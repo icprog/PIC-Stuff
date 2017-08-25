@@ -1,11 +1,11 @@
-Microchip MPLAB XC8 Compiler V1.34 ()
+Microchip MPLAB XC8 Compiler V1.35 ()
 
 Linker command line:
 
---edf=C:\Program Files (x86)\Microchip\xc8\v1.34\dat\en_msgs.txt -cs \
+--edf=C:\Program Files (x86)\Microchip\xc8\v1.35\dat\en_msgs.txt -cs \
   -h+dist/default/production\PoolSolar.X.production.sym \
   --cmf=dist/default/production\PoolSolar.X.production.cmf -z -Q16F720 \
-  -oC:\Users\DAVE\AppData\Local\Temp\s2es.6 \
+  -oC:\Users\DAVE\AppData\Local\Temp\s4c0.2 \
   -Mdist/default/production/PoolSolar.X.production.map -E1 -ver=XC8 \
   -ASTACK=043h-06fh -pstack=STACK -ACODE=00h-07FFh -ASTRCODE=00h-07FFh \
   -ASTRING=00h-0FFhx8 -ACONST=00h-0FFhx8 -AENTRY=00h-0FFhx8 \
@@ -16,7 +16,7 @@ Linker command line:
   -pfunctab=CODE -ACONFIG=02007h-02008h -pconfig=CONFIG -DCONFIG=2 \
   -AIDLOC=02000h-02003h -pidloc=IDLOC -DIDLOC=2 -DCODE=2 -DSTRCODE=2 \
   -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
-  C:\Users\DAVE\AppData\Local\Temp\s2es.obj \
+  C:\Users\DAVE\AppData\Local\Temp\s4c0.obj \
   dist/default/production\PoolSolar.X.production.obj 
 
 Object code version is 3.11
@@ -26,7 +26,7 @@ Machine type is 16F720
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\DAVE\AppData\Local\Temp\s2es.obj
+C:\Users\DAVE\AppData\Local\Temp\s4c0.obj
                 end_init                              0        0        1        0       0
                 config                             2007     2007        1     400E       0
 dist/default/production\PoolSolar.X.production.obj
@@ -185,7 +185,7 @@ LCDGotoXY@x                   cstackCOMMON 007D
 LCDGotoXY@y                   cstackCOMMON 007C
 LCDInit@__i                   cstackCOMMON 007D
 LCDInit@style                 cstackCOMMON 007C
-LCDWriteInt@F1070             bssBANK0     003D
+LCDWriteInt@F1072             bssBANK0     003D
 LCDWriteInt@field_length      cstackBANK0  0022
 LCDWriteInt@i                 cstackBANK0  002A
 LCDWriteInt@j                 cstackBANK0  0028
@@ -425,7 +425,7 @@ FUNCTION INFORMATION:
 
  *************** function _main *****************
  Defined at:
-		line 23 in file "main.c"
+		line 24 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -460,7 +460,7 @@ Total ram usage:        3 bytes
 
  *************** function _TempCheck *****************
  Defined at:
-		line 70 in file "main.c"
+		line 71 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -566,7 +566,7 @@ Total ram usage:       14 bytes
 
  *************** function ___awmod *****************
  Defined at:
-		line 6 in file "C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\awmod.c"
+		line 6 in file "C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\awmod.c"
  Parameters:    Size  Location     Type
   divisor         2    0[COMMON] int 
   dividend        2    2[COMMON] int 
@@ -597,7 +597,7 @@ Total ram usage:        7 bytes
 
  *************** function ___awdiv *****************
  Defined at:
-		line 6 in file "C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\awdiv.c"
+		line 6 in file "C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\awdiv.c"
  Parameters:    Size  Location     Type
   divisor         2    0[COMMON] int 
   dividend        2    2[COMMON] int 
@@ -881,22 +881,22 @@ Total ram usage:        0 bytes
 MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
-C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\awmod.c
-		___awmod       		CODE           	0259	0000	76
+C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\awdiv.c
+		___awdiv       		CODE           	02F4	0000	90
 
-C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\awmod.c estimated size: 76
+C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\awdiv.c estimated size: 90
 
 shared
 		__stringtab    		STRCODE        	0500	0000	19
-		__initializatio		CODE           	07E8	0000	23
-		TempCheck@tempr		STRCODE        	0512	0000	477
+		__initialization		CODE           	07E8	0000	23
+		TempCheck@tempread		STRCODE        	0512	0000	477
 
 shared estimated size: 519
 
-C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\awdiv.c
-		___awdiv       		CODE           	02F4	0000	90
+C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\awmod.c
+		___awmod       		CODE           	0259	0000	76
 
-C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\awdiv.c estimated size: 90
+C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\awmod.c estimated size: 76
 
 lcd_hd44780_pic16.c
 		_LCDByte       		CODE           	0195	0000	59
@@ -922,7 +922,7 @@ main.c
 main.c estimated size: 437
 
 system.c
-		_ConfigureOscil		CODE           	0152	0000	18
+		_ConfigureOscillator		CODE           	0152	0000	18
 
 system.c estimated size: 18
 
