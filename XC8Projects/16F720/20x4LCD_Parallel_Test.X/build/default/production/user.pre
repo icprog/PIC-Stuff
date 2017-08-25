@@ -1,13 +1,17 @@
 
 # 1 "user.c"
 
-# 21 "../../../Program Files (x86)/Microchip/xc8/v1.33/include\htc.h"
+# 26 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
 
+extern double __fpnormalize(double);
+
+
+# 13 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\xc8debug.h"
 #pragma intrinsic(__builtin_software_breakpoint)
 extern void __builtin_software_breakpoint(void);
 
-# 47 "../../../Program Files (x86)/Microchip/xc8/v1.33/include\pic16f720.h"
+# 49 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic16f720.h"
 extern volatile unsigned char INDF @ 0x000;
 
 asm("INDF equ 00h");
@@ -48,9 +52,7 @@ unsigned RP1 :1;
 };
 struct {
 unsigned CARRY :1;
-};
-struct {
-unsigned :2;
+unsigned :1;
 unsigned ZERO :1;
 };
 } STATUSbits_t;
@@ -1318,17 +1320,24 @@ extern volatile __bit nT1SYNC @ (((unsigned) &T1CON)*8) + 2;
 extern volatile __bit nTO @ (((unsigned) &STATUS)*8) + 4;
 
 
-# 27 "../../../Program Files (x86)/Microchip/xc8/v1.33/include\pic.h"
+# 27 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic.h"
 #pragma intrinsic(__nop)
 extern void __nop(void);
 
-# 80
+# 77
 extern unsigned int flash_read(unsigned short addr);
 
 
-# 153
+# 151
 #pragma intrinsic(_delay)
 extern __nonreentrant void _delay(unsigned long);
+#pragma intrinsic(_delaywdt)
+extern __nonreentrant void _delaywdt(unsigned long);
+
+# 192
+extern unsigned char __resetbits;
+extern __bit __powerdown;
+extern __bit __timeout;
 
 # 25 "system.h"
 void ConfigureOscillator(void);
