@@ -12070,6 +12070,7 @@ grid 2.54 mm</description>
 <part name="R63" library="resistor" deviceset="R-US_" device="R0603" value=" "/>
 <part name="U4" library="3-Pin-5.08" deviceset="282837-3" device=""/>
 <part name="U5" library="3-Pin-5.08" deviceset="282837-3" device=""/>
+<part name="R52" library="rcl" deviceset="R-TRIMM" device="3296W" value=" "/>
 </parts>
 <sheets>
 <sheet>
@@ -12318,6 +12319,7 @@ grid 2.54 mm</description>
 <instance part="R63" gate="G$1" x="193.04" y="-83.82"/>
 <instance part="U4" gate="A" x="332.74" y="-38.1" rot="R270"/>
 <instance part="U5" gate="A" x="332.74" y="-109.22" rot="R270"/>
+<instance part="R52" gate="G$1" x="162.56" y="-233.68" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -12490,10 +12492,11 @@ grid 2.54 mm</description>
 <wire x1="111.76" y1="-233.68" x2="111.76" y2="-194.31" width="0.1524" layer="91"/>
 <junction x="111.76" y="-233.68"/>
 <wire x1="111.76" y1="-241.3" x2="171.45" y2="-241.3" width="0.1524" layer="91"/>
-<wire x1="171.45" y1="-241.3" x2="171.45" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="171.45" y1="-241.3" x2="171.45" y2="-194.31" width="0.1524" layer="91"/>
 <junction x="111.76" y="-241.3"/>
 <pinref part="---" gate="1" pin="3"/>
 <pinref part="C1" gate="G$1" pin="2"/>
+<wire x1="171.45" y1="-194.31" x2="171.45" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="72.39" y1="101.6" x2="82.55" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="171.45" y1="101.6" x2="91.44" y2="101.6" width="0.1524" layer="91"/>
 <junction x="82.55" y="101.6"/>
@@ -12528,6 +12531,9 @@ grid 2.54 mm</description>
 <wire x1="320.04" y1="-111.76" x2="320.04" y2="-81.28" width="0.1524" layer="91"/>
 <junction x="320.04" y="-111.76"/>
 <junction x="320.04" y="-81.28"/>
+<pinref part="LCDHEADER" gate="G$1" pin="20"/>
+<wire x1="160.02" y1="-194.31" x2="171.45" y2="-194.31" width="0.1524" layer="91"/>
+<junction x="171.45" y="-194.31"/>
 </segment>
 <segment>
 <pinref part="VSS2" gate="G$1" pin="VSS"/>
@@ -12842,10 +12848,19 @@ grid 2.54 mm</description>
 <wire x1="254" y1="-140.97" x2="307.34" y2="-140.97" width="0.1524" layer="91"/>
 <wire x1="307.34" y1="-140.97" x2="307.34" y2="-113.03" width="0.1524" layer="91"/>
 <junction x="307.34" y="-113.03"/>
-<wire x1="114.3" y1="-203.2" x2="307.34" y2="-203.2" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="-203.2" x2="179.07" y2="-203.2" width="0.1524" layer="91"/>
+<wire x1="179.07" y1="-203.2" x2="307.34" y2="-203.2" width="0.1524" layer="91"/>
 <wire x1="307.34" y1="-203.2" x2="307.34" y2="-140.97" width="0.1524" layer="91"/>
 <junction x="114.3" y="-203.2"/>
 <junction x="307.34" y="-140.97"/>
+<wire x1="179.07" y1="-203.2" x2="179.07" y2="-233.68" width="0.1524" layer="91"/>
+<junction x="179.07" y="-203.2"/>
+<pinref part="R52" gate="G$1" pin="E"/>
+<wire x1="179.07" y1="-233.68" x2="167.64" y2="-233.68" width="0.1524" layer="91"/>
+<wire x1="167.64" y1="-233.68" x2="167.64" y2="-238.76" width="0.1524" layer="91"/>
+<junction x="167.64" y="-233.68"/>
+<pinref part="R52" gate="G$1" pin="S"/>
+<wire x1="167.64" y1="-238.76" x2="162.56" y2="-238.76" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="P" gate="A" pin="VDD_3"/>
@@ -14700,6 +14715,13 @@ grid 2.54 mm</description>
 <pinref part="U5" gate="A" pin="2"/>
 <wire x1="317.5" y1="-128.27" x2="317.5" y2="-152.4" width="0.1524" layer="91"/>
 <wire x1="317.5" y1="-152.4" x2="330.2" y2="-152.4" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$63" class="0">
+<segment>
+<pinref part="LCDHEADER" gate="G$1" pin="19"/>
+<pinref part="R52" gate="G$1" pin="A"/>
+<wire x1="157.48" y1="-194.31" x2="157.48" y2="-233.68" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
