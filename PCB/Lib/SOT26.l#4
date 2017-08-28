@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="mil" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -180,6 +180,8 @@
 <text x="-2.0066" y="0.9398" size="1.27" layer="21" ratio="6" rot="SR0">*</text>
 <text x="-3.2766" y="-0.635" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
 </package>
+<package name="SOT26">
+</package>
 </packages>
 <symbols>
 <symbol name="LM5114_DBV_6">
@@ -199,6 +201,7 @@
 </symbols>
 <devicesets>
 <deviceset name="LM5114BMFX/S7003094" prefix="U">
+<description>SOT26 Gate Driver</description>
 <gates>
 <gate name="A" symbol="LM5114_DBV_6" x="0" y="0"/>
 </gates>
@@ -221,12 +224,11 @@
 </device>
 <device name="MF06A-M" package="MF06A-M">
 <connects>
-<connect gate="A" pin="IN" pad="6"/>
-<connect gate="A" pin="INB" pad="5"/>
-<connect gate="A" pin="N_OUT" pad="3"/>
-<connect gate="A" pin="P_OUT" pad="2"/>
+<connect gate="A" pin="IN" pad="2"/>
+<connect gate="A" pin="N_OUT" pad="4"/>
+<connect gate="A" pin="P_OUT" pad="6"/>
 <connect gate="A" pin="VDD" pad="1"/>
-<connect gate="A" pin="VSS" pad="4"/>
+<connect gate="A" pin="VSS" pad="3"/>
 </connects>
 <technologies>
 <technology name="">
@@ -249,6 +251,19 @@
 <attribute name="MANUFACTURER_PART_NUMBER" value="LM5114BMFXS7003094" constant="no"/>
 <attribute name="VENDOR" value="National Semiconductor" constant="no"/>
 </technology>
+</technologies>
+</device>
+<device name="SOT26-GATEDRIVER" package="MF06A">
+<connects>
+<connect gate="A" pin="IN" pad="2"/>
+<connect gate="A" pin="INB" pad="5"/>
+<connect gate="A" pin="N_OUT" pad="4"/>
+<connect gate="A" pin="P_OUT" pad="6"/>
+<connect gate="A" pin="VDD" pad="1"/>
+<connect gate="A" pin="VSS" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
