@@ -1339,7 +1339,7 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 10 "system.h"
+# 11 "system.h"
 void ConfigureOscillator(void);
 
 void Init(void);
@@ -1359,7 +1359,7 @@ unsigned char ADCRead(unsigned char ch)
 ADCON0=0x00;
 ADCON0=(ch<<2);
 ADON=1;
-_delay((unsigned long)((100)*(8000000L/4000000.0)));
+_delay((unsigned long)((100)*(4000000/4000000.0)));
 GO_nDONE=1;
 while(GO_nDONE);
 ADON=0;

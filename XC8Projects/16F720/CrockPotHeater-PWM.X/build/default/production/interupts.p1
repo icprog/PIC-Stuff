@@ -32,7 +32,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TMR1L `Vuc ~T0 @X0 0 e@14 ]
 "697
 [v _CCPR1L `Vuc ~T0 @X0 0 e@21 ]
-[; ;interupts.h: 16: void interrupt int_routine(void);
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -979,47 +978,48 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 186: extern unsigned char __resetbits;
 [; ;pic.h: 187: extern __bit __powerdown;
 [; ;pic.h: 188: extern __bit __timeout;
-[v F3 `(v ~T0 @X0 1 tf ]
-"10 interupts.c
-[v _int_routine `IF3 ~T0 @X0 1 e ]
-"11
+[; ;interupts.h: 5: void interrupt int_routine(void);
+[v F998 `(v ~T0 @X0 1 tf ]
+"5 interupts.c
+[v _int_routine `IF998 ~T0 @X0 1 e ]
+"6
 {
-[; ;interupts.c: 10: void interrupt int_routine(void)
-[; ;interupts.c: 11: {
+[; ;interupts.c: 5: void interrupt int_routine(void)
+[; ;interupts.c: 6: {
 [e :U _int_routine ]
 [f ]
-"12
-[v _OutCurrent `uc ~T0 @X0 0 e ]
-[; ;interupts.c: 12: extern unsigned char OutCurrent;
-[; ;interupts.c: 15: if (PIE1bits.TMR1IE && PIR1bits.TMR1IF)
-"15
+"7
+[v _output `uc ~T0 @X0 0 e ]
+[; ;interupts.c: 7: extern unsigned char output;
+[; ;interupts.c: 10: if (PIE1bits.TMR1IE && PIR1bits.TMR1IF)
+"10
 [e $ ! && != -> . . _PIE1bits 0 0 `i -> -> -> 0 `i `Vuc `i != -> . . _PIR1bits 0 0 `i -> -> -> 0 `i `Vuc `i 95  ]
-[; ;interupts.c: 16: {
-"16
+[; ;interupts.c: 11: {
+"11
 {
-[; ;interupts.c: 17: PIR1bits.TMR1IF = 0;
-"17
+[; ;interupts.c: 12: PIR1bits.TMR1IF = 0;
+"12
 [e = . . _PIR1bits 0 0 -> -> 0 `i `uc ]
-[; ;interupts.c: 18: T1CONbits.TMR1ON = 0;
-"18
+[; ;interupts.c: 13: T1CONbits.TMR1ON = 0;
+"13
 [e = . . _T1CONbits 0 0 -> -> 0 `i `uc ]
-[; ;interupts.c: 20: TMR1H = 0xE7;
-"20
+[; ;interupts.c: 15: TMR1H = 0xE7;
+"15
 [e = _TMR1H -> -> 231 `i `uc ]
-[; ;interupts.c: 21: TMR1L = 0x95;
-"21
+[; ;interupts.c: 16: TMR1L = 0x95;
+"16
 [e = _TMR1L -> -> 149 `i `uc ]
-[; ;interupts.c: 23: T1CONbits.TMR1ON = 1;
-"23
+[; ;interupts.c: 18: T1CONbits.TMR1ON = 1;
+"18
 [e = . . _T1CONbits 0 0 -> -> 1 `i `uc ]
-[; ;interupts.c: 26: CCPR1L = OutCurrent;
-"26
-[e = _CCPR1L _OutCurrent ]
-"27
+[; ;interupts.c: 21: CCPR1L = output;
+"21
+[e = _CCPR1L _output ]
+"22
 }
 [e :U 95 ]
-[; ;interupts.c: 27: }
-[; ;interupts.c: 30: }
-"30
+[; ;interupts.c: 22: }
+[; ;interupts.c: 25: }
+"25
 [e :UE 94 ]
 }

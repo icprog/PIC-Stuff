@@ -45,21 +45,21 @@ void Init()
     //PR2 = 0x65; // Set PWM period (PR2+1) * 4 * Tosc * TMR2_Prescale_value
     // period = (255 + 1) * 4 * 0.25us * 16 = 4.1ms
     // frequency = 1 / 4.1ms = 244Hz
-    CCP1CON = 0x00; // Reset all bits to 0 
-    CCP1CONbits.CCP1M = 0xF; // Set up for PWM mode, with only P1 active
-    CCPR1L = 0x00; // Setup for 0% duty cycle
+    CCP1CON = 0x00;                                     // Reset all bits to 0 
+    CCP1CONbits.CCP1M = 0xF;                            // Set up for PWM mode, with only P1 active
+    CCPR1L = 0xFF;                                      // Setup for 100% duty cycle
     // Setup Timer 2 for PWM
-    PIR1bits.TMR2IF = 0; // Clear Timer 2 interrupt flag
-    T2CONbits.T2CKPS = 0x3; // Set Timer 2 prescaler to 1:16
-//    T2CONbits.T2CKPS = 0x0; // Set Timer 2 prescaler to 1:1
-    T2CONbits.TMR2ON = 1; // Enable Timer 2
-    while(PIR1bits.TMR1IF); // Wait for first overflow
-    TRISCbits.TRISC5 = 0; // Sets pin RC5 to output for PWM
+    PIR1bits.TMR2IF = 0;                                // Clear Timer 2 interrupt flag
+    T2CONbits.T2CKPS = 0x3;                             // Set Timer 2 prescaler to 1:16
+//    T2CONbits.T2CKPS = 0x0;                           // Set Timer 2 prescaler to 1:1
+    T2CONbits.TMR2ON = 1;                               // Enable Timer 2
+    while(PIR1bits.TMR1IF);                             // Wait for first overflow
+    TRISCbits.TRISC5 = 0;                               // Sets pin RC5 to output for PWM
 
-    // Setup Timer 1 for incrementing PWM duty cycle and fading bulb
+    // Setup Timer 1 for handling PWM duty cycle
     T1CON = 0;
-    T1CONbits.T1CKPS0 = 1;  // T1CKPS = 11 = 1:8 prescaler
-    T1CONbits.T1CKPS1 = 1;  // so timer clock = 1MHz / 8 = 125kHz
+    T1CONbits.T1CKPS0 = 1;                              // T1CKPS = 11 = 1:8 prescaler
+    T1CONbits.T1CKPS1 = 1;                              // so timer clock = 1MHz / 8 = 125kHz
     /* Calculating for PWM duty cycle increment every 50ms, so period needs
      * to be 20Hz. Timer 1 clock is 125kHz, so
      * for 20Hz, we divide 125kHz by 20 = 6250. Then we subtract this
@@ -68,9 +68,9 @@ void Init()
      * registers, so we put 0xE7 in the high and 0x95 in the low */
     TMR1H = 0xE7;           
     TMR1L = 0x95;
-    T1CONbits.TMR1ON = 1;   // Turn timer on
-    INTCONbits.GIE = 1;     // Enable global interrupts
-    INTCONbits.PEIE = 1;    // Enable peripheral interrupts
-    PIR1bits.TMR1IF = 0;    // Clear Timer 1 interrupt flag
-    PIE1bits.TMR1IE = 1;    // Enable Timer 1 interrupt
+    T1CONbits.TMR1ON = 1;                               // Turn timer on
+    INTCONbits.GIE = 1;                                 // Enable global interrupts
+    INTCONbits.PEIE = 1;                                // Enable peripheral interrupts
+    PIR1bits.TMR1IF = 0;                                // Clear Timer 1 interrupt flag
+    PIE1bits.TMR1IE = 1;                                // Enable Timer 1 interrupt
 }

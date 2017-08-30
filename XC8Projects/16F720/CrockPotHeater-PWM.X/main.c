@@ -2,100 +2,103 @@
 #include "system.h"
 #include "user.h"
 #include "interupts.h"
-// #include "hd44780.h"
 #include "lcd.h"
-#include <stdio.h>
 
-unsigned char OutCurrent = 255;
+#define numSamples          20                                                  //Number of samples to average for current reading
+
+
+unsigned char output = 255;
 
 void main()
 {
-    char s[16];
+    Init();                                                                     // Init Ports & PWM Setup
 
-    Init(); 
-
-    delay_ms(250);
+    __delay_ms(250);                                                            // Power Up delay for LCD
     
-    LCD_Init();
+    LCD_Init(0);                                                                // Init LCD
     
-    LCD_Clear();
+    LCD_Clear();                                                                // Clear Screen
 
     PORTCbits.RC0 = 1;
 
     
-    extern unsigned char OutCurrent;
-    unsigned char setpoint, ReadCurrent;
+//    extern unsigned char output;
+    unsigned char setpoint, readTemperature, tempReadTemperature;
     unsigned char x;
-        
+    unsigned int total;
+    int samples[numSamples];                                                    //Samples to average current over x number of samples
+    unsigned char sampleIndex = 0;                                              //Used to calculate average current measurement
+    
 
     while(1)                                                                    // Infinite loop
     {
-        
-        for(x = 0; x < 255 ; x++)
+        tempReadTemperature = ADCRead(3);                                       // Read current & assign it to a temporary variable 
+            
+        total = total - samples[sampleIndex];                                   // Subtract the oldest sample data from the total
+
+        samples[sampleIndex] = tempReadTemperature;                             // Assign the just read current measurement to the location of the currently oldest data
+
+        total = total + samples[sampleIndex];                                   // Add that new sample to the total
+           
+        sampleIndex += 1;                                                       // and move to the next index location
+            
+        if(sampleIndex >= numSamples)
         {
-            ReadCurrent = (ReadCurrent + ADCRead(3))/2;
+            sampleIndex = 0;
         }
+            
+        readTemperature = total / numSamples;                                   // assign the average current value of total to the readCurrent variable
         
-                
+
+
+
+                 
         for(x = 0 ; x < 255 ; x++)
         {
             setpoint = (setpoint + ADCRead(2))/2;
         }
         
-        delay_ms(1000);
+        __delay_ms(1000);
         
 
-        if(setpoint >= ReadCurrent + 2)
+        if(setpoint >= readTemperature + 2)
         {
-            if(OutCurrent < 255)
+            if(output < 255)
             {
-                OutCurrent+=1;
+                output+=1;
             }
             else
             {
-                OutCurrent = 255;
+                output = 255;
             }
         }
         
 
-        if(setpoint <= ReadCurrent - 2)
+        if(setpoint <= readTemperature - 2)
         {
             
             
-            if(OutCurrent > 0)
+            if(output > 0)
             {
-                OutCurrent-=1;
+                output-=1;
             }
             else
             {
-                OutCurrent = 0;
+                output = 0;
             }
         }
         
 
         LCD_Clear();
     
+        
+        LCDWriteStringXY(0,0,"PWM=");
+        LCDWriteIntXY(0,4,CCPR1L,3,0,0);
 
-sprintf(s, "CCPR1L      = %d", CCPR1L );
-LCD_Set_Cursor(0,0);
-LCD_Write_String(s);
+        LCDWriteStringXY(0,8,"OP=");
+        LCDWriteIntXY(0,11,output,3,0,0);
 
-sprintf(s, "OutCurrent  = %d", OutCurrent );
-LCD_Set_Cursor(1,0);
-LCD_Write_String(s);
-
-sprintf(s, "Setpoint    = %d", setpoint );
-LCDWriteStringXY(2,0,s);
-
-sprintf(s, "ReadCurrent = %d", ReadCurrent );
-LCDWriteStringXY(3,0,s);
-
-// delay_ms(1000);
-
-                
-//        LCDWriteIntXY(0,0,CCPR1L,3);
-  //      LCDWriteIntXY(0,1,OutCurrent,3);
-    //    LCDWriteIntXY(4,0,setpoint,3);
-      //  LCDWriteIntXY(4,1,ReadCurrent,3);
+        LCDWriteStringXY(1,0,"MV=");
+        LCDWriteIntXY(1,3,readTemperature,3,0,0);
     }
 }
