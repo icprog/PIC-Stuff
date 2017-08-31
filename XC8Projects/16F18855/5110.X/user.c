@@ -18,7 +18,7 @@
 int Index;
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
-unsigned char ASCII[][5] = {
+const unsigned char ASCII[][5] = {
 //unsigned char ASCII[][5] = {
   {0x00, 0x00, 0x00, 0x00, 0x00} // 20
   ,{0x00, 0x00, 0x5f, 0x00, 0x00} // 21 !
@@ -146,7 +146,7 @@ void LCDCharacter(char character) {
 }
 
 //Given a string of characters, one by one is passed to the LCD
-void LCDString(char *characters) {
+void LCDString(const char *characters) {
   while (*characters)
     LCDCharacter(*characters++);
 }
@@ -186,6 +186,16 @@ void LCDInit(void) {
 __delay_ms(1);  
     LCD_RST = 1;
   __delay_ms(1);
+__delay_ms(1);  
+    LCD_RST = 0;
+__delay_ms(1);  
+    LCD_RST = 1;
+__delay_ms(1);  
+    LCD_RST = 0;
+__delay_ms(1);  
+    LCD_RST = 1;
+__delay_ms(1);  
+    LCD_RST = 0;
 
   LCDWrite(LCD_COMMAND, 0x21); //Tell LCD that extended commands follow
   LCDWrite(LCD_COMMAND, 0xBB); //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark

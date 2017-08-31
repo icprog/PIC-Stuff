@@ -12604,7 +12604,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;user.h: 9: void gotoXY(int x, int y);
 [; ;user.h: 10: void LCDBitmap(char my_array[]);
 [; ;user.h: 11: void LCDCharacter(char character);
-[; ;user.h: 12: void LCDString(char *characters);
+[; ;user.h: 12: void LCDString(const char *characters);
 [; ;user.h: 13: void LCDClear(void);
 [; ;user.h: 14: void LCDInit(void) ;
 [; ;user.h: 16: void InitApp(void);
@@ -12612,7 +12612,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "18 user.c
 [v _Index `i ~T0 @X0 1 e ]
 [; ;user.c: 18: int Index;
-[v F13580 `uc ~T0 @X0 -> 5 `i t ]
+[v F13580 `Cuc ~T0 @X0 -> 5 `i t ]
 "21
 [v _ASCII `F13580 ~T0 @X0 -> 0 `x e ]
 [i _ASCII
@@ -13387,7 +13387,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-[; ;user.c: 21: unsigned char ASCII[][5] = {
+[; ;user.c: 21: const unsigned char ASCII[][5] = {
 [; ;user.c: 23: {0x00, 0x00, 0x00, 0x00, 0x00}
 [; ;user.c: 24: ,{0x00, 0x00, 0x5f, 0x00, 0x00}
 [; ;user.c: 25: ,{0x00, 0x07, 0x00, 0x07, 0x00}
@@ -13568,11 +13568,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 1524 ]
 }
 "149
-[v _LCDString `(v ~T0 @X0 1 ef1`*uc ]
+[v _LCDString `(v ~T0 @X0 1 ef1`*Cuc ]
 {
-[; ;user.c: 149: void LCDString(char *characters) {
+[; ;user.c: 149: void LCDString(const char *characters) {
 [e :U _LCDString ]
-[v _characters `*uc ~T0 @X0 1 r1 ]
+[v _characters `*Cuc ~T0 @X0 1 r1 ]
 [f ]
 [; ;user.c: 150: while (*characters)
 "150
@@ -13583,7 +13583,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCDCharacter (1 *U ++ _characters * -> -> 1 `i `x -> -> # *U _characters `i `x ]
 [e :U 1529 ]
 "150
-[e $ != -> *U _characters `i -> -> -> 0 `i `uc `i 1530  ]
+[e $ != -> *U _characters `i -> -> -> 0 `i `Cuc `i 1530  ]
 [e :U 1531 ]
 [; ;user.c: 152: }
 "152
@@ -13651,135 +13651,165 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;user.c: 184: TRISCbits.TRISC7=0;
 "184
 [e = . . _TRISCbits 0 7 -> -> 0 `i `uc ]
-[; ;user.c: 186: _delay((unsigned long)((1)*(1000000/4000.0)));
+[; ;user.c: 186: _delay((unsigned long)((1)*(32000/4000.0)));
 "186
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 32000 `i `d .4000.0 `ul ]
 [; ;user.c: 187: TRISCbits.TRISC7 = 1;
 "187
 [e = . . _TRISCbits 0 7 -> -> 1 `i `uc ]
-[; ;user.c: 188: _delay((unsigned long)((1)*(1000000/4000.0)));
+[; ;user.c: 188: _delay((unsigned long)((1)*(32000/4000.0)));
 "188
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;user.c: 190: LCDWrite(0, 0x21);
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 32000 `i `d .4000.0 `ul ]
+[; ;user.c: 189: _delay((unsigned long)((1)*(32000/4000.0)));
+"189
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 32000 `i `d .4000.0 `ul ]
+[; ;user.c: 190: TRISCbits.TRISC7 = 0;
 "190
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 33 `i `uc ]
-[; ;user.c: 191: LCDWrite(0, 0xBB);
+[e = . . _TRISCbits 0 7 -> -> 0 `i `uc ]
+[; ;user.c: 191: _delay((unsigned long)((1)*(32000/4000.0)));
 "191
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 187 `i `uc ]
-[; ;user.c: 192: LCDWrite(0, 0x04);
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 32000 `i `d .4000.0 `ul ]
+[; ;user.c: 192: TRISCbits.TRISC7 = 1;
 "192
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 4 `i `uc ]
-[; ;user.c: 193: LCDWrite(0, 0x14);
+[e = . . _TRISCbits 0 7 -> -> 1 `i `uc ]
+[; ;user.c: 193: _delay((unsigned long)((1)*(32000/4000.0)));
 "193
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 20 `i `uc ]
-[; ;user.c: 195: LCDWrite(0, 0x20);
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 32000 `i `d .4000.0 `ul ]
+[; ;user.c: 194: TRISCbits.TRISC7 = 0;
+"194
+[e = . . _TRISCbits 0 7 -> -> 0 `i `uc ]
+[; ;user.c: 195: _delay((unsigned long)((1)*(32000/4000.0)));
 "195
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 32 `i `uc ]
-[; ;user.c: 196: LCDWrite(0, 0x0D);
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 32000 `i `d .4000.0 `ul ]
+[; ;user.c: 196: TRISCbits.TRISC7 = 1;
 "196
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 13 `i `uc ]
-[; ;user.c: 197: }
+[e = . . _TRISCbits 0 7 -> -> 1 `i `uc ]
+[; ;user.c: 197: _delay((unsigned long)((1)*(32000/4000.0)));
 "197
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 32000 `i `d .4000.0 `ul ]
+[; ;user.c: 198: TRISCbits.TRISC7 = 0;
+"198
+[e = . . _TRISCbits 0 7 -> -> 0 `i `uc ]
+[; ;user.c: 200: LCDWrite(0, 0x21);
+"200
+[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 33 `i `uc ]
+[; ;user.c: 201: LCDWrite(0, 0xBB);
+"201
+[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 187 `i `uc ]
+[; ;user.c: 202: LCDWrite(0, 0x04);
+"202
+[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 4 `i `uc ]
+[; ;user.c: 203: LCDWrite(0, 0x14);
+"203
+[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 20 `i `uc ]
+[; ;user.c: 205: LCDWrite(0, 0x20);
+"205
+[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 32 `i `uc ]
+[; ;user.c: 206: LCDWrite(0, 0x0D);
+"206
+[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 13 `i `uc ]
+[; ;user.c: 207: }
+"207
 [e :UE 1536 ]
 }
-"202
+"212
 [v _LCDWrite `(v ~T0 @X0 1 ef2`uc`uc ]
 {
-[; ;user.c: 202: void LCDWrite(unsigned char data_or_command, unsigned char data) {
+[; ;user.c: 212: void LCDWrite(unsigned char data_or_command, unsigned char data) {
 [e :U _LCDWrite ]
 [v _data_or_command `uc ~T0 @X0 1 r1 ]
 [v _data `uc ~T0 @X0 1 r2 ]
 [f ]
-"203
+"213
 [v _i `uc ~T0 @X0 1 a ]
 [v _d `uc ~T0 @X0 1 a ]
-[; ;user.c: 203: unsigned char i,d;
-[; ;user.c: 205: d=data;
-"205
+[; ;user.c: 213: unsigned char i,d;
+[; ;user.c: 215: d=data;
+"215
 [e = _d _data ]
-[; ;user.c: 206: if(data_or_command==0)TRISCbits.TRISC3=0;
-"206
+[; ;user.c: 216: if(data_or_command==0)TRISCbits.TRISC3=0;
+"216
 [e $ ! == -> _data_or_command `i -> 0 `i 1538  ]
 [e = . . _TRISCbits 0 3 -> -> 0 `i `uc ]
 [e $U 1539  ]
-"207
+"217
 [e :U 1538 ]
-[; ;user.c: 207: else TRISCbits.TRISC3=1;
+[; ;user.c: 217: else TRISCbits.TRISC3=1;
 [e = . . _TRISCbits 0 3 -> -> 1 `i `uc ]
 [e :U 1539 ]
-[; ;user.c: 211: TRISCbits.TRISC6=0;
-"211
+[; ;user.c: 221: TRISCbits.TRISC6=0;
+"221
 [e = . . _TRISCbits 0 6 -> -> 0 `i `uc ]
-[; ;user.c: 214: for(i=0;i<8;i++)
-"214
+[; ;user.c: 224: for(i=0;i<8;i++)
+"224
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 8 `i 1540  ]
 [e $U 1541  ]
-"215
+"225
 [e :U 1540 ]
-[; ;user.c: 215: {
+[; ;user.c: 225: {
 {
-[; ;user.c: 216: TRISCbits.TRISC4=0;
-"216
+[; ;user.c: 226: TRISCbits.TRISC4=0;
+"226
 [e = . . _TRISCbits 0 4 -> -> 0 `i `uc ]
-[; ;user.c: 217: if(d&0x80)TRISCbits.TRISC4=1;
-"217
+[; ;user.c: 227: if(d&0x80)TRISCbits.TRISC4=1;
+"227
 [e $ ! != & -> _d `i -> 128 `i -> 0 `i 1543  ]
 [e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
 [e :U 1543 ]
-[; ;user.c: 218: TRISCbits.TRISC5=1;
-"218
+[; ;user.c: 228: TRISCbits.TRISC5=1;
+"228
 [e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
-[; ;user.c: 219: d<<=1;
-"219
+[; ;user.c: 229: d<<=1;
+"229
 [e =<< _d -> 1 `i ]
-[; ;user.c: 220: TRISCbits.TRISC5=0;
-"220
+[; ;user.c: 230: TRISCbits.TRISC5=0;
+"230
 [e = . . _TRISCbits 0 5 -> -> 0 `i `uc ]
-"221
+"231
 }
-"214
+"224
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 8 `i 1540  ]
 [e :U 1541 ]
-"221
-}
-[; ;user.c: 221: }
-[; ;user.c: 223: TRISCbits.TRISC6=1;
-"223
-[e = . . _TRISCbits 0 6 -> -> 1 `i `uc ]
-[; ;user.c: 225: }
-"225
-[e :UE 1537 ]
-}
-"227
-[v _InitApp `(v ~T0 @X0 1 ef ]
-"228
-{
-[; ;user.c: 227: void InitApp(void)
-[; ;user.c: 228: {
-[e :U _InitApp ]
-[f ]
-[; ;user.c: 229: ANSELA=0;
-"229
-[e = _ANSELA -> -> 0 `i `uc ]
-[; ;user.c: 230: ANSELB=0;
-"230
-[e = _ANSELB -> -> 0 `i `uc ]
-[; ;user.c: 231: ANSELC=0;
 "231
-[e = _ANSELC -> -> 0 `i `uc ]
-[; ;user.c: 232: TRISA=0;
-"232
-[e = _TRISA -> -> 0 `i `uc ]
-[; ;user.c: 233: TRISB=0;
+}
+[; ;user.c: 231: }
+[; ;user.c: 233: TRISCbits.TRISC6=1;
 "233
-[e = _TRISB -> -> 0 `i `uc ]
-[; ;user.c: 234: TRISC=0;
-"234
-[e = _TRISC -> -> 0 `i `uc ]
+[e = . . _TRISCbits 0 6 -> -> 1 `i `uc ]
 [; ;user.c: 235: }
 "235
+[e :UE 1537 ]
+}
+"237
+[v _InitApp `(v ~T0 @X0 1 ef ]
+"238
+{
+[; ;user.c: 237: void InitApp(void)
+[; ;user.c: 238: {
+[e :U _InitApp ]
+[f ]
+[; ;user.c: 239: ANSELA=0;
+"239
+[e = _ANSELA -> -> 0 `i `uc ]
+[; ;user.c: 240: ANSELB=0;
+"240
+[e = _ANSELB -> -> 0 `i `uc ]
+[; ;user.c: 241: ANSELC=0;
+"241
+[e = _ANSELC -> -> 0 `i `uc ]
+[; ;user.c: 242: TRISA=0;
+"242
+[e = _TRISA -> -> 0 `i `uc ]
+[; ;user.c: 243: TRISB=0;
+"243
+[e = _TRISB -> -> 0 `i `uc ]
+[; ;user.c: 244: TRISC=0;
+"244
+[e = _TRISC -> -> 0 `i `uc ]
+[; ;user.c: 245: }
+"245
 [e :UE 1544 ]
 }

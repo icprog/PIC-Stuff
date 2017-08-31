@@ -16685,7 +16685,7 @@ void LCDWrite(unsigned char data_or_command, unsigned char data);
 void gotoXY(int x, int y);
 void LCDBitmap(char my_array[]);
 void LCDCharacter(char character);
-void LCDString(char *characters);
+void LCDString(const char *characters);
 void LCDClear(void);
 void LCDInit(void) ;
 
@@ -16698,7 +16698,7 @@ void ConfigureOscillator(void);
 int Index;
 
 
-unsigned char ASCII[][5] = {
+const unsigned char ASCII[][5] = {
 
 {0x00, 0x00, 0x00, 0x00, 0x00}
 ,{0x00, 0x00, 0x5f, 0x00, 0x00}
@@ -16823,7 +16823,7 @@ LCDWrite(1, 0x00);
 }
 
 
-void LCDString(char *characters) {
+void LCDString(const char *characters) {
 while (*characters)
 LCDCharacter(*characters++);
 }
@@ -16853,9 +16853,19 @@ TRISCbits.TRISC3=0;
 # 184
 TRISCbits.TRISC7=0;
 
-_delay((unsigned long)((1)*(1000000/4000.0)));
+_delay((unsigned long)((1)*(32000/4000.0)));
 TRISCbits.TRISC7 = 1;
-_delay((unsigned long)((1)*(1000000/4000.0)));
+_delay((unsigned long)((1)*(32000/4000.0)));
+_delay((unsigned long)((1)*(32000/4000.0)));
+TRISCbits.TRISC7 = 0;
+_delay((unsigned long)((1)*(32000/4000.0)));
+TRISCbits.TRISC7 = 1;
+_delay((unsigned long)((1)*(32000/4000.0)));
+TRISCbits.TRISC7 = 0;
+_delay((unsigned long)((1)*(32000/4000.0)));
+TRISCbits.TRISC7 = 1;
+_delay((unsigned long)((1)*(32000/4000.0)));
+TRISCbits.TRISC7 = 0;
 
 LCDWrite(0, 0x21);
 LCDWrite(0, 0xBB);

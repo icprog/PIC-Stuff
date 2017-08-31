@@ -29,8 +29,8 @@ int main(void)
         __delay_ms(1000);
         RC2 = 0;
         __delay_ms(1000);
-        gotoXY(1,1);
-        LCDString("PIC 16F18855");
+//        gotoXY(1,1);
+  //      LCDString("PIC 16F18855");
 
     }
     return(1);

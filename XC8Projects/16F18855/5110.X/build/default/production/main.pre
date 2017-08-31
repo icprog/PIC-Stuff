@@ -16688,7 +16688,7 @@ void LCDWrite(unsigned char data_or_command, unsigned char data);
 void gotoXY(int x, int y);
 void LCDBitmap(char my_array[]);
 void LCDCharacter(char character);
-void LCDString(char *characters);
+void LCDString(const char *characters);
 void LCDClear(void);
 void LCDInit(void) ;
 
@@ -16712,11 +16712,11 @@ LCDClear();
 while(1)
 {
 RC2 = 1;
-_delay((unsigned long)((1000)*(1000000/4000.0)));
+_delay((unsigned long)((1000)*(32000/4000.0)));
 RC2 = 0;
-_delay((unsigned long)((1000)*(1000000/4000.0)));
-gotoXY(1,1);
-LCDString("PIC 16F18855");
+_delay((unsigned long)((1000)*(32000/4000.0)));
+
+
 
 }
 return(1);

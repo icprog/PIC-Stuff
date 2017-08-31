@@ -14,10 +14,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 "152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
 [v __delay `JF13525 ~T0 @X0 0 e ]
 [p i __delay ]
-"9 user.h
-[v _gotoXY `(v ~T0 @X0 0 ef2`i`i ]
-"12
-[v _LCDString `(v ~T0 @X0 0 ef1`*uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12598,7 +12594,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;user.h: 9: void gotoXY(int x, int y);
 [; ;user.h: 10: void LCDBitmap(char my_array[]);
 [; ;user.h: 11: void LCDCharacter(char character);
-[; ;user.h: 12: void LCDString(char *characters);
+[; ;user.h: 12: void LCDString(const char *characters);
 [; ;user.h: 13: void LCDClear(void);
 [; ;user.h: 14: void LCDInit(void) ;
 [; ;user.h: 16: void InitApp(void);
@@ -12631,21 +12627,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 28: RC2 = 1;
 "28
 [e = _RC2 -> -> 1 `i `b ]
-[; ;main.c: 29: _delay((unsigned long)((1000)*(1000000/4000.0)));
+[; ;main.c: 29: _delay((unsigned long)((1000)*(32000/4000.0)));
 "29
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000 `i `d .4000.0 `ul ]
 [; ;main.c: 30: RC2 = 0;
 "30
 [e = _RC2 -> -> 0 `i `b ]
-[; ;main.c: 31: _delay((unsigned long)((1000)*(1000000/4000.0)));
+[; ;main.c: 31: _delay((unsigned long)((1000)*(32000/4000.0)));
 "31
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;main.c: 32: gotoXY(1,1);
-"32
-[e ( _gotoXY (2 , -> 1 `i -> 1 `i ]
-[; ;main.c: 33: LCDString("PIC 16F18855");
-"33
-[e ( _LCDString (1 -> :s 1C `*uc ]
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000 `i `d .4000.0 `ul ]
 "35
 }
 [e :U 1520 ]
@@ -12661,5 +12651,3 @@ Version 3.2 HI-TECH Software Intermediate Code
 "38
 [e :UE 1519 ]
 }
-[a 1C 80 73 67 32 49 54 70 49 56 56 53 53 0 ]
-
