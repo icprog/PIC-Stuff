@@ -1347,14 +1347,14 @@ extern __bit __timeout;
 # 9 "system.c"
 void ConfigureOscillator(void)
 {
-FVRCON = 0xD3;
+FVRCON = 0xF2;
 IRCF1 = 0;
 IRCF0 = 0;
 
 
 TMR0 = 0;
 T0CS = 0;
-T0SE = 0;
+
 PSA = 0;
 PS0 = 1;
 PS1 = 1;
@@ -1364,15 +1364,15 @@ PS2 = 1;
 
 void Init()
 {
-TRISA = 0x14;
-ANSELA = 0x14;
+TRISA = 0x10;
+ANSELA = 0x10;
 PORTA = 0x00;
 
 TRISB = 0b00000000;
 ANSELB = 0b00000000;
 PORTB = 0x00;
 
-TRISC = 0b00100000;
+TRISC = 0b00000000;
 ANSELC = 0x00;
 
 # 44

@@ -10,24 +10,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _LCD_Init `(v ~T0 @X0 0 ef1`uc ]
 "43
 [v _LCD_Clear `(v ~T0 @X0 0 ef ]
-"253 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f720.h
-[s S11 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S11 . RC0 RC1 RC2 RC3 RC4 RC5 RC6 RC7 ]
-"252
-[u S10 `S11 1 ]
-[n S10 . . ]
-"264
-[v _PORTCbits `VS10 ~T0 @X0 0 e@7 ]
 "4 user.h
 [v _ADCRead `(uc ~T0 @X0 0 ef1`uc ]
 "45 lcd.h
 [v _LCD_Set_Cursor `(v ~T0 @X0 0 ef2`uc`uc ]
-"51
-[v _LCD_Write_String `(v ~T0 @X0 0 ef1`*Cuc ]
 "53
 [v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
-"697 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f720.h
-[v _CCPR1L `Vuc ~T0 @X0 0 e@21 ]
+"49
+[v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
+"51
+[v _LCD_Write_String `(v ~T0 @X0 0 ef1`*Cuc ]
+"2362 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f720.h
+[v _RA5 `Vb ~T0 @X0 0 e@45 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -1035,220 +1029,230 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 14: Init();
 "14
 [e ( _Init ..  ]
-[; ;main.c: 16: _delay((unsigned long)((250)*(4000000/4000.0)));
+[; ;main.c: 16: _delay((unsigned long)((250)*(62500/4000.0)));
 "16
-[e ( __delay (1 -> * -> -> 250 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 250 `i `d / -> -> 62500 `l `d .4000.0 `ul ]
 [; ;main.c: 18: LCD_Init(0);
 "18
 [e ( _LCD_Init (1 -> -> 0 `i `uc ]
 [; ;main.c: 20: LCD_Clear();
 "20
 [e ( _LCD_Clear ..  ]
-[; ;main.c: 22: PORTCbits.RC0 = 1;
-"22
-[e = . . _PORTCbits 0 0 -> -> 1 `i `uc ]
 "26
 [v _setpoint `uc ~T0 @X0 1 a ]
-[v _readTemperature `uc ~T0 @X0 1 a ]
 [v _tempReadTemperature `uc ~T0 @X0 1 a ]
 "27
-[v _x `uc ~T0 @X0 1 a ]
+[v _readTemperatureC `i ~T0 @X0 1 a ]
+[v _readTemperatureF `i ~T0 @X0 1 a ]
 "28
-[v _total `ui ~T0 @X0 1 a ]
+[v _x `uc ~T0 @X0 1 a ]
 "29
-[v _samples `i ~T0 @X0 -> 20 `i a ]
+[v _total `i ~T0 @X0 1 a ]
+[; ;main.c: 26: char setpoint, tempReadTemperature;
+[; ;main.c: 27: int readTemperatureC, readTemperatureF;
+[; ;main.c: 28: unsigned char x;
+[; ;main.c: 29: int total = 0;
+[e = _total -> 0 `i ]
+[v F1067 `i ~T0 @X0 -> 8 `i s ]
+[i F1067
+:U ..
+"31
+>> -U -> 8 `i -> 1 `i
+..
+]
 "30
+[v _samples `i ~T0 @X0 -> 8 `i a ]
+[; ;main.c: 30: int samples[8] = {-8>>1
+[; ;main.c: 31: };
+"31
+[e = _samples F1067 ]
+"32
 [v _sampleIndex `uc ~T0 @X0 1 a ]
-[; ;main.c: 26: unsigned char setpoint, readTemperature, tempReadTemperature;
-[; ;main.c: 27: unsigned char x;
-[; ;main.c: 28: unsigned int total;
-[; ;main.c: 29: int samples[20];
-[; ;main.c: 30: unsigned char sampleIndex = 0;
+[; ;main.c: 32: unsigned char sampleIndex = 0;
 [e = _sampleIndex -> -> 0 `i `uc ]
-[; ;main.c: 33: while(1)
 "33
-[e :U 96 ]
-[; ;main.c: 34: {
-"34
-{
-[; ;main.c: 35: tempReadTemperature = ADCRead(3);
+[v _counter `i ~T0 @X0 1 a ]
+[; ;main.c: 33: int counter = 0;
+[e = _counter -> 0 `i ]
+[; ;main.c: 35: while(1)
 "35
-[e = _tempReadTemperature ( _ADCRead (1 -> -> 3 `i `uc ]
-[; ;main.c: 37: total = total - samples[sampleIndex];
-"37
-[e = _total - _total -> *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux `ui ]
-[; ;main.c: 39: samples[sampleIndex] = tempReadTemperature;
-"39
-[e = *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux -> _tempReadTemperature `i ]
-[; ;main.c: 41: total = total + samples[sampleIndex];
-"41
-[e = _total + _total -> *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux `ui ]
-[; ;main.c: 43: sampleIndex += 1;
-"43
-[e =+ _sampleIndex -> -> 1 `i `uc ]
-[; ;main.c: 45: if(sampleIndex >= 20)
-"45
-[e $ ! >= -> _sampleIndex `i -> 20 `i 98  ]
-[; ;main.c: 46: {
-"46
+[e :U 96 ]
+[; ;main.c: 36: {
+"36
 {
-[; ;main.c: 47: sampleIndex = 0;
+[; ;main.c: 37: tempReadTemperature = ADCRead(3);
+"37
+[e = _tempReadTemperature ( _ADCRead (1 -> -> 3 `i `uc ]
+[; ;main.c: 39: total = total - samples[sampleIndex];
+"39
+[e = _total - _total *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux ]
+[; ;main.c: 41: samples[sampleIndex] = tempReadTemperature;
+"41
+[e = *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux -> _tempReadTemperature `i ]
+[; ;main.c: 43: total = total + samples[sampleIndex];
+"43
+[e = _total + _total *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux ]
+[; ;main.c: 45: sampleIndex += 1;
+"45
+[e =+ _sampleIndex -> -> 1 `i `uc ]
+[; ;main.c: 47: if(sampleIndex >= 8)
 "47
-[e = _sampleIndex -> -> 0 `i `uc ]
+[e $ ! >= -> _sampleIndex `i -> 8 `i 98  ]
+[; ;main.c: 48: {
 "48
+{
+[; ;main.c: 49: sampleIndex = 0;
+"49
+[e = _sampleIndex -> -> 0 `i `uc ]
+"50
 }
 [e :U 98 ]
-[; ;main.c: 48: }
-[; ;main.c: 50: readTemperature = total / 20;
-"50
-[e = _readTemperature -> / _total -> -> 20 `i `ui `uc ]
-[; ;main.c: 56: for(x = 0 ; x < 255 ; x++)
-"56
-{
-[e = _x -> -> 0 `i `uc ]
-[e $ < -> _x `i -> 255 `i 99  ]
-[e $U 100  ]
-"57
-[e :U 99 ]
-[; ;main.c: 57: {
-{
-[; ;main.c: 58: setpoint = (setpoint + ADCRead(2))/2;
-"58
-[e = _setpoint -> / + -> _setpoint `i -> ( _ADCRead (1 -> -> 2 `i `uc `i -> 2 `i `uc ]
-"59
-}
-"56
-[e ++ _x -> -> 1 `i `uc ]
-[e $ < -> _x `i -> 255 `i 99  ]
-[e :U 100 ]
-"59
-}
-[; ;main.c: 59: }
-[; ;main.c: 61: _delay((unsigned long)((1000)*(4000000/4000.0)));
-"61
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
-[; ;main.c: 64: if(setpoint >= readTemperature + 2)
+[; ;main.c: 50: }
+[; ;main.c: 52: readTemperatureF = ((total/8*194>>3)/30 + 32);
+"52
+[e = _readTemperatureF + / >> * / _total -> 8 `i -> 194 `i -> 3 `i -> 30 `i -> 32 `i ]
+[; ;main.c: 54: readTemperatureC = (total / 8)*194;
+"54
+[e = _readTemperatureC * / _total -> 8 `i -> 194 `i ]
+[; ;main.c: 64: setpoint = 127;
 "64
-[e $ ! >= -> _setpoint `i + -> _readTemperature `i -> 2 `i 102  ]
-[; ;main.c: 65: {
-"65
-{
-[; ;main.c: 66: if(output < 255)
+[e = _setpoint -> -> 127 `i `uc ]
+[; ;main.c: 66: _delay((unsigned long)((1000)*(62500/4000.0)));
 "66
-[e $ ! < -> _output `i -> 255 `i 103  ]
-[; ;main.c: 67: {
-"67
-{
-[; ;main.c: 68: output+=1;
-"68
-[e =+ _output -> -> 1 `i `uc ]
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 62500 `l `d .4000.0 `ul ]
+[; ;main.c: 69: if(setpoint >= readTemperatureF + 2)
 "69
-}
-[; ;main.c: 69: }
-[e $U 104  ]
+[e $ ! >= -> _setpoint `i + _readTemperatureF -> 2 `i 99  ]
+[; ;main.c: 70: {
 "70
-[e :U 103 ]
-[; ;main.c: 70: else
-[; ;main.c: 71: {
-"71
 {
-[; ;main.c: 72: output = 255;
+[; ;main.c: 71: if(output < 255)
+"71
+[e $ ! < -> _output `i -> 255 `i 100  ]
+[; ;main.c: 72: {
 "72
-[e = _output -> -> 255 `i `uc ]
+{
+[; ;main.c: 73: output+=1;
 "73
-}
-[e :U 104 ]
+[e =+ _output -> -> 1 `i `uc ]
 "74
 }
-[e :U 102 ]
-[; ;main.c: 73: }
 [; ;main.c: 74: }
-[; ;main.c: 77: if(setpoint <= readTemperature - 2)
+[e $U 101  ]
+"75
+[e :U 100 ]
+[; ;main.c: 75: else
+[; ;main.c: 76: {
+"76
+{
+[; ;main.c: 77: output = 255;
 "77
-[e $ ! <= -> _setpoint `i - -> _readTemperature `i -> 2 `i 105  ]
-[; ;main.c: 78: {
+[e = _output -> -> 255 `i `uc ]
 "78
-{
-[; ;main.c: 81: if(output > 0)
-"81
-[e $ ! > -> _output `i -> 0 `i 106  ]
-[; ;main.c: 82: {
+}
+[e :U 101 ]
+"79
+}
+[e :U 99 ]
+[; ;main.c: 78: }
+[; ;main.c: 79: }
+[; ;main.c: 82: if(setpoint <= readTemperatureF - 2)
 "82
-{
-[; ;main.c: 83: output-=1;
+[e $ ! <= -> _setpoint `i - _readTemperatureF -> 2 `i 102  ]
+[; ;main.c: 83: {
 "83
-[e =- _output -> -> 1 `i `uc ]
-"84
-}
-[; ;main.c: 84: }
-[e $U 107  ]
-"85
-[e :U 106 ]
-[; ;main.c: 85: else
-[; ;main.c: 86: {
-"86
 {
-[; ;main.c: 87: output = 0;
+[; ;main.c: 86: if(output > 0)
+"86
+[e $ ! > -> _output `i -> 0 `i 103  ]
+[; ;main.c: 87: {
 "87
-[e = _output -> -> 0 `i `uc ]
+{
+[; ;main.c: 88: output-=1;
 "88
-}
-[e :U 107 ]
+[e =- _output -> -> 1 `i `uc ]
 "89
 }
-[e :U 105 ]
-[; ;main.c: 88: }
 [; ;main.c: 89: }
-[; ;main.c: 92: LCD_Clear();
+[e $U 104  ]
+"90
+[e :U 103 ]
+[; ;main.c: 90: else
+[; ;main.c: 91: {
+"91
+{
+[; ;main.c: 92: output = 0;
 "92
-[e ( _LCD_Clear ..  ]
-[; ;main.c: 95: { LCD_Set_Cursor(0,0); LCD_Write_String("PWM=");};
-"95
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_String (1 :s 1C ]
+[e = _output -> -> 0 `i `uc ]
+"93
 }
-[; ;main.c: 96: { LCD_Set_Cursor(0,4); LCD_Write_Int(CCPR1L,3, 0, 0);};
-"96
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 4 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _CCPR1L `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e :U 104 ]
+"94
 }
-[; ;main.c: 98: { LCD_Set_Cursor(0,8); LCD_Write_String("OP=");};
-"98
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 8 `i `uc ]
-[e ( _LCD_Write_String (1 :s 2C ]
-}
-[; ;main.c: 99: { LCD_Set_Cursor(0,11); LCD_Write_Int(output,3, 0, 0);};
-"99
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 11 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _output `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
-}
-[; ;main.c: 101: { LCD_Set_Cursor(1,0); LCD_Write_String("MV=");};
+[e :U 102 ]
+[; ;main.c: 93: }
+[; ;main.c: 94: }
+[; ;main.c: 101: { LCD_Set_Cursor(0,0); LCD_Write_Int(total,5, 0, 1);};
 "101
 {
-[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_String (1 :s 3C ]
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , _total -> -> 5 `i `c -> -> 0 `i `c -> -> 1 `i `c ]
 }
-[; ;main.c: 102: { LCD_Set_Cursor(1,3); LCD_Write_Int(readTemperature,3, 0, 0);};
+[; ;main.c: 102: LCD_Write_Char(' ');
 "102
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;main.c: 103: LCD_Write_Char(' ');
+"103
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;main.c: 106: { LCD_Set_Cursor(0,8); LCD_Write_Int(readTemperatureF,5, 0, 0);};
+"106
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 8 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , _readTemperatureF -> -> 5 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+[; ;main.c: 108: { LCD_Set_Cursor(1,0); LCD_Write_String("MV=");};
+"108
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_String (1 :s 1C ]
+}
+[; ;main.c: 109: { LCD_Set_Cursor(1,3); LCD_Write_Int(readTemperatureC,5, 2, 0);};
+"109
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 3 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _readTemperature `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , _readTemperatureC -> -> 5 `i `c -> -> 2 `i `c -> -> 0 `i `c ]
 }
-"103
+[; ;main.c: 110: LCD_Write_Char(' ');
+"110
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;main.c: 112: { LCD_Set_Cursor(1,11); LCD_Write_Int(ADCRead(3),4, 0, 0);};
+"112
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 11 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , -> ( _ADCRead (1 -> -> 3 `i `uc `i -> -> 4 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+[; ;main.c: 113: RA5 = 0;
+"113
+[e = _RA5 -> -> 0 `i `b ]
+[; ;main.c: 114: _delay((unsigned long)((1000)*(62500/4000.0)));
+"114
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 62500 `l `d .4000.0 `ul ]
+[; ;main.c: 115: RA5 = 1;
+"115
+[e = _RA5 -> -> 1 `i `b ]
+[; ;main.c: 116: _delay((unsigned long)((1000)*(62500/4000.0)));
+"116
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 62500 `l `d .4000.0 `ul ]
+"119
 }
 [e :U 95 ]
-"33
+"35
 [e $U 96  ]
 [e :U 97 ]
-[; ;main.c: 103: }
-[; ;main.c: 104: }
-"104
+[; ;main.c: 119: }
+[; ;main.c: 120: }
+"120
 [e :UE 94 ]
 }
-[a 3C 77 86 61 0 ]
-[a 2C 79 80 61 0 ]
-[a 1C 80 87 77 61 0 ]
+[a 1C 77 86 61 0 ]
+

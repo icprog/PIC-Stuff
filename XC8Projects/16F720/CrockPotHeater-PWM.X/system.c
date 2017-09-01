@@ -8,15 +8,15 @@
 
 void ConfigureOscillator(void)
 {
-    FVRCON = 0xD3;
-    IRCF1 = 0;                          // These 2 parameters set Clock @ 2 MHz
-    IRCF0 = 0;                          // These 2 parameters set Clock @ 2 MHz
+    FVRCON = 0xF2;                      // FVREN = 1, TSEN = 1, TSRNG = 1, FVR @ 2.048V
+    IRCF1 = 0;                          // These 2 parameters set Clock @ 2 MHz when PLL EN=1, 62.5 KHz when PLLEN = 0 (PLLEN = 0 for this Project)
+    IRCF0 = 0;                          // These 2 parameters set Clock @ 2 MHz when PLL EN=1, 62.5 KHz when PLLEN = 0 (PLLEN = 0 for this Project)
 //    OSCTUNE = 0x00;                     // Change default oscilator speed (See page 68)
 
     TMR0 = 0;                           // TMR0 Pre-set
     T0CS = 0;                           // TMR0 Clock source 0 = internal clock (FOSC/4)
-    T0SE = 0;                           // Triggering on Low to High edge
-    PSA = 0;                            // Work with a PreScaler
+//    T0SE = 0;                           // Triggering on Low to High edge 
+    PSA = 0;                            // Work with a PreScaler on Timer0
     PS0 = 1;                            // Set Pre-Scaler for TMR0 to 256 (1:256)
     PS1 = 1;                            // Set Pre-Scaler for TMR0 to 256 (1:256)
     PS2 = 1;                            // Set Pre-Scaler for TMR0 to 256 (1:256)
@@ -25,15 +25,15 @@ void ConfigureOscillator(void)
 // Initialisation routine
 void Init()
 {
-    TRISA =  0x14;                       // RA2 and RA4 as inputs, 0 = output 1 = input
-    ANSELA = 0x14;                       // RA2 and RA4 as Analog (0 = Digital, 1 = Analog)
+    TRISA =  0x10;                       // RA2 and RA4 as inputs, 0 = output 1 = input
+    ANSELA = 0x10;                       // RA2 and RA4 as Analog (0 = Digital, 1 = Analog)
     PORTA =  0x00;                       // Set all port A register to 1, 1 = off, 0 = on, (if sinking)
 
     TRISB = 0b00000000;                 // 0 = output, 1 = input
     ANSELB = 0b00000000;                // No Analogs (0 = Digital, 1 = Analog)
     PORTB = 0x00;                       // Set all port B register to 0, 1 = off, 0 = on
 
-    TRISC = 0b00100000;                       // 0 = output 1 = input
+    TRISC = 0b00000000;                       // 0 = output 1 = input
     ANSELC = 0x00;                      // 0 = Digital, 1 = Analog
 //    PORTC = 0xff;                       // Set all port C register to 1, 1 = off, 0 = on
 

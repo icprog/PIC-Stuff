@@ -18,7 +18,7 @@ unsigned char ADCRead(unsigned char ch)  //Function to Read given ADC channel (0
     ADCON0=0x00;                         // Set ADCON0 to all zero's
     ADCON0=(ch<<2);                      // Select ADC Channel (write the decimal value of ch, Left shifted two places, writing to Bits 5,4,3 and 2)
     ADON=1;                              // Enable the ADC module (on selected channel)
-    __delay_us(100);                      // Delay 1500 us to allow the ADC cap to charge
+    __delay_us(200);                     // Delay 100 us to allow the ADC cap to charge
     GO_nDONE=1;                          // Start conversion
     while(GO_nDONE);                     // Wait for the conversion to finish
     ADON=0;                              // Disable the ADC

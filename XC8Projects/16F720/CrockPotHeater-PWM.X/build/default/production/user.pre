@@ -1359,7 +1359,7 @@ unsigned char ADCRead(unsigned char ch)
 ADCON0=0x00;
 ADCON0=(ch<<2);
 ADON=1;
-_delay((unsigned long)((100)*(4000000/4000000.0)));
+_delay((unsigned long)((200)*(62500/4000000.0)));
 GO_nDONE=1;
 while(GO_nDONE);
 ADON=0;

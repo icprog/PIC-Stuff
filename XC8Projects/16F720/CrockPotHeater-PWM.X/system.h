@@ -1,5 +1,5 @@
-#define SYS_FREQ        8000000L
-#define _XTAL_FREQ      4000000
+#define SYS_FREQ        62500L
+#define _XTAL_FREQ      62500
 #define FCY             SYS_FREQ/4
 
 // Add the following to solve __delay_ms() issues in XC8

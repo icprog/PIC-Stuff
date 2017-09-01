@@ -4,7 +4,7 @@
 #include "interupts.h"
 #include "lcd.h"
 
-#define numSamples          20                                                  //Number of samples to average for current reading
+#define numSamples          8                                                   //Number of samples to average for current reading
 
 
 unsigned char output = 255;
@@ -19,16 +19,18 @@ void main()
     
     LCD_Clear();                                                                // Clear Screen
 
-    PORTCbits.RC0 = 1;
+//    PORTCbits.RC0 = 1;
 
     
 //    extern unsigned char output;
-    unsigned char setpoint, readTemperature, tempReadTemperature;
+    char setpoint, tempReadTemperature;
+    int readTemperatureC, readTemperatureF;
     unsigned char x;
-    unsigned int total;
-    int samples[numSamples];                                                    //Samples to average current over x number of samples
+    int total = 0;
+    int samples[numSamples] = {-numSamples>>1
+    };                                              //Samples to average current over x number of samples
     unsigned char sampleIndex = 0;                                              //Used to calculate average current measurement
-    
+    int counter = 0;
 
     while(1)                                                                    // Infinite loop
     {
@@ -47,21 +49,24 @@ void main()
             sampleIndex = 0;
         }
             
-        readTemperature = total / numSamples;                                   // assign the average current value of total to the readCurrent variable
+        readTemperatureF = ((total/numSamples*194>>3)/30 + 32);                     // assign the average current value of total to the readCurrent variable
         
+        readTemperatureC = (total / numSamples)*194;
 
 
 
                  
-        for(x = 0 ; x < 255 ; x++)
-        {
-            setpoint = (setpoint + ADCRead(2))/2;
-        }
+//        for(x = 0 ; x < 255 ; x++)
+  //      {
+    //        setpoint = (setpoint + ADCRead(2))/2;
+      //    }
+      
+        setpoint = 127;
         
         __delay_ms(1000);
         
 
-        if(setpoint >= readTemperature + 2)
+        if(setpoint >= readTemperatureF + 2)
         {
             if(output < 255)
             {
@@ -74,7 +79,7 @@ void main()
         }
         
 
-        if(setpoint <= readTemperature - 2)
+        if(setpoint <= readTemperatureF - 2)
         {
             
             
@@ -89,16 +94,27 @@ void main()
         }
         
 
-        LCD_Clear();
+//        LCD_Clear();
     
         
-        LCDWriteStringXY(0,0,"PWM=");
-        LCDWriteIntXY(0,4,CCPR1L,3,0,0);
+//        LCDWriteStringXY(0,0,"PWM=");
+        LCDWriteIntXY(0,0,total,5,0,1);
+        LCD_Write_Char(' ');
+        LCD_Write_Char(' ');
 
-        LCDWriteStringXY(0,8,"OP=");
-        LCDWriteIntXY(0,11,output,3,0,0);
+//        LCDWriteStringXY(0,8,"OP=");
+        LCDWriteIntXY(0,8,readTemperatureF,5,0,0);
 
         LCDWriteStringXY(1,0,"MV=");
-        LCDWriteIntXY(1,3,readTemperature,3,0,0);
+        LCDWriteIntXY(1,3,readTemperatureC,5,2,0);
+        LCD_Write_Char(' ');
+//        counter +=1;
+        LCDWriteIntXY(1,11,ADCRead(3),4,0,0);
+        RA5 = 0;
+        __delay_ms(1000);
+        RA5 = 1;
+        __delay_ms(1000);
+        
+ //       clrwdt;
     }
 }

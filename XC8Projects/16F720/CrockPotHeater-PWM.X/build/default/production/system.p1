@@ -9,8 +9,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TMR0 `Vuc ~T0 @X0 0 e@1 ]
 "2432
 [v _T0CS `Vb ~T0 @X0 0 e@1037 ]
-"2434
-[v _T0SE `Vb ~T0 @X0 0 e@1036 ]
 "2350
 [v _PSA `Vb ~T0 @X0 0 e@1035 ]
 "2344
@@ -1068,9 +1066,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 10: {
 [e :U _ConfigureOscillator ]
 [f ]
-[; ;system.c: 11: FVRCON = 0xD3;
+[; ;system.c: 11: FVRCON = 0xF2;
 "11
-[e = _FVRCON -> -> 211 `i `uc ]
+[e = _FVRCON -> -> 242 `i `uc ]
 [; ;system.c: 12: IRCF1 = 0;
 "12
 [e = _IRCF1 -> -> 0 `i `b ]
@@ -1083,9 +1081,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 17: T0CS = 0;
 "17
 [e = _T0CS -> -> 0 `i `b ]
-[; ;system.c: 18: T0SE = 0;
-"18
-[e = _T0SE -> -> 0 `i `b ]
 [; ;system.c: 19: PSA = 0;
 "19
 [e = _PSA -> -> 0 `i `b ]
@@ -1110,12 +1105,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 27: {
 [e :U _Init ]
 [f ]
-[; ;system.c: 28: TRISA = 0x14;
+[; ;system.c: 28: TRISA = 0x10;
 "28
-[e = _TRISA -> -> 20 `i `uc ]
-[; ;system.c: 29: ANSELA = 0x14;
+[e = _TRISA -> -> 16 `i `uc ]
+[; ;system.c: 29: ANSELA = 0x10;
 "29
-[e = _ANSELA -> -> 20 `i `uc ]
+[e = _ANSELA -> -> 16 `i `uc ]
 [; ;system.c: 30: PORTA = 0x00;
 "30
 [e = _PORTA -> -> 0 `i `uc ]
@@ -1128,9 +1123,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 34: PORTB = 0x00;
 "34
 [e = _PORTB -> -> 0 `i `uc ]
-[; ;system.c: 36: TRISC = 0b00100000;
+[; ;system.c: 36: TRISC = 0b00000000;
 "36
-[e = _TRISC -> -> 32 `i `uc ]
+[e = _TRISC -> -> 0 `i `uc ]
 [; ;system.c: 37: ANSELC = 0x00;
 "37
 [e = _ANSELC -> -> 0 `i `uc ]

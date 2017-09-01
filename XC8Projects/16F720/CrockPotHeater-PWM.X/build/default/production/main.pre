@@ -1473,22 +1473,21 @@ void main()
 {
 Init();
 
-_delay((unsigned long)((250)*(4000000/4000.0)));
+_delay((unsigned long)((250)*(62500/4000.0)));
 
 LCD_Init(0);
 
 LCD_Clear();
 
-PORTCbits.RC0 = 1;
-
-
-
-unsigned char setpoint, readTemperature, tempReadTemperature;
+# 26
+char setpoint, tempReadTemperature;
+int readTemperatureC, readTemperatureF;
 unsigned char x;
-unsigned int total;
-int samples[20];
+int total = 0;
+int samples[8] = {-8>>1
+};
 unsigned char sampleIndex = 0;
-
+int counter = 0;
 
 while(1)
 {
@@ -1502,23 +1501,22 @@ total = total + samples[sampleIndex];
 
 sampleIndex += 1;
 
-if(sampleIndex >= 20)
+if(sampleIndex >= 8)
 {
 sampleIndex = 0;
 }
 
-readTemperature = total / 20;
+readTemperatureF = ((total/8*194>>3)/30 + 32);
 
-# 56
-for(x = 0 ; x < 255 ; x++)
-{
-setpoint = (setpoint + ADCRead(2))/2;
-}
+readTemperatureC = (total / 8)*194;
 
-_delay((unsigned long)((1000)*(4000000/4000.0)));
+# 64
+setpoint = 127;
+
+_delay((unsigned long)((1000)*(62500/4000.0)));
 
 
-if(setpoint >= readTemperature + 2)
+if(setpoint >= readTemperatureF + 2)
 {
 if(output < 255)
 {
@@ -1531,7 +1529,7 @@ output = 255;
 }
 
 
-if(setpoint <= readTemperature - 2)
+if(setpoint <= readTemperatureF - 2)
 {
 
 
@@ -1545,17 +1543,24 @@ output = 0;
 }
 }
 
+# 101
+{ LCD_Set_Cursor(0,0); LCD_Write_Int(total,5, 0, 1);};
+LCD_Write_Char(' ');
+LCD_Write_Char(' ');
 
-LCD_Clear();
 
-
-{ LCD_Set_Cursor(0,0); LCD_Write_String("PWM=");};
-{ LCD_Set_Cursor(0,4); LCD_Write_Int(CCPR1L,3, 0, 0);};
-
-{ LCD_Set_Cursor(0,8); LCD_Write_String("OP=");};
-{ LCD_Set_Cursor(0,11); LCD_Write_Int(output,3, 0, 0);};
+{ LCD_Set_Cursor(0,8); LCD_Write_Int(readTemperatureF,5, 0, 0);};
 
 { LCD_Set_Cursor(1,0); LCD_Write_String("MV=");};
-{ LCD_Set_Cursor(1,3); LCD_Write_Int(readTemperature,3, 0, 0);};
+{ LCD_Set_Cursor(1,3); LCD_Write_Int(readTemperatureC,5, 2, 0);};
+LCD_Write_Char(' ');
+
+{ LCD_Set_Cursor(1,11); LCD_Write_Int(ADCRead(3),4, 0, 0);};
+RA5 = 0;
+_delay((unsigned long)((1000)*(62500/4000.0)));
+RA5 = 1;
+_delay((unsigned long)((1000)*(62500/4000.0)));
+
+
 }
 }

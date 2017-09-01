@@ -11,8 +11,8 @@
 [v ___ftpack __ftpack `(f  1 e 3 0 ]
 "86 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftadd.c
 [v ___ftadd __ftadd `(f  1 e 3 0 ]
-"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lwdiv.c
-[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F720\CrockPotHeater-PWM.X\interupts.c
 [v _int_routine int_routine `II(v  1 e 1 0 ]
 "41 D:\PIC-Stuff\XC8Projects\16F720\CrockPotHeater-PWM.X\lcd.c
@@ -43,19 +43,7 @@
 [v _PORTA PORTA `VEuc  1 e 1 @5 ]
 "209
 [v _PORTB PORTB `VEuc  1 e 1 @6 ]
-[s S387 . 1 `uc 1 RC0 1 0 :1:0 
-`uc 1 RC1 1 0 :1:1 
-`uc 1 RC2 1 0 :1:2 
-`uc 1 RC3 1 0 :1:3 
-`uc 1 RC4 1 0 :1:4 
-`uc 1 RC5 1 0 :1:5 
-`uc 1 RC6 1 0 :1:6 
-`uc 1 RC7 1 0 :1:7 
-]
-"264
-[u S396 . 1 `S387 1 . 1 0 ]
-[v _PORTCbits PORTCbits `VES396  1 e 1 @7 ]
-[s S173 . 1 `uc 1 RABIF 1 0 :1:0 
+[s S172 . 1 `uc 1 RABIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
 `uc 1 TMR0IF 1 0 :1:2 
 `uc 1 RABIE 1 0 :1:3 
@@ -65,9 +53,9 @@
 `uc 1 GIE 1 0 :1:7 
 ]
 "344
-[u S182 . 1 `S173 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES182  1 e 1 @11 ]
-[s S66 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[u S181 . 1 `S172 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES181  1 e 1 @11 ]
+[s S65 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 CCP1IF 1 0 :1:2 
 `uc 1 SSPIF 1 0 :1:3 
@@ -77,15 +65,15 @@
 `uc 1 TMR1GIF 1 0 :1:7 
 ]
 "405
-[u S75 . 1 `S66 1 . 1 0 ]
-[v _PIR1bits PIR1bits `VES75  1 e 1 @12 ]
+[u S74 . 1 `S65 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES74  1 e 1 @12 ]
 "455
 [v _TMR1L TMR1L `VEuc  1 e 1 @14 ]
 "461
 [v _TMR1H TMR1H `VEuc  1 e 1 @15 ]
 "467
 [v _T1CON T1CON `VEuc  1 e 1 @16 ]
-[s S137 . 1 `uc 1 TMR1ON 1 0 :1:0 
+[s S136 . 1 `uc 1 TMR1ON 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 T1SYNC 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -93,7 +81,7 @@
 `uc 1 TMR1CS 1 0 :2:6 
 ]
 "491
-[s S144 . 1 `uc 1 . 1 0 :2:0 
+[s S143 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nT1SYNC 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
 `uc 1 T1CKPS0 1 0 :1:4 
@@ -101,14 +89,14 @@
 `uc 1 TMR1CS0 1 0 :1:6 
 `uc 1 TMR1CS1 1 0 :1:7 
 ]
-[u S152 . 1 `S137 1 . 1 0 `S144 1 . 1 0 ]
-[v _T1CONbits T1CONbits `VES152  1 e 1 @16 ]
-[s S87 . 1 `uc 1 T2CKPS 1 0 :2:0 
+[u S151 . 1 `S136 1 . 1 0 `S143 1 . 1 0 ]
+[v _T1CONbits T1CONbits `VES151  1 e 1 @16 ]
+[s S86 . 1 `uc 1 T2CKPS 1 0 :2:0 
 `uc 1 TMR2ON 1 0 :1:2 
 `uc 1 TOUTPS 1 0 :4:3 
 ]
 "567
-[s S91 . 1 `uc 1 T2CKPS0 1 0 :1:0 
+[s S90 . 1 `uc 1 T2CKPS0 1 0 :1:0 
 `uc 1 T2CKPS1 1 0 :1:1 
 `uc 1 . 1 0 :1:2 
 `uc 1 TOUTPS0 1 0 :1:3 
@@ -116,26 +104,26 @@
 `uc 1 TOUTPS2 1 0 :1:5 
 `uc 1 TOUTPS3 1 0 :1:6 
 ]
-[u S99 . 1 `S87 1 . 1 0 `S91 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES99  1 e 1 @18 ]
+[u S98 . 1 `S86 1 . 1 0 `S90 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES98  1 e 1 @18 ]
 "697
 [v _CCPR1L CCPR1L `VEuc  1 e 1 @21 ]
 "709
 [v _CCP1CON CCP1CON `VEuc  1 e 1 @23 ]
-[s S39 . 1 `uc 1 CCP1M 1 0 :4:0 
+[s S38 . 1 `uc 1 CCP1M 1 0 :4:0 
 `uc 1 B1 1 0 :1:4 
 `uc 1 DC1 1 0 :1:5 
 ]
 "729
-[s S43 . 1 `uc 1 CCP1M0 1 0 :1:0 
+[s S42 . 1 `uc 1 CCP1M0 1 0 :1:0 
 `uc 1 CCP1M1 1 0 :1:1 
 `uc 1 CCP1M2 1 0 :1:2 
 `uc 1 CCP1M3 1 0 :1:3 
 `uc 1 CCP1Y 1 0 :1:4 
 `uc 1 CCP1X 1 0 :1:5 
 ]
-[u S50 . 1 `S39 1 . 1 0 `S43 1 . 1 0 ]
-[v _CCP1CONbits CCP1CONbits `VES50  1 e 1 @23 ]
+[u S49 . 1 `S38 1 . 1 0 `S42 1 . 1 0 ]
+[v _CCP1CONbits CCP1CONbits `VES49  1 e 1 @23 ]
 "851
 [v _ADRES ADRES `VEuc  1 e 1 @30 ]
 "870
@@ -146,7 +134,7 @@
 [v _TRISB TRISB `VEuc  1 e 1 @134 ]
 "1079
 [v _TRISC TRISC `VEuc  1 e 1 @135 ]
-[s S115 . 1 `uc 1 TRISC0 1 0 :1:0 
+[s S114 . 1 `uc 1 TRISC0 1 0 :1:0 
 `uc 1 TRISC1 1 0 :1:1 
 `uc 1 TRISC2 1 0 :1:2 
 `uc 1 TRISC3 1 0 :1:3 
@@ -156,9 +144,9 @@
 `uc 1 TRISC7 1 0 :1:7 
 ]
 "1096
-[u S124 . 1 `S115 1 . 1 0 ]
-[v _TRISCbits TRISCbits `VES124  1 e 1 @135 ]
-[s S194 . 1 `uc 1 TMR1IE 1 0 :1:0 
+[u S123 . 1 `S114 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES123  1 e 1 @135 ]
+[s S193 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
 `uc 1 SSPIE 1 0 :1:3 
@@ -168,8 +156,8 @@
 `uc 1 TMR1GIE 1 0 :1:7 
 ]
 "1157
-[u S203 . 1 `S194 1 . 1 0 ]
-[v _PIE1bits PIE1bits `VES203  1 e 1 @140 ]
+[u S202 . 1 `S193 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES202  1 e 1 @140 ]
 "1406
 [v _PR2 PR2 `VEuc  1 e 1 @146 ]
 "1763
@@ -198,81 +186,82 @@
 [v _PS2 PS2 `VEb  1 e 0 @1034 ]
 "2350
 [v _PSA PSA `VEb  1 e 0 @1035 ]
+"2362
+[v _RA5 RA5 `VEb  1 e 0 @45 ]
+"2368
+[v _RB4 RB4 `VEb  1 e 0 @52 ]
+"2370
+[v _RB5 RB5 `VEb  1 e 0 @53 ]
+"2372
+[v _RB6 RB6 `VEb  1 e 0 @54 ]
+"2374
+[v _RB7 RB7 `VEb  1 e 0 @55 ]
+"2378
+[v _RC1 RC1 `VEb  1 e 0 @57 ]
 "2380
 [v _RC2 RC2 `VEb  1 e 0 @58 ]
-"2382
-[v _RC3 RC3 `VEb  1 e 0 @59 ]
-"2384
-[v _RC4 RC4 `VEb  1 e 0 @60 ]
-"2386
-[v _RC5 RC5 `VEb  1 e 0 @61 ]
-"2388
-[v _RC6 RC6 `VEb  1 e 0 @62 ]
-"2390
-[v _RC7 RC7 `VEb  1 e 0 @63 ]
 "2432
 [v _T0CS T0CS `VEb  1 e 0 @1037 ]
-"2434
-[v _T0SE T0SE `VEb  1 e 0 @1036 ]
 "5 D:\PIC-Stuff\XC8Projects\16F720\CrockPotHeater-PWM.X\lcd.c
-[v ___cgram __cgram `[24]uc  1 e 24 0 ]
+[v ___cgram __cgram `[8]uc  1 e 8 0 ]
 "10 D:\PIC-Stuff\XC8Projects\16F720\CrockPotHeater-PWM.X\main.c
 [v _output output `uc  1 e 1 0 ]
 "12
 [v _main main `(v  1 e 1 0 ]
 {
-"29
-[v main@samples samples `[20]i  1 a 40 27 ]
-"28
-[v main@total total `ui  1 a 2 69 ]
 "30
-[v main@sampleIndex sampleIndex `uc  1 a 1 73 ]
-"26
-[v main@readTemperature readTemperature `uc  1 a 1 72 ]
-[v main@setpoint setpoint `uc  1 a 1 71 ]
+[v main@samples samples `[8]i  1 a 16 29 ]
+"29
+[v main@total total `i  1 a 2 54 ]
 "27
-[v main@x x `uc  1 a 1 68 ]
+[v main@readTemperatureF readTemperatureF `i  1 a 2 51 ]
+[v main@readTemperatureC readTemperatureC `i  1 a 2 45 ]
+"33
+[v main@counter counter `i  1 a 2 27 ]
+"32
+[v main@sampleIndex sampleIndex `uc  1 a 1 53 ]
 "26
-[v main@tempReadTemperature tempReadTemperature `uc  1 a 1 67 ]
-"104
+[v main@setpoint setpoint `uc  1 a 1 50 ]
+[v main@tempReadTemperature tempReadTemperature `uc  1 a 1 49 ]
+"29
+[v main@F1067 F1067 `[8]i  1 s 16 F1067 ]
+"120
 } 0
-"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lwdiv.c
-[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
 {
-"11
-[v ___lwdiv@quotient quotient `ui  1 a 2 0 ]
-"12
-[v ___lwdiv@counter counter `uc  1 a 1 2 ]
-"6
-[v ___lwdiv@divisor divisor `ui  1 p 2 4 ]
-[v ___lwdiv@dividend dividend `ui  1 p 2 6 ]
-"31
+"17
+[v ___wmul@product product `ui  1 a 2 8 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 4 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 6 ]
+"53
 } 0
 "239 D:\PIC-Stuff\XC8Projects\16F720\CrockPotHeater-PWM.X\lcd.c
 [v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
 {
 [v LCD_Write_String@a a `*.24DCCuc  1 a 1 wreg ]
 "241
-[v LCD_Write_String@i i `uc  1 a 1 0 ]
+[v LCD_Write_String@i i `uc  1 a 1 1 ]
 "239
 [v LCD_Write_String@a a `*.24DCCuc  1 a 1 wreg ]
 "242
-[v LCD_Write_String@a a `*.24DCCuc  1 a 1 1 ]
+[v LCD_Write_String@a a `*.24DCCuc  1 a 1 0 ]
 "244
 } 0
 "246
 [v _LCD_Write_Int LCD_Write_Int `(v  1 e 1 0 ]
 {
 "248
-[v LCD_Write_Int@str str `[5]uc  1 a 5 15 ]
+[v LCD_Write_Int@str str `[5]uc  1 a 5 14 ]
 "249
-[v LCD_Write_Int@i i `i  1 a 2 22 ]
-[v LCD_Write_Int@j j `i  1 a 2 20 ]
+[v LCD_Write_Int@i i `i  1 a 2 21 ]
+[v LCD_Write_Int@j j `i  1 a 2 19 ]
 "246
-[v LCD_Write_Int@value value `i  1 p 2 5 ]
-[v LCD_Write_Int@fieldLength fieldLength `c  1 p 1 7 ]
-[v LCD_Write_Int@numPlaces numPlaces `c  1 p 1 8 ]
-[v LCD_Write_Int@sign sign `c  1 p 1 9 ]
+[v LCD_Write_Int@value value `i  1 p 2 4 ]
+[v LCD_Write_Int@fieldLength fieldLength `c  1 p 1 6 ]
+[v LCD_Write_Int@numPlaces numPlaces `c  1 p 1 7 ]
+[v LCD_Write_Int@sign sign `c  1 p 1 8 ]
 "247
 [v LCD_Write_Int@F1081 F1081 `[5]uc  1 s 5 F1081 ]
 "300
@@ -292,13 +281,13 @@
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
 {
 "11
-[v ___awdiv@quotient quotient `i  1 a 2 3 ]
+[v ___awdiv@quotient quotient `i  1 a 2 2 ]
 "12
-[v ___awdiv@sign sign `uc  1 a 1 2 ]
-[v ___awdiv@counter counter `uc  1 a 1 1 ]
+[v ___awdiv@sign sign `uc  1 a 1 1 ]
+[v ___awdiv@counter counter `uc  1 a 1 0 ]
 "6
-[v ___awdiv@divisor divisor `i  1 p 2 6 ]
-[v ___awdiv@dividend dividend `i  1 p 2 8 ]
+[v ___awdiv@divisor divisor `i  1 p 2 4 ]
+[v ___awdiv@dividend dividend `i  1 p 2 6 ]
 "42
 } 0
 "223 D:\PIC-Stuff\XC8Projects\16F720\CrockPotHeater-PWM.X\lcd.c
@@ -319,14 +308,14 @@
 {
 [v LCD_Set_Cursor@x x `uc  1 a 1 wreg ]
 "86
-[v LCD_Set_Cursor@temp temp `uc  1 a 1 5 ]
-[v LCD_Set_Cursor@w w `uc  1 a 1 4 ]
-[v LCD_Set_Cursor@z z `uc  1 a 1 3 ]
+[v LCD_Set_Cursor@temp temp `uc  1 a 1 3 ]
+[v LCD_Set_Cursor@w w `uc  1 a 1 2 ]
+[v LCD_Set_Cursor@z z `uc  1 a 1 1 ]
 "82
 [v LCD_Set_Cursor@x x `uc  1 a 1 wreg ]
-[v LCD_Set_Cursor@y y `uc  1 p 1 8 ]
+[v LCD_Set_Cursor@y y `uc  1 p 1 7 ]
 "88
-[v LCD_Set_Cursor@x x `uc  1 a 1 2 ]
+[v LCD_Set_Cursor@x x `uc  1 a 1 0 ]
 "152
 } 0
 "154
@@ -335,7 +324,7 @@
 [v LCD_Init@style style `uc  1 a 1 wreg ]
 [v LCD_Init@style style `uc  1 a 1 wreg ]
 "156
-[v LCD_Init@style style `uc  1 a 1 0 ]
+[v LCD_Init@style style `uc  1 a 1 8 ]
 "221
 } 0
 "75
@@ -349,7 +338,7 @@
 [v LCD_Cmd@a a `uc  1 a 1 wreg ]
 [v LCD_Cmd@a a `uc  1 a 1 wreg ]
 "67
-[v LCD_Cmd@a a `uc  1 a 1 7 ]
+[v LCD_Cmd@a a `uc  1 a 1 6 ]
 "72
 } 0
 "41
