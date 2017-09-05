@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.38 build -256452561 
-                                                                                               Tue Sep 05 16:21:23 2017
+                                                                                               Tue Sep 05 17:31:19 2017
 
 Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010351
      1                           	processor	16F18855
@@ -4293,10 +4293,10 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   4287  0070                     ?_PWM3_LoadDutyValue:	
   4288                           ; 1 bytes @ 0x0
   4289                           
-  4290  0070                     ?_TMR2_Start:	
+  4290  0070                     ?_LCD_Cmd:	
   4291                           ; 1 bytes @ 0x0
   4292                           
-  4293  0070                     ??_TMR2_Start:	
+  4293  0070                     ?_LCD_Write_Char:	
   4294                           ; 1 bytes @ 0x0
   4295                           
   4296  0070                     ?_OSCILLATOR_Initialize:	
@@ -4305,58 +4305,58 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   4299  0070                     ??_OSCILLATOR_Initialize:	
   4300                           ; 1 bytes @ 0x0
   4301                           
-  4302  0070                     ?_LCD_Init:	
+  4302  0070                     ?_TMR2_Initialize:	
   4303                           ; 1 bytes @ 0x0
   4304                           
-  4305  0070                     ?_LCD_Cmd:	
+  4305  0070                     ??_TMR2_Initialize:	
   4306                           ; 1 bytes @ 0x0
   4307                           
-  4308  0070                     ?_LCD_Write_Char:	
+  4308  0070                     ?_TMR2_Start:	
   4309                           ; 1 bytes @ 0x0
   4310                           
-  4311  0070                     ?_main:	
+  4311  0070                     ??_TMR2_Start:	
   4312                           ; 1 bytes @ 0x0
   4313                           
-  4314  0070                     ?_PIN_MANAGER_Initialize:	
+  4314  0070                     ?_main:	
   4315                           ; 1 bytes @ 0x0
   4316                           
-  4317  0070                     ??_PIN_MANAGER_Initialize:	
+  4317  0070                     ?_LCD_Port:	
   4318                           ; 1 bytes @ 0x0
   4319                           
-  4320  0070                     ?_PWM1_Initialize:	
+  4320  0070                     ??_LCD_Port:	
   4321                           ; 1 bytes @ 0x0
   4322                           
-  4323  0070                     ??_PWM1_Initialize:	
+  4323  0070                     ?_LCD_Init:	
   4324                           ; 1 bytes @ 0x0
   4325                           
-  4326  0070                     ?_PWM2_Initialize:	
+  4326  0070                     ?_PIN_MANAGER_Initialize:	
   4327                           ; 1 bytes @ 0x0
   4328                           
-  4329  0070                     ??_PWM2_Initialize:	
+  4329  0070                     ??_PIN_MANAGER_Initialize:	
   4330                           ; 1 bytes @ 0x0
   4331                           
-  4332  0070                     ?_PWM3_Initialize:	
+  4332  0070                     ?_PWM1_Initialize:	
   4333                           ; 1 bytes @ 0x0
   4334                           
-  4335  0070                     ??_PWM3_Initialize:	
+  4335  0070                     ??_PWM1_Initialize:	
   4336                           ; 1 bytes @ 0x0
   4337                           
-  4338  0070                     ?_TMR2_Initialize:	
+  4338  0070                     ?_PWM2_Initialize:	
   4339                           ; 1 bytes @ 0x0
   4340                           
-  4341  0070                     ??_TMR2_Initialize:	
+  4341  0070                     ??_PWM2_Initialize:	
   4342                           ; 1 bytes @ 0x0
   4343                           
-  4344  0070                     ?_LCD_Port:	
+  4344  0070                     ?_PWM3_Initialize:	
   4345                           ; 1 bytes @ 0x0
   4346                           
-  4347  0070                     ??_LCD_Port:	
+  4347  0070                     ??_PWM3_Initialize:	
   4348                           ; 1 bytes @ 0x0
   4349                           
-  4350  0070                     PIN_MANAGER_Initialize@state:	
+  4350  0070                     LCD_Port@a:	
   4351                           ; 1 bytes @ 0x0
   4352                           
-  4353  0070                     LCD_Port@a:	
+  4353  0070                     PIN_MANAGER_Initialize@state:	
   4354                           ; 1 bytes @ 0x0
   4355                           
   4356  0070                     PWM1_LoadDutyValue@dutyValue:	
@@ -5126,10 +5126,10 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   5080                           
   5081                           ;pin_manager.c: 49: GIE = state;
   5082  06FB  1C70               	btfss	PIN_MANAGER_Initialize@state,0
-  5083  06FC  2EFF               	goto	u50
+  5083  06FC  2EFF               	goto	u60
   5084  06FD  178B               	bsf	11,7	;volatile
   5085  06FE  0008               	return
-  5086  06FF                     u50:	
+  5086  06FF                     u60:	
   5087  06FF  138B               	bcf	11,7	;volatile
   5088  0700  0008               	return
   5089  0701                     __end_of_PIN_MANAGER_Initialize:	
@@ -6149,13 +6149,13 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   6048                           
   6049                           ;lcd.c: 43: if(a & 1)
   6050  066D  1C70               	btfss	LCD_Port@a,0
-  6051  066E  2E72               	goto	l265
+  6051  066E  2E72               	goto	l52
   6052                           
   6053                           ;lcd.c: 44: RB2 = 1;
   6054  066F  0020               	movlb	0	; select bank0
   6055  0670  150D               	bsf	13,2	;volatile
   6056  0671  2E74               	goto	l1160
-  6057  0672                     l265:	
+  6057  0672                     l52:	
   6058                           
   6059                           ;lcd.c: 45: else
   6060                           ;lcd.c: 46: RB2 = 0;
@@ -6165,12 +6165,12 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   6064                           
   6065                           ;lcd.c: 48: if(a & 2)
   6066  0674  1CF0               	btfss	LCD_Port@a,1
-  6067  0675  2E78               	goto	l267
+  6067  0675  2E78               	goto	l54
   6068                           
   6069                           ;lcd.c: 49: RB3 = 1;
   6070  0676  158D               	bsf	13,3	;volatile
   6071  0677  2E79               	goto	l1164
-  6072  0678                     l267:	
+  6072  0678                     l54:	
   6073                           
   6074                           ;lcd.c: 50: else
   6075                           ;lcd.c: 51: RB3 = 0;
@@ -6179,12 +6179,12 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   6078                           
   6079                           ;lcd.c: 53: if(a & 4)
   6080  0679  1D70               	btfss	LCD_Port@a,2
-  6081  067A  2E7D               	goto	l269
+  6081  067A  2E7D               	goto	l56
   6082                           
   6083                           ;lcd.c: 54: RB4 = 1;
   6084  067B  160D               	bsf	13,4	;volatile
   6085  067C  2E7E               	goto	l1168
-  6086  067D                     l269:	
+  6086  067D                     l56:	
   6087                           
   6088                           ;lcd.c: 55: else
   6089                           ;lcd.c: 56: RB4 = 0;
@@ -6193,12 +6193,12 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   6092                           
   6093                           ;lcd.c: 58: if(a & 8)
   6094  067E  1DF0               	btfss	LCD_Port@a,3
-  6095  067F  2E82               	goto	l271
+  6095  067F  2E82               	goto	l58
   6096                           
   6097                           ;lcd.c: 59: RB5 = 1;
   6098  0680  168D               	bsf	13,5	;volatile
   6099  0681  0008               	return
-  6100  0682                     l271:	
+  6100  0682                     l58:	
   6101                           
   6102                           ;lcd.c: 60: else
   6103                           ;lcd.c: 61: RB5 = 0;
@@ -6535,11 +6535,11 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.38 build -256452561 
-Symbol Table                                                                                   Tue Sep 05 16:21:23 2017
+Symbol Table                                                                                   Tue Sep 05 17:31:19 2017
 
-                    __CFG_CP$OFF 0000                               l21 0704                               u50 06FF  
-                    __CFG_LVP$ON 0000                              l271 0682                              l265 0672  
-                            l267 0678                              l269 067D                              _GIE 005F  
+                    __CFG_CP$OFF 0000                               l21 0704                               l52 0672  
+                             l54 0678                               l56 067D                               l58 0682  
+                             u60 06FF                      __CFG_LVP$ON 0000                              _GIE 005F  
                             _RA0 0060                              _RB0 0068                              _RB1 0069  
                             _RB2 006A                              _RB3 006B                              _RB4 006C  
                             _RB5 006D                              _PR2 028D                              u425 061C  
