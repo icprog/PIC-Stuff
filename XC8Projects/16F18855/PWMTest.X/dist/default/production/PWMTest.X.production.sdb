@@ -3,14 +3,6 @@
 [d edition pro ]
 [d chip 16F18855 ]
 [d frameptr 6 ]
-"33 D:\PIC-Stuff\XC8Projects\16F18855/PWMTest.X/main.c
-[e E13587 . `uc
-POT 4
-channel_VSS 60
-channel_Temp 61
-channel_DAC1 62
-channel_FVR 63
-]
 "79 D:\PIC-Stuff\XC8Projects\16F18855/PWMTest.X/adcc.c
 [e E13559 . `uc
 POT 4
@@ -19,7 +11,15 @@ channel_Temp 61
 channel_DAC1 62
 channel_FVR 63
 ]
-"5
+"35 D:\PIC-Stuff\XC8Projects\16F18855/PWMTest.X/main.c
+[e E13587 . `uc
+POT 4
+channel_VSS 60
+channel_Temp 61
+channel_DAC1 62
+channel_FVR 63
+]
+"5 D:\PIC-Stuff\XC8Projects\16F18855/PWMTest.X/adcc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
 "78
 [v _ADCC_GetSingleConversion ADCC_GetSingleConversion `(ui  1 e 2 0 ]
@@ -83,8 +83,6 @@ channel_FVR 63
 [v ___fttol __fttol `(l  1 e 4 0 ]
 "5 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\log.c
 [v _log log `(d  1 e 3 0 ]
-"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lwdiv.c
-[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
 "28 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lwtoft.c
 [v ___lwtoft __lwtoft `(f  1 e 3 0 ]
 "15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
@@ -96,7 +94,7 @@ channel_FVR 63
 "5 D:\PIC-Stuff\XC8Projects\16F18855/PWMTest.X/lcd.c
 [v ___cgram __cgram `[24]uc  1 e 24 0 ]
 "8 D:\PIC-Stuff\XC8Projects\16F18855/PWMTest.X/main.c
-[v _samples samples `[50]ui  1 e 100 @9100 ]
+[v _samples samples `[10]ui  1 e 20 0 ]
 "572 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
 "633
@@ -115,7 +113,7 @@ channel_FVR 63
 [v _ADRESH ADRESH `VEuc  1 e 1 @141 ]
 "1821
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @147 ]
-[s S116 . 1 `uc 1 ADGO 1 0 :1:0 
+[s S44 . 1 `uc 1 ADGO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM 1 0 :2:2 
 `uc 1 ADCS 1 0 :1:4 
@@ -124,19 +122,19 @@ channel_FVR 63
 `uc 1 ADON 1 0 :1:7 
 ]
 "1852
-[s S124 . 1 `uc 1 DONE 1 0 :1:0 
+[s S52 . 1 `uc 1 DONE 1 0 :1:0 
 ]
-[s S126 . 1 `uc 1 nDONE 1 0 :1:0 
+[s S54 . 1 `uc 1 nDONE 1 0 :1:0 
 ]
-[s S128 . 1 `uc 1 GO 1 0 :1:0 
+[s S56 . 1 `uc 1 GO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM0 1 0 :1:2 
 `uc 1 ADFM1 1 0 :1:3 
 ]
-[s S133 . 1 `uc 1 GO_nDONE 1 0 :1:0 
+[s S61 . 1 `uc 1 GO_nDONE 1 0 :1:0 
 ]
-[u S135 . 1 `S116 1 . 1 0 `S124 1 . 1 0 `S126 1 . 1 0 `S128 1 . 1 0 `S133 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES135  1 e 1 @147 ]
+[u S63 . 1 `S44 1 . 1 0 `S52 1 . 1 0 `S54 1 . 1 0 `S56 1 . 1 0 `S61 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES63  1 e 1 @147 ]
 "1911
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @148 ]
 "1949
@@ -173,36 +171,36 @@ channel_FVR 63
 [v _ADSTPTL ADSTPTL `VEuc  1 e 1 @274 ]
 "3059
 [v _ADSTPTH ADSTPTH `VEuc  1 e 1 @275 ]
-[s S219 . 1 `uc 1 C5TSEL 1 0 :2:0 
+[s S147 . 1 `uc 1 C5TSEL 1 0 :2:0 
 `uc 1 P6TSEL 1 0 :2:2 
 `uc 1 P7TSEL 1 0 :2:4 
 ]
 "7519
-[s S223 . 1 `uc 1 C5TSEL0 1 0 :1:0 
+[s S151 . 1 `uc 1 C5TSEL0 1 0 :1:0 
 `uc 1 C5TSEL1 1 0 :1:1 
 `uc 1 P6TSEL0 1 0 :1:2 
 `uc 1 P6TSEL1 1 0 :1:3 
 `uc 1 P7TSEL0 1 0 :1:4 
 `uc 1 P7TSEL1 1 0 :1:5 
 ]
-[u S230 . 1 `S219 1 . 1 0 `S223 1 . 1 0 ]
-[v _CCPTMRS1bits CCPTMRS1bits `VES230  1 e 1 @543 ]
+[u S158 . 1 `S147 1 . 1 0 `S151 1 . 1 0 ]
+[v _CCPTMRS1bits CCPTMRS1bits `VES158  1 e 1 @543 ]
 "7568
 [v _T2TMR T2TMR `VEuc  1 e 1 @652 ]
 "7605
 [v _T2PR T2PR `VEuc  1 e 1 @653 ]
 "7642
 [v _T2CON T2CON `VEuc  1 e 1 @654 ]
-[s S296 . 1 `uc 1 OUTPS 1 0 :4:0 
+[s S224 . 1 `uc 1 OUTPS 1 0 :4:0 
 `uc 1 CKPS 1 0 :3:4 
 `uc 1 ON 1 0 :1:7 
 ]
 "7678
-[s S300 . 1 `uc 1 T2OUTPS 1 0 :4:0 
+[s S228 . 1 `uc 1 T2OUTPS 1 0 :4:0 
 `uc 1 T2CKPS 1 0 :3:4 
 `uc 1 T2ON 1 0 :1:7 
 ]
-[s S304 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
+[s S232 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
 `uc 1 T2OUTPS1 1 0 :1:1 
 `uc 1 T2OUTPS2 1 0 :1:2 
 `uc 1 T2OUTPS3 1 0 :1:3 
@@ -210,7 +208,7 @@ channel_FVR 63
 `uc 1 T2CKPS1 1 0 :1:5 
 `uc 1 T2CKPS2 1 0 :1:6 
 ]
-[s S312 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S240 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -219,8 +217,8 @@ channel_FVR 63
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR2ON 1 0 :1:7 
 ]
-[u S321 . 1 `S296 1 . 1 0 `S300 1 . 1 0 `S304 1 . 1 0 `S312 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES321  1 e 1 @654 ]
+[u S249 . 1 `S224 1 . 1 0 `S228 1 . 1 0 `S232 1 . 1 0 `S240 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES249  1 e 1 @654 ]
 "7787
 [v _T2HLT T2HLT `VEuc  1 e 1 @655 ]
 "7919
@@ -233,7 +231,7 @@ channel_FVR 63
 [v _PWM6DCH PWM6DCH `VEuc  1 e 1 @909 ]
 "10774
 [v _PWM6CON PWM6CON `VEuc  1 e 1 @910 ]
-[s S279 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[s S207 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 TMR3IF 1 0 :1:2 
 `uc 1 TMR4IF 1 0 :1:3 
@@ -241,16 +239,16 @@ channel_FVR 63
 `uc 1 TMR6IF 1 0 :1:5 
 ]
 "19557
-[u S286 . 1 `S279 1 . 1 0 ]
-[v _PIR4bits PIR4bits `VES286  1 e 1 @1808 ]
-[s S186 . 1 `uc 1 INTE 1 0 :1:0 
+[u S214 . 1 `S207 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES214  1 e 1 @1808 ]
+[s S114 . 1 `uc 1 INTE 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIE 1 0 :1:4 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
 "19817
-[u S191 . 1 `S186 1 . 1 0 ]
-[v _PIE0bits PIE0bits `VES191  1 e 1 @1814 ]
+[u S119 . 1 `S114 1 . 1 0 ]
+[v _PIE0bits PIE0bits `VES119  1 e 1 @1814 ]
 "21546
 [v _OSCCON1 OSCCON1 `VEuc  1 e 1 @2189 ]
 "21684
@@ -265,11 +263,11 @@ channel_FVR 63
 [v _FVRCON FVRCON `VEuc  1 e 1 @2316 ]
 "27917
 [v _PPSLOCK PPSLOCK `VEuc  1 e 1 @3727 ]
-[s S201 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
+[s S129 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
 ]
 "27927
-[u S203 . 1 `S201 1 . 1 0 ]
-[v _PPSLOCKbits PPSLOCKbits `VES203  1 e 1 @3727 ]
+[u S131 . 1 `S129 1 . 1 0 ]
+[v _PPSLOCKbits PPSLOCKbits `VES131  1 e 1 @3727 ]
 "29960
 [v _RA1PPS RA1PPS `VEuc  1 e 1 @3857 ]
 "31087
@@ -305,18 +303,20 @@ channel_FVR 63
 "11 D:\PIC-Stuff\XC8Projects\16F18855/PWMTest.X/main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"102
-[v main@steinhart steinhart `f  1 a 3 65 ]
-"27
-[v main@totals totals `l  1 a 4 57 ]
-"23
-[v main@readTemperature readTemperature `ui  1 a 2 68 ]
-[v main@outCurrent outCurrent `ui  1 a 2 63 ]
-[v main@readTemperatureOld readTemperatureOld `ui  1 a 2 61 ]
-[v main@setpoint setpoint `ui  1 a 2 55 ]
+"104
+[v main@steinhart steinhart `f  1 a 3 73 ]
+"29
+[v main@totals totals `l  1 a 4 63 ]
 "25
+[v main@R R `f  1 a 3 58 ]
+"23
+[v main@readTemperature readTemperature `ui  1 a 2 71 ]
+[v main@outCurrent outCurrent `ui  1 a 2 69 ]
+[v main@readTemperatureOld readTemperatureOld `ui  1 a 2 67 ]
+[v main@setpoint setpoint `ui  1 a 2 61 ]
+"27
 [v main@sampleIndex sampleIndex `ui  1 s 2 sampleIndex ]
-"145
+"147
 } 0
 "5 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\log.c
 [v _log log `(d  1 e 3 0 ]
@@ -393,18 +393,6 @@ channel_FVR 63
 [v ___lwtoft@c c `ui  1 p 2 8 ]
 "31
 } 0
-"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lwdiv.c
-[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
-{
-"11
-[v ___lwdiv@quotient quotient `ui  1 a 2 5 ]
-"12
-[v ___lwdiv@counter counter `uc  1 a 1 7 ]
-"6
-[v ___lwdiv@divisor divisor `ui  1 p 2 0 ]
-[v ___lwdiv@dividend dividend `ui  1 p 2 2 ]
-"31
-} 0
 "44 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fttol.c
 [v ___fttol __fttol `(l  1 e 4 0 ]
 {
@@ -440,14 +428,14 @@ channel_FVR 63
 [v ___ftdiv __ftdiv `(f  1 e 3 0 ]
 {
 "60
-[v ___ftdiv@f3 f3 `f  1 a 3 5 ]
+[v ___ftdiv@f3 f3 `f  1 a 3 11 ]
 "59
-[v ___ftdiv@sign sign `uc  1 a 1 9 ]
-[v ___ftdiv@exp exp `uc  1 a 1 8 ]
-[v ___ftdiv@cntr cntr `uc  1 a 1 4 ]
+[v ___ftdiv@sign sign `uc  1 a 1 15 ]
+[v ___ftdiv@exp exp `uc  1 a 1 14 ]
+[v ___ftdiv@cntr cntr `uc  1 a 1 10 ]
 "56
-[v ___ftdiv@f2 f2 `f  1 p 3 8 ]
-[v ___ftdiv@f1 f1 `f  1 p 3 11 ]
+[v ___ftdiv@f2 f2 `f  1 p 3 0 ]
+[v ___ftdiv@f1 f1 `f  1 p 3 3 ]
 "86
 } 0
 "62 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\float.c

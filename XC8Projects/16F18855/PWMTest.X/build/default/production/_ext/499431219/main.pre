@@ -16825,7 +16825,7 @@ extern double trunc(double);
 extern double round(double);
 
 # 8 "../PWMTest.X/main.c"
-uint16_t samples[50];
+uint16_t samples[10];
 
 
 void main(void)
@@ -16841,6 +16841,8 @@ LCD_Clear();
 InitCustomChars();
 
 uint16_t readTemperature, setpoint = 70, outCurrent = 1023, readTemperatureOld = 20;
+
+float R;
 
 static uint16_t sampleIndex = 0;
 
@@ -16860,12 +16862,12 @@ totals = totals + samples[sampleIndex];
 
 sampleIndex += 1;
 
-if(sampleIndex >= 50)
+if(sampleIndex >= 10)
 {
 sampleIndex = 0;
 }
 
-readTemperature = totals / 50;
+readTemperature = totals / 10;
 
 if(readTemperature > readTemperatureOld)
 {
@@ -16914,28 +16916,28 @@ outCurrent = 0;
 }
 }
 
+R = 9970/(1023/ (float)readTemperature - 1);
 
 
-readTemperature = (1023 / readTemperature) - 1;
-readTemperature = 10000 / readTemperature;
+
 
 float steinhart;
-steinhart = readTemperature / 10000;
+steinhart = R / 9970;
 steinhart = log(steinhart);
 steinhart /= 3490;
 steinhart += 1.0 / (25 + 273.15);
 steinhart = 1.0 / steinhart;
 steinhart -= 273.15;
 
-# 126
-{ LCD_Set_Cursor(0,0); LCD_Write_Int(steinhart,-1, 0, 0);};
+# 128
+{ LCD_Set_Cursor(0,0); LCD_Write_Int(R,-1, 0, 0);};
 
 
 
-{ LCD_Set_Cursor(1,0); LCD_Write_Int(ADCC_GetSingleConversion(2),-1, 0, 0);};
+{ LCD_Set_Cursor(1,0); LCD_Write_Int(steinhart,-1, 0, 0);};
 LCD_Write_Char(' ');
 
-# 143
+# 145
 PWM6_LoadDutyValue(outCurrent);
 }
 }
