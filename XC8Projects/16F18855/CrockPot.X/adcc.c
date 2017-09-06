@@ -16,10 +16,10 @@ void ADCC_Initialize(void)
     // ADAOV ACC or ADERR not Overflowed; 
     ADSTAT = 0x00;
     // ADCCS FOSC/2; 
-    ADCLK = 0x00;
+    ADCLK = 0x0F;               //ADC CLK FOSC/32?
      
-//    ADREF = 0x03;           // ADNREF VSS; ADPREF FVR;
-    ADREF = 0x00;           // ADNREF VSS; ADPREF VDD;
+//    ADREF = 0x03;             // ADNREF VSS; ADPREF FVR;
+    ADREF = 0x00;               // ADNREF VSS; ADPREF VDD;
     // ADCAP 0; 
     ADCAP = 0x00;
     // ADPRE 0; 
@@ -48,31 +48,6 @@ void ADCC_Initialize(void)
     
 
 }
-/*
-void ADCC_StartConversion(adcc_channel_t channel)
-{
-    // select the A/D channel
-    ADPCH = channel;  
-  
-    // Turn on the ADC module
-    ADCON0bits.ADON = 1;      
-
-    // Start the conversion
-    ADCON0bits.ADGO = 1;
-}
-
-bool ADCC_IsConversionDone()
-{
-    // Start the conversion
-    return (!ADCON0bits.ADGO);
-}
-
-adc_result_t ADCC_GetConversionResult(void)
-{
-    // Return the result
-    return ((ADRESH << 8) + ADRESL);
-}
-*/
 
 
 adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel)

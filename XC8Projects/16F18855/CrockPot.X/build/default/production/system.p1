@@ -1,18 +1,16 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"66 pin_manager.h
+"16 pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
-"21 system.h
+"29 system.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
-"338 tmr2.h
+"22252 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _FVRCON `Vuc ~T0 @X0 0 e@2316 ]
+"22 adcc.h
+[v _ADCC_Initialize `(v ~T0 @X0 0 ef ]
+"9 pwm6.h
+[v _PWM6_Initialize `(v ~T0 @X0 0 ef ]
+"264 tmr2.h
 [v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
-"96 pwm1.h
-[v _PWM1_Initialize `(v ~T0 @X0 0 ef ]
-"9 pwm2.h
-[v _PWM2_Initialize `(v ~T0 @X0 0 ef ]
-"96 pwm3.h
-[v _PWM3_Initialize `(v ~T0 @X0 0 ef ]
-"47 lcd.h
-[v _LCD_Init `(v ~T0 @X0 0 ef1`uc ]
 "21546 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _OSCCON1 `Vuc ~T0 @X0 0 e@2189 ]
 "21684
@@ -23,31 +21,31 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _OSCFRQ `Vuc ~T0 @X0 0 e@2195 ]
 "21829
 [v _OSCTUNE `Vuc ~T0 @X0 0 e@2194 ]
-"2 system.c
-[p x FEXTOSC=ECH ]
-"3
-[p x RSTOSC=HFINT1 ]
+"3 system.c
+[p x FEXTOSC=OFF ]
 "4
-[p x CLKOUTEN=OFF ]
+[p x RSTOSC=HFINT1 ]
 "5
-[p x CSWEN=ON ]
+[p x CLKOUTEN=OFF ]
 "6
+[p x CSWEN=ON ]
+"7
 [p x FCMEN=ON ]
-"9
-[p x MCLRE=ON ]
 "10
-[p x PWRTE=OFF ]
+[p x MCLRE=ON ]
 "11
-[p x LPBOREN=OFF ]
+[p x PWRTE=OFF ]
 "12
-[p x BOREN=ON ]
+[p x LPBOREN=OFF ]
 "13
-[p x BORV=LO ]
+[p x BOREN=OFF ]
 "14
-[p x ZCD=OFF ]
+[p x BORV=LO ]
 "15
-[p x PPS1WAY=ON ]
+[p x ZCD=OFF ]
 "16
+[p x PPS1WAY=ON ]
+"17
 [p x STVREN=ON ]
 "20
 [p x WDTCPS=WDTCPS_31 ]
@@ -12613,7 +12611,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 186: extern unsigned char __resetbits;
 [; ;pic.h: 187: extern __bit __powerdown;
 [; ;pic.h: 188: extern __bit __timeout;
-[; ;pin_manager.h: 66: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef signed short long int int24_t;
@@ -12643,142 +12641,110 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
-[; ;tmr2.h: 78: typedef enum
-[; ;tmr2.h: 79: {
-[; ;tmr2.h: 88: TMR2_ROP_STARTS_TMRON,
-[; ;tmr2.h: 93: TMR2_ROP_STARTS_TMRON_ERSHIGH,
-[; ;tmr2.h: 98: TMR2_ROP_STARTS_TMRON_ERSLOW,
-[; ;tmr2.h: 103: TMR2_ROP_RESETS_ERSBOTHEDGE,
-[; ;tmr2.h: 108: TMR2_ROP_RESETS_ERSRISINGEDGE,
-[; ;tmr2.h: 113: TMR2_ROP_RESETS_ERSFALLINGEDGE,
-[; ;tmr2.h: 118: TMR2_ROP_RESETS_ERSLOW,
-[; ;tmr2.h: 123: TMR2_ROP_RESETS_ERSHIGH,
-[; ;tmr2.h: 134: TMR2_OS_STARTS_TMRON,
-[; ;tmr2.h: 139: TMR2_OS_STARTS_ERSRISINGEDGE ,
-[; ;tmr2.h: 144: TMR2_OS_STARTS_ERSFALLINGEDGE ,
-[; ;tmr2.h: 149: TMR2_OS_STARTS_ERSBOTHEDGE,
-[; ;tmr2.h: 155: TMR2_OS_STARTS_ERSFIRSTRISINGEDGE,
-[; ;tmr2.h: 161: TMR2_OS_STARTS_ERSFIRSTFALLINGEDGE,
-[; ;tmr2.h: 167: TMR2_OS_STARTS_ERSRISINGEDGEDETECT,
-[; ;tmr2.h: 172: TMR2_OS_STARTS_ERSFALLINGEDGEDETECT,
-[; ;tmr2.h: 177: TMR2_OS_STARTS_TMRON_ERSHIGH = 0x16,
-[; ;tmr2.h: 182: TMR2_OS_STARTS_TMRON_ERSLOW = 0x17,
-[; ;tmr2.h: 191: TMR2_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
-[; ;tmr2.h: 196: TMR2_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
-[; ;tmr2.h: 202: TMR2_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
-[; ;tmr2.h: 204: } TMR2_HLT_MODE;
-[; ;tmr2.h: 219: typedef enum
-[; ;tmr2.h: 220: {
-[; ;tmr2.h: 224: TMR2_T2INPPS,
-[; ;tmr2.h: 228: TMR2_RESERVED,
-[; ;tmr2.h: 232: TMR2_T4POSTSCALED,
-[; ;tmr2.h: 236: TMR2_T6POSTSCALED,
-[; ;tmr2.h: 239: TMR2_CCP1_OUT,
-[; ;tmr2.h: 243: TMR2_CCP2_OUT,
-[; ;tmr2.h: 247: TMR2_CCP3_OUT,
-[; ;tmr2.h: 251: TMR2_CCP4_OUT,
-[; ;tmr2.h: 255: TMR2_CCP5_OUT,
-[; ;tmr2.h: 259: TMR2_PWM6_OUT,
-[; ;tmr2.h: 263: TMR2_PWM7_OUT,
-[; ;tmr2.h: 267: TMR2_C1_OUT_SYNC,
-[; ;tmr2.h: 271: TMR2_C2_OUT_SYNC,
-[; ;tmr2.h: 275: TMR2_ZCD_OUTPUT,
-[; ;tmr2.h: 279: TMR2_LC1_OUT,
-[; ;tmr2.h: 283: TMR2_LC2_OUT,
-[; ;tmr2.h: 287: TMR2_LC3_OUT,
-[; ;tmr2.h: 291: TMR2_LC4_OUT
-[; ;tmr2.h: 296: } TMR2_HLT_EXT_RESET_SOURCE;
-[; ;tmr2.h: 338: void TMR2_Initialize(void);
-[; ;tmr2.h: 374: void TMR2_ModeSet(TMR2_HLT_MODE mode);
-[; ;tmr2.h: 409: void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset);
-[; ;tmr2.h: 438: void TMR2_Start(void);
-[; ;tmr2.h: 467: void TMR2_StartTimer(void);
-[; ;tmr2.h: 499: void TMR2_Stop(void);
-[; ;tmr2.h: 531: void TMR2_StopTimer(void);
-[; ;tmr2.h: 566: uint8_t TMR2_Counter8BitGet(void);
-[; ;tmr2.h: 601: uint8_t TMR2_ReadTimer(void);
-[; ;tmr2.h: 640: void TMR2_Counter8BitSet(uint8_t timerVal);
-[; ;tmr2.h: 679: void TMR2_WriteTimer(uint8_t timerVal);
-[; ;tmr2.h: 731: void TMR2_Period8BitSet(uint8_t periodVal);
-[; ;tmr2.h: 783: void TMR2_LoadPeriodRegister(uint8_t periodVal);
-[; ;tmr2.h: 821: bool TMR2_HasOverflowOccured(void);
-[; ;pwm1.h: 96: void PWM1_Initialize(void);
-[; ;pwm1.h: 123: void PWM1_LoadDutyValue(uint16_t dutyValue);
-[; ;pwm1.h: 155: bool PWM1_OutputStatusGet(void);
-[; ;pwm2.h: 9: void PWM2_Initialize(void);
-[; ;pwm2.h: 36: void PWM2_LoadDutyValue(uint16_t dutyValue);
-[; ;pwm2.h: 68: bool PWM2_OutputStatusGet(void);
-[; ;pwm3.h: 96: void PWM3_Initialize(void);
-[; ;pwm3.h: 123: void PWM3_LoadDutyValue(uint16_t dutyValue);
-[; ;pwm3.h: 155: bool PWM3_OutputStatusGet(void);
-[; ;lcd.h: 37: void InitCustomChars();
-[; ;lcd.h: 39: void LCD_Port(char a);
-[; ;lcd.h: 41: void LCD_Cmd(char a);
-[; ;lcd.h: 43: void LCD_Clear();
-[; ;lcd.h: 45: void LCD_Set_Cursor(char x, char y);
-[; ;lcd.h: 47: void LCD_Init(char style);
-[; ;lcd.h: 49: void LCD_Write_Char(const char a);
-[; ;lcd.h: 51: void LCD_Write_String(const char *a);
-[; ;lcd.h: 53: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
-[; ;system.h: 18: void SYSTEM_Initialize(void);
-[; ;system.h: 21: void OSCILLATOR_Initialize(void);
-"36 system.c
+[; ;pwm6.h: 9: void PWM6_Initialize(void);
+[; ;pwm6.h: 33: void PWM6_LoadDutyValue(uint16_t dutyValue);
+[; ;tmr2.h: 264: void TMR2_Initialize(void);
+[; ;lcd.h: 49: void InitCustomChars();
+[; ;lcd.h: 51: void LCD_Port(char a);
+[; ;lcd.h: 53: void LCD_Cmd(char a);
+[; ;lcd.h: 55: void LCD_Clear();
+[; ;lcd.h: 57: void LCD_Set_Cursor(char x, char y);
+[; ;lcd.h: 59: void LCD_Init(char style);
+[; ;lcd.h: 61: void LCD_Write_Char(char a);
+[; ;lcd.h: 63: void LCD_Write_String(char *a);
+[; ;lcd.h: 65: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+[; ;adcc.h: 9: typedef uint16_t adc_result_t;
+[; ;adcc.h: 12: typedef enum
+[; ;adcc.h: 13: {
+[; ;adcc.h: 14: POT = 0x4,
+[; ;adcc.h: 15: channel_VSS = 0x3C,
+[; ;adcc.h: 16: channel_Temp = 0x3D,
+[; ;adcc.h: 17: channel_DAC1 = 0x3E,
+[; ;adcc.h: 18: channel_FVR = 0x3F
+[; ;adcc.h: 19: } adcc_channel_t;
+[; ;adcc.h: 22: void ADCC_Initialize(void);
+[; ;adcc.h: 24: void ADCC_StartConversion(adcc_channel_t channel);
+[; ;adcc.h: 26: bool ADCC_IsConversionDone();
+[; ;adcc.h: 28: adc_result_t ADCC_GetConversionResult(void);
+[; ;adcc.h: 30: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+[; ;adcc.h: 32: void ADCC_StopConversion(void);
+[; ;adcc.h: 34: void ADCC_SetStopOnInterrupt(void);
+[; ;adcc.h: 36: void ADCC_DischargeSampleCapacitor(void);
+[; ;adcc.h: 38: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adcc.h: 40: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adcc.h: 42: void ADCC_SetRepeatCount(uint8_t);
+[; ;adcc.h: 44: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adcc.h: 46: void ADCC_ClearAccumulator(void);
+[; ;adcc.h: 48: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adcc.h: 50: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adcc.h: 52: uint16_t ADCC_GetFilterValue(void);
+[; ;adcc.h: 76: uint16_t ADCC_GetPreviousResult(void);
+[; ;adcc.h: 100: void ADCC_DefineSetPoint(uint16_t);
+[; ;adcc.h: 125: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adcc.h: 150: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adcc.h: 173: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adcc.h: 195: void ADCC_EnableDoubleSampling(void);
+[; ;adcc.h: 217: void ADCC_EnableContinuousConversion(void);
+[; ;adcc.h: 239: void ADCC_DisableContinuousConversion(void);
+[; ;adcc.h: 261: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adcc.h: 283: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;system.h: 27: void SYSTEM_Initialize(void);
+[; ;system.h: 29: void OSCILLATOR_Initialize(void);
+"68 system.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
-"37
+"69
 {
-[; ;system.c: 36: void SYSTEM_Initialize(void)
-[; ;system.c: 37: {
+[; ;system.c: 68: void SYSTEM_Initialize(void)
+[; ;system.c: 69: {
 [e :U _SYSTEM_Initialize ]
 [f ]
-[; ;system.c: 39: PIN_MANAGER_Initialize();
-"39
+[; ;system.c: 71: PIN_MANAGER_Initialize();
+"71
 [e ( _PIN_MANAGER_Initialize ..  ]
-[; ;system.c: 40: OSCILLATOR_Initialize();
-"40
+[; ;system.c: 72: OSCILLATOR_Initialize();
+"72
 [e ( _OSCILLATOR_Initialize ..  ]
-[; ;system.c: 41: TMR2_Initialize();
-"41
+[; ;system.c: 73: FVRCON = 0x00;
+"73
+[e = _FVRCON -> -> 0 `i `uc ]
+[; ;system.c: 74: ADCC_Initialize();
+"74
+[e ( _ADCC_Initialize ..  ]
+[; ;system.c: 75: PWM6_Initialize();
+"75
+[e ( _PWM6_Initialize ..  ]
+[; ;system.c: 76: TMR2_Initialize();
+"76
 [e ( _TMR2_Initialize ..  ]
-[; ;system.c: 42: PWM1_Initialize();
-"42
-[e ( _PWM1_Initialize ..  ]
-[; ;system.c: 43: PWM2_Initialize();
-"43
-[e ( _PWM2_Initialize ..  ]
-[; ;system.c: 44: PWM3_Initialize();
-"44
-[e ( _PWM3_Initialize ..  ]
-[; ;system.c: 46: LCD_Init(0);
-"46
-[e ( _LCD_Init (1 -> -> 0 `i `uc ]
-[; ;system.c: 48: }
-"48
+[; ;system.c: 77: }
+"77
 [e :UE 1519 ]
 }
-"50
+"79
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
-"51
+"80
 {
-[; ;system.c: 50: void OSCILLATOR_Initialize(void)
-[; ;system.c: 51: {
+[; ;system.c: 79: void OSCILLATOR_Initialize(void)
+[; ;system.c: 80: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;system.c: 53: OSCCON1 = 0x62;
-"53
+[; ;system.c: 94: OSCCON1 = 0x62;
+"94
 [e = _OSCCON1 -> -> 98 `i `uc ]
-[; ;system.c: 55: OSCCON3 = 0x00;
-"55
+[; ;system.c: 96: OSCCON3 = 0x00;
+"96
 [e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 57: OSCEN = 0x00;
-"57
+[; ;system.c: 98: OSCEN = 0x00;
+"98
 [e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 59: OSCFRQ = 0x00;
-"59
-[e = _OSCFRQ -> -> 0 `i `uc ]
-[; ;system.c: 61: OSCTUNE = 0x00;
-"61
+[; ;system.c: 100: OSCFRQ = 0x02;
+"100
+[e = _OSCFRQ -> -> 2 `i `uc ]
+[; ;system.c: 102: OSCTUNE = 0x00;
+"102
 [e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 62: }
-"62
+[; ;system.c: 105: }
+"105
 [e :UE 1520 ]
 }

@@ -24,19 +24,7 @@
 //#define delay_ms(x) _delay((unsigned long)((x)*(SYS_FREQ/1000.0)))
 
 
-/* @Description
-    Initializes the device to the default states configured in the MCC GUI
- * @Example
-    SYSTEM_Initialize(void);
- */
 void SYSTEM_Initialize(void);
 
-/* @Description
-    Initializes the oscillator to the default states configured in the MCC GUI
- * @Example
-    OSCILLATOR_Initialize(void);
- */
 void OSCILLATOR_Initialize(void);
-
-
 #endif

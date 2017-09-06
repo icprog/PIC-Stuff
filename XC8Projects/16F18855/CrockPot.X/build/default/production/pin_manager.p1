@@ -5,32 +5,34 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _LATB `Vuc ~T0 @X0 0 e@23 ]
 "877
 [v _LATC `Vuc ~T0 @X0 0 e@24 ]
+"31148
+[v _WPUA `Vuc ~T0 @X0 0 e@3897 ]
+"31758
+[v _WPUB `Vuc ~T0 @X0 0 e@3908 ]
+"32368
+[v _WPUC `Vuc ~T0 @X0 0 e@3919 ]
+"32917
+[v _WPUE `Vuc ~T0 @X0 0 e@3941 ]
 "572
 [v _TRISA `Vuc ~T0 @X0 0 e@17 ]
 "633
 [v _TRISB `Vuc ~T0 @X0 0 e@18 ]
 "694
 [v _TRISC `Vuc ~T0 @X0 0 e@19 ]
-"32307
-[v _ANSELC `Vuc ~T0 @X0 0 e@3918 ]
-"31697
-[v _ANSELB `Vuc ~T0 @X0 0 e@3907 ]
 "31087
 [v _ANSELA `Vuc ~T0 @X0 0 e@3896 ]
-"32917
-[v _WPUE `Vuc ~T0 @X0 0 e@3941 ]
-"31758
-[v _WPUB `Vuc ~T0 @X0 0 e@3908 ]
-"31148
-[v _WPUA `Vuc ~T0 @X0 0 e@3897 ]
-"32368
-[v _WPUC `Vuc ~T0 @X0 0 e@3919 ]
-"31209
-[v _ODCONA `Vuc ~T0 @X0 0 e@3898 ]
-"31819
-[v _ODCONB `Vuc ~T0 @X0 0 e@3909 ]
-"32429
-[v _ODCONC `Vuc ~T0 @X0 0 e@3920 ]
+"31697
+[v _ANSELB `Vuc ~T0 @X0 0 e@3907 ]
+"32307
+[v _ANSELC `Vuc ~T0 @X0 0 e@3918 ]
+"19810
+[s S931 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S931 . INTE . IOCIE TMR0IE ]
+"19809
+[u S930 `S931 1 ]
+[n S930 . . ]
+"19817
+[v _PIE0bits `VS930 ~T0 @X0 0 e@1814 ]
 "34694
 [v _GIE `Vb ~T0 @X0 0 e@95 ]
 "27917
@@ -43,23 +45,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S1261 . . ]
 "27927
 [v _PPSLOCKbits `VS1261 ~T0 @X0 0 e@3727 ]
-"28338
-[s S1288 :5 `uc 1 ]
-[n S1288 . T2AINPPS ]
-"28341
-[s S1289 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1289 . T2AINPPS0 T2AINPPS1 T2AINPPS2 T2AINPPS3 T2AINPPS4 ]
-"28337
-[u S1287 `S1288 1 `S1289 1 ]
-[n S1287 . . . ]
-"28349
-[v _T2AINPPSbits `VS1287 ~T0 @X0 0 e@3740 ]
-"30891
-[v _RC4PPS `Vuc ~T0 @X0 0 e@3876 ]
-"30940
-[v _RC5PPS `Vuc ~T0 @X0 0 e@3877 ]
-"30989
-[v _RC6PPS `Vuc ~T0 @X0 0 e@3878 ]
+"29960
+[v _RA1PPS `Vuc ~T0 @X0 0 e@3857 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12606,105 +12593,90 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 186: extern unsigned char __resetbits;
 [; ;pic.h: 187: extern __bit __powerdown;
 [; ;pic.h: 188: extern __bit __timeout;
-[; ;pin_manager.h: 66: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
 [; ;stdbool.h: 12: typedef unsigned char bool;
-"6 pin_manager.c
+"5 pin_manager.c
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 1 ef ]
-"7
+"6
 {
-[; ;pin_manager.c: 6: void PIN_MANAGER_Initialize(void)
-[; ;pin_manager.c: 7: {
+[; ;pin_manager.c: 5: void PIN_MANAGER_Initialize(void)
+[; ;pin_manager.c: 6: {
 [e :U _PIN_MANAGER_Initialize ]
 [f ]
-[; ;pin_manager.c: 8: LATA = 0x00;
-"8
+[; ;pin_manager.c: 7: LATA = 0x00;
+"7
 [e = _LATA -> -> 0 `i `uc ]
-[; ;pin_manager.c: 9: LATB = 0x00;
-"9
+[; ;pin_manager.c: 8: LATB = 0x0;
+"8
 [e = _LATB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 10: LATC = 0x00;
-"10
+[; ;pin_manager.c: 9: LATC = 0x0;
+"9
 [e = _LATC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 12: TRISA = 0xFE;
-"12
-[e = _TRISA -> -> 254 `i `uc ]
-[; ;pin_manager.c: 13: TRISB = 0xC0;
-"13
-[e = _TRISB -> -> 192 `i `uc ]
-[; ;pin_manager.c: 14: TRISC = 0xFF;
-"14
-[e = _TRISC -> -> 255 `i `uc ]
-[; ;pin_manager.c: 16: ANSELC = 0x00;
-"16
-[e = _ANSELC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 17: ANSELB = 0x00;
-"17
-[e = _ANSELB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 18: ANSELA = 0x00;
-"18
-[e = _ANSELA -> -> 0 `i `uc ]
-[; ;pin_manager.c: 20: WPUE = 0x00;
-"20
-[e = _WPUE -> -> 0 `i `uc ]
-[; ;pin_manager.c: 21: WPUB = 0x00;
-"21
-[e = _WPUB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 22: WPUA = 0x00;
-"22
+[; ;pin_manager.c: 11: WPUA = 0x00;
+"11
 [e = _WPUA -> -> 0 `i `uc ]
-[; ;pin_manager.c: 23: WPUC = 0x00;
-"23
+[; ;pin_manager.c: 12: WPUB = 0x00;
+"12
+[e = _WPUB -> -> 0 `i `uc ]
+[; ;pin_manager.c: 13: WPUC = 0x00;
+"13
 [e = _WPUC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 25: ODCONA = 0x00;
-"25
-[e = _ODCONA -> -> 0 `i `uc ]
-[; ;pin_manager.c: 26: ODCONB = 0x00;
+[; ;pin_manager.c: 14: WPUE = 0x8;
+"14
+[e = _WPUE -> -> 8 `i `uc ]
+[; ;pin_manager.c: 16: TRISA = 0x04;
+"16
+[e = _TRISA -> -> 4 `i `uc ]
+[; ;pin_manager.c: 17: TRISB = 0x00;
+"17
+[e = _TRISB -> -> 0 `i `uc ]
+[; ;pin_manager.c: 18: TRISC = 0x10;
+"18
+[e = _TRISC -> -> 16 `i `uc ]
+[; ;pin_manager.c: 20: ANSELA = 0x04;
+"20
+[e = _ANSELA -> -> 4 `i `uc ]
+[; ;pin_manager.c: 21: ANSELB = 0x00;
+"21
+[e = _ANSELB -> -> 0 `i `uc ]
+[; ;pin_manager.c: 22: ANSELC = 0x00;
+"22
+[e = _ANSELC -> -> 0 `i `uc ]
+[; ;pin_manager.c: 26: PIE0bits.IOCIE = 0;
 "26
-[e = _ODCONB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 27: ODCONC = 0x00;
+[e = . . _PIE0bits 0 2 -> -> 0 `i `uc ]
 "27
-[e = _ODCONC -> -> 0 `i `uc ]
-"34
 [v _state `uc ~T0 @X0 1 a ]
-[; ;pin_manager.c: 34: bool state = GIE;
+[; ;pin_manager.c: 27: bool state = GIE;
 [e = _state -> -> _GIE `i `uc ]
-[; ;pin_manager.c: 35: GIE = 0;
-"35
+[; ;pin_manager.c: 28: GIE = 0;
+"28
 [e = _GIE -> -> 0 `i `b ]
-[; ;pin_manager.c: 36: PPSLOCK = 0x55;
-"36
+[; ;pin_manager.c: 29: PPSLOCK = 0x55;
+"29
 [e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 37: PPSLOCK = 0xAA;
-"37
+[; ;pin_manager.c: 30: PPSLOCK = 0xAA;
+"30
 [e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 38: PPSLOCKbits.PPSLOCKED = 0x00;
-"38
+[; ;pin_manager.c: 31: PPSLOCKbits.PPSLOCKED = 0x00;
+"31
 [e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
-[; ;pin_manager.c: 40: T2AINPPSbits.T2AINPPS = 0x13;
-"40
-[e = . . _T2AINPPSbits 0 0 -> -> 19 `i `uc ]
-[; ;pin_manager.c: 41: RC4PPS = 0x09;
-"41
-[e = _RC4PPS -> -> 9 `i `uc ]
-[; ;pin_manager.c: 42: RC5PPS = 0x0A;
-"42
-[e = _RC5PPS -> -> 10 `i `uc ]
-[; ;pin_manager.c: 43: RC6PPS = 0x0B;
-"43
-[e = _RC6PPS -> -> 11 `i `uc ]
-[; ;pin_manager.c: 45: PPSLOCK = 0x55;
-"45
+[; ;pin_manager.c: 34: RA1PPS = 0x000E;
+"34
+[e = _RA1PPS -> -> 14 `i `uc ]
+[; ;pin_manager.c: 38: PPSLOCK = 0x55;
+"38
 [e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 46: PPSLOCK = 0xAA;
-"46
+[; ;pin_manager.c: 39: PPSLOCK = 0xAA;
+"39
 [e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 47: PPSLOCKbits.PPSLOCKED = 0x01;
-"47
+[; ;pin_manager.c: 40: PPSLOCKbits.PPSLOCKED = 0x01;
+"40
 [e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
-[; ;pin_manager.c: 49: GIE = state;
-"49
+[; ;pin_manager.c: 41: GIE = state;
+"41
 [e = _GIE -> _state `b ]
-[; ;pin_manager.c: 50: }
-"50
+[; ;pin_manager.c: 42: }
+"42
 [e :UE 1519 ]
 }

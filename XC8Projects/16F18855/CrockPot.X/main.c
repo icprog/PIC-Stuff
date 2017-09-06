@@ -1,8 +1,9 @@
 #include "system.h"
 #include "lcd.h"
 #include <math.h>
+#include <stdio.h>
 
-#define     numSamples  10                                                      // Number of Temperature readings to Average
+#define     numSamples  50                                                      // Number of Temperature readings to Average
 
 
 uint16_t samples[numSamples];
@@ -22,7 +23,9 @@ void main(void)
     
     uint16_t readTemperature, setpoint = 70, outCurrent = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld = 20;
     
-    float R;
+    float R, steinhart;
+    
+    char s[8];
     
     static uint16_t sampleIndex = 0;
 
@@ -96,15 +99,11 @@ void main(void)
             }
         }
         
-        R = 9970/(1023/ (float)readTemperature - 1);
+        R = 10200/(1023/(float)readTemperature - 1);
         
-//        readTemperature = (1023 /(float)readTemperature) - 1;
-  //      readTemperature = 10000 / (float)readTemperature;
- 
-        float steinhart;
-        steinhart = R / 9970;     // (R/Ro)
+        steinhart = R /10061;     // (R/Ro)
         steinhart = log(steinhart);                  // ln(R/Ro)
-        steinhart /= 3490;                   // 1/B * ln(R/Ro)
+        steinhart /= 4015;                   // 1/B * ln(R/Ro)
         steinhart += 1.0 / (25 + 273.15); // + (1/To)
         steinhart = 1.0 / steinhart;                 // Invert
         steinhart -= 273.15;                         // convert to C
@@ -124,24 +123,29 @@ void main(void)
     //    LCD_Write_Char('%');
       //  LCD_Write_Char(' ');
         //LCD_Write_Char(' ');
-        
-        LCDWriteIntXY(0,0,R,-1,0,0);
+
+
+
+        sprintf(s,"%3.1f  ", steinhart );
+        LCD_Set_Cursor(0,0);
+        LCD_Write_String(s);
+
+        sprintf(s,"%5.0f  ", R );
+        LCD_Set_Cursor(1,0);
+        LCD_Write_String(s);
+
+ //       LCDWriteIntXY(0,0,R,-1,0,0);
 //        LCD_Write_Char(' ');
   //      LCD_Write_Char(' ');
  
-        LCDWriteIntXY(1,0,steinhart,-1,0,0);
-        LCD_Write_Char(' ');
+//        LCDWriteIntXY(1,0,steinhart,-1,0,0);
+  //      LCD_Write_Char(' ');
 //        LCD_Write_Char(' ');
  
 //        LCDWriteIntXY(1,4,z,-1,0,0);
   //      LCD_Write_Char(' ');
     //    LCD_Write_Char(' ');
         
-        
-
-//        __delay_ms(10);
-        
-
         PWM6_LoadDutyValue(outCurrent);
     }
 }

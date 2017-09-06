@@ -1,5 +1,5 @@
 
-# 1 "pwm3.c"
+# 1 "adcc.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -16680,54 +16680,154 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
 typedef unsigned char bool;
 
-# 96 "pwm3.h"
-void PWM3_Initialize(void);
+# 9 "adcc.h"
+typedef uint16_t adc_result_t;
 
-# 123
-void PWM3_LoadDutyValue(uint16_t dutyValue);
 
-# 155
-bool PWM3_OutputStatusGet(void);
+typedef enum
+{
+POT = 0x4,
+channel_VSS = 0x3C,
+channel_Temp = 0x3D,
+channel_DAC1 = 0x3E,
+channel_FVR = 0x3F
+} adcc_channel_t;
 
-# 63 "pwm3.c"
-void PWM3_Initialize(void)
+
+void ADCC_Initialize(void);
+
+void ADCC_StartConversion(adcc_channel_t channel);
+
+bool ADCC_IsConversionDone();
+
+adc_result_t ADCC_GetConversionResult(void);
+
+adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+
+void ADCC_StopConversion(void);
+
+void ADCC_SetStopOnInterrupt(void);
+
+void ADCC_DischargeSampleCapacitor(void);
+
+void ADCC_LoadAcquisitionRegister(uint8_t);
+
+void ADCC_SetPrechargeTime(uint8_t);
+
+void ADCC_SetRepeatCount(uint8_t);
+
+uint8_t ADCC_GetCurrentCountofConversions(void);
+
+void ADCC_ClearAccumulator(void);
+
+uint16_t ADCC_GetAccumulatorValue(void);
+
+bool ADCC_HasAccumulatorOverflowed(void);
+
+uint16_t ADCC_GetFilterValue(void);
+
+# 76
+uint16_t ADCC_GetPreviousResult(void);
+
+# 100
+void ADCC_DefineSetPoint(uint16_t);
+
+# 125
+void ADCC_SetUpperThreshold(uint16_t);
+
+# 150
+void ADCC_SetLowerThreshold(uint16_t);
+
+# 173
+uint16_t ADCC_GetErrorCalculation(void);
+
+# 195
+void ADCC_EnableDoubleSampling(void);
+
+# 217
+void ADCC_EnableContinuousConversion(void);
+
+# 239
+void ADCC_DisableContinuousConversion(void);
+
+# 261
+bool ADCC_HasErrorCrossedUpperThreshold(void);
+
+# 283
+bool ADCC_HasErrorCrossedLowerThreshold(void);
+
+# 305
+uint8_t ADCC_GetConversionStageStatus(void);
+
+# 5 "adcc.c"
+void ADCC_Initialize(void)
 {
 
 
+ADCON1 = 0x00;
 
-CCP3CON = 0x8F;
+ADCON2 = 0x00;
+
+ADCON3 = 0x00;
+
+ADACT = 0x00;
+
+ADSTAT = 0x00;
+
+ADCLK = 0x0F;
 
 
-CCPR3H = 0x00;
+ADREF = 0x00;
+
+ADCAP = 0x00;
+
+ADPRE = 0x00;
+
+ADACQ = 0x00;
+
+ADPCH = 0x00;
+
+ADRPT = 0x00;
+
+ADLTHL = 0x00;
+
+ADLTHH = 0x00;
+
+ADUTHL = 0x00;
+
+ADUTHH = 0x00;
+
+ADSTPTL = 0x00;
+
+ADSTPTH = 0x00;
 
 
-CCPR3L = 0x00;
+ADCON0 = 0x84;
 
 
-CCPTMRS0bits.C3TSEL = 0x1;
 }
 
-void PWM3_LoadDutyValue(uint16_t dutyValue)
+
+adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel)
 {
-dutyValue &= 0x03FF;
+
+ADPCH = channel;
 
 
-if(CCP3CONbits.CCP3FMT)
+ADCON0bits.ADON = 1;
+
+
+ADCON0bits.ADCONT = 0;
+
+
+ADCON0bits.ADGO = 1;
+
+
+while (ADCON0bits.ADGO)
 {
-dutyValue <<= 6;
-CCPR3H = dutyValue >> 8;
-CCPR3L = dutyValue;
 }
-else
-{
-CCPR3H = dutyValue >> 8;
-CCPR3L = dutyValue;
-}
-}
 
-bool PWM3_OutputStatusGet(void)
-{
 
-return(CCP3CONbits.OUT);
+return ((ADRESH << 8) + ADRESL);
 }
 

@@ -1,38 +1,21 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"9632 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
-[v _CCP2CON `Vuc ~T0 @X0 0 e@786 ]
-"9613
-[v _CCPR2H `Vuc ~T0 @X0 0 e@785 ]
-"9594
-[v _CCPR2L `Vuc ~T0 @X0 0 e@784 ]
-"7418
-[s S357 :2 `uc 1 :2 `uc 1 :2 `uc 1 :2 `uc 1 ]
-[n S357 . C1TSEL C2TSEL C3TSEL C4TSEL ]
-"7424
-[s S358 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S358 . C1TSEL0 C1TSEL1 C2TSEL0 C2TSEL1 C3TSEL0 C3TSEL1 C4TSEL0 C4TSEL1 ]
-"7417
-[u S356 `S357 1 `S358 1 ]
-[n S356 . . . ]
-"7435
-[v _CCPTMRS0bits `VS356 ~T0 @X0 0 e@542 ]
-"9638
-[s S480 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S480 . MODE FMT OUT OE EN ]
-"9645
-[s S481 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S481 . MODE0 MODE1 MODE2 MODE3 ]
-"9651
-[s S482 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S482 . CCP2MODE CCP2FMT CCP2OUT CCP2OE CCP2EN ]
-"9658
-[s S483 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S483 . CCP2MODE0 CCP2MODE1 CCP2MODE2 CCP2MODE3 ]
-"9637
-[u S479 `S480 1 `S481 1 `S482 1 `S483 1 ]
-[n S479 . . . . . ]
-"9665
-[v _CCP2CONbits `VS479 ~T0 @X0 0 e@786 ]
+"10774 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _PWM6CON `Vuc ~T0 @X0 0 e@910 ]
+"10605
+[v _PWM6DCH `Vuc ~T0 @X0 0 e@909 ]
+"10540
+[v _PWM6DCL `Vuc ~T0 @X0 0 e@908 ]
+"7505
+[s S360 :2 `uc 1 :2 `uc 1 :2 `uc 1 ]
+[n S360 . C5TSEL P6TSEL P7TSEL ]
+"7510
+[s S361 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S361 . C5TSEL0 C5TSEL1 P6TSEL0 P6TSEL1 P7TSEL0 P7TSEL1 ]
+"7504
+[u S359 `S360 1 `S361 1 ]
+[n S359 . . . ]
+"7519
+[v _CCPTMRS1bits `VS359 ~T0 @X0 0 e@543 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12607,100 +12590,50 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
-[; ;stdbool.h: 12: typedef unsigned char bool;
-[; ;pwm2.h: 9: void PWM2_Initialize(void);
-[; ;pwm2.h: 36: void PWM2_LoadDutyValue(uint16_t dutyValue);
-[; ;pwm2.h: 68: bool PWM2_OutputStatusGet(void);
-"63 pwm2.c
-[v _PWM2_Initialize `(v ~T0 @X0 1 ef ]
-"64
+[; ;pwm6.h: 9: void PWM6_Initialize(void);
+[; ;pwm6.h: 33: void PWM6_LoadDutyValue(uint16_t dutyValue);
+"4 pwm6.c
+[v _PWM6_Initialize `(v ~T0 @X0 1 ef ]
+"5
 {
-[; ;pwm2.c: 63: void PWM2_Initialize(void)
-[; ;pwm2.c: 64: {
-[e :U _PWM2_Initialize ]
+[; ;pwm6.c: 4: void PWM6_Initialize(void)
+[; ;pwm6.c: 5: {
+[e :U _PWM6_Initialize ]
 [f ]
-[; ;pwm2.c: 68: CCP2CON = 0x8F;
-"68
-[e = _CCP2CON -> -> 143 `i `uc ]
-[; ;pwm2.c: 71: CCPR2H = 0x01;
-"71
-[e = _CCPR2H -> -> 1 `i `uc ]
-[; ;pwm2.c: 74: CCPR2L = 0xFF;
-"74
-[e = _CCPR2L -> -> 255 `i `uc ]
-[; ;pwm2.c: 77: CCPTMRS0bits.C2TSEL = 0x1;
-"77
-[e = . . _CCPTMRS0bits 0 1 -> -> 1 `i `uc ]
-[; ;pwm2.c: 78: }
-"78
+[; ;pwm6.c: 6: PWM6CON = 0x80;
+"6
+[e = _PWM6CON -> -> 128 `i `uc ]
+[; ;pwm6.c: 8: PWM6DCH = 0x3C;
+"8
+[e = _PWM6DCH -> -> 60 `i `uc ]
+[; ;pwm6.c: 10: PWM6DCL = 0x40;
+"10
+[e = _PWM6DCL -> -> 64 `i `uc ]
+[; ;pwm6.c: 12: CCPTMRS1bits.P6TSEL = 0x1;
+"12
+[e = . . _CCPTMRS1bits 0 1 -> -> 1 `i `uc ]
+[; ;pwm6.c: 13: }
+"13
 [e :UE 1519 ]
 }
-"80
-[v _PWM2_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
-"81
+"15
+[v _PWM6_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
+"16
 {
-[; ;pwm2.c: 80: void PWM2_LoadDutyValue(uint16_t dutyValue)
-[; ;pwm2.c: 81: {
-[e :U _PWM2_LoadDutyValue ]
-"80
+[; ;pwm6.c: 15: void PWM6_LoadDutyValue(uint16_t dutyValue)
+[; ;pwm6.c: 16: {
+[e :U _PWM6_LoadDutyValue ]
+"15
 [v _dutyValue `ui ~T0 @X0 1 r1 ]
-"81
+"16
 [f ]
-[; ;pwm2.c: 82: dutyValue &= 0x03FF;
-"82
-[e =& _dutyValue -> -> 1023 `i `ui ]
-[; ;pwm2.c: 85: if(CCP2CONbits.CCP2FMT)
-"85
-[e $ ! != -> . . _CCP2CONbits 2 1 `i -> -> -> 0 `i `Vuc `i 1521  ]
-[; ;pwm2.c: 86: {
-"86
-{
-[; ;pwm2.c: 87: dutyValue <<= 6;
-"87
-[e =<< _dutyValue -> 6 `i ]
-[; ;pwm2.c: 88: CCPR2H = dutyValue >> 8;
-"88
-[e = _CCPR2H -> >> _dutyValue -> 8 `i `uc ]
-[; ;pwm2.c: 89: CCPR2L = dutyValue;
-"89
-[e = _CCPR2L -> _dutyValue `uc ]
-"90
-}
-[; ;pwm2.c: 90: }
-[e $U 1522  ]
-"91
-[e :U 1521 ]
-[; ;pwm2.c: 91: else
-[; ;pwm2.c: 92: {
-"92
-{
-[; ;pwm2.c: 93: CCPR2H = dutyValue >> 8;
-"93
-[e = _CCPR2H -> >> _dutyValue -> 8 `i `uc ]
-[; ;pwm2.c: 94: CCPR2L = dutyValue;
-"94
-[e = _CCPR2L -> _dutyValue `uc ]
-"95
-}
-[e :U 1522 ]
-[; ;pwm2.c: 95: }
-[; ;pwm2.c: 96: }
-"96
+[; ;pwm6.c: 17: PWM6DCH = (dutyValue & 0x03FC)>>2;
+"17
+[e = _PWM6DCH -> >> & _dutyValue -> -> 1020 `i `ui -> 2 `i `uc ]
+[; ;pwm6.c: 19: PWM6DCL = (dutyValue & 0x0003)<<6;
+"19
+[e = _PWM6DCL -> << & _dutyValue -> -> 3 `i `ui -> 6 `i `uc ]
+[; ;pwm6.c: 20: }
+"20
 [e :UE 1520 ]
-}
-"98
-[v _PWM2_OutputStatusGet `(uc ~T0 @X0 1 ef ]
-"99
-{
-[; ;pwm2.c: 98: bool PWM2_OutputStatusGet(void)
-[; ;pwm2.c: 99: {
-[e :U _PWM2_OutputStatusGet ]
-[f ]
-[; ;pwm2.c: 101: return(CCP2CONbits.OUT);
-"101
-[e ) . . _CCP2CONbits 0 2 ]
-[e $UE 1523  ]
-[; ;pwm2.c: 102: }
-"102
-[e :UE 1523 ]
 }

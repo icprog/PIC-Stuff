@@ -3,64 +3,85 @@
 [d edition pro ]
 [d chip 16F18855 ]
 [d frameptr 6 ]
-"30 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\tmr2.c
-[e E13558 . `uc
-TMR2_ROP_STARTS_TMRON 0
-TMR2_ROP_STARTS_TMRON_ERSHIGH 1
-TMR2_ROP_STARTS_TMRON_ERSLOW 2
-TMR2_ROP_RESETS_ERSBOTHEDGE 3
-TMR2_ROP_RESETS_ERSRISINGEDGE 4
-TMR2_ROP_RESETS_ERSFALLINGEDGE 5
-TMR2_ROP_RESETS_ERSLOW 6
-TMR2_ROP_RESETS_ERSHIGH 7
-TMR2_OS_STARTS_TMRON 8
-TMR2_OS_STARTS_ERSRISINGEDGE 9
-TMR2_OS_STARTS_ERSFALLINGEDGE 10
-TMR2_OS_STARTS_ERSBOTHEDGE 11
-TMR2_OS_STARTS_ERSFIRSTRISINGEDGE 12
-TMR2_OS_STARTS_ERSFIRSTFALLINGEDGE 13
-TMR2_OS_STARTS_ERSRISINGEDGEDETECT 14
-TMR2_OS_STARTS_ERSFALLINGEDGEDETECT 15
-TMR2_OS_STARTS_TMRON_ERSHIGH 22
-TMR2_OS_STARTS_TMRON_ERSLOW 23
-TMR2_MS_STARTS_TMRON_ERSRISINGEDGEDETECT 17
-TMR2_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT 18
-TMR2_MS_STARTS_TMRON_ERSBOTHEDGE 19
+"38 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
+[e E13587 . `uc
+POT 4
+channel_VSS 60
+channel_Temp 61
+channel_DAC1 62
+channel_FVR 63
 ]
-"36
-[e E13581 . `uc
-TMR2_T2INPPS 0
-TMR2_RESERVED 1
-TMR2_T4POSTSCALED 2
-TMR2_T6POSTSCALED 3
-TMR2_CCP1_OUT 4
-TMR2_CCP2_OUT 5
-TMR2_CCP3_OUT 6
-TMR2_CCP4_OUT 7
-TMR2_CCP5_OUT 8
-TMR2_PWM6_OUT 9
-TMR2_PWM7_OUT 10
-TMR2_C1_OUT_SYNC 11
-TMR2_C2_OUT_SYNC 12
-TMR2_ZCD_OUTPUT 13
-TMR2_LC1_OUT 14
-TMR2_LC2_OUT 15
-TMR2_LC3_OUT 16
-TMR2_LC4_OUT 17
+"54 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\adcc.c
+[e E13559 . `uc
+POT 4
+channel_VSS 60
+channel_Temp 61
+channel_DAC1 62
+channel_FVR 63
 ]
+"5
+[v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
+"53
+[v _ADCC_GetSingleConversion ADCC_GetSingleConversion `(ui  1 e 2 0 ]
+"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\aldiv.c
+[v ___aldiv __aldiv `(l  1 e 4 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
+"32 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awtoft.c
+[v ___awtoft __awtoft `(f  1 e 3 0 ]
+"409 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\doprnt.c
+[v _fround fround `(d  1 s 3 fround ]
+"425
+[v _scale scale `(d  1 s 3 scale ]
+"492
+[v _sprintf sprintf `(i  1 e 2 0 ]
+"4 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\evalpoly.c
+[v _eval_poly eval_poly `(d  1 e 3 0 ]
+"60 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fldivl.c
+[v __div_to_l_ _div_to_l_ `(ul  1 e 4 0 ]
 "62 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\float.c
 [v ___ftpack __ftpack `(f  1 e 3 0 ]
+"254 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\frexp.c
+[v _frexp frexp `(d  1 e 3 0 ]
 "86 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftadd.c
 [v ___ftadd __ftadd `(f  1 e 3 0 ]
+"56 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
+"60 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftdivl.c
+[v __tdiv_to_l_ _tdiv_to_l_ `(ul  1 e 4 0 ]
+"4 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftge.c
+[v ___ftge __ftge `(b  1 e 0 0 ]
+"62 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 3 0 ]
+"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftneg.c
+[v ___ftneg __ftneg `(f  1 e 3 0 ]
+"18 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftsub.c
+[v ___ftsub __ftsub `(f  1 e 3 0 ]
+"44 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fttol.c
+[v ___fttol __fttol `(l  1 e 4 0 ]
+"8 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\isdigit.c
+[v _isdigit isdigit `(b  1 e 0 0 ]
+"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lldiv.c
+[v ___lldiv __lldiv `(ul  1 e 4 0 ]
+"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\llmod.c
+[v ___llmod __llmod `(ul  1 e 4 0 ]
+"35 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lltoft.c
+[v ___lltoft __lltoft `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\log.c
+[v _log log `(d  1 e 3 0 ]
+"28 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lwtoft.c
+[v ___lwtoft __lwtoft `(f  1 e 3 0 ]
+"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\pic\eeprom.c
 [v _eecpymem eecpymem `(v  1 e 1 0 ]
 "39
 [v _memcpyee memcpyee `(v  1 e 1 0 ]
-"41 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\lcd.c
+"29 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\lcd.c
+[v _InitCustomChars InitCustomChars `(v  1 e 1 0 ]
+"41
 [v _LCD_Port LCD_Port `(v  1 e 1 0 ]
 "65
 [v _LCD_Cmd LCD_Cmd `(v  1 e 1 0 ]
@@ -74,38 +95,20 @@ TMR2_LC4_OUT 17
 [v _LCD_Write_Char LCD_Write_Char `(v  1 e 1 0 ]
 "239
 [v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
-"4 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
+"12 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
 [v _main main `(v  1 e 1 0 ]
-"6 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pin_manager.c
+"5 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
-"8 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm1.c
-[v _PWM1_Initialize PWM1_Initialize `(v  1 e 1 0 ]
-"23
-[v _PWM1_LoadDutyValue PWM1_LoadDutyValue `(v  1 e 1 0 ]
-"63 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm2.c
-[v _PWM2_Initialize PWM2_Initialize `(v  1 e 1 0 ]
-"80
-[v _PWM2_LoadDutyValue PWM2_LoadDutyValue `(v  1 e 1 0 ]
-"63 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm3.c
-[v _PWM3_Initialize PWM3_Initialize `(v  1 e 1 0 ]
-"80
-[v _PWM3_LoadDutyValue PWM3_LoadDutyValue `(v  1 e 1 0 ]
-"36 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\system.c
+"4 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm6.c
+[v _PWM6_Initialize PWM6_Initialize `(v  1 e 1 0 ]
+"15
+[v _PWM6_LoadDutyValue PWM6_LoadDutyValue `(v  1 e 1 0 ]
+"68 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
-"50
+"79
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
-"6 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\tmr2.c
+"4 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\tmr2.c
 [v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
-"41
-[v _TMR2_Start TMR2_Start `(v  1 e 1 0 ]
-"52
-[v _TMR2_Stop TMR2_Stop `(v  1 e 1 0 ]
-"63
-[v _TMR2_Counter8BitGet TMR2_Counter8BitGet `(uc  1 e 1 0 ]
-"77
-[v _TMR2_Counter8BitSet TMR2_Counter8BitSet `(v  1 e 1 0 ]
-"88
-[v _TMR2_Period8BitSet TMR2_Period8BitSet `(v  1 e 1 0 ]
 "572 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
 "633
@@ -118,43 +121,100 @@ TMR2_LC4_OUT 17
 [v _LATB LATB `VEuc  1 e 1 @23 ]
 "877
 [v _LATC LATC `VEuc  1 e 1 @24 ]
-[s S168 . 1 `uc 1 C1TSEL 1 0 :2:0 
-`uc 1 C2TSEL 1 0 :2:2 
-`uc 1 C3TSEL 1 0 :2:4 
-`uc 1 C4TSEL 1 0 :2:6 
+"1508
+[v _ADRESL ADRESL `VEuc  1 e 1 @140 ]
+"1527
+[v _ADRESH ADRESH `VEuc  1 e 1 @141 ]
+"1821
+[v _ADCON0 ADCON0 `VEuc  1 e 1 @147 ]
+[s S349 . 1 `uc 1 ADGO 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 ADFM 1 0 :2:2 
+`uc 1 ADCS 1 0 :1:4 
+`uc 1 . 1 0 :1:5 
+`uc 1 ADCONT 1 0 :1:6 
+`uc 1 ADON 1 0 :1:7 
 ]
-"7435
-[s S173 . 1 `uc 1 C1TSEL0 1 0 :1:0 
-`uc 1 C1TSEL1 1 0 :1:1 
-`uc 1 C2TSEL0 1 0 :1:2 
-`uc 1 C2TSEL1 1 0 :1:3 
-`uc 1 C3TSEL0 1 0 :1:4 
-`uc 1 C3TSEL1 1 0 :1:5 
-`uc 1 C4TSEL0 1 0 :1:6 
-`uc 1 C4TSEL1 1 0 :1:7 
+"1852
+[s S357 . 1 `uc 1 DONE 1 0 :1:0 
 ]
-[u S182 . 1 `S168 1 . 1 0 `S173 1 . 1 0 ]
-[v _CCPTMRS0bits CCPTMRS0bits `VES182  1 e 1 @542 ]
+[s S359 . 1 `uc 1 nDONE 1 0 :1:0 
+]
+[s S361 . 1 `uc 1 GO 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 ADFM0 1 0 :1:2 
+`uc 1 ADFM1 1 0 :1:3 
+]
+[s S366 . 1 `uc 1 GO_nDONE 1 0 :1:0 
+]
+[u S368 . 1 `S349 1 . 1 0 `S357 1 . 1 0 `S359 1 . 1 0 `S361 1 . 1 0 `S366 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES368  1 e 1 @147 ]
+"1911
+[v _ADCON1 ADCON1 `VEuc  1 e 1 @148 ]
+"1949
+[v _ADCON2 ADCON2 `VEuc  1 e 1 @149 ]
+"2025
+[v _ADCON3 ADCON3 `VEuc  1 e 1 @150 ]
+"2095
+[v _ADSTAT ADSTAT `VEuc  1 e 1 @151 ]
+"2164
+[v _ADCLK ADCLK `VEuc  1 e 1 @152 ]
+"2221
+[v _ADACT ADACT `VEuc  1 e 1 @153 ]
+"2272
+[v _ADREF ADREF `VEuc  1 e 1 @154 ]
+"2312
+[v _ADCAP ADCAP `VEuc  1 e 1 @155 ]
+"2363
+[v _ADPRE ADPRE `VEuc  1 e 1 @156 ]
+"2432
+[v _ADACQ ADACQ `VEuc  1 e 1 @157 ]
+"2501
+[v _ADPCH ADPCH `VEuc  1 e 1 @158 ]
+"2627
+[v _ADRPT ADRPT `VEuc  1 e 1 @269 ]
+"2702
+[v _ADLTHL ADLTHL `VEuc  1 e 1 @270 ]
+"2771
+[v _ADLTHH ADLTHH `VEuc  1 e 1 @271 ]
+"2846
+[v _ADUTHL ADUTHL `VEuc  1 e 1 @272 ]
+"2915
+[v _ADUTHH ADUTHH `VEuc  1 e 1 @273 ]
+"2990
+[v _ADSTPTL ADSTPTL `VEuc  1 e 1 @274 ]
+"3059
+[v _ADSTPTH ADSTPTH `VEuc  1 e 1 @275 ]
+[s S292 . 1 `uc 1 C5TSEL 1 0 :2:0 
+`uc 1 P6TSEL 1 0 :2:2 
+`uc 1 P7TSEL 1 0 :2:4 
+]
+"7519
+[s S296 . 1 `uc 1 C5TSEL0 1 0 :1:0 
+`uc 1 C5TSEL1 1 0 :1:1 
+`uc 1 P6TSEL0 1 0 :1:2 
+`uc 1 P6TSEL1 1 0 :1:3 
+`uc 1 P7TSEL0 1 0 :1:4 
+`uc 1 P7TSEL1 1 0 :1:5 
+]
+[u S303 . 1 `S292 1 . 1 0 `S296 1 . 1 0 ]
+[v _CCPTMRS1bits CCPTMRS1bits `VES303  1 e 1 @543 ]
 "7568
 [v _T2TMR T2TMR `VEuc  1 e 1 @652 ]
-"7573
-[v _TMR2 TMR2 `VEuc  1 e 1 @652 ]
 "7605
 [v _T2PR T2PR `VEuc  1 e 1 @653 ]
-"7610
-[v _PR2 PR2 `VEuc  1 e 1 @653 ]
 "7642
 [v _T2CON T2CON `VEuc  1 e 1 @654 ]
-[s S620 . 1 `uc 1 OUTPS 1 0 :4:0 
+[s S85 . 1 `uc 1 OUTPS 1 0 :4:0 
 `uc 1 CKPS 1 0 :3:4 
 `uc 1 ON 1 0 :1:7 
 ]
 "7678
-[s S624 . 1 `uc 1 T2OUTPS 1 0 :4:0 
+[s S89 . 1 `uc 1 T2OUTPS 1 0 :4:0 
 `uc 1 T2CKPS 1 0 :3:4 
 `uc 1 T2ON 1 0 :1:7 
 ]
-[s S628 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
+[s S93 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
 `uc 1 T2OUTPS1 1 0 :1:1 
 `uc 1 T2OUTPS2 1 0 :1:2 
 `uc 1 T2OUTPS3 1 0 :1:3 
@@ -162,7 +222,7 @@ TMR2_LC4_OUT 17
 `uc 1 T2CKPS1 1 0 :1:5 
 `uc 1 T2CKPS2 1 0 :1:6 
 ]
-[s S636 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S101 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -171,130 +231,21 @@ TMR2_LC4_OUT 17
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR2ON 1 0 :1:7 
 ]
-[u S645 . 1 `S620 1 . 1 0 `S624 1 . 1 0 `S628 1 . 1 0 `S636 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES645  1 e 1 @654 ]
+[u S110 . 1 `S85 1 . 1 0 `S89 1 . 1 0 `S93 1 . 1 0 `S101 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES110  1 e 1 @654 ]
 "7787
 [v _T2HLT T2HLT `VEuc  1 e 1 @655 ]
-[s S513 . 1 `uc 1 MODE 1 0 :5:0 
-`uc 1 CKSYNC 1 0 :1:5 
-`uc 1 CKPOL 1 0 :1:6 
-`uc 1 PSYNC 1 0 :1:7 
-]
-"7820
-[s S518 . 1 `uc 1 MODE0 1 0 :1:0 
-`uc 1 MODE1 1 0 :1:1 
-`uc 1 MODE2 1 0 :1:2 
-`uc 1 MODE3 1 0 :1:3 
-`uc 1 MODE4 1 0 :1:4 
-]
-[s S524 . 1 `uc 1 T2MODE 1 0 :5:0 
-`uc 1 T2CKSYNC 1 0 :1:5 
-`uc 1 T2CKPOL 1 0 :1:6 
-`uc 1 T2PSYNC 1 0 :1:7 
-]
-[s S529 . 1 `uc 1 T2MODE0 1 0 :1:0 
-`uc 1 T2MODE1 1 0 :1:1 
-`uc 1 T2MODE2 1 0 :1:2 
-`uc 1 T2MODE3 1 0 :1:3 
-`uc 1 T2MODE4 1 0 :1:4 
-]
-[u S535 . 1 `S513 1 . 1 0 `S518 1 . 1 0 `S524 1 . 1 0 `S529 1 . 1 0 ]
-[v _T2HLTbits T2HLTbits `VES535  1 e 1 @655 ]
 "7919
 [v _T2CLKCON T2CLKCON `VEuc  1 e 1 @656 ]
 "8071
 [v _T2RST T2RST `VEuc  1 e 1 @657 ]
-[s S582 . 1 `uc 1 RSEL 1 0 :5:0 
-]
-"8098
-[s S584 . 1 `uc 1 RSEL0 1 0 :1:0 
-`uc 1 RSEL1 1 0 :1:1 
-`uc 1 RSEL2 1 0 :1:2 
-`uc 1 RSEL3 1 0 :1:3 
-`uc 1 RSEL4 1 0 :1:4 
-]
-[s S590 . 1 `uc 1 T2RSEL 1 0 :5:0 
-]
-[s S592 . 1 `uc 1 T2RSEL0 1 0 :1:0 
-`uc 1 T2RSEL1 1 0 :1:1 
-`uc 1 T2RSEL2 1 0 :1:2 
-`uc 1 T2RSEL3 1 0 :1:3 
-`uc 1 T2RSEL4 1 0 :1:4 
-]
-[u S598 . 1 `S582 1 . 1 0 `S584 1 . 1 0 `S590 1 . 1 0 `S592 1 . 1 0 ]
-[v _T2RSTbits T2RSTbits `VES598  1 e 1 @657 ]
-"9356
-[v _CCPR1L CCPR1L `VEuc  1 e 1 @780 ]
-"9375
-[v _CCPR1H CCPR1H `VEuc  1 e 1 @781 ]
-"9394
-[v _CCP1CON CCP1CON `VEuc  1 e 1 @782 ]
-[s S200 . 1 `uc 1 MODE 1 0 :4:0 
-`uc 1 FMT 1 0 :1:4 
-`uc 1 OUT 1 0 :1:5 
-`uc 1 OE 1 0 :1:6 
-`uc 1 EN 1 0 :1:7 
-]
-"9427
-[s S206 . 1 `uc 1 MODE0 1 0 :1:0 
-`uc 1 MODE1 1 0 :1:1 
-`uc 1 MODE2 1 0 :1:2 
-`uc 1 MODE3 1 0 :1:3 
-]
-[s S211 . 1 `uc 1 CCP1MODE 1 0 :4:0 
-`uc 1 CCP1FMT 1 0 :1:4 
-`uc 1 CCP1OUT 1 0 :1:5 
-`uc 1 CCP1OE 1 0 :1:6 
-`uc 1 CCP1EN 1 0 :1:7 
-]
-[s S217 . 1 `uc 1 CCP1MODE0 1 0 :1:0 
-`uc 1 CCP1MODE1 1 0 :1:1 
-`uc 1 CCP1MODE2 1 0 :1:2 
-`uc 1 CCP1MODE3 1 0 :1:3 
-]
-[u S222 . 1 `S200 1 . 1 0 `S206 1 . 1 0 `S211 1 . 1 0 `S217 1 . 1 0 ]
-[v _CCP1CONbits CCP1CONbits `VES222  1 e 1 @782 ]
-"9594
-[v _CCPR2L CCPR2L `VEuc  1 e 1 @784 ]
-"9613
-[v _CCPR2H CCPR2H `VEuc  1 e 1 @785 ]
-"9632
-[v _CCP2CON CCP2CON `VEuc  1 e 1 @786 ]
-"9665
-[s S300 . 1 `uc 1 CCP2MODE 1 0 :4:0 
-`uc 1 CCP2FMT 1 0 :1:4 
-`uc 1 CCP2OUT 1 0 :1:5 
-`uc 1 CCP2OE 1 0 :1:6 
-`uc 1 CCP2EN 1 0 :1:7 
-]
-[s S306 . 1 `uc 1 CCP2MODE0 1 0 :1:0 
-`uc 1 CCP2MODE1 1 0 :1:1 
-`uc 1 CCP2MODE2 1 0 :1:2 
-`uc 1 CCP2MODE3 1 0 :1:3 
-]
-[u S311 . 1 `S200 1 . 1 0 `S206 1 . 1 0 `S300 1 . 1 0 `S306 1 . 1 0 ]
-[v _CCP2CONbits CCP2CONbits `VES311  1 e 1 @786 ]
-"9832
-[v _CCPR3L CCPR3L `VEuc  1 e 1 @788 ]
-"9851
-[v _CCPR3H CCPR3H `VEuc  1 e 1 @789 ]
-"9870
-[v _CCP3CON CCP3CON `VEuc  1 e 1 @790 ]
-"9903
-[s S385 . 1 `uc 1 CCP3MODE 1 0 :4:0 
-`uc 1 CCP3FMT 1 0 :1:4 
-`uc 1 CCP3OUT 1 0 :1:5 
-`uc 1 CCP3OE 1 0 :1:6 
-`uc 1 CCP3EN 1 0 :1:7 
-]
-[s S391 . 1 `uc 1 CCP3MODE0 1 0 :1:0 
-`uc 1 CCP3MODE1 1 0 :1:1 
-`uc 1 CCP3MODE2 1 0 :1:2 
-`uc 1 CCP3MODE3 1 0 :1:3 
-]
-[u S396 . 1 `S200 1 . 1 0 `S206 1 . 1 0 `S385 1 . 1 0 `S391 1 . 1 0 ]
-[v _CCP3CONbits CCP3CONbits `VES396  1 e 1 @790 ]
-[s S470 . 1 `uc 1 TMR1IF 1 0 :1:0 
+"10540
+[v _PWM6DCL PWM6DCL `VEuc  1 e 1 @908 ]
+"10605
+[v _PWM6DCH PWM6DCH `VEuc  1 e 1 @909 ]
+"10774
+[v _PWM6CON PWM6CON `VEuc  1 e 1 @910 ]
+[s S68 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 TMR3IF 1 0 :1:2 
 `uc 1 TMR4IF 1 0 :1:3 
@@ -302,8 +253,16 @@ TMR2_LC4_OUT 17
 `uc 1 TMR6IF 1 0 :1:5 
 ]
 "19557
-[u S477 . 1 `S470 1 . 1 0 ]
-[v _PIR4bits PIR4bits `VES477  1 e 1 @1808 ]
+[u S75 . 1 `S68 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES75  1 e 1 @1808 ]
+[s S32 . 1 `uc 1 INTE 1 0 :1:0 
+`uc 1 . 1 0 :3:1 
+`uc 1 IOCIE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+]
+"19817
+[u S37 . 1 `S32 1 . 1 0 ]
+[v _PIE0bits PIE0bits `VES37  1 e 1 @1814 ]
 "21546
 [v _OSCCON1 OSCCON1 `VEuc  1 e 1 @2189 ]
 "21684
@@ -314,55 +273,33 @@ TMR2_LC4_OUT 17
 [v _OSCTUNE OSCTUNE `VEuc  1 e 1 @2194 ]
 "21886
 [v _OSCFRQ OSCFRQ `VEuc  1 e 1 @2195 ]
+"22252
+[v _FVRCON FVRCON `VEuc  1 e 1 @2316 ]
 "27917
 [v _PPSLOCK PPSLOCK `VEuc  1 e 1 @3727 ]
-[s S131 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
+[s S47 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
 ]
 "27927
-[u S133 . 1 `S131 1 . 1 0 ]
-[v _PPSLOCKbits PPSLOCKbits `VES133  1 e 1 @3727 ]
-[s S138 . 1 `uc 1 T2AINPPS 1 0 :5:0 
-]
-"28349
-[s S140 . 1 `uc 1 T2AINPPS0 1 0 :1:0 
-`uc 1 T2AINPPS1 1 0 :1:1 
-`uc 1 T2AINPPS2 1 0 :1:2 
-`uc 1 T2AINPPS3 1 0 :1:3 
-`uc 1 T2AINPPS4 1 0 :1:4 
-]
-[u S146 . 1 `S138 1 . 1 0 `S140 1 . 1 0 ]
-[v _T2AINPPSbits T2AINPPSbits `VES146  1 e 1 @3740 ]
-"30891
-[v _RC4PPS RC4PPS `VEuc  1 e 1 @3876 ]
-"30940
-[v _RC5PPS RC5PPS `VEuc  1 e 1 @3877 ]
-"30989
-[v _RC6PPS RC6PPS `VEuc  1 e 1 @3878 ]
+[u S49 . 1 `S47 1 . 1 0 ]
+[v _PPSLOCKbits PPSLOCKbits `VES49  1 e 1 @3727 ]
+"29960
+[v _RA1PPS RA1PPS `VEuc  1 e 1 @3857 ]
 "31087
 [v _ANSELA ANSELA `VEuc  1 e 1 @3896 ]
 "31148
 [v _WPUA WPUA `VEuc  1 e 1 @3897 ]
-"31209
-[v _ODCONA ODCONA `VEuc  1 e 1 @3898 ]
 "31697
 [v _ANSELB ANSELB `VEuc  1 e 1 @3907 ]
 "31758
 [v _WPUB WPUB `VEuc  1 e 1 @3908 ]
-"31819
-[v _ODCONB ODCONB `VEuc  1 e 1 @3909 ]
 "32307
 [v _ANSELC ANSELC `VEuc  1 e 1 @3918 ]
 "32368
 [v _WPUC WPUC `VEuc  1 e 1 @3919 ]
-"32429
-[v _ODCONC ODCONC `VEuc  1 e 1 @3920 ]
 "32917
 [v _WPUE WPUE `VEuc  1 e 1 @3941 ]
 "34694
-"34694
 [v _GIE GIE `VEb  1 e 0 @95 ]
-"36142
-[v _RA0 RA0 `VEb  1 e 0 @96 ]
 "36254
 [v _RB0 RB0 `VEb  1 e 0 @104 ]
 "36268
@@ -375,56 +312,388 @@ TMR2_LC4_OUT 17
 [v _RB4 RB4 `VEb  1 e 0 @108 ]
 "36324
 [v _RB5 RB5 `VEb  1 e 0 @109 ]
+"354 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\doprnt.c
+[v _dpowers dpowers `DCC[10]ul  1 s 40 dpowers ]
+"3 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\errno.c
+[v _errno errno `i  1 e 2 0 ]
+"7 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\powers.c
+[v __powers_ _powers_ `DCC[13]d  1 e 39 0 ]
+"39
+[v __npowers_ _npowers_ `DCC[13]d  1 e 39 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\lcd.c
-[v ___cgram __cgram `[8]uc  1 e 8 0 ]
-"4 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
+[v ___cgram __cgram `[24]uc  1 e 24 0 ]
+"9 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
+[v _samples samples `[50]ui  1 e 100 @9100 ]
+"12
 [v _main main `(v  1 e 1 0 ]
 {
-"36
+"28
+[v main@s s `[8]uc  1 a 8 25 ]
+"32
+[v main@totals totals `l  1 a 4 41 ]
+"26
+[v main@steinhart steinhart `f  1 a 3 51 ]
+[v main@R R `f  1 a 3 36 ]
+"24
+[v main@readTemperature readTemperature `ui  1 a 2 49 ]
+[v main@outCurrent outCurrent `ui  1 a 2 47 ]
+[v main@readTemperatureOld readTemperatureOld `ui  1 a 2 45 ]
+[v main@setpoint setpoint `ui  1 a 2 39 ]
+"30
+[v main@sampleIndex sampleIndex `ui  1 s 2 sampleIndex ]
+"151
 } 0
-"36 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\system.c
-[v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
+"492 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\doprnt.c
+[v _sprintf sprintf `(i  1 e 2 0 ]
 {
-"48
+[v sprintf@sp sp `*.4uc  1 a 1 wreg ]
+[u S450 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+"526
+[v sprintf@tmpval tmpval `S450  1 a 4 12 ]
+"528
+[v sprintf@val val `ul  1 a 4 4 ]
+"516
+[v sprintf@fval fval `d  1 a 3 18 ]
+"504
+[v sprintf@prec prec `i  1 a 2 22 ]
+"516
+[v sprintf@exp exp `i  1 a 2 16 ]
+"501
+[v sprintf@width width `i  1 a 2 10 ]
+"508
+[v sprintf@flag flag `us  1 a 2 8 ]
+"499
+[v sprintf@c c `c  1 a 1 24 ]
+"494
+[v sprintf@ap ap `[1]*.4v  1 a 1 3 ]
+"492
+[v sprintf@sp sp `*.4uc  1 a 1 wreg ]
+[v sprintf@f f `*.25DCCuc  1 p 2 57 ]
+"533
+[v sprintf@sp sp `*.4uc  1 a 1 21 ]
+"1541
 } 0
-"6 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\tmr2.c
-[v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
+"425
+[v _scale scale `(d  1 s 3 scale ]
 {
+[v scale@scl scl `c  1 a 1 wreg ]
+[v scale@scl scl `c  1 a 1 wreg ]
+"428
+[v scale@scl scl `c  1 a 1 32 ]
+"441
+} 0
+"8 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\isdigit.c
+[v _isdigit isdigit `(b  1 e 0 0 ]
+{
+[v isdigit@c c `uc  1 a 1 wreg ]
+[v isdigit@c c `uc  1 a 1 wreg ]
+"14
+[v isdigit@c c `uc  1 a 1 1 ]
+"15
+} 0
+"409 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\doprnt.c
+[v _fround fround `(d  1 s 3 fround ]
+{
+[v fround@prec prec `uc  1 a 1 wreg ]
+[v fround@prec prec `uc  1 a 1 wreg ]
+"413
+[v fround@prec prec `uc  1 a 1 37 ]
+"418
+} 0
+"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+{
+"11
+[v ___awmod@sign sign `uc  1 a 1 6 ]
+[v ___awmod@counter counter `uc  1 a 1 5 ]
+"6
+[v ___awmod@divisor divisor `i  1 p 2 0 ]
+[v ___awmod@dividend dividend `i  1 p 2 2 ]
+"35
+} 0
+"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+{
+"11
+[v ___awdiv@quotient quotient `i  1 a 2 2 ]
+"12
+[v ___awdiv@sign sign `uc  1 a 1 1 ]
+[v ___awdiv@counter counter `uc  1 a 1 0 ]
+"6
+[v ___awdiv@divisor divisor `i  1 p 2 7 ]
+[v ___awdiv@dividend dividend `i  1 p 2 9 ]
+"42
+} 0
+"60 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftdivl.c
+[v __tdiv_to_l_ _tdiv_to_l_ `(ul  1 e 4 0 ]
+{
+"63
+[v __tdiv_to_l_@quot quot `ul  1 a 4 0 ]
+"62
+[v __tdiv_to_l_@exp1 exp1 `uc  1 a 1 5 ]
+[v __tdiv_to_l_@cntr cntr `uc  1 a 1 4 ]
+"60
+[v __tdiv_to_l_@f1 f1 `f  1 p 3 0 ]
+[v __tdiv_to_l_@f2 f2 `f  1 p 3 3 ]
+"101
+} 0
+"60 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fldivl.c
+[v __div_to_l_ _div_to_l_ `(ul  1 e 4 0 ]
+{
+"63
+[v __div_to_l_@quot quot `ul  1 a 4 0 ]
+"62
+[v __div_to_l_@exp1 exp1 `uc  1 a 1 5 ]
+[v __div_to_l_@cntr cntr `uc  1 a 1 4 ]
+"60
+[v __div_to_l_@f1 f1 `d  1 p 3 0 ]
+[v __div_to_l_@f2 f2 `d  1 p 3 3 ]
+"101
+} 0
+"35 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lltoft.c
+[v ___lltoft __lltoft `(f  1 e 3 0 ]
+{
+"37
+[v ___lltoft@exp exp `uc  1 a 1 13 ]
+"35
+[v ___lltoft@c c `ul  1 p 4 8 ]
+"46
+} 0
+"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\llmod.c
+[v ___llmod __llmod `(ul  1 e 4 0 ]
+{
+"11
+[v ___llmod@counter counter `uc  1 a 1 9 ]
+"6
+[v ___llmod@divisor divisor `ul  1 p 4 0 ]
+[v ___llmod@dividend dividend `ul  1 p 4 4 ]
+"26
+} 0
+"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lldiv.c
+[v ___lldiv __lldiv `(ul  1 e 4 0 ]
+{
+"11
+[v ___lldiv@quotient quotient `ul  1 a 4 9 ]
+"12
+[v ___lldiv@counter counter `uc  1 a 1 13 ]
+"6
+[v ___lldiv@divisor divisor `ul  1 p 4 0 ]
+[v ___lldiv@dividend dividend `ul  1 p 4 4 ]
+"31
+} 0
+"44 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fttol.c
+[v ___fttol __fttol `(l  1 e 4 0 ]
+{
+"47
+[v ___fttol@lval lval `ul  1 a 4 42 ]
+"46
+[v ___fttol@exp1 exp1 `uc  1 a 1 46 ]
+[v ___fttol@sign1 sign1 `uc  1 a 1 41 ]
+"44
+[v ___fttol@f1 f1 `f  1 p 3 33 ]
+"73
+} 0
+"18 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftsub.c
+[v ___ftsub __ftsub `(f  1 e 3 0 ]
+{
+[v ___ftsub@f2 f2 `f  1 p 3 51 ]
+[v ___ftsub@f1 f1 `f  1 p 3 54 ]
 "27
 } 0
-"41
-[v _TMR2_Start TMR2_Start `(v  1 e 1 0 ]
+"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftneg.c
+[v ___ftneg __ftneg `(f  1 e 3 0 ]
 {
-"45
+[v ___ftneg@f1 f1 `f  1 p 3 0 ]
+"20
 } 0
-"63 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm3.c
-[v _PWM3_Initialize PWM3_Initialize `(v  1 e 1 0 ]
+"5 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\log.c
+[v _log log `(d  1 e 3 0 ]
 {
-"78
+"7
+[v log@exponent exponent `i  1 a 2 65 ]
+"5
+[v log@x x `d  1 p 3 61 ]
+"9
+[v log@coeff coeff `DCC[9]d  1 s 27 coeff ]
+"36
 } 0
-"63 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm2.c
-[v _PWM2_Initialize PWM2_Initialize `(v  1 e 1 0 ]
+"254 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\frexp.c
+[v _frexp frexp `(d  1 e 3 0 ]
 {
-"78
+[v frexp@value value `d  1 p 3 0 ]
+[v frexp@eptr eptr `*.4i  1 p 1 3 ]
+"274
 } 0
-"8 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm1.c
-[v _PWM1_Initialize PWM1_Initialize `(v  1 e 1 0 ]
+"4 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\evalpoly.c
+[v _eval_poly eval_poly `(d  1 e 3 0 ]
+{
+"6
+[v eval_poly@res res `d  1 a 3 58 ]
+"4
+[v eval_poly@x x `d  1 p 3 51 ]
+[v eval_poly@d d `*.25DCCd  1 p 2 54 ]
+[v eval_poly@n n `i  1 p 2 56 ]
+"12
+} 0
+"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 12 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 4 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 6 ]
+"53
+} 0
+"62 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 3 0 ]
+{
+"65
+[v ___ftmul@f3_as_product f3_as_product `um  1 a 3 19 ]
+"64
+[v ___ftmul@sign sign `uc  1 a 1 23 ]
+[v ___ftmul@cntr cntr `uc  1 a 1 22 ]
+[v ___ftmul@exp exp `uc  1 a 1 18 ]
+"62
+[v ___ftmul@f1 f1 `f  1 p 3 8 ]
+[v ___ftmul@f2 f2 `f  1 p 3 11 ]
+"157
+} 0
+"86 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 3 0 ]
+{
+"88
+[v ___ftadd@exp1 exp1 `uc  1 a 1 50 ]
+[v ___ftadd@exp2 exp2 `uc  1 a 1 49 ]
+[v ___ftadd@sign sign `uc  1 a 1 48 ]
+"86
+[v ___ftadd@f1 f1 `f  1 p 3 38 ]
+[v ___ftadd@f2 f2 `f  1 p 3 41 ]
+"148
+} 0
+"4 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftge.c
+[v ___ftge __ftge `(b  1 e 0 0 ]
+{
+[v ___ftge@ff1 ff1 `f  1 p 3 0 ]
+[v ___ftge@ff2 ff2 `f  1 p 3 3 ]
+"13
+} 0
+"32 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awtoft.c
+[v ___awtoft __awtoft `(f  1 e 3 0 ]
+{
+"34
+[v ___awtoft@sign sign `uc  1 a 1 13 ]
+"32
+[v ___awtoft@c c `i  1 p 2 8 ]
+"42
+} 0
+"28 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lwtoft.c
+[v ___lwtoft __lwtoft `(f  1 e 3 0 ]
+{
+[v ___lwtoft@c c `ui  1 p 2 8 ]
+"31
+} 0
+"56 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
+{
+"60
+[v ___ftdiv@f3 f3 `f  1 a 3 11 ]
+"59
+[v ___ftdiv@sign sign `uc  1 a 1 15 ]
+[v ___ftdiv@exp exp `uc  1 a 1 14 ]
+[v ___ftdiv@cntr cntr `uc  1 a 1 10 ]
+"56
+[v ___ftdiv@f2 f2 `f  1 p 3 0 ]
+[v ___ftdiv@f1 f1 `f  1 p 3 3 ]
+"86
+} 0
+"62 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+{
+[v ___ftpack@arg arg `um  1 p 3 0 ]
+[v ___ftpack@exp exp `uc  1 p 1 3 ]
+[v ___ftpack@sign sign `uc  1 p 1 4 ]
+"86
+} 0
+"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\aldiv.c
+[v ___aldiv __aldiv `(l  1 e 4 0 ]
+{
+"11
+[v ___aldiv@quotient quotient `l  1 a 4 2 ]
+"12
+[v ___aldiv@sign sign `uc  1 a 1 1 ]
+[v ___aldiv@counter counter `uc  1 a 1 0 ]
+"6
+[v ___aldiv@divisor divisor `l  1 p 4 0 ]
+[v ___aldiv@dividend dividend `l  1 p 4 4 ]
+"42
+} 0
+"68 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\system.c
+[v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
+{
+"77
+} 0
+"4 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\tmr2.c
+[v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
 {
 "21
 } 0
-"6 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pin_manager.c
+"4 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm6.c
+[v _PWM6_Initialize PWM6_Initialize `(v  1 e 1 0 ]
+{
+"13
+} 0
+"5 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
 {
-"34
+"27
 [v PIN_MANAGER_Initialize@state state `uc  1 a 1 0 ]
-"50
+"42
 } 0
-"50 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\system.c
+"79 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\system.c
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
 {
-"62
+"105
 } 0
-"154 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\lcd.c
+"5 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\adcc.c
+[v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
+{
+"50
+} 0
+"15 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm6.c
+[v _PWM6_LoadDutyValue PWM6_LoadDutyValue `(v  1 e 1 0 ]
+{
+[v PWM6_LoadDutyValue@dutyValue dutyValue `ui  1 p 2 0 ]
+"20
+} 0
+"239 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\lcd.c
+[v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
+{
+[v LCD_Write_String@a a `*.4uc  1 a 1 wreg ]
+"241
+[v LCD_Write_String@i i `i  1 a 2 6 ]
+"239
+[v LCD_Write_String@a a `*.4uc  1 a 1 wreg ]
+"242
+[v LCD_Write_String@a a `*.4uc  1 a 1 8 ]
+"244
+} 0
+"82
+[v _LCD_Set_Cursor LCD_Set_Cursor `(v  1 e 1 0 ]
+{
+[v LCD_Set_Cursor@x x `uc  1 a 1 wreg ]
+"109
+[v LCD_Set_Cursor@temp temp `uc  1 a 1 9 ]
+[v LCD_Set_Cursor@w w `uc  1 a 1 8 ]
+[v LCD_Set_Cursor@z z `uc  1 a 1 7 ]
+"82
+[v LCD_Set_Cursor@x x `uc  1 a 1 wreg ]
+[v LCD_Set_Cursor@y y `uc  1 p 1 3 ]
+"111
+[v LCD_Set_Cursor@x x `uc  1 a 1 6 ]
+"152
+} 0
+"154
 [v _LCD_Init LCD_Init `(v  1 e 1 0 ]
 {
 [v LCD_Init@style style `uc  1 a 1 wreg ]
@@ -433,65 +702,30 @@ TMR2_LC4_OUT 17
 [v LCD_Init@style style `uc  1 a 1 5 ]
 "221
 } 0
-"80 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm3.c
-[v _PWM3_LoadDutyValue PWM3_LoadDutyValue `(v  1 e 1 0 ]
-{
-[v PWM3_LoadDutyValue@dutyValue dutyValue `ui  1 p 2 0 ]
-"96
-} 0
-"80 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm2.c
-[v _PWM2_LoadDutyValue PWM2_LoadDutyValue `(v  1 e 1 0 ]
-{
-[v PWM2_LoadDutyValue@dutyValue dutyValue `ui  1 p 2 0 ]
-"96
-} 0
-"23 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm1.c
-[v _PWM1_LoadDutyValue PWM1_LoadDutyValue `(v  1 e 1 0 ]
-{
-[v PWM1_LoadDutyValue@dutyValue dutyValue `ui  1 p 2 0 ]
-"38
-} 0
-"239 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\lcd.c
-[v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
-{
-"241
-[v LCD_Write_String@i i `uc  1 a 1 10 ]
-"239
-[v LCD_Write_String@a a `*.25DCCuc  1 p 2 5 ]
-"244
-} 0
-"223
-[v _LCD_Write_Char LCD_Write_Char `(v  1 e 1 0 ]
-{
-[v LCD_Write_Char@a a `DCCuc  1 a 1 wreg ]
-"225
-[v LCD_Write_Char@y y `uc  1 a 1 3 ]
-[v LCD_Write_Char@temp temp `uc  1 a 1 2 ]
-"223
-[v LCD_Write_Char@a a `DCCuc  1 a 1 wreg ]
-"226
-[v LCD_Write_Char@a a `DCCuc  1 a 1 4 ]
-"237
-} 0
-"82
-[v _LCD_Set_Cursor LCD_Set_Cursor `(v  1 e 1 0 ]
-{
-[v LCD_Set_Cursor@x x `uc  1 a 1 wreg ]
-"86
-[v LCD_Set_Cursor@temp temp `uc  1 a 1 9 ]
-[v LCD_Set_Cursor@w w `uc  1 a 1 8 ]
-[v LCD_Set_Cursor@z z `uc  1 a 1 7 ]
-"82
-[v LCD_Set_Cursor@x x `uc  1 a 1 wreg ]
-[v LCD_Set_Cursor@y y `uc  1 p 1 3 ]
-"88
-[v LCD_Set_Cursor@x x `uc  1 a 1 6 ]
-"152
-} 0
 "75
 [v _LCD_Clear LCD_Clear `(v  1 e 1 0 ]
 {
 "79
+} 0
+"29
+[v _InitCustomChars InitCustomChars `(v  1 e 1 0 ]
+{
+"31
+[v InitCustomChars@i i `uc  1 a 1 6 ]
+"38
+} 0
+"223
+[v _LCD_Write_Char LCD_Write_Char `(v  1 e 1 0 ]
+{
+[v LCD_Write_Char@a a `uc  1 a 1 wreg ]
+"225
+[v LCD_Write_Char@y y `uc  1 a 1 3 ]
+[v LCD_Write_Char@temp temp `uc  1 a 1 2 ]
+"223
+[v LCD_Write_Char@a a `uc  1 a 1 wreg ]
+"226
+[v LCD_Write_Char@a a `uc  1 a 1 4 ]
+"237
 } 0
 "65
 [v _LCD_Cmd LCD_Cmd `(v  1 e 1 0 ]
@@ -510,4 +744,13 @@ TMR2_LC4_OUT 17
 "43
 [v LCD_Port@a a `uc  1 a 1 0 ]
 "62
+} 0
+"53 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\adcc.c
+[v _ADCC_GetSingleConversion ADCC_GetSingleConversion `(ui  1 e 2 0 ]
+{
+[v ADCC_GetSingleConversion@channel channel `E13559  1 a 1 wreg ]
+[v ADCC_GetSingleConversion@channel channel `E13559  1 a 1 wreg ]
+"56
+[v ADCC_GetSingleConversion@channel channel `E13559  1 a 1 3 ]
+"74
 } 0

@@ -1,5 +1,5 @@
 
-# 1 "pwm1.c"
+# 1 "pwm6.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -16677,53 +16677,27 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
-typedef unsigned char bool;
+# 9 "pwm6.h"
+void PWM6_Initialize(void);
 
-# 96 "pwm1.h"
-void PWM1_Initialize(void);
+# 33
+void PWM6_LoadDutyValue(uint16_t dutyValue);
 
-# 123
-void PWM1_LoadDutyValue(uint16_t dutyValue);
-
-# 155
-bool PWM1_OutputStatusGet(void);
-
-# 8 "pwm1.c"
-void PWM1_Initialize(void)
+# 4 "pwm6.c"
+void PWM6_Initialize(void)
 {
+PWM6CON = 0x80;
 
-CCP1CON = 0x8F;
+PWM6DCH = 0x3C;
 
+PWM6DCL = 0x40;
 
-CCPR1H = 0x01;
-
-
-CCPR1L = 0xFF;
-
-
-CCPTMRS0bits.C1TSEL = 0x1;
+CCPTMRS1bits.P6TSEL = 0x1;
 }
 
-void PWM1_LoadDutyValue(uint16_t dutyValue)
+void PWM6_LoadDutyValue(uint16_t dutyValue)
 {
-dutyValue &= 0x01FF;
+PWM6DCH = (dutyValue & 0x03FC)>>2;
 
-if(CCP1CONbits.CCP1FMT)
-{
-dutyValue <<= 6;
-CCPR1H = dutyValue >> 8;
-CCPR1L = dutyValue;
-}
-else
-{
-CCPR1H = dutyValue >> 8;
-CCPR1L = dutyValue;
-}
-}
-
-bool PWM1_OutputStatusGet(void)
-{
-
-return(CCP1CONbits.OUT);
+PWM6DCL = (dutyValue & 0x0003)<<6;
 }

@@ -16587,7 +16587,7 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 66 "pin_manager.h"
+# 16 "pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdint.h"
@@ -16683,214 +16683,100 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
 typedef unsigned char bool;
 
-# 78 "tmr2.h"
-typedef enum
-{
+# 9 "pwm6.h"
+void PWM6_Initialize(void);
 
-# 88
-TMR2_ROP_STARTS_TMRON,
+# 33
+void PWM6_LoadDutyValue(uint16_t dutyValue);
 
-# 93
-TMR2_ROP_STARTS_TMRON_ERSHIGH,
-
-# 98
-TMR2_ROP_STARTS_TMRON_ERSLOW,
-
-# 103
-TMR2_ROP_RESETS_ERSBOTHEDGE,
-
-# 108
-TMR2_ROP_RESETS_ERSRISINGEDGE,
-
-# 113
-TMR2_ROP_RESETS_ERSFALLINGEDGE,
-
-# 118
-TMR2_ROP_RESETS_ERSLOW,
-
-# 123
-TMR2_ROP_RESETS_ERSHIGH,
-
-# 134
-TMR2_OS_STARTS_TMRON,
-
-# 139
-TMR2_OS_STARTS_ERSRISINGEDGE ,
-
-# 144
-TMR2_OS_STARTS_ERSFALLINGEDGE ,
-
-# 149
-TMR2_OS_STARTS_ERSBOTHEDGE,
-
-# 155
-TMR2_OS_STARTS_ERSFIRSTRISINGEDGE,
-
-# 161
-TMR2_OS_STARTS_ERSFIRSTFALLINGEDGE,
-
-# 167
-TMR2_OS_STARTS_ERSRISINGEDGEDETECT,
-
-# 172
-TMR2_OS_STARTS_ERSFALLINGEDGEDETECT,
-
-# 177
-TMR2_OS_STARTS_TMRON_ERSHIGH = 0x16,
-
-# 182
-TMR2_OS_STARTS_TMRON_ERSLOW = 0x17,
-
-# 191
-TMR2_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
-
-# 196
-TMR2_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
-
-# 202
-TMR2_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
-
-} TMR2_HLT_MODE;
-
-# 219
-typedef enum
-{
-
-# 224
-TMR2_T2INPPS,
-
-# 228
-TMR2_RESERVED,
-
-# 232
-TMR2_T4POSTSCALED,
-
-# 236
-TMR2_T6POSTSCALED,
-
-# 239
-TMR2_CCP1_OUT,
-
-# 243
-TMR2_CCP2_OUT,
-
-# 247
-TMR2_CCP3_OUT,
-
-# 251
-TMR2_CCP4_OUT,
-
-# 255
-TMR2_CCP5_OUT,
-
-# 259
-TMR2_PWM6_OUT,
-
-# 263
-TMR2_PWM7_OUT,
-
-# 267
-TMR2_C1_OUT_SYNC,
-
-# 271
-TMR2_C2_OUT_SYNC,
-
-# 275
-TMR2_ZCD_OUTPUT,
-
-# 279
-TMR2_LC1_OUT,
-
-# 283
-TMR2_LC2_OUT,
-
-# 287
-TMR2_LC3_OUT,
-
-# 291
-TMR2_LC4_OUT
-
-
-
-
-} TMR2_HLT_EXT_RESET_SOURCE;
-
-# 338
+# 264 "tmr2.h"
 void TMR2_Initialize(void);
 
-# 374
-void TMR2_ModeSet(TMR2_HLT_MODE mode);
+# 9 "adcc.h"
+typedef uint16_t adc_result_t;
 
-# 409
-void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset);
 
-# 438
-void TMR2_Start(void);
+typedef enum
+{
+POT = 0x4,
+channel_VSS = 0x3C,
+channel_Temp = 0x3D,
+channel_DAC1 = 0x3E,
+channel_FVR = 0x3F
+} adcc_channel_t;
 
-# 467
-void TMR2_StartTimer(void);
 
-# 499
-void TMR2_Stop(void);
+void ADCC_Initialize(void);
 
-# 531
-void TMR2_StopTimer(void);
+void ADCC_StartConversion(adcc_channel_t channel);
 
-# 566
-uint8_t TMR2_Counter8BitGet(void);
+bool ADCC_IsConversionDone();
 
-# 601
-uint8_t TMR2_ReadTimer(void);
+adc_result_t ADCC_GetConversionResult(void);
 
-# 640
-void TMR2_Counter8BitSet(uint8_t timerVal);
+adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
 
-# 679
-void TMR2_WriteTimer(uint8_t timerVal);
+void ADCC_StopConversion(void);
 
-# 731
-void TMR2_Period8BitSet(uint8_t periodVal);
+void ADCC_SetStopOnInterrupt(void);
 
-# 783
-void TMR2_LoadPeriodRegister(uint8_t periodVal);
+void ADCC_DischargeSampleCapacitor(void);
 
-# 821
-bool TMR2_HasOverflowOccured(void);
+void ADCC_LoadAcquisitionRegister(uint8_t);
 
-# 96 "pwm1.h"
-void PWM1_Initialize(void);
+void ADCC_SetPrechargeTime(uint8_t);
 
-# 123
-void PWM1_LoadDutyValue(uint16_t dutyValue);
+void ADCC_SetRepeatCount(uint8_t);
 
-# 155
-bool PWM1_OutputStatusGet(void);
+uint8_t ADCC_GetCurrentCountofConversions(void);
 
-# 9 "pwm2.h"
-void PWM2_Initialize(void);
+void ADCC_ClearAccumulator(void);
 
-# 36
-void PWM2_LoadDutyValue(uint16_t dutyValue);
+uint16_t ADCC_GetAccumulatorValue(void);
 
-# 68
-bool PWM2_OutputStatusGet(void);
+bool ADCC_HasAccumulatorOverflowed(void);
 
-# 96 "pwm3.h"
-void PWM3_Initialize(void);
+uint16_t ADCC_GetFilterValue(void);
 
-# 123
-void PWM3_LoadDutyValue(uint16_t dutyValue);
+# 76
+uint16_t ADCC_GetPreviousResult(void);
 
-# 155
-bool PWM3_OutputStatusGet(void);
+# 100
+void ADCC_DefineSetPoint(uint16_t);
 
-# 18 "system.h"
+# 125
+void ADCC_SetUpperThreshold(uint16_t);
+
+# 150
+void ADCC_SetLowerThreshold(uint16_t);
+
+# 173
+uint16_t ADCC_GetErrorCalculation(void);
+
+# 195
+void ADCC_EnableDoubleSampling(void);
+
+# 217
+void ADCC_EnableContinuousConversion(void);
+
+# 239
+void ADCC_DisableContinuousConversion(void);
+
+# 261
+bool ADCC_HasErrorCrossedUpperThreshold(void);
+
+# 283
+bool ADCC_HasErrorCrossedLowerThreshold(void);
+
+# 305
+uint8_t ADCC_GetConversionStageStatus(void);
+
+# 27 "system.h"
 void SYSTEM_Initialize(void);
-
 
 void OSCILLATOR_Initialize(void);
 
-# 37 "lcd.h"
+# 49 "lcd.h"
 void InitCustomChars();
 
 void LCD_Port(char a);
@@ -16903,9 +16789,9 @@ void LCD_Set_Cursor(char x, char y);
 
 void LCD_Init(char style);
 
-void LCD_Write_Char(const char a);
+void LCD_Write_Char(char a);
 
-void LCD_Write_String(const char *a);
+void LCD_Write_String(char *a);
 
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
@@ -16913,6 +16799,8 @@ void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, sig
 uint8_t __cgram[] =
 {
 0x0C, 0x12, 0x12, 0x0C, 0x00, 0x00, 0x00, 0x00,
+0x0A, 0x15, 0x11, 0x0A, 0x04, 0x00, 0x00, 0x00,
+0x0A, 0x1F, 0x1F, 0x0E, 0x04, 0x00, 0x00, 0x00,
 
 # 27
 };
@@ -16959,7 +16847,7 @@ RB0 = 0;
 LCD_Port(a);
 RB1 = 1;
 RB1 = 0;
-_delay((unsigned long)((4)*(250000/4000.0)));
+_delay((unsigned long)((4)*(1000000/4000.0)));
 }
 
 
@@ -16973,12 +16861,13 @@ LCD_Cmd(1);
 void LCD_Set_Cursor(char x, char y)
 {
 
-
+# 109
 char temp,z,w;
 
 if(x == 0)
 {
 temp = 0x80 + y;
+
 z = temp>>4;
 w = temp & 0x0F;
 LCD_Cmd(z);
@@ -16988,71 +16877,92 @@ LCD_Cmd(w);
 else if(x == 1)
 {
 temp = 0xC0 + y;
+
 z = temp>>4;
 w = temp & 0x0F;
 LCD_Cmd(z);
 LCD_Cmd(w);
 }
 
-# 152
+
+else if(x == 2)
+{
+temp = 0x94 + y;
+
+z = temp>>4;
+w = temp & 0x0F;
+LCD_Cmd(z);
+LCD_Cmd(w);
+}
+
+else if(x == 3)
+{
+temp = 0xD4 + y;
+
+z = temp>>4;
+w = temp & 0x0F;
+LCD_Cmd(z);
+LCD_Cmd(w);
+}
+
 }
 
 void LCD_Init(char style)
 {
 LCD_Port(0x00);
 
-_delay((unsigned long)((100)*(250000/4000.0)));
+_delay((unsigned long)((100)*(1000000/4000.0)));
 
 LCD_Cmd(0x03);
 
-_delay((unsigned long)((10)*(250000/4000.0)));
+_delay((unsigned long)((10)*(1000000/4000.0)));
 
 LCD_Cmd(0x03);
 
-_delay((unsigned long)((120)*(250000/4000000.0)));
+_delay((unsigned long)((120)*(1000000/4000000.0)));
 
 LCD_Cmd(0x03);
 
-_delay((unsigned long)((120)*(250000/4000000.0)));
+_delay((unsigned long)((120)*(1000000/4000000.0)));
 
 LCD_Cmd(0x02);
 
-_delay((unsigned long)((120)*(250000/4000000.0)));
+_delay((unsigned long)((120)*(1000000/4000000.0)));
 
 LCD_Cmd(0x2);
 
 LCD_Cmd(0x8);
 
-_delay((unsigned long)((120)*(250000/4000000.0)));
+_delay((unsigned long)((120)*(1000000/4000000.0)));
 
 LCD_Cmd(0x0);
 
 LCD_Cmd(0x8);
 
-_delay((unsigned long)((120)*(250000/4000000.0)));
+_delay((unsigned long)((120)*(1000000/4000000.0)));
 
 LCD_Cmd(0x0);
 
 LCD_Cmd(0x1);
 
-_delay((unsigned long)((5)*(250000/4000.0)));
+_delay((unsigned long)((5)*(1000000/4000.0)));
 
 LCD_Cmd(0x0);
 
 LCD_Cmd(0x6);
 
-_delay((unsigned long)((120)*(250000/4000000.0)));
+_delay((unsigned long)((120)*(1000000/4000000.0)));
 
 LCD_Cmd(0x0);
 
 LCD_Cmd(0xc|style);
 
-_delay((unsigned long)((120)*(250000/4000000.0)));
+_delay((unsigned long)((120)*(1000000/4000000.0)));
 
 # 221
 }
 
-void LCD_Write_Char(const char a)
+void LCD_Write_Char(char a)
 {
 char temp,y;
 temp = a&0x0F;
@@ -17061,16 +16971,16 @@ RB0 = 1;
 LCD_Port(y>>4);
 RB1 = 1;
 RB1 = 0;
-_delay((unsigned long)((40)*(250000/4000000.0)));
+_delay((unsigned long)((40)*(1000000/4000000.0)));
 LCD_Port(temp);
 RB1 = 1;
 RB1 = 0;
-_delay((unsigned long)((40)*(250000/4000000.0)));
+_delay((unsigned long)((40)*(1000000/4000000.0)));
 }
 
-void LCD_Write_String(const char *a)
+void LCD_Write_String(char *a)
 {
-char i;
+int i;
 for(i=0;a[i]!='\0';i++)
 LCD_Write_Char(a[i]);
 }

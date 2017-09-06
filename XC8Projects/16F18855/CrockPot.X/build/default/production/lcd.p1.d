@@ -1,9 +1,8 @@
  build/default/production/lcd.d  \
  build/default/production/lcd.p1:  \
  lcd.c  \
-pwm1.h  \
-pwm2.h  \
-pwm3.h  \
+adcc.h  \
+pwm6.h  \
 lcd.h  \
 pin_manager.h  \
 system.h  \

@@ -16587,7 +16587,7 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 66 "pin_manager.h"
+# 16 "pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdint.h"
@@ -16683,208 +16683,16 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
 typedef unsigned char bool;
 
-# 78 "tmr2.h"
-typedef enum
-{
+# 9 "pwm6.h"
+void PWM6_Initialize(void);
 
-# 88
-TMR2_ROP_STARTS_TMRON,
+# 33
+void PWM6_LoadDutyValue(uint16_t dutyValue);
 
-# 93
-TMR2_ROP_STARTS_TMRON_ERSHIGH,
-
-# 98
-TMR2_ROP_STARTS_TMRON_ERSLOW,
-
-# 103
-TMR2_ROP_RESETS_ERSBOTHEDGE,
-
-# 108
-TMR2_ROP_RESETS_ERSRISINGEDGE,
-
-# 113
-TMR2_ROP_RESETS_ERSFALLINGEDGE,
-
-# 118
-TMR2_ROP_RESETS_ERSLOW,
-
-# 123
-TMR2_ROP_RESETS_ERSHIGH,
-
-# 134
-TMR2_OS_STARTS_TMRON,
-
-# 139
-TMR2_OS_STARTS_ERSRISINGEDGE ,
-
-# 144
-TMR2_OS_STARTS_ERSFALLINGEDGE ,
-
-# 149
-TMR2_OS_STARTS_ERSBOTHEDGE,
-
-# 155
-TMR2_OS_STARTS_ERSFIRSTRISINGEDGE,
-
-# 161
-TMR2_OS_STARTS_ERSFIRSTFALLINGEDGE,
-
-# 167
-TMR2_OS_STARTS_ERSRISINGEDGEDETECT,
-
-# 172
-TMR2_OS_STARTS_ERSFALLINGEDGEDETECT,
-
-# 177
-TMR2_OS_STARTS_TMRON_ERSHIGH = 0x16,
-
-# 182
-TMR2_OS_STARTS_TMRON_ERSLOW = 0x17,
-
-# 191
-TMR2_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
-
-# 196
-TMR2_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
-
-# 202
-TMR2_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
-
-} TMR2_HLT_MODE;
-
-# 219
-typedef enum
-{
-
-# 224
-TMR2_T2INPPS,
-
-# 228
-TMR2_RESERVED,
-
-# 232
-TMR2_T4POSTSCALED,
-
-# 236
-TMR2_T6POSTSCALED,
-
-# 239
-TMR2_CCP1_OUT,
-
-# 243
-TMR2_CCP2_OUT,
-
-# 247
-TMR2_CCP3_OUT,
-
-# 251
-TMR2_CCP4_OUT,
-
-# 255
-TMR2_CCP5_OUT,
-
-# 259
-TMR2_PWM6_OUT,
-
-# 263
-TMR2_PWM7_OUT,
-
-# 267
-TMR2_C1_OUT_SYNC,
-
-# 271
-TMR2_C2_OUT_SYNC,
-
-# 275
-TMR2_ZCD_OUTPUT,
-
-# 279
-TMR2_LC1_OUT,
-
-# 283
-TMR2_LC2_OUT,
-
-# 287
-TMR2_LC3_OUT,
-
-# 291
-TMR2_LC4_OUT
-
-
-
-
-} TMR2_HLT_EXT_RESET_SOURCE;
-
-# 338
+# 264 "tmr2.h"
 void TMR2_Initialize(void);
 
-# 374
-void TMR2_ModeSet(TMR2_HLT_MODE mode);
-
-# 409
-void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset);
-
-# 438
-void TMR2_Start(void);
-
-# 467
-void TMR2_StartTimer(void);
-
-# 499
-void TMR2_Stop(void);
-
-# 531
-void TMR2_StopTimer(void);
-
-# 566
-uint8_t TMR2_Counter8BitGet(void);
-
-# 601
-uint8_t TMR2_ReadTimer(void);
-
-# 640
-void TMR2_Counter8BitSet(uint8_t timerVal);
-
-# 679
-void TMR2_WriteTimer(uint8_t timerVal);
-
-# 731
-void TMR2_Period8BitSet(uint8_t periodVal);
-
-# 783
-void TMR2_LoadPeriodRegister(uint8_t periodVal);
-
-# 821
-bool TMR2_HasOverflowOccured(void);
-
-# 96 "pwm1.h"
-void PWM1_Initialize(void);
-
-# 123
-void PWM1_LoadDutyValue(uint16_t dutyValue);
-
-# 155
-bool PWM1_OutputStatusGet(void);
-
-# 9 "pwm2.h"
-void PWM2_Initialize(void);
-
-# 36
-void PWM2_LoadDutyValue(uint16_t dutyValue);
-
-# 68
-bool PWM2_OutputStatusGet(void);
-
-# 96 "pwm3.h"
-void PWM3_Initialize(void);
-
-# 123
-void PWM3_LoadDutyValue(uint16_t dutyValue);
-
-# 155
-bool PWM3_OutputStatusGet(void);
-
-# 37 "lcd.h"
+# 49 "lcd.h"
 void InitCustomChars();
 
 void LCD_Port(char a);
@@ -16897,35 +16705,300 @@ void LCD_Set_Cursor(char x, char y);
 
 void LCD_Init(char style);
 
-void LCD_Write_Char(const char a);
+void LCD_Write_Char(char a);
 
-void LCD_Write_String(const char *a);
+void LCD_Write_String(char *a);
 
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
-# 18 "system.h"
-void SYSTEM_Initialize(void);
+# 9 "adcc.h"
+typedef uint16_t adc_result_t;
 
+
+typedef enum
+{
+POT = 0x4,
+channel_VSS = 0x3C,
+channel_Temp = 0x3D,
+channel_DAC1 = 0x3E,
+channel_FVR = 0x3F
+} adcc_channel_t;
+
+
+void ADCC_Initialize(void);
+
+void ADCC_StartConversion(adcc_channel_t channel);
+
+bool ADCC_IsConversionDone();
+
+adc_result_t ADCC_GetConversionResult(void);
+
+adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+
+void ADCC_StopConversion(void);
+
+void ADCC_SetStopOnInterrupt(void);
+
+void ADCC_DischargeSampleCapacitor(void);
+
+void ADCC_LoadAcquisitionRegister(uint8_t);
+
+void ADCC_SetPrechargeTime(uint8_t);
+
+void ADCC_SetRepeatCount(uint8_t);
+
+uint8_t ADCC_GetCurrentCountofConversions(void);
+
+void ADCC_ClearAccumulator(void);
+
+uint16_t ADCC_GetAccumulatorValue(void);
+
+bool ADCC_HasAccumulatorOverflowed(void);
+
+uint16_t ADCC_GetFilterValue(void);
+
+# 76
+uint16_t ADCC_GetPreviousResult(void);
+
+# 100
+void ADCC_DefineSetPoint(uint16_t);
+
+# 125
+void ADCC_SetUpperThreshold(uint16_t);
+
+# 150
+void ADCC_SetLowerThreshold(uint16_t);
+
+# 173
+uint16_t ADCC_GetErrorCalculation(void);
+
+# 195
+void ADCC_EnableDoubleSampling(void);
+
+# 217
+void ADCC_EnableContinuousConversion(void);
+
+# 239
+void ADCC_DisableContinuousConversion(void);
+
+# 261
+bool ADCC_HasErrorCrossedUpperThreshold(void);
+
+# 283
+bool ADCC_HasErrorCrossedLowerThreshold(void);
+
+# 305
+uint8_t ADCC_GetConversionStageStatus(void);
+
+# 27 "system.h"
+void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 4 "main.c"
+# 30 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\math.h"
+extern double fabs(double);
+extern double floor(double);
+extern double ceil(double);
+extern double modf(double, double *);
+extern double sqrt(double);
+extern double atof(const char *);
+extern double sin(double) ;
+extern double cos(double) ;
+extern double tan(double) ;
+extern double asin(double) ;
+extern double acos(double) ;
+extern double atan(double);
+extern double atan2(double, double) ;
+extern double log(double);
+extern double log10(double);
+extern double pow(double, double) ;
+extern double exp(double) ;
+extern double sinh(double) ;
+extern double cosh(double) ;
+extern double tanh(double);
+extern double eval_poly(double, const double *, int);
+extern double frexp(double, int *);
+extern double ldexp(double, int);
+extern double fmod(double, double);
+extern double trunc(double);
+extern double round(double);
+
+# 4 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\__size_t.h"
+typedef unsigned size_t;
+
+# 7 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdarg.h"
+typedef void * va_list[1];
+
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
+
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
+
+# 43 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdio.h"
+struct __prbuf
+{
+char * ptr;
+void (* func)(char);
+};
+
+# 29 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\errno.h"
+extern int errno;
+
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\conio.h"
+extern void init_uart(void);
+
+extern char getch(void);
+extern char getche(void);
+extern void putch(char);
+extern void ungetch(char);
+
+extern __bit kbhit(void);
+
+# 23
+extern char * cgets(char *);
+extern void cputs(const char *);
+
+# 88 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdio.h"
+extern int cprintf(char *, ...);
+#pragma printf_check(cprintf)
+
+
+
+extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+
+
+# 180
+#pragma printf_check(vprintf) const
+#pragma printf_check(vsprintf) const
+
+extern char * gets(char *);
+extern int puts(const char *);
+extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+
+#pragma printf_check(printf) const
+#pragma printf_check(sprintf) const
+extern int sprintf(char *, const char *, ...);
+extern int printf(const char *, ...);
+
+# 9 "main.c"
+uint16_t samples[50];
+
+
 void main(void)
 {
-
 SYSTEM_Initialize();
 
-# 24
+LCD_Init(0X00);
+
+_delay((unsigned long)((100)*(1000000/4000.0)));
+
+LCD_Clear();
+
+InitCustomChars();
+
+uint16_t readTemperature, setpoint = 70, outCurrent = 1023, readTemperatureOld = 20;
+
+float R, steinhart;
+
+char s[8];
+
+static uint16_t sampleIndex = 0;
+
+int32_t totals = 0;
+
+
+
 while (1)
 {
-{ LCD_Set_Cursor(0,0); LCD_Write_String("HELLO!");};
-_delay((unsigned long)((1000)*(250000/4000.0)));
-RA0 = 1;
-LCD_Clear();
-_delay((unsigned long)((1000)*(250000/4000.0)));
-RA0 = 0;
-PWM1_LoadDutyValue(0x01FF);
-PWM2_LoadDutyValue(0x01FF);
-PWM3_LoadDutyValue(0x01FF);
+readTemperature = ADCC_GetSingleConversion(2);
+
+totals = totals - samples[sampleIndex];
+
+samples[sampleIndex] = readTemperature;
+
+totals = totals + samples[sampleIndex];
+
+sampleIndex += 1;
+
+if(sampleIndex >= 50)
+{
+sampleIndex = 0;
+}
+
+readTemperature = totals / 50;
+
+if(readTemperature > readTemperatureOld)
+{
+readTemperatureOld += 1;
+}
+
+if(readTemperature < readTemperatureOld)
+{
+readTemperatureOld -= 1;
+}
+
+readTemperature = readTemperatureOld;
+
+
+if(setpoint > readTemperature)
+{
+if(outCurrent < 1022)
+{
+
+
+
+outCurrent++;
+
+
+}
+else
+{
+outCurrent = 1023;
+}
+}
+
+if(setpoint < readTemperature)
+{
+if(outCurrent > 1)
+{
+
+
+
+outCurrent-=1;
+
+
+}
+else
+{
+outCurrent = 0;
+}
+}
+
+R = 10200/(1023/(float)readTemperature - 1);
+
+steinhart = R /10061;
+steinhart = log(steinhart);
+steinhart /= 4015;
+steinhart += 1.0 / (25 + 273.15);
+steinhart = 1.0 / steinhart;
+steinhart -= 273.15;
+
+# 129
+sprintf(s,"%3.1f  ", steinhart );
+LCD_Set_Cursor(0,0);
+LCD_Write_String(s);
+
+sprintf(s,"%5.0f  ", R );
+LCD_Set_Cursor(1,0);
+LCD_Write_String(s);
+
+# 149
+PWM6_LoadDutyValue(outCurrent);
 }
 }
