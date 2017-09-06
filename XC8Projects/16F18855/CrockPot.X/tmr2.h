@@ -1,67 +1,8 @@
-/**
-  TMR2 Generated Driver API Header File
-
-  @Company
-    Microchip Technology Inc.
-
-  @File Name
-    tmr2.h
-
-  @Summary
-    This is the generated header file for the TMR2 driver using MPLAB(c) Code Configurator
-
-  @Description
-    This header file provides APIs for TMR2.
-    Generation Information :
-        Product Revision  :  MPLAB(c) Code Configurator - 4.15.1
-        Device            :  PIC16F18855
-        Driver Version    :  1.00
-    The generated drivers are tested against the following:
-        Compiler          :  XC8 1.35
-        MPLAB             :  MPLAB X 3.40
-*/
-
-/*
-    (c) 2016 Microchip Technology Inc. and its subsidiaries. You may use this
-    software and any derivatives exclusively with Microchip products.
-
-    THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
-    EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
-    WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
-    PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
-    WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
-
-    IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
-    INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
-    WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
-    BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
-    FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
-    ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
-    THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-
-    MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
-    TERMS.
-*/
-
 #ifndef _TMR2_H
 #define _TMR2_H
 
-/**
-  Section: Included Files
-*/
-
 #include <stdint.h>
-#include <stdbool.h>
-
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    extern "C" {
-
-#endif
-
-/**
- Section: Data Type Definitions
-*/
+//#include <stdbool.h>
 
 /**
   HLT Mode Setting Enumeration
@@ -75,8 +16,8 @@
 	with the timer
 */
 
-typedef enum
-{
+//typedef enum
+//{
 
 	/* Roll-over Pulse mode clears the TMRx upon TMRx = PRx, then continue running.
 	ON bit must be set and is not affected by Resets
@@ -85,42 +26,42 @@ typedef enum
    /* Roll-over Pulse mode indicates that Timer starts
    immediately upon ON = 1 (Software Control)
    */
-   TMR2_ROP_STARTS_TMRON,
+  // TMR2_ROP_STARTS_TMRON,
 
    /* Roll-over Pulse mode indicates that the Timer starts
        when ON = 1 and TMRx_ers = 1. Stops when TMRx_ers = 0
      */
-   TMR2_ROP_STARTS_TMRON_ERSHIGH,
+//   TMR2_ROP_STARTS_TMRON_ERSHIGH,
 
    /* Roll-over Pulse mode indicates that the Timer starts
       when ON = 1 and TMRx_ers = 0. Stops when TMRx_ers = 1
      */
-   TMR2_ROP_STARTS_TMRON_ERSLOW,
+  // TMR2_ROP_STARTS_TMRON_ERSLOW,
 
    /* Roll-over Pulse mode indicates that the Timer resets
    upon rising or falling edge of TMRx_ers
      */
-   TMR2_ROP_RESETS_ERSBOTHEDGE,
+//   TMR2_ROP_RESETS_ERSBOTHEDGE,
 
    /* Roll-over Pulse mode indicates that the Timer resets
     upon rising edge of TMRx_ers
      */
-   TMR2_ROP_RESETS_ERSRISINGEDGE,
+  // TMR2_ROP_RESETS_ERSRISINGEDGE,
 
    /* Roll-over Pulse mode indicates that the Timer resets
    upon falling edge of TMRx_ers
      */
-   TMR2_ROP_RESETS_ERSFALLINGEDGE,
+//   TMR2_ROP_RESETS_ERSFALLINGEDGE,
 
    /* Roll-over Pulse mode indicates that the Timer resets
    upon TMRx_ers = 0
      */
-   TMR2_ROP_RESETS_ERSLOW,
+  // TMR2_ROP_RESETS_ERSLOW,
 
    /* Roll-over Pulse mode indicates that the Timer resets
    upon TMRx_ers = 1
      */
-   TMR2_ROP_RESETS_ERSHIGH,
+//   TMR2_ROP_RESETS_ERSHIGH,
 
     /*In all One-Shot mode the timer resets and the ON bit is
 	cleared when the timer value matches the PRx period
@@ -131,55 +72,55 @@ typedef enum
    /* One shot mode indicates that the Timer starts
     immediately upon ON = 1 (Software Control)
      */
-   TMR2_OS_STARTS_TMRON,
+  // TMR2_OS_STARTS_TMRON,
 
    /* One shot mode indicates that the Timer starts
     when a rising edge is detected on the TMRx_ers
      */
-   TMR2_OS_STARTS_ERSRISINGEDGE ,
+//   TMR2_OS_STARTS_ERSRISINGEDGE ,
 
    /* One shot mode indicates that the Timer starts
     when a falling edge is detected on the TMRx_ers
      */
-   TMR2_OS_STARTS_ERSFALLINGEDGE ,
+  // TMR2_OS_STARTS_ERSFALLINGEDGE ,
 
    /* One shot mode indicates that the Timer starts
     when either a rising or falling edge is detected on TMRx_ers
      */
-   TMR2_OS_STARTS_ERSBOTHEDGE,
+//   TMR2_OS_STARTS_ERSBOTHEDGE,
 
    /* One shot mode indicates that the Timer starts
     upon first TMRx_ers rising edge and resets on all
 	subsequent TMRx_ers rising edges
      */
-   TMR2_OS_STARTS_ERSFIRSTRISINGEDGE,
+  // TMR2_OS_STARTS_ERSFIRSTRISINGEDGE,
 
    /* One shot mode indicates that the Timer starts
     upon first TMRx_ers falling edge and restarts on all
 	subsequent TMRx_ers falling edges
      */
-   TMR2_OS_STARTS_ERSFIRSTFALLINGEDGE,
+//   TMR2_OS_STARTS_ERSFIRSTFALLINGEDGE,
 
    /* One shot mode indicates that the Timer starts
     when a rising edge is detected on the TMRx_ers,
 	resets upon TMRx_ers = 0
      */
-   TMR2_OS_STARTS_ERSRISINGEDGEDETECT,
+  // TMR2_OS_STARTS_ERSRISINGEDGEDETECT,
      /* One shot mode indicates that the Timer starts
     when a falling edge is detected on the TMRx_ers,
 	resets upon TMRx_ers = 1
      */
-   TMR2_OS_STARTS_ERSFALLINGEDGEDETECT,
+//   TMR2_OS_STARTS_ERSFALLINGEDGEDETECT,
    
    /* One shot mode indicates that the Timer starts
     when a TMRx_ers = 1,ON =1 and resets upon TMRx_ers =0
     */
-   TMR2_OS_STARTS_TMRON_ERSHIGH = 0x16,
+  // TMR2_OS_STARTS_TMRON_ERSHIGH = 0x16,
            
    /* One shot mode indicates that the Timer starts
      when a TMRx_ers = 0,ON = 1 and resets upon TMRx_ers =1 
     */
-   TMR2_OS_STARTS_TMRON_ERSLOW = 0x17,
+//   TMR2_OS_STARTS_TMRON_ERSLOW = 0x17,
         
    /*In all Mono-Stable mode the ON bit must be initially set,but
      not cleared upon the TMRx = PRx, and the timer will start upon
@@ -188,20 +129,20 @@ typedef enum
    /* Mono Stable mode indicates that the Timer starts
       when a rising edge is detected on the TMRx_ers and ON = 1
     */
-   TMR2_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
+  // TMR2_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
            
    /* Mono Stable mode indicates that the Timer starts
       when a falling edge is detected on the TMRx_ers and ON = 1
     */
-   TMR2_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
+//   TMR2_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
            
    /* Mono Stable mode indicates that the Timer starts
       when  either a rising or falling edge is detected on TMRx_ers 
       and ON = 1
     */
-   TMR2_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
+  // TMR2_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
            
-} TMR2_HLT_MODE;
+//} TMR2_HLT_MODE;
 
 /**
   HLT Reset Source Enumeration
@@ -216,84 +157,81 @@ typedef enum
 	controlled by the HLT_MODE
 */
 
-typedef enum
-{
+//typedef enum
+//{
 
      /* T2INPPS is the Timer external reset source
      */
-    TMR2_T2INPPS,
+   // TMR2_T2INPPS,
 
     /* Reserved enum cannot be used 
      */
-    TMR2_RESERVED,
+  ///  TMR2_RESERVED,
     
     /* Timer4 Postscale is the Timer external reset source 
      */
-    TMR2_T4POSTSCALED,
+//    TMR2_T4POSTSCALED,
     
     /* Timer6 Postscale is the Timer external reset source 
      */
-    TMR2_T6POSTSCALED,
+    //TMR2_T6POSTSCALED,
      /* CCP1_OUT is the Timer external reset source 
      */
-    TMR2_CCP1_OUT,
+  //  TMR2_CCP1_OUT,
 
     /* CCP2_OUT is the Timer external reset source 
      */
-    TMR2_CCP2_OUT,
+//    TMR2_CCP2_OUT,
 
      /* CCP3_OUT is the Timer external reset source 
      */
-    TMR2_CCP3_OUT,
+  //  TMR2_CCP3_OUT,
 
     /* CCP4_OUT is the Timer external reset source 
      */
-    TMR2_CCP4_OUT,
+//    TMR2_CCP4_OUT,
 
     /* CCP5_OUT is the Timer external reset source 
      */
-    TMR2_CCP5_OUT,
+    //TMR2_CCP5_OUT,
 
     /* PWM6_out is the Timer external reset source 
      */
-    TMR2_PWM6_OUT,
+  //  TMR2_PWM6_OUT,
 
      /* PWM7_out is the Timer external reset source 
      */
-    TMR2_PWM7_OUT,
+//    TMR2_PWM7_OUT,
 
     /* C1_OUT_SYNC is the Timer external reset source 
      */
-    TMR2_C1_OUT_SYNC,	
+//    TMR2_C1_OUT_SYNC,	
 
     /* C2_OUT_SYNC is the Timer external reset source 
      */
-    TMR2_C2_OUT_SYNC,
+    //TMR2_C2_OUT_SYNC,
 
     /* ZCD_Output is the Timer external reset source 
      */
-    TMR2_ZCD_OUTPUT,
+  //  TMR2_ZCD_OUTPUT,
 
     /* LC1_out is the Timer external reset source 
      */
-    TMR2_LC1_OUT,
+////    TMR2_LC1_OUT,
          
     /* LC2_out is the Timer external reset source 
      */
-    TMR2_LC2_OUT,
+//    TMR2_LC2_OUT,
             
     /* LC3_out is the Timer external reset source 
      */
-    TMR2_LC3_OUT,
+    //TMR2_LC3_OUT,
 
     /* LC4_out is the Timer external reset source 
      */
-    TMR2_LC4_OUT
+  //  TMR2_LC4_OUT
 
-
-
-
-} TMR2_HLT_EXT_RESET_SOURCE;
+//} TMR2_HLT_EXT_RESET_SOURCE;
 
 
 /**
@@ -311,18 +249,6 @@ typedef enum
   @Description
     This function initializes the TMR2 Registers.
     This function must be called before any other TMR2 function is called.
-
-  @Preconditions
-    None
-
-  @Param
-    None
-
-  @Returns
-    None
-
-  @Comment
-    
 
   @Example
     <code>
@@ -350,9 +276,6 @@ void TMR2_Initialize(void);
   @Param
     mode - Value to write into T2HLTbits.MODE bits.
 
-  @Returns
-    None
-
   @Example
     <code>
 	main()
@@ -371,7 +294,7 @@ void TMR2_Initialize(void);
     }
     </code>
 */
-void TMR2_ModeSet(TMR2_HLT_MODE mode);
+//void TMR2_ModeSet(TMR2_HLT_MODE mode);
 
 /**
   @Summary
@@ -406,7 +329,7 @@ void TMR2_ModeSet(TMR2_HLT_MODE mode);
     }
     </code>
 */
-void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset);
+//void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset);
 
 /**
   @Summary
@@ -435,7 +358,7 @@ void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset);
     // Do something else...
     </code>
 */
-void TMR2_Start(void);
+//void TMR2_Start(void);
 
 /**
   @Summary
@@ -464,7 +387,7 @@ void TMR2_Start(void);
     // Do something else...
     </code>
 */
-void TMR2_StartTimer(void);
+//void TMR2_StartTimer(void);
 
 /**
   @Summary
@@ -496,7 +419,7 @@ void TMR2_StartTimer(void);
     TMR2_Stop();
     </code>
 */
-void TMR2_Stop(void);
+//void TMR2_Stop(void);
 
 /**
   @Summary
@@ -528,7 +451,7 @@ void TMR2_Stop(void);
     TMR2_StopTimer();
     </code>
 */
-void TMR2_StopTimer(void);
+//void TMR2_StopTimer(void);
 
 /**
   @Summary
@@ -563,7 +486,7 @@ void TMR2_StopTimer(void);
     }
     </code>
 */
-uint8_t TMR2_Counter8BitGet(void);
+//uint8_t TMR2_Counter8BitGet(void);
 
 /**
   @Summary
@@ -598,7 +521,7 @@ uint8_t TMR2_Counter8BitGet(void);
     }
     </code>
 */
-uint8_t TMR2_ReadTimer(void);
+//uint8_t TMR2_ReadTimer(void);
 
 /**
   @Summary
@@ -637,7 +560,7 @@ uint8_t TMR2_ReadTimer(void);
     }
     </code>
 */
-void TMR2_Counter8BitSet(uint8_t timerVal);
+//void TMR2_Counter8BitSet(uint8_t timerVal);
 
 /**
   @Summary
@@ -676,7 +599,7 @@ void TMR2_Counter8BitSet(uint8_t timerVal);
     }
     </code>
 */
-void TMR2_WriteTimer(uint8_t timerVal);
+//void TMR2_WriteTimer(uint8_t timerVal);
 
 /**
   @Summary
@@ -728,7 +651,7 @@ void TMR2_WriteTimer(uint8_t timerVal);
     }
     </code>
 */
-void TMR2_Period8BitSet(uint8_t periodVal);
+//void TMR2_Period8BitSet(uint8_t periodVal);
 
 /**
   @Summary
@@ -780,7 +703,7 @@ void TMR2_Period8BitSet(uint8_t periodVal);
     }
     </code>
 */
-void TMR2_LoadPeriodRegister(uint8_t periodVal);
+//void TMR2_LoadPeriodRegister(uint8_t periodVal);
 
 /**
   @Summary
@@ -818,16 +741,6 @@ void TMR2_LoadPeriodRegister(uint8_t periodVal);
     }
     </code>
 */
-bool TMR2_HasOverflowOccured(void);
-
- #ifdef __cplusplus  // Provide C++ Compatibility
-
-    }
+//bool TMR2_HasOverflowOccured(void);
 
 #endif
-
-#endif // _TMR2_H
-/**
- End of File
-*/
-

@@ -5,8 +5,8 @@
 uint8_t __cgram[] =                                     // YOU CAN USE LCD_Write_Char(48 + Ascii code) for any char in the Display Rom!!!
 {
     0x0C, 0x12, 0x12, 0x0C, 0x00, 0x00, 0x00, 0x00,     // Char0 Degree symbol, Use LCD_Write_Char(0); to display this char
-//	0x0A, 0x15, 0x11, 0x0A, 0x04, 0x00, 0x00, 0x00,     // Char2 Open Heart
-//	0x0A, 0x1F, 0x1F, 0x0E, 0x04, 0x00, 0x00, 0x00,     // Char3 Solid Heart
+	0x0A, 0x15, 0x11, 0x0A, 0x04, 0x00, 0x00, 0x00,     // Char2 Open Heart
+	0x0A, 0x1F, 0x1F, 0x0E, 0x04, 0x00, 0x00, 0x00,     // Char3 Solid Heart
 
 /*  	
     0x0C, 0x12, 0x12, 0x0C, 0x00, 0x00, 0x00, 0x00,     // Degree symbol, char num #0 Use LCD_Write_Char(0); to display this char
@@ -220,7 +220,7 @@ void LCD_Init(char style)
   LCD_Cmd(0x06); */
 }
 // ***************************************************************************************************************************************************************
-void LCD_Write_Char(const char a)
+void LCD_Write_Char(char a)
 {
    char temp,y;
    temp = a&0x0F;
@@ -236,9 +236,9 @@ void LCD_Write_Char(const char a)
 __delay_us(40);
    }
 // ***************************************************************************************************************************************************************
-void LCD_Write_String(const char *a)
+void LCD_Write_String(char *a)
 {
-	char i;
+	int i;
 	for(i=0;a[i]!='\0';i++)
 	   LCD_Write_Char(a[i]);
 }
@@ -298,6 +298,179 @@ void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, sig
         LCD_Write_Char(48+str[4]);
     }
 }
+
+/*
+// ***************************************************************************************************************************************************************
+void LCD_Write_Int(int val, char field_length)
+{
+	/ ***************************************************************
+	This function writes a integer type value to LCD module
+
+	Arguments:
+	1)int val	: Value to print
+
+	2)unsigned int field_length :total length of field in which the value is printed
+	must be between 1-5 if it is -1 the field length is no of digits in the val
+
+	****************************************************************/
+
+/*	char str[5]={0,0,0,0,0};
+	int i=4,j=0;
+
+    //Handle negative integers
+    if(val<0)
+    {
+        LCD_Write_Char('-');   //Write Negative sign
+        val=val*-1;     //convert to positive
+    }
+
+	while(val)
+	{
+            str[i]=val%10;
+            val=val/10;
+            i--;
+	}
+	if(field_length==-1)
+		while(str[j]==0) j++;
+	else
+		j=5-field_length;
+
+	
+	for(i=j;i<5;i++)
+	{
+	LCD_Write_Char(48+str[i]);
+	}
+}
+// ***************************************************************************************************************************************************************
+void LCD_Write_Signed_Dec_Int(int val, char field_length)
+{
+	/ ***************************************************************
+	This function writes a integer type value to LCD module, while 
+    taking that value, dividing by ten, and inserting a decimal point!
+
+	Arguments:
+	1)int val	: Value to print
+
+	2)char field_length :total length of field in which the value is printed
+	must be between 1-5 if it is "-1" the field length is no of digits in the val
+
+	****************************************************************/
+/*
+	char str[5]={0,0,0,0,0};
+	int i=4,j=0;
+    
+    if(val<0)                   //Handle negative integers
+    {
+        LCD_Write_Char('-');    //Write Negative sign
+        val=val*-1;             //convert to positive
+    }
+
+    else
+    {
+        LCD_Write_Char('+');     //Int was already positive, so put a positive sign.
+    }
+
+	while(val)
+	{
+            str[i]=val%10;
+            val=val/10;
+            i--;
+	}
+    
+	if(field_length == -1)
+		while(str[j] == 0) j++;
+	else
+		j=5-field_length;
+
+	
+	for(i=j;i<4;i++)
+	{
+	LCD_Write_Char(48+str[i]);
+	}
+    
+    LCD_Write_Char(46);         //A decimal period!
+    LCD_Write_Char(48+str[4]);
+}
+// ***************************************************************************************************************************************************************
+void LCD_Write_Dec_Int(int val, char field_length)
+{
+	/ ***************************************************************
+	This function writes a integer type value to LCD module, while 
+    taking that value, dividing by ten, and inserting a decimal point!
+
+	Arguments:
+	1)int val	: Value to print
+
+	2)char field_length :total length of field in which the value is printed
+	must be between 1-5 if it is "-1" the field length is no of digits in the val
+
+	****************************************************************/
+/*
+	char str[5]={0,0,0,0,0};
+	int i=4,j=0;
+
+	while(val)
+	{
+            str[i]=val%10;
+            val=val/10;
+            i--;
+	}
+    
+	if(field_length == -1)
+		while(str[j] == 0) j++;
+	else
+		j=5-field_length;
+
+	
+	for(i=j;i<4;i++)
+	{
+	LCD_Write_Char(48+str[i]);
+	}
+    
+    LCD_Write_Char(46);         //A decimal period!
+    LCD_Write_Char(48+str[4]);
+}
+// ***************************************************************************************************************************************************************
+void LCD_Write_2Dec_Int(int val, char field_length)
+{
+	/ ***************************************************************
+	This function writes a integer type value to LCD module, while 
+    taking that value, dividing by one hundred, and inserting a V where
+    the decimal point would normally be. Used to display Voltage.
+
+	Arguments:
+	1)int val	: Value to print
+
+	2)char field_length :total length of field in which the value is printed
+	must be between 1-5 if it is "-1" the field length is no of digits in the val
+
+	****************************************************************/
+/*
+	char str[5]={0,0,0,0,0};
+	int i=4,j=0;
+
+	while(val)
+	{
+            str[i]=val%10;
+            val=val/10;
+            i--;
+	}
+    
+	if(field_length == -1)
+		while(str[j] == 0) j++;
+	else
+		j=5-field_length;
+
+	
+	for(i=j;i<3;i++)
+	{
+	LCD_Write_Char(48+str[i]);
+	}
+    
+    LCD_Write_Char('.');
+    LCD_Write_Char(48+str[3]);
+    LCD_Write_Char(48+str[4]);
+}*/
 // ***************************************************************************************************************************************************************
 
 /*void LCD_Shift_Right()
