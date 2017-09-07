@@ -141,11 +141,12 @@ void main(void)
         
         if(setpoint - steinhart < 2)
         {
-            if(counter>=309)
+            if(counter>=314)
             {
                 minute+=1;
                 counter = 0;
             }
         }
+        CLRWDT();
     }
 }
