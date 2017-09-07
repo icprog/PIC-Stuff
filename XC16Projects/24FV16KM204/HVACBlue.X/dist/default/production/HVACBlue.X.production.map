@@ -98,34 +98,34 @@ Program Memory  [Origin = 0x200, Length = 0x2a00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x62e           0x945  (2373)
-.const                       0x82e               0x320           0x4b0  (1200)
-.text                        0xb4e              0x1cb6          0x2b11  (11025)
-.dinit                      0x2804                0x72            0xab  (171)
-.text                       0x2876                0xc6           0x129  (297)
-.init.delay32               0x293c                0x1c            0x2a  (42)
+.const                       0x82e               0x38e           0x555  (1365)
+.text                        0xbbc              0x1e6c          0x2da2  (11682)
+.dinit                      0x2a28                0x82            0xc3  (195)
+.text                       0x2aaa                0xc6           0x129  (297)
+.init.delay32               0x2b70                0x1c            0x2a  (42)
 
-                     Total program memory used (bytes):         0x3b04  (15108) 93%
+                     Total program memory used (bytes):         0x3e52  (15954) 98%
 
 
 Data EEPROM Memory  [Origin = 0x7ffe00, Length = 0x200]
 
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
-.eedata                   0x7ffe00                0x8c            0x8c  (140)
+.eedata                   0x7ffe00                0xaa            0xaa  (170)
 
-                        Total data EEPROM used (bytes):           0x8c  (140) 27%
+                        Total data EEPROM used (bytes):           0xaa  (170) 33%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0            0xc4  (196)
-.ndata                       0x8c4                   0            0x58  (88)
-.nbss                        0x91c                   0             0xe  (14)
-.ndata                       0x92a                   0             0x4  (4)
+.nbss                        0x800                   0            0xb8  (184)
+.ndata                       0x8b8                   0            0x6e  (110)
+.nbss                        0x926                   0             0xe  (14)
+.ndata                       0x934                   0             0x4  (4)
 
-                        Total data memory used (bytes):          0x12e  (302) 14%
+                        Total data memory used (bytes):          0x138  (312) 15%
 
 
 Dynamic Memory Usage
@@ -133,66 +133,68 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x92e                               0x6d2  (1746)
+stack                        0x938                               0x6c8  (1736)
 
-                        Maximum dynamic memory (bytes):          0x6d2  (1746)
+                        Maximum dynamic memory (bytes):          0x6c8  (1736)
 
 
 External Symbols in Data Memory (by address):
 
                     0x0800                  _time
                     0x0808                  _Bias
-                    0x081e                  _outState
-                    0x082a                  _outStateCounter
-                    0x0840                  _lastOutState
-                    0x084b                  _call
-                    0x084c                  _samples
-                    0x08c4                  _WeekDay
-                    0x08d2                  _month
-                    0x08ec                  ___cgram
-                    0x0904                  _desc
-                    0x091a                  _powerFail
-                    0x091c                  _col
-                    0x091d                  _row
-                    0x091e                  _x
-                    0x0920                  _y
-                    0x0922                  _j
-                    0x0923                  _k
-                    0x0924                  _l
-                    0x0926                  _halfSec
-                    0x0927                  _lastState
-                    0x0928                  _timer
-                    0x092a                  _lastKeyState
-                    0x092b                  _key
-                    0x092c                  _toggle
+                    0x081e                  _enabled
+                    0x0829                  _outState
+                    0x0834                  _lastOutState
+                    0x083f                  _call
+                    0x0840                  _samples
+                    0x08b8                  _desc
+                    0x08ce                  _outStateCounter
+                    0x08e4                  _powerFail
+                    0x08e6                  _WeekDay
+                    0x08f4                  _month
+                    0x090e                  ___cgram
+                    0x0926                  _col
+                    0x0927                  _row
+                    0x0928                  _x
+                    0x092a                  _y
+                    0x092c                  _j
+                    0x092d                  _k
+                    0x092e                  _l
+                    0x0930                  _halfSec
+                    0x0931                  _lastState
+                    0x0932                  _timer
+                    0x0934                  _lastKeyState
+                    0x0935                  _key
+                    0x0936                  _toggle
 
 External Symbols in Data Memory (by name):
 
                     0x0808                  _Bias
-                    0x08c4                  _WeekDay
-                    0x08ec                  ___cgram
-                    0x084b                  _call
-                    0x091c                  _col
-                    0x0904                  _desc
-                    0x0926                  _halfSec
-                    0x0922                  _j
-                    0x0923                  _k
-                    0x092b                  _key
-                    0x0924                  _l
-                    0x092a                  _lastKeyState
-                    0x0840                  _lastOutState
-                    0x0927                  _lastState
-                    0x08d2                  _month
-                    0x081e                  _outState
-                    0x082a                  _outStateCounter
-                    0x091a                  _powerFail
-                    0x091d                  _row
-                    0x084c                  _samples
+                    0x08e6                  _WeekDay
+                    0x090e                  ___cgram
+                    0x083f                  _call
+                    0x0926                  _col
+                    0x08b8                  _desc
+                    0x081e                  _enabled
+                    0x0930                  _halfSec
+                    0x092c                  _j
+                    0x092d                  _k
+                    0x0935                  _key
+                    0x092e                  _l
+                    0x0934                  _lastKeyState
+                    0x0834                  _lastOutState
+                    0x0931                  _lastState
+                    0x08f4                  _month
+                    0x0829                  _outState
+                    0x08ce                  _outStateCounter
+                    0x08e4                  _powerFail
+                    0x0927                  _row
+                    0x0840                  _samples
                     0x0800                  _time
-                    0x0928                  _timer
-                    0x092c                  _toggle
-                    0x091e                  _x
-                    0x0920                  _y
+                    0x0932                  _timer
+                    0x0936                  _toggle
+                    0x0928                  _x
+                    0x092a                  _y
 
 External Symbols in Data EEPROM (by address):
 
@@ -243,74 +245,81 @@ External Symbols in Program Memory (by address):
                   0x00087c                  _startDay
                   0x00087d                  _endMonth
                   0x00087e                  _endDay
-                  0x000b4e                  _main
-                  0x0019a4                  _heartBeat
-                  0x0019d8                  _TempCalc
-                  0x0019fe                  _SetStartEndMonth
-                  0x001a8e                  _SetStartEndDay
-                  0x001b1e                  _TempSetpoint
-                  0x001bb0                  _SetDeadband
-                  0x001c44                  _SetBiasWarm
-                  0x001cdc                  _SetBiasNeg5
-                  0x001d74                  _SetBiasNeg15
-                  0x001e0c                  _SetBiasNeg25
-                  0x001ea4                  _SetOutput
-                  0x001edc                  _bin2bcd
-                  0x001f06                  _bcd2bin
-                  0x001f28                  _RTCC_Initialize
-                  0x001f78                  _getRTCTime
-                  0x001ff6                  _displayTime
-                  0x002072                  _SetTime
-                  0x002350                  _InitCustomChars
-                  0x00237e                  _LCD_Port
-                  0x0023c0                  _LCD_Cmd
-                  0x0023d8                  _LCD_Clear
-                  0x0023e6                  _LCD_Set_Cursor
-                  0x00247e                  _LCD_Init
-                  0x002500                  _LCD_Write_Char
-                  0x002538                  _LCD_Write_String
-                  0x00255e                  _LCD_Write_Int
-                  0x002628                  _menuRead
-                  0x002876                  _ADCInit
-                  0x00288e                  _ADCRead
-                  0x0028c6                  _eepromPutData
-                  0x0028fe                  _eepromGetData
-                  0x002912                  _ConfigureOscillator
-                  0x002918                  _InitApp
-                  0x00293c                  ___delay32
+                  0x00087f                  _earlyStartMonth
+                  0x000880                  _earlyStartDay
+                  0x000881                  _extendedEndMonth
+                  0x000882                  _extendedEndDay
+                  0x000883                  _extendedRunEnable
+                  0x000bbc                  _main
+                  0x001b32                  _heartBeat
+                  0x001b66                  _TempCalc
+                  0x001b8c                  _SetStartEndMonth
+                  0x001c1c                  _SetStartEndDay
+                  0x001cac                  _TempSetpoint
+                  0x001d3e                  _SetDeadband
+                  0x001dd2                  _SetBiasWarm
+                  0x001e6a                  _SetBiasNeg5
+                  0x001f02                  _SetBiasNeg15
+                  0x001f9a                  _SetBiasNeg25
+                  0x002032                  _SetExtendedRunBit
+                  0x0020c8                  _SetOutput
+                  0x002100                  _bin2bcd
+                  0x00212a                  _bcd2bin
+                  0x00214c                  _RTCC_Initialize
+                  0x00219c                  _getRTCTime
+                  0x00221a                  _displayTime
+                  0x002296                  _SetTime
+                  0x002574                  _InitCustomChars
+                  0x0025a2                  _LCD_Port
+                  0x0025e4                  _LCD_Cmd
+                  0x0025fc                  _LCD_Clear
+                  0x00260a                  _LCD_Set_Cursor
+                  0x0026a2                  _LCD_Init
+                  0x002724                  _LCD_Write_Char
+                  0x00275c                  _LCD_Write_String
+                  0x002782                  _LCD_Write_Int
+                  0x00284c                  _menuRead
+                  0x002aaa                  _ADCInit
+                  0x002ac2                  _ADCRead
+                  0x002afa                  _eepromPutData
+                  0x002b32                  _eepromGetData
+                  0x002b46                  _ConfigureOscillator
+                  0x002b4c                  _InitApp
+                  0x002b70                  ___delay32
 
 External Symbols in Program Memory (by name):
 
-                  0x002876                  _ADCInit
-                  0x00288e                  _ADCRead
+                  0x002aaa                  _ADCInit
+                  0x002ac2                  _ADCRead
                   0x00084f                  _Bias0
                   0x000844                  _BiasWarm
-                  0x002912                  _ConfigureOscillator
-                  0x002918                  _InitApp
-                  0x002350                  _InitCustomChars
-                  0x0023d8                  _LCD_Clear
-                  0x0023c0                  _LCD_Cmd
-                  0x00247e                  _LCD_Init
-                  0x00237e                  _LCD_Port
-                  0x0023e6                  _LCD_Set_Cursor
-                  0x002500                  _LCD_Write_Char
-                  0x00255e                  _LCD_Write_Int
-                  0x002538                  _LCD_Write_String
-                  0x001f28                  _RTCC_Initialize
-                  0x001d74                  _SetBiasNeg15
-                  0x001e0c                  _SetBiasNeg25
-                  0x001cdc                  _SetBiasNeg5
-                  0x001c44                  _SetBiasWarm
-                  0x001bb0                  _SetDeadband
-                  0x001ea4                  _SetOutput
-                  0x001a8e                  _SetStartEndDay
-                  0x0019fe                  _SetStartEndMonth
-                  0x002072                  _SetTime
-                  0x0019d8                  _TempCalc
-                  0x001b1e                  _TempSetpoint
+                  0x002b46                  _ConfigureOscillator
+                  0x002b4c                  _InitApp
+                  0x002574                  _InitCustomChars
+                  0x0025fc                  _LCD_Clear
+                  0x0025e4                  _LCD_Cmd
+                  0x0026a2                  _LCD_Init
+                  0x0025a2                  _LCD_Port
+                  0x00260a                  _LCD_Set_Cursor
+                  0x002724                  _LCD_Write_Char
+                  0x002782                  _LCD_Write_Int
+                  0x00275c                  _LCD_Write_String
+                  0x00214c                  _RTCC_Initialize
+                  0x001f02                  _SetBiasNeg15
+                  0x001f9a                  _SetBiasNeg25
+                  0x001e6a                  _SetBiasNeg5
+                  0x001dd2                  _SetBiasWarm
+                  0x001d3e                  _SetDeadband
+                  0x002032                  _SetExtendedRunBit
+                  0x0020c8                  _SetOutput
+                  0x001c1c                  _SetStartEndDay
+                  0x001b8c                  _SetStartEndMonth
+                  0x002296                  _SetTime
+                  0x001b66                  _TempCalc
+                  0x001cac                  _TempSetpoint
                   0x00029a                  __DefaultInterrupt
                   0x0002a0                  ___addsf3
-                  0x00293c                  ___delay32
+                  0x002b70                  ___delay32
                   0x000652                  ___divdi3
                   0x00035a                  ___divsf3
                   0x0003de                  ___divsi3
@@ -336,21 +345,26 @@ External Symbols in Program Memory (by name):
                   0x0004ba                  __funpack2
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
-                  0x001f06                  _bcd2bin
+                  0x00212a                  _bcd2bin
                   0x000865                  _biasNeg15
                   0x000870                  _biasNeg25
                   0x00085a                  _biasNeg5
-                  0x001edc                  _bin2bcd
+                  0x002100                  _bin2bcd
                   0x000839                  _deadband
-                  0x001ff6                  _displayTime
-                  0x0028fe                  _eepromGetData
-                  0x0028c6                  _eepromPutData
+                  0x00221a                  _displayTime
+                  0x000880                  _earlyStartDay
+                  0x00087f                  _earlyStartMonth
+                  0x002b32                  _eepromGetData
+                  0x002afa                  _eepromPutData
                   0x00087e                  _endDay
                   0x00087d                  _endMonth
-                  0x001f78                  _getRTCTime
-                  0x0019a4                  _heartBeat
-                  0x000b4e                  _main
-                  0x002628                  _menuRead
+                  0x000882                  _extendedEndDay
+                  0x000881                  _extendedEndMonth
+                  0x000883                  _extendedRunEnable
+                  0x00219c                  _getRTCTime
+                  0x001b32                  _heartBeat
+                  0x000bbc                  _main
+                  0x00284c                  _menuRead
                   0x00082e                  _setpoint
                   0x00087c                  _startDay
                   0x00087b                  _startMonth
@@ -518,17 +532,17 @@ __FICD
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x36de
+.debug_info       0x000000       0x38ab
  *(.debug_info)
- .debug_info      0x000000        0x7b2 build/default/production/adc.o
- .debug_info      0x0007b2         0x9d build/default/production/configuration_bits.o
- .debug_info      0x00084f        0x2f2 build/default/production/eeprom.o
- .debug_info      0x000b41        0x5b4 build/default/production/lcd.o
- .debug_info      0x0010f5        0x6c9 build/default/production/rtcc.o
- .debug_info      0x0017be        0x25d build/default/production/system.o
- .debug_info      0x001a1b        0xb66 build/default/production/touch.o
- .debug_info      0x002581        0x6e5 build/default/production/user.o
- .debug_info      0x002c66        0xa78 build/default/production/main.o
+ .debug_info      0x000000        0x7c5 build/default/production/adc.o
+ .debug_info      0x0007c5         0xb0 build/default/production/configuration_bits.o
+ .debug_info      0x000875        0x305 build/default/production/eeprom.o
+ .debug_info      0x000b7a        0x5c7 build/default/production/lcd.o
+ .debug_info      0x001141        0x6dc build/default/production/rtcc.o
+ .debug_info      0x00181d        0x270 build/default/production/system.o
+ .debug_info      0x001a8d        0xb79 build/default/production/touch.o
+ .debug_info      0x002606        0x74e build/default/production/user.o
+ .debug_info      0x002d54        0xb57 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x8f0
@@ -543,7 +557,7 @@ __FICD
  .debug_abbrev    0x000644        0x166 build/default/production/user.o
  .debug_abbrev    0x0007aa        0x146 build/default/production/main.o
 
-.debug_line       0x000000       0x27d8
+.debug_line       0x000000       0x298f
  *(.debug_line)
  .debug_line      0x000000        0x1b4 build/default/production/adc.o
  .debug_line      0x0001b4         0x24 build/default/production/configuration_bits.o
@@ -552,10 +566,10 @@ __FICD
  .debug_line      0x000860        0x6a2 build/default/production/rtcc.o
  .debug_line      0x000f02        0x109 build/default/production/system.o
  .debug_line      0x00100b        0x336 build/default/production/touch.o
- .debug_line      0x001341        0x9d5 build/default/production/user.o
- .debug_line      0x001d16        0xac2 build/default/production/main.o
+ .debug_line      0x001341        0xade build/default/production/user.o
+ .debug_line      0x001e1f        0xb70 build/default/production/main.o
 
-.debug_frame      0x000000        0x2c0
+.debug_frame      0x000000        0x2d0
  *(.debug_frame)
  .debug_frame     0x000000         0x34 build/default/production/adc.o
  .debug_frame     0x000034         0x34 build/default/production/eeprom.o
@@ -563,10 +577,10 @@ __FICD
  .debug_frame     0x00010c         0x74 build/default/production/rtcc.o
  .debug_frame     0x000180         0x34 build/default/production/system.o
  .debug_frame     0x0001b4         0x24 build/default/production/touch.o
- .debug_frame     0x0001d8         0xc4 build/default/production/user.o
- .debug_frame     0x00029c         0x24 build/default/production/main.o
+ .debug_frame     0x0001d8         0xd4 build/default/production/user.o
+ .debug_frame     0x0002ac         0x24 build/default/production/main.o
 
-.debug_str        0x000000        0x186
+.debug_str        0x000000        0x1d6
  *(.debug_str)
  .debug_str       0x000000         0x2a build/default/production/adc.o
  .debug_str       0x00002a         0x14 build/default/production/eeprom.o
@@ -574,7 +588,7 @@ __FICD
  .debug_str       0x000052         0x1f build/default/production/rtcc.o
  .debug_str       0x000071         0x50 build/default/production/touch.o
  .debug_str       0x0000c1         0x25 build/default/production/user.o
- .debug_str       0x0000e6         0xa0 build/default/production/main.o
+ .debug_str       0x0000e6         0xf0 build/default/production/main.o
 
 .debug_loc
  *(.debug_loc)
@@ -583,7 +597,7 @@ __FICD
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x449
+                  0x000000        0x4cf
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x2a build/default/production/adc.o
@@ -598,9 +612,9 @@ __FICD
  .debug_pubnames
                   0x0001c8         0x66 build/default/production/touch.o
  .debug_pubnames
-                  0x00022e         0xf5 build/default/production/user.o
+                  0x00022e        0x10b build/default/production/user.o
  .debug_pubnames
-                  0x000323        0x126 build/default/production/main.o
+                  0x000339        0x196 build/default/production/main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1746,46 +1760,47 @@ __c30_signature
  __c30_signature
                   0x0004ba          0x6 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-c-elf.a(strlen.XXeo)
 
-.nbss               0x0800         0xc4
- .nbss              0x0800         0xc4 build/default/production/main.o
+.nbss               0x0800         0xb8
+ .nbss              0x0800         0xb8 build/default/production/main.o
                     0x0800                  _time
                     0x0808                  _Bias
-                    0x081e                  _outState
-                    0x082a                  _outStateCounter
-                    0x0840                  _lastOutState
-                    0x084b                  _call
-                    0x084c                  _samples
+                    0x081e                  _enabled
+                    0x0829                  _outState
+                    0x0834                  _lastOutState
+                    0x083f                  _call
+                    0x0840                  _samples
 
-.ndata              0x08c4         0x58
- .ndata             0x08c4         0x28 build/default/production/rtcc.o
-                    0x08c4                  _WeekDay
-                    0x08d2                  _month
- .ndata             0x08ec         0x18 build/default/production/lcd.o
-                    0x08ec                  ___cgram
- .ndata             0x0904         0x18 build/default/production/main.o
-                    0x0904                  _desc
-                    0x091a                  _powerFail
+.ndata              0x08b8         0x6e
+ .ndata             0x08b8         0x2e build/default/production/main.o
+                    0x08b8                  _desc
+                    0x08ce                  _outStateCounter
+                    0x08e4                  _powerFail
+ .ndata             0x08e6         0x28 build/default/production/rtcc.o
+                    0x08e6                  _WeekDay
+                    0x08f4                  _month
+ .ndata             0x090e         0x18 build/default/production/lcd.o
+                    0x090e                  ___cgram
 
-.nbss               0x091c          0xe
- .nbss              0x091c          0xa build/default/production/touch.o
-                    0x091c                  _col
-                    0x091d                  _row
-                    0x091e                  _x
-                    0x0920                  _y
-                    0x0922                  _j
-                    0x0923                  _k
-                    0x0924                  _l
- .nbss              0x0926          0x4 build/default/production/user.o
-                    0x0926                  _halfSec
-                    0x0927                  _lastState
-                    0x0928                  _timer
+.nbss               0x0926          0xe
+ .nbss              0x0926          0xa build/default/production/touch.o
+                    0x0926                  _col
+                    0x0927                  _row
+                    0x0928                  _x
+                    0x092a                  _y
+                    0x092c                  _j
+                    0x092d                  _k
+                    0x092e                  _l
+ .nbss              0x0930          0x4 build/default/production/user.o
+                    0x0930                  _halfSec
+                    0x0931                  _lastState
+                    0x0932                  _timer
 
-.ndata              0x092a          0x4
- .ndata             0x092a          0x2 build/default/production/touch.o
-                    0x092a                  _lastKeyState
-                    0x092b                  _key
- .ndata             0x092c          0x2 build/default/production/user.o
-                    0x092c                  _toggle
+.ndata              0x0934          0x4
+ .ndata             0x0934          0x2 build/default/production/touch.o
+                    0x0934                  _lastKeyState
+                    0x0935                  _key
+ .ndata             0x0936          0x2 build/default/production/user.o
+                    0x0936                  _toggle
 
 .config_ICS       0xf8000e          0x2
  .config_ICS      0xf8000e          0x2 build/default/production/configuration_bits.o
@@ -1809,8 +1824,8 @@ __c30_signature
 .config_BSS       0xf80000          0x2
  .config_BSS      0xf80000          0x2 build/default/production/configuration_bits.o
 
-.const              0x882e        0x320 load address 0x00082e  
- .const             0x882e        0x246 build/default/production/main.o
+.const              0x882e        0x38e load address 0x00082e  
+ .const             0x882e        0x2a2 build/default/production/main.o
                     0x882e                  _setpoint
                     0x8839                  _deadband
                     0x8844                  _BiasWarm
@@ -1822,62 +1837,68 @@ __c30_signature
                     0x887c                  _startDay
                     0x887d                  _endMonth
                     0x887e                  _endDay
- .const             0x8a74         0x94 build/default/production/rtcc.o
- .const             0x8b08         0x46 build/default/production/user.o
+                    0x887f                  _earlyStartMonth
+                    0x8880                  _earlyStartDay
+                    0x8881                  _extendedEndMonth
+                    0x8882                  _extendedEndDay
+                    0x8883                  _extendedRunEnable
+ .const             0x8ad0         0x94 build/default/production/rtcc.o
+ .const             0x8b64         0x58 build/default/production/user.o
 
-.text             0x000b4e       0x1cb6
- .text            0x000b4e        0xe56 build/default/production/main.o
-                  0x000b4e                  _main
- .text            0x0019a4        0x538 build/default/production/user.o
-                  0x0019a4                  _heartBeat
-                  0x0019d8                  _TempCalc
-                  0x0019fe                  _SetStartEndMonth
-                  0x001a8e                  _SetStartEndDay
-                  0x001b1e                  _TempSetpoint
-                  0x001bb0                  _SetDeadband
-                  0x001c44                  _SetBiasWarm
-                  0x001cdc                  _SetBiasNeg5
-                  0x001d74                  _SetBiasNeg15
-                  0x001e0c                  _SetBiasNeg25
-                  0x001ea4                  _SetOutput
- .text            0x001edc        0x474 build/default/production/rtcc.o
-                  0x001edc                  _bin2bcd
-                  0x001f06                  _bcd2bin
-                  0x001f28                  _RTCC_Initialize
-                  0x001f78                  _getRTCTime
-                  0x001ff6                  _displayTime
-                  0x002072                  _SetTime
- .text            0x002350        0x2d8 build/default/production/lcd.o
-                  0x002350                  _InitCustomChars
-                  0x00237e                  _LCD_Port
-                  0x0023c0                  _LCD_Cmd
-                  0x0023d8                  _LCD_Clear
-                  0x0023e6                  _LCD_Set_Cursor
-                  0x00247e                  _LCD_Init
-                  0x002500                  _LCD_Write_Char
-                  0x002538                  _LCD_Write_String
-                  0x00255e                  _LCD_Write_Int
- .text            0x002628        0x1dc build/default/production/touch.o
-                  0x002628                  _menuRead
+.text             0x000bbc       0x1e6c
+ .text            0x000bbc        0xf76 build/default/production/main.o
+                  0x000bbc                  _main
+ .text            0x001b32        0x5ce build/default/production/user.o
+                  0x001b32                  _heartBeat
+                  0x001b66                  _TempCalc
+                  0x001b8c                  _SetStartEndMonth
+                  0x001c1c                  _SetStartEndDay
+                  0x001cac                  _TempSetpoint
+                  0x001d3e                  _SetDeadband
+                  0x001dd2                  _SetBiasWarm
+                  0x001e6a                  _SetBiasNeg5
+                  0x001f02                  _SetBiasNeg15
+                  0x001f9a                  _SetBiasNeg25
+                  0x002032                  _SetExtendedRunBit
+                  0x0020c8                  _SetOutput
+ .text            0x002100        0x474 build/default/production/rtcc.o
+                  0x002100                  _bin2bcd
+                  0x00212a                  _bcd2bin
+                  0x00214c                  _RTCC_Initialize
+                  0x00219c                  _getRTCTime
+                  0x00221a                  _displayTime
+                  0x002296                  _SetTime
+ .text            0x002574        0x2d8 build/default/production/lcd.o
+                  0x002574                  _InitCustomChars
+                  0x0025a2                  _LCD_Port
+                  0x0025e4                  _LCD_Cmd
+                  0x0025fc                  _LCD_Clear
+                  0x00260a                  _LCD_Set_Cursor
+                  0x0026a2                  _LCD_Init
+                  0x002724                  _LCD_Write_Char
+                  0x00275c                  _LCD_Write_String
+                  0x002782                  _LCD_Write_Int
+ .text            0x00284c        0x1dc build/default/production/touch.o
+                  0x00284c                  _menuRead
 
-.dinit            0x002804         0x72
- .dinit           0x002804         0x72 data_init
+.dinit            0x002a28         0x82
+ .dinit           0x002a28         0x82 data_init
 
-.text             0x002876         0xc6
- .text            0x002876         0x50 build/default/production/adc.o
-                  0x002876                  _ADCInit
-                  0x00288e                  _ADCRead
- .text            0x0028c6         0x4c build/default/production/eeprom.o
-                  0x0028c6                  _eepromPutData
-                  0x0028fe                  _eepromGetData
- .text            0x002912         0x2a build/default/production/system.o
-                  0x002912                  _ConfigureOscillator
-                  0x002918                  _InitApp
+.text             0x002aaa         0xc6
+ .text            0x002aaa         0x50 build/default/production/adc.o
+                  0x002aaa                  _ADCInit
+                  0x002ac2                  _ADCRead
+ .text            0x002afa         0x4c build/default/production/eeprom.o
+                  0x002afa                  _eepromPutData
+                  0x002b32                  _eepromGetData
+ .text            0x002b46         0x2a build/default/production/system.o
+                  0x002b46                  _ConfigureOscillator
+                  0x002b4c                  _InitApp
 
-.init.delay32     0x00293c         0x1c
- .init.delay32    0x00293c         0x1c c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
-                  0x00293c                  ___delay32
+.init.delay32     0x002b70         0x1c
+ .init.delay32    0x002b70         0x1c c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
+                  0x002b70                  ___delay32
 
-.eedata             0xfe00         0x8c load address 0x7ffe00  
- .eedata            0xfe00         0x8c build/default/production/main.o
+.eedata             0xfe00         0xaa load address 0x7ffe00  
+ .eedata            0xfe00         0xaa build/default/production/main.o
                     0xfe00                  _Settings

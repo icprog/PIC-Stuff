@@ -1,76 +1,68 @@
 #include "user.h"
+#include "lcd.h"
 
 #define downButton  RA3
 #define upButton    RA4
 
-char downCount = 0, upCount = 0;
+uint8_t downCount = 0, upCount = 0, oldSetpoint;
+extern uint8_t setpoint;
 
-int TempSetpoint(int b)
+
+void tempSetpoint(void)
 {
-    int result = b;
+    uint8_t counter = 0;
     
-    char TestKey;
+    oldSetpoint = setpoint;
     
-    unsigned char timer = 0;
-    
-//    __delay_ms(500);
-    
-    TestKey = readButtons();
-    
-    while(TestKey != KEY_ENTER)
+    while(downCount >= 5)
+    {
+        counter+=1;
+        if(counter<=1)
         {
-        TestKey = MenuRead();
-        
-        timer += 1;
-        
-        __delay_ms(175);            // 175 mS delay to extend dead time to 150mS x number of counts below, before auto-exit of function
-                    
-        if(timer > 100)             // Number of counts multiplied by the delay value above to more or less set the time out delay
-        {
-            timer = 0;
-            TestKey = KEY_ENTER;
+            LCD_Clear();
         }
-        
-        LCDWriteStringXY(1,0,"Setpoint?");
-        LCDWriteDecIntXY(1,11,result,3);
-
-        heartBeat();
-        
-        
-        switch(TestKey)
-        {
-            case KEY_DOWN:
-            {
-                result -=1;
-                            
-                if (result <= 50)
-                    {
-                        result = 50;
-                    }
-                }
-            break;
-                        
-            case KEY_UP:
-            {
-                result += 1;
-                            
-                if(result >= 350)
-                    {
-                        result = 350;
-                    }
-                }
-            break;
-            }
-        }
-        
-        TestKey = 9;            // Ensure TestKey is set to KEY_NONE before exiting
+        setpoint-=1;
+        LCDWriteStringXY(0,0,"Setpoint?");
+        LCDWriteIntXY(1,0,setpoint,3,0,0);
+        LCD_Write_Char(0);
+        LCD_Write_Char('C');
+        LCD_Write_Char(' ');
+        __delay_ms(350);
+        readButtons();
+//        CLRWDT();
+    }
     
-    return (result);
+    while(upCount >= 5)
+    {
+        counter+=1;
+        if(counter<=1)
+        {
+            LCD_Clear();
+        }
+        setpoint+=1;
+        LCDWriteStringXY(0,0,"Setpoint?");
+        LCDWriteIntXY(1,0,setpoint,3,0,0);
+        LCD_Write_Char(0);
+        LCD_Write_Char('C');
+        LCD_Write_Char(' ');
+        __delay_ms(350);
+        readButtons();
+//        CLRWDT();
+    }
+    
+    counter = 0;
+    
+    if(oldSetpoint!=setpoint)
+    {
+        __delay_ms(3000);
+        LCD_Clear();
+    }
 }
+    
 
-char readButtons(void)
+void readButtons(void)
 {
-    if(RA3 == 1)
+    if(RA3 == 0)
     {
         downCount +=1;
         if(downCount>5)
@@ -83,7 +75,7 @@ char readButtons(void)
         downCount = 0;
     }
     
-    if(RA4 == 1)
+    if(RA4 == 0)
     {
         upCount +=1;
         if(upCount>5)

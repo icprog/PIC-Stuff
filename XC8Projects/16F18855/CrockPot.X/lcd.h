@@ -9,8 +9,8 @@
 // LCD Type Selection
 // Uncomment Just one of them
 // ************************************************
-//#define LCD_TYPE_2_LINE	//For 16 or 20 Chars by 2 lines
-#define LCD_TYPE_4_LINE     //For 16 or 20 Chars by 4 lines
+#define LCD_TYPE_2_LINE	//For 16 or 20 Chars by 2 lines
+//#define LCD_TYPE_4_LINE     //For 16 or 20 Chars by 4 lines
 // ************************************************
 #define RS  RB0             // Define REGISTER SELECT Bit
 #define EN  RB1             // Define ENABLE Bit

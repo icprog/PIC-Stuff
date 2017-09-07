@@ -1,11 +1,10 @@
 #ifndef USER_H
 #define	USER_H
 #include <xc.h>
-#include "lcd.h"
-#include "eeprom.h"
+#include <stdint.h>
 
-int TempSetpoint(int b);
+void tempSetpoint(void);
 
-char readButtons(void);
+void readButtons(void);
 
 #endif

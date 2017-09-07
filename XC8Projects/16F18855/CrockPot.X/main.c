@@ -1,25 +1,25 @@
 #include "system.h"
 #include "lcd.h"
 #include <math.h>
-#include <stdio.h>
+#include "user.h"
 
 #define     numSamples  50                                                      // Number of Temperature readings to Average
 
 
 uint16_t samples[numSamples];
 
+uint8_t setpoint = 70;
+
 
 void main(void)
 {
     SYSTEM_Initialize();
    
-    uint16_t readTemperature, setpoint = 24, outCurrent = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld, timer = 0, counter = 0, minute = 0;
+    uint16_t readTemperature, outCurrent = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld, displayTemp = 70, counter = 0, minute = 0;
     
     unsigned char startupTimer = 0, firstTimeThrough = 0;
     
     float R, steinhart;
-    
-    char s[8];
     
     static uint16_t sampleIndex = 0;
 
@@ -122,19 +122,23 @@ void main(void)
       //  LCD_Write_Char(' ');
         //LCD_Write_Char(' ');
 
+        displayTemp = (uint16_t)steinhart * 10;
+//        steinhart = (uint16_t)steinhart;
 
-
-        sprintf(s,"%3.1f", steinhart );
-        LCD_Set_Cursor(0,0);
-        LCD_Write_String(s);
+        LCDWriteIntXY(0,1,displayTemp,-1,1,0);
+//        sprintf(s,"%3.1f", steinhart );
+//        LCD_Set_Cursor(0,0);
+  //      LCD_Write_String(s);
         LCD_Write_Char(0);
         LCD_Write_Char('C');
         LCD_Write_Char(' ');
-        LCD_Write_Char(' ');
+        
+        LCDWriteStringXY(1,0,"Time:")
+        LCDWriteIntXY(1,5,minute,-1,0,0);
 
-        sprintf(s,"%d  ", minute);
-        LCD_Set_Cursor(1,0);
-        LCD_Write_String(s);
+//        sprintf(s,"%d  ", minute);
+  //      LCD_Set_Cursor(1,0);
+    //    LCD_Write_String(s);
 
         startupTimer +=1;
         counter+=1;
@@ -147,6 +151,8 @@ void main(void)
                 counter = 0;
             }
         }
-        CLRWDT();
+        readButtons();
+        tempSetpoint();
+//        CLRWDT();
     }
 }

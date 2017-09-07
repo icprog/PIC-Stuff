@@ -1,52 +1,26 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"755 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
-[v _LATA `Vuc ~T0 @X0 0 e@22 ]
-"816
-[v _LATB `Vuc ~T0 @X0 0 e@23 ]
-"877
-[v _LATC `Vuc ~T0 @X0 0 e@24 ]
-"31148
-[v _WPUA `Vuc ~T0 @X0 0 e@3897 ]
-"31758
-[v _WPUB `Vuc ~T0 @X0 0 e@3908 ]
-"32368
-[v _WPUC `Vuc ~T0 @X0 0 e@3919 ]
-"32917
-[v _WPUE `Vuc ~T0 @X0 0 e@3941 ]
-"572
-[v _TRISA `Vuc ~T0 @X0 0 e@17 ]
-"633
-[v _TRISB `Vuc ~T0 @X0 0 e@18 ]
-"694
-[v _TRISC `Vuc ~T0 @X0 0 e@19 ]
-"31087
-[v _ANSELA `Vuc ~T0 @X0 0 e@3896 ]
-"31697
-[v _ANSELB `Vuc ~T0 @X0 0 e@3907 ]
-"32307
-[v _ANSELC `Vuc ~T0 @X0 0 e@3918 ]
-"19810
-[s S931 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S931 . INTE . IOCIE TMR0IE ]
-"19809
-[u S930 `S931 1 ]
-[n S930 . . ]
-"19817
-[v _PIE0bits `VS930 ~T0 @X0 0 e@1814 ]
-"34694
-[v _GIE `Vb ~T0 @X0 0 e@95 ]
-"27917
-[v _PPSLOCK `Vuc ~T0 @X0 0 e@3727 ]
-"27923
-[s S1262 :1 `uc 1 ]
-[n S1262 . PPSLOCKED ]
-"27922
-[u S1261 `S1262 1 ]
-[n S1261 . . ]
-"27927
-[v _PPSLOCKbits `VS1261 ~T0 @X0 0 e@3727 ]
-"29960
-[v _RA1PPS `Vuc ~T0 @X0 0 e@3857 ]
+"8 user.c
+[v _setpoint `uc ~T0 @X0 0 e ]
+"55 lcd.h
+[v _LCD_Clear `(v ~T0 @X0 0 ef ]
+"57
+[v _LCD_Set_Cursor `(v ~T0 @X0 0 ef2`uc`uc ]
+"63
+[v _LCD_Write_String `(v ~T0 @X0 0 ef1`*uc ]
+"65
+[v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
+"61
+[v _LCD_Write_Char `(v ~T0 @X0 0 ef1`uc ]
+[v F13525 `(v ~T0 @X0 1 tf1`ul ]
+"152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
+[v __delay `JF13525 ~T0 @X0 0 e ]
+[p i __delay ]
+"8 user.h
+[v _readButtons `(v ~T0 @X0 0 ef ]
+"36184 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _RA3 `Vb ~T0 @X0 0 e@99 ]
+"36198
+[v _RA4 `Vb ~T0 @X0 0 e@100 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12593,90 +12567,347 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 186: extern unsigned char __resetbits;
 [; ;pic.h: 187: extern __bit __powerdown;
 [; ;pic.h: 188: extern __bit __timeout;
+[; ;stdint.h: 13: typedef signed char int8_t;
+[; ;stdint.h: 20: typedef signed int int16_t;
+[; ;stdint.h: 28: typedef signed short long int int24_t;
+[; ;stdint.h: 36: typedef signed long int int32_t;
+[; ;stdint.h: 43: typedef unsigned char uint8_t;
+[; ;stdint.h: 49: typedef unsigned int uint16_t;
+[; ;stdint.h: 56: typedef unsigned short long int uint24_t;
+[; ;stdint.h: 63: typedef unsigned long int uint32_t;
+[; ;stdint.h: 71: typedef signed char int_least8_t;
+[; ;stdint.h: 78: typedef signed int int_least16_t;
+[; ;stdint.h: 90: typedef signed short long int int_least24_t;
+[; ;stdint.h: 98: typedef signed long int int_least32_t;
+[; ;stdint.h: 105: typedef unsigned char uint_least8_t;
+[; ;stdint.h: 111: typedef unsigned int uint_least16_t;
+[; ;stdint.h: 121: typedef unsigned short long int uint_least24_t;
+[; ;stdint.h: 128: typedef unsigned long int uint_least32_t;
+[; ;stdint.h: 137: typedef signed char int_fast8_t;
+[; ;stdint.h: 144: typedef signed int int_fast16_t;
+[; ;stdint.h: 156: typedef signed short long int int_fast24_t;
+[; ;stdint.h: 164: typedef signed long int int_fast32_t;
+[; ;stdint.h: 171: typedef unsigned char uint_fast8_t;
+[; ;stdint.h: 177: typedef unsigned int uint_fast16_t;
+[; ;stdint.h: 187: typedef unsigned short long int uint_fast24_t;
+[; ;stdint.h: 194: typedef unsigned long int uint_fast32_t;
+[; ;stdint.h: 200: typedef int32_t intmax_t;
+[; ;stdint.h: 205: typedef uint32_t uintmax_t;
+[; ;stdint.h: 210: typedef int16_t intptr_t;
+[; ;stdint.h: 215: typedef uint16_t uintptr_t;
+[; ;user.h: 6: void tempSetpoint(void);
+[; ;user.h: 8: void readButtons(void);
 [; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
 [; ;stdbool.h: 12: typedef unsigned char bool;
-"5 pin_manager.c
-[v _PIN_MANAGER_Initialize `(v ~T0 @X0 1 ef ]
-"6
-{
-[; ;pin_manager.c: 5: void PIN_MANAGER_Initialize(void)
-[; ;pin_manager.c: 6: {
-[e :U _PIN_MANAGER_Initialize ]
-[f ]
-[; ;pin_manager.c: 7: LATA = 0x00;
-"7
-[e = _LATA -> -> 0 `i `uc ]
-[; ;pin_manager.c: 8: LATB = 0x0;
-"8
-[e = _LATB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 9: LATC = 0x0;
-"9
-[e = _LATC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 11: WPUA = 0x18;
+[; ;pwm6.h: 9: void PWM6_Initialize(void);
+[; ;pwm6.h: 33: void PWM6_LoadDutyValue(uint16_t dutyValue);
+[; ;tmr2.h: 264: void TMR2_Initialize(void);
+[; ;adcc.h: 9: typedef uint16_t adc_result_t;
+[; ;adcc.h: 12: typedef enum
+[; ;adcc.h: 13: {
+[; ;adcc.h: 14: POT = 0x4,
+[; ;adcc.h: 15: channel_VSS = 0x3C,
+[; ;adcc.h: 16: channel_Temp = 0x3D,
+[; ;adcc.h: 17: channel_DAC1 = 0x3E,
+[; ;adcc.h: 18: channel_FVR = 0x3F
+[; ;adcc.h: 19: } adcc_channel_t;
+[; ;adcc.h: 22: void ADCC_Initialize(void);
+[; ;adcc.h: 24: void ADCC_StartConversion(adcc_channel_t channel);
+[; ;adcc.h: 26: bool ADCC_IsConversionDone();
+[; ;adcc.h: 28: adc_result_t ADCC_GetConversionResult(void);
+[; ;adcc.h: 30: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+[; ;adcc.h: 32: void ADCC_StopConversion(void);
+[; ;adcc.h: 34: void ADCC_SetStopOnInterrupt(void);
+[; ;adcc.h: 36: void ADCC_DischargeSampleCapacitor(void);
+[; ;adcc.h: 38: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adcc.h: 40: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adcc.h: 42: void ADCC_SetRepeatCount(uint8_t);
+[; ;adcc.h: 44: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adcc.h: 46: void ADCC_ClearAccumulator(void);
+[; ;adcc.h: 48: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adcc.h: 50: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adcc.h: 52: uint16_t ADCC_GetFilterValue(void);
+[; ;adcc.h: 76: uint16_t ADCC_GetPreviousResult(void);
+[; ;adcc.h: 100: void ADCC_DefineSetPoint(uint16_t);
+[; ;adcc.h: 125: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adcc.h: 150: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adcc.h: 173: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adcc.h: 195: void ADCC_EnableDoubleSampling(void);
+[; ;adcc.h: 217: void ADCC_EnableContinuousConversion(void);
+[; ;adcc.h: 239: void ADCC_DisableContinuousConversion(void);
+[; ;adcc.h: 261: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adcc.h: 283: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;system.h: 31: void SYSTEM_Initialize(void);
+[; ;system.h: 33: void OSCILLATOR_Initialize(void);
+[; ;lcd.h: 49: void InitCustomChars();
+[; ;lcd.h: 51: void LCD_Port(char a);
+[; ;lcd.h: 53: void LCD_Cmd(char a);
+[; ;lcd.h: 55: void LCD_Clear();
+[; ;lcd.h: 57: void LCD_Set_Cursor(char x, char y);
+[; ;lcd.h: 59: void LCD_Init(char style);
+[; ;lcd.h: 61: void LCD_Write_Char(char a);
+[; ;lcd.h: 63: void LCD_Write_String(char *a);
+[; ;lcd.h: 65: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+"7 user.c
+[v _downCount `uc ~T0 @X0 1 e ]
+[i _downCount
+-> -> 0 `i `uc
+]
+[v _upCount `uc ~T0 @X0 1 e ]
+[i _upCount
+-> -> 0 `i `uc
+]
+[v _oldSetpoint `uc ~T0 @X0 1 e ]
+[; ;user.c: 7: uint8_t downCount = 0, upCount = 0, oldSetpoint;
+[; ;user.c: 8: extern uint8_t setpoint;
 "11
-[e = _WPUA -> -> 24 `i `uc ]
-[; ;pin_manager.c: 12: WPUB = 0x00;
+[v _tempSetpoint `(v ~T0 @X0 1 ef ]
 "12
-[e = _WPUB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 13: WPUC = 0x00;
+{
+[; ;user.c: 11: void tempSetpoint(void)
+[; ;user.c: 12: {
+[e :U _tempSetpoint ]
+[f ]
 "13
-[e = _WPUC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 14: WPUE = 0x8;
-"14
-[e = _WPUE -> -> 8 `i `uc ]
-[; ;pin_manager.c: 16: TRISA = 0x1C;
-"16
-[e = _TRISA -> -> 28 `i `uc ]
-[; ;pin_manager.c: 17: TRISB = 0x00;
+[v _counter `uc ~T0 @X0 1 a ]
+[; ;user.c: 13: uint8_t counter = 0;
+[e = _counter -> -> 0 `i `uc ]
+[; ;user.c: 15: oldSetpoint = setpoint;
+"15
+[e = _oldSetpoint _setpoint ]
+[; ;user.c: 17: while(downCount >= 5)
 "17
-[e = _TRISB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 18: TRISC = 0x10;
+[e $U 1520  ]
+[e :U 1521 ]
+[; ;user.c: 18: {
 "18
-[e = _TRISC -> -> 16 `i `uc ]
-[; ;pin_manager.c: 20: ANSELA = 0x04;
+{
+[; ;user.c: 19: counter+=1;
+"19
+[e =+ _counter -> -> 1 `i `uc ]
+[; ;user.c: 20: if(counter<=1)
 "20
-[e = _ANSELA -> -> 4 `i `uc ]
-[; ;pin_manager.c: 21: ANSELB = 0x00;
+[e $ ! <= -> _counter `i -> 1 `i 1523  ]
+[; ;user.c: 21: {
 "21
-[e = _ANSELB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 22: ANSELC = 0x00;
+{
+[; ;user.c: 22: LCD_Clear();
 "22
-[e = _ANSELC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 26: PIE0bits.IOCIE = 0;
+[e ( _LCD_Clear ..  ]
+"23
+}
+[e :U 1523 ]
+[; ;user.c: 23: }
+[; ;user.c: 24: setpoint-=1;
+"24
+[e =- _setpoint -> -> 1 `i `uc ]
+[; ;user.c: 25: { LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+"25
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_String (1 -> :s 1C `*uc ]
+}
+[; ;user.c: 26: { LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
 "26
-[e = . . _PIE0bits 0 2 -> -> 0 `i `uc ]
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , -> _setpoint `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+[; ;user.c: 27: LCD_Write_Char(0);
 "27
-[v _state `uc ~T0 @X0 1 a ]
-[; ;pin_manager.c: 27: bool state = GIE;
-[e = _state -> -> _GIE `i `uc ]
-[; ;pin_manager.c: 28: GIE = 0;
+[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
+[; ;user.c: 28: LCD_Write_Char('C');
 "28
-[e = _GIE -> -> 0 `i `b ]
-[; ;pin_manager.c: 29: PPSLOCK = 0x55;
+[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
+[; ;user.c: 29: LCD_Write_Char(' ');
 "29
-[e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 30: PPSLOCK = 0xAA;
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;user.c: 30: _delay((unsigned long)((350)*(1000000/4000.0)));
 "30
-[e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 31: PPSLOCKbits.PPSLOCKED = 0x00;
+[e ( __delay (1 -> * -> -> 350 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;user.c: 31: readButtons();
 "31
-[e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
-[; ;pin_manager.c: 34: RA1PPS = 0x000E;
-"34
-[e = _RA1PPS -> -> 14 `i `uc ]
-[; ;pin_manager.c: 38: PPSLOCK = 0x55;
+[e ( _readButtons ..  ]
+"33
+}
+[e :U 1520 ]
+"17
+[e $ >= -> _downCount `i -> 5 `i 1521  ]
+[e :U 1522 ]
+[; ;user.c: 33: }
+[; ;user.c: 35: while(upCount >= 5)
+"35
+[e $U 1524  ]
+[e :U 1525 ]
+[; ;user.c: 36: {
+"36
+{
+[; ;user.c: 37: counter+=1;
+"37
+[e =+ _counter -> -> 1 `i `uc ]
+[; ;user.c: 38: if(counter<=1)
 "38
-[e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 39: PPSLOCK = 0xAA;
+[e $ ! <= -> _counter `i -> 1 `i 1527  ]
+[; ;user.c: 39: {
 "39
-[e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 40: PPSLOCKbits.PPSLOCKED = 0x01;
+{
+[; ;user.c: 40: LCD_Clear();
 "40
-[e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
-[; ;pin_manager.c: 41: GIE = state;
+[e ( _LCD_Clear ..  ]
 "41
-[e = _GIE -> _state `b ]
-[; ;pin_manager.c: 42: }
+}
+[e :U 1527 ]
+[; ;user.c: 41: }
+[; ;user.c: 42: setpoint+=1;
 "42
+[e =+ _setpoint -> -> 1 `i `uc ]
+[; ;user.c: 43: { LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+"43
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_String (1 -> :s 2C `*uc ]
+}
+[; ;user.c: 44: { LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+"44
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , -> _setpoint `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+[; ;user.c: 45: LCD_Write_Char(0);
+"45
+[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
+[; ;user.c: 46: LCD_Write_Char('C');
+"46
+[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
+[; ;user.c: 47: LCD_Write_Char(' ');
+"47
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;user.c: 48: _delay((unsigned long)((350)*(1000000/4000.0)));
+"48
+[e ( __delay (1 -> * -> -> 350 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;user.c: 49: readButtons();
+"49
+[e ( _readButtons ..  ]
+"51
+}
+[e :U 1524 ]
+"35
+[e $ >= -> _upCount `i -> 5 `i 1525  ]
+[e :U 1526 ]
+[; ;user.c: 51: }
+[; ;user.c: 53: counter = 0;
+"53
+[e = _counter -> -> 0 `i `uc ]
+[; ;user.c: 55: if(oldSetpoint!=setpoint)
+"55
+[e $ ! != -> _oldSetpoint `i -> _setpoint `i 1528  ]
+[; ;user.c: 56: {
+"56
+{
+[; ;user.c: 57: _delay((unsigned long)((3000)*(1000000/4000.0)));
+"57
+[e ( __delay (1 -> * -> -> 3000 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;user.c: 58: LCD_Clear();
+"58
+[e ( _LCD_Clear ..  ]
+"59
+}
+[e :U 1528 ]
+[; ;user.c: 59: }
+[; ;user.c: 60: }
+"60
 [e :UE 1519 ]
 }
+"63
+[v _readButtons `(v ~T0 @X0 1 ef ]
+"64
+{
+[; ;user.c: 63: void readButtons(void)
+[; ;user.c: 64: {
+[e :U _readButtons ]
+[f ]
+[; ;user.c: 65: if(RA3 == 0)
+"65
+[e $ ! == -> _RA3 `i -> 0 `i 1530  ]
+[; ;user.c: 66: {
+"66
+{
+[; ;user.c: 67: downCount +=1;
+"67
+[e =+ _downCount -> -> 1 `i `uc ]
+[; ;user.c: 68: if(downCount>5)
+"68
+[e $ ! > -> _downCount `i -> 5 `i 1531  ]
+[; ;user.c: 69: {
+"69
+{
+[; ;user.c: 70: downCount = 5;
+"70
+[e = _downCount -> -> 5 `i `uc ]
+"71
+}
+[e :U 1531 ]
+"72
+}
+[; ;user.c: 71: }
+[; ;user.c: 72: }
+[e $U 1532  ]
+"73
+[e :U 1530 ]
+[; ;user.c: 73: else
+[; ;user.c: 74: {
+"74
+{
+[; ;user.c: 75: downCount = 0;
+"75
+[e = _downCount -> -> 0 `i `uc ]
+"76
+}
+[e :U 1532 ]
+[; ;user.c: 76: }
+[; ;user.c: 78: if(RA4 == 0)
+"78
+[e $ ! == -> _RA4 `i -> 0 `i 1533  ]
+[; ;user.c: 79: {
+"79
+{
+[; ;user.c: 80: upCount +=1;
+"80
+[e =+ _upCount -> -> 1 `i `uc ]
+[; ;user.c: 81: if(upCount>5)
+"81
+[e $ ! > -> _upCount `i -> 5 `i 1534  ]
+[; ;user.c: 82: {
+"82
+{
+[; ;user.c: 83: upCount = 5;
+"83
+[e = _upCount -> -> 5 `i `uc ]
+"84
+}
+[e :U 1534 ]
+"85
+}
+[; ;user.c: 84: }
+[; ;user.c: 85: }
+[e $U 1535  ]
+"86
+[e :U 1533 ]
+[; ;user.c: 86: else
+[; ;user.c: 87: {
+"87
+{
+[; ;user.c: 88: upCount = 0;
+"88
+[e = _upCount -> -> 0 `i `uc ]
+"89
+}
+[e :U 1535 ]
+[; ;user.c: 89: }
+[; ;user.c: 90: }
+"90
+[e :UE 1529 ]
+}
+[a 1C 83 101 116 112 111 105 110 116 63 0 ]
+[a 2C 83 101 116 112 111 105 110 116 63 0 ]

@@ -5,5 +5,6 @@ adcc.h  \
 pwm6.h  \
 pin_manager.h  \
 lcd.h  \
+user.h  \
 system.h  \
 tmr2.h 

@@ -1,37 +1,5 @@
 
-# 1 "system.c"
-
-
-#pragma config FEXTOSC = OFF
-#pragma config RSTOSC = HFINT1
-#pragma config CLKOUTEN = OFF
-#pragma config CSWEN = ON
-#pragma config FCMEN = ON
-
-
-#pragma config MCLRE = ON
-#pragma config PWRTE = OFF
-#pragma config LPBOREN = OFF
-#pragma config BOREN = OFF
-#pragma config BORV = LO
-#pragma config ZCD = OFF
-#pragma config PPS1WAY = ON
-#pragma config STVREN = ON
-
-
-#pragma config WDTCPS = WDTCPS_31
-#pragma config WDTE = OFF
-#pragma config WDTCWS = WDTCWS_7
-#pragma config WDTCCS = SC
-
-
-#pragma config WRT = OFF
-#pragma config SCANE = available
-#pragma config LVP = ON
-
-
-#pragma config CP = OFF
-#pragma config CPD = OFF
+# 1 "user.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -16619,9 +16587,6 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 16 "pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdint.h"
 typedef signed char int8_t;
 
@@ -16712,6 +16677,14 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
+# 6 "user.h"
+void tempSetpoint(void);
+
+void readButtons(void);
+
+# 16 "pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
 typedef unsigned char bool;
 
@@ -16723,25 +16696,6 @@ void PWM6_LoadDutyValue(uint16_t dutyValue);
 
 # 264 "tmr2.h"
 void TMR2_Initialize(void);
-
-# 49 "lcd.h"
-void InitCustomChars();
-
-void LCD_Port(char a);
-
-void LCD_Cmd(char a);
-
-void LCD_Clear();
-
-void LCD_Set_Cursor(char x, char y);
-
-void LCD_Init(char style);
-
-void LCD_Write_Char(char a);
-
-void LCD_Write_String(char *a);
-
-void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
 # 9 "adcc.h"
 typedef uint16_t adc_result_t;
@@ -16827,36 +16781,107 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 37 "system.c"
-void SYSTEM_Initialize(void)
-{
+# 49 "lcd.h"
+void InitCustomChars();
 
-PIN_MANAGER_Initialize();
-OSCILLATOR_Initialize();
-FVRCON = 0x00;
-ADCC_Initialize();
-PWM6_Initialize();
-TMR2_Initialize();
-LCD_Init(0X00);
-_delay((unsigned long)((200)*(1000000/4000.0)));
+void LCD_Port(char a);
+
+void LCD_Cmd(char a);
+
+void LCD_Clear();
+
+void LCD_Set_Cursor(char x, char y);
+
+void LCD_Init(char style);
+
+void LCD_Write_Char(char a);
+
+void LCD_Write_String(char *a);
+
+void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+
+# 7 "user.c"
+uint8_t downCount = 0, upCount = 0, oldSetpoint;
+extern uint8_t setpoint;
+
+
+void tempSetpoint(void)
+{
+uint8_t counter = 0;
+
+oldSetpoint = setpoint;
+
+while(downCount >= 5)
+{
+counter+=1;
+if(counter<=1)
+{
 LCD_Clear();
-_delay((unsigned long)((100)*(1000000/4000.0)));
-InitCustomChars();
-_delay((unsigned long)((200)*(1000000/4000.0)));
+}
+setpoint-=1;
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+{ LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_Char(' ');
+_delay((unsigned long)((350)*(1000000/4000.0)));
+readButtons();
+
 }
 
-void OSCILLATOR_Initialize(void)
+while(upCount >= 5)
 {
+counter+=1;
+if(counter<=1)
+{
+LCD_Clear();
+}
+setpoint+=1;
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+{ LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_Char(' ');
+_delay((unsigned long)((350)*(1000000/4000.0)));
+readButtons();
 
-# 80
-OSCCON1 = 0x60;
+}
 
-OSCCON3 = 0x00;
+counter = 0;
 
-OSCEN = 0x00;
+if(oldSetpoint!=setpoint)
+{
+_delay((unsigned long)((3000)*(1000000/4000.0)));
+LCD_Clear();
+}
+}
 
-OSCFRQ = 0x00;
 
-OSCTUNE = 0x00;
+void readButtons(void)
+{
+if(RA3 == 0)
+{
+downCount +=1;
+if(downCount>5)
+{
+downCount = 5;
+}
+}
+else
+{
+downCount = 0;
+}
 
+if(RA4 == 0)
+{
+upCount +=1;
+if(upCount>5)
+{
+upCount = 5;
+}
+}
+else
+{
+upCount = 0;
+}
 }

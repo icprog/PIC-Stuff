@@ -16823,84 +16823,26 @@ extern double fmod(double, double);
 extern double trunc(double);
 extern double round(double);
 
-# 4 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\__size_t.h"
-typedef unsigned size_t;
+# 6 "user.h"
+void tempSetpoint(void);
 
-# 7 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdarg.h"
-typedef void * va_list[1];
-
-#pragma intrinsic(__va_start)
-extern void * __va_start(void);
-
-#pragma intrinsic(__va_arg)
-extern void * __va_arg(void *, ...);
-
-# 43 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdio.h"
-struct __prbuf
-{
-char * ptr;
-void (* func)(char);
-};
-
-# 29 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\errno.h"
-extern int errno;
-
-# 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\conio.h"
-extern void init_uart(void);
-
-extern char getch(void);
-extern char getche(void);
-extern void putch(char);
-extern void ungetch(char);
-
-extern __bit kbhit(void);
-
-# 23
-extern char * cgets(char *);
-extern void cputs(const char *);
-
-# 88 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdio.h"
-extern int cprintf(char *, ...);
-#pragma printf_check(cprintf)
-
-
-
-extern int _doprnt(struct __prbuf *, const register char *, register va_list);
-
-
-# 180
-#pragma printf_check(vprintf) const
-#pragma printf_check(vsprintf) const
-
-extern char * gets(char *);
-extern int puts(const char *);
-extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
-extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
-extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
-extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
-extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
-extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
-
-#pragma printf_check(printf) const
-#pragma printf_check(sprintf) const
-extern int sprintf(char *, const char *, ...);
-extern int printf(const char *, ...);
+void readButtons(void);
 
 # 9 "main.c"
 uint16_t samples[50];
+
+uint8_t setpoint = 70;
 
 
 void main(void)
 {
 SYSTEM_Initialize();
 
-uint16_t readTemperature, setpoint = 24, outCurrent = 1023, readTemperatureOld, timer = 0, counter = 0, minute = 0;
+uint16_t readTemperature, outCurrent = 1023, readTemperatureOld, displayTemp = 70, counter = 0, minute = 0;
 
 unsigned char startupTimer = 0, firstTimeThrough = 0;
 
 float R, steinhart;
-
-char s[8];
 
 static uint16_t sampleIndex = 0;
 
@@ -16987,19 +16929,22 @@ steinhart += 1.0 / (25 + 273.15);
 steinhart = 1.0 / steinhart;
 steinhart -= 273.15;
 
-# 127
-sprintf(s,"%3.1f", steinhart );
-LCD_Set_Cursor(0,0);
-LCD_Write_String(s);
+# 125
+displayTemp = (uint16_t)steinhart * 10;
+
+
+{ LCD_Set_Cursor(0,1); LCD_Write_Int(displayTemp,-1, 1, 0);};
+
+
+
 LCD_Write_Char(0);
 LCD_Write_Char('C');
 LCD_Write_Char(' ');
-LCD_Write_Char(' ');
 
-sprintf(s,"%d  ", minute);
-LCD_Set_Cursor(1,0);
-LCD_Write_String(s);
+{ LCD_Set_Cursor(1,0); LCD_Write_String("Time:");}
+{ LCD_Set_Cursor(1,5); LCD_Write_Int(minute,-1, 0, 0);};
 
+# 143
 startupTimer +=1;
 counter+=1;
 
@@ -17011,6 +16956,8 @@ minute+=1;
 counter = 0;
 }
 }
-asm("clrwdt");
+readButtons();
+tempSetpoint();
+
 }
 }
