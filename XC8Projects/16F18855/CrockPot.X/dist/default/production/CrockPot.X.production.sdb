@@ -3,14 +3,6 @@
 [d edition pro ]
 [d chip 16F18855 ]
 [d frameptr 6 ]
-"38 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
-[e E13587 . `uc
-POT 4
-channel_VSS 60
-channel_Temp 61
-channel_DAC1 62
-channel_FVR 63
-]
 "54 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\adcc.c
 [e E13559 . `uc
 POT 4
@@ -19,7 +11,15 @@ channel_Temp 61
 channel_DAC1 62
 channel_FVR 63
 ]
-"5
+"38 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
+[e E13587 . `uc
+POT 4
+channel_VSS 60
+channel_Temp 61
+channel_DAC1 62
+channel_FVR 63
+]
+"5 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\adcc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
 "53
 [v _ADCC_GetSingleConversion ADCC_GetSingleConversion `(ui  1 e 2 0 ]
@@ -127,7 +127,7 @@ channel_FVR 63
 [v _ADRESH ADRESH `VEuc  1 e 1 @141 ]
 "1821
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @147 ]
-[s S349 . 1 `uc 1 ADGO 1 0 :1:0 
+[s S295 . 1 `uc 1 ADGO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM 1 0 :2:2 
 `uc 1 ADCS 1 0 :1:4 
@@ -136,19 +136,19 @@ channel_FVR 63
 `uc 1 ADON 1 0 :1:7 
 ]
 "1852
-[s S357 . 1 `uc 1 DONE 1 0 :1:0 
+[s S303 . 1 `uc 1 DONE 1 0 :1:0 
 ]
-[s S359 . 1 `uc 1 nDONE 1 0 :1:0 
+[s S305 . 1 `uc 1 nDONE 1 0 :1:0 
 ]
-[s S361 . 1 `uc 1 GO 1 0 :1:0 
+[s S307 . 1 `uc 1 GO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM0 1 0 :1:2 
 `uc 1 ADFM1 1 0 :1:3 
 ]
-[s S366 . 1 `uc 1 GO_nDONE 1 0 :1:0 
+[s S312 . 1 `uc 1 GO_nDONE 1 0 :1:0 
 ]
-[u S368 . 1 `S349 1 . 1 0 `S357 1 . 1 0 `S359 1 . 1 0 `S361 1 . 1 0 `S366 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES368  1 e 1 @147 ]
+[u S314 . 1 `S295 1 . 1 0 `S303 1 . 1 0 `S305 1 . 1 0 `S307 1 . 1 0 `S312 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES314  1 e 1 @147 ]
 "1911
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @148 ]
 "1949
@@ -185,20 +185,20 @@ channel_FVR 63
 [v _ADSTPTL ADSTPTL `VEuc  1 e 1 @274 ]
 "3059
 [v _ADSTPTH ADSTPTH `VEuc  1 e 1 @275 ]
-[s S292 . 1 `uc 1 C5TSEL 1 0 :2:0 
+[s S238 . 1 `uc 1 C5TSEL 1 0 :2:0 
 `uc 1 P6TSEL 1 0 :2:2 
 `uc 1 P7TSEL 1 0 :2:4 
 ]
 "7519
-[s S296 . 1 `uc 1 C5TSEL0 1 0 :1:0 
+[s S242 . 1 `uc 1 C5TSEL0 1 0 :1:0 
 `uc 1 C5TSEL1 1 0 :1:1 
 `uc 1 P6TSEL0 1 0 :1:2 
 `uc 1 P6TSEL1 1 0 :1:3 
 `uc 1 P7TSEL0 1 0 :1:4 
 `uc 1 P7TSEL1 1 0 :1:5 
 ]
-[u S303 . 1 `S292 1 . 1 0 `S296 1 . 1 0 ]
-[v _CCPTMRS1bits CCPTMRS1bits `VES303  1 e 1 @543 ]
+[u S249 . 1 `S238 1 . 1 0 `S242 1 . 1 0 ]
+[v _CCPTMRS1bits CCPTMRS1bits `VES249  1 e 1 @543 ]
 "7568
 [v _T2TMR T2TMR `VEuc  1 e 1 @652 ]
 "7605
@@ -347,9 +347,9 @@ channel_FVR 63
 [v _sprintf sprintf `(i  1 e 2 0 ]
 {
 [v sprintf@sp sp `*.4uc  1 a 1 wreg ]
-[u S450 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+[u S444 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
 "526
-[v sprintf@tmpval tmpval `S450  1 a 4 12 ]
+[v sprintf@tmpval tmpval `S444  1 a 4 12 ]
 "528
 [v sprintf@val val `ul  1 a 4 4 ]
 "516

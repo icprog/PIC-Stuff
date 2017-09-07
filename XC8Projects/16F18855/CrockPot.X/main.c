@@ -103,7 +103,7 @@ void main(void)
         
         steinhart = R /10061;     // (R/Ro)
         steinhart = log(steinhart);                  // ln(R/Ro)
-        steinhart /= 4015;                   // 1/B * ln(R/Ro)
+        steinhart /= 3995;                   // 1/B * ln(R/Ro)
         steinhart += 1.0 / (25 + 273.15); // + (1/To)
         steinhart = 1.0 / steinhart;                 // Invert
         steinhart -= 273.15;                         // convert to C
