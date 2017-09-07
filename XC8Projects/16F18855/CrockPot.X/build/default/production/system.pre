@@ -16822,7 +16822,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 305
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 27 "system.h"
+# 31 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16837,21 +16837,26 @@ FVRCON = 0x00;
 ADCC_Initialize();
 PWM6_Initialize();
 TMR2_Initialize();
+LCD_Init(0X00);
+_delay((unsigned long)((200)*(250000/4000.0)));
+LCD_Clear();
+_delay((unsigned long)((100)*(250000/4000.0)));
+InitCustomChars();
+_delay((unsigned long)((200)*(250000/4000.0)));
 }
 
 void OSCILLATOR_Initialize(void)
 {
 
-# 94
-OSCCON1 = 0x62;
+# 111
+OSCCON1 = 0x60;
 
 OSCCON3 = 0x00;
 
 OSCEN = 0x00;
 
-OSCFRQ = 0x02;
+OSCFRQ = 0x00;
 
 OSCTUNE = 0x00;
-
 
 }

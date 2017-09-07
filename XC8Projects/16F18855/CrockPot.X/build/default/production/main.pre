@@ -16790,7 +16790,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 305
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 27 "system.h"
+# 31 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16894,15 +16894,9 @@ void main(void)
 {
 SYSTEM_Initialize();
 
-LCD_Init(0X00);
+uint16_t readTemperature, setpoint = 24, outCurrent = 1023, readTemperatureOld, timer = 0, counter = 0, minute = 0;
 
-_delay((unsigned long)((100)*(1000000/4000.0)));
-
-LCD_Clear();
-
-InitCustomChars();
-
-uint16_t readTemperature, setpoint = 70, outCurrent = 1023, readTemperatureOld = 20;
+unsigned char startupTimer = 0, firstTimeThrough = 0;
 
 float R, steinhart;
 
@@ -16933,6 +16927,14 @@ sampleIndex = 0;
 
 readTemperature = totals / 50;
 
+if(startupTimer >= 250)
+{
+if(firstTimeThrough == 0)
+{
+readTemperatureOld = readTemperature;
+firstTimeThrough +=1;
+}
+
 if(readTemperature > readTemperatureOld)
 {
 readTemperatureOld += 1;
@@ -16945,17 +16947,16 @@ readTemperatureOld -= 1;
 
 readTemperature = readTemperatureOld;
 
+startupTimer = 249;
+}
 
-if(setpoint > readTemperature)
+
+
+if(setpoint > steinhart)
 {
 if(outCurrent < 1022)
 {
-
-
-
 outCurrent++;
-
-
 }
 else
 {
@@ -16963,22 +16964,19 @@ outCurrent = 1023;
 }
 }
 
-if(setpoint < readTemperature)
+if(setpoint < steinhart)
 {
 if(outCurrent > 1)
 {
-
-
-
 outCurrent-=1;
-
-
 }
 else
 {
 outCurrent = 0;
 }
 }
+
+PWM6_LoadDutyValue(outCurrent);
 
 R = 10200/(1023/(float)readTemperature - 1);
 
@@ -16989,16 +16987,29 @@ steinhart += 1.0 / (25 + 273.15);
 steinhart = 1.0 / steinhart;
 steinhart -= 273.15;
 
-# 129
-sprintf(s,"%3.1f  ", steinhart );
+# 127
+sprintf(s,"%3.1f", steinhart );
 LCD_Set_Cursor(0,0);
 LCD_Write_String(s);
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_Char(' ');
+LCD_Write_Char(' ');
 
-sprintf(s,"%5.0f  ", R );
+sprintf(s,"%d  ", minute);
 LCD_Set_Cursor(1,0);
 LCD_Write_String(s);
 
-# 149
-PWM6_LoadDutyValue(outCurrent);
+startupTimer +=1;
+counter+=1;
+
+if(setpoint - steinhart < 2)
+{
+if(counter>=309)
+{
+minute+=1;
+counter = 0;
+}
+}
 }
 }

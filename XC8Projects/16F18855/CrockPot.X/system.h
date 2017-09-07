@@ -10,9 +10,13 @@
 #include "lcd.h"
 #include "adcc.h"
 
-#define _XTAL_FREQ      1000000
-#define SYS_FREQ        1000000L
-#define FCY             SYS_FREQ/4
+
+#define _XTAL_FREQ  250000
+#define SYS_FREQ    250000
+#define FCY         SYS_FREQ/4
+//#define _XTAL_FREQ      1000000
+//#define SYS_FREQ        1000000L
+//#define FCY             SYS_FREQ/4
 
 //#define _XTAL_FREQ  7750
 //#define SYS_FREQ        7750

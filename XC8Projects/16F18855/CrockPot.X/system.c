@@ -74,6 +74,12 @@ void SYSTEM_Initialize(void)
     ADCC_Initialize();
     PWM6_Initialize();
     TMR2_Initialize();
+    LCD_Init(NONE);
+    __delay_ms(200);
+    LCD_Clear();
+    __delay_ms(100);
+    InitCustomChars();
+    __delay_ms(200);
 }
 
 void OSCILLATOR_Initialize(void)
@@ -91,15 +97,25 @@ void OSCILLATOR_Initialize(void)
     // Set the secondary oscillator
 
     // NOSC HFINTOSC; NDIV 4; 
-    OSCCON1 = 0x62;
+//    OSCCON1 = 0x62;
+    // CSWHOLD may proceed; SOSCPWR Low power; 
+  //  OSCCON3 = 0x00;
+    // MFOEN disabled; LFOEN disabled; ADOEN disabled; SOSCEN disabled; EXTOEN disabled; HFOEN disabled; 
+    //OSCEN = 0x00;
+    // HFFRQ 4_MHz; 
+//    OSCFRQ = 0x02;
+    // HFTUN 0; 
+  //  OSCTUNE = 0x00;
+    // Set the secondary oscillator
+        // NOSC HFINTOSC; NDIV 1; 
+    OSCCON1 = 0x60;
     // CSWHOLD may proceed; SOSCPWR Low power; 
     OSCCON3 = 0x00;
     // MFOEN disabled; LFOEN disabled; ADOEN disabled; SOSCEN disabled; EXTOEN disabled; HFOEN disabled; 
     OSCEN = 0x00;
-    // HFFRQ 4_MHz; 
-    OSCFRQ = 0x02;
+    // HFFRQ 1_MHz; 
+    OSCFRQ = 0x00;
     // HFTUN 0; 
     OSCTUNE = 0x00;
-    // Set the secondary oscillator
-    
+
 }

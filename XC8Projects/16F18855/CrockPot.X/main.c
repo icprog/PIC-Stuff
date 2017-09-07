@@ -12,16 +12,10 @@ uint16_t samples[numSamples];
 void main(void)
 {
     SYSTEM_Initialize();
+   
+    uint16_t readTemperature, setpoint = 24, outCurrent = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld, timer = 0, counter = 0, minute = 0;
     
-    LCD_Init(NONE);
-
-    __delay_ms(100);
-    
-    LCD_Clear();
-
-    InitCustomChars();
-    
-    uint16_t readTemperature, setpoint = 70, outCurrent = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld = 20;
+    unsigned char startupTimer = 0, firstTimeThrough = 0;
     
     float R, steinhart;
     
@@ -51,30 +45,37 @@ void main(void)
         }
             
         readTemperature = totals / numSamples;                                  // assign the average value of total to the readTemperature variable
-
-        if(readTemperature > readTemperatureOld)
+        
+        if(startupTimer >= 250)
         {
-            readTemperatureOld += 1;
-        }
+            if(firstTimeThrough == 0)
+            {
+                readTemperatureOld = readTemperature;
+                firstTimeThrough +=1;
+            }
+            
+            if(readTemperature > readTemperatureOld)
+            {
+                readTemperatureOld += 1;
+            }
         
-        if(readTemperature < readTemperatureOld)
-        {
-            readTemperatureOld -= 1;
-        }
+            if(readTemperature < readTemperatureOld)
+            {
+                readTemperatureOld -= 1;
+            }
         
-        readTemperature = readTemperatureOld;
+            readTemperature = readTemperatureOld;
+            
+            startupTimer = 249;
+        }
+
 
         
-        if(setpoint > readTemperature)
+        if(setpoint > steinhart)
         {
             if(outCurrent < 1022)
             {
-//                x+=1;
-  //              if (x>9)
-    //            {
                     outCurrent++;
-      //              x = 0;
-        //        }
             }
             else
             {
@@ -82,31 +83,28 @@ void main(void)
             }
         }
         
-        if(setpoint < readTemperature)
+        if(setpoint < steinhart)
         {
             if(outCurrent > 1)
             {
-//                x-=1;
-  //              if(x<-9)
-    //            {
-                    outCurrent-=1;
-//                    x = 0;
-      //          }
-             }
+                outCurrent-=1;
+            }
             else
             {
                 outCurrent = 0;
             }
         }
+
+        PWM6_LoadDutyValue(outCurrent);
         
-        R = 10200/(1023/(float)readTemperature - 1);
+        R = 10200/(1023/(float)readTemperature - 1);                            // Resistance of Thermistor (R Reference/1023/readTemp -1)
         
-        steinhart = R /10061;     // (R/Ro)
-        steinhart = log(steinhart);                  // ln(R/Ro)
-        steinhart /= 3995;                   // 1/B * ln(R/Ro)
-        steinhart += 1.0 / (25 + 273.15); // + (1/To)
-        steinhart = 1.0 / steinhart;                 // Invert
-        steinhart -= 273.15;                         // convert to C
+        steinhart = R /10061;                                                   // (R/Ro) R/R Standard (resistance of Thermistor at 25C)
+        steinhart = log(steinhart);                                             // ln(R/Ro)
+        steinhart /= 3995;                                                      // 1/Beta * ln(R/Ro)
+        steinhart += 1.0 / (25 + 273.15);                                       // + (1/To, Temperature in degK @ 25C)
+        steinhart = 1.0 / steinhart;                                            // Invert
+        steinhart -= 273.15;                                                    // convert to DegC
  
 //        percentOutput = (uint16_t)(outCurrent*.09765625);
         
@@ -126,26 +124,28 @@ void main(void)
 
 
 
-        sprintf(s,"%3.1f  ", steinhart );
+        sprintf(s,"%3.1f", steinhart );
         LCD_Set_Cursor(0,0);
         LCD_Write_String(s);
+        LCD_Write_Char(0);
+        LCD_Write_Char('C');
+        LCD_Write_Char(' ');
+        LCD_Write_Char(' ');
 
-        sprintf(s,"%5.0f  ", R );
+        sprintf(s,"%d  ", minute);
         LCD_Set_Cursor(1,0);
         LCD_Write_String(s);
 
- //       LCDWriteIntXY(0,0,R,-1,0,0);
-//        LCD_Write_Char(' ');
-  //      LCD_Write_Char(' ');
- 
-//        LCDWriteIntXY(1,0,steinhart,-1,0,0);
-  //      LCD_Write_Char(' ');
-//        LCD_Write_Char(' ');
- 
-//        LCDWriteIntXY(1,4,z,-1,0,0);
-  //      LCD_Write_Char(' ');
-    //    LCD_Write_Char(' ');
+        startupTimer +=1;
+        counter+=1;
         
-        PWM6_LoadDutyValue(outCurrent);
+        if(setpoint - steinhart < 2)
+        {
+            if(counter>=309)
+            {
+                minute+=1;
+                counter = 0;
+            }
+        }
     }
 }

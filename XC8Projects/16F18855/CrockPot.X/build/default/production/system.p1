@@ -1,7 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "16 pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
-"29 system.h
+"33 system.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
 "22252 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _FVRCON `Vuc ~T0 @X0 0 e@2316 ]
@@ -11,6 +11,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PWM6_Initialize `(v ~T0 @X0 0 ef ]
 "264 tmr2.h
 [v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
+"59 lcd.h
+[v _LCD_Init `(v ~T0 @X0 0 ef1`uc ]
+[v F13525 `(v ~T0 @X0 1 tf1`ul ]
+"152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
+[v __delay `JF13525 ~T0 @X0 0 e ]
+[p i __delay ]
+"55 lcd.h
+[v _LCD_Clear `(v ~T0 @X0 0 ef ]
+"49
+[v _InitCustomChars `(v ~T0 @X0 0 ef ]
 "21546 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _OSCCON1 `Vuc ~T0 @X0 0 e@2189 ]
 "21684
@@ -12689,8 +12699,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 261: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adcc.h: 283: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;system.h: 27: void SYSTEM_Initialize(void);
-[; ;system.h: 29: void OSCILLATOR_Initialize(void);
+[; ;system.h: 31: void SYSTEM_Initialize(void);
+[; ;system.h: 33: void OSCILLATOR_Initialize(void);
 "68 system.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
 "69
@@ -12717,34 +12727,52 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 76: TMR2_Initialize();
 "76
 [e ( _TMR2_Initialize ..  ]
-[; ;system.c: 77: }
+[; ;system.c: 77: LCD_Init(0X00);
 "77
+[e ( _LCD_Init (1 -> -> 0 `i `uc ]
+[; ;system.c: 78: _delay((unsigned long)((200)*(250000/4000.0)));
+"78
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 250000 `l `d .4000.0 `ul ]
+[; ;system.c: 79: LCD_Clear();
+"79
+[e ( _LCD_Clear ..  ]
+[; ;system.c: 80: _delay((unsigned long)((100)*(250000/4000.0)));
+"80
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 250000 `l `d .4000.0 `ul ]
+[; ;system.c: 81: InitCustomChars();
+"81
+[e ( _InitCustomChars ..  ]
+[; ;system.c: 82: _delay((unsigned long)((200)*(250000/4000.0)));
+"82
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 250000 `l `d .4000.0 `ul ]
+[; ;system.c: 83: }
+"83
 [e :UE 1519 ]
 }
-"79
+"85
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
-"80
+"86
 {
-[; ;system.c: 79: void OSCILLATOR_Initialize(void)
-[; ;system.c: 80: {
+[; ;system.c: 85: void OSCILLATOR_Initialize(void)
+[; ;system.c: 86: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;system.c: 94: OSCCON1 = 0x62;
-"94
-[e = _OSCCON1 -> -> 98 `i `uc ]
-[; ;system.c: 96: OSCCON3 = 0x00;
-"96
+[; ;system.c: 111: OSCCON1 = 0x60;
+"111
+[e = _OSCCON1 -> -> 96 `i `uc ]
+[; ;system.c: 113: OSCCON3 = 0x00;
+"113
 [e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 98: OSCEN = 0x00;
-"98
+[; ;system.c: 115: OSCEN = 0x00;
+"115
 [e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 100: OSCFRQ = 0x02;
-"100
-[e = _OSCFRQ -> -> 2 `i `uc ]
-[; ;system.c: 102: OSCTUNE = 0x00;
-"102
+[; ;system.c: 117: OSCFRQ = 0x00;
+"117
+[e = _OSCFRQ -> -> 0 `i `uc ]
+[; ;system.c: 119: OSCTUNE = 0x00;
+"119
 [e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 105: }
-"105
+[; ;system.c: 121: }
+"121
 [e :UE 1520 ]
 }

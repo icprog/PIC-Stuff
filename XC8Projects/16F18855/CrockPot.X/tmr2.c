@@ -3,8 +3,9 @@
 
 void TMR2_Initialize(void)
 {
-    T2CON = 0x02;                   // T2CKPS 1:4 Clock PreScaler; T2OUTPS 1:1 Out PostScaler; TMR2ON off;
-    
+//    T2CON = 0x02;                   // T2CKPS 1:4 Clock PreScaler; T2OUTPS 1:1 Out PostScaler; TMR2ON off;  WRONG!!!!
+    T2CON = 0x7F;                   // T2CKPS 1:128 Clock PreScaler; T2OUTPS 1:16 Out PostScaler; TMR2ON off;
+      
     T2CLKCON = 0x01;                // Pg 440, T2CS(T2 Clock Source) FOSC/4; 
     
     T2HLT = 0x00;                   // Pg 442, Hardware Limit Cntrl, T2PSYNC Not Synchronized; T2MODE Software control; T2CKPOL Ris ing Edge; T2CKSYNC Not Synchronized;
