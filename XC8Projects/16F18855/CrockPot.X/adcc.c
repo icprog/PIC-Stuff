@@ -4,7 +4,6 @@
 
 void ADCC_Initialize(void)
 {
-    // set the ADCC to the options selected in the User Interface
     // ADDSEN disabled; ADGPOL digital_low; ADIPEN disabled; ADPPOL VSS; 
     ADCON1 = 0x00;
     // ADCRS 0; ADMD Basic_mode; ADACLR disabled; ADPSIS ADFLTR; 

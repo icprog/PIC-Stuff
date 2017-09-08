@@ -37,9 +37,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADSTPTH `Vuc ~T0 @X0 0 e@275 ]
 "1821
 [v _ADCON0 `Vuc ~T0 @X0 0 e@147 ]
-"54 adcc.c
-[c E13559 4 60 61 62 63 .. ]
-[n E13559 . POT channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
+"53 adcc.c
+[c E13559 60 61 62 63 .. ]
+[n E13559 . channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
 "1827 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [s S87 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S87 . ADGO . ADFM ADCS . ADCONT ADON ]
@@ -12642,7 +12642,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 9: typedef uint16_t adc_result_t;
 [; ;adcc.h: 12: typedef enum
 [; ;adcc.h: 13: {
-[; ;adcc.h: 14: POT = 0x4,
 [; ;adcc.h: 15: channel_VSS = 0x3C,
 [; ;adcc.h: 16: channel_Temp = 0x3D,
 [; ;adcc.h: 17: channel_DAC1 = 0x3E,
@@ -12683,109 +12682,109 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.c: 6: {
 [e :U _ADCC_Initialize ]
 [f ]
-[; ;adcc.c: 9: ADCON1 = 0x00;
-"9
+[; ;adcc.c: 8: ADCON1 = 0x00;
+"8
 [e = _ADCON1 -> -> 0 `i `uc ]
-[; ;adcc.c: 11: ADCON2 = 0x00;
-"11
+[; ;adcc.c: 10: ADCON2 = 0x00;
+"10
 [e = _ADCON2 -> -> 0 `i `uc ]
-[; ;adcc.c: 13: ADCON3 = 0x00;
-"13
+[; ;adcc.c: 12: ADCON3 = 0x00;
+"12
 [e = _ADCON3 -> -> 0 `i `uc ]
-[; ;adcc.c: 15: ADACT = 0x00;
-"15
+[; ;adcc.c: 14: ADACT = 0x00;
+"14
 [e = _ADACT -> -> 0 `i `uc ]
-[; ;adcc.c: 17: ADSTAT = 0x00;
-"17
+[; ;adcc.c: 16: ADSTAT = 0x00;
+"16
 [e = _ADSTAT -> -> 0 `i `uc ]
-[; ;adcc.c: 19: ADCLK = 0x0F;
-"19
+[; ;adcc.c: 18: ADCLK = 0x0F;
+"18
 [e = _ADCLK -> -> 15 `i `uc ]
-[; ;adcc.c: 22: ADREF = 0x00;
-"22
+[; ;adcc.c: 21: ADREF = 0x00;
+"21
 [e = _ADREF -> -> 0 `i `uc ]
-[; ;adcc.c: 24: ADCAP = 0x00;
-"24
+[; ;adcc.c: 23: ADCAP = 0x00;
+"23
 [e = _ADCAP -> -> 0 `i `uc ]
-[; ;adcc.c: 26: ADPRE = 0x00;
-"26
+[; ;adcc.c: 25: ADPRE = 0x00;
+"25
 [e = _ADPRE -> -> 0 `i `uc ]
-[; ;adcc.c: 28: ADACQ = 0x00;
-"28
+[; ;adcc.c: 27: ADACQ = 0x00;
+"27
 [e = _ADACQ -> -> 0 `i `uc ]
-[; ;adcc.c: 30: ADPCH = 0x00;
-"30
+[; ;adcc.c: 29: ADPCH = 0x00;
+"29
 [e = _ADPCH -> -> 0 `i `uc ]
-[; ;adcc.c: 32: ADRPT = 0x00;
-"32
+[; ;adcc.c: 31: ADRPT = 0x00;
+"31
 [e = _ADRPT -> -> 0 `i `uc ]
-[; ;adcc.c: 34: ADLTHL = 0x00;
-"34
+[; ;adcc.c: 33: ADLTHL = 0x00;
+"33
 [e = _ADLTHL -> -> 0 `i `uc ]
-[; ;adcc.c: 36: ADLTHH = 0x00;
-"36
+[; ;adcc.c: 35: ADLTHH = 0x00;
+"35
 [e = _ADLTHH -> -> 0 `i `uc ]
-[; ;adcc.c: 38: ADUTHL = 0x00;
-"38
+[; ;adcc.c: 37: ADUTHL = 0x00;
+"37
 [e = _ADUTHL -> -> 0 `i `uc ]
-[; ;adcc.c: 40: ADUTHH = 0x00;
-"40
+[; ;adcc.c: 39: ADUTHH = 0x00;
+"39
 [e = _ADUTHH -> -> 0 `i `uc ]
-[; ;adcc.c: 42: ADSTPTL = 0x00;
-"42
+[; ;adcc.c: 41: ADSTPTL = 0x00;
+"41
 [e = _ADSTPTL -> -> 0 `i `uc ]
-[; ;adcc.c: 44: ADSTPTH = 0x00;
-"44
+[; ;adcc.c: 43: ADSTPTH = 0x00;
+"43
 [e = _ADSTPTH -> -> 0 `i `uc ]
-[; ;adcc.c: 47: ADCON0 = 0x84;
-"47
+[; ;adcc.c: 46: ADCON0 = 0x84;
+"46
 [e = _ADCON0 -> -> 132 `i `uc ]
-[; ;adcc.c: 50: }
-"50
+[; ;adcc.c: 49: }
+"49
 [e :UE 1519 ]
 }
-"53
+"52
 [v _ADCC_GetSingleConversion `(ui ~T0 @X0 1 ef1`E13559 ]
-"54
-{
-[; ;adcc.c: 53: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel)
-[; ;adcc.c: 54: {
-[e :U _ADCC_GetSingleConversion ]
 "53
+{
+[; ;adcc.c: 52: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel)
+[; ;adcc.c: 53: {
+[e :U _ADCC_GetSingleConversion ]
+"52
 [v _channel `E13559 ~T0 @X0 1 r1 ]
-"54
+"53
 [f ]
-[; ;adcc.c: 56: ADPCH = channel;
-"56
+[; ;adcc.c: 55: ADPCH = channel;
+"55
 [e = _ADPCH -> _channel `uc ]
-[; ;adcc.c: 59: ADCON0bits.ADON = 1;
-"59
+[; ;adcc.c: 58: ADCON0bits.ADON = 1;
+"58
 [e = . . _ADCON0bits 0 6 -> -> 1 `i `uc ]
-[; ;adcc.c: 62: ADCON0bits.ADCONT = 0;
-"62
+[; ;adcc.c: 61: ADCON0bits.ADCONT = 0;
+"61
 [e = . . _ADCON0bits 0 5 -> -> 0 `i `uc ]
-[; ;adcc.c: 65: ADCON0bits.ADGO = 1;
-"65
+[; ;adcc.c: 64: ADCON0bits.ADGO = 1;
+"64
 [e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
-[; ;adcc.c: 68: while (ADCON0bits.ADGO)
-"68
+[; ;adcc.c: 67: while (ADCON0bits.ADGO)
+"67
 [e $U 1521  ]
 [e :U 1522 ]
-[; ;adcc.c: 69: {
-"69
+[; ;adcc.c: 68: {
+"68
 {
-"70
+"69
 }
 [e :U 1521 ]
-"68
+"67
 [e $ != -> . . _ADCON0bits 0 0 `i -> -> -> 0 `i `Vuc `i 1522  ]
 [e :U 1523 ]
-[; ;adcc.c: 70: }
-[; ;adcc.c: 73: return ((ADRESH << 8) + ADRESL);
-"73
+[; ;adcc.c: 69: }
+[; ;adcc.c: 72: return ((ADRESH << 8) + ADRESL);
+"72
 [e ) -> + << -> _ADRESH `i -> 8 `i -> _ADRESL `i `ui ]
 [e $UE 1520  ]
-[; ;adcc.c: 74: }
-"74
+[; ;adcc.c: 73: }
+"73
 [e :UE 1520 ]
 }

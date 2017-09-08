@@ -20,8 +20,6 @@ void PIN_MANAGER_Initialize(void)
     ANSELA = 0x04;
     ANSELB = 0x00;
     ANSELC = 0x00;
-//    ANSELC = 0x10;
-
     
     PIE0bits.IOCIE = 0;                 // interrupts-on-change are globally disabled
     bool state = GIE;

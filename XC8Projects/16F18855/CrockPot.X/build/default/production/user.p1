@@ -1,15 +1,15 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "8 user.c
 [v _setpoint `uc ~T0 @X0 0 e ]
-"55 lcd.h
+"44 lcd.h
 [v _LCD_Clear `(v ~T0 @X0 0 ef ]
-"57
+"46
 [v _LCD_Set_Cursor `(v ~T0 @X0 0 ef2`uc`uc ]
-"63
+"52
 [v _LCD_Write_String `(v ~T0 @X0 0 ef1`*Cuc ]
-"65
+"54
 [v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
-"61
+"50
 [v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
 [v F13525 `(v ~T0 @X0 1 tf1`ul ]
 "152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
@@ -12608,7 +12608,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 9: typedef uint16_t adc_result_t;
 [; ;adcc.h: 12: typedef enum
 [; ;adcc.h: 13: {
-[; ;adcc.h: 14: POT = 0x4,
 [; ;adcc.h: 15: channel_VSS = 0x3C,
 [; ;adcc.h: 16: channel_Temp = 0x3D,
 [; ;adcc.h: 17: channel_DAC1 = 0x3E,
@@ -12643,15 +12642,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;system.h: 32: void SYSTEM_Initialize(void);
 [; ;system.h: 34: void OSCILLATOR_Initialize(void);
-[; ;lcd.h: 49: void InitCustomChars();
-[; ;lcd.h: 51: void LCD_Port(char a);
-[; ;lcd.h: 53: void LCD_Cmd(char a);
-[; ;lcd.h: 55: void LCD_Clear();
-[; ;lcd.h: 57: void LCD_Set_Cursor(char x, char y);
-[; ;lcd.h: 59: void LCD_Init(char style);
-[; ;lcd.h: 61: void LCD_Write_Char(const char a);
-[; ;lcd.h: 63: void LCD_Write_String(const char *a);
-[; ;lcd.h: 65: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+[; ;lcd.h: 38: void InitCustomChars();
+[; ;lcd.h: 40: void LCD_Port(char a);
+[; ;lcd.h: 42: void LCD_Cmd(char a);
+[; ;lcd.h: 44: void LCD_Clear();
+[; ;lcd.h: 46: void LCD_Set_Cursor(char x, char y);
+[; ;lcd.h: 48: void LCD_Init(char style);
+[; ;lcd.h: 50: void LCD_Write_Char(const char a);
+[; ;lcd.h: 52: void LCD_Write_String(const char *a);
+[; ;lcd.h: 54: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 "7 user.c
 [v _downCount `uc ~T0 @X0 1 e ]
 [i _downCount

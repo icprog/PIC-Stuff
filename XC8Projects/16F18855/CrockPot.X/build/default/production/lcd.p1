@@ -1,7 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"53 lcd.h
+"42 lcd.h
 [v _LCD_Cmd `(v ~T0 @X0 0 ef1`uc ]
-"61
+"50
 [v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
 "36282 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _RB2 `Vb ~T0 @X0 0 e@106 ]
@@ -12602,7 +12602,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 9: typedef uint16_t adc_result_t;
 [; ;adcc.h: 12: typedef enum
 [; ;adcc.h: 13: {
-[; ;adcc.h: 14: POT = 0x4,
 [; ;adcc.h: 15: channel_VSS = 0x3C,
 [; ;adcc.h: 16: channel_Temp = 0x3D,
 [; ;adcc.h: 17: channel_DAC1 = 0x3E,
@@ -12637,15 +12636,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;system.h: 32: void SYSTEM_Initialize(void);
 [; ;system.h: 34: void OSCILLATOR_Initialize(void);
-[; ;lcd.h: 49: void InitCustomChars();
-[; ;lcd.h: 51: void LCD_Port(char a);
-[; ;lcd.h: 53: void LCD_Cmd(char a);
-[; ;lcd.h: 55: void LCD_Clear();
-[; ;lcd.h: 57: void LCD_Set_Cursor(char x, char y);
-[; ;lcd.h: 59: void LCD_Init(char style);
-[; ;lcd.h: 61: void LCD_Write_Char(const char a);
-[; ;lcd.h: 63: void LCD_Write_String(const char *a);
-[; ;lcd.h: 65: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+[; ;lcd.h: 38: void InitCustomChars();
+[; ;lcd.h: 40: void LCD_Port(char a);
+[; ;lcd.h: 42: void LCD_Cmd(char a);
+[; ;lcd.h: 44: void LCD_Clear();
+[; ;lcd.h: 46: void LCD_Set_Cursor(char x, char y);
+[; ;lcd.h: 48: void LCD_Init(char style);
+[; ;lcd.h: 50: void LCD_Write_Char(const char a);
+[; ;lcd.h: 52: void LCD_Write_String(const char *a);
+[; ;lcd.h: 54: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 "5 lcd.c
 [v ___cgram `uc ~T0 @X0 -> 0 `x e ]
 [i ___cgram
@@ -13111,8 +13110,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `c ~T0 @X0 1 r4 ]
 "247
 [f ]
-[v F13686 `uc ~T0 @X0 -> 5 `i s ]
-[i F13686
+[v F13685 `uc ~T0 @X0 -> 5 `i s ]
+[i F13685
 :U ..
 "248
 -> -> 0 `i `uc
@@ -13124,7 +13123,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _str `uc ~T0 @X0 -> 5 `i a ]
 [; ;lcd.c: 248: char str[5]={0,0,0,0,0};
-[e = _str F13686 ]
+[e = _str F13685 ]
 "249
 [v _i `i ~T0 @X0 1 a ]
 [; ;lcd.c: 249: int i=4,j=0;

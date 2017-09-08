@@ -16694,7 +16694,7 @@ void TMR0_Initialize(void);
 
 void TMR2_Initialize(void);
 
-# 49 "lcd.h"
+# 38 "lcd.h"
 void InitCustomChars();
 
 void LCD_Port(char a);
@@ -16719,7 +16719,7 @@ typedef uint16_t adc_result_t;
 
 typedef enum
 {
-POT = 0x4,
+
 channel_VSS = 0x3C,
 channel_Temp = 0x3D,
 channel_DAC1 = 0x3E,
@@ -16830,7 +16830,7 @@ void tempSetpoint(void);
 
 void readButtons(void);
 
-# 9 "main.c"
+# 8 "main.c"
 uint16_t samples[50];
 
 uint8_t setpoint = 70, presets[5]={0,70,95,105,120};
@@ -16840,7 +16840,7 @@ void main(void)
 {
 SYSTEM_Initialize();
 
-uint16_t readTemperature, outCurrent = 1023, readTemperatureOld, displayTemp = 70, counter = 0, counter2 = 0, minute = 0;
+uint16_t readTemperature, outCurrent = 1023, readTemperatureOld, displayTemp = 70, seconds = 0, counter = 0, minutes = 0;
 
 uint8_t startupTimer = 0, firstTimeThrough = 0, toggle = 0;
 
@@ -16871,11 +16871,13 @@ sampleIndex = 0;
 
 readTemperature = totals / 50;
 
+
 if(startupTimer >= 70)
 {
 if(firstTimeThrough == 0)
 {
 readTemperatureOld = readTemperature;
+counter = 0;
 firstTimeThrough +=1;
 }
 
@@ -16920,7 +16922,7 @@ PWM6_LoadDutyValue(outCurrent);
 startupTimer = 69;
 }
 
-
+startupTimer +=1;
 
 
 R = 10200/(1023/(float)readTemperature - 1);
@@ -16952,38 +16954,39 @@ LCD_Write_Char(' ');
 }
 
 
-
-
-{ LCD_Set_Cursor(1,0); LCD_Write_Int(counter,-1, 0, 0);};
+{ LCD_Set_Cursor(1,0); LCD_Write_String("Time:");}
+{ LCD_Set_Cursor(1,5); LCD_Write_Int(minutes,-1, 0, 0);};
 LCD_Write_Char(' ');
-startupTimer +=1;
 
-counter2 +=1;
+
+counter +=1;
+
+if(counter>12)
+{
+toggle = 1-toggle;
+counter = 0;
+}
+
 
 if(TMR0IF)
 {
 TMR0H = 0x24;
-TMR0L = 0xB8;
+TMR0L = 0x9F;
 TMR0IF = 0;
-counter+=1;
-}
-
-if(counter2>12)
-{
-toggle = 1-toggle;
-counter2 = 0;
+seconds+=1;
 }
 
 if(setpoint - steinhart < 2)
 {
-if(counter>=314)
+if(seconds>61)
 {
-minute+=1;
+minutes+=1;
+seconds = 0;
+}
+}
 
-}
-}
+
 readButtons();
 tempSetpoint();
-
 }
 }

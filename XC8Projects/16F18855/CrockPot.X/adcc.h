@@ -11,7 +11,7 @@ typedef uint16_t adc_result_t;
 
 typedef enum
 {
-    POT =  0x4,
+//    POT         =   0x4,
     channel_VSS =   0x3C,
     channel_Temp =  0x3D,
     channel_DAC1 =  0x3E,
