@@ -16689,7 +16689,9 @@ void PWM6_Initialize(void);
 # 33
 void PWM6_LoadDutyValue(uint16_t dutyValue);
 
-# 264 "tmr2.h"
+# 5 "timers.h"
+void TMR0_Initialize(void);
+
 void TMR2_Initialize(void);
 
 # 9 "adcc.h"
@@ -16771,7 +16773,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 305
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 31 "system.h"
+# 32 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16789,9 +16791,9 @@ void LCD_Set_Cursor(char x, char y);
 
 void LCD_Init(char style);
 
-void LCD_Write_Char(char a);
+void LCD_Write_Char(const char a);
 
-void LCD_Write_String(char *a);
+void LCD_Write_String(const char *a);
 
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
@@ -16940,7 +16942,7 @@ _delay((unsigned long)((120)*(1000000/4000000.0)));
 # 221
 }
 
-void LCD_Write_Char(char a)
+void LCD_Write_Char(const char a)
 {
 char temp,y;
 temp = a&0x0F;
@@ -16956,7 +16958,7 @@ RB1 = 0;
 _delay((unsigned long)((40)*(1000000/4000000.0)));
 }
 
-void LCD_Write_String(char *a)
+void LCD_Write_String(const char *a)
 {
 int i;
 for(i=0;a[i]!='\0';i++)

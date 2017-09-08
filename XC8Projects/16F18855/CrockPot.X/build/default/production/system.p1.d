@@ -2,8 +2,8 @@
  build/default/production/system.p1:  \
  system.c  \
 adcc.h  \
+timers.h  \
 pwm6.h  \
 pin_manager.h  \
 lcd.h  \
-system.h  \
-tmr2.h 
+system.h 

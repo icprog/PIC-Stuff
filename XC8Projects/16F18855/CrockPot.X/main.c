@@ -8,16 +8,16 @@
 
 uint16_t samples[numSamples];
 
-uint8_t setpoint = 70;
+uint8_t setpoint = 70, presets[5]={0,70,95,105,120};
 
 
 void main(void)
 {
     SYSTEM_Initialize();
    
-    uint16_t readTemperature, outCurrent = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld, displayTemp = 70, counter = 0, minute = 0;
+    uint16_t readTemperature, outCurrent = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld, displayTemp = 70, counter = 0, counter2 = 0, minute = 0;
     
-    unsigned char startupTimer = 0, firstTimeThrough = 0;
+    uint8_t startupTimer = 0, firstTimeThrough = 0, toggle = 0;
     
     float R, steinhart;
     
@@ -46,7 +46,7 @@ void main(void)
             
         readTemperature = totals / numSamples;                                  // assign the average value of total to the readTemperature variable
         
-        if(startupTimer >= 250)
+        if(startupTimer >= 70)
         {
             if(firstTimeThrough == 0)
             {
@@ -65,37 +65,38 @@ void main(void)
             }
         
             readTemperature = readTemperatureOld;
-            
-            startupTimer = 249;
-        }
 
-
-        
-        if(setpoint > steinhart)
-        {
-            if(outCurrent < 1022)
+            if(setpoint > steinhart)
             {
+                if(outCurrent < 1023)
+                {
                     outCurrent++;
+                }
+                else
+                {
+                    outCurrent = 1023;
+                }
             }
-            else
-            {
-                outCurrent = 1023;
-            }
-        }
         
-        if(setpoint < steinhart)
-        {
-            if(outCurrent > 1)
+            if(setpoint < steinhart)
             {
-                outCurrent-=1;
+                if(outCurrent > 0)
+                {
+                    outCurrent-=1;
+                }
+                else
+                {
+                    outCurrent = 0;
+                }
             }
-            else
-            {
-                outCurrent = 0;
-            }
+
+            PWM6_LoadDutyValue(outCurrent);                                         // Load DutyCycle to control output at desired temperature
+            
+            startupTimer = 69;
         }
 
-        PWM6_LoadDutyValue(outCurrent);
+
+        
         
         R = 10200/(1023/(float)readTemperature - 1);                            // Resistance of Thermistor (R Reference/1023/readTemp -1)
         
@@ -106,52 +107,57 @@ void main(void)
         steinhart = 1.0 / steinhart;                                            // Invert
         steinhart -= 273.15;                                                    // convert to DegC
  
-//        percentOutput = (uint16_t)(outCurrent*.09765625);
-        
-//        measuredCurrent = (uint16_t)(readCurrent * 1.5454545454);
-        
-        
-//        LCDWriteIntXY(0,0,measuredCurrent,-1,0,0);
-  //      LCD_Write_Char('m');
-    ///    LCD_Write_Char('a');
-       // LCD_Write_Char(' ');
-//        LCD_Write_Char(' ');
-
-  //      LCDWriteIntXY(0,8,percentOutput,2,0,0);
-    //    LCD_Write_Char('%');
-      //  LCD_Write_Char(' ');
-        //LCD_Write_Char(' ');
 
         displayTemp = (uint16_t)steinhart * 10;
-//        steinhart = (uint16_t)steinhart;
-
-        LCDWriteIntXY(0,1,displayTemp,-1,1,0);
-//        sprintf(s,"%3.1f", steinhart );
-//        LCD_Set_Cursor(0,0);
-  //      LCD_Write_String(s);
-        LCD_Write_Char(0);
-        LCD_Write_Char('C');
-        LCD_Write_Char(' ');
         
-        LCDWriteStringXY(1,0,"Time:")
-        LCDWriteIntXY(1,5,minute,-1,0,0);
+        if(toggle == 1)
+        {
+            displayTemp = displayTemp*9/5+320;                                  // Display Temperature in DegF
+            LCDWriteIntXY(0,1,displayTemp,-1,1,0);
+            LCD_Write_Char(0);
+            LCD_Write_Char('F');
+            LCD_Write_Char(' ');
+        }
+        else
+        {
+            LCDWriteIntXY(0,1,displayTemp,-1,1,0);                              //Display Temperature in DegC
+            LCD_Write_Char(0);
+            LCD_Write_Char('C');
+            LCD_Write_Char(' ');
+        }
+        
+//        LCDWriteStringXY(1,0,"Time:")
+  //      LCDWriteIntXY(1,5,minute,-1,0,0);                                       // Display Number of minutes spent within 2 DegC of Setpoint (or hotter))
 
-//        sprintf(s,"%d  ", minute);
-  //      LCD_Set_Cursor(1,0);
-    //    LCD_Write_String(s);
-
-        startupTimer +=1;
-        counter+=1;
+        LCDWriteIntXY(1,0,counter,-1,0,0);
+        LCD_Write_Char(' ');
+        startupTimer +=1;                                                       // Hold PWM at 100% while temperature reading stabilizes
+//        counter+=1;                                                             // Minute counter
+        counter2 +=1;                                                           // toggle counter
+        
+        if(TMR0IF)
+        {
+            TMR0H   =   0x24;               // Load Preset to Timer0 of 63750 (at 255KHz, this should produce 1 rollover/second)
+            TMR0L   =   0xB8;
+            TMR0IF = 0;
+            counter+=1;
+        }
+        
+        if(counter2>12)
+        {
+            toggle = 1-toggle;
+            counter2 = 0;
+        }
         
         if(setpoint - steinhart < 2)
         {
             if(counter>=314)
             {
                 minute+=1;
-                counter = 0;
+//                counter = 0;
             }
         }
-        readButtons();
+        readButtons();                                                          // check if a button is pressed
         tempSetpoint();
 //        CLRWDT();
     }

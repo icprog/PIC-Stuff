@@ -42,6 +42,7 @@ void SYSTEM_Initialize(void)
     FVRCON = 0x00;                      // Set Fixed Voltage reference
     ADCC_Initialize();
     PWM6_Initialize();
+    TMR0_Initialize();
     TMR2_Initialize();
     LCD_Init(NONE);
     __delay_ms(200);

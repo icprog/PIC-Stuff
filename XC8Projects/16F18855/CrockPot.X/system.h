@@ -6,7 +6,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "pwm6.h"
-#include "tmr2.h"
+#include "timers.h"
+//#include "tmr2.h"
 #include "lcd.h"
 #include "adcc.h"
 

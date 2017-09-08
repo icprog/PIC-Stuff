@@ -16694,7 +16694,9 @@ void PWM6_Initialize(void);
 # 33
 void PWM6_LoadDutyValue(uint16_t dutyValue);
 
-# 264 "tmr2.h"
+# 5 "timers.h"
+void TMR0_Initialize(void);
+
 void TMR2_Initialize(void);
 
 # 9 "adcc.h"
@@ -16776,7 +16778,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 305
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 31 "system.h"
+# 32 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16794,15 +16796,16 @@ void LCD_Set_Cursor(char x, char y);
 
 void LCD_Init(char style);
 
-void LCD_Write_Char(char a);
+void LCD_Write_Char(const char a);
 
-void LCD_Write_String(char *a);
+void LCD_Write_String(const char *a);
 
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
 # 7 "user.c"
-uint8_t downCount = 0, upCount = 0, oldSetpoint;
+uint8_t downCount = 0, upCount = 0, oldSetpoint, toggleCount = 0, x = 0;
 extern uint8_t setpoint;
+extern uint8_t presets[];
 
 
 void tempSetpoint(void)
@@ -16826,7 +16829,6 @@ LCD_Write_Char('C');
 LCD_Write_Char(' ');
 _delay((unsigned long)((350)*(1000000/4000.0)));
 readButtons();
-
 }
 
 while(upCount >= 5)
@@ -16844,7 +16846,6 @@ LCD_Write_Char('C');
 LCD_Write_Char(' ');
 _delay((unsigned long)((350)*(1000000/4000.0)));
 readButtons();
-
 }
 
 counter = 0;
@@ -16859,6 +16860,29 @@ LCD_Clear();
 
 void readButtons(void)
 {
+if(RA3 == 0 && RA4 == 0)
+{
+downCount = 0;
+upCount = 0;
+toggleCount+=1;
+if(toggleCount >=6)
+{
+x+=1;
+if(x>4)
+{
+x=0;
+}
+setpoint = presets[x];
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+{ LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_Char(' ');
+_delay((unsigned long)((1500)*(1000000/4000.0)));
+toggleCount = 0;
+LCD_Clear();
+}
+}
 if(RA3 == 0)
 {
 downCount +=1;

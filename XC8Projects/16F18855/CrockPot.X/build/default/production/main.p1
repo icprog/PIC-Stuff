@@ -1,12 +1,12 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
-"31 system.h
+"32 system.h
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
 "32 main.c
-[c E13587 4 60 61 62 63 .. ]
-[n E13587 . POT channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
+[c E13589 4 60 61 62 63 .. ]
+[n E13589 . POT channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
 "30 adcc.h
-[v _ADCC_GetSingleConversion `(ui ~T0 @X0 0 ef1`E13587 ]
+[v _ADCC_GetSingleConversion `(ui ~T0 @X0 0 ef1`E13589 ]
 "33 pwm6.h
 [v _PWM6_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
 "43 C:\Program Files (x86)\Microchip\xc8\v1.38\include\math.h
@@ -16,9 +16,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 "65
 [v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
 "61
-[v _LCD_Write_Char `(v ~T0 @X0 0 ef1`uc ]
-"63
-[v _LCD_Write_String `(v ~T0 @X0 0 ef1`*uc ]
+[v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
+"37774 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _TMR0IF `Vb ~T0 @X0 0 e@14437 ]
+"1075
+[v _TMR0H `Vuc ~T0 @X0 0 e@29 ]
+"938
+[v _TMR0L `Vuc ~T0 @X0 0 e@28 ]
 "8 user.h
 [v _readButtons `(v ~T0 @X0 0 ef ]
 "6
@@ -12601,15 +12605,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;pwm6.h: 9: void PWM6_Initialize(void);
 [; ;pwm6.h: 33: void PWM6_LoadDutyValue(uint16_t dutyValue);
-[; ;tmr2.h: 264: void TMR2_Initialize(void);
+[; ;timers.h: 5: void TMR0_Initialize(void);
+[; ;timers.h: 7: void TMR2_Initialize(void);
 [; ;lcd.h: 49: void InitCustomChars();
 [; ;lcd.h: 51: void LCD_Port(char a);
 [; ;lcd.h: 53: void LCD_Cmd(char a);
 [; ;lcd.h: 55: void LCD_Clear();
 [; ;lcd.h: 57: void LCD_Set_Cursor(char x, char y);
 [; ;lcd.h: 59: void LCD_Init(char style);
-[; ;lcd.h: 61: void LCD_Write_Char(char a);
-[; ;lcd.h: 63: void LCD_Write_String(char *a);
+[; ;lcd.h: 61: void LCD_Write_Char(const char a);
+[; ;lcd.h: 63: void LCD_Write_String(const char *a);
 [; ;lcd.h: 65: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 [; ;adcc.h: 9: typedef uint16_t adc_result_t;
 [; ;adcc.h: 12: typedef enum
@@ -12647,8 +12652,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 261: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adcc.h: 283: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;system.h: 31: void SYSTEM_Initialize(void);
-[; ;system.h: 33: void OSCILLATOR_Initialize(void);
+[; ;system.h: 32: void SYSTEM_Initialize(void);
+[; ;system.h: 34: void OSCILLATOR_Initialize(void);
 [; ;math.h: 30: extern double fabs(double);
 [; ;math.h: 31: extern double floor(double);
 [; ;math.h: 32: extern double ceil(double);
@@ -12685,7 +12690,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [i _setpoint
 -> -> 70 `i `uc
 ]
-[; ;main.c: 11: uint8_t setpoint = 70;
+[v _presets `uc ~T0 @X0 -> 5 `i e ]
+[i _presets
+:U ..
+-> -> 0 `i `uc
+-> -> 70 `i `uc
+-> -> 95 `i `uc
+-> -> 105 `i `uc
+-> -> 120 `i `uc
+..
+]
+[; ;main.c: 11: uint8_t setpoint = 70, presets[5]={0,70,95,105,120};
 "14
 [v _main `(v ~T0 @X0 1 ef ]
 "15
@@ -12700,27 +12715,31 @@ Version 3.2 HI-TECH Software Intermediate Code
 "18
 [v _readTemperature `ui ~T0 @X0 1 a ]
 [v _outCurrent `ui ~T0 @X0 1 a ]
-[; ;main.c: 18: uint16_t readTemperature, outCurrent = 1023, readTemperatureOld, displayTemp = 70, counter = 0, minute = 0;
+[; ;main.c: 18: uint16_t readTemperature, outCurrent = 1023, readTemperatureOld, displayTemp = 70, counter = 0, counter2 = 0, minute = 0;
 [e = _outCurrent -> -> 1023 `i `ui ]
 [v _readTemperatureOld `ui ~T0 @X0 1 a ]
 [v _displayTemp `ui ~T0 @X0 1 a ]
 [e = _displayTemp -> -> 70 `i `ui ]
 [v _counter `ui ~T0 @X0 1 a ]
 [e = _counter -> -> 0 `i `ui ]
+[v _counter2 `ui ~T0 @X0 1 a ]
+[e = _counter2 -> -> 0 `i `ui ]
 [v _minute `ui ~T0 @X0 1 a ]
 [e = _minute -> -> 0 `i `ui ]
 "20
 [v _startupTimer `uc ~T0 @X0 1 a ]
-[; ;main.c: 20: unsigned char startupTimer = 0, firstTimeThrough = 0;
+[; ;main.c: 20: uint8_t startupTimer = 0, firstTimeThrough = 0, toggle = 0;
 [e = _startupTimer -> -> 0 `i `uc ]
 [v _firstTimeThrough `uc ~T0 @X0 1 a ]
 [e = _firstTimeThrough -> -> 0 `i `uc ]
+[v _toggle `uc ~T0 @X0 1 a ]
+[e = _toggle -> -> 0 `i `uc ]
 "22
 [v _R `f ~T0 @X0 1 a ]
 [v _steinhart `f ~T0 @X0 1 a ]
 "24
-[v F13729 `ui ~T0 @X0 1 s sampleIndex ]
-[i F13729
+[v F13734 `ui ~T0 @X0 1 s sampleIndex ]
+[i F13734
 -> -> 0 `i `ui
 ]
 "26
@@ -12737,28 +12756,28 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;main.c: 32: readTemperature = ADCC_GetSingleConversion(2);
 "32
-[e = _readTemperature ( _ADCC_GetSingleConversion (1 -> -> 2 `i `E13587 ]
+[e = _readTemperature ( _ADCC_GetSingleConversion (1 -> -> 2 `i `E13589 ]
 [; ;main.c: 34: totals = totals - samples[sampleIndex];
 "34
-[e = _totals - _totals -> *U + &U _samples * -> F13729 `ux -> -> # *U &U _samples `ui `ux `l ]
+[e = _totals - _totals -> *U + &U _samples * -> F13734 `ux -> -> # *U &U _samples `ui `ux `l ]
 [; ;main.c: 36: samples[sampleIndex] = readTemperature;
 "36
-[e = *U + &U _samples * -> F13729 `ux -> -> # *U &U _samples `ui `ux _readTemperature ]
+[e = *U + &U _samples * -> F13734 `ux -> -> # *U &U _samples `ui `ux _readTemperature ]
 [; ;main.c: 38: totals = totals + samples[sampleIndex];
 "38
-[e = _totals + _totals -> *U + &U _samples * -> F13729 `ux -> -> # *U &U _samples `ui `ux `l ]
+[e = _totals + _totals -> *U + &U _samples * -> F13734 `ux -> -> # *U &U _samples `ui `ux `l ]
 [; ;main.c: 40: sampleIndex += 1;
 "40
-[e =+ F13729 -> -> 1 `i `ui ]
+[e =+ F13734 -> -> 1 `i `ui ]
 [; ;main.c: 42: if(sampleIndex >= 50)
 "42
-[e $ ! >= F13729 -> -> 50 `i `ui 1523  ]
+[e $ ! >= F13734 -> -> 50 `i `ui 1523  ]
 [; ;main.c: 43: {
 "43
 {
 [; ;main.c: 44: sampleIndex = 0;
 "44
-[e = F13729 -> -> 0 `i `ui ]
+[e = F13734 -> -> 0 `i `ui ]
 "45
 }
 [e :U 1523 ]
@@ -12766,9 +12785,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 47: readTemperature = totals / 50;
 "47
 [e = _readTemperature -> / _totals -> -> 50 `i `l `ui ]
-[; ;main.c: 49: if(startupTimer >= 250)
+[; ;main.c: 49: if(startupTimer >= 70)
 "49
-[e $ ! >= -> _startupTimer `i -> 250 `i 1524  ]
+[e $ ! >= -> _startupTimer `i -> 70 `i 1524  ]
 [; ;main.c: 50: {
 "50
 {
@@ -12817,187 +12836,255 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 67: readTemperature = readTemperatureOld;
 "67
 [e = _readTemperature _readTemperatureOld ]
-[; ;main.c: 69: startupTimer = 249;
+[; ;main.c: 69: if(setpoint > steinhart)
 "69
-[e = _startupTimer -> -> 249 `i `uc ]
-"70
-}
-[e :U 1524 ]
-[; ;main.c: 70: }
-[; ;main.c: 74: if(setpoint > steinhart)
-"74
 [e $ ! > -> _setpoint `f _steinhart 1528  ]
-[; ;main.c: 75: {
-"75
+[; ;main.c: 70: {
+"70
 {
-[; ;main.c: 76: if(outCurrent < 1022)
-"76
-[e $ ! < _outCurrent -> -> 1022 `i `ui 1529  ]
-[; ;main.c: 77: {
-"77
+[; ;main.c: 71: if(outCurrent < 1023)
+"71
+[e $ ! < _outCurrent -> -> 1023 `i `ui 1529  ]
+[; ;main.c: 72: {
+"72
 {
-[; ;main.c: 78: outCurrent++;
-"78
+[; ;main.c: 73: outCurrent++;
+"73
 [e ++ _outCurrent -> -> 1 `i `ui ]
-"79
+"74
 }
-[; ;main.c: 79: }
+[; ;main.c: 74: }
 [e $U 1530  ]
-"80
+"75
 [e :U 1529 ]
-[; ;main.c: 80: else
-[; ;main.c: 81: {
-"81
+[; ;main.c: 75: else
+[; ;main.c: 76: {
+"76
 {
-[; ;main.c: 82: outCurrent = 1023;
-"82
+[; ;main.c: 77: outCurrent = 1023;
+"77
 [e = _outCurrent -> -> 1023 `i `ui ]
-"83
+"78
 }
 [e :U 1530 ]
-"84
+"79
 }
 [e :U 1528 ]
-[; ;main.c: 83: }
-[; ;main.c: 84: }
-[; ;main.c: 86: if(setpoint < steinhart)
-"86
+[; ;main.c: 78: }
+[; ;main.c: 79: }
+[; ;main.c: 81: if(setpoint < steinhart)
+"81
 [e $ ! < -> _setpoint `f _steinhart 1531  ]
-[; ;main.c: 87: {
-"87
+[; ;main.c: 82: {
+"82
 {
-[; ;main.c: 88: if(outCurrent > 1)
-"88
-[e $ ! > _outCurrent -> -> 1 `i `ui 1532  ]
-[; ;main.c: 89: {
-"89
+[; ;main.c: 83: if(outCurrent > 0)
+"83
+[e $ ! > _outCurrent -> -> 0 `i `ui 1532  ]
+[; ;main.c: 84: {
+"84
 {
-[; ;main.c: 90: outCurrent-=1;
-"90
+[; ;main.c: 85: outCurrent-=1;
+"85
 [e =- _outCurrent -> -> 1 `i `ui ]
-"91
+"86
 }
-[; ;main.c: 91: }
+[; ;main.c: 86: }
 [e $U 1533  ]
-"92
+"87
 [e :U 1532 ]
-[; ;main.c: 92: else
-[; ;main.c: 93: {
-"93
+[; ;main.c: 87: else
+[; ;main.c: 88: {
+"88
 {
-[; ;main.c: 94: outCurrent = 0;
-"94
+[; ;main.c: 89: outCurrent = 0;
+"89
 [e = _outCurrent -> -> 0 `i `ui ]
-"95
+"90
 }
 [e :U 1533 ]
-"96
+"91
 }
 [e :U 1531 ]
-[; ;main.c: 95: }
-[; ;main.c: 96: }
-[; ;main.c: 98: PWM6_LoadDutyValue(outCurrent);
-"98
+[; ;main.c: 90: }
+[; ;main.c: 91: }
+[; ;main.c: 93: PWM6_LoadDutyValue(outCurrent);
+"93
 [e ( _PWM6_LoadDutyValue (1 _outCurrent ]
-[; ;main.c: 100: R = 10200/(1023/(float)readTemperature - 1);
-"100
+[; ;main.c: 95: startupTimer = 69;
+"95
+[e = _startupTimer -> -> 69 `i `uc ]
+"96
+}
+[e :U 1524 ]
+[; ;main.c: 96: }
+[; ;main.c: 101: R = 10200/(1023/(float)readTemperature - 1);
+"101
 [e = _R / -> -> 10200 `i `f - / -> -> 1023 `i `f -> _readTemperature `f -> -> 1 `i `f ]
-[; ;main.c: 102: steinhart = R /10061;
-"102
-[e = _steinhart / _R -> -> 10061 `i `f ]
-[; ;main.c: 103: steinhart = log(steinhart);
+[; ;main.c: 103: steinhart = R /10061;
 "103
-[e = _steinhart -> ( _log (1 -> _steinhart `d `f ]
-[; ;main.c: 104: steinhart /= 3995;
+[e = _steinhart / _R -> -> 10061 `i `f ]
+[; ;main.c: 104: steinhart = log(steinhart);
 "104
-[e =/ _steinhart -> -> 3995 `us `f ]
-[; ;main.c: 105: steinhart += 1.0 / (25 + 273.15);
+[e = _steinhart -> ( _log (1 -> _steinhart `d `f ]
+[; ;main.c: 105: steinhart /= 3995;
 "105
-[e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]
-[; ;main.c: 106: steinhart = 1.0 / steinhart;
+[e =/ _steinhart -> -> 3995 `us `f ]
+[; ;main.c: 106: steinhart += 1.0 / (25 + 273.15);
 "106
-[e = _steinhart -> / .1.0 -> _steinhart `d `f ]
-[; ;main.c: 107: steinhart -= 273.15;
+[e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]
+[; ;main.c: 107: steinhart = 1.0 / steinhart;
 "107
+[e = _steinhart -> / .1.0 -> _steinhart `d `f ]
+[; ;main.c: 108: steinhart -= 273.15;
+"108
 [e =- _steinhart -> .273.15 `f ]
-[; ;main.c: 125: displayTemp = (uint16_t)steinhart * 10;
-"125
+[; ;main.c: 111: displayTemp = (uint16_t)steinhart * 10;
+"111
 [e = _displayTemp * -> _steinhart `ui -> -> 10 `i `ui ]
-[; ;main.c: 128: { LCD_Set_Cursor(0,1); LCD_Write_Int(displayTemp,-1, 1, 0);};
-"128
+[; ;main.c: 113: if(toggle == 1)
+"113
+[e $ ! == -> _toggle `i -> 1 `i 1534  ]
+[; ;main.c: 114: {
+"114
+{
+[; ;main.c: 115: displayTemp = displayTemp*9/5+320;
+"115
+[e = _displayTemp + / * _displayTemp -> -> 9 `i `ui -> -> 5 `i `ui -> -> 320 `i `ui ]
+[; ;main.c: 116: { LCD_Set_Cursor(0,1); LCD_Write_Int(displayTemp,-1, 1, 0);};
+"116
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
 [e ( _LCD_Write_Int (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
 }
-[; ;main.c: 132: LCD_Write_Char(0);
-"132
+[; ;main.c: 117: LCD_Write_Char(0);
+"117
 [e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
-[; ;main.c: 133: LCD_Write_Char('C');
-"133
-[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
-[; ;main.c: 134: LCD_Write_Char(' ');
-"134
+[; ;main.c: 118: LCD_Write_Char('F');
+"118
+[e ( _LCD_Write_Char (1 -> -> 70 `ui `uc ]
+[; ;main.c: 119: LCD_Write_Char(' ');
+"119
 [e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-[; ;main.c: 136: { LCD_Set_Cursor(1,0); LCD_Write_String("Time:");}
-"136
+"120
+}
+[; ;main.c: 120: }
+[e $U 1535  ]
+"121
+[e :U 1534 ]
+[; ;main.c: 121: else
+[; ;main.c: 122: {
+"122
+{
+[; ;main.c: 123: { LCD_Set_Cursor(0,1); LCD_Write_Int(displayTemp,-1, 1, 0);};
+"123
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
+}
+[; ;main.c: 124: LCD_Write_Char(0);
+"124
+[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
+[; ;main.c: 125: LCD_Write_Char('C');
+"125
+[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
+[; ;main.c: 126: LCD_Write_Char(' ');
+"126
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+"127
+}
+[e :U 1535 ]
+[; ;main.c: 127: }
+[; ;main.c: 132: { LCD_Set_Cursor(1,0); LCD_Write_Int(counter,-1, 0, 0);};
+"132
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_String (1 -> :s 1C `*uc ]
+[e ( _LCD_Write_Int (4 , , , -> _counter `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
 }
-[; ;main.c: 137: { LCD_Set_Cursor(1,5); LCD_Write_Int(minute,-1, 0, 0);};
-"137
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 5 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _minute `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
-}
-[; ;main.c: 143: startupTimer +=1;
-"143
+[; ;main.c: 133: LCD_Write_Char(' ');
+"133
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;main.c: 134: startupTimer +=1;
+"134
 [e =+ _startupTimer -> -> 1 `i `uc ]
-[; ;main.c: 144: counter+=1;
-"144
+[; ;main.c: 136: counter2 +=1;
+"136
+[e =+ _counter2 -> -> 1 `i `ui ]
+[; ;main.c: 138: if(TMR0IF)
+"138
+[e $ ! _TMR0IF 1536  ]
+[; ;main.c: 139: {
+"139
+{
+[; ;main.c: 140: TMR0H = 0x24;
+"140
+[e = _TMR0H -> -> 36 `i `uc ]
+[; ;main.c: 141: TMR0L = 0xB8;
+"141
+[e = _TMR0L -> -> 184 `i `uc ]
+[; ;main.c: 142: TMR0IF = 0;
+"142
+[e = _TMR0IF -> -> 0 `i `b ]
+[; ;main.c: 143: counter+=1;
+"143
 [e =+ _counter -> -> 1 `i `ui ]
-[; ;main.c: 146: if(setpoint - steinhart < 2)
+"144
+}
+[e :U 1536 ]
+[; ;main.c: 144: }
+[; ;main.c: 146: if(counter2>12)
 "146
-[e $ ! < - -> _setpoint `f _steinhart -> -> 2 `i `f 1534  ]
+[e $ ! > _counter2 -> -> 12 `i `ui 1537  ]
 [; ;main.c: 147: {
 "147
 {
-[; ;main.c: 148: if(counter>=314)
+[; ;main.c: 148: toggle = 1-toggle;
 "148
-[e $ ! >= _counter -> -> 314 `i `ui 1535  ]
-[; ;main.c: 149: {
+[e = _toggle -> - -> 1 `i -> _toggle `i `uc ]
+[; ;main.c: 149: counter2 = 0;
 "149
-{
-[; ;main.c: 150: minute+=1;
+[e = _counter2 -> -> 0 `i `ui ]
 "150
-[e =+ _minute -> -> 1 `i `ui ]
-[; ;main.c: 151: counter = 0;
-"151
-[e = _counter -> -> 0 `i `ui ]
+}
+[e :U 1537 ]
+[; ;main.c: 150: }
+[; ;main.c: 152: if(setpoint - steinhart < 2)
 "152
-}
-[e :U 1535 ]
+[e $ ! < - -> _setpoint `f _steinhart -> -> 2 `i `f 1538  ]
+[; ;main.c: 153: {
 "153
-}
-[e :U 1534 ]
-[; ;main.c: 152: }
-[; ;main.c: 153: }
-[; ;main.c: 154: readButtons();
+{
+[; ;main.c: 154: if(counter>=314)
 "154
-[e ( _readButtons ..  ]
-[; ;main.c: 155: tempSetpoint();
+[e $ ! >= _counter -> -> 314 `i `ui 1539  ]
+[; ;main.c: 155: {
 "155
+{
+[; ;main.c: 156: minute+=1;
+"156
+[e =+ _minute -> -> 1 `i `ui ]
+"158
+}
+[e :U 1539 ]
+"159
+}
+[e :U 1538 ]
+[; ;main.c: 158: }
+[; ;main.c: 159: }
+[; ;main.c: 160: readButtons();
+"160
+[e ( _readButtons ..  ]
+[; ;main.c: 161: tempSetpoint();
+"161
 [e ( _tempSetpoint ..  ]
-"157
+"163
 }
 [e :U 1520 ]
 "30
 [e $U 1521  ]
 [e :U 1522 ]
-[; ;main.c: 157: }
-[; ;main.c: 158: }
-"158
+[; ;main.c: 163: }
+[; ;main.c: 164: }
+"164
 [e :UE 1519 ]
 }
-[a 1C 84 105 109 101 58 0 ]
-

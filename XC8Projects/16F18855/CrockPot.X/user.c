@@ -4,8 +4,9 @@
 #define downButton  RA3
 #define upButton    RA4
 
-uint8_t downCount = 0, upCount = 0, oldSetpoint;
+uint8_t downCount = 0, upCount = 0, oldSetpoint, toggleCount = 0, x = 0;
 extern uint8_t setpoint;
+extern uint8_t presets[];
 
 
 void tempSetpoint(void)
@@ -29,7 +30,6 @@ void tempSetpoint(void)
         LCD_Write_Char(' ');
         __delay_ms(350);
         readButtons();
-//        CLRWDT();
     }
     
     while(upCount >= 5)
@@ -47,7 +47,6 @@ void tempSetpoint(void)
         LCD_Write_Char(' ');
         __delay_ms(350);
         readButtons();
-//        CLRWDT();
     }
     
     counter = 0;
@@ -62,6 +61,29 @@ void tempSetpoint(void)
 
 void readButtons(void)
 {
+    if(RA3 == 0 && RA4 == 0)
+    {
+        downCount = 0;
+        upCount = 0;
+        toggleCount+=1;
+        if(toggleCount >=6)
+        {
+            x+=1;
+            if(x>4)
+            {
+                x=0;
+            }
+            setpoint = presets[x];
+            LCDWriteStringXY(0,0,"Setpoint?");
+            LCDWriteIntXY(1,0,setpoint,3,0,0);
+            LCD_Write_Char(0);
+            LCD_Write_Char('C');
+            LCD_Write_Char(' ');
+            __delay_ms(1500);
+            toggleCount = 0;
+            LCD_Clear();
+        }
+    }
     if(RA3 == 0)
     {
         downCount +=1;
