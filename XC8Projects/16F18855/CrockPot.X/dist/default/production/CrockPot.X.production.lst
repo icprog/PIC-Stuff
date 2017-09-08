@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.38 build -256452561 
-                                                                                               Fri Sep 08 00:34:57 2017
+                                                                                               Fri Sep 08 13:44:29 2017
 
 Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010351
      1                           	processor	16F18855
@@ -5458,7 +5458,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   5446  0524  0233               	subwf	main@readTemperatureOld^(0+128),w
   5447  0525                     u3245:	
   5448  0525  1803               	skipnc
-  5449  0526  2D2B               	goto	l322
+  5449  0526  2D2B               	goto	l358
   5450                           
   5451                           ;main.c: 59: {
   5452                           ;main.c: 60: readTemperatureOld += 1;
@@ -5466,7 +5466,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   5454  0528  07B3               	addwf	main@readTemperatureOld^(0+128),f
   5455  0529  3000               	movlw	0
   5456  052A  3DB4               	addwfc	(main@readTemperatureOld+1)^(0+128),f
-  5457  052B                     l322:	
+  5457  052B                     l358:	
   5458                           
   5459                           ;main.c: 61: }
   5460                           ;main.c: 63: if(readTemperature < readTemperatureOld)
@@ -5478,7 +5478,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   5466  0530  0239               	subwf	main@readTemperature^(0+128),w
   5467  0531                     u3255:	
   5468  0531  1803               	skipnc
-  5469  0532  2D37               	goto	l323
+  5469  0532  2D37               	goto	l359
   5470                           
   5471                           ;main.c: 64: {
   5472                           ;main.c: 65: readTemperatureOld -= 1;
@@ -5486,7 +5486,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   5474  0534  02B3               	subwf	main@readTemperatureOld^(0+128),f
   5475  0535  3000               	movlw	0
   5476  0536  3BB4               	subwfb	(main@readTemperatureOld+1)^(0+128),f
-  5477  0537                     l323:	
+  5477  0537                     l359:	
   5478                           
   5479                           ;main.c: 66: }
   5480                           ;main.c: 68: readTemperature = readTemperatureOld;
@@ -6179,11 +6179,11 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   6167  07B3  2FC2               	goto	l3088
   6168                           
   6169                           ;main.c: 154: {
-  6170                           ;main.c: 155: if(seconds>61)
+  6170                           ;main.c: 155: if(seconds>63)
   6171  07B4  3000               	movlw	0
   6172  07B5  0021               	movlb	1	; select bank1
   6173  07B6  0229               	subwf	(main@seconds+1)^(0+128),w
-  6174  07B7  303E               	movlw	62
+  6174  07B7  3040               	movlw	64
   6175  07B8  1903               	skipnz
   6176  07B9  0228               	subwf	main@seconds^(0+128),w
   6177  07BA  1C03               	skipc
@@ -12103,7 +12103,7 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.38 build -256452561 
-Symbol Table                                                                                   Fri Sep 08 00:34:57 2017
+Symbol Table                                                                                   Fri Sep 08 13:44:29 2017
 
                                 _x 0062                        __CFG_CP$OFF 0000  
                      ___awdiv@sign 0076                ___wmul@multiplicand 0022  
@@ -12112,8 +12112,8 @@ Symbol Table                                                                    
                      ___ftadd@sign 003A                                l111 09D7  
                               l105 09C7                                l107 09CD  
                               l109 09D2                                l222 0961  
-                              l322 052B                                l323 0537  
-                              l511 0E60                                l624 0D34  
+                              l511 0E60                                l358 052B  
+                              l359 0537                                l624 0D34  
                               l456 0A47                                l625 0D3C  
                               l617 0D21                                l708 0F3D  
                               l648 03CF                                _GIE 005F  

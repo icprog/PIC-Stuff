@@ -13,8 +13,8 @@
 
 
 #define _XTAL_FREQ  1000000
-#define SYS_FREQ    1000000
-#define FCY         SYS_FREQ/4
+//#define SYS_FREQ    1000000
+//#define FCY         SYS_FREQ/4
 //#define _XTAL_FREQ      1000000
 //#define SYS_FREQ        1000000L
 //#define FCY             SYS_FREQ/4

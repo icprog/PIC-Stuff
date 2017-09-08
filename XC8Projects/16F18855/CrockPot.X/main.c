@@ -152,7 +152,7 @@ void main(void)
         
         if(setpoint - steinhart < 2)                                    //If at, near, or over setpoint, start counting time in minutes
         {
-            if(seconds>61)                                              // Was counting fast, so, make it count extra seconds
+            if(seconds>63)                                              // Was counting fast, so, make it count extra seconds
             {
                 minutes+=1;                                                          
                 seconds = 0;
