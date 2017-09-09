@@ -16778,13 +16778,12 @@ void eepromPutData(unsigned int offset, unsigned int data);
 
 unsigned int eepromGetData(unsigned int offset);
 
-# 7 "PID_Lib.h"
-void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
+# 14 "PID_Lib.h"
+void Init_PID(void);
 
-# 24
-int PID_Calculate(int const setpoint, int temp);
+float PID_Calculate(int const setpoint, float temp);
 
-# 33 "system.h"
+# 18 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);

@@ -3,6 +3,8 @@
 #include <math.h>
 #include "user.h"
 #include "PID_Lib.h"
+#include <stdio.h>
+// *****************************************************************************    
 
 #define     numSamples  50                                              // Number of Temperature readings to Average
 
@@ -10,12 +12,12 @@ uint16_t samples[numSamples];
 
 uint8_t setpoint = 70, presets[5]={0,70,95,105,120};                    // PreSet Temps Selected by pressing both buttons at same time
 
-
+// *****************************************************************************    
 void main(void)
 {
     SYSTEM_Initialize();
    
-    uint16_t readTemperature, outCurrent = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld, displayTemp = 70, seconds = 0, counter = 0, minutes = 0;
+    uint16_t readTemperature, PWM_Output = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld, displayTemp = 70, seconds = 0, counter = 0, minutes = 0;
     
     uint8_t startupTimer = 0, firstTimeThrough = 0, toggle = 0;
     
@@ -47,14 +49,14 @@ void main(void)
         readTemperature = totals / numSamples;                          // assign the average value of total to the readTemperature variable
         
 // *****************************************************************************    
-        if(startupTimer >= 70)
+        if(startupTimer >= 70)                                          // has been running at least 10 seconds
         {
             if(firstTimeThrough == 0)
             {
                 readTemperatureOld = readTemperature;
                 counter = 0;
-                firstTimeThrough +=1;
-            }
+                firstTimeThrough +=1;                                   // firstTimeThrough has been incremented once, will not come here
+            }                                                           // till reset, so, no need to limit count of firstTimeThrough
             
             if(readTemperature > readTemperatureOld)
             {
@@ -68,33 +70,14 @@ void main(void)
         
             readTemperature = readTemperatureOld;
 
-//            if(setpoint >= steinhart)
-  //          {
-    //            if(outCurrent < 1023)
-      //          {
-        //            outCurrent++;
-          //      }
-            //    else
-              //  {
-                //    outCurrent = 1023;
-                //}
-            //}
-        
-//            if(setpoint < steinhart)
-  //          {
-    //            if(outCurrent > 0)
-      //          {
-        //            outCurrent-=1;
-          //      }
-            //    else
-              //  {
-                //    outCurrent = 0;
-                //}
-            //}
-
-            outCurrent = PID_Calculate(setpoint, steinhart);
-
-            PWM6_LoadDutyValue(outCurrent);                             // Load DutyCycle to control output at desired temperature
+            PWM_Output = (int)PID_Calculate(setpoint, steinhart);       // Calculate DutyCycle (PWM_Output)  
+            
+            if((setpoint-steinhart)>4)                                  // Turn on output @100% until within 4 DegC of setpoint
+            {
+                PWM_Output = 1023;
+            }
+            
+            PWM6_LoadDutyValue(PWM_Output);                             // Load DutyCycle to control output at desired temperature
             
             startupTimer = 69;
         }
@@ -129,10 +112,9 @@ void main(void)
             LCD_Write_Char('C');
             LCD_Write_Char(' ');
         }
-        
 // *****************************************************************************  (lcd.h)  
-        LCDWriteStringXY(1,0,"Time:")
-        LCDWriteIntXY(1,5,minutes,-1,0,0);                              // Display Number of minutes spent within 2 DegC of Setpoint (or hotter))
+//        LCDWriteStringXY(1,0,"Time:")
+        LCDWriteIntXY(1,4,PWM_Output,4,0,0);                              // Display Number of minutes spent within 2 DegC of Setpoint (or hotter))
         LCD_Write_Char(' ');
 
 // *****************************************************************************    

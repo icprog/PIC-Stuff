@@ -12642,10 +12642,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;eeprom.h: 6: void eepromPutData(unsigned int offset, unsigned int data);
 [; ;eeprom.h: 8: unsigned int eepromGetData(unsigned int offset);
-[; ;PID_Lib.h: 7: void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
-[; ;PID_Lib.h: 24: int PID_Calculate(int const setpoint, int temp);
-[; ;system.h: 33: void SYSTEM_Initialize(void);
-[; ;system.h: 35: void OSCILLATOR_Initialize(void);
+[; ;PID_Lib.h: 14: void Init_PID(void);
+[; ;PID_Lib.h: 16: float PID_Calculate(int const setpoint, float temp);
+[; ;system.h: 18: void SYSTEM_Initialize(void);
+[; ;system.h: 20: void OSCILLATOR_Initialize(void);
 [; ;lcd.h: 38: void InitCustomChars();
 [; ;lcd.h: 40: void LCD_Port(char a);
 [; ;lcd.h: 42: void LCD_Cmd(char a);
@@ -12820,9 +12820,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;user.c: 55: {
 "55
 {
-[; ;user.c: 56: _delay((unsigned long)((3000)*(1000000/4000.0)));
+[; ;user.c: 56: _delay((unsigned long)((2000)*(1000000/4000.0)));
 "56
-[e ( __delay (1 -> * -> -> 3000 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
 [; ;user.c: 57: LCD_Clear();
 "57
 [e ( _LCD_Clear ..  ]
@@ -12920,86 +12920,86 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 1530 ]
 [; ;user.c: 85: }
 [; ;user.c: 86: }
-[; ;user.c: 87: if(RA3 == 0)
-"87
-[e $ ! == -> _RA3 `i -> 0 `i 1533  ]
-[; ;user.c: 88: {
+[; ;user.c: 88: if(RA3 == 0)
 "88
-{
-[; ;user.c: 89: downCount +=1;
+[e $ ! == -> _RA3 `i -> 0 `i 1533  ]
+[; ;user.c: 89: {
 "89
-[e =+ _downCount -> -> 1 `i `uc ]
-[; ;user.c: 90: if(downCount>5)
-"90
-[e $ ! > -> _downCount `i -> 5 `i 1534  ]
-[; ;user.c: 91: {
-"91
 {
-[; ;user.c: 92: downCount = 5;
+[; ;user.c: 90: downCount +=1;
+"90
+[e =+ _downCount -> -> 1 `i `uc ]
+[; ;user.c: 91: if(downCount>5)
+"91
+[e $ ! > -> _downCount `i -> 5 `i 1534  ]
+[; ;user.c: 92: {
 "92
-[e = _downCount -> -> 5 `i `uc ]
+{
+[; ;user.c: 93: downCount = 5;
 "93
-}
-[e :U 1534 ]
+[e = _downCount -> -> 5 `i `uc ]
 "94
 }
-[; ;user.c: 93: }
-[; ;user.c: 94: }
-[e $U 1535  ]
+[e :U 1534 ]
 "95
-[e :U 1533 ]
-[; ;user.c: 95: else
-[; ;user.c: 96: {
+}
+[; ;user.c: 94: }
+[; ;user.c: 95: }
+[e $U 1535  ]
 "96
-{
-[; ;user.c: 97: downCount = 0;
+[e :U 1533 ]
+[; ;user.c: 96: else
+[; ;user.c: 97: {
 "97
-[e = _downCount -> -> 0 `i `uc ]
+{
+[; ;user.c: 98: downCount = 0;
 "98
+[e = _downCount -> -> 0 `i `uc ]
+"99
 }
 [e :U 1535 ]
-[; ;user.c: 98: }
-[; ;user.c: 100: if(RA4 == 0)
-"100
-[e $ ! == -> _RA4 `i -> 0 `i 1536  ]
-[; ;user.c: 101: {
+[; ;user.c: 99: }
+[; ;user.c: 101: if(RA4 == 0)
 "101
-{
-[; ;user.c: 102: upCount +=1;
+[e $ ! == -> _RA4 `i -> 0 `i 1536  ]
+[; ;user.c: 102: {
 "102
-[e =+ _upCount -> -> 1 `i `uc ]
-[; ;user.c: 103: if(upCount>5)
-"103
-[e $ ! > -> _upCount `i -> 5 `i 1537  ]
-[; ;user.c: 104: {
-"104
 {
-[; ;user.c: 105: upCount = 5;
+[; ;user.c: 103: upCount +=1;
+"103
+[e =+ _upCount -> -> 1 `i `uc ]
+[; ;user.c: 104: if(upCount>5)
+"104
+[e $ ! > -> _upCount `i -> 5 `i 1537  ]
+[; ;user.c: 105: {
 "105
-[e = _upCount -> -> 5 `i `uc ]
+{
+[; ;user.c: 106: upCount = 5;
 "106
-}
-[e :U 1537 ]
+[e = _upCount -> -> 5 `i `uc ]
 "107
 }
-[; ;user.c: 106: }
-[; ;user.c: 107: }
-[e $U 1538  ]
+[e :U 1537 ]
 "108
-[e :U 1536 ]
-[; ;user.c: 108: else
-[; ;user.c: 109: {
+}
+[; ;user.c: 107: }
+[; ;user.c: 108: }
+[e $U 1538  ]
 "109
-{
-[; ;user.c: 110: upCount = 0;
+[e :U 1536 ]
+[; ;user.c: 109: else
+[; ;user.c: 110: {
 "110
-[e = _upCount -> -> 0 `i `uc ]
+{
+[; ;user.c: 111: upCount = 0;
 "111
+[e = _upCount -> -> 0 `i `uc ]
+"112
 }
 [e :U 1538 ]
-[; ;user.c: 111: }
 [; ;user.c: 112: }
-"112
+[; ;user.c: 113: }
+"113
 [e :UE 1529 ]
 }
 [a 1C 83 101 116 112 111 105 110 116 63 0 ]

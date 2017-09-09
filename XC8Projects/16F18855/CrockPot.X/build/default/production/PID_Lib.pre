@@ -16773,7 +16773,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 305
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 33 "system.h"
+# 18 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16802,78 +16802,87 @@ void eepromPutData(unsigned int offset, unsigned int data);
 
 unsigned int eepromGetData(unsigned int offset);
 
-# 7 "PID_Lib.h"
-void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
+# 14 "PID_Lib.h"
+void Init_PID(void);
 
-# 24
-int PID_Calculate(int const setpoint, int temp);
+float PID_Calculate(int const setpoint, float temp);
 
-# 10 "PID_Lib.c"
-int PID_Kp, PID_Ki;
-unsigned char PID_Kd;
-int PID_Integrated;
-int PID_Prev_Input;
-int PID_MinOutput, PID_MaxOutput;
-unsigned char PID_First_Time;
+# 3 "PID_Lib.c"
+float PID_Kp, PID_Ki;
+float PID_Kd;
+float PID_Integrated;
+float PID_Prev_Input = 0;
+int PID_MinOutput = 0, PID_MaxOutput = 1023;
+unsigned char PID_First_Time = 1;
 
-# 41
-void Init_PID(int Kp, int Ki, char Kd, int minOutput, int maxOutput)
+
+void Init_PID(void)
 {
-PID_Kp = Kp;
-PID_Ki = Ki;
-PID_Kd = Kd;
-PID_MinOutput = minOutput;
-PID_MaxOutput = maxOutput;
+PID_Kp = 5;
+PID_Ki = 15;
+PID_Kd = 300;
+PID_MinOutput = 0;
+PID_MaxOutput = 1023;
 PID_Integrated = 0;
 PID_Prev_Input = 0;
 PID_First_Time = 1;
 }
 
-# 77
-int PID_Calculate(int const setpoint, int temp)
-{
-int Err, ErrValue, DerivativeValue, Result;
 
+float PID_Calculate(int const setpoint, float temp)
+{
+float Err, ErrValue, DerivativeValue, Result;
 
 Err = setpoint - temp;
 
-
-
-
 ErrValue = Err * PID_Kp;
 
-# 93
 PID_Integrated = PID_Integrated + (Err * PID_Ki);
 
-# 99
 if (PID_Integrated < PID_MinOutput)
+{
 PID_Integrated = PID_MinOutput;
+}
+
 if (PID_Integrated > PID_MaxOutput)
+{
 PID_Integrated = PID_MaxOutput;
+}
 
 
 if (PID_First_Time)
 {
-
 PID_First_Time = 0;
 PID_Prev_Input = temp;
 }
 
-
-
+if(temp == PID_Prev_Input)
+{
+DerivativeValue = DerivativeValue;
+}
+else
+{
 DerivativeValue = (temp - PID_Prev_Input) * PID_Kd;
 PID_Prev_Input = temp;
+}
 
-# 124
+if(temp>=setpoint)
+{
+ErrValue = 0;
+PID_Integrated = 0;
+}
+
 Result = ErrValue + PID_Integrated - DerivativeValue;
 
 if (Result < PID_MinOutput)
+{
 Result = PID_MinOutput;
+}
+
 if (Result > PID_MaxOutput)
+{
 Result = PID_MaxOutput;
-
-
+}
 
 return (Result);
 }
-

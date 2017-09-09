@@ -39,7 +39,7 @@ void SYSTEM_Initialize(void)
     
     PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
-    FVRCON = 0x00;                      // Set Fixed Voltage reference
+    FVRCON = 0x00;                  // Set Fixed Voltage reference
     ADCC_Initialize();
     PWM6_Initialize();
     TMR0_Initialize();
@@ -50,43 +50,18 @@ void SYSTEM_Initialize(void)
     __delay_ms(100);
     InitCustomChars();
     __delay_ms(200);
-    Init_PID(1, 1, 1, 0, 1023);
+    Init_PID();
 }
 
 void OSCILLATOR_Initialize(void)
 {
-    // NOSC LFINTOSC; NDIV 4; 
-  //  OSCCON1 = 0x52;
-    // CSWHOLD may proceed; SOSCPWR Low power; 
-//    OSCCON3 = 0x00;
-    // MFOEN disabled; LFOEN disabled; ADOEN disabled; SOSCEN disabled; EXTOEN disabled; HFOEN disabled; 
-    //OSCEN = 0x00;
-    // HFFRQ0 4_MHz; 
-  //  OSCFRQ = 0x02;
-    // HFTUN 0; 
-//    OSCTUNE = 0x00;
-    // Set the secondary oscillator
+    OSCCON1 = 0x60;                 // NOSC HFINTOSC; NDIV 1; 
+    
+    OSCCON3 = 0x00;                 // CSWHOLD may proceed; SOSCPWR Low power; 
 
-    // NOSC HFINTOSC; NDIV 4; 
-//    OSCCON1 = 0x62;
-    // CSWHOLD may proceed; SOSCPWR Low power; 
-  //  OSCCON3 = 0x00;
-    // MFOEN disabled; LFOEN disabled; ADOEN disabled; SOSCEN disabled; EXTOEN disabled; HFOEN disabled; 
-    //OSCEN = 0x00;
-    // HFFRQ 4_MHz; 
-//    OSCFRQ = 0x02;
-    // HFTUN 0; 
-  //  OSCTUNE = 0x00;
-    // Set the secondary oscillator
-        // NOSC HFINTOSC; NDIV 1; 
-    OSCCON1 = 0x60;
-    // CSWHOLD may proceed; SOSCPWR Low power; 
-    OSCCON3 = 0x00;
-    // MFOEN disabled; LFOEN disabled; ADOEN disabled; SOSCEN disabled; EXTOEN disabled; HFOEN disabled; 
-    OSCEN = 0x00;
-    // HFFRQ 1_MHz; 
-    OSCFRQ = 0x00;
-    // HFTUN 0; 
-    OSCTUNE = 0x00;
+    OSCEN = 0x00;                   // MFOEN disabled; LFOEN disabled; ADOEN disabled; SOSCEN disabled; EXTOEN disabled; HFOEN disabled; 
 
+    OSCFRQ = 0x00;                  // HFFRQ 1_MHz; 
+
+    OSCTUNE = 0x00;                 // HFTUN 0; 
 }

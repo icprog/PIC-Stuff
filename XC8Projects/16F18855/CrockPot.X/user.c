@@ -53,7 +53,7 @@ void tempSetpoint(void)
     
     if(oldSetpoint!=setpoint)
     {
-        __delay_ms(3000);
+        __delay_ms(2000);
         LCD_Clear();
     }
 }
@@ -84,6 +84,7 @@ void readButtons(void)
             LCD_Clear();
         }
     }
+    
     if(RA3 == 0)
     {
         downCount +=1;

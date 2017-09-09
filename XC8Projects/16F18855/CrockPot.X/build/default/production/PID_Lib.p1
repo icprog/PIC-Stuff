@@ -12614,8 +12614,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 261: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adcc.h: 283: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;system.h: 33: void SYSTEM_Initialize(void);
-[; ;system.h: 35: void OSCILLATOR_Initialize(void);
+[; ;system.h: 18: void SYSTEM_Initialize(void);
+[; ;system.h: 20: void OSCILLATOR_Initialize(void);
 [; ;lcd.h: 38: void InitCustomChars();
 [; ;lcd.h: 40: void LCD_Port(char a);
 [; ;lcd.h: 42: void LCD_Cmd(char a);
@@ -12627,156 +12627,224 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 54: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 [; ;eeprom.h: 6: void eepromPutData(unsigned int offset, unsigned int data);
 [; ;eeprom.h: 8: unsigned int eepromGetData(unsigned int offset);
-[; ;PID_Lib.h: 7: void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
-[; ;PID_Lib.h: 24: int PID_Calculate(int const setpoint, int temp);
-"10 PID_Lib.c
-[v _PID_Kp `i ~T0 @X0 1 e ]
-[v _PID_Ki `i ~T0 @X0 1 e ]
-[; ;PID_Lib.c: 10: int PID_Kp, PID_Ki;
-"11
-[v _PID_Kd `uc ~T0 @X0 1 e ]
-[; ;PID_Lib.c: 11: unsigned char PID_Kd;
-"12
-[v _PID_Integrated `i ~T0 @X0 1 e ]
-[; ;PID_Lib.c: 12: int PID_Integrated;
-"13
-[v _PID_Prev_Input `i ~T0 @X0 1 e ]
-[; ;PID_Lib.c: 13: int PID_Prev_Input;
-"14
+[; ;PID_Lib.h: 14: void Init_PID(void);
+[; ;PID_Lib.h: 16: float PID_Calculate(int const setpoint, float temp);
+"3 PID_Lib.c
+[v _PID_Kp `f ~T0 @X0 1 e ]
+[v _PID_Ki `f ~T0 @X0 1 e ]
+[; ;PID_Lib.c: 3: float PID_Kp, PID_Ki;
+"4
+[v _PID_Kd `f ~T0 @X0 1 e ]
+[; ;PID_Lib.c: 4: float PID_Kd;
+"5
+[v _PID_Integrated `f ~T0 @X0 1 e ]
+[; ;PID_Lib.c: 5: float PID_Integrated;
+"6
+[v _PID_Prev_Input `f ~T0 @X0 1 e ]
+[i _PID_Prev_Input
+-> -> 0 `i `f
+]
+[; ;PID_Lib.c: 6: float PID_Prev_Input = 0;
+"7
 [v _PID_MinOutput `i ~T0 @X0 1 e ]
+[i _PID_MinOutput
+-> 0 `i
+]
 [v _PID_MaxOutput `i ~T0 @X0 1 e ]
-[; ;PID_Lib.c: 14: int PID_MinOutput, PID_MaxOutput;
-"15
+[i _PID_MaxOutput
+-> 1023 `i
+]
+[; ;PID_Lib.c: 7: int PID_MinOutput = 0, PID_MaxOutput = 1023;
+"8
 [v _PID_First_Time `uc ~T0 @X0 1 e ]
-[; ;PID_Lib.c: 15: unsigned char PID_First_Time;
-"41
-[v _Init_PID `(v ~T0 @X0 1 ef5`i`i`uc`i`i ]
-"42
+[i _PID_First_Time
+-> -> 1 `i `uc
+]
+[; ;PID_Lib.c: 8: unsigned char PID_First_Time = 1;
+"11
+[v _Init_PID `(v ~T0 @X0 1 ef ]
+"12
 {
-[; ;PID_Lib.c: 41: void Init_PID(int Kp, int Ki, char Kd, int minOutput, int maxOutput)
-[; ;PID_Lib.c: 42: {
+[; ;PID_Lib.c: 11: void Init_PID(void)
+[; ;PID_Lib.c: 12: {
 [e :U _Init_PID ]
-"41
-[v _Kp `i ~T0 @X0 1 r1 ]
-[v _Ki `i ~T0 @X0 1 r2 ]
-[v _Kd `uc ~T0 @X0 1 r3 ]
-[v _minOutput `i ~T0 @X0 1 r4 ]
-[v _maxOutput `i ~T0 @X0 1 r5 ]
-"42
 [f ]
-[; ;PID_Lib.c: 43: PID_Kp = Kp;
-"43
-[e = _PID_Kp _Kp ]
-[; ;PID_Lib.c: 44: PID_Ki = Ki;
-"44
-[e = _PID_Ki _Ki ]
-[; ;PID_Lib.c: 45: PID_Kd = Kd;
-"45
-[e = _PID_Kd _Kd ]
-[; ;PID_Lib.c: 46: PID_MinOutput = minOutput;
-"46
-[e = _PID_MinOutput _minOutput ]
-[; ;PID_Lib.c: 47: PID_MaxOutput = maxOutput;
-"47
-[e = _PID_MaxOutput _maxOutput ]
-[; ;PID_Lib.c: 48: PID_Integrated = 0;
-"48
-[e = _PID_Integrated -> 0 `i ]
-[; ;PID_Lib.c: 49: PID_Prev_Input = 0;
-"49
-[e = _PID_Prev_Input -> 0 `i ]
-[; ;PID_Lib.c: 50: PID_First_Time = 1;
-"50
+[; ;PID_Lib.c: 13: PID_Kp = 5;
+"13
+[e = _PID_Kp -> -> 5 `i `f ]
+[; ;PID_Lib.c: 14: PID_Ki = 15;
+"14
+[e = _PID_Ki -> -> 15 `i `f ]
+[; ;PID_Lib.c: 15: PID_Kd = 300;
+"15
+[e = _PID_Kd -> -> 300 `i `f ]
+[; ;PID_Lib.c: 16: PID_MinOutput = 0;
+"16
+[e = _PID_MinOutput -> 0 `i ]
+[; ;PID_Lib.c: 17: PID_MaxOutput = 1023;
+"17
+[e = _PID_MaxOutput -> 1023 `i ]
+[; ;PID_Lib.c: 18: PID_Integrated = 0;
+"18
+[e = _PID_Integrated -> -> 0 `i `f ]
+[; ;PID_Lib.c: 19: PID_Prev_Input = 0;
+"19
+[e = _PID_Prev_Input -> -> 0 `i `f ]
+[; ;PID_Lib.c: 20: PID_First_Time = 1;
+"20
 [e = _PID_First_Time -> -> 1 `i `uc ]
-[; ;PID_Lib.c: 51: }
-"51
+[; ;PID_Lib.c: 21: }
+"21
 [e :UE 1519 ]
 }
-"77
-[v _PID_Calculate `(i ~T0 @X0 1 ef2`Ci`i ]
-"78
+"24
+[v _PID_Calculate `(f ~T0 @X0 1 ef2`Ci`f ]
+"25
 {
-[; ;PID_Lib.c: 77: int PID_Calculate(int const setpoint, int temp)
-[; ;PID_Lib.c: 78: {
+[; ;PID_Lib.c: 24: float PID_Calculate(int const setpoint, float temp)
+[; ;PID_Lib.c: 25: {
 [e :U _PID_Calculate ]
-"77
+"24
 [v _setpoint `Ci ~T0 @X0 1 r1 ]
-[v _temp `i ~T0 @X0 1 r2 ]
-"78
+[v _temp `f ~T0 @X0 1 r2 ]
+"25
 [f ]
-"79
-[v _Err `i ~T0 @X0 1 a ]
-[v _ErrValue `i ~T0 @X0 1 a ]
-[v _DerivativeValue `i ~T0 @X0 1 a ]
-[v _Result `i ~T0 @X0 1 a ]
-[; ;PID_Lib.c: 79: int Err, ErrValue, DerivativeValue, Result;
-[; ;PID_Lib.c: 82: Err = setpoint - temp;
-"82
-[e = _Err - _setpoint _temp ]
-[; ;PID_Lib.c: 87: ErrValue = Err * PID_Kp;
-"87
+"26
+[v _Err `f ~T0 @X0 1 a ]
+[v _ErrValue `f ~T0 @X0 1 a ]
+[v _DerivativeValue `f ~T0 @X0 1 a ]
+[v _Result `f ~T0 @X0 1 a ]
+[; ;PID_Lib.c: 26: float Err, ErrValue, DerivativeValue, Result;
+[; ;PID_Lib.c: 28: Err = setpoint - temp;
+"28
+[e = _Err - -> _setpoint `f _temp ]
+[; ;PID_Lib.c: 30: ErrValue = Err * PID_Kp;
+"30
 [e = _ErrValue * _Err _PID_Kp ]
-[; ;PID_Lib.c: 93: PID_Integrated = PID_Integrated + (Err * PID_Ki);
-"93
+[; ;PID_Lib.c: 32: PID_Integrated = PID_Integrated + (Err * PID_Ki);
+"32
 [e = _PID_Integrated + _PID_Integrated * _Err _PID_Ki ]
-[; ;PID_Lib.c: 99: if (PID_Integrated < PID_MinOutput)
-"99
-[e $ ! < _PID_Integrated _PID_MinOutput 1521  ]
-[; ;PID_Lib.c: 100: PID_Integrated = PID_MinOutput;
-"100
-[e = _PID_Integrated _PID_MinOutput ]
-[e :U 1521 ]
-[; ;PID_Lib.c: 101: if (PID_Integrated > PID_MaxOutput)
-"101
-[e $ ! > _PID_Integrated _PID_MaxOutput 1522  ]
-[; ;PID_Lib.c: 102: PID_Integrated = PID_MaxOutput;
-"102
-[e = _PID_Integrated _PID_MaxOutput ]
-[e :U 1522 ]
-[; ;PID_Lib.c: 105: if (PID_First_Time)
-"105
-[e $ ! != -> _PID_First_Time `i -> -> -> 0 `i `uc `i 1523  ]
-[; ;PID_Lib.c: 106: {
-"106
+[; ;PID_Lib.c: 34: if (PID_Integrated < PID_MinOutput)
+"34
+[e $ ! < _PID_Integrated -> _PID_MinOutput `f 1521  ]
+[; ;PID_Lib.c: 35: {
+"35
 {
-[; ;PID_Lib.c: 108: PID_First_Time = 0;
-"108
+[; ;PID_Lib.c: 36: PID_Integrated = PID_MinOutput;
+"36
+[e = _PID_Integrated -> _PID_MinOutput `f ]
+"37
+}
+[e :U 1521 ]
+[; ;PID_Lib.c: 37: }
+[; ;PID_Lib.c: 39: if (PID_Integrated > PID_MaxOutput)
+"39
+[e $ ! > _PID_Integrated -> _PID_MaxOutput `f 1522  ]
+[; ;PID_Lib.c: 40: {
+"40
+{
+[; ;PID_Lib.c: 41: PID_Integrated = PID_MaxOutput;
+"41
+[e = _PID_Integrated -> _PID_MaxOutput `f ]
+"42
+}
+[e :U 1522 ]
+[; ;PID_Lib.c: 42: }
+[; ;PID_Lib.c: 45: if (PID_First_Time)
+"45
+[e $ ! != -> _PID_First_Time `i -> -> -> 0 `i `uc `i 1523  ]
+[; ;PID_Lib.c: 46: {
+"46
+{
+[; ;PID_Lib.c: 47: PID_First_Time = 0;
+"47
 [e = _PID_First_Time -> -> 0 `i `uc ]
-[; ;PID_Lib.c: 109: PID_Prev_Input = temp;
-"109
+[; ;PID_Lib.c: 48: PID_Prev_Input = temp;
+"48
 [e = _PID_Prev_Input _temp ]
-"110
+"49
 }
 [e :U 1523 ]
-[; ;PID_Lib.c: 110: }
-[; ;PID_Lib.c: 114: DerivativeValue = (temp - PID_Prev_Input) * PID_Kd;
-"114
-[e = _DerivativeValue * - _temp _PID_Prev_Input -> _PID_Kd `i ]
-[; ;PID_Lib.c: 115: PID_Prev_Input = temp;
-"115
-[e = _PID_Prev_Input _temp ]
-[; ;PID_Lib.c: 124: Result = ErrValue + PID_Integrated - DerivativeValue;
-"124
-[e = _Result - + _ErrValue _PID_Integrated _DerivativeValue ]
-[; ;PID_Lib.c: 126: if (Result < PID_MinOutput)
-"126
-[e $ ! < _Result _PID_MinOutput 1524  ]
-[; ;PID_Lib.c: 127: Result = PID_MinOutput;
-"127
-[e = _Result _PID_MinOutput ]
+[; ;PID_Lib.c: 49: }
+[; ;PID_Lib.c: 51: if(temp == PID_Prev_Input)
+"51
+[e $ ! == _temp _PID_Prev_Input 1524  ]
+[; ;PID_Lib.c: 52: {
+"52
+{
+[; ;PID_Lib.c: 53: DerivativeValue = DerivativeValue;
+"53
+[e = _DerivativeValue _DerivativeValue ]
+"54
+}
+[; ;PID_Lib.c: 54: }
+[e $U 1525  ]
+"55
 [e :U 1524 ]
-[; ;PID_Lib.c: 128: if (Result > PID_MaxOutput)
-"128
-[e $ ! > _Result _PID_MaxOutput 1525  ]
-[; ;PID_Lib.c: 129: Result = PID_MaxOutput;
-"129
-[e = _Result _PID_MaxOutput ]
+[; ;PID_Lib.c: 55: else
+[; ;PID_Lib.c: 56: {
+"56
+{
+[; ;PID_Lib.c: 57: DerivativeValue = (temp - PID_Prev_Input) * PID_Kd;
+"57
+[e = _DerivativeValue * - _temp _PID_Prev_Input _PID_Kd ]
+[; ;PID_Lib.c: 58: PID_Prev_Input = temp;
+"58
+[e = _PID_Prev_Input _temp ]
+"59
+}
 [e :U 1525 ]
-[; ;PID_Lib.c: 133: return (Result);
-"133
+[; ;PID_Lib.c: 59: }
+[; ;PID_Lib.c: 61: if(temp>=setpoint)
+"61
+[e $ ! >= _temp -> _setpoint `f 1526  ]
+[; ;PID_Lib.c: 62: {
+"62
+{
+[; ;PID_Lib.c: 63: ErrValue = 0;
+"63
+[e = _ErrValue -> -> 0 `i `f ]
+[; ;PID_Lib.c: 64: PID_Integrated = 0;
+"64
+[e = _PID_Integrated -> -> 0 `i `f ]
+"65
+}
+[e :U 1526 ]
+[; ;PID_Lib.c: 65: }
+[; ;PID_Lib.c: 67: Result = ErrValue + PID_Integrated - DerivativeValue;
+"67
+[e = _Result - + _ErrValue _PID_Integrated _DerivativeValue ]
+[; ;PID_Lib.c: 69: if (Result < PID_MinOutput)
+"69
+[e $ ! < _Result -> _PID_MinOutput `f 1527  ]
+[; ;PID_Lib.c: 70: {
+"70
+{
+[; ;PID_Lib.c: 71: Result = PID_MinOutput;
+"71
+[e = _Result -> _PID_MinOutput `f ]
+"72
+}
+[e :U 1527 ]
+[; ;PID_Lib.c: 72: }
+[; ;PID_Lib.c: 74: if (Result > PID_MaxOutput)
+"74
+[e $ ! > _Result -> _PID_MaxOutput `f 1528  ]
+[; ;PID_Lib.c: 75: {
+"75
+{
+[; ;PID_Lib.c: 76: Result = PID_MaxOutput;
+"76
+[e = _Result -> _PID_MaxOutput `f ]
+"77
+}
+[e :U 1528 ]
+[; ;PID_Lib.c: 77: }
+[; ;PID_Lib.c: 79: return (Result);
+"79
 [e ) _Result ]
 [e $UE 1520  ]
-[; ;PID_Lib.c: 134: }
-"134
+[; ;PID_Lib.c: 80: }
+"80
 [e :UE 1520 ]
 }
