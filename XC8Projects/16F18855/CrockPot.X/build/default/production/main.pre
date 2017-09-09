@@ -16792,7 +16792,18 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 305
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 32 "system.h"
+# 6 "eeprom.h"
+void eepromPutData(unsigned int offset, unsigned int data);
+
+unsigned int eepromGetData(unsigned int offset);
+
+# 7 "PID_Lib.h"
+void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
+
+# 24
+int PID_Calculate(int const setpoint, int temp);
+
+# 33 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16830,7 +16841,7 @@ void tempSetpoint(void);
 
 void readButtons(void);
 
-# 8 "main.c"
+# 9 "main.c"
 uint16_t samples[50];
 
 uint8_t setpoint = 70, presets[5]={0,70,95,105,120};
@@ -16893,29 +16904,8 @@ readTemperatureOld -= 1;
 
 readTemperature = readTemperatureOld;
 
-if(setpoint > steinhart)
-{
-if(outCurrent < 1023)
-{
-outCurrent++;
-}
-else
-{
-outCurrent = 1023;
-}
-}
-
-if(setpoint < steinhart)
-{
-if(outCurrent > 0)
-{
-outCurrent-=1;
-}
-else
-{
-outCurrent = 0;
-}
-}
+# 95
+outCurrent = PID_Calculate(setpoint, steinhart);
 
 PWM6_LoadDutyValue(outCurrent);
 
@@ -16935,7 +16925,7 @@ steinhart = 1.0 / steinhart;
 steinhart -= 273.15;
 
 
-displayTemp = (uint16_t)steinhart * 10;
+displayTemp = (uint16_t)(steinhart * 10);
 
 if(toggle == 1)
 {

@@ -2,6 +2,7 @@
 #include "lcd.h"
 #include <math.h>
 #include "user.h"
+#include "PID_Lib.h"
 
 #define     numSamples  50                                              // Number of Temperature readings to Average
 
@@ -67,29 +68,31 @@ void main(void)
         
             readTemperature = readTemperatureOld;
 
-            if(setpoint > steinhart)
-            {
-                if(outCurrent < 1023)
-                {
-                    outCurrent++;
-                }
-                else
-                {
-                    outCurrent = 1023;
-                }
-            }
+//            if(setpoint >= steinhart)
+  //          {
+    //            if(outCurrent < 1023)
+      //          {
+        //            outCurrent++;
+          //      }
+            //    else
+              //  {
+                //    outCurrent = 1023;
+                //}
+            //}
         
-            if(setpoint < steinhart)
-            {
-                if(outCurrent > 0)
-                {
-                    outCurrent-=1;
-                }
-                else
-                {
-                    outCurrent = 0;
-                }
-            }
+//            if(setpoint < steinhart)
+  //          {
+    //            if(outCurrent > 0)
+      //          {
+        //            outCurrent-=1;
+          //      }
+            //    else
+              //  {
+                //    outCurrent = 0;
+                //}
+            //}
+
+            outCurrent = PID_Calculate(setpoint, steinhart);
 
             PWM6_LoadDutyValue(outCurrent);                             // Load DutyCycle to control output at desired temperature
             
@@ -109,7 +112,7 @@ void main(void)
         steinhart -= 273.15;                                            // convert to DegC
  
 
-        displayTemp = (uint16_t)steinhart * 10;
+        displayTemp = (uint16_t)(steinhart * 10);
         
         if(toggle == 1)
         {

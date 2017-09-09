@@ -16824,7 +16824,18 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 305
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 32 "system.h"
+# 6 "eeprom.h"
+void eepromPutData(unsigned int offset, unsigned int data);
+
+unsigned int eepromGetData(unsigned int offset);
+
+# 7 "PID_Lib.h"
+void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
+
+# 24
+int PID_Calculate(int const setpoint, int temp);
+
+# 33 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16846,12 +16857,13 @@ LCD_Clear();
 _delay((unsigned long)((100)*(1000000/4000.0)));
 InitCustomChars();
 _delay((unsigned long)((200)*(1000000/4000.0)));
+Init_PID(1, 1, 1, 0, 1023);
 }
 
 void OSCILLATOR_Initialize(void)
 {
 
-# 81
+# 82
 OSCCON1 = 0x60;
 
 OSCCON3 = 0x00;

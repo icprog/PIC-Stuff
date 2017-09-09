@@ -1,5 +1,5 @@
 
-# 1 "lcd.c"
+# 1 "PID_Lib.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -16773,17 +16773,6 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 305
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 6 "eeprom.h"
-void eepromPutData(unsigned int offset, unsigned int data);
-
-unsigned int eepromGetData(unsigned int offset);
-
-# 7 "PID_Lib.h"
-void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
-
-# 24
-int PID_Calculate(int const setpoint, int temp);
-
 # 33 "system.h"
 void SYSTEM_Initialize(void);
 
@@ -16808,227 +16797,83 @@ void LCD_Write_String(const char *a);
 
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
-# 5 "lcd.c"
-uint8_t __cgram[] =
-{
-0x0C, 0x12, 0x12, 0x0C, 0x00, 0x00, 0x00, 0x00,
-0x0A, 0x15, 0x11, 0x0A, 0x04, 0x00, 0x00, 0x00,
-0x0A, 0x1F, 0x1F, 0x0E, 0x04, 0x00, 0x00, 0x00
+# 6 "eeprom.h"
+void eepromPutData(unsigned int offset, unsigned int data);
 
-# 27
-};
+unsigned int eepromGetData(unsigned int offset);
 
-void InitCustomChars()
+# 7 "PID_Lib.h"
+void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
+
+# 24
+int PID_Calculate(int const setpoint, int temp);
+
+# 10 "PID_Lib.c"
+int PID_Kp, PID_Ki;
+unsigned char PID_Kd;
+int PID_Integrated;
+int PID_Prev_Input;
+int PID_MinOutput, PID_MaxOutput;
+unsigned char PID_First_Time;
+
+# 41
+void Init_PID(int Kp, int Ki, char Kd, int minOutput, int maxOutput)
 {
-uint8_t i;
-LCD_Cmd(0x04);
-LCD_Cmd(0x00);
-for (i = 0; i < sizeof(__cgram) ; i++)
-LCD_Write_Char(__cgram[i]);
-LCD_Cmd(0);
-LCD_Cmd(2);
+PID_Kp = Kp;
+PID_Ki = Ki;
+PID_Kd = Kd;
+PID_MinOutput = minOutput;
+PID_MaxOutput = maxOutput;
+PID_Integrated = 0;
+PID_Prev_Input = 0;
+PID_First_Time = 1;
+}
+
+# 77
+int PID_Calculate(int const setpoint, int temp)
+{
+int Err, ErrValue, DerivativeValue, Result;
+
+
+Err = setpoint - temp;
+
+
+
+
+ErrValue = Err * PID_Kp;
+
+# 93
+PID_Integrated = PID_Integrated + (Err * PID_Ki);
+
+# 99
+if (PID_Integrated < PID_MinOutput)
+PID_Integrated = PID_MinOutput;
+if (PID_Integrated > PID_MaxOutput)
+PID_Integrated = PID_MaxOutput;
+
+
+if (PID_First_Time)
+{
+
+PID_First_Time = 0;
+PID_Prev_Input = temp;
 }
 
 
-void LCD_Port(char a)
-{
-if(a & 1)
-RB2 = 1;
-else
-RB2 = 0;
 
-if(a & 2)
-RB3 = 1;
-else
-RB3 = 0;
+DerivativeValue = (temp - PID_Prev_Input) * PID_Kd;
+PID_Prev_Input = temp;
 
-if(a & 4)
-RB4 = 1;
-else
-RB4 = 0;
+# 124
+Result = ErrValue + PID_Integrated - DerivativeValue;
 
-if(a & 8)
-RB5 = 1;
-else
-RB5 = 0;
-}
+if (Result < PID_MinOutput)
+Result = PID_MinOutput;
+if (Result > PID_MaxOutput)
+Result = PID_MaxOutput;
 
 
-void LCD_Cmd(char a)
-{
-RB0 = 0;
-LCD_Port(a);
-RB1 = 1;
-RB1 = 0;
-_delay((unsigned long)((4)*(1000000/4000.0)));
-}
 
-
-void LCD_Clear()
-{
-LCD_Cmd(0);
-LCD_Cmd(1);
-}
-
-
-void LCD_Set_Cursor(char x, char y)
-{
-
-
-char temp,z,w;
-
-if(x == 0)
-{
-temp = 0x80 + y;
-z = temp>>4;
-w = temp & 0x0F;
-LCD_Cmd(z);
-LCD_Cmd(w);
-}
-
-else if(x == 1)
-{
-temp = 0xC0 + y;
-z = temp>>4;
-w = temp & 0x0F;
-LCD_Cmd(z);
-LCD_Cmd(w);
-}
-
-# 152
-}
-
-void LCD_Init(char style)
-{
-LCD_Port(0x00);
-
-_delay((unsigned long)((100)*(1000000/4000.0)));
-
-LCD_Cmd(0x03);
-
-_delay((unsigned long)((10)*(1000000/4000.0)));
-
-LCD_Cmd(0x03);
-
-_delay((unsigned long)((120)*(1000000/4000000.0)));
-
-LCD_Cmd(0x03);
-
-_delay((unsigned long)((120)*(1000000/4000000.0)));
-
-LCD_Cmd(0x02);
-
-_delay((unsigned long)((120)*(1000000/4000000.0)));
-
-LCD_Cmd(0x2);
-
-LCD_Cmd(0x8);
-
-_delay((unsigned long)((120)*(1000000/4000000.0)));
-
-LCD_Cmd(0x0);
-
-LCD_Cmd(0x8);
-
-_delay((unsigned long)((120)*(1000000/4000000.0)));
-
-LCD_Cmd(0x0);
-
-LCD_Cmd(0x1);
-
-_delay((unsigned long)((5)*(1000000/4000.0)));
-
-LCD_Cmd(0x0);
-
-LCD_Cmd(0x6);
-
-_delay((unsigned long)((120)*(1000000/4000000.0)));
-
-LCD_Cmd(0x0);
-
-LCD_Cmd(0xc|style);
-
-_delay((unsigned long)((120)*(1000000/4000000.0)));
-
-# 221
-}
-
-void LCD_Write_Char(const char a)
-{
-char temp,y;
-temp = a&0x0F;
-y = a&0xF0;
-RB0 = 1;
-LCD_Port(y>>4);
-RB1 = 1;
-RB1 = 0;
-_delay((unsigned long)((40)*(1000000/4000000.0)));
-LCD_Port(temp);
-RB1 = 1;
-RB1 = 0;
-_delay((unsigned long)((40)*(1000000/4000000.0)));
-}
-
-void LCD_Write_String(const char *a)
-{
-int i;
-for(i=0;a[i]!='\0';i++)
-LCD_Write_Char(a[i]);
-}
-
-void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign)
-{
-char str[5]={0,0,0,0,0};
-int i=4,j=0;
-
-if(value<0)
-{
-LCD_Write_Char('-');
-value=value*-1;
-}
-
-else
-{
-if(sign == 1)
-{
-LCD_Write_Char('+');
-}
-}
-
-while(value)
-{
-str[i]=value%10;
-value=value/10;
-i--;
-}
-if(fieldLength==-1)
-{
-while(str[j]==0)
-{
-j++;
-}
-}
-else
-{
-j=5-fieldLength;
-}
-
-for(i=j;i<(5-numPlaces);i++)
-{
-LCD_Write_Char(48+str[i]);
-}
-
-if(numPlaces == 1)
-{
-LCD_Write_Char(46);
-LCD_Write_Char(48+str[4]);
-}
-
-if(numPlaces == 2)
-{
-LCD_Write_Char(46);
-LCD_Write_Char(48+str[3]);
-LCD_Write_Char(48+str[4]);
-}
+return (Result);
 }
 

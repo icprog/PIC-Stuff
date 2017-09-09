@@ -1,7 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "16 pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
-"34 system.h
+"35 system.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
 "22252 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _FVRCON `Vuc ~T0 @X0 0 e@2316 ]
@@ -23,6 +23,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _LCD_Clear `(v ~T0 @X0 0 ef ]
 "38
 [v _InitCustomChars `(v ~T0 @X0 0 ef ]
+"7 PID_Lib.h
+[v _Init_PID `(v ~T0 @X0 0 ef5`i`i`uc`i`i ]
 "21546 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _OSCCON1 `Vuc ~T0 @X0 0 e@2189 ]
 "21684
@@ -12701,8 +12703,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 261: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adcc.h: 283: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;system.h: 32: void SYSTEM_Initialize(void);
-[; ;system.h: 34: void OSCILLATOR_Initialize(void);
+[; ;eeprom.h: 6: void eepromPutData(unsigned int offset, unsigned int data);
+[; ;eeprom.h: 8: unsigned int eepromGetData(unsigned int offset);
+[; ;PID_Lib.h: 7: void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
+[; ;PID_Lib.h: 24: int PID_Calculate(int const setpoint, int temp);
+[; ;system.h: 33: void SYSTEM_Initialize(void);
+[; ;system.h: 35: void OSCILLATOR_Initialize(void);
 "37 system.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
 "38
@@ -12750,34 +12756,37 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 52: _delay((unsigned long)((200)*(1000000/4000.0)));
 "52
 [e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;system.c: 53: }
+[; ;system.c: 53: Init_PID(1, 1, 1, 0, 1023);
 "53
+[e ( _Init_PID (4 , , , , -> 1 `i -> 1 `i -> -> 1 `i `uc -> 0 `i -> 1023 `i ]
+[; ;system.c: 54: }
+"54
 [e :UE 1519 ]
 }
-"55
-[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
 "56
+[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
+"57
 {
-[; ;system.c: 55: void OSCILLATOR_Initialize(void)
-[; ;system.c: 56: {
+[; ;system.c: 56: void OSCILLATOR_Initialize(void)
+[; ;system.c: 57: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;system.c: 81: OSCCON1 = 0x60;
-"81
+[; ;system.c: 82: OSCCON1 = 0x60;
+"82
 [e = _OSCCON1 -> -> 96 `i `uc ]
-[; ;system.c: 83: OSCCON3 = 0x00;
-"83
+[; ;system.c: 84: OSCCON3 = 0x00;
+"84
 [e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 85: OSCEN = 0x00;
-"85
+[; ;system.c: 86: OSCEN = 0x00;
+"86
 [e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 87: OSCFRQ = 0x00;
-"87
+[; ;system.c: 88: OSCFRQ = 0x00;
+"88
 [e = _OSCFRQ -> -> 0 `i `uc ]
-[; ;system.c: 89: OSCTUNE = 0x00;
-"89
+[; ;system.c: 90: OSCTUNE = 0x00;
+"90
 [e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 91: }
-"91
+[; ;system.c: 92: }
+"92
 [e :UE 1520 ]
 }

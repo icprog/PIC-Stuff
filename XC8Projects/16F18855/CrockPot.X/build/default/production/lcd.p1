@@ -12634,8 +12634,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 261: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adcc.h: 283: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;system.h: 32: void SYSTEM_Initialize(void);
-[; ;system.h: 34: void OSCILLATOR_Initialize(void);
+[; ;eeprom.h: 6: void eepromPutData(unsigned int offset, unsigned int data);
+[; ;eeprom.h: 8: unsigned int eepromGetData(unsigned int offset);
+[; ;PID_Lib.h: 7: void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
+[; ;PID_Lib.h: 24: int PID_Calculate(int const setpoint, int temp);
+[; ;system.h: 33: void SYSTEM_Initialize(void);
+[; ;system.h: 35: void OSCILLATOR_Initialize(void);
 [; ;lcd.h: 38: void InitCustomChars();
 [; ;lcd.h: 40: void LCD_Port(char a);
 [; ;lcd.h: 42: void LCD_Cmd(char a);
@@ -13110,8 +13114,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `c ~T0 @X0 1 r4 ]
 "247
 [f ]
-[v F13685 `uc ~T0 @X0 -> 5 `i s ]
-[i F13685
+[v F13699 `uc ~T0 @X0 -> 5 `i s ]
+[i F13699
 :U ..
 "248
 -> -> 0 `i `uc
@@ -13123,7 +13127,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _str `uc ~T0 @X0 -> 5 `i a ]
 [; ;lcd.c: 248: char str[5]={0,0,0,0,0};
-[e = _str F13685 ]
+[e = _str F13699 ]
 "249
 [v _i `i ~T0 @X0 1 a ]
 [; ;lcd.c: 249: int i=4,j=0;

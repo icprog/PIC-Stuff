@@ -50,6 +50,7 @@ void SYSTEM_Initialize(void)
     __delay_ms(100);
     InitCustomChars();
     __delay_ms(200);
+    Init_PID(1, 1, 1, 0, 1023);
 }
 
 void OSCILLATOR_Initialize(void)

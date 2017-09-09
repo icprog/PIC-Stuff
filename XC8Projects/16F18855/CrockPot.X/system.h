@@ -10,6 +10,7 @@
 //#include "tmr2.h"
 #include "lcd.h"
 #include "adcc.h"
+#include "PID_Lib.h"
 
 
 #define _XTAL_FREQ  1000000

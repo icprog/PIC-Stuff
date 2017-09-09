@@ -1,28 +1,4 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"8 user.c
-[v _setpoint `uc ~T0 @X0 0 e ]
-"44 lcd.h
-[v _LCD_Clear `(v ~T0 @X0 0 ef ]
-"46
-[v _LCD_Set_Cursor `(v ~T0 @X0 0 ef2`uc`uc ]
-"52
-[v _LCD_Write_String `(v ~T0 @X0 0 ef1`*Cuc ]
-"54
-[v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
-"50
-[v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
-[v F13525 `(v ~T0 @X0 1 tf1`ul ]
-"152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
-[v __delay `JF13525 ~T0 @X0 0 e ]
-[p i __delay ]
-"8 user.h
-[v _readButtons `(v ~T0 @X0 0 ef ]
-"36184 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
-[v _RA3 `Vb ~T0 @X0 0 e@99 ]
-"36198
-[v _RA4 `Vb ~T0 @X0 0 e@100 ]
-"9 user.c
-[v _presets `uc ~T0 @X0 -> 0 `x e ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12569,6 +12545,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 186: extern unsigned char __resetbits;
 [; ;pic.h: 187: extern __bit __powerdown;
 [; ;pic.h: 188: extern __bit __timeout;
+[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef signed short long int int24_t;
@@ -12597,9 +12574,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
-[; ;user.h: 6: void tempSetpoint(void);
-[; ;user.h: 8: void readButtons(void);
-[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
 [; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;pwm6.h: 9: void PWM6_Initialize(void);
 [; ;pwm6.h: 33: void PWM6_LoadDutyValue(uint16_t dutyValue);
@@ -12640,10 +12614,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 261: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adcc.h: 283: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;eeprom.h: 6: void eepromPutData(unsigned int offset, unsigned int data);
-[; ;eeprom.h: 8: unsigned int eepromGetData(unsigned int offset);
-[; ;PID_Lib.h: 7: void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
-[; ;PID_Lib.h: 24: int PID_Calculate(int const setpoint, int temp);
 [; ;system.h: 33: void SYSTEM_Initialize(void);
 [; ;system.h: 35: void OSCILLATOR_Initialize(void);
 [; ;lcd.h: 38: void InitCustomChars();
@@ -12655,353 +12625,158 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 50: void LCD_Write_Char(const char a);
 [; ;lcd.h: 52: void LCD_Write_String(const char *a);
 [; ;lcd.h: 54: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
-"7 user.c
-[v _downCount `uc ~T0 @X0 1 e ]
-[i _downCount
--> -> 0 `i `uc
-]
-[v _upCount `uc ~T0 @X0 1 e ]
-[i _upCount
--> -> 0 `i `uc
-]
-[v _oldSetpoint `uc ~T0 @X0 1 e ]
-[v _toggleCount `uc ~T0 @X0 1 e ]
-[i _toggleCount
--> -> 0 `i `uc
-]
-[v _x `uc ~T0 @X0 1 e ]
-[i _x
--> -> 0 `i `uc
-]
-[; ;user.c: 7: uint8_t downCount = 0, upCount = 0, oldSetpoint, toggleCount = 0, x = 0;
-[; ;user.c: 8: extern uint8_t setpoint;
-[; ;user.c: 9: extern uint8_t presets[];
+[; ;eeprom.h: 6: void eepromPutData(unsigned int offset, unsigned int data);
+[; ;eeprom.h: 8: unsigned int eepromGetData(unsigned int offset);
+[; ;PID_Lib.h: 7: void Init_PID(int Kp, int Ki, char Kd, int MinOutput, int MaxOutput);
+[; ;PID_Lib.h: 24: int PID_Calculate(int const setpoint, int temp);
+"10 PID_Lib.c
+[v _PID_Kp `i ~T0 @X0 1 e ]
+[v _PID_Ki `i ~T0 @X0 1 e ]
+[; ;PID_Lib.c: 10: int PID_Kp, PID_Ki;
+"11
+[v _PID_Kd `uc ~T0 @X0 1 e ]
+[; ;PID_Lib.c: 11: unsigned char PID_Kd;
 "12
-[v _tempSetpoint `(v ~T0 @X0 1 ef ]
+[v _PID_Integrated `i ~T0 @X0 1 e ]
+[; ;PID_Lib.c: 12: int PID_Integrated;
 "13
-{
-[; ;user.c: 12: void tempSetpoint(void)
-[; ;user.c: 13: {
-[e :U _tempSetpoint ]
-[f ]
+[v _PID_Prev_Input `i ~T0 @X0 1 e ]
+[; ;PID_Lib.c: 13: int PID_Prev_Input;
 "14
-[v _counter `uc ~T0 @X0 1 a ]
-[; ;user.c: 14: uint8_t counter = 0;
-[e = _counter -> -> 0 `i `uc ]
-[; ;user.c: 16: oldSetpoint = setpoint;
-"16
-[e = _oldSetpoint _setpoint ]
-[; ;user.c: 18: while(downCount >= 5)
-"18
-[e $U 1520  ]
-[e :U 1521 ]
-[; ;user.c: 19: {
-"19
-{
-[; ;user.c: 20: counter+=1;
-"20
-[e =+ _counter -> -> 1 `i `uc ]
-[; ;user.c: 21: if(counter<=1)
-"21
-[e $ ! <= -> _counter `i -> 1 `i 1523  ]
-[; ;user.c: 22: {
-"22
-{
-[; ;user.c: 23: LCD_Clear();
-"23
-[e ( _LCD_Clear ..  ]
-"24
-}
-[e :U 1523 ]
-[; ;user.c: 24: }
-[; ;user.c: 25: setpoint-=1;
-"25
-[e =- _setpoint -> -> 1 `i `uc ]
-[; ;user.c: 26: { LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
-"26
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_String (1 :s 1C ]
-}
-[; ;user.c: 27: { LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
-"27
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _setpoint `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
-}
-[; ;user.c: 28: LCD_Write_Char(0);
-"28
-[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
-[; ;user.c: 29: LCD_Write_Char('C');
-"29
-[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
-[; ;user.c: 30: LCD_Write_Char(' ');
-"30
-[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-[; ;user.c: 31: _delay((unsigned long)((350)*(1000000/4000.0)));
-"31
-[e ( __delay (1 -> * -> -> 350 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;user.c: 32: readButtons();
-"32
-[e ( _readButtons ..  ]
-"33
-}
-[e :U 1520 ]
-"18
-[e $ >= -> _downCount `i -> 5 `i 1521  ]
-[e :U 1522 ]
-[; ;user.c: 33: }
-[; ;user.c: 35: while(upCount >= 5)
-"35
-[e $U 1524  ]
-[e :U 1525 ]
-[; ;user.c: 36: {
-"36
-{
-[; ;user.c: 37: counter+=1;
-"37
-[e =+ _counter -> -> 1 `i `uc ]
-[; ;user.c: 38: if(counter<=1)
-"38
-[e $ ! <= -> _counter `i -> 1 `i 1527  ]
-[; ;user.c: 39: {
-"39
-{
-[; ;user.c: 40: LCD_Clear();
-"40
-[e ( _LCD_Clear ..  ]
+[v _PID_MinOutput `i ~T0 @X0 1 e ]
+[v _PID_MaxOutput `i ~T0 @X0 1 e ]
+[; ;PID_Lib.c: 14: int PID_MinOutput, PID_MaxOutput;
+"15
+[v _PID_First_Time `uc ~T0 @X0 1 e ]
+[; ;PID_Lib.c: 15: unsigned char PID_First_Time;
 "41
-}
-[e :U 1527 ]
-[; ;user.c: 41: }
-[; ;user.c: 42: setpoint+=1;
+[v _Init_PID `(v ~T0 @X0 1 ef5`i`i`uc`i`i ]
 "42
-[e =+ _setpoint -> -> 1 `i `uc ]
-[; ;user.c: 43: { LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+{
+[; ;PID_Lib.c: 41: void Init_PID(int Kp, int Ki, char Kd, int minOutput, int maxOutput)
+[; ;PID_Lib.c: 42: {
+[e :U _Init_PID ]
+"41
+[v _Kp `i ~T0 @X0 1 r1 ]
+[v _Ki `i ~T0 @X0 1 r2 ]
+[v _Kd `uc ~T0 @X0 1 r3 ]
+[v _minOutput `i ~T0 @X0 1 r4 ]
+[v _maxOutput `i ~T0 @X0 1 r5 ]
+"42
+[f ]
+[; ;PID_Lib.c: 43: PID_Kp = Kp;
 "43
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_String (1 :s 2C ]
-}
-[; ;user.c: 44: { LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+[e = _PID_Kp _Kp ]
+[; ;PID_Lib.c: 44: PID_Ki = Ki;
 "44
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _setpoint `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
-}
-[; ;user.c: 45: LCD_Write_Char(0);
+[e = _PID_Ki _Ki ]
+[; ;PID_Lib.c: 45: PID_Kd = Kd;
 "45
-[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
-[; ;user.c: 46: LCD_Write_Char('C');
+[e = _PID_Kd _Kd ]
+[; ;PID_Lib.c: 46: PID_MinOutput = minOutput;
 "46
-[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
-[; ;user.c: 47: LCD_Write_Char(' ');
+[e = _PID_MinOutput _minOutput ]
+[; ;PID_Lib.c: 47: PID_MaxOutput = maxOutput;
 "47
-[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-[; ;user.c: 48: _delay((unsigned long)((350)*(1000000/4000.0)));
+[e = _PID_MaxOutput _maxOutput ]
+[; ;PID_Lib.c: 48: PID_Integrated = 0;
 "48
-[e ( __delay (1 -> * -> -> 350 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;user.c: 49: readButtons();
+[e = _PID_Integrated -> 0 `i ]
+[; ;PID_Lib.c: 49: PID_Prev_Input = 0;
 "49
-[e ( _readButtons ..  ]
+[e = _PID_Prev_Input -> 0 `i ]
+[; ;PID_Lib.c: 50: PID_First_Time = 1;
 "50
-}
-[e :U 1524 ]
-"35
-[e $ >= -> _upCount `i -> 5 `i 1525  ]
-[e :U 1526 ]
-[; ;user.c: 50: }
-[; ;user.c: 52: counter = 0;
-"52
-[e = _counter -> -> 0 `i `uc ]
-[; ;user.c: 54: if(oldSetpoint!=setpoint)
-"54
-[e $ ! != -> _oldSetpoint `i -> _setpoint `i 1528  ]
-[; ;user.c: 55: {
-"55
-{
-[; ;user.c: 56: _delay((unsigned long)((3000)*(1000000/4000.0)));
-"56
-[e ( __delay (1 -> * -> -> 3000 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;user.c: 57: LCD_Clear();
-"57
-[e ( _LCD_Clear ..  ]
-"58
-}
-[e :U 1528 ]
-[; ;user.c: 58: }
-[; ;user.c: 59: }
-"59
+[e = _PID_First_Time -> -> 1 `i `uc ]
+[; ;PID_Lib.c: 51: }
+"51
 [e :UE 1519 ]
 }
-"62
-[v _readButtons `(v ~T0 @X0 1 ef ]
-"63
-{
-[; ;user.c: 62: void readButtons(void)
-[; ;user.c: 63: {
-[e :U _readButtons ]
-[f ]
-[; ;user.c: 64: if(RA3 == 0 && RA4 == 0)
-"64
-[e $ ! && == -> _RA3 `i -> 0 `i == -> _RA4 `i -> 0 `i 1530  ]
-[; ;user.c: 65: {
-"65
-{
-[; ;user.c: 66: downCount = 0;
-"66
-[e = _downCount -> -> 0 `i `uc ]
-[; ;user.c: 67: upCount = 0;
-"67
-[e = _upCount -> -> 0 `i `uc ]
-[; ;user.c: 68: toggleCount+=1;
-"68
-[e =+ _toggleCount -> -> 1 `i `uc ]
-[; ;user.c: 69: if(toggleCount >=6)
-"69
-[e $ ! >= -> _toggleCount `i -> 6 `i 1531  ]
-[; ;user.c: 70: {
-"70
-{
-[; ;user.c: 71: x+=1;
-"71
-[e =+ _x -> -> 1 `i `uc ]
-[; ;user.c: 72: if(x>4)
-"72
-[e $ ! > -> _x `i -> 4 `i 1532  ]
-[; ;user.c: 73: {
-"73
-{
-[; ;user.c: 74: x=0;
-"74
-[e = _x -> -> 0 `i `uc ]
-"75
-}
-[e :U 1532 ]
-[; ;user.c: 75: }
-[; ;user.c: 76: setpoint = presets[x];
-"76
-[e = _setpoint *U + &U _presets * -> _x `ux -> -> # *U &U _presets `ui `ux ]
-[; ;user.c: 77: { LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
 "77
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_String (1 :s 3C ]
-}
-[; ;user.c: 78: { LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+[v _PID_Calculate `(i ~T0 @X0 1 ef2`Ci`i ]
 "78
 {
-[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _setpoint `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
-}
-[; ;user.c: 79: LCD_Write_Char(0);
+[; ;PID_Lib.c: 77: int PID_Calculate(int const setpoint, int temp)
+[; ;PID_Lib.c: 78: {
+[e :U _PID_Calculate ]
+"77
+[v _setpoint `Ci ~T0 @X0 1 r1 ]
+[v _temp `i ~T0 @X0 1 r2 ]
+"78
+[f ]
 "79
-[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
-[; ;user.c: 80: LCD_Write_Char('C');
-"80
-[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
-[; ;user.c: 81: LCD_Write_Char(' ');
-"81
-[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-[; ;user.c: 82: _delay((unsigned long)((1500)*(1000000/4000.0)));
+[v _Err `i ~T0 @X0 1 a ]
+[v _ErrValue `i ~T0 @X0 1 a ]
+[v _DerivativeValue `i ~T0 @X0 1 a ]
+[v _Result `i ~T0 @X0 1 a ]
+[; ;PID_Lib.c: 79: int Err, ErrValue, DerivativeValue, Result;
+[; ;PID_Lib.c: 82: Err = setpoint - temp;
 "82
-[e ( __delay (1 -> * -> -> 1500 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;user.c: 83: toggleCount = 0;
-"83
-[e = _toggleCount -> -> 0 `i `uc ]
-[; ;user.c: 84: LCD_Clear();
-"84
-[e ( _LCD_Clear ..  ]
-"85
-}
-[e :U 1531 ]
-"86
-}
-[e :U 1530 ]
-[; ;user.c: 85: }
-[; ;user.c: 86: }
-[; ;user.c: 87: if(RA3 == 0)
+[e = _Err - _setpoint _temp ]
+[; ;PID_Lib.c: 87: ErrValue = Err * PID_Kp;
 "87
-[e $ ! == -> _RA3 `i -> 0 `i 1533  ]
-[; ;user.c: 88: {
-"88
-{
-[; ;user.c: 89: downCount +=1;
-"89
-[e =+ _downCount -> -> 1 `i `uc ]
-[; ;user.c: 90: if(downCount>5)
-"90
-[e $ ! > -> _downCount `i -> 5 `i 1534  ]
-[; ;user.c: 91: {
-"91
-{
-[; ;user.c: 92: downCount = 5;
-"92
-[e = _downCount -> -> 5 `i `uc ]
+[e = _ErrValue * _Err _PID_Kp ]
+[; ;PID_Lib.c: 93: PID_Integrated = PID_Integrated + (Err * PID_Ki);
 "93
-}
-[e :U 1534 ]
-"94
-}
-[; ;user.c: 93: }
-[; ;user.c: 94: }
-[e $U 1535  ]
-"95
-[e :U 1533 ]
-[; ;user.c: 95: else
-[; ;user.c: 96: {
-"96
-{
-[; ;user.c: 97: downCount = 0;
-"97
-[e = _downCount -> -> 0 `i `uc ]
-"98
-}
-[e :U 1535 ]
-[; ;user.c: 98: }
-[; ;user.c: 100: if(RA4 == 0)
+[e = _PID_Integrated + _PID_Integrated * _Err _PID_Ki ]
+[; ;PID_Lib.c: 99: if (PID_Integrated < PID_MinOutput)
+"99
+[e $ ! < _PID_Integrated _PID_MinOutput 1521  ]
+[; ;PID_Lib.c: 100: PID_Integrated = PID_MinOutput;
 "100
-[e $ ! == -> _RA4 `i -> 0 `i 1536  ]
-[; ;user.c: 101: {
+[e = _PID_Integrated _PID_MinOutput ]
+[e :U 1521 ]
+[; ;PID_Lib.c: 101: if (PID_Integrated > PID_MaxOutput)
 "101
-{
-[; ;user.c: 102: upCount +=1;
+[e $ ! > _PID_Integrated _PID_MaxOutput 1522  ]
+[; ;PID_Lib.c: 102: PID_Integrated = PID_MaxOutput;
 "102
-[e =+ _upCount -> -> 1 `i `uc ]
-[; ;user.c: 103: if(upCount>5)
-"103
-[e $ ! > -> _upCount `i -> 5 `i 1537  ]
-[; ;user.c: 104: {
-"104
-{
-[; ;user.c: 105: upCount = 5;
+[e = _PID_Integrated _PID_MaxOutput ]
+[e :U 1522 ]
+[; ;PID_Lib.c: 105: if (PID_First_Time)
 "105
-[e = _upCount -> -> 5 `i `uc ]
+[e $ ! != -> _PID_First_Time `i -> -> -> 0 `i `uc `i 1523  ]
+[; ;PID_Lib.c: 106: {
 "106
-}
-[e :U 1537 ]
-"107
-}
-[; ;user.c: 106: }
-[; ;user.c: 107: }
-[e $U 1538  ]
-"108
-[e :U 1536 ]
-[; ;user.c: 108: else
-[; ;user.c: 109: {
-"109
 {
-[; ;user.c: 110: upCount = 0;
+[; ;PID_Lib.c: 108: PID_First_Time = 0;
+"108
+[e = _PID_First_Time -> -> 0 `i `uc ]
+[; ;PID_Lib.c: 109: PID_Prev_Input = temp;
+"109
+[e = _PID_Prev_Input _temp ]
 "110
-[e = _upCount -> -> 0 `i `uc ]
-"111
 }
-[e :U 1538 ]
-[; ;user.c: 111: }
-[; ;user.c: 112: }
-"112
-[e :UE 1529 ]
+[e :U 1523 ]
+[; ;PID_Lib.c: 110: }
+[; ;PID_Lib.c: 114: DerivativeValue = (temp - PID_Prev_Input) * PID_Kd;
+"114
+[e = _DerivativeValue * - _temp _PID_Prev_Input -> _PID_Kd `i ]
+[; ;PID_Lib.c: 115: PID_Prev_Input = temp;
+"115
+[e = _PID_Prev_Input _temp ]
+[; ;PID_Lib.c: 124: Result = ErrValue + PID_Integrated - DerivativeValue;
+"124
+[e = _Result - + _ErrValue _PID_Integrated _DerivativeValue ]
+[; ;PID_Lib.c: 126: if (Result < PID_MinOutput)
+"126
+[e $ ! < _Result _PID_MinOutput 1524  ]
+[; ;PID_Lib.c: 127: Result = PID_MinOutput;
+"127
+[e = _Result _PID_MinOutput ]
+[e :U 1524 ]
+[; ;PID_Lib.c: 128: if (Result > PID_MaxOutput)
+"128
+[e $ ! > _Result _PID_MaxOutput 1525  ]
+[; ;PID_Lib.c: 129: Result = PID_MaxOutput;
+"129
+[e = _Result _PID_MaxOutput ]
+[e :U 1525 ]
+[; ;PID_Lib.c: 133: return (Result);
+"133
+[e ) _Result ]
+[e $UE 1520  ]
+[; ;PID_Lib.c: 134: }
+"134
+[e :UE 1520 ]
 }
-[a 1C 83 101 116 112 111 105 110 116 63 0 ]
-[a 2C 83 101 116 112 111 105 110 116 63 0 ]
-[a 3C 83 101 116 112 111 105 110 116 63 0 ]
