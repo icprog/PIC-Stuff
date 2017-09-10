@@ -7,10 +7,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n E13589 . channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
 "30 adcc.h
 [v _ADCC_GetSingleConversion `(ui ~T0 @X0 0 ef1`E13589 ]
-"16 PID_Lib.h
-[v _PID_Calculate `(f ~T0 @X0 0 ef2`Ci`f ]
-"33 pwm6.h
-[v _PWM6_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
 "43 C:\Program Files (x86)\Microchip\xc8\v1.38\include\math.h
 [v _log `(d ~T0 @X0 0 ef1`d ]
 "46 lcd.h
@@ -19,6 +15,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
 "50
 [v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
+"16 PID_Lib.h
+[v _PID_Calculate `(f ~T0 @X0 0 ef2`Ci`f ]
+"33 pwm6.h
+[v _PWM6_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
 "37774 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _TMR0IF `Vb ~T0 @X0 0 e@14437 ]
 "1075
@@ -12874,202 +12874,195 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 71: readTemperature = readTemperatureOld;
 "71
 [e = _readTemperature _readTemperatureOld ]
-[; ;main.c: 73: PWM_Output = (int)PID_Calculate(setpoint, steinhart);
+[; ;main.c: 73: startupTimer = 69;
 "73
-[e = _PWM_Output -> -> ( _PID_Calculate (2 , -> _setpoint `i _steinhart `i `ui ]
-[; ;main.c: 75: if((setpoint-steinhart)>4)
-"75
-[e $ ! > - -> _setpoint `f _steinhart -> -> 4 `i `f 1529  ]
-[; ;main.c: 76: {
-"76
-{
-[; ;main.c: 77: PWM_Output = 1023;
-"77
-[e = _PWM_Output -> -> 1023 `i `ui ]
-"78
-}
-[e :U 1529 ]
-[; ;main.c: 78: }
-[; ;main.c: 80: PWM6_LoadDutyValue(PWM_Output);
-"80
-[e ( _PWM6_LoadDutyValue (1 _PWM_Output ]
-[; ;main.c: 82: startupTimer = 69;
-"82
 [e = _startupTimer -> -> 69 `i `uc ]
-"83
+"74
 }
 [e :U 1525 ]
-[; ;main.c: 83: }
-[; ;main.c: 85: startupTimer +=1;
-"85
+[; ;main.c: 74: }
+[; ;main.c: 76: startupTimer +=1;
+"76
 [e =+ _startupTimer -> -> 1 `i `uc ]
-[; ;main.c: 88: R = 10200/(1023/(float)readTemperature - 1);
-"88
+[; ;main.c: 79: R = 10200/(1023/(float)readTemperature - 1);
+"79
 [e = _R / -> -> 10200 `i `f - / -> -> 1023 `i `f -> _readTemperature `f -> -> 1 `i `f ]
-[; ;main.c: 90: steinhart = R /10061;
-"90
+[; ;main.c: 81: steinhart = R /10061;
+"81
 [e = _steinhart / _R -> -> 10061 `i `f ]
-[; ;main.c: 91: steinhart = log(steinhart);
-"91
+[; ;main.c: 82: steinhart = log(steinhart);
+"82
 [e = _steinhart -> ( _log (1 -> _steinhart `d `f ]
-[; ;main.c: 92: steinhart /= 3995;
-"92
+[; ;main.c: 83: steinhart /= 3995;
+"83
 [e =/ _steinhart -> -> 3995 `us `f ]
-[; ;main.c: 93: steinhart += 1.0 / (25 + 273.15);
-"93
+[; ;main.c: 84: steinhart += 1.0 / (25 + 273.15);
+"84
 [e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]
-[; ;main.c: 94: steinhart = 1.0 / steinhart;
-"94
+[; ;main.c: 85: steinhart = 1.0 / steinhart;
+"85
 [e = _steinhart -> / .1.0 -> _steinhart `d `f ]
-[; ;main.c: 95: steinhart -= 273.15;
-"95
+[; ;main.c: 86: steinhart -= 273.15;
+"86
 [e =- _steinhart -> .273.15 `f ]
-[; ;main.c: 98: displayTemp = (uint16_t)(steinhart * 10);
-"98
+[; ;main.c: 89: displayTemp = (uint16_t)(steinhart * 10);
+"89
 [e = _displayTemp -> * _steinhart -> -> 10 `i `f `ui ]
-[; ;main.c: 100: if(toggle == 1)
+[; ;main.c: 91: if(toggle == 1)
+"91
+[e $ ! == -> _toggle `i -> 1 `i 1529  ]
+[; ;main.c: 92: {
+"92
+{
+[; ;main.c: 93: displayTemp = displayTemp*9/5+320;
+"93
+[e = _displayTemp + / * _displayTemp -> -> 9 `i `ui -> -> 5 `i `ui -> -> 320 `i `ui ]
+[; ;main.c: 94: { LCD_Set_Cursor(0,1); LCD_Write_Int(displayTemp,-1, 1, 0);};
+"94
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
+}
+[; ;main.c: 95: LCD_Write_Char(0);
+"95
+[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
+[; ;main.c: 96: LCD_Write_Char('F');
+"96
+[e ( _LCD_Write_Char (1 -> -> 70 `ui `uc ]
+[; ;main.c: 97: LCD_Write_Char(' ');
+"97
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+"98
+}
+[; ;main.c: 98: }
+[e $U 1530  ]
+"99
+[e :U 1529 ]
+[; ;main.c: 99: else
+[; ;main.c: 100: {
 "100
-[e $ ! == -> _toggle `i -> 1 `i 1530  ]
-[; ;main.c: 101: {
+{
+[; ;main.c: 101: { LCD_Set_Cursor(0,1); LCD_Write_Int(displayTemp,-1, 1, 0);};
 "101
 {
-[; ;main.c: 102: displayTemp = displayTemp*9/5+320;
-"102
-[e = _displayTemp + / * _displayTemp -> -> 9 `i `ui -> -> 5 `i `ui -> -> 320 `i `ui ]
-[; ;main.c: 103: { LCD_Set_Cursor(0,1); LCD_Write_Int(displayTemp,-1, 1, 0);};
-"103
-{
 [e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
 [e ( _LCD_Write_Int (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
 }
-[; ;main.c: 104: LCD_Write_Char(0);
-"104
+[; ;main.c: 102: LCD_Write_Char(0);
+"102
 [e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
-[; ;main.c: 105: LCD_Write_Char('F');
-"105
-[e ( _LCD_Write_Char (1 -> -> 70 `ui `uc ]
-[; ;main.c: 106: LCD_Write_Char(' ');
-"106
+[; ;main.c: 103: LCD_Write_Char('C');
+"103
+[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
+[; ;main.c: 104: LCD_Write_Char(' ');
+"104
 [e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-"107
+"105
 }
-[; ;main.c: 107: }
-[e $U 1531  ]
-"108
 [e :U 1530 ]
-[; ;main.c: 108: else
-[; ;main.c: 109: {
+"108
+[v _DerivativeValue `f ~T0 @X0 0 e ]
+[; ;main.c: 105: }
+[; ;main.c: 108: extern float DerivativeValue;
+[; ;main.c: 109: { LCD_Set_Cursor(1,0); LCD_Write_Int(DerivativeValue,3, 0, 0);};
 "109
 {
-[; ;main.c: 110: { LCD_Set_Cursor(0,1); LCD_Write_Int(displayTemp,-1, 1, 0);};
+[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , -> _DerivativeValue `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+[; ;main.c: 110: { LCD_Set_Cursor(1,4); LCD_Write_Int(PWM_Output,4, 0, 0);};
 "110
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
-}
-[; ;main.c: 111: LCD_Write_Char(0);
-"111
-[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
-[; ;main.c: 112: LCD_Write_Char('C');
-"112
-[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
-[; ;main.c: 113: LCD_Write_Char(' ');
-"113
-[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-"114
-}
-[e :U 1531 ]
-[; ;main.c: 114: }
-[; ;main.c: 117: { LCD_Set_Cursor(1,4); LCD_Write_Int(PWM_Output,4, 0, 0);};
-"117
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 4 `i `uc ]
 [e ( _LCD_Write_Int (4 , , , -> _PWM_Output `i -> -> 4 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
 }
-[; ;main.c: 118: LCD_Write_Char(' ');
-"118
+[; ;main.c: 111: LCD_Write_Char(' ');
+"111
 [e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-[; ;main.c: 121: counter +=1;
-"121
+[; ;main.c: 114: counter +=1;
+"114
 [e =+ _counter -> -> 1 `i `ui ]
-[; ;main.c: 123: if(counter>12)
-"123
-[e $ ! > _counter -> -> 12 `i `ui 1532  ]
-[; ;main.c: 124: {
-"124
+[; ;main.c: 116: if(counter>12)
+"116
+[e $ ! > _counter -> -> 12 `i `ui 1531  ]
+[; ;main.c: 117: {
+"117
 {
-[; ;main.c: 125: toggle = 1-toggle;
-"125
-[e = _toggle -> - -> 1 `i -> _toggle `i `uc ]
-[; ;main.c: 126: counter = 0;
-"126
+[; ;main.c: 119: counter = 0;
+"119
 [e = _counter -> -> 0 `i `ui ]
+[; ;main.c: 120: PWM_Output = (int)PID_Calculate(setpoint, steinhart);
+"120
+[e = _PWM_Output -> -> ( _PID_Calculate (2 , -> _setpoint `i _steinhart `i `ui ]
+[; ;main.c: 127: PWM6_LoadDutyValue(PWM_Output);
 "127
+[e ( _PWM6_LoadDutyValue (1 _PWM_Output ]
+"128
+}
+[e :U 1531 ]
+[; ;main.c: 128: }
+[; ;main.c: 131: if(TMR0IF)
+"131
+[e $ ! _TMR0IF 1532  ]
+[; ;main.c: 132: {
+"132
+{
+[; ;main.c: 133: TMR0H = 0x24;
+"133
+[e = _TMR0H -> -> 36 `i `uc ]
+[; ;main.c: 134: TMR0L = 0x9F;
+"134
+[e = _TMR0L -> -> 159 `i `uc ]
+[; ;main.c: 135: TMR0IF = 0;
+"135
+[e = _TMR0IF -> -> 0 `i `b ]
+[; ;main.c: 136: seconds+=1;
+"136
+[e =+ _seconds -> -> 1 `i `ui ]
+"137
 }
 [e :U 1532 ]
-[; ;main.c: 127: }
-[; ;main.c: 130: if(TMR0IF)
-"130
-[e $ ! _TMR0IF 1533  ]
-[; ;main.c: 131: {
-"131
-{
-[; ;main.c: 132: TMR0H = 0x24;
-"132
-[e = _TMR0H -> -> 36 `i `uc ]
-[; ;main.c: 133: TMR0L = 0x9F;
-"133
-[e = _TMR0L -> -> 159 `i `uc ]
-[; ;main.c: 134: TMR0IF = 0;
-"134
-[e = _TMR0IF -> -> 0 `i `b ]
-[; ;main.c: 135: seconds+=1;
-"135
-[e =+ _seconds -> -> 1 `i `ui ]
-"136
-}
-[e :U 1533 ]
-[; ;main.c: 136: }
-[; ;main.c: 138: if(setpoint - steinhart < 2)
-"138
-[e $ ! < - -> _setpoint `f _steinhart -> -> 2 `i `f 1534  ]
-[; ;main.c: 139: {
+[; ;main.c: 137: }
+[; ;main.c: 139: if(setpoint - steinhart < 2)
 "139
-{
-[; ;main.c: 140: if(seconds>63)
+[e $ ! < - -> _setpoint `f _steinhart -> -> 2 `i `f 1533  ]
+[; ;main.c: 140: {
 "140
-[e $ ! > _seconds -> -> 63 `i `ui 1535  ]
-[; ;main.c: 141: {
-"141
 {
-[; ;main.c: 142: minutes+=1;
+[; ;main.c: 141: if(seconds>63)
+"141
+[e $ ! > _seconds -> -> 63 `i `ui 1534  ]
+[; ;main.c: 142: {
 "142
-[e =+ _minutes -> -> 1 `i `ui ]
-[; ;main.c: 143: seconds = 0;
+{
+[; ;main.c: 143: minutes+=1;
 "143
-[e = _seconds -> -> 0 `i `ui ]
+[e =+ _minutes -> -> 1 `i `ui ]
+[; ;main.c: 144: seconds = 0;
 "144
-}
-[e :U 1535 ]
+[e = _seconds -> -> 0 `i `ui ]
 "145
 }
 [e :U 1534 ]
-[; ;main.c: 144: }
+"146
+}
+[e :U 1533 ]
 [; ;main.c: 145: }
-[; ;main.c: 148: readButtons();
-"148
-[e ( _readButtons ..  ]
-[; ;main.c: 149: tempSetpoint();
+[; ;main.c: 146: }
+[; ;main.c: 149: readButtons();
 "149
-[e ( _tempSetpoint ..  ]
+[e ( _readButtons ..  ]
+[; ;main.c: 150: tempSetpoint();
 "150
+[e ( _tempSetpoint ..  ]
+"151
 }
 [e :U 1521 ]
 "32
 [e $U 1522  ]
 [e :U 1523 ]
-[; ;main.c: 150: }
 [; ;main.c: 151: }
-"151
+[; ;main.c: 152: }
+"152
 [e :UE 1520 ]
 }

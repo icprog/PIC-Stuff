@@ -70,15 +70,6 @@ void main(void)
         
             readTemperature = readTemperatureOld;
 
-            PWM_Output = (int)PID_Calculate(setpoint, steinhart);       // Calculate DutyCycle (PWM_Output)  
-            
-            if((setpoint-steinhart)>4)                                  // Turn on output @100% until within 4 DegC of setpoint
-            {
-                PWM_Output = 1023;
-            }
-            
-            PWM6_LoadDutyValue(PWM_Output);                             // Load DutyCycle to control output at desired temperature
-            
             startupTimer = 69;
         }
 
@@ -114,6 +105,8 @@ void main(void)
         }
 // *****************************************************************************  (lcd.h)  
 //        LCDWriteStringXY(1,0,"Time:")
+        extern float DerivativeValue;
+        LCDWriteIntXY(1,0,DerivativeValue,3,0,0);
         LCDWriteIntXY(1,4,PWM_Output,4,0,0);                              // Display Number of minutes spent within 2 DegC of Setpoint (or hotter))
         LCD_Write_Char(' ');
 
@@ -122,8 +115,16 @@ void main(void)
         
         if(counter>12)
         {
-            toggle = 1-toggle;                                          // toggle C or F on Display
+//            toggle = 1-toggle;                                          // toggle C or F on Display
             counter = 0;
+            PWM_Output = (int)PID_Calculate(setpoint, steinhart);       // Calculate DutyCycle (PWM_Output)  
+            
+//            if((setpoint-steinhart)>4)                                  // Turn on output @100% until within 4 DegC of setpoint
+  //          {
+    //            PWM_Output = 1023;
+      //      }
+            
+            PWM6_LoadDutyValue(PWM_Output);                             // Load DutyCycle to control output at desired temperature
         }
 
 // *****************************************************************************  (timers.h)   

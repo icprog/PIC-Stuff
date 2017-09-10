@@ -16966,15 +16966,6 @@ readTemperatureOld -= 1;
 
 readTemperature = readTemperatureOld;
 
-PWM_Output = (int)PID_Calculate(setpoint, steinhart);
-
-if((setpoint-steinhart)>4)
-{
-PWM_Output = 1023;
-}
-
-PWM6_LoadDutyValue(PWM_Output);
-
 startupTimer = 69;
 }
 
@@ -17010,6 +17001,8 @@ LCD_Write_Char(' ');
 }
 
 
+extern float DerivativeValue;
+{ LCD_Set_Cursor(1,0); LCD_Write_Int(DerivativeValue,3, 0, 0);};
 { LCD_Set_Cursor(1,4); LCD_Write_Int(PWM_Output,4, 0, 0);};
 LCD_Write_Char(' ');
 
@@ -17018,8 +17011,12 @@ counter +=1;
 
 if(counter>12)
 {
-toggle = 1-toggle;
+
 counter = 0;
+PWM_Output = (int)PID_Calculate(setpoint, steinhart);
+
+# 127
+PWM6_LoadDutyValue(PWM_Output);
 }
 
 
