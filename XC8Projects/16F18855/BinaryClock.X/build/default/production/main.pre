@@ -16587,26 +16587,24 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 8 "system.h"
+# 4 "tmr0.h"
+void TMR0_Initialize(void);
+
+# 9 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
 void PIN_MANAGER_Initialize (void);
 
-# 4 "tmr0.h"
-void TMR0_Initialize(void);
-
-# 5 "main.c"
+# 4 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
 
-TMR0_Initialize();
-
 char sec = 0, SEC_COUNT, MIN_COUNT, HOUR_COUNT;
-int DEBOUNCE = 0;
-
+char DEBOUNCE = 0;
+long int CORRECTION_COUNTER = 0;
 static bit INCREMENT;
 
 while (1)
@@ -16620,8 +16618,15 @@ sec+=1;
 if (sec>0)
 {
 SEC_COUNT+=1;
-
-# 36
+CORRECTION_COUNTER+=1;
+if (CORRECTION_COUNTER > 172799)
+{
+if (SEC_COUNT>0)
+{
+SEC_COUNT-=1;
+CORRECTION_COUNTER -= CORRECTION_COUNTER;
+}
+}
 sec=0;
 
 if (SEC_COUNT>59)
@@ -16629,12 +16634,12 @@ if (SEC_COUNT>59)
 SEC_COUNT=0;
 INCREMENT=1;
 }
-RB4 = !(SEC_COUNT & 0x01);
-RB3 = !((SEC_COUNT & 0x02) >> 1);
-RB2 = !((SEC_COUNT & 0x04) >> 2);
-RB1 = !((SEC_COUNT & 0x08) >> 3);
-RB0 = !((SEC_COUNT & 0x10) >> 4);
-RA7 = !((SEC_COUNT & 0x20) >> 5);
+LATB4 = !(SEC_COUNT & 0x01);
+LATB3 = !((SEC_COUNT & 0x02) >> 1);
+LATB2 = !((SEC_COUNT & 0x04) >> 2);
+LATB1 = !((SEC_COUNT & 0x08) >> 3);
+LATB0 = !((SEC_COUNT & 0x10) >> 4);
+LATA7 = !((SEC_COUNT & 0x20) >> 5);
 
 }
 
@@ -16647,12 +16652,12 @@ if (MIN_COUNT>59)
 INCREMENT=1;
 MIN_COUNT=0;
 }
-RA6 = !(MIN_COUNT & 0x01);
-RA5 = !((MIN_COUNT & 0x02) >> 1);
-RA3 = !((MIN_COUNT & 0x04) >> 2);
-RA2 = !((MIN_COUNT & 0x08) >> 3);
-RA1 = !((MIN_COUNT & 0x10) >> 4);
-RA0 = !((MIN_COUNT & 0x20) >> 5);
+LATA6 = !(MIN_COUNT & 0x01);
+LATA5 = !((MIN_COUNT & 0x02) >> 1);
+LATA3 = !((MIN_COUNT & 0x04) >> 2);
+LATA2 = !((MIN_COUNT & 0x08) >> 3);
+LATA1 = !((MIN_COUNT & 0x10) >> 4);
+LATA0 = !((MIN_COUNT & 0x20) >> 5);
 }
 
 if (INCREMENT>0)
@@ -16663,11 +16668,11 @@ if (HOUR_COUNT>23)
 {
 HOUR_COUNT=0;
 }
-RC4 = !(HOUR_COUNT & 0x01);
-RC3 = !((HOUR_COUNT & 0x02) >> 1);
-RC2 = !((HOUR_COUNT & 0x04) >> 2);
-RC1 = !((HOUR_COUNT & 0x08) >> 3);
-RC0 = !((HOUR_COUNT & 0x10) >> 4);
+LATC4 = !(HOUR_COUNT & 0x01);
+LATC3 = !((HOUR_COUNT & 0x02) >> 1);
+LATC2 = !((HOUR_COUNT & 0x04) >> 2);
+LATC1 = !((HOUR_COUNT & 0x08) >> 3);
+LATC0 = !((HOUR_COUNT & 0x10) >> 4);
 }
 
 if (RC6==1 && DEBOUNCE==0)
@@ -16680,13 +16685,13 @@ MIN_COUNT=0;
 }
 
 SEC_COUNT= -1;
-RB4 = !(SEC_COUNT & 0x01);
-RA6 = !(MIN_COUNT & 0x01);
-RA5 = !((MIN_COUNT & 0x02) >> 1);
-RA3 = !((MIN_COUNT & 0x04) >> 2);
-RA2 = !((MIN_COUNT & 0x08) >> 3);
-RA1 = !((MIN_COUNT & 0x10) >> 4);
-RA0 = !((MIN_COUNT & 0x20) >> 5);
+LATB4 = !(SEC_COUNT & 0x01);
+LATA6 = !(MIN_COUNT & 0x01);
+LATA5 = !((MIN_COUNT & 0x02) >> 1);
+LATA3 = !((MIN_COUNT & 0x04) >> 2);
+LATA2 = !((MIN_COUNT & 0x08) >> 3);
+LATA1 = !((MIN_COUNT & 0x10) >> 4);
+LATA0 = !((MIN_COUNT & 0x20) >> 5);
 DEBOUNCE=1;
 }
 
@@ -16699,11 +16704,11 @@ if(HOUR_COUNT>23)
 HOUR_COUNT=0;
 }
 
-RC4 = !(HOUR_COUNT & 0x01);
-RC3 = !((HOUR_COUNT & 0x02) >> 1);
-RC2 = !((HOUR_COUNT & 0x04) >> 2);
-RC1 = !((HOUR_COUNT & 0x08) >> 3);
-RC0 = !((HOUR_COUNT & 0x10) >> 4);
+LATC4 = !(HOUR_COUNT & 0x01);
+LATC3 = !((HOUR_COUNT & 0x02) >> 1);
+LATC2 = !((HOUR_COUNT & 0x04) >> 2);
+LATC1 = !((HOUR_COUNT & 0x08) >> 3);
+LATC0 = !((HOUR_COUNT & 0x10) >> 4);
 DEBOUNCE = 1;
 }
 
@@ -16712,7 +16717,7 @@ if (DEBOUNCE>0)
 DEBOUNCE+=1;
 }
 
-if (DEBOUNCE>500)
+if (DEBOUNCE>1)
 {
 DEBOUNCE=0;
 }

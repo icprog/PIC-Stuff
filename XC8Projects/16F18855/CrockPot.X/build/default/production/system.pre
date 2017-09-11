@@ -16712,13 +16712,9 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
-typedef unsigned char bool;
-
 # 9 "pwm6.h"
 void PWM6_Initialize(void);
 
-# 33
 void PWM6_LoadDutyValue(uint16_t dutyValue);
 
 # 5 "timers.h"
@@ -16744,6 +16740,9 @@ void LCD_Write_Char(const char a);
 void LCD_Write_String(const char *a);
 
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
+typedef unsigned char bool;
 
 # 9 "adcc.h"
 typedef uint16_t adc_result_t;
@@ -16824,15 +16823,16 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 305
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 6 "eeprom.h"
-void eepromPutData(unsigned int offset, unsigned int data);
-
-unsigned int eepromGetData(unsigned int offset);
-
-# 14 "PID_Lib.h"
+# 12 "pid.h"
 void Init_PID(void);
 
+# 20
 float PID_Calculate(int const setpoint, float temp);
+
+# 6 "buttons.h"
+void tempSetpoint(void);
+
+void readButtons(void);
 
 # 18 "system.h"
 void SYSTEM_Initialize(void);
@@ -16842,7 +16842,6 @@ void OSCILLATOR_Initialize(void);
 # 37 "system.c"
 void SYSTEM_Initialize(void)
 {
-
 PIN_MANAGER_Initialize();
 OSCILLATOR_Initialize();
 FVRCON = 0x00;
@@ -16862,12 +16861,8 @@ Init_PID();
 void OSCILLATOR_Initialize(void)
 {
 OSCCON1 = 0x60;
-
 OSCCON3 = 0x00;
-
 OSCEN = 0x00;
-
 OSCFRQ = 0x00;
-
 OSCTUNE = 0x00;
 }

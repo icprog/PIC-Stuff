@@ -4,15 +4,15 @@
 #include <xc.h>
 #include "pin_manager.h"
 #include <stdint.h>
-#include <stdbool.h>
 #include "pwm6.h"
 #include "timers.h"
 #include "lcd.h"
 #include "adcc.h"
-#include "PID_Lib.h"
+#include "pid.h"
+#include "buttons.h"
 
 
-#define _XTAL_FREQ  1000000
+#define _XTAL_FREQ  1000000         // Define clock freq for __delay_ms();
 
 
 void SYSTEM_Initialize(void);

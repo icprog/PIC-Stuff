@@ -6,6 +6,6 @@ timers.h  \
 pwm6.h  \
 lcd.h  \
 pin_manager.h  \
-PID_Lib.h  \
 system.h  \
-eeprom.h 
+buttons.h  \
+pid.h 

@@ -1,4 +1,4 @@
-#include "user.h"
+#include "buttons.h"
 #include "lcd.h"
 
 #define downButton  RA3
@@ -61,7 +61,7 @@ void tempSetpoint(void)
 
 void readButtons(void)
 {
-    if(RA3 == 0 && RA4 == 0)
+    while(RA3 == 0 && RA4 == 0)
     {
         downCount = 0;
         upCount = 0;

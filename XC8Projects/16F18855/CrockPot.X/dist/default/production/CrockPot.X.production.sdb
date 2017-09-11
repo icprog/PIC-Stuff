@@ -10,7 +10,7 @@ channel_Temp 61
 channel_DAC1 62
 channel_FVR 63
 ]
-"34 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
+"30 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
 [e E13589 . `uc
 channel_VSS 60
 channel_Temp 61
@@ -21,6 +21,10 @@ channel_FVR 63
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
 "52
 [v _ADCC_GetSingleConversion ADCC_GetSingleConversion `(ui  1 e 2 0 ]
+"12 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\buttons.c
+[v _tempSetpoint tempSetpoint `(v  1 e 1 0 ]
+"62
+[v _readButtons readButtons `(v  1 e 1 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\aldiv.c
 [v ___aldiv __aldiv `(l  1 e 4 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awdiv.c
@@ -81,11 +85,11 @@ channel_FVR 63
 [v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
 "246
 [v _LCD_Write_Int LCD_Write_Int `(v  1 e 1 0 ]
-"16 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
+"13 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
 [v _main main `(v  1 e 1 0 ]
-"12 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\PID_Lib.c
+"12 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pid.c
 [v _Init_PID Init_PID `(v  1 e 1 0 ]
-"25
+"24
 [v _PID_Calculate PID_Calculate `(f  1 e 3 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
@@ -95,16 +99,18 @@ channel_FVR 63
 [v _PWM6_LoadDutyValue PWM6_LoadDutyValue `(v  1 e 1 0 ]
 "37 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
-"56
+"55
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
 "3 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\timers.c
 [v _TMR0_Initialize TMR0_Initialize `(v  1 e 1 0 ]
-"21
+"15
 [v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
-"12 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\user.c
-[v _tempSetpoint tempSetpoint `(v  1 e 1 0 ]
-"62
-[v _readButtons readButtons `(v  1 e 1 0 ]
+"7 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\buttons.c
+[v _downCount downCount `uc  1 e 1 0 ]
+[v _upCount upCount `uc  1 e 1 0 ]
+[v _oldSetpoint oldSetpoint `uc  1 e 1 0 ]
+[v _toggleCount toggleCount `uc  1 e 1 0 ]
+[v _x x `uc  1 e 1 0 ]
 "572 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
 "633
@@ -123,20 +129,20 @@ channel_FVR 63
 [v _TMR0H TMR0H `VEuc  1 e 1 @29 ]
 "1328
 [v _T0CON0 T0CON0 `VEuc  1 e 1 @30 ]
-[s S336 . 1 `uc 1 T0OUTPS 1 0 :4:0 
+[s S307 . 1 `uc 1 T0OUTPS 1 0 :4:0 
 `uc 1 T016BIT 1 0 :1:4 
 `uc 1 T0OUT 1 0 :1:5 
 `uc 1 . 1 0 :1:6 
 `uc 1 T0EN 1 0 :1:7 
 ]
 "1348
-[s S342 . 1 `uc 1 T0OUTPS0 1 0 :1:0 
+[s S313 . 1 `uc 1 T0OUTPS0 1 0 :1:0 
 `uc 1 T0OUTPS1 1 0 :1:1 
 `uc 1 T0OUTPS2 1 0 :1:2 
 `uc 1 T0OUTPS3 1 0 :1:3 
 ]
-[u S347 . 1 `S336 1 . 1 0 `S342 1 . 1 0 ]
-[v _T0CON0bits T0CON0bits `VES347  1 e 1 @30 ]
+[u S318 . 1 `S307 1 . 1 0 `S313 1 . 1 0 ]
+[v _T0CON0bits T0CON0bits `VES318  1 e 1 @30 ]
 "1392
 [v _T0CON1 T0CON1 `VEuc  1 e 1 @31 ]
 "1508
@@ -223,16 +229,16 @@ channel_FVR 63
 [v _T2PR T2PR `VEuc  1 e 1 @653 ]
 "7642
 [v _T2CON T2CON `VEuc  1 e 1 @654 ]
-[s S385 . 1 `uc 1 OUTPS 1 0 :4:0 
+[s S356 . 1 `uc 1 OUTPS 1 0 :4:0 
 `uc 1 CKPS 1 0 :3:4 
 `uc 1 ON 1 0 :1:7 
 ]
 "7678
-[s S389 . 1 `uc 1 T2OUTPS 1 0 :4:0 
+[s S360 . 1 `uc 1 T2OUTPS 1 0 :4:0 
 `uc 1 T2CKPS 1 0 :3:4 
 `uc 1 T2ON 1 0 :1:7 
 ]
-[s S393 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
+[s S364 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
 `uc 1 T2OUTPS1 1 0 :1:1 
 `uc 1 T2OUTPS2 1 0 :1:2 
 `uc 1 T2OUTPS3 1 0 :1:3 
@@ -240,7 +246,7 @@ channel_FVR 63
 `uc 1 T2CKPS1 1 0 :1:5 
 `uc 1 T2CKPS2 1 0 :1:6 
 ]
-[s S401 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S372 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -249,8 +255,8 @@ channel_FVR 63
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR2ON 1 0 :1:7 
 ]
-[u S410 . 1 `S385 1 . 1 0 `S389 1 . 1 0 `S393 1 . 1 0 `S401 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES410  1 e 1 @654 ]
+[u S381 . 1 `S356 1 . 1 0 `S360 1 . 1 0 `S364 1 . 1 0 `S372 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES381  1 e 1 @654 ]
 "7787
 [v _T2HLT T2HLT `VEuc  1 e 1 @655 ]
 "7919
@@ -263,15 +269,15 @@ channel_FVR 63
 [v _PWM6DCH PWM6DCH `VEuc  1 e 1 @909 ]
 "10774
 [v _PWM6CON PWM6CON `VEuc  1 e 1 @910 ]
-[s S323 . 1 `uc 1 INTF 1 0 :1:0 
+[s S294 . 1 `uc 1 INTF 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIF 1 0 :1:4 
 `uc 1 TMR0IF 1 0 :1:5 
 ]
 "19404
-[u S328 . 1 `S323 1 . 1 0 ]
-[v _PIR0bits PIR0bits `VES328  1 e 1 @1804 ]
-[s S368 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[u S299 . 1 `S294 1 . 1 0 ]
+[v _PIR0bits PIR0bits `VES299  1 e 1 @1804 ]
+[s S339 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 TMR3IF 1 0 :1:2 
 `uc 1 TMR4IF 1 0 :1:3 
@@ -279,8 +285,8 @@ channel_FVR 63
 `uc 1 TMR6IF 1 0 :1:5 
 ]
 "19557
-[u S375 . 1 `S368 1 . 1 0 ]
-[v _PIR4bits PIR4bits `VES375  1 e 1 @1808 ]
+[u S346 . 1 `S339 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES346  1 e 1 @1808 ]
 [s S32 . 1 `uc 1 INTE 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIE 1 0 :1:4 
@@ -348,60 +354,45 @@ channel_FVR 63
 [v _errno errno `i  1 e 2 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\lcd.c
 [v ___cgram __cgram `[24]uc  1 e 24 0 ]
-"11 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
+"9 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
 [v _samples samples `[50]ui  1 e 100 @9100 ]
-"13
+"10
 [v _setpoint setpoint `uc  1 e 1 0 ]
 [v _presets presets `[5]uc  1 e 5 0 ]
-"2 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\PID_Lib.c
-[v _Err Err `f  1 e 3 0 ]
-[v _ErrValue ErrValue `f  1 e 3 0 ]
-[v _DerivativeValue DerivativeValue `f  1 e 3 0 ]
-[v _Result Result `f  1 e 3 0 ]
-[v _PID_Prev_Error PID_Prev_Error `f  1 e 3 0 ]
-"4
+"5 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pid.c
 [v _PID_Kp PID_Kp `f  1 e 3 0 ]
 [v _PID_Ki PID_Ki `f  1 e 3 0 ]
-"5
-[v _PID_Kd PID_Kd `f  1 e 3 0 ]
 "6
-[v _PID_Integrated PID_Integrated `f  1 e 3 0 ]
+[v _PID_Kd PID_Kd `f  1 e 3 0 ]
 "7
-[v _PID_Prev_Input PID_Prev_Input `f  1 e 3 0 ]
+[v _pidIntegrated pidIntegrated `f  1 e 3 0 ]
 "8
-[v _PID_MinOutput PID_MinOutput `i  1 e 2 0 ]
-[v _PID_MaxOutput PID_MaxOutput `i  1 e 2 0 ]
-"7 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\user.c
-[v _downCount downCount `uc  1 e 1 0 ]
-[v _upCount upCount `uc  1 e 1 0 ]
-[v _oldSetpoint oldSetpoint `uc  1 e 1 0 ]
-[v _toggleCount toggleCount `uc  1 e 1 0 ]
-[v _x x `uc  1 e 1 0 ]
-"16 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
+[v _pidPrevInput pidPrevInput `f  1 e 3 0 ]
+"9
+[v _pidMinOutput pidMinOutput `i  1 e 2 0 ]
+[v _pidMaxOutput pidMaxOutput `i  1 e 2 0 ]
+"13 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"28
-[v main@totals totals `l  1 a 4 19 ]
-"24
-[v main@steinhart steinhart `f  1 a 3 27 ]
-[v main@R R `f  1 a 3 0 ]
-"20
-[v main@readTemperature readTemperature `ui  1 a 2 25 ]
-[v main@readTemperatureOld readTemperatureOld `ui  1 a 2 23 ]
-[v main@displayTemp displayTemp `ui  1 a 2 17 ]
-[v main@counter counter `ui  1 a 2 13 ]
-[v main@seconds seconds `ui  1 a 2 10 ]
-[v main@PWM_Output PWM_Output `ui  1 a 2 8 ]
-[v main@minutes minutes `ui  1 a 2 6 ]
-"22
-[v main@toggle toggle `uc  1 a 1 16 ]
-[v main@startupTimer startupTimer `uc  1 a 1 15 ]
-[v main@firstTimeThrough firstTimeThrough `uc  1 a 1 12 ]
-"26
+"25
+[v main@totals totals `l  1 a 4 29 ]
+"21
+[v main@steinhart steinhart `f  1 a 3 33 ]
+[v main@R R `f  1 a 3 10 ]
+"17
+[v main@displayTemp displayTemp `ui  1 a 2 27 ]
+[v main@readTemperature readTemperature `ui  1 a 2 24 ]
+[v main@counter counter `ui  1 a 2 22 ]
+[v main@seconds seconds `ui  1 a 2 20 ]
+[v main@minutes minutes `ui  1 a 2 18 ]
+[v main@PWM_Output PWM_Output `ui  1 a 2 16 ]
+"19
+[v main@toggle toggle `uc  1 a 1 26 ]
+"23
 [v main@sampleIndex sampleIndex `ui  1 s 2 sampleIndex ]
-"165
+"112
 } 0
-"12 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\user.c
+"12 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\buttons.c
 [v _tempSetpoint tempSetpoint `(v  1 e 1 0 ]
 {
 "14
@@ -436,7 +427,7 @@ channel_FVR 63
 [v LCD_Write_Int@numPlaces numPlaces `c  1 p 1 12 ]
 [v LCD_Write_Int@sign sign `c  1 p 1 13 ]
 "247
-[v LCD_Write_Int@F13695 F13695 `[5]uc  1 s 5 F13695 ]
+[v LCD_Write_Int@F13694 F13694 `[5]uc  1 s 5 F13694 ]
 "300
 } 0
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awmod.c
@@ -548,12 +539,12 @@ channel_FVR 63
 [v ___fttol __fttol `(l  1 e 4 0 ]
 {
 "47
-[v ___fttol@lval lval `ul  1 a 4 55 ]
+[v ___fttol@lval lval `ul  1 a 4 70 ]
 "46
-[v ___fttol@exp1 exp1 `uc  1 a 1 59 ]
-[v ___fttol@sign1 sign1 `uc  1 a 1 54 ]
+[v ___fttol@exp1 exp1 `uc  1 a 1 74 ]
+[v ___fttol@sign1 sign1 `uc  1 a 1 69 ]
 "44
-[v ___fttol@f1 f1 `f  1 p 3 46 ]
+[v ___fttol@f1 f1 `f  1 p 3 61 ]
 "73
 } 0
 "18 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftsub.c
@@ -593,17 +584,17 @@ channel_FVR 63
 "37 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
 {
-"54
+"53
 } 0
-"21 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\timers.c
+"15 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\timers.c
 [v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
 {
-"38
+"25
 } 0
 "3
 [v _TMR0_Initialize TMR0_Initialize `(v  1 e 1 0 ]
 {
-"18
+"12
 } 0
 "4 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pwm6.c
 [v _PWM6_Initialize PWM6_Initialize `(v  1 e 1 0 ]
@@ -617,10 +608,10 @@ channel_FVR 63
 [v PIN_MANAGER_Initialize@state state `uc  1 a 1 0 ]
 "40
 } 0
-"56 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\system.c
+"55 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\system.c
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
 {
-"67
+"62
 } 0
 "154 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\lcd.c
 [v _LCD_Init LCD_Init `(v  1 e 1 0 ]
@@ -636,10 +627,10 @@ channel_FVR 63
 {
 "79
 } 0
-"12 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\PID_Lib.c
+"12 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pid.c
 [v _Init_PID Init_PID `(v  1 e 1 0 ]
 {
-"22
+"21
 } 0
 "29 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\lcd.c
 [v _InitCustomChars InitCustomChars `(v  1 e 1 0 ]
@@ -690,12 +681,19 @@ channel_FVR 63
 [v PWM6_LoadDutyValue@dutyValue dutyValue `ui  1 p 2 0 ]
 "20
 } 0
-"25 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\PID_Lib.c
+"24 D:\PIC-Stuff\XC8Projects\16F18855\CrockPot.X\pid.c
 [v _PID_Calculate PID_Calculate `(f  1 e 3 0 ]
 {
+"26
+[v PID_Calculate@error error `f  1 a 3 58 ]
+[v PID_Calculate@Result Result `f  1 a 3 55 ]
+[v PID_Calculate@pidPrevError pidPrevError `f  1 a 3 52 ]
+[v PID_Calculate@derivativeValue derivativeValue `f  1 a 3 49 ]
+[v PID_Calculate@errorValue errorValue `f  1 a 3 43 ]
+"24
 [v PID_Calculate@setpoint setpoint `DCCi  1 p 2 38 ]
 [v PID_Calculate@temp temp `f  1 p 3 40 ]
-"82
+"64
 } 0
 "15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftneg.c
 [v ___ftneg __ftneg `(f  1 e 3 0 ]

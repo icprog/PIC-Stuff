@@ -16618,7 +16618,10 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 8 "system.h"
+# 4 "tmr0.h"
+void TMR0_Initialize(void);
+
+# 9 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16628,7 +16631,7 @@ void PIN_MANAGER_Initialize (void);
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
 typedef unsigned char bool;
 
-# 36 "system.c"
+# 37 "system.c"
 void PIN_MANAGER_Initialize(void)
 {
 LATA = 0xEF;
@@ -16671,6 +16674,8 @@ void SYSTEM_Initialize(void)
 {
 PIN_MANAGER_Initialize();
 OSCILLATOR_Initialize();
+TMR0_Initialize();
+CPUDOZE = 0x46;
 }
 
 void OSCILLATOR_Initialize(void)

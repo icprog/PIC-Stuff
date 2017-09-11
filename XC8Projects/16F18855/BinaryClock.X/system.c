@@ -76,6 +76,7 @@ void SYSTEM_Initialize(void)
 {
     PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
+    TMR0_Initialize();                          // Initialize Timer0
     CPUDOZE = 0x46;                     // DOZEN = 1, DOZE = 1:128
 }
 

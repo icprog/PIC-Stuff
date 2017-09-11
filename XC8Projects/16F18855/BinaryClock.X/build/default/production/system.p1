@@ -54,9 +54,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S1266 . . . ]
 "27997
 [v _T0CKIPPSbits `VS1266 ~T0 @X0 0 e@3729 ]
-"10 system.h
+"11 system.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
-"21546 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+"4 tmr0.h
+[v _TMR0_Initialize `(v ~T0 @X0 0 ef ]
+"21490 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _CPUDOZE `Vuc ~T0 @X0 0 e@2188 ]
+"21546
 [v _OSCCON1 `Vuc ~T0 @X0 0 e@2189 ]
 "21684
 [v _OSCCON3 `Vuc ~T0 @X0 0 e@2191 ]
@@ -12656,143 +12660,150 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 186: extern unsigned char __resetbits;
 [; ;pic.h: 187: extern __bit __powerdown;
 [; ;pic.h: 188: extern __bit __timeout;
-[; ;system.h: 8: void SYSTEM_Initialize(void);
-[; ;system.h: 10: void OSCILLATOR_Initialize(void);
-[; ;system.h: 12: void PIN_MANAGER_Initialize (void);
+[; ;tmr0.h: 4: void TMR0_Initialize(void);
+[; ;system.h: 9: void SYSTEM_Initialize(void);
+[; ;system.h: 11: void OSCILLATOR_Initialize(void);
+[; ;system.h: 13: void PIN_MANAGER_Initialize (void);
 [; ;stdbool.h: 12: typedef unsigned char bool;
-"36 system.c
+"37 system.c
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 1 ef ]
-"37
+"38
 {
-[; ;system.c: 36: void PIN_MANAGER_Initialize(void)
-[; ;system.c: 37: {
+[; ;system.c: 37: void PIN_MANAGER_Initialize(void)
+[; ;system.c: 38: {
 [e :U _PIN_MANAGER_Initialize ]
 [f ]
-[; ;system.c: 38: LATA = 0xEF;
-"38
-[e = _LATA -> -> 239 `i `uc ]
-[; ;system.c: 39: LATB = 0x1F;
+[; ;system.c: 39: LATA = 0xEF;
 "39
-[e = _LATB -> -> 31 `i `uc ]
-[; ;system.c: 40: LATC = 0x1D;
+[e = _LATA -> -> 239 `i `uc ]
+[; ;system.c: 40: LATB = 0x1F;
 "40
+[e = _LATB -> -> 31 `i `uc ]
+[; ;system.c: 41: LATC = 0x1D;
+"41
 [e = _LATC -> -> 29 `i `uc ]
-[; ;system.c: 42: TRISA = 0x10;
-"42
-[e = _TRISA -> -> 16 `i `uc ]
-[; ;system.c: 43: TRISB = 0x00;
+[; ;system.c: 43: TRISA = 0x10;
 "43
-[e = _TRISB -> -> 0 `i `uc ]
-[; ;system.c: 44: TRISC = 0xC0;
+[e = _TRISA -> -> 16 `i `uc ]
+[; ;system.c: 44: TRISB = 0x00;
 "44
+[e = _TRISB -> -> 0 `i `uc ]
+[; ;system.c: 45: TRISC = 0xC0;
+"45
 [e = _TRISC -> -> 192 `i `uc ]
-[; ;system.c: 46: ANSELC = 0x00;
-"46
-[e = _ANSELC -> -> 0 `i `uc ]
-[; ;system.c: 47: ANSELB = 0x00;
+[; ;system.c: 47: ANSELC = 0x00;
 "47
-[e = _ANSELB -> -> 0 `i `uc ]
-[; ;system.c: 48: ANSELA = 0x00;
+[e = _ANSELC -> -> 0 `i `uc ]
+[; ;system.c: 48: ANSELB = 0x00;
 "48
+[e = _ANSELB -> -> 0 `i `uc ]
+[; ;system.c: 49: ANSELA = 0x00;
+"49
 [e = _ANSELA -> -> 0 `i `uc ]
-[; ;system.c: 50: WPUE = 0x00;
-"50
-[e = _WPUE -> -> 0 `i `uc ]
-[; ;system.c: 51: WPUB = 0x00;
+[; ;system.c: 51: WPUE = 0x00;
 "51
-[e = _WPUB -> -> 0 `i `uc ]
-[; ;system.c: 52: WPUA = 0x00;
+[e = _WPUE -> -> 0 `i `uc ]
+[; ;system.c: 52: WPUB = 0x00;
 "52
-[e = _WPUA -> -> 0 `i `uc ]
-[; ;system.c: 53: WPUC = 0x00;
+[e = _WPUB -> -> 0 `i `uc ]
+[; ;system.c: 53: WPUA = 0x00;
 "53
+[e = _WPUA -> -> 0 `i `uc ]
+[; ;system.c: 54: WPUC = 0x00;
+"54
 [e = _WPUC -> -> 0 `i `uc ]
-[; ;system.c: 55: ODCONA = 0x00;
-"55
-[e = _ODCONA -> -> 0 `i `uc ]
-[; ;system.c: 56: ODCONB = 0x00;
+[; ;system.c: 56: ODCONA = 0x00;
 "56
-[e = _ODCONB -> -> 0 `i `uc ]
-[; ;system.c: 57: ODCONC = 0x00;
+[e = _ODCONA -> -> 0 `i `uc ]
+[; ;system.c: 57: ODCONB = 0x00;
 "57
+[e = _ODCONB -> -> 0 `i `uc ]
+[; ;system.c: 58: ODCONC = 0x00;
+"58
 [e = _ODCONC -> -> 0 `i `uc ]
-"59
-[v _state `uc ~T0 @X0 1 a ]
-[; ;system.c: 59: bool state = (unsigned char)GIE;
-[e = _state -> -> _GIE `i `uc ]
-[; ;system.c: 60: GIE = 0;
 "60
-[e = _GIE -> -> 0 `i `b ]
-[; ;system.c: 61: PPSLOCK = 0x55;
+[v _state `uc ~T0 @X0 1 a ]
+[; ;system.c: 60: bool state = (unsigned char)GIE;
+[e = _state -> -> _GIE `i `uc ]
+[; ;system.c: 61: GIE = 0;
 "61
-[e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;system.c: 62: PPSLOCK = 0xAA;
+[e = _GIE -> -> 0 `i `b ]
+[; ;system.c: 62: PPSLOCK = 0x55;
 "62
-[e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;system.c: 63: PPSLOCKbits.PPSLOCKED = 0x00;
-"63
-[e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
-[; ;system.c: 65: T0CKIPPSbits.T0CKIPPS = 0x04;
-"65
-[e = . . _T0CKIPPSbits 0 0 -> -> 4 `i `uc ]
-[; ;system.c: 67: PPSLOCK = 0x55;
-"67
 [e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;system.c: 68: PPSLOCK = 0xAA;
-"68
+[; ;system.c: 63: PPSLOCK = 0xAA;
+"63
 [e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;system.c: 69: PPSLOCKbits.PPSLOCKED = 0x01;
+[; ;system.c: 64: PPSLOCKbits.PPSLOCKED = 0x00;
+"64
+[e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
+[; ;system.c: 66: T0CKIPPSbits.T0CKIPPS = 0x04;
+"66
+[e = . . _T0CKIPPSbits 0 0 -> -> 4 `i `uc ]
+[; ;system.c: 68: PPSLOCK = 0x55;
+"68
+[e = _PPSLOCK -> -> 85 `i `uc ]
+[; ;system.c: 69: PPSLOCK = 0xAA;
 "69
+[e = _PPSLOCK -> -> 170 `i `uc ]
+[; ;system.c: 70: PPSLOCKbits.PPSLOCKED = 0x01;
+"70
 [e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
-[; ;system.c: 71: GIE = state;
-"71
-[e = _GIE -> _state `b ]
-[; ;system.c: 72: }
+[; ;system.c: 72: GIE = state;
 "72
+[e = _GIE -> _state `b ]
+[; ;system.c: 73: }
+"73
 [e :UE 1519 ]
 }
-"74
-[v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
 "75
+[v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
+"76
 {
-[; ;system.c: 74: void SYSTEM_Initialize(void)
-[; ;system.c: 75: {
+[; ;system.c: 75: void SYSTEM_Initialize(void)
+[; ;system.c: 76: {
 [e :U _SYSTEM_Initialize ]
 [f ]
-[; ;system.c: 76: PIN_MANAGER_Initialize();
-"76
-[e ( _PIN_MANAGER_Initialize ..  ]
-[; ;system.c: 77: OSCILLATOR_Initialize();
+[; ;system.c: 77: PIN_MANAGER_Initialize();
 "77
-[e ( _OSCILLATOR_Initialize ..  ]
-[; ;system.c: 78: }
+[e ( _PIN_MANAGER_Initialize ..  ]
+[; ;system.c: 78: OSCILLATOR_Initialize();
 "78
+[e ( _OSCILLATOR_Initialize ..  ]
+[; ;system.c: 79: TMR0_Initialize();
+"79
+[e ( _TMR0_Initialize ..  ]
+[; ;system.c: 80: CPUDOZE = 0x46;
+"80
+[e = _CPUDOZE -> -> 70 `i `uc ]
+[; ;system.c: 81: }
+"81
 [e :UE 1520 ]
 }
-"80
+"83
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
-"81
+"84
 {
-[; ;system.c: 80: void OSCILLATOR_Initialize(void)
-[; ;system.c: 81: {
+[; ;system.c: 83: void OSCILLATOR_Initialize(void)
+[; ;system.c: 84: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;system.c: 82: OSCCON1 = 0x62;
-"82
+[; ;system.c: 85: OSCCON1 = 0x62;
+"85
 [e = _OSCCON1 -> -> 98 `i `uc ]
-[; ;system.c: 84: OSCCON3 = 0x00;
-"84
+[; ;system.c: 87: OSCCON3 = 0x00;
+"87
 [e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 86: OSCEN = 0x00;
-"86
+[; ;system.c: 89: OSCEN = 0x00;
+"89
 [e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 88: OSCFRQ = 0x00;
-"88
-[e = _OSCFRQ -> -> 0 `i `uc ]
-[; ;system.c: 90: OSCTUNE = 0x00;
-"90
-[e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 91: }
+[; ;system.c: 91: OSCFRQ = 0x00;
 "91
+[e = _OSCFRQ -> -> 0 `i `uc ]
+[; ;system.c: 93: OSCTUNE = 0x00;
+"93
+[e = _OSCTUNE -> -> 0 `i `uc ]
+[; ;system.c: 94: }
+"94
 [e :UE 1521 ]
 }

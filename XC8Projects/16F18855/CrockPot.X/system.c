@@ -36,7 +36,6 @@
 
 void SYSTEM_Initialize(void)
 {
-    
     PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
     FVRCON = 0x00;                  // Set Fixed Voltage reference
@@ -56,12 +55,8 @@ void SYSTEM_Initialize(void)
 void OSCILLATOR_Initialize(void)
 {
     OSCCON1 = 0x60;                 // NOSC HFINTOSC; NDIV 1; 
-    
     OSCCON3 = 0x00;                 // CSWHOLD may proceed; SOSCPWR Low power; 
-
     OSCEN = 0x00;                   // MFOEN disabled; LFOEN disabled; ADOEN disabled; SOSCEN disabled; EXTOEN disabled; HFOEN disabled; 
-
     OSCFRQ = 0x00;                  // HFFRQ 1_MHz; 
-
     OSCTUNE = 0x00;                 // HFTUN 0; 
 }

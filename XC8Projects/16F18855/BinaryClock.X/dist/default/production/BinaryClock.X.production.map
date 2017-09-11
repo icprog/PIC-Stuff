@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.38\dat\en_msgs.txt -cs \
   -h+dist/default/production\BinaryClock.X.production.sym \
   --cmf=dist/default/production\BinaryClock.X.production.cmf -z -Q16F18855 \
-  -oC:\Users\DAVE\AppData\Local\Temp\s38k.2 \
+  -oC:\Users\DAVE\AppData\Local\Temp\s3d0.2 \
   -Mdist/default/production/BinaryClock.X.production.map -E1 -ver=XC8 \
   -ASTACK=02000h-023efh -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
@@ -32,7 +32,7 @@ Linker command line:
   -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 \
   -AEEDATA=00h-0FFh/0F000h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
-  C:\Users\DAVE\AppData\Local\Temp\s38k.obj \
+  C:\Users\DAVE\AppData\Local\Temp\s3d0.obj \
   dist/default/production\BinaryClock.X.production.obj 
 
 Object code version is 3.11
@@ -42,19 +42,19 @@ Machine type is 16F18855
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\DAVE\AppData\Local\Temp\s38k.obj
+C:\Users\DAVE\AppData\Local\Temp\s3d0.obj
                 end_init                              2        2        2        0       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5    1000E       0
 dist/default/production\BinaryClock.X.production.obj
                 cinit                               7FC      7FC        4      FF8       0
-                text4                               5E4      5E4        8      BC8       0
-                text3                               5F8      5F8       31      BF0       0
-                text2                               5DE      5DE        6      BBC       0
-                text1                               5EC      5EC        C      BD8       0
-                maintext                            629      629      1D3      C52       0
-                cstackCOMMON                         70       70        8       70       1
-                bitbssCOMMON                        3C0       78        1       70       1     8
+                text4                               5CB      5CB        8      B96       0
+                text3                               5EB      5EB       31      BD6       0
+                text2                               5D3      5D3        C      BA6       0
+                text1                               5DF      5DF        C      BBE       0
+                maintext                            61C      61C      1E0      C38       0
+                cstackCOMMON                         70       70        B       70       1
+                bitbssCOMMON                        3D8       7B        1       70       1     8
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   STACK          
@@ -63,11 +63,11 @@ TOTAL           Name                               Link     Load   Length     Sp
                 end_init                              2        2        2         0
                 cinit                               7FC      7FC        4         0
                 reset_vec                             0        0        2         0
-                text4                               5E4      5E4        8         0
-                text3                               5F8      5F8       31         0
-                text2                               5DE      5DE        6         0
-                text1                               5EC      5EC        C         0
-                maintext                            629      629      1D3         0
+                text4                               5CB      5CB        8         0
+                text3                               5EB      5EB       31         0
+                text2                               5D3      5D3        C         0
+                text1                               5DF      5DF        C         0
+                maintext                            61C      61C      1E0         0
 
         CLASS   STRCODE        
 
@@ -78,8 +78,8 @@ TOTAL           Name                               Link     Load   Length     Sp
         CLASS   ENTRY          
 
         CLASS   COMMON         
-                cstackCOMMON                         70       70        8         1
-                bitbssCOMMON                        3C0       78        1         1
+                cstackCOMMON                         70       70        B         1
+                bitbssCOMMON                        3D8       7B        1         1
 
         CLASS   BANK0          
 
@@ -228,12 +228,12 @@ TOTAL           Name                               Link     Load   Length     Sp
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
 
                 reset_vec                      000000  000004  000004         0       0  CODE        2
-                cstackCOMMON                   000070  000009  000079        70       1  COMMON      1
-                text2                          0005DE  000006  0005E4       BBC       0  CODE        2
-                text4                          0005E4  000008  0005EC       BC8       0  CODE        2
-                text1                          0005EC  00000C  0005F8       BD8       0  CODE        2
-                text3                          0005F8  000031  000629       BF0       0  CODE        2
-                maintext                       000629  0001D3  0007FC       C52       0  CODE        2
+                cstackCOMMON                   000070  00000C  00007C        70       1  COMMON      1
+                text4                          0005CB  000008  0005D3       B96       0  CODE        2
+                text2                          0005D3  00000C  0005DF       BA6       0  CODE        2
+                text1                          0005DF  00000C  0005EB       BBE       0  CODE        2
+                text3                          0005EB  000031  00061C       BD6       0  CODE        2
+                maintext                       00061C  0001E0  0007FC       C38       0  CODE        2
                 cinit                          0007FC  000004  000800       FF8       0  CODE        2
                 config                         008007  000005  00800C     1000E       0  CONFIG      2
 
@@ -255,13 +255,13 @@ UNUSED ADDRESS RANGES
         BANK8            00420-0046F              50           1
         BANK9            004A0-004EF              50           1
         BIGRAM           02000-023EF             3F0           1
-        CODE             00004-005DD             5DA           2
+        CODE             00004-005CA             5C7           2
                          00800-01FFF             800
-        COMMON           00079-0007D               5           1
-        CONST            00004-005DD             100           2
+        COMMON           0007C-0007D               2           1
+        CONST            00004-005CA             100           2
                          00800-01FFF             100
         EEDATA           0F000-0F0FF             100           2
-        ENTRY            00004-005DD             100           2
+        ENTRY            00004-005CA             100           2
                          00800-01FFF             100
         IDLOC            08000-08003               4           2
         RAM              00020-0006F              50           1
@@ -310,9 +310,9 @@ UNUSED ADDRESS RANGES
         SFR8             00400-0041F              20           1
         SFR9             00480-0049F              20           1
         STACK            02000-023EF             3F0           1
-        STRCODE          00004-005DD             5DA           2
+        STRCODE          00004-005CA             5C7           2
                          00800-01FFF            1800
-        STRING           00004-005DD             100           2
+        STRING           00004-005CA             100           2
                          00800-01FFF             100
 
                                   Symbol Table
@@ -321,10 +321,28 @@ PIN_MANAGER_Initialize@state     cstackCOMMON 00070
 _ANSELA                          (abs)        00F38
 _ANSELB                          (abs)        00F43
 _ANSELC                          (abs)        00F4E
+_CPUDOZE                         (abs)        0088C
 _GIE                             (abs)        0005F
 _LATA                            (abs)        00016
+_LATA0                           (abs)        000B0
+_LATA1                           (abs)        000B1
+_LATA2                           (abs)        000B2
+_LATA3                           (abs)        000B3
+_LATA5                           (abs)        000B5
+_LATA6                           (abs)        000B6
+_LATA7                           (abs)        000B7
 _LATB                            (abs)        00017
+_LATB0                           (abs)        000B8
+_LATB1                           (abs)        000B9
+_LATB2                           (abs)        000BA
+_LATB3                           (abs)        000BB
+_LATB4                           (abs)        000BC
 _LATC                            (abs)        00018
+_LATC0                           (abs)        000C0
+_LATC1                           (abs)        000C1
+_LATC2                           (abs)        000C2
+_LATC3                           (abs)        000C3
+_LATC4                           (abs)        000C4
 _ODCONA                          (abs)        00F3A
 _ODCONB                          (abs)        00F45
 _ODCONC                          (abs)        00F50
@@ -332,32 +350,15 @@ _OSCCON1                         (abs)        0088D
 _OSCCON3                         (abs)        0088F
 _OSCEN                           (abs)        00891
 _OSCFRQ                          (abs)        00893
-_OSCILLATOR_Initialize           text4        005E4
+_OSCILLATOR_Initialize           text4        005CB
 _OSCTUNE                         (abs)        00892
-_PIN_MANAGER_Initialize          text3        005F8
+_PIN_MANAGER_Initialize          text3        005EB
 _PIR0bits                        (abs)        0070C
 _PPSLOCK                         (abs)        00E8F
 _PPSLOCKbits                     (abs)        00E8F
-_RA0                             (abs)        00060
-_RA1                             (abs)        00061
-_RA2                             (abs)        00062
-_RA3                             (abs)        00063
-_RA5                             (abs)        00065
-_RA6                             (abs)        00066
-_RA7                             (abs)        00067
-_RB0                             (abs)        00068
-_RB1                             (abs)        00069
-_RB2                             (abs)        0006A
-_RB3                             (abs)        0006B
-_RB4                             (abs)        0006C
-_RC0                             (abs)        00070
-_RC1                             (abs)        00071
-_RC2                             (abs)        00072
-_RC3                             (abs)        00073
-_RC4                             (abs)        00074
 _RC6                             (abs)        00076
 _RC7                             (abs)        00077
-_SYSTEM_Initialize               text2        005DE
+_SYSTEM_Initialize               text1        005DF
 _T0CKIPPSbits                    (abs)        00E91
 _T0CON0                          (abs)        0001E
 _T0CON0bits                      (abs)        0001E
@@ -365,7 +366,7 @@ _T0CON1                          (abs)        0001F
 _TMR0H                           (abs)        0001D
 _TMR0IF                          (abs)        03865
 _TMR0L                           (abs)        0001C
-_TMR0_Initialize                 text1        005EC
+_TMR0_Initialize                 text2        005D3
 _TRISA                           (abs)        00011
 _TRISB                           (abs)        00012
 _TRISC                           (abs)        00013
@@ -479,7 +480,7 @@ __Hsfr7                          sfr7         00000
 __Hsfr8                          sfr8         00000
 __Hsfr9                          sfr9         00000
 __Hspace_0                       (abs)        0800C
-__Hspace_1                       (abs)        003C1
+__Hspace_1                       (abs)        003D9
 __Hspace_2                       (abs)        00000
 __Hspace_3                       (abs)        00000
 __Hstack                         stack        00000
@@ -576,32 +577,32 @@ __Lstack                         stack        00000
 __Lstrings                       strings      00000
 __Ltext                          text         00000
 __S0                             (abs)        0800C
-__S1                             (abs)        00079
+__S1                             (abs)        0007C
 __S2                             (abs)        00000
 __S3                             (abs)        00000
 ___int_sp                        stack        00000
 ___latbits                       (abs)        00002
 ___sp                            stack        00000
-__end_of_OSCILLATOR_Initialize   text4        005EC
-__end_of_PIN_MANAGER_Initialize  text3        00629
-__end_of_SYSTEM_Initialize       text2        005E4
-__end_of_TMR0_Initialize         text1        005F8
+__end_of_OSCILLATOR_Initialize   text4        005D3
+__end_of_PIN_MANAGER_Initialize  text3        0061C
+__end_of_SYSTEM_Initialize       text1        005EB
+__end_of_TMR0_Initialize         text2        005DF
 __end_of__initialization         cinit        007FD
 __end_of_main                    maintext     007FC
 __initialization                 cinit        007FC
-__pbitbssCOMMON                  bitbssCOMMON 003C0
+__pbitbssCOMMON                  bitbssCOMMON 003D8
 __pcstackCOMMON                  cstackCOMMON 00070
-__pmaintext                      maintext     00629
-__ptext1                         text1        005EC
-__ptext2                         text2        005DE
-__ptext3                         text3        005F8
-__ptext4                         text4        005E4
+__pmaintext                      maintext     0061C
+__ptext1                         text1        005DF
+__ptext2                         text2        005D3
+__ptext3                         text3        005EB
+__ptext4                         text4        005CB
 __size_of_OSCILLATOR_Initialize  (abs)        00000
 __size_of_PIN_MANAGER_Initialize (abs)        00000
 __size_of_SYSTEM_Initialize      (abs)        00000
 __size_of_TMR0_Initialize        (abs)        00000
 __size_of_main                   (abs)        00000
-_main                            maintext     00629
+_main                            maintext     0061C
 btemp                            (abs)        0007E
 end_of_initialization            cinit        007FD
 intlevel0                        functab      00000
@@ -615,11 +616,12 @@ ltemp0                           (abs)        0007E
 ltemp1                           (abs)        00082
 ltemp2                           (abs)        00086
 ltemp3                           (abs)        00080
-main@DEBOUNCE                    cstackCOMMON 00073
-main@HOUR_COUNT                  cstackCOMMON 00076
-main@INCREMENT                   bitbssCOMMON 003C0
-main@MIN_COUNT                   cstackCOMMON 00077
-main@SEC_COUNT                   cstackCOMMON 00075
+main@CORRECTION_COUNTER          cstackCOMMON 00073
+main@DEBOUNCE                    cstackCOMMON 00077
+main@HOUR_COUNT                  cstackCOMMON 00079
+main@INCREMENT                   bitbssCOMMON 003D8
+main@MIN_COUNT                   cstackCOMMON 0007A
+main@SEC_COUNT                   cstackCOMMON 00078
 main@sec                         cstackCOMMON 00072
 reset_vec                        reset_vec    00000
 stackhi                          (abs)        023EF
@@ -646,14 +648,15 @@ FUNCTION INFORMATION:
 
  *************** function _main *****************
  Defined at:
-		line 5 in file "main.c"
+		line 4 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
-  DEBOUNCE        2    3[COMMON] int 
-  MIN_COUNT       1    7[COMMON] unsigned char 
-  HOUR_COUNT      1    6[COMMON] unsigned char 
-  SEC_COUNT       1    5[COMMON] unsigned char 
+  CORRECTION_C    4    3[COMMON] long 
+  MIN_COUNT       1   10[COMMON] unsigned char 
+  HOUR_COUNT      1    9[COMMON] unsigned char 
+  SEC_COUNT       1    8[COMMON] unsigned char 
+  DEBOUNCE        1    7[COMMON] unsigned char 
   sec             1    2[COMMON] unsigned char 
  Return value:  Size  Location     Type
                   1    wreg      void 
@@ -665,16 +668,47 @@ FUNCTION INFORMATION:
 		Unchanged: 
  Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
       Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Locals:         6       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         9       0       0       0       0       0       0       0       0       0       0       0       0       0
       Temps:          1       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         7       0       0       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:        7 bytes
+      Totals:        10       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:       10 bytes
  Hardware stack levels required when called:    2
  This function calls:
 		_SYSTEM_Initialize
-		_TMR0_Initialize
  This function is called by:
 		Startup code after reset
+ This function uses a non-reentrant model
+
+
+ *************** function _SYSTEM_Initialize *****************
+ Defined at:
+		line 75 in file "system.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		wreg, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
+      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
+      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    1
+ This function calls:
+		_OSCILLATOR_Initialize
+		_PIN_MANAGER_Initialize
+		_TMR0_Initialize
+ This function is called by:
+		_main
  This function uses a non-reentrant model
 
 
@@ -703,44 +737,13 @@ Total ram usage:        0 bytes
  This function calls:
 		Nothing
  This function is called by:
-		_main
- This function uses a non-reentrant model
-
-
- *************** function _SYSTEM_Initialize *****************
- Defined at:
-		line 74 in file "system.c"
- Parameters:    Size  Location     Type
-		None
- Auto vars:     Size  Location     Type
-		None
- Return value:  Size  Location     Type
-                  1    wreg      void 
- Registers used:
-		wreg, status,2, status,0, pclath, cstack
- Tracked objects:
-		On entry : 
-		On exit  : 
-		Unchanged: 
- Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK11  BANK12
-      Params:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       0       0
-      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       0       0
-Total ram usage:        0 bytes
- Hardware stack levels used:    1
- Hardware stack levels required when called:    1
- This function calls:
-		_OSCILLATOR_Initialize
-		_PIN_MANAGER_Initialize
- This function is called by:
-		_main
+		_SYSTEM_Initialize
  This function uses a non-reentrant model
 
 
  *************** function _PIN_MANAGER_Initialize *****************
  Defined at:
-		line 36 in file "system.c"
+		line 37 in file "system.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -769,7 +772,7 @@ Total ram usage:        1 bytes
 
  *************** function _OSCILLATOR_Initialize *****************
  Defined at:
-		line 80 in file "system.c"
+		line 83 in file "system.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -801,7 +804,7 @@ MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
 tmr0.c
-		_TMR0_Initialize		CODE           	05EC	0000	13
+		_TMR0_Initialize		CODE           	05D3	0000	13
 
 tmr0.c estimated size: 13
 
@@ -811,14 +814,14 @@ shared
 shared estimated size: 2
 
 main.c
-		_main          		CODE           	0629	0000	468
+		_main          		CODE           	061C	0000	481
 
-main.c estimated size: 468
+main.c estimated size: 481
 
 system.c
-		_PIN_MANAGER_Initialize		CODE           	05F8	0000	50
-		_OSCILLATOR_Initialize		CODE           	05E4	0000	9
-		_SYSTEM_Initialize		CODE           	05DE	0000	7
+		_PIN_MANAGER_Initialize		CODE           	05EB	0000	50
+		_OSCILLATOR_Initialize		CODE           	05CB	0000	9
+		_SYSTEM_Initialize		CODE           	05DF	0000	13
 
-system.c estimated size: 66
+system.c estimated size: 72
 

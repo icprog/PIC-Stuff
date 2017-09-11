@@ -12594,11 +12594,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
-[; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;pwm6.h: 9: void PWM6_Initialize(void);
-[; ;pwm6.h: 33: void PWM6_LoadDutyValue(uint16_t dutyValue);
+[; ;pwm6.h: 11: void PWM6_LoadDutyValue(uint16_t dutyValue);
 [; ;timers.h: 5: void TMR0_Initialize(void);
 [; ;timers.h: 7: void TMR2_Initialize(void);
+[; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;adcc.h: 9: typedef uint16_t adc_result_t;
 [; ;adcc.h: 12: typedef enum
 [; ;adcc.h: 13: {
@@ -12634,10 +12634,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 261: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adcc.h: 283: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;eeprom.h: 6: void eepromPutData(unsigned int offset, unsigned int data);
-[; ;eeprom.h: 8: unsigned int eepromGetData(unsigned int offset);
-[; ;PID_Lib.h: 14: void Init_PID(void);
-[; ;PID_Lib.h: 16: float PID_Calculate(int const setpoint, float temp);
+[; ;pid.h: 12: void Init_PID(void);
+[; ;pid.h: 20: float PID_Calculate(int const setpoint, float temp);
+[; ;buttons.h: 6: void tempSetpoint(void);
+[; ;buttons.h: 8: void readButtons(void);
 [; ;system.h: 18: void SYSTEM_Initialize(void);
 [; ;system.h: 20: void OSCILLATOR_Initialize(void);
 [; ;lcd.h: 38: void InitCustomChars();
@@ -13114,8 +13114,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `c ~T0 @X0 1 r4 ]
 "247
 [f ]
-[v F13695 `uc ~T0 @X0 -> 5 `i s ]
-[i F13695
+[v F13694 `uc ~T0 @X0 -> 5 `i s ]
+[i F13694
 :U ..
 "248
 -> -> 0 `i `uc
@@ -13127,7 +13127,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _str `uc ~T0 @X0 -> 5 `i a ]
 [; ;lcd.c: 248: char str[5]={0,0,0,0,0};
-[e = _str F13695 ]
+[e = _str F13694 ]
 "249
 [v _i `i ~T0 @X0 1 a ]
 [; ;lcd.c: 249: int i=4,j=0;

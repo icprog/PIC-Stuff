@@ -1,34 +1,30 @@
+// *************** Includes ****************************************************    
 #include "system.h"
-#include "lcd.h"
 #include <math.h>
-#include "user.h"
-#include "PID_Lib.h"
-#include <stdio.h>
-// *****************************************************************************    
 
+// *************** Defines *****************************************************    
 #define     numSamples  50                                              // Number of Temperature readings to Average
 
+// *************** Externally available Variables ******************************    
 uint16_t samples[numSamples];
-
 uint8_t setpoint = 70, presets[5]={0,70,95,105,120};                    // PreSet Temps Selected by pressing both buttons at same time
 
-// *****************************************************************************    
+// *************** Main Routine ************************************************    
 void main(void)
 {
     SYSTEM_Initialize();
    
     uint16_t readTemperature, PWM_Output = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld, displayTemp, seconds = 0, counter = 0, minutes = 0;
     
-    uint8_t startupTimer = 0, firstTimeThrough = 0, toggle = 0;
+    uint8_t  toggle = 0;
     
     float R, steinhart;                                                 // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
     
     static uint16_t sampleIndex = 0;
 
     int32_t totals = 0;
-    
-    char s[8];
-// *****************************************************************************    
+
+// *************** Read Temperature ********************************************    
     while (1)
     {
         readTemperature = ADCC_GetSingleConversion(2);                  // Assign the just read temperature to the location of the current oldest data
@@ -48,34 +44,7 @@ void main(void)
             
         readTemperature = totals / numSamples;                          // assign the average value of total to the readTemperature variable
         
-// *****************************************************************************    
-        if(startupTimer >= 70)                                          // has been running at least 10 seconds
-        {
-            if(firstTimeThrough == 0)
-            {
-                readTemperatureOld = readTemperature;
-                counter = 0;
-                firstTimeThrough +=1;                                   // firstTimeThrough has been incremented once, will not come here
-            }                                                           // till reset, so, no need to limit count of firstTimeThrough
-            
-            if(readTemperature > readTemperatureOld)
-            {
-                readTemperatureOld += 1;
-            }
-        
-            if(readTemperature < readTemperatureOld)
-            {
-                readTemperatureOld -= 1;
-            }
-        
-            readTemperature = readTemperatureOld;
-
-            startupTimer = 69;
-        }
-
-        startupTimer +=1;                                               // Hold PWM at 100% while temperature reading stabilizes
-
-// *****************************************************************************    
+// *************** Calculate & Display Temp ************************************    
         R = 10200/(1023/(float)readTemperature - 1);                    // Resistance of Thermistor (R Reference/1023/readTemp -1)
         
         steinhart = R /10061;                                           // (R/Ro) R/R Standard (resistance of Thermistor at 25C)
@@ -86,61 +55,40 @@ void main(void)
         steinhart -= 273.15;                                            // convert to DegC
  
 
-        displayTemp = (uint16_t)(steinhart*100);
+        displayTemp = (uint16_t)(steinhart*10);
         
         if(toggle == 1)
         {
-            displayTemp = displayTemp*9/5+3200;                          // Display Temperature in DegF
-//            sprintf(s,"%d",displayTemp);
-  //          LCD_Set_Cursor(0,0);
-    //        LCD_Write_String(s);
+            displayTemp = displayTemp*9/5+320;                          // Display Temperature in DegF
             
-            LCDWriteIntXY(0,1,displayTemp,-1,2,0);
+            LCDWriteIntXY(0,0,displayTemp,-1,1,0);
             LCD_Write_Char(0);
             LCD_Write_Char('F');
             LCD_Write_Char(' ');
         }
         else
         {
-//            sprintf(s,"%f",displayTemp);
-  //          LCD_Set_Cursor(0,0);
-    //        LCD_Write_String(s);
-
-            
-            LCDWriteIntXY(0,0,displayTemp,-1,2,0);                      //Display Temperature in DegC
+            LCDWriteIntXY(0,0,displayTemp,-1,1,0);                      //Display Temperature in DegC
             LCD_Write_Char(0);
             LCD_Write_Char('C');
             LCD_Write_Char(' ');
         }
-// *****************************************************************************  (lcd.h)  
+// *************** Display Running Time once at Setpoint ***********************  (lcd.h)  
         LCDWriteStringXY(1,0,"Time:")
-//        extern float DerivativeValue;
-//        sprintf(s,"%f",Err);
-            
-//        LCD_Set_Cursor(1,0);
-  //      LCD_Write_String(s);
-  //      LCDWriteIntXY(1,0,DerivativeValue,3,0,1);
-        LCDWriteIntXY(1,4,minutes,4,0,0);                               // Display Number of minutes spent within 2 DegC of Setpoint (or hotter))
-//        LCD_Write_Char(' ');
+        LCDWriteIntXY(1,5,minutes,3,0,0);                               // Display Number of minutes spent within 2 DegC of Setpoint (or hotter))
 
-// *****************************************************************************    
+// *************** Timer for Display Update & PID Output Update ****************    
         counter +=1;                                                    // toggle counter
         
         if(counter>12)
         {
             toggle = 1-toggle;                                          // toggle C or F on Display
             counter = 0;
-            PWM_Output = (int)PID_Calculate(setpoint, steinhart);       // Calculate DutyCycle (PWM_Output)  
-            
-            if((setpoint-steinhart)>4)                                  // Turn on output @100% until within 4 DegC of setpoint
-            {
-                PWM_Output = 1023;
-            }
-            
+            PWM_Output = (int)PID_Calculate(setpoint, steinhart);       // Calculate DutyCycle (PWM_Output) (PID Settings in pid.h)
             PWM6_LoadDutyValue(PWM_Output);                             // Load DutyCycle to control output at desired temperature
         }
 
-// *****************************************************************************  (timers.h)   
+// *************** Minutes @ Setpoint Counter **********************************  (timers.h)   
         if(TMR0IF)
         {
             TMR0H   =   0x24;                                           // Load Preset to Timer0 of 9375 (at current processor speed,
@@ -157,8 +105,7 @@ void main(void)
                 seconds = 0;
             }
         }
-        
-// *****************************************************************************  (user.h)   
+// *************** Test if a Button or Buttons are being pressed ***************  (user.h)   
         readButtons();                                                  // check if a button is pressed         
         tempSetpoint();                                                 // Set Temperature if user is asking    
     }

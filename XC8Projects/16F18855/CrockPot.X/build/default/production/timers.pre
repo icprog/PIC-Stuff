@@ -16596,17 +16596,11 @@ void TMR2_Initialize(void);
 void TMR0_Initialize(void)
 {
 T0CON0 = 0x10;
-
 T0CON1 = 0x42;
-
 TMR0H = 0x24;
-
 TMR0L = 0x9F;
-
 PIE0bits.TMR0IE = 1;
-
 PIR0bits.TMR0IF = 0;
-
 T0CON0bits.T0EN = 1;
 }
 
@@ -16614,18 +16608,11 @@ T0CON0bits.T0EN = 1;
 void TMR2_Initialize(void)
 {
 T2CON = 0x7F;
-
 T2CLKCON = 0x01;
-
 T2HLT = 0x00;
-
 T2RST = 0x00;
-
 T2PR = 0xFF;
-
 T2TMR = 0x00;
-
 PIR4bits.TMR2IF = 0;
-
 T2CONbits.TMR2ON = 1;
 }

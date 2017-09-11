@@ -23,7 +23,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _LCD_Clear `(v ~T0 @X0 0 ef ]
 "38
 [v _InitCustomChars `(v ~T0 @X0 0 ef ]
-"14 PID_Lib.h
+"12 pid.h
 [v _Init_PID `(v ~T0 @X0 0 ef ]
 "21546 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _OSCCON1 `Vuc ~T0 @X0 0 e@2189 ]
@@ -12654,9 +12654,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
-[; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;pwm6.h: 9: void PWM6_Initialize(void);
-[; ;pwm6.h: 33: void PWM6_LoadDutyValue(uint16_t dutyValue);
+[; ;pwm6.h: 11: void PWM6_LoadDutyValue(uint16_t dutyValue);
 [; ;timers.h: 5: void TMR0_Initialize(void);
 [; ;timers.h: 7: void TMR2_Initialize(void);
 [; ;lcd.h: 38: void InitCustomChars();
@@ -12668,6 +12667,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 50: void LCD_Write_Char(const char a);
 [; ;lcd.h: 52: void LCD_Write_String(const char *a);
 [; ;lcd.h: 54: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+[; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;adcc.h: 9: typedef uint16_t adc_result_t;
 [; ;adcc.h: 12: typedef enum
 [; ;adcc.h: 13: {
@@ -12703,10 +12703,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 261: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adcc.h: 283: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;eeprom.h: 6: void eepromPutData(unsigned int offset, unsigned int data);
-[; ;eeprom.h: 8: unsigned int eepromGetData(unsigned int offset);
-[; ;PID_Lib.h: 14: void Init_PID(void);
-[; ;PID_Lib.h: 16: float PID_Calculate(int const setpoint, float temp);
+[; ;pid.h: 12: void Init_PID(void);
+[; ;pid.h: 20: float PID_Calculate(int const setpoint, float temp);
+[; ;buttons.h: 6: void tempSetpoint(void);
+[; ;buttons.h: 8: void readButtons(void);
 [; ;system.h: 18: void SYSTEM_Initialize(void);
 [; ;system.h: 20: void OSCILLATOR_Initialize(void);
 "37 system.c
@@ -12717,76 +12717,76 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 38: {
 [e :U _SYSTEM_Initialize ]
 [f ]
-[; ;system.c: 40: PIN_MANAGER_Initialize();
-"40
+[; ;system.c: 39: PIN_MANAGER_Initialize();
+"39
 [e ( _PIN_MANAGER_Initialize ..  ]
-[; ;system.c: 41: OSCILLATOR_Initialize();
-"41
+[; ;system.c: 40: OSCILLATOR_Initialize();
+"40
 [e ( _OSCILLATOR_Initialize ..  ]
-[; ;system.c: 42: FVRCON = 0x00;
-"42
+[; ;system.c: 41: FVRCON = 0x00;
+"41
 [e = _FVRCON -> -> 0 `i `uc ]
-[; ;system.c: 43: ADCC_Initialize();
-"43
+[; ;system.c: 42: ADCC_Initialize();
+"42
 [e ( _ADCC_Initialize ..  ]
-[; ;system.c: 44: PWM6_Initialize();
-"44
+[; ;system.c: 43: PWM6_Initialize();
+"43
 [e ( _PWM6_Initialize ..  ]
-[; ;system.c: 45: TMR0_Initialize();
-"45
+[; ;system.c: 44: TMR0_Initialize();
+"44
 [e ( _TMR0_Initialize ..  ]
-[; ;system.c: 46: TMR2_Initialize();
-"46
+[; ;system.c: 45: TMR2_Initialize();
+"45
 [e ( _TMR2_Initialize ..  ]
-[; ;system.c: 47: LCD_Init(0X00);
-"47
+[; ;system.c: 46: LCD_Init(0X00);
+"46
 [e ( _LCD_Init (1 -> -> 0 `i `uc ]
-[; ;system.c: 48: _delay((unsigned long)((200)*(1000000/4000.0)));
+[; ;system.c: 47: _delay((unsigned long)((200)*(1000000/4000.0)));
+"47
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;system.c: 48: LCD_Clear();
 "48
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;system.c: 49: LCD_Clear();
-"49
 [e ( _LCD_Clear ..  ]
-[; ;system.c: 50: _delay((unsigned long)((100)*(1000000/4000.0)));
-"50
+[; ;system.c: 49: _delay((unsigned long)((100)*(1000000/4000.0)));
+"49
 [e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;system.c: 51: InitCustomChars();
-"51
+[; ;system.c: 50: InitCustomChars();
+"50
 [e ( _InitCustomChars ..  ]
-[; ;system.c: 52: _delay((unsigned long)((200)*(1000000/4000.0)));
-"52
+[; ;system.c: 51: _delay((unsigned long)((200)*(1000000/4000.0)));
+"51
 [e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;system.c: 53: Init_PID();
-"53
+[; ;system.c: 52: Init_PID();
+"52
 [e ( _Init_PID ..  ]
-[; ;system.c: 54: }
-"54
+[; ;system.c: 53: }
+"53
 [e :UE 1519 ]
 }
-"56
+"55
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
-"57
+"56
 {
-[; ;system.c: 56: void OSCILLATOR_Initialize(void)
-[; ;system.c: 57: {
+[; ;system.c: 55: void OSCILLATOR_Initialize(void)
+[; ;system.c: 56: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;system.c: 58: OSCCON1 = 0x60;
-"58
+[; ;system.c: 57: OSCCON1 = 0x60;
+"57
 [e = _OSCCON1 -> -> 96 `i `uc ]
-[; ;system.c: 60: OSCCON3 = 0x00;
-"60
+[; ;system.c: 58: OSCCON3 = 0x00;
+"58
 [e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 62: OSCEN = 0x00;
-"62
+[; ;system.c: 59: OSCEN = 0x00;
+"59
 [e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 64: OSCFRQ = 0x00;
-"64
+[; ;system.c: 60: OSCFRQ = 0x00;
+"60
 [e = _OSCFRQ -> -> 0 `i `uc ]
-[; ;system.c: 66: OSCTUNE = 0x00;
-"66
+[; ;system.c: 61: OSCTUNE = 0x00;
+"61
 [e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 67: }
-"67
+[; ;system.c: 62: }
+"62
 [e :UE 1520 ]
 }

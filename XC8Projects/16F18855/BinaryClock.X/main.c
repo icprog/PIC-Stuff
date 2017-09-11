@@ -1,16 +1,13 @@
 #include <xc.h>
 #include "system.h"
-#include "tmr0.h"
 
 void main(void)
 {
     SYSTEM_Initialize();                        // Initialize the device
-
-    TMR0_Initialize();                          // Initialize Timer0
     
     char sec = 0, SEC_COUNT, MIN_COUNT, HOUR_COUNT;
-    int DEBOUNCE = 0;                           // Button debouncing
-//    long int CORRECTION_COUNTER = 0;
+    char DEBOUNCE = 0;                           // Button debouncing
+    long int CORRECTION_COUNTER = 0;
     static bit INCREMENT;
     
     while (1)
@@ -24,15 +21,15 @@ void main(void)
         if (sec>0)
         {
             SEC_COUNT+=1;
-//            CORRECTION_COUNTER+=1;              // Counter to add or subtract counts to account for oscillator error
-  //          if (CORRECTION_COUNTER > 172799)    
-    //        {
-      //          if (SEC_COUNT>0)
-        //        {
-          //          SEC_COUNT-=1;
-            //        CORRECTION_COUNTER -= CORRECTION_COUNTER;
-              //  }
-            //}
+            CORRECTION_COUNTER+=1;              // Counter to add or subtract counts to account for oscillator error
+            if (CORRECTION_COUNTER > 172799)    
+            {
+                if (SEC_COUNT>0)
+                {
+                    SEC_COUNT-=1;
+                    CORRECTION_COUNTER -= CORRECTION_COUNTER;
+                }
+            }
             sec=0;
             
             if (SEC_COUNT>59)

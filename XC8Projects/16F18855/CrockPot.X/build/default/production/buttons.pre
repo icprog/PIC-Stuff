@@ -1,5 +1,5 @@
 
-# 1 "PID_Lib.c"
+# 1 "buttons.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -16587,9 +16587,6 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 16 "pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdint.h"
 typedef signed char int8_t;
 
@@ -16680,19 +16677,26 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
-typedef unsigned char bool;
+# 6 "buttons.h"
+void tempSetpoint(void);
+
+void readButtons(void);
+
+# 16 "pin_manager.h"
+void PIN_MANAGER_Initialize (void);
 
 # 9 "pwm6.h"
 void PWM6_Initialize(void);
 
-# 33
 void PWM6_LoadDutyValue(uint16_t dutyValue);
 
 # 5 "timers.h"
 void TMR0_Initialize(void);
 
 void TMR2_Initialize(void);
+
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
+typedef unsigned char bool;
 
 # 9 "adcc.h"
 typedef uint16_t adc_result_t;
@@ -16773,6 +16777,12 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 305
 uint8_t ADCC_GetConversionStageStatus(void);
 
+# 12 "pid.h"
+void Init_PID(void);
+
+# 20
+float PID_Calculate(int const setpoint, float temp);
+
 # 18 "system.h"
 void SYSTEM_Initialize(void);
 
@@ -16797,79 +16807,111 @@ void LCD_Write_String(const char *a);
 
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
-# 6 "eeprom.h"
-void eepromPutData(unsigned int offset, unsigned int data);
-
-unsigned int eepromGetData(unsigned int offset);
-
-# 14 "PID_Lib.h"
-void Init_PID(void);
-
-float PID_Calculate(int const setpoint, float temp);
-
-# 2 "PID_Lib.c"
-float Err, ErrValue, DerivativeValue = 0, Result, PID_Prev_Error = 0;
-
-float PID_Kp, PID_Ki;
-float PID_Kd;
-float PID_Integrated;
-float PID_Prev_Input = 0;
-int PID_MinOutput = 0, PID_MaxOutput = 1023;
+# 7 "buttons.c"
+uint8_t downCount = 0, upCount = 0, oldSetpoint, toggleCount = 0, x = 0;
+extern uint8_t setpoint;
+extern uint8_t presets[];
 
 
-
-void Init_PID(void)
+void tempSetpoint(void)
 {
-PID_Kp = 50;
-PID_Ki = .5;
-PID_Kd = 400;
-PID_MinOutput = 0;
-PID_MaxOutput = 1023;
-PID_Integrated = 0;
-PID_Prev_Input = 0;
+uint8_t counter = 0;
 
+oldSetpoint = setpoint;
+
+while(downCount >= 5)
+{
+counter+=1;
+if(counter<=1)
+{
+LCD_Clear();
+}
+setpoint-=1;
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+{ LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_Char(' ');
+_delay((unsigned long)((350)*(1000000/4000.0)));
+readButtons();
+}
+
+while(upCount >= 5)
+{
+counter+=1;
+if(counter<=1)
+{
+LCD_Clear();
+}
+setpoint+=1;
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+{ LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_Char(' ');
+_delay((unsigned long)((350)*(1000000/4000.0)));
+readButtons();
+}
+
+counter = 0;
+
+if(oldSetpoint!=setpoint)
+{
+_delay((unsigned long)((2000)*(1000000/4000.0)));
+LCD_Clear();
+}
 }
 
 
-float PID_Calculate(int const setpoint, float temp)
+void readButtons(void)
 {
-
-
-
-Err = setpoint - temp;
-
-ErrValue = Err * PID_Kp;
-
-
-PID_Integrated = PID_Integrated + (Err * PID_Ki);
-
-if (PID_Integrated < PID_MinOutput)
+while(RA3 == 0 && RA4 == 0)
 {
-PID_Integrated = PID_MinOutput;
+downCount = 0;
+upCount = 0;
+toggleCount+=1;
+if(toggleCount >=6)
+{
+x+=1;
+if(x>4)
+{
+x=0;
+}
+setpoint = presets[x];
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+{ LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_Char(' ');
+_delay((unsigned long)((1500)*(1000000/4000.0)));
+toggleCount = 0;
+LCD_Clear();
+}
 }
 
-if (PID_Integrated > PID_MaxOutput)
+if(RA3 == 0)
 {
-PID_Integrated = PID_MaxOutput;
+downCount +=1;
+if(downCount>5)
+{
+downCount = 5;
+}
+}
+else
+{
+downCount = 0;
 }
 
-# 57
-DerivativeValue=(Err-PID_Prev_Error)*PID_Kd;
-
-PID_Prev_Error = Err;
-
-# 69
-Result = ErrValue + PID_Integrated + DerivativeValue;
-
-if (Result < PID_MinOutput)
+if(RA4 == 0)
 {
-Result = PID_MinOutput;
-}
-
-if (Result > PID_MaxOutput)
+upCount +=1;
+if(upCount>5)
 {
-Result = PID_MaxOutput;
+upCount = 5;
 }
-
-return (Result);
+}
+else
+{
+upCount = 0;
+}
 }
