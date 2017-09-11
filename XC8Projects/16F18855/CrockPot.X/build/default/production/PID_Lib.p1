@@ -12676,15 +12676,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;PID_Lib.c: 13: {
 [e :U _Init_PID ]
 [f ]
-[; ;PID_Lib.c: 14: PID_Kp = .5;
+[; ;PID_Lib.c: 14: PID_Kp = 50;
 "14
-[e = _PID_Kp -> .0.5 `f ]
-[; ;PID_Lib.c: 15: PID_Ki = .75;
+[e = _PID_Kp -> -> 50 `i `f ]
+[; ;PID_Lib.c: 15: PID_Ki = .5;
 "15
-[e = _PID_Ki -> .0.75 `f ]
-[; ;PID_Lib.c: 16: PID_Kd = 200;
+[e = _PID_Ki -> .0.5 `f ]
+[; ;PID_Lib.c: 16: PID_Kd = 400;
 "16
-[e = _PID_Kd -> -> 200 `i `f ]
+[e = _PID_Kd -> -> 400 `i `f ]
 [; ;PID_Lib.c: 17: PID_MinOutput = 0;
 "17
 [e = _PID_MinOutput -> 0 `i ]
@@ -12719,9 +12719,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;PID_Lib.c: 32: ErrValue = Err * PID_Kp;
 "32
 [e = _ErrValue * _Err _PID_Kp ]
-[; ;PID_Lib.c: 35: PID_Integrated = PID_Integrated + (ErrValue * PID_Ki);
+[; ;PID_Lib.c: 35: PID_Integrated = PID_Integrated + (Err * PID_Ki);
 "35
-[e = _PID_Integrated + _PID_Integrated * _ErrValue _PID_Ki ]
+[e = _PID_Integrated + _PID_Integrated * _Err _PID_Ki ]
 [; ;PID_Lib.c: 37: if (PID_Integrated < PID_MinOutput)
 "37
 [e $ ! < _PID_Integrated -> _PID_MinOutput `f 1521  ]

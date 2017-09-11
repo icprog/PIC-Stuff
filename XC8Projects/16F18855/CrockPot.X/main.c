@@ -17,7 +17,7 @@ void main(void)
 {
     SYSTEM_Initialize();
    
-    uint16_t readTemperature, PWM_Output = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld, displayTemp = 70, seconds = 0, counter = 0, minutes = 0;
+    uint16_t readTemperature, PWM_Output = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld, displayTemp, seconds = 0, counter = 0, minutes = 0;
     
     uint8_t startupTimer = 0, firstTimeThrough = 0, toggle = 0;
     
@@ -27,7 +27,7 @@ void main(void)
 
     int32_t totals = 0;
     
-
+    char s[8];
 // *****************************************************************************    
     while (1)
     {
@@ -86,43 +86,56 @@ void main(void)
         steinhart -= 273.15;                                            // convert to DegC
  
 
-        displayTemp = (uint16_t)(steinhart * 10);
+        displayTemp = (uint16_t)(steinhart*100);
         
         if(toggle == 1)
         {
-            displayTemp = displayTemp*9/5+320;                          // Display Temperature in DegF
-            LCDWriteIntXY(0,1,displayTemp,-1,1,0);
+            displayTemp = displayTemp*9/5+3200;                          // Display Temperature in DegF
+//            sprintf(s,"%d",displayTemp);
+  //          LCD_Set_Cursor(0,0);
+    //        LCD_Write_String(s);
+            
+            LCDWriteIntXY(0,1,displayTemp,-1,2,0);
             LCD_Write_Char(0);
             LCD_Write_Char('F');
             LCD_Write_Char(' ');
         }
         else
         {
-            LCDWriteIntXY(0,1,displayTemp,-1,1,0);                      //Display Temperature in DegC
+//            sprintf(s,"%f",displayTemp);
+  //          LCD_Set_Cursor(0,0);
+    //        LCD_Write_String(s);
+
+            
+            LCDWriteIntXY(0,0,displayTemp,-1,2,0);                      //Display Temperature in DegC
             LCD_Write_Char(0);
             LCD_Write_Char('C');
             LCD_Write_Char(' ');
         }
 // *****************************************************************************  (lcd.h)  
-//        LCDWriteStringXY(1,0,"Time:")
-        extern float DerivativeValue;
-        LCDWriteIntXY(1,0,DerivativeValue,3,0,0);
-        LCDWriteIntXY(1,4,PWM_Output,4,0,0);                              // Display Number of minutes spent within 2 DegC of Setpoint (or hotter))
-        LCD_Write_Char(' ');
+        LCDWriteStringXY(1,0,"Time:")
+//        extern float DerivativeValue;
+//        sprintf(s,"%f",Err);
+            
+//        LCD_Set_Cursor(1,0);
+  //      LCD_Write_String(s);
+  //      LCDWriteIntXY(1,0,DerivativeValue,3,0,1);
+        LCDWriteIntXY(1,4,minutes,4,0,0);                               // Display Number of minutes spent within 2 DegC of Setpoint (or hotter))
+//        LCD_Write_Char(' ');
 
 // *****************************************************************************    
         counter +=1;                                                    // toggle counter
         
         if(counter>12)
         {
-//            toggle = 1-toggle;                                          // toggle C or F on Display
+            toggle = 1-toggle;                                          // toggle C or F on Display
             counter = 0;
             PWM_Output = (int)PID_Calculate(setpoint, steinhart);       // Calculate DutyCycle (PWM_Output)  
             
-//            if((setpoint-steinhart)>4)                                  // Turn on output @100% until within 4 DegC of setpoint
-  //          {
-    //            PWM_Output = 1023;
-      //      }
+            if((setpoint-steinhart)>4)                                  // Turn on output @100% until within 4 DegC of setpoint
+            {
+                PWM_Output = 1023;
+            }
             
             PWM6_LoadDutyValue(PWM_Output);                             // Load DutyCycle to control output at desired temperature
         }

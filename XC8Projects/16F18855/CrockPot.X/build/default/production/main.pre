@@ -16913,7 +16913,7 @@ void main(void)
 {
 SYSTEM_Initialize();
 
-uint16_t readTemperature, PWM_Output = 1023, readTemperatureOld, displayTemp = 70, seconds = 0, counter = 0, minutes = 0;
+uint16_t readTemperature, PWM_Output = 1023, readTemperatureOld, displayTemp, seconds = 0, counter = 0, minutes = 0;
 
 uint8_t startupTimer = 0, firstTimeThrough = 0, toggle = 0;
 
@@ -16923,7 +16923,7 @@ static uint16_t sampleIndex = 0;
 
 int32_t totals = 0;
 
-
+char s[8];
 
 while (1)
 {
@@ -16982,40 +16982,50 @@ steinhart = 1.0 / steinhart;
 steinhart -= 273.15;
 
 
-displayTemp = (uint16_t)(steinhart * 10);
+displayTemp = (uint16_t)(steinhart*100);
 
 if(toggle == 1)
 {
-displayTemp = displayTemp*9/5+320;
-{ LCD_Set_Cursor(0,1); LCD_Write_Int(displayTemp,-1, 1, 0);};
+displayTemp = displayTemp*9/5+3200;
+
+
+
+
+{ LCD_Set_Cursor(0,1); LCD_Write_Int(displayTemp,-1, 2, 0);};
 LCD_Write_Char(0);
 LCD_Write_Char('F');
 LCD_Write_Char(' ');
 }
 else
 {
-{ LCD_Set_Cursor(0,1); LCD_Write_Int(displayTemp,-1, 1, 0);};
+
+# 110
+{ LCD_Set_Cursor(0,0); LCD_Write_Int(displayTemp,-1, 2, 0);};
 LCD_Write_Char(0);
 LCD_Write_Char('C');
 LCD_Write_Char(' ');
 }
 
+{ LCD_Set_Cursor(1,0); LCD_Write_String("Time:");}
 
-extern float DerivativeValue;
-{ LCD_Set_Cursor(1,0); LCD_Write_Int(DerivativeValue,3, 0, 0);};
-{ LCD_Set_Cursor(1,4); LCD_Write_Int(PWM_Output,4, 0, 0);};
-LCD_Write_Char(' ');
+# 123
+{ LCD_Set_Cursor(1,4); LCD_Write_Int(minutes,4, 0, 0);};
+
 
 
 counter +=1;
 
 if(counter>12)
 {
-
+toggle = 1-toggle;
 counter = 0;
 PWM_Output = (int)PID_Calculate(setpoint, steinhart);
 
-# 127
+if((setpoint-steinhart)>4)
+{
+PWM_Output = 1023;
+}
+
 PWM6_LoadDutyValue(PWM_Output);
 }
 

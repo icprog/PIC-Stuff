@@ -4,9 +4,9 @@
 #include "lcd.h"
 #include "eeprom.h"
 
-#define Kp              .5
-#define Ki              .75
-#define Kd              200
+#define Kp              50
+#define Ki              .5
+#define Kd              400
 #define MinimumOutput   0
 #define MaximumOutput   1023
 

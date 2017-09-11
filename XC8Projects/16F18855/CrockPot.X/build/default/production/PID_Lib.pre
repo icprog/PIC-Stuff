@@ -16820,9 +16820,9 @@ int PID_MinOutput = 0, PID_MaxOutput = 1023;
 
 void Init_PID(void)
 {
-PID_Kp = .5;
-PID_Ki = .75;
-PID_Kd = 200;
+PID_Kp = 50;
+PID_Ki = .5;
+PID_Kd = 400;
 PID_MinOutput = 0;
 PID_MaxOutput = 1023;
 PID_Integrated = 0;
@@ -16841,7 +16841,7 @@ Err = setpoint - temp;
 ErrValue = Err * PID_Kp;
 
 
-PID_Integrated = PID_Integrated + (ErrValue * PID_Ki);
+PID_Integrated = PID_Integrated + (Err * PID_Ki);
 
 if (PID_Integrated < PID_MinOutput)
 {

@@ -32,7 +32,7 @@ float PID_Calculate(int const setpoint, float temp)
     ErrValue  = Err * PID_Kp;                               // Calculate proportional value
 
 // **************** Calculate Integral *****************************************    
-    PID_Integrated = PID_Integrated + (ErrValue * PID_Ki);  // Calculate integral value
+    PID_Integrated = PID_Integrated + (Err * PID_Ki);       // Calculate integral value
 
     if (PID_Integrated < PID_MinOutput)                     // limit output minimum value
     {
