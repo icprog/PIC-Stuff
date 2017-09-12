@@ -9,22 +9,16 @@ Command:
   dist/default/production/Test.X.production.elf \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/.. \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib \
-  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/PIC24E \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/PIC24E/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/PIC24F \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/PIC24F/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/PIC24H \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/PIC24H/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/dsPIC30F \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/dsPIC30F/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/dsPIC33E \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/dsPIC33E/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/dsPIC33F \
   -Lc:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../support/dsPIC33F/gld \
+  build/default/production/system.o \
   build/default/production/main.o \
   build/default/production/interrupt_manager.o \
   build/default/production/pin_manager.o \
-  build/default/production/system.o \
   build/default/production/traps.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
@@ -50,6 +44,8 @@ Command:
   --library=lega-c-elf \
   -end-group \
 
+
+Optional library libpPIC24Fxxx.a not found
 Archive member included because of file (symbol)
 
 c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended.o)
@@ -154,13 +150,13 @@ FDEVOPT1         0x0abf2c           0x000002
 
 Linker script and memory map
 
+LOAD build/default/production/system.o
 LOAD build/default/production/main.o
 LOAD build/default/production/interrupt_manager.o
 LOAD build/default/production/pin_manager.o
-LOAD build/default/production/system.o
 LOAD build/default/production/traps.o
                     0x0001                  __MPLAB_BUILD = 0x1
-LOAD c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib/PIC24F\libpPIC24Fxxx-elf.a
+LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.25/bin/bin/../../lib\libfx-elf.a
                     0x801800                  __FBOOT = 0x801800
                     0xabf00                  __FSEC = 0xabf00
@@ -241,35 +237,35 @@ __FDEVOPT1
 
 .debug_info       0x000000        0xdbe
  *(.debug_info)
- .debug_info      0x000000        0x12b build/default/production/main.o
- .debug_info      0x00012b         0xd1 build/default/production/interrupt_manager.o
- .debug_info      0x0001fc        0x528 build/default/production/pin_manager.o
- .debug_info      0x000724        0x291 build/default/production/system.o
+ .debug_info      0x000000        0x291 build/default/production/system.o
+ .debug_info      0x000291        0x12b build/default/production/main.o
+ .debug_info      0x0003bc         0xd1 build/default/production/interrupt_manager.o
+ .debug_info      0x00048d        0x528 build/default/production/pin_manager.o
  .debug_info      0x0009b5        0x409 build/default/production/traps.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x220
  *(.debug_abbrev)
- .debug_abbrev    0x000000         0x36 build/default/production/main.o
- .debug_abbrev    0x000036         0x34 build/default/production/interrupt_manager.o
- .debug_abbrev    0x00006a         0x4c build/default/production/pin_manager.o
- .debug_abbrev    0x0000b6         0x6a build/default/production/system.o
+ .debug_abbrev    0x000000         0x6a build/default/production/system.o
+ .debug_abbrev    0x00006a         0x36 build/default/production/main.o
+ .debug_abbrev    0x0000a0         0x34 build/default/production/interrupt_manager.o
+ .debug_abbrev    0x0000d4         0x4c build/default/production/pin_manager.o
  .debug_abbrev    0x000120        0x100 build/default/production/traps.o
 
 .debug_line       0x000000        0x5df
  *(.debug_line)
- .debug_line      0x000000         0x58 build/default/production/main.o
- .debug_line      0x000058         0x55 build/default/production/interrupt_manager.o
- .debug_line      0x0000ad        0x1c6 build/default/production/pin_manager.o
- .debug_line      0x000273        0x180 build/default/production/system.o
+ .debug_line      0x000000        0x180 build/default/production/system.o
+ .debug_line      0x000180         0x58 build/default/production/main.o
+ .debug_line      0x0001d8         0x55 build/default/production/interrupt_manager.o
+ .debug_line      0x00022d        0x1c6 build/default/production/pin_manager.o
  .debug_line      0x0003f3        0x1ec build/default/production/traps.o
 
 .debug_frame      0x000000        0x124
  *(.debug_frame)
- .debug_frame     0x000000         0x24 build/default/production/main.o
- .debug_frame     0x000024         0x24 build/default/production/interrupt_manager.o
- .debug_frame     0x000048         0x24 build/default/production/pin_manager.o
- .debug_frame     0x00006c         0x34 build/default/production/system.o
+ .debug_frame     0x000000         0x34 build/default/production/system.o
+ .debug_frame     0x000034         0x24 build/default/production/main.o
+ .debug_frame     0x000058         0x24 build/default/production/interrupt_manager.o
+ .debug_frame     0x00007c         0x24 build/default/production/pin_manager.o
  .debug_frame     0x0000a0         0x84 build/default/production/traps.o
 
 .debug_str        0x000000         0x34
@@ -287,13 +283,13 @@ __FDEVOPT1
                   0x000000        0x132
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x1b build/default/production/main.o
+                  0x000000         0x42 build/default/production/system.o
  .debug_pubnames
-                  0x00001b         0x2b build/default/production/interrupt_manager.o
+                  0x000042         0x1b build/default/production/main.o
  .debug_pubnames
-                  0x000046         0x2d build/default/production/pin_manager.o
+                  0x00005d         0x2b build/default/production/interrupt_manager.o
  .debug_pubnames
-                  0x000073         0x42 build/default/production/system.o
+                  0x000088         0x2d build/default/production/pin_manager.o
  .debug_pubnames
                   0x0000b5         0x7d build/default/production/traps.o
 
@@ -303,13 +299,13 @@ __FDEVOPT1
 .debug_aranges    0x000000         0x78
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/main.o
+                  0x000000         0x18 build/default/production/system.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/interrupt_manager.o
+                  0x000018         0x18 build/default/production/main.o
  .debug_aranges
-                  0x000030         0x18 build/default/production/pin_manager.o
+                  0x000030         0x18 build/default/production/interrupt_manager.o
  .debug_aranges
-                  0x000048         0x18 build/default/production/system.o
+                  0x000048         0x18 build/default/production/pin_manager.o
  .debug_aranges
                   0x000060         0x18 build/default/production/traps.o
 
@@ -2493,26 +2489,26 @@ LOAD data_init
 .debug_pubtypes
                   0x000078         0xc5
  .debug_pubtypes
-                  0x000078         0x12 build/default/production/main.o
+                  0x000078         0x1e build/default/production/system.o
  .debug_pubtypes
-                  0x00008a         0x12 build/default/production/interrupt_manager.o
+                  0x000096         0x12 build/default/production/main.o
  .debug_pubtypes
-                  0x00009c         0x12 build/default/production/pin_manager.o
+                  0x0000a8         0x12 build/default/production/interrupt_manager.o
  .debug_pubtypes
-                  0x0000ae         0x1e build/default/production/system.o
+                  0x0000ba         0x12 build/default/production/pin_manager.o
  .debug_pubtypes
                   0x0000cc         0x71 build/default/production/traps.o
 
 __c30_signature
                   0x00013d         0x30
  __c30_signature
-                  0x00013d          0x6 build/default/production/main.o
+                  0x00013d          0x6 build/default/production/system.o
  __c30_signature
-                  0x000143          0x6 build/default/production/interrupt_manager.o
+                  0x000143          0x6 build/default/production/main.o
  __c30_signature
-                  0x000149          0x6 build/default/production/pin_manager.o
+                  0x000149          0x6 build/default/production/interrupt_manager.o
  __c30_signature
-                  0x00014f          0x6 build/default/production/system.o
+                  0x00014f          0x6 build/default/production/pin_manager.o
  __c30_signature
                   0x000155          0x6 build/default/production/traps.o
  __c30_signature
