@@ -13,7 +13,7 @@
 #define E           LATDbits.LATD10
 #define RS          LATGbits.LATG8
 
-// <editor-fold defaultstate="collapsed" desc="Not Used Original Code">
+            // <editor-fold defaultstate="collapsed" desc="Not Used Original Code">
 
 
 /*
@@ -98,6 +98,7 @@ void GoTo_XY(uint8_t X, uint8_t Y)
 */
 // </editor-fold>
 
+            // <editor-fold defaultstate="collapsed" desc="Font Code 3 Bits Wide + Padding of 1 bit">
 const unsigned char font [] = 
 {
     0x00, 0x00, 0x00,  // sp
@@ -202,16 +203,16 @@ const unsigned char font [] =
     0xFF, 0xFF, 0xFF,  // <
     0xFF, 0xFF, 0xFF,  // 
 };
-
+// </editor-fold>
 
 void GoToXY(uint8_t X, uint8_t Y)
 {
     uint8_t page, position;             // page 0 - 7 are 8 bit tall pages on either side of display (X location of page)
-    if((Y * 4) > 0x3F)                  // if we reached 80 thats last pixel 7 + 1 goto
+    if((Y * 4) > 0x3F)                  // if we reached 80 thats last pixel 7 + 1 goto                     (0X3F = Dec 63)
     {                        
         CS1 = 0;                        //Right Side on
         CS2 = 1;                        //left side off
-        Y -= 0X10;
+        Y -= 0X10;                      // 0X10 = Dec 32
     }
     else
     {
@@ -219,9 +220,9 @@ void GoToXY(uint8_t X, uint8_t Y)
         CS2 = 0;                        // Right side Off
     }
 
-    page = 0xB8 + X;                    // Set X position of page (0 = 0XB8) (+X, +1, +2,... for other pages)
+    page = 0xB8 + X;                    // Set X position of page (0 = 0XB8) (+X, +1, +2,... for other pages) (0XB8 = Dec 184)
     cmd_write(page);                    // Go to selected page
-    position = 0x40 + (Y*4);            // Set Y position on page (0 - 63, 0X40 = 0 position)
+    position = 0x40 + (Y*4);            // Set Y position on page (0 - 63, 0X40 = 0 position) (0X40 = Dec 64)
     cmd_write(position);                // and Go there
 }
 
@@ -478,7 +479,9 @@ void init_lcd(void)
 	RS = 1;
 	E = 0;
 	CS1 = CS2 = 1;
-	cmd_write(0x3F);                        // turn on display
+	cmd_write(0x3E);                        // turn display Off
+    __delay_ms(100);
+	cmd_write(0x3F);                        // turn display On
 	cmd_write(0x40);                        // go to left side
 	cmd_write(0xB8);                        // go to top page
 	cls();                                  // clear the screen
@@ -506,7 +509,7 @@ void cls(void)                              // clear screen
 	cmd_write(0xb8);                        // go to top page
 }
 
-void OnOff(int controlCode)
+void displayOn(int controlCode)
 {
     int code = controlCode;
     

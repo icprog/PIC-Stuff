@@ -48,7 +48,7 @@ void cls(void);
 
 void loadimg(const unsigned char *image, unsigned int len, char startPage);
 
-void OnOff(int controlCode);
+void displayOn(int controlCode);
 
 //char printChar(char const *image, char number, char x, int y);
 
