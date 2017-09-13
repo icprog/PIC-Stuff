@@ -505,3 +505,22 @@ void cls(void)                              // clear screen
 	cmd_write(0x40);                        // go to left side
 	cmd_write(0xb8);                        // go to top page
 }
+
+void OnOff(int controlCode)
+{
+    int code = controlCode;
+    
+	RS = 1;
+	E = 0;
+	CS1 = CS2 = 1;
+    if(code == 0)
+    {
+        cmd_write(0X3E);                    // Turn Off the display
+    }
+    else
+    {
+        cmd_write(0X3F);
+      	cmd_write(0x40);                        // go to left side
+    	cmd_write(0xB8);                        // go to top page
+    }
+}
