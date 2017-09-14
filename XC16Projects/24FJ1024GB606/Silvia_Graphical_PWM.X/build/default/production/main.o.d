@@ -6,4 +6,5 @@ pin_manager.h  \
 traps.h  \
 glcd.h  \
 pid.h  \
+adc.h  \
 menu.h 

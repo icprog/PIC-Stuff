@@ -3,11 +3,11 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.
 //***************************************************************************************************************************************************************
-#define KEY_NONE        0
-#define KEY_1           1
-#define KEY_2           2
-#define KEY_3           3
-/*
+//#define KEY_NONE        0
+//#define KEY_1           1
+//#define KEY_2           2
+//#define KEY_3           3
+
 #define KEY_RESET       0
 #define KEY_RIGHT   	1
 #define KEY_LEFT        2
@@ -18,7 +18,7 @@
 #define KEY_SET_TIME    7
 #define KEY_START_STOP  8
 #define KEY_NONE        9
-*/
+
 char menuRead(void);
 
 #endif

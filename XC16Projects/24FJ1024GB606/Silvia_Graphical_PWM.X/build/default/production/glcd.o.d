@@ -5,4 +5,5 @@ system.h  \
 pin_manager.h  \
  interrupt_manager.h  \
 traps.h  \
-pid.h 
+pid.h  \
+adc.h 

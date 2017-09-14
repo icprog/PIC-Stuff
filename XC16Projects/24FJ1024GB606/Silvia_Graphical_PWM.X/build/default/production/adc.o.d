@@ -1,9 +1,9 @@
-build/default/production/system.o:  \
-system.c  \
+build/default/production/adc.o:  \
+adc.c  \
+adc.h  \
 system.h  \
 pin_manager.h  \
  interrupt_manager.h  \
 traps.h  \
 glcd.h  \
-pid.h  \
-adc.h 
+pid.h 

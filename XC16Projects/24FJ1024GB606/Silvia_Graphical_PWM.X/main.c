@@ -5,7 +5,7 @@ int main(void)
 {
     SYSTEM_Initialize();                        // initialize the device
     
-//    char loopCount = 0;
+    char loopCount = 0;
 
     while (1)
     {
@@ -19,6 +19,8 @@ int main(void)
         LCDWriteStringXY(3,17,"the Time!");
         _RF3 = 1;
         __delay_ms(1000);
+        LCDWriteIntXY(1,1,loopCount,5,0);
+        LCDWriteIntXY(2,1,ADCRead(ADC_CHANNEL_CTMU_TEMPERATURE_SENSOR_INPUT),5,0);
         _RF3 = 0;
         __delay_ms(1000);
         __delay_ms(5000);
@@ -31,10 +33,11 @@ int main(void)
             displayOn(1);
         }
         
-        if(loopCount<10)
-        {
+*/
+//        if(loopCount<10)
+  //      {
             loopCount+=1;
-        }
-  */  }
+      //  }
+    }
     return -1;
 }

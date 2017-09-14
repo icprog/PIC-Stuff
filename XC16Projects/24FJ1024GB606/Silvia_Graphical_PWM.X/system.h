@@ -8,7 +8,7 @@
 #include    "traps.h"
 #include    "glcd.h"
 #include    "pid.h"  
-
+#include    "adc.h"
 
 
 #define _XTAL_FREQ  32000000UL
