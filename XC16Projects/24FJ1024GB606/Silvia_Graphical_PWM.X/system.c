@@ -56,12 +56,15 @@
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 
+
+
 #include "system.h"
 
 void SYSTEM_Initialize(void)
 {
     PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
+    ADCInit();
     INTERRUPT_Initialize();
     init_lcd();
     __delay_ms(100);
