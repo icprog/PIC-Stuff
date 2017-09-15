@@ -9,6 +9,7 @@
 #include    "glcd.h"
 #include    "pid.h"  
 #include    "adc.h"
+#include    "touch.h"
 
 
 #define _XTAL_FREQ  32000000UL

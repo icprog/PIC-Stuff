@@ -7,4 +7,5 @@ traps.h  \
 glcd.h  \
 pid.h  \
 adc.h  \
+touch.h  \
 menu.h 

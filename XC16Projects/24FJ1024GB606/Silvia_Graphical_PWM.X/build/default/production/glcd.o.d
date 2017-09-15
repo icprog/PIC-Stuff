@@ -6,4 +6,5 @@ pin_manager.h  \
  interrupt_manager.h  \
 traps.h  \
 pid.h  \
-adc.h 
+adc.h  \
+touch.h 

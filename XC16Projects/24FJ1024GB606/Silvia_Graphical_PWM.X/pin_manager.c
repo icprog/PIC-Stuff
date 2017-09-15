@@ -51,7 +51,7 @@ void PIN_MANAGER_Initialize(void)
     // *************************************************************************
     // * Setting the Analog/Digital Configuration SFR(s)
     // *************************************************************************
-    ANSB = 0x0000;
+    ANSB = 0x0000;          //AN 14 & 15
     ANSC = 0x0000;
     ANSD = 0x0000;
     ANSE = 0x0000;
