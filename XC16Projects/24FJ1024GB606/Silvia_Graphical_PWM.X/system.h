@@ -1,7 +1,7 @@
 #ifndef SYSTEM_H
 #define	SYSTEM_H
 
-#include    <xc.h> // include processor files - each processor file is guarded. 
+#include    <xc.h>
 #include    "pin_manager.h"
 #include    <stdint.h>
 #include    "interrupt_manager.h"
@@ -10,6 +10,7 @@
 #include    "pid.h"  
 #include    "adc.h"
 #include    "touch.h"
+//#include    "menu.h"
 
 
 #define _XTAL_FREQ  32000000UL

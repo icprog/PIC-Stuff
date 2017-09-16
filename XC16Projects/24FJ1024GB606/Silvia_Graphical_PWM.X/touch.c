@@ -1,88 +1,78 @@
 #include "touch.h"
 #include "system.h"
-//#include "adc.h"                                    // Included to use ADC functionality
 
-#define cycleDelay          50
+#define xPos_TRIS           TRISBbits.TRISB15       // pin 1 on connector Note, Either xPos or xNeg must be an Analog in as well
+#define xNeg_TRIS           TRISFbits.TRISF4        // pin 3 on connector
+#define yNeg_TRIS           TRISFbits.TRISF5        // pin 2 on connector
+#define yPos_TRIS           TRISBbits.TRISB14       // pin 4 on connector Note, Either yPos or yNeg must be an Analog in as well
 
-#define xPos_In             TRISBbits.TRISB15       // pin 1 on connector Note, Either xPos or xNeg must be an Analog in as well
-#define xNeg_In             TRISFbits.TRISF4        // pin 3 on connector
-#define yPos_In             TRISBbits.TRISB14       // pin 4 on connector Note, Either yPos or yNeg must be an Analog in as well
-#define yNeg_In             TRISFbits.TRISF4        // pin 4 on connector
 #define xPos_Out            LATBbits.LATB15
 #define xNeg_Out            LATFbits.LATF4
+#define yNeg_Out            LATFbits.LATF5
 #define yPos_Out            LATBbits.LATB14
-#define yNeg_Out            LATFbits.LATF4
+
+#define col_1_min           300                     //minimum value (read on ADC) to define colume 1 boundary
+#define col_1_max           1300                    //maximum value (read on ADC) to define colume 1 boundary
+#define col_2_min           1400                    //minimum value (read on ADC) to define colume 2 boundary
+#define col_2_max           2450                    //maximum value (read on ADC) to define colume 2 boundary
+#define col_3_min           2550                    //minimum value (read on ADC) to define colume 3 boundary
+#define row_1_min           300                     //minimum value (read on ADC) to define row 1 boundary
+#define row_1_max           1400                    //maximum value (read on ADC) to define row 1 boundary
+#define row_2_min           1600                    //minimum value (read on ADC) to define row 2 boundary
+#define row_2_max           2500                    //maximum value (read on ADC) to define row 2 boundary
+#define row_3_min           2600                    //minimum value (read on ADC) to define row 3 boundary
+#define row_3_max           3300                    //maximum value (read on ADC) to define row 3 boundary
+
 
 uint16_t x,y;                                               
-
-
-
-//#define xPos_In             TRISAbits.TRISA2        // pin 1 on connector Note, Either xPos or xNeg must be an Analog in as well
-//#define xNeg_In             TRISAbits.TRISA9        // pin 2 on connector
-//#define yPos_In             TRISAbits.TRISA3        // pin 3 on connector Note, Either yPos or yNeg must be an Analog in as well
-//#define yNeg_In             TRISAbits.TRISA11       // pin 4 on connector
-//#define xPos_Out            LATAbits.LATA2
-//#define xNeg_Out            LATAbits.LATA9
-//#define yPos_Out            LATAbits.LATA3
-//#define yNeg_Out            LATAbits.LATA11
-#define colume1             1250
-#define colume2             2100
-
-
+uint8_t col = 0, row = 0;                            
 // ***************************************************************************************************************************************************************
 
-char menuRead()
+uint8_t menuRead()
 {
     static uint8_t lastKeyState = KEY_NONE, key = KEY_NONE, j, k, L;
-    uint8_t col = 0, row = 0;                            
+//    uint8_t col = 0, row = 0;                            
 //    uint16_t x,y;                                               
 
-//    xPos_In             = 1;    //Set x+ to an Input
-  //  IOCPDBbits.IOCPDB15 = 1;    //Enable Weak-Pull-Downs on Analog port pin, as Pull downs can't be enabled when pin is switched to a OP
-    //xNeg_In             = 1;    //Set x- to an Input
-    yPos_In             = 0;    //Set y+ to an Output
-    yPos_Out = 1;
-    __delay_ms(4500);
-    yPos_Out = 0;
-    __delay_ms(1000);
-    _LATB15 = 1;
-    __delay_ms(1500);
-    _LATB15 = 0;
-//    yNeg_In             = 0;    //Set y- to an output
-  //  yPos_Out            = 1;    //Set y+ to +5V
-    //yNeg_Out            = 0;    //Set y- to 0V
-//    x = ADCRead(15);            //Read ADC value of x+
-  //  yPos_Out = 0;               //Set y+ to 0V
-    //IOCPDBbits.IOCPDB15 = 1;    //Disable Weak-Pull-Downs on Analog port pin
+    xPos_TRIS           = 1;    //Set x+ to an Input, we are going to read y coordinates
+    xNeg_TRIS           = 1;    //Set x- to an Input
+    IOCPDFbits.IOCPDF4  = 1;    //Enable Weak-Pull-Downs on Analog port pin, as Pull downs can't be enabled when pin is switched to a OP
+    yPos_TRIS           = 0;    //Set y+ to an Output
+    yNeg_TRIS           = 0;    //Set y_ to an Output
+    yPos_Out = 0;               //Set y+ to 0V
+    yNeg_Out = 1;               //Set y_ to +3.3V (changing whether Neg or Pos is higher voltage, changes orientation of touch screen)
+    y = ADCRead(15);            //Read ADC value of x+
+    yPos_Out = 0;               //Set y+ to 0V
+    IOCPDFbits.IOCPDF4  = 0;    //Disable Weak-Pull-Downs on Analog port pin
 
-//    yPos_In             = 1;    //Set y+ to an Input
-  //  IOCPDBbits.IOCPDB14 = 1;    //Enable Weak-Pull-Downs on Analog port pin
-    //yNeg_In             = 1;    //Set y- to an Input
-//    xPos_In             = 0;    //Set x+ to an Output
-  //  xNeg_In             = 0;    //Set x- to an Output
-    //xPos_Out            = 1;    //Set x+ to +5V
-//    xNeg_Out            = 0;    //Set x- to 0V
-  //  y = ADCRead(14);            //Read ADC value of y+
-    //xPos_Out            = 0;    //Set x+ to 0V
-//    IOCPDBbits.IOCPDB14 = 0;    //Disable Weak-Pull-Downs on Analog port pin, as Pull downs can't be enabled when pin is switched to a OP
+    yPos_TRIS           = 1;    //Set y+ to an Input
+    yNeg_TRIS           = 1;    //Set y- to an Input
+    IOCPDFbits.IOCPDF5  = 1;    //Enable Weak-Pull-Downs on Analog port pin (keeps pin from floating, resulting in a center touch reading)
+    xPos_TRIS           = 0;    //Set x+ to an Output
+    xNeg_TRIS           = 0;    //Set x- to an Output
+    xPos_Out            = 1;    //Set x+ to +3.3V
+    xNeg_Out            = 0;    //Set x- to 0V
+    x = ADCRead(14);            //Read ADC value of y+
+    xPos_Out            = 0;    //Set x+ to 0V
+    IOCPDFbits.IOCPDF5  = 0;    //Disable Weak-Pull-Downs on Analog port pin, as Pull downs can't be enabled when pin is switched to a OP
 
     // ***************************************************************************************************************************************************************
        
-    if(x < 220 || y < 220)
+    if(x < col_1_min || y < row_1_min)
     {
         key = KEY_NONE;
         j = 0;
     }
     
-    if(x >= 220 && x <1075)
+    if(x >= col_1_min && x < col_1_max)
     {
         col = 1;
     }
-    else if(x >= 1075 && x < 1990)
+    else if(x >= col_2_min && x < col_2_max)
     {
         col = 2;
     }
-    else if(x >= 1990)
+    else if(x >= col_3_min)
     {
         col = 3;
     }
@@ -91,15 +81,15 @@ char menuRead()
         col = 0;
     }
     
-    if(y >= 220 && y <1000)
+    if(y >= row_1_min && y < row_1_max)
     {
         row = 1;
     }
-    else if(y >= 1000 && y < 2000)
+    else if(y >= row_2_min && y < row_2_max)
     {
         row = 2;
     }
-    else if(y >= 2000)
+    else if(y >= row_3_min)
     {
         row = 3;
     }

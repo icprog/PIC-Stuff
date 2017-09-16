@@ -205,6 +205,8 @@ const unsigned char font [] =
 };
 // </editor-fold>
 
+
+
 void GoToXY(uint8_t X, uint8_t Y)
 {
     uint8_t page, position;             // page 0 - 7 are 8 bit tall pages on either side of display (X location of page)

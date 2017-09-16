@@ -1,7 +1,7 @@
 #ifndef TOUCH_H
 #define TOUCH_H
 
-#include <xc.h> // include processor files - each processor file is guarded.
+#include "system.h"
 //***************************************************************************************************************************************************************
 //#define KEY_NONE        0
 //#define KEY_1           1
@@ -19,6 +19,6 @@
 #define KEY_START_STOP  8
 #define KEY_NONE        9
 
-char menuRead(void);
+uint8_t menuRead(void);
 
 #endif
