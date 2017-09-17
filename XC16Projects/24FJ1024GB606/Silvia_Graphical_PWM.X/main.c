@@ -18,8 +18,7 @@ int main(void)
         {
         loadimg(&menu2[0], 1024,0);                     //Draw Menu2
         }
-//        loadimg(&menu2[0], 1024,0);                     //Draw Menu2
-   //     __delay_ms(3750);
+
         LCDWriteStringXY(3,6,"Please Set");
         LCDWriteStringXY(3,17,"the Time!");
         _RF3 = 1;
@@ -35,7 +34,7 @@ int main(void)
         {
             
             cls();
-            loadimg(&menu3[0], 1024,0);                         //Draw Menu2
+            loadimg(&menu3[0], 1024,0);                         //Draw Menu3
             LCDWriteStringXY(3,2,"Press 'ENTER' ");
             LCDWriteStringXY(3,16,"to Set the Time");
 

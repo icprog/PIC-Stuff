@@ -119,7 +119,7 @@ int main(void)
     unsigned int backLightTimer = 0;                                            //Used to turn off the LCD backlight after an interval of inactivity (60 seconds))
 
     unsigned char previous_time = 0;                                            //Used to limit temp readings and LCD updates to once a second
-    
+
 // ******************************************************************************
     while(1)
     {
@@ -235,7 +235,7 @@ int main(void)
 
 // *********************************  Following lines turn off all outputs & disables writes to the output pins, unless between auto start & stop dates
 
-            if (((time.month < eepromGetData(earlyStartMonth)) || (time.month <= eepromGetData(earlyStartMonth) && time.day < eepromGetData(earlyStartDay)))  && ((time.month > eepromGetData(endMonth)) || ((time.month >= eepromGetData(endMonth)) && (time.day >= eepromGetData(endDay)))))
+            if (((time.month < eepromGetData(earlyStartMonth)) || (time.month <= eepromGetData(earlyStartMonth) && time.day < eepromGetData(earlyStartDay)))  && ((time.month > eepromGetData(extendedEndMonth)) || ((time.month >= eepromGetData(extendedEndMonth)) && (time.day >= eepromGetData(extendedEndDay)))))
             {
                 for(i=0;i<11;i++)
                 {
@@ -244,18 +244,18 @@ int main(void)
             }
             else
             {
-                for(i=0;i<11;i++)
+                if (((time.month < eepromGetData(startMonth)) || (time.month <= eepromGetData(startMonth) && time.day < eepromGetData(startDay)))  && ((time.month > eepromGetData(endMonth)) || ((time.month >= eepromGetData(endMonth)) && (time.day >= eepromGetData(endDay)))))
                 {
-                    if (((time.month < eepromGetData(startMonth)) || (time.month <= eepromGetData(startMonth) && time.day < eepromGetData(startDay)))  && ((time.month > eepromGetData(endMonth)) || ((time.month >= eepromGetData(endMonth)) && (time.day >= eepromGetData(endDay)))))
+                    for(i=0;i<11;i++)
                     {
-                        if (extendedRunEnable[i] == 1)
+                        if (eepromGetData(extendedRunEnable[i]) == 1)
                         {
                             enabled[i] = 1;
                         }
-                    }
-                    else
-                    {
-                        enabled[i] = 1;
+                        else
+                        {
+                            enabled[i] = 0;
+                        }
                     }
                 }
             }
@@ -479,10 +479,9 @@ int main(void)
         }
         
         done3:
+
 // ******************************************************************************
-        
-        
-        if(loopCounter == 12)
+        if(loopCounter == 12)                                                   // This is the Main Display
         {
             if(powerFail == 1)
             {
@@ -492,116 +491,13 @@ int main(void)
             else
             {
                 displayTime();
-                
-//                LCDWriteIntXY(0,0,time.year,2,0,0);
-  //              LCD_Write_String(month[time.month]);
-    //            LCD_Write_Int(time.day,2,0,0);
-      //          LCDWriteStringXY(0,8,WeekDay[time.weekday]);
-        //        LCDWriteIntXY(0,12,time.hour,2,0,0);
-          //      LCD_Write_String(":");
-            //    LCD_Write_Int(time.minute,2,0,0);
-              //  LCD_Write_String(":");
-                //LCD_Write_Int(time.second,2,0,0);
-
-
-/*
-                LCDWriteIntXY(0,0,time.year,2);
-                LCDWriteStringXY(0,2,"/");
-                LCDWriteIntXY(0,3,time.month,2);
-                LCDWriteStringXY(0,5,"/");
-                LCDWriteIntXY(0,6,time.day,2);
-                LCDWriteStringXY(0,9,WeekDay[time.weekday]);
-                LCDWriteIntXY(0,12,time.hour,2);
-                LCDWriteStringXY(0,14,":");
-                LCDWriteIntXY(0,15,time.minute,2);
-                LCDWriteStringXY(0,17,":");
-                LCDWriteIntXY(0,18,time.second,2);
-*/
-            }
-              
-/*            LCDWriteStringXY(1,0,"X Pos:");
-            LCDWriteIntXY(1,7,x,5);
-            LCDWriteStringXY(1,13,"Col:");
-            LCDWriteIntXY(1,18,col,1);
-
-            LCDWriteStringXY(2,0,"Y Pos:");
-            LCDWriteIntXY(2,7,y,5);
-            LCDWriteStringXY(2,13,"Row:");
-            LCDWriteIntXY(2,18,row,1);
-*/
-//            LCD_Clear();
-//                LCDWriteStringXY(0,0,"Total:");
-  //              LCDWriteIntXY(0,10,total,8);
-
-//                LCDWriteStringXY(1,0,"OutSide:");
-  //              LCDWriteIntXY(1,10,OutAirTemp,6);
-           
-    //            LCDWriteStringXY(2,0,"tmp");
-      //          LCDWriteIntXY(2,4,ADCRead(20),5);
-        //        LCDWriteIntXY(2,10,Temp[10],6);
-
-          //      LCDWriteStringXY(3,0,"sample:");
-            //    LCDWriteIntXY(3,7,sampleIndex,2);
-              //  LCDWriteIntXY(3,10,samples[sampleIndex],6);
-                //__delay_ms(1000);
-/*            
-            LCDWriteStringXY(0,0,"Bs");                                        //LCD Line 1 SetPoint Display
-            LCDWriteIntXY(0,3,Bias[0],4);
-            LCDWriteIntXY(0,9,eepromGetData(biasNeg25[0]),4);
-            LCDWriteIntXY(0,15,BiasWarm[0],4);
-//            LCDWriteDecIntXY(0,8,eepromGetData(biasNeg25[0],4);
-            
-            LCDWriteStringXY(1,0,"Set:");
-            LCDWriteDecIntXY(1,5,eepromGetData(setpoint[0]),4);
-            LCDWriteDecIntXY(1,11,eepromGetData(setpoint[1]),4);
- 
-            LCDWriteStringXY(2,0,"T");                                      //LCD Line 2 Temperature Display
-            LCDWriteDecIntXY(2,2,Temp[0],3);
-            LCDWriteDecIntXY(2,7,Temp[1],3);
-
-            LCDWriteStringXY(2,11,"D");                                       //LCD Line 2 Deadband Display
-            LCDWriteDecIntXY(2,13,eepromGetData(deadband[0]),2);
-            LCDWriteDecIntXY(2,17,eepromGetData(deadband[1]),2);
-            
-            LCDWriteIntXY(3,0,Out[0],2);
-            LCDWriteIntXY(3,4,Out[1],2);
-            LCDWriteIntXY(3,7,OutAirTemp,5);
-//            LCDWriteIntXY(3,14,TestVar,5);
-*/            
-            
-            
-//            if(mainTimer <= 8)
-  //          {
                 LCDWriteStringXY(1,0,"OutSide Temp:");
                 LCDWriteIntXY(1,13,OutAirTemp,3,1,1);
                 LCD_Write_Char(0);
                 LCD_Write_Char(67);
-    //            LCDWriteStringXY(2,0,"Enter Key Sets Time ");
-      //          LCDWriteStringXY(3,0,"Menu Key Sets Temp ");
-        //    }
-            
-          //  if(mainTimer > 8 && mainTimer <= 16)
-            //{
-              //  LCDWriteStringXY(1,0,"OutSide Temp:");
-                //LCDWriteSignedDecIntXY(1,13,OutAirTemp,3);
-//                LCD_Write_Char(0);
-  //              LCD_Write_Char(67);
                 LCDWriteStringXY(2,0," <- / -> Keys page ");
                 LCDWriteStringXY(3,0," through Loop Info ");
-    //        }
-            
-      //      if(mainTimer > 16 && mainTimer <= 20)
-        //    {
-          //      LCDWriteStringXY(1,0,"Left Key to display ");
-            //    LCDWriteStringXY(2,0," all Loop Run-time  ");
-              //  LCDWriteStringXY(3,0,"  Info on One Page ");
-            //}
-//        }
-        
-
-  //      if(mainTimer > 19)
-    //    {
-      //      mainTimer = 0;
+            }
         }
         
 // ******************************************************************************
