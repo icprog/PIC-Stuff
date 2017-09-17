@@ -1,5 +1,5 @@
 #include "xc.h"
-#include "lcd.h"                        // Pretty obvious, provides LCD Routines
+#include "lcd.h"                        // Provides LCD Routines
 #include "system.h"                     // System funct/params, like osc/peripheral config
 #include "user.h"                       // User Functions (Temperature Calculation, Heartbeat indication, etc...)
 #include "rtcc.h"                       // Real Time clock & Calendar Functions
