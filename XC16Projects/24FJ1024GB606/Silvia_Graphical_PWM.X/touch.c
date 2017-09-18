@@ -23,16 +23,12 @@
 #define row_3_min           2600                    //minimum value (read on ADC) to define row 3 boundary
 #define row_3_max           3300                    //maximum value (read on ADC) to define row 3 boundary
 
-
-uint16_t x,y;                                               
-uint8_t col = 0, row = 0;                            
 // ***************************************************************************************************************************************************************
-
 uint8_t menuRead()
 {
     static uint8_t lastKeyState = KEY_NONE, key = KEY_NONE, j, k, L;
-//    uint8_t col = 0, row = 0;                            
-//    uint16_t x,y;                                               
+    uint8_t col = 0, row = 0;                            
+    uint16_t x,y;                                               
 
     xPos_TRIS           = 1;    //Set x+ to an Input, we are going to read y coordinates
     xNeg_TRIS           = 1;    //Set x- to an Input
