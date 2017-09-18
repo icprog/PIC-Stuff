@@ -5,10 +5,8 @@
     RTCVAL = 0x0150;                            // MINUTES/SECONDS
 */
 
-#include <xc.h>
 #include "rtcc.h"
-#include "user.h"
-#include "lcd.h"
+
 //***************************************************************************************************************************************************************
 extern char call, powerFail;                            //call is used to set HMI delay time, based on what function you are in 
 

@@ -1,44 +1,26 @@
-/* 
- * File:   system.h
- * Author: DAVE
- *
- * Created on May 16, 2015, 1:28 AM
- */
-
 #ifndef SYSTEM_H
 #define	SYSTEM_H
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
+#include <xc.h>
+#include "adc.h"
+#include "eeprom.h"
+#include "lcd.h"
+#include "rtcc.h"
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include "touch.h"
+#include "user.h"
 
-/******************************************************************************/
-/* System Level #define Macros                                                */
-/******************************************************************************/
-
-/* TODO Define system operating frequency */
-
-/* Microcontroller MIPs (FCY) */
 #define SYS_FREQ        4000000L
 #define FCY             SYS_FREQ/2
-#define _XTAL_FREQ 4000000
+#define _XTAL_FREQ      4000000
 
 
 //********** Add the following to solve __delay_ms() issues in XC16 ************
 #include <libpic30.h>   
 //******************************************************************************
-#include <stdint.h>          /* For uint32_t definition */
-#include <stdbool.h>         /* For true/false definition */
-    
 
-
-/******************************************************************************/
-/* System Function Prototypes                                                 */
-/******************************************************************************/
-
-/* Custom oscillator configuration funtions, reset source evaluation
-functions, and other non-peripheral microcontroller initialization functions
-go here. */
 
 void ConfigureOscillator(void);     /* Handles clock switching/osc initialization */
 //***************************************************************************************************************************************************************
@@ -46,11 +28,4 @@ void ConfigureOscillator(void);     /* Handles clock switching/osc initializatio
 void InitApp(void);                 /* I/O and Peripheral Initialization */
 //***************************************************************************************************************************************************************
 
-
-
-#ifdef	__cplusplus
-}
 #endif
-
-#endif	/* SYSTEM_H */
-

@@ -155,11 +155,11 @@ void LCD_Init(char style)
 {
     LCD_Port(0x00);
     
-    __delay_ms(100);
+    __delay_ms(300);
     
     LCD_Cmd(0x03);              //Reset Instruction (3 times), as recommended by Hitachi
     
-    __delay_ms(10);             // the first reset takes a while
+    __delay_ms(20);             // the first reset takes a while
     
     LCD_Cmd(0x03);
     
@@ -201,7 +201,6 @@ void LCD_Init(char style)
     
     LCD_Cmd(0xc|style);         //We are sending 0x0c|style, usually NONE (or 0),which hides the cursor
     
-    __delay_us(120);
 /*
   LCD_Port(0x00);
    __delay_ms(20);

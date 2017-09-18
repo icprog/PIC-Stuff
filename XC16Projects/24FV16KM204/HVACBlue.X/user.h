@@ -1,35 +1,32 @@
 #ifndef USER_H
 #define	USER_H
 
-#include <xc.h>                         // include processor files - each processor file is guarded.  
-#include "stdint.h"                     // Includes uint16_t definition
 #include "system.h"                     // Needed to calculate __delay_() Functions
-#include "touch.h"
 
 // ***************************************************************************************************************************************************************
 void heartBeat(void);
 //***************************************************************************************************************************************************************
 int TempCalc(int a);
 //***************************************************************************************************************************************************************
-unsigned char SetStartEndMonth(signed char b);
+uint8_t SetStartEndMonth(int8_t b);
 //***************************************************************************************************************************************************************
-unsigned char SetStartEndDay(signed char b);
+uint8_t SetStartEndDay(int8_t b);
 //***************************************************************************************************************************************************************
 int TempSetpoint(int);
 //***************************************************************************************************************************************************************
-unsigned char SetDeadband(unsigned char b);
+uint8_t SetDeadband(uint8_t b);
 //***************************************************************************************************************************************************************
-signed char SetBiasWarm(signed char b);
+int8_t SetBiasWarm(int8_t b);
 //***************************************************************************************************************************************************************
-signed char SetBiasNeg5(signed char b);
+int8_t SetBiasNeg5(int8_t b);
 //***************************************************************************************************************************************************************
-signed char SetBiasNeg15(signed char b);
+int8_t SetBiasNeg15(int8_t b);
 //***************************************************************************************************************************************************************
-signed char SetBiasNeg25(signed char b);
+int8_t SetBiasNeg25(int8_t b);
 //***************************************************************************************************************************************************************
-signed char SetExtendedRunBit(signed char b);
+int8_t SetExtendedRunBit(int8_t b);
 //***************************************************************************************************************************************************************
-bool SetOutput(bool Out, int SetPoint, signed int Bias, int ProcessVariable, unsigned char Deadband);
+bool SetOutput(bool Out, int SetPoint, signed int Bias, int ProcessVariable, uint8_t Deadband);
 //***************************************************************************************************************************************************************
-//int SetOutputValue(bool Out, int SetPoint, signed char Bias, int ProcessVariable, unsigned char Deadband);
+//int SetOutputValue(bool Out, int SetPoint, signed char Bias, int ProcessVariable, uint8_t Deadband);
 #endif

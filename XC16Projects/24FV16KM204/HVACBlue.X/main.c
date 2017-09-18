@@ -1,12 +1,4 @@
-#include "xc.h"
-#include "lcd.h"                        // Provides LCD Routines
 #include "system.h"                     // System funct/params, like osc/peripheral config
-#include "user.h"                       // User Functions (Temperature Calculation, Heartbeat indication, etc...)
-#include "rtcc.h"                       // Real Time clock & Calendar Functions
-#include <string.h>                     // Using strlen Functionality
-#include "eeprom.h"                     // EEProm used to store Setpoints, deadbands, Bias values, etc, to be retained through power cycle
-#include "touch.h"                      // Resistive touch screen interface Routines
-#include "adc.h"                        // Analog to Digital conversion periferal, reading temperatures
 
 // ******************************************************************************
 #define DeckFloorOut        _LATA3
@@ -18,37 +10,35 @@
 #define SEBasementFloorOut  _LATA7
 #define MediaRoomFloorOut   _LATC9
 #define GarageFloorOut      _LATC8
-
 #define backLightOn         _LATA1
-
 #define numSamples          60                                                  //Number of samples to average for Outdoor Air temp
-// ******************************************************************************
 
-int __attribute__ ((space(eedata))) Settings[85];                               // Global variable located in EEPROM (created by the space()attribute
+// ******************************************************************************
+int16_t __attribute__ ((space(eedata))) Settings[85];                               // Global variable located in EEPROM (created by the space()attribute
 
 RTCTime time;                                                                   // declare the type of the time object
 
-unsigned char const setpoint[]  = {0,  8, 16, 24, 32, 40, 48, 56, 64, 72, 80};  //setpoint EEPROM Address "offset" values
+uint8_t const setpoint[]  = {0,  8, 16, 24, 32, 40, 48, 56, 64, 72, 80};  //setpoint EEPROM Address "offset" values
 
-unsigned char const deadband[]  = {2, 10, 18, 26, 34, 42, 50, 58, 66, 74, 82};  //dead band EEPROM Address "offset" values
+uint8_t const deadband[]  = {2, 10, 18, 26, 34, 42, 50, 58, 66, 74, 82};  //dead band EEPROM Address "offset" values
 
-unsigned char const BiasWarm[]  = {118,120,122,124,126,128,130,132,134,136,138};//Setpoint Bias when Temperature above +10C (EEPROM offset values)
+uint8_t const BiasWarm[]  = {118,120,122,124,126,128,130,132,134,136,138};//Setpoint Bias when Temperature above +10C (EEPROM offset values)
 
-unsigned char const Bias0[]     = {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};  //Setpoint Bias when Temperature between -5C and 5C (Hard coded, non-EEPROM values)
+uint8_t const Bias0[]     = {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};  //Setpoint Bias when Temperature between -5C and 5C (Hard coded, non-EEPROM values)
 
-unsigned char const biasNeg5[]  = {96,98,100,102,104,106,108,110,112,114,116};  //Setpoint Bias when Temperature between -15C and -5C (EEPROM Address "offset" values)
+uint8_t const biasNeg5[]  = {96,98,100,102,104,106,108,110,112,114,116};  //Setpoint Bias when Temperature between -15C and -5C (EEPROM Address "offset" values)
 
-unsigned char const biasNeg15[] = {4, 12, 20, 28, 36, 44, 52, 60, 68, 76, 84};  //biasNeg15 (Temperature between -15C and -25C) EEPROM Address "offset" values
+uint8_t const biasNeg15[] = {4, 12, 20, 28, 36, 44, 52, 60, 68, 76, 84};  //biasNeg15 (Temperature between -15C and -25C) EEPROM Address "offset" values
 
-unsigned char const biasNeg25[] = {6, 14, 22, 30, 38, 46, 54, 62, 70, 78, 86};  //biasNeg25 (Temperature below -25C) EEPROM Address "offset" values
+uint8_t const biasNeg25[] = {6, 14, 22, 30, 38, 46, 54, 62, 70, 78, 86};  //biasNeg25 (Temperature below -25C) EEPROM Address "offset" values
 
-unsigned char const startMonth = 88, startDay = 90, endMonth = 92, endDay = 94; //EEPROM Address offset values to store user settable Start/Stop dates
+uint8_t const startMonth = 88, startDay = 90, endMonth = 92, endDay = 94; //EEPROM Address offset values to store user settable Start/Stop dates
 
-unsigned char const earlyStartMonth = 140, earlyStartDay = 142, extendedEndMonth = 144, extendedEndDay = 146;
+uint8_t const earlyStartMonth = 140, earlyStartDay = 142, extendedEndMonth = 144, extendedEndDay = 146;
 
-unsigned char const extendedRunEnable[] = {148,150,152,154,156,158,160,162,164,166,168};
+uint8_t const extendedRunEnable[] = {148,150,152,154,156,158,160,162,164,166,168};
 
-signed int Bias[] =             {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};    //Set Bias values all to 0, in case of a startup when temps are between assigned switch points                                                        //Bias value added to Setpoint, based on outdoor air temp (will be a negative number when outside air is warmer)
+int16_t Bias[] =                    {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};    //Set Bias values all to 0, in case of a startup when temps are between assigned switch points                                                        //Bias value added to Setpoint, based on outdoor air temp (will be a negative number when outside air is warmer)
 
 char *desc[] = {"Deck Rm Air ","Deck Floor ","Utility Flr ","Entrance Flr ","Master Bath ","Office Floor ","Craft Rm Flr ","SE BedRm Flr ","Media Rm Flr ","Garage Floor ","Garage Rm Air"};
 
@@ -60,76 +50,60 @@ _Bool lastOutState[11] = {0};                                                   
 
 //int outStateCounter[11]         = {0,0,0,0,0,0,0,0,0,0,0};                      //Keeps track of which outputs are turning on most often
 
-int outStateCounter[11] = {342,407,319,578,414,84,66,0,24,71,49};               //Keeps track of which outputs are turning on most often
+int16_t outStateCounter[11] = {342,407,319,578,414,84,66,0,24,71,49};               //Keeps track of which outputs are turning on most often
 
-char call = 0;                                                                  //call is used to set HMI key delay time, based on what function you are in 
+uint8_t call = 0;                                                                  //call is used to set HMI key delay time, based on what function you are in 
 
-char powerFail = 1;                                                             //Setting powerFail to 1, displays "set Clock" Message
+uint8_t powerFail = 1;                                                             //Setting powerFail to 1, displays "set Clock" Message
 
-int samples[numSamples];                                                        //Outside Air Temperature Samples to average temp over x number of samples
+int16_t samples[numSamples];                                                        //Outside Air Temperature Samples to average temp over x number of samples
 
 // ******************************************************************************
-
-
-int main(void)
+int16_t main(void)
 {
-    ConfigureOscillator();
-
     InitApp();
     
-    ADCInit();
-
-    LCD_Init(NONE);
-    
-    __delay_ms(100);
-    
-    LCD_Clear();
-    
-    RTCC_Initialize();
-    
-    InitCustomChars();
-    
 // ******************************************************************************
-    signed char loopCounter = 12, previousLoopCounter = 12;                     //Loopcounter value determines which screen info is displayed on LCD
+    int8_t loopCounter = 12, previousLoopCounter = 12;                          //Loopcounter value determines which screen info is displayed on LCD
     
-    int OutAirTemp;                                                             //Average Outside air temp (Avg of numSamples))
+    int16_t OutAirTemp;                                                         //Average Outside air temp (Avg of numSamples))
     
-    int tempOutAirTemp;                                                         //Temporary calculated Outside air temp as read by the ADC 
+    int16_t tempOutAirTemp;                                                     //Temporary calculated Outside air temp as read by the ADC 
 
-    int Temp[11];                                                               //Calculated loop temperatures as read by the ADC, these display in 1/10 of Degrees Celcius
+    int16_t Temp[11];                                                           //Calculated loop temperatures as read by the ADC, these display in 1/10 of Degrees Celcius
     
-    unsigned char sampleIndex = 0;                                              //Used to calculate average outdoor temp
+    uint8_t sampleIndex = 0;                                                    //Used to calculate average outdoor temp
     
-    int total = 0;                                                              //Running total of Outside air samples 
+    int16_t total = 0;                                                          //Running total of Outside air samples 
     
-    unsigned char StartUpDelay = 0;                                             // Startup delay so outputs do not turn on until after OutAirTemp has been averaged
+    uint8_t StartUpDelay = 0;                                                   // Startup delay so outputs do not turn on until after OutAirTemp has been averaged
     
-    int OldTemp[11] = {300};                                                    //Used to smooth temperature readings
+    int16_t OldTemp[11] = {300};                                                //Used to smooth temperature readings
 
-    _Bool Out[11] = {0};                                                        // Startup values for all outputs, 0 = OFF (Output 0 - 11))
+    bool Out[11] = {0};                                                         // Startup values for all outputs, 0 = OFF (Output 0 - 11))
     
     _Bool OutSum = 0;                                                           // Sum of all Outputs
     
-    unsigned char i = 0;
+    uint8_t i = 0;
     
-    char TestKey;                                                               // Variable used for Storing Which Menu Key is Pressed
+    int8_t TestKey;                                                             // Variable used for Storing Which Menu Key is Pressed
 
-    int internalBGV;                                                            // Variable to store the internal BandGapVoltage as read by the ADC
+    int16_t internalBGV;                                                        // Variable to store the internal BandGapVoltage as read by the ADC
     
-    unsigned int backLightTimer = 0;                                            //Used to turn off the LCD backlight after an interval of inactivity (60 seconds))
+    int16_t backLightTimer = 0;                                                 //Used to turn off the LCD backlight after an interval of inactivity (60 seconds))
 
-    unsigned char previous_time = 0;                                            //Used to limit temp readings and LCD updates to once a second
+    uint8_t previous_time = 0;                                                  //Used to limit temp readings and LCD updates to once a second
 
 // ******************************************************************************
     while(1)
     {
         time = getRTCTime();                                                    // get the time
         
-        unsigned int timer = 0;                                                 // Used to count up time in a loop, to auto exit if user in a menu too long
+        uint16_t timer = 0;                                                     // Used to count up time in a loop, to auto exit if user in a menu too long
 
+// ******************************************************************************
         if(previous_time != time.second)                                        // Only update if an additional second has passed
         {
-// ******************************************************************************
             tempOutAirTemp = ((ADCRead(9) - 840)/3.276 - 500);                  // Read Outdoor air temperature & assign it to a temporary variable 
             
             total = total - samples[sampleIndex];                               // Subtract the oldest sample data from the total
@@ -313,7 +287,7 @@ int main(void)
         
 //                    if(outSumOldState != OutSum)                                        // OutSum has changed,
   //                  {
-                    if(OutSum != 0)                                                 // because an Out is turned on
+                    if(OutSum != 0)                                             // because an Out is turned on
                     {
                         for(i=0;i<11;i++)
                         {
@@ -321,12 +295,12 @@ int main(void)
                             {
                                 if (Temp[i] < eepromGetData(setpoint[i]) + eepromGetData(deadband[i]) + Bias[i])// Check for other PV's below SP + DB + Bias,
                                 {
-                                    Out[i] = 1;                                         // and turn them on.
+                                    Out[i] = 1;                                 // and turn them on.
                                 }
 
                                 else
                                 {
-                                    Out[i] = 0;                                         // Turn them off if they are already too hot!!
+                                    Out[i] = 0;                                 // Turn them off if they are already too hot!!
                                 }
                             }
                         }
@@ -615,9 +589,8 @@ int main(void)
 
             LCD_Clear();
         }
+
 // ******************************************************************************
-        
-        
         if(TestKey == KEY_LEFT)
         {
             loopCounter -=1;
@@ -627,8 +600,8 @@ int main(void)
                 loopCounter = 12;
             }
         }
+        
 // ******************************************************************************
-
         if(TestKey == KEY_RIGHT)
         {
             loopCounter +=1;
@@ -638,11 +611,11 @@ int main(void)
                 loopCounter = 0;
             }
         }
+        
 // ******************************************************************************
-
         if (TestKey == KEY_MENU)
         {
-            signed char choice = 5;
+            int8_t choice = 5;
 
             while(TestKey != KEY_ENTER)
             {

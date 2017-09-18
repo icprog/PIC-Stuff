@@ -1,9 +1,7 @@
 #ifndef LCD_H
 #define LCD_H
 
-#include <xc.h>
 #include "system.h"
-#include <stdint.h>
 
 // ***********************************************
 // LCD Type Selection

@@ -1,10 +1,9 @@
 #ifndef TOUCH_H
 #define TOUCH_H
 
-#include <xc.h> // include processor files - each processor file is guarded.
-#include "adc.h"                   // Included to use ADC functionality
-//***************************************************************************************************************************************************************
+#include "system.h"
 
+//***************************************************************************************************************************************************************
 #define KEY_RESET       0
 #define KEY_RIGHT   	1
 #define KEY_LEFT        2

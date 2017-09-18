@@ -42,7 +42,7 @@ int ADCRead(ADC_CHANNEL channel)
         __delay_us(20);                                                 
     }
     AD1CON1bits.SAMP = 1;
-    __delay_us(25);
+    __delay_us(50);
     AD1CON1bits.SAMP = 0;
     while(!AD1CON1bits.DONE)
     {

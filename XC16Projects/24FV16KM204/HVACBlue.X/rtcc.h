@@ -1,19 +1,19 @@
 #ifndef rtcc_H
 #define	rtcc_H
 
-#include <xc.h>         // include processor files - each processor file is guarded.  
-//#include "stdbool.h"
+#include "system.h"
+#include <stdint.h>
 //***************************************************************************************************************************************************************
 
 typedef struct _RTCTime
 {
-	unsigned char year;
-	unsigned char month;
-	unsigned char day;
-	unsigned char weekday; // Monday is 0, Sunday is 6
-	unsigned char hour;
-	unsigned char minute;
-	unsigned char second;
+	uint8_t year;
+	uint8_t month;
+	uint8_t day;
+	uint8_t weekday; // Monday is 0, Sunday is 6
+	uint8_t hour;
+	uint8_t minute;
+	uint8_t second;
 } RTCTime;
 
 //***************************************************************************************************************************************************************

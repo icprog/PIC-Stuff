@@ -3,7 +3,7 @@
 
 uint8_t  halfSec, lastState, toggle = 2;
 
-extern char call;
+extern int8_t call;
 
 unsigned int timer = 0;
 
@@ -37,11 +37,11 @@ int TempCalc(int a)
     }
 }
 // ***************************************************************************************************************************************************************
-unsigned char SetStartEndMonth(signed char b)
+uint8_t SetStartEndMonth(int8_t b)
 {
     call = 1;
     
-    signed char result = b, TestKey = 9;
+    int8_t result = b, TestKey = 9;
 
     TestKey = menuRead();
     
@@ -100,11 +100,11 @@ unsigned char SetStartEndMonth(signed char b)
     return (result);
 }
 // ***************************************************************************************************************************************************************
-unsigned char SetStartEndDay(signed char b)
+uint8_t SetStartEndDay(int8_t b)
 {
     call = 1;
     
-    signed char result = b, TestKey = 9;
+    int8_t result = b, TestKey = 9;
 
     TestKey = menuRead();
     
@@ -170,7 +170,7 @@ int TempSetpoint(int b)
     
     int result = b;
     
-    char TestKey;
+    int8_t TestKey;
     
     TestKey = menuRead();
     
@@ -229,11 +229,11 @@ int TempSetpoint(int b)
     return (result);
 }
 //***************************************************************************************************************************************************************
-unsigned char SetDeadband(unsigned char b)
+uint8_t SetDeadband(uint8_t b)
 {
     call = 1;
     
-    unsigned char result = b, TestKey = 9;
+    uint8_t result = b, TestKey = 9;
 
     TestKey = menuRead();
     
@@ -293,13 +293,13 @@ unsigned char SetDeadband(unsigned char b)
     return (result);
 }
 //***************************************************************************************************************************************************************
-signed char SetBiasWarm(signed char b)
+int8_t SetBiasWarm(int8_t b)
 {
     call = 1;
     
-    signed char result = b;
+    int8_t result = b;
     
-    char TestKey;
+    int8_t TestKey;
     
     TestKey = menuRead();
     
@@ -359,13 +359,13 @@ signed char SetBiasWarm(signed char b)
 }
 //***************************************************************************************************************************************************************
 
-signed char SetBiasNeg5(signed char b)
+int8_t SetBiasNeg5(int8_t b)
 {
     call = 1;
     
-    signed char result = b;
+    int8_t result = b;
     
-    char TestKey;
+    int8_t TestKey;
     
     TestKey = menuRead();
     
@@ -424,13 +424,13 @@ signed char SetBiasNeg5(signed char b)
     return (result);
 }
 //***************************************************************************************************************************************************************
-signed char SetBiasNeg15(signed char b)
+int8_t SetBiasNeg15(int8_t b)
 {
     call = 1;
     
-    signed char result = b;
+    int8_t result = b;
     
-    char TestKey;
+    int8_t TestKey;
     
     TestKey = menuRead();
     
@@ -489,13 +489,13 @@ signed char SetBiasNeg15(signed char b)
     return (result);
 }
 //***************************************************************************************************************************************************************
-signed char SetBiasNeg25(signed char b)
+int8_t SetBiasNeg25(int8_t b)
 {
     call = 1;
     
-    signed char result = b;
+    int8_t result = b;
     
-    char TestKey;
+    int8_t TestKey;
     
     TestKey = menuRead();
     
@@ -554,13 +554,13 @@ signed char SetBiasNeg25(signed char b)
     return (result);
 }
 //***************************************************************************************************************************************************************
-signed char SetExtendedRunBit(signed char b)
+int8_t SetExtendedRunBit(int8_t b)
 {
     call = 1;
     
-    signed char result = b;
+    int8_t result = b;
     
-    char TestKey;
+    int8_t TestKey;
     
     TestKey = menuRead();
     
@@ -619,7 +619,7 @@ signed char SetExtendedRunBit(signed char b)
     return (result);
 }
 //***************************************************************************************************************************************************************
-bool SetOutput(bool Out, int SetPoint, signed int Bias, int ProcessVariable, unsigned char Deadband)
+bool SetOutput(bool Out, int SetPoint, signed int Bias, int ProcessVariable, uint8_t Deadband)
 {
     if (ProcessVariable <= SetPoint + Bias)                                     //Turn on Output if PV < SP + Bias.
         return 1;
