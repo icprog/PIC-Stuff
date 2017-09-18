@@ -1,9 +1,9 @@
 build/default/production/main.o:  \
 main.c  \
-lcd.h  \
 system.h  \
-user.h  \
+adc.h  \
+eeprom.h  \
+lcd.h  \
+ rtcc.h  \
 touch.h  \
- adc.h  \
-rtcc.h  \
-eeprom.h 
+user.h 
