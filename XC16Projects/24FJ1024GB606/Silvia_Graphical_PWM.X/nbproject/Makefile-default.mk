@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=adc.c glcd.c interrupt_manager.c pid.c pin_manager.c pwm.c system.c touch.c traps.c main.c
+SOURCEFILES_QUOTED_IF_SPACED=adc.c glcd.c interrupt_manager.c pid.c pin_manager.c pwm.c system.c touch.c traps.c main.c "DEE Emulation 16-bit.c" FlashOperations.s
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/adc.o ${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/system.o ${OBJECTDIR}/touch.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/main.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/adc.o.d ${OBJECTDIR}/glcd.o.d ${OBJECTDIR}/interrupt_manager.o.d ${OBJECTDIR}/pid.o.d ${OBJECTDIR}/pin_manager.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/touch.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/main.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/adc.o ${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/system.o ${OBJECTDIR}/touch.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/main.o "${OBJECTDIR}/DEE Emulation 16-bit.o" ${OBJECTDIR}/FlashOperations.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/adc.o.d ${OBJECTDIR}/glcd.o.d ${OBJECTDIR}/interrupt_manager.o.d ${OBJECTDIR}/pid.o.d ${OBJECTDIR}/pin_manager.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/touch.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/main.o.d "${OBJECTDIR}/DEE Emulation 16-bit.o.d" ${OBJECTDIR}/FlashOperations.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/adc.o ${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/system.o ${OBJECTDIR}/touch.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/main.o
+OBJECTFILES=${OBJECTDIR}/adc.o ${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/system.o ${OBJECTDIR}/touch.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/main.o ${OBJECTDIR}/DEE\ Emulation\ 16-bit.o ${OBJECTDIR}/FlashOperations.o
 
 # Source Files
-SOURCEFILES=adc.c glcd.c interrupt_manager.c pid.c pin_manager.c pwm.c system.c touch.c traps.c main.c
+SOURCEFILES=adc.c glcd.c interrupt_manager.c pid.c pin_manager.c pwm.c system.c touch.c traps.c main.c DEE Emulation 16-bit.c FlashOperations.s
 
 
 CFLAGS=
@@ -158,6 +158,13 @@ ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/DEE\ Emulation\ 16-bit.o: DEE\ Emulation\ 16-bit.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} "${OBJECTDIR}/DEE Emulation 16-bit.o".d 
+	@${RM} "${OBJECTDIR}/DEE Emulation 16-bit.o" 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  "DEE Emulation 16-bit.c"  -o "${OBJECTDIR}/DEE Emulation 16-bit.o"  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/DEE Emulation 16-bit.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/DEE Emulation 16-bit.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/adc.o: adc.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -229,12 +236,33 @@ ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/DEE\ Emulation\ 16-bit.o: DEE\ Emulation\ 16-bit.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} "${OBJECTDIR}/DEE Emulation 16-bit.o".d 
+	@${RM} "${OBJECTDIR}/DEE Emulation 16-bit.o" 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  "DEE Emulation 16-bit.c"  -o "${OBJECTDIR}/DEE Emulation 16-bit.o"  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/DEE Emulation 16-bit.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/DEE Emulation 16-bit.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 endif
 
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/FlashOperations.o: FlashOperations.s  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/FlashOperations.o.d 
+	@${RM} ${OBJECTDIR}/FlashOperations.o 
+	${MP_CC} $(MP_EXTRA_AS_PRE)  FlashOperations.s  -o ${OBJECTDIR}/FlashOperations.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  -Wa,-MD,"${OBJECTDIR}/FlashOperations.o.d",--defsym=__MPLAB_BUILD=1,--defsym=__ICD2RAM=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PK3=1,-g,--no-relax$(MP_EXTRA_AS_POST)
+	@${FIXDEPS} "${OBJECTDIR}/FlashOperations.o.d"  $(SILENT)  -rsi ${MP_CC_DIR}../  
+	
 else
+${OBJECTDIR}/FlashOperations.o: FlashOperations.s  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/FlashOperations.o.d 
+	@${RM} ${OBJECTDIR}/FlashOperations.o 
+	${MP_CC} $(MP_EXTRA_AS_PRE)  FlashOperations.s  -o ${OBJECTDIR}/FlashOperations.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  -Wa,-MD,"${OBJECTDIR}/FlashOperations.o.d",--defsym=__MPLAB_BUILD=1,-g,--no-relax$(MP_EXTRA_AS_POST)
+	@${FIXDEPS} "${OBJECTDIR}/FlashOperations.o.d"  $(SILENT)  -rsi ${MP_CC_DIR}../  
+	
 endif
 
 # ------------------------------------------------------------------------------------
