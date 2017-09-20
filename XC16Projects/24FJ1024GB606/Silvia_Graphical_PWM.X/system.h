@@ -11,7 +11,6 @@
 #include    "adc.h"
 #include    "touch.h"
 #include    "DEE Emulation 16-bit.h"
-#include    "FlashOperations.s" 
 //#include    "menu.h"
 
 

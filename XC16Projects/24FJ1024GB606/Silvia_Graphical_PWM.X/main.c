@@ -7,8 +7,8 @@ int main(void)
     
     uint8_t loopCount = 0;
     
-    extern uint16_t x,y;  
-    extern uint8_t col, row;
+//    extern uint16_t x,y;  
+  //  extern uint8_t col, row;
     uint8_t testKey = 0;
 
 
@@ -25,10 +25,10 @@ int main(void)
         __delay_ms(100);
         char s = 0;
         testKey = menuRead();
-        LCDWriteIntXY(4,0,x,5,0);
-        LCDWriteIntXY(5,0,y,5,0);
-        LCDWriteIntXY(4,17,col,5,0);
-        LCDWriteIntXY(5,17,row,5,0);
+//        LCDWriteIntXY(4,0,x,5,0);
+  //      LCDWriteIntXY(5,0,y,5,0);
+    //    LCDWriteIntXY(4,17,col,5,0);
+      //  LCDWriteIntXY(5,17,row,5,0);
         
         if (testKey == KEY_RIGHT)
         {
