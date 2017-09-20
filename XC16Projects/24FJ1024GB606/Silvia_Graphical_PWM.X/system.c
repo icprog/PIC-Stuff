@@ -69,6 +69,7 @@ void SYSTEM_Initialize(void)
     init_lcd();
     __delay_ms(100);
     cls();
+//    DataEEInit();
 }
 
 void OSCILLATOR_Initialize(void)

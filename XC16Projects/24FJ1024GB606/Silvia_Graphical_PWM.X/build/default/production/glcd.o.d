@@ -7,5 +7,4 @@ pin_manager.h  \
 traps.h  \
 pid.h  \
 adc.h  \
-touch.h  \
-DEE\ Emulation\ 16-bit.h 
+touch.h 
