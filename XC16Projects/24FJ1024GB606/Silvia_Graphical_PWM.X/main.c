@@ -4,7 +4,7 @@
                         // <editor-fold defaultstate="collapsed" desc="Defines">
 // *************** Outputs ***************************************************************************************************************************************
 #define boilerOutput            _LATB7
-#define groupheadOutput         _LATC8
+#define groupheadOutput         _LATB8
 #define piezoOutput             _LATF1
 #define backLightOn             _LATD4
 #define airPump                 _LATD5
@@ -713,7 +713,7 @@ int main(void)
             
  //           TestKey = 0;
             
-            cls();
+/*            cls();
             loadimg(&menu2[0], 1024,0);              //Draw Menu2
             LCDWriteStringXY(1,1,"SetPoint = ");
             eepromPutData(setpoint[choice], setParameter(1,16,1750,2950,eepromGetData(setpoint[choice])));
@@ -734,7 +734,7 @@ int main(void)
             Init_PID(choice,eepromGetData(Kp[choice]),eepromGetData(Ki[choice]),eepromGetData(Kd[choice]),0,4095);                
 
             timer = 0;
-
+*/
             cls();
             loadimg(&menu3[0], 1024,0);                  //Draw Menu2
             __delay_ms(500);

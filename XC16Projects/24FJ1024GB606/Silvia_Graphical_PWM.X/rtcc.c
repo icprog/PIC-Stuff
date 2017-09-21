@@ -1,11 +1,7 @@
                     // <editor-fold defaultstate="collapsed" desc="Includes">
-#include "rtcc.h"
-#include "glcd.h"
-#include "touch.h"
-#include "rtccMenu.h"
-#include "eeprom.h"
-#include "user.h"
-#include "system.h"
+#include    "rtcc.h"
+#include    "system.h"
+#include    "rtccMenu.h"
 
 // </editor-fold>
 //***************************************************************************************************************************************************************
@@ -92,7 +88,8 @@ void RTCC_Initialize(void) {
 
     __builtin_write_RTCWEN();                   // Set the RTCWREN bit
 
-    RCFGCALbits.RTCEN = 0;
+//    RCFGCALbits.RTCEN = 0;
+    RTCCON1Lbits.RTCEN = 0;
 
     // set Thursday Oct 24 20:59:50 CST 2016
     RCFGCALbits.RTCPTR = 3;                     // start the sequence
@@ -496,12 +493,12 @@ int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
 {
     static char run;
     
-    if(hour == eepromGetData(startHour[weekday]) && minute == eepromGetData(startMinute[weekday]))
+    if(hour == startHour[weekday] && minute == startMinute[weekday])
     {
         run = 1;
     }
     
-    if(hour == eepromGetData(stopHour[weekday]) && minute == eepromGetData(stopMinute[weekday]))
+    if(hour == stopHour[weekday] && minute == stopMinute[weekday])
     {
         run = 0;
     }
