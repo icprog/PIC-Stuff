@@ -1,9 +1,9 @@
 #ifndef PID_H
 #define	PID_H
 
-#define Kp              50      // Controller Gain      (inverse of Proportional Band)
-#define Ki              1       // Controller Integral Reset/Unit Time, determined by how often PID is calculated
-#define Kd              300     // Controller Derivative (or Rate))
+#define Kp[x]           = { 50, 50, 50}     // Controller Gain      (inverse of Proportional Band)
+#define Ki[x]           = { 15, 15, 15};    // Controller Integral Reset/Unit Time, determined by how often PID is calculated
+#define Kd[x]           = { 25, 25, 25};    // Controller Derivative (or Rate))
 #define minimumOutput   0       // Minimum output limit of Controller
 #define maximumOutput   1023    // Maximum output limit of Controller
 

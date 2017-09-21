@@ -27,7 +27,7 @@
 uint8_t menuRead()
 {
     static uint8_t lastKeyState = KEY_NONE, key = KEY_NONE, j, k, L;
-    uint8_t col = 0;    //, row = 0;                            
+    uint8_t col = 0, row = 0;                            
     uint16_t x,y;                                               
 
     xPos_TRIS           = 1;    //Set x+ to an Input, we are going to read y coordinates
@@ -54,7 +54,7 @@ uint8_t menuRead()
 
     // ***************************************************************************************************************************************************************
        
-    if(x < col_1_min)
+    if(x < col_1_min || y < row_1_min)
     {
         key = KEY_NONE;
         j = 0;
@@ -77,26 +77,90 @@ uint8_t menuRead()
         col = 0;
     }
     
-   if(col == 1)
+    if(y >= row_1_min && y < row_1_max)
     {
-        key = KEY_1;
+        row = 1;
     }
-    else if(col == 2)
+    else if(y >= row_2_min && y < row_2_max)
     {
-        key = KEY_2;
+        row = 2;
     }
-    else if(col == 3)
+    else if(y >= row_3_min)
     {
-        key = KEY_3;
+        row = 3;
     }
     else
     {
-        key = KEY_NONE;
-        j = 0;
+        row = 0;
+    }
+// ***************************************************************************************************************************************************************
+    
+    if(col == 1)
+    {
+        if(row == 1)
+        {
+            key = KEY_START_STOP;
+        }
+        else if(row == 2)
+        {
+            key = KEY_LEFT;
+        }
+        else if(row == 3)
+        {
+            key = KEY_RESET;
+        }
+        else 
+        {
+            key = KEY_NONE;
+            j = 0;
+        }
+    }
+    
+    else if(col == 2)
+    {
+        if(row == 1)
+        {
+            key = KEY_DOWN;
+        }
+        else if(row == 2)
+        {
+            key = KEY_ENTER;
+        }
+        else if(row == 3)
+        {
+            key = KEY_UP;
+        }
+        else 
+        {
+            key = KEY_NONE;
+        }
     }
 
+    else if(col == 3)
+    {
+        if(row == 1)
+        {
+            key = KEY_MENU;
+        }
+        else if(row == 2)
+        {
+            key = KEY_RIGHT;
+        }
+        else if(row == 3)
+        {
+            key = KEY_SET_TIME;
+        }
+        else 
+        {
+            key = KEY_NONE;
+        }
+    }
+    
+    else
+    {
+        key = KEY_NONE;
+    }
 // ***************************************************************************************************************************************************************
-
     if (key != KEY_NONE)
     {
         k = 15;

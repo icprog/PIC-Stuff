@@ -5,6 +5,8 @@ pin_manager.h  \
  interrupt_manager.h  \
 traps.h  \
 glcd.h  \
-pid.h  \
 adc.h  \
-touch.h 
+touch.h  \
+pwm.h  \
+rtcc.h  \
+user.h 
