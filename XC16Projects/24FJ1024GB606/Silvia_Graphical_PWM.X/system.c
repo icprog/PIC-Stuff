@@ -2,13 +2,13 @@
 
 // FSEC
 #pragma config BWRP =       OFF             // Boot Segment Write-Protect bit (Boot Segment may be written)
-#pragma config BSS =        OFF             // Boot Segment Code-Protect Level bits (No Protection (other than BWRP))
+#pragma config BSS =        DISABLED        // Boot Segment Code-Protect Level bits (No Protection (other than BWRP))
 #pragma config BSEN =       OFF             // Boot Segment Control bit (No Boot Segment)
 #pragma config GWRP =       OFF             // General Segment Write-Protect bit (General Segment may be written)
-#pragma config GSS =        OFF             // General Segment Code-Protect Level bits (No Protection (other than GWRP))
+#pragma config GSS =        DISABLED        // General Segment Code-Protect Level bits (No Protection (other than GWRP))
 #pragma config CWRP =       OFF             // Configuration Segment Write-Protect bit (Configuration Segment may be written)
-#pragma config CSS =        DIS             // Configuration Segment Code-Protect Level bits (No Protection (other than CWRP))
-#pragma config AIVTDIS =    DISABLE         // Alternate Interrupt Vector Table bit (Disabled AIVT)
+#pragma config CSS =        DISABLED        // Configuration Segment Code-Protect Level bits (No Protection (other than CWRP))
+#pragma config AIVTDIS =    OFF             // Alternate Interrupt Vector Table bit (Disabled AIVT)
 
 // FBSLIM
 #pragma config BSLIM =      0x1FFF          // Boot Segment Flash Page Address Limit bits (Boot Segment Flash page address  limit)
@@ -43,7 +43,7 @@
 #pragma config DNVPEN =     ENABLE          // Downside Voltage Protection Enable bit (Downside protection enabled using ZPBOR when BOR is inactive)
 
 // FICD
-#pragma config ICS =        PGx1            // ICD Communication Channel Select bits (Communicate on PGEC1 and PGED1)
+#pragma config ICS =        PGD1            // ICD Communication Channel Select bits (Communicate on PGEC1 and PGED1)
 #pragma config JTAGEN =     OFF             // JTAG Enable bit (JTAG is disabled)
 #pragma config BTSWP =      OFF             // BOOTSWP Disable (BOOTSWP instruction disabled)
 
