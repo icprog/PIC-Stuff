@@ -2,17 +2,17 @@
 #define	SYSTEM_H
 
 #include    <xc.h>
+#include    "rtcc.h"
 #include    "pin_manager.h"
 #include    <stdint.h>
 #include    <stdbool.h>
 #include    "interrupt_manager.h"
 #include    "traps.h"
 #include    "glcd.h"
-//#include    "pid.h"  
+#include    "pid.h"  
 #include    "adc.h"
 #include    "touch.h"
 #include    "pwm.h"
-#include    "rtcc.h"
 #include    "traps.h"
 #include    "user.h"
 //#include    "DEE Emulation 16-bit.h"

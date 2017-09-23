@@ -66,6 +66,7 @@ void SYSTEM_Initialize(void)
     OSCILLATOR_Initialize();
     ADCInit();
     INTERRUPT_Initialize();
+    RTCC_Initialize();
     init_lcd();
     __delay_ms(100);
     cls();

@@ -1,4 +1,6 @@
+#include "system.h"
 #include "rtcc.h"
+
 
 static void RTCC_Lock(void);
 static bool rtccTimeInitialized;
@@ -6,9 +8,23 @@ static bool RTCCTimeInitialized(void);
 static uint8_t ConvertHexToBCD(uint8_t hexvalue);
 static uint8_t ConvertBCDToHex(uint8_t bcdvalue);
 
-/**
-// Section: Driver Interface Function Definitions
-*/
+struct tm initialTime;
+struct tm currentTime;
+
+
+
+char *WeekDay[7]    = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+char *month[13]     = {"NUL","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
+
+int const startHour[]   =   { 8, 6, 6, 6, 6, 6, 8};
+
+int const startMinute[] =   {00,45,45,45,45,45,00};
+
+int const stopHour[]    =   {11, 7, 7, 7, 7,10,11};
+
+int const stopMinute[]  =   {00,25,25,25,25,25,00};
+
+
 
 void RTCC_Initialize(void)
 {
@@ -52,37 +68,37 @@ static void RTCC_Lock(void)
     asm volatile("BSET RTCCON1L, #11");
 }
 
-bool RTCC_TimeGet(struct RTCTime *currentTime)
+bool RTCC_TimeGet(struct tm *currentTime)
 {
     uint16_t register_value;
     if(RTCSTATLbits.SYNC){
-        return false;
+        return 0;
     }
 
  
     __builtin_write_RTCC_WRLOCK();
  
     register_value = DATEH;
-    currentTime->time.year = ConvertBCDToHex((register_value & 0xFF00) >> 8);
-    currentTime->time.month = ConvertBCDToHex(register_value & 0x00FF);
+    currentTime->tm_year = ConvertBCDToHex((register_value & 0xFF00) >> 8);
+    currentTime->tm_mon = ConvertBCDToHex(register_value & 0x00FF);
     
     register_value = DATEL;
-    currentTime->time.monthday = ConvertBCDToHex((register_value & 0xFF00) >> 8);
-    currentTime->time.weekday = ConvertBCDToHex(register_value & 0x00FF);
+    currentTime->tm_mday = ConvertBCDToHex((register_value & 0xFF00) >> 8);
+    currentTime->tm_wday = ConvertBCDToHex(register_value & 0x00FF);
     
     register_value = TIMEH;
-    currentTime->time.hour = ConvertBCDToHex((register_value & 0xFF00) >> 8);
-    currentTime->time.minute = ConvertBCDToHex(register_value & 0x00FF);
+    currentTime->tm_hour = ConvertBCDToHex((register_value & 0xFF00) >> 8);
+    currentTime->tm_min = ConvertBCDToHex(register_value & 0x00FF);
     
     register_value = TIMEL;
-    currentTime->time.second = ConvertBCDToHex((register_value & 0xFF00) >> 8);
+    currentTime->tm_sec = ConvertBCDToHex((register_value & 0xFF00) >> 8);
    
     RTCC_Lock();
 
-    return true;
+    return 1;
 }
 
-void RTCC_TimeSet(struct RTCTime *initialTime)
+void RTCC_TimeSet(struct tm *initialTime)
 {
 
   __builtin_write_RTCC_WRLOCK();
@@ -91,10 +107,10 @@ void RTCC_TimeSet(struct RTCTime *initialTime)
    
 
    // set RTCC initial time
-   DATEH = (ConvertHexToBCD(initialTime->time.year) << 8) | ConvertHexToBCD(initialTime->time.month) ;  // YEAR/MONTH-1
-   DATEL = (ConvertHexToBCD(initialTime->time.monthday) << 8) | ConvertHexToBCD(initialTime->time.weekday) ;  // /DAY-1/WEEKDAY
-   TIMEH = (ConvertHexToBCD(initialTime->time.hour) << 8)  | ConvertHexToBCD(initialTime->time.minute); // /HOURS/MINUTES
-   TIMEL = (ConvertHexToBCD(initialTime->time.second) << 8) ;   // SECOND
+   DATEH = (ConvertHexToBCD(initialTime->tm_year) << 8) | ConvertHexToBCD(initialTime->tm_mon) ;  // YEAR/MONTH-1
+   DATEL = (ConvertHexToBCD(initialTime->tm_mday) << 8) | ConvertHexToBCD(initialTime->tm_wday) ;  // /DAY-1/WEEKDAY
+   TIMEH = (ConvertHexToBCD(initialTime->tm_hour) << 8)  | ConvertHexToBCD(initialTime->tm_min); // /HOURS/MINUTES
+   TIMEL = (ConvertHexToBCD(initialTime->tm_sec) << 8) ;   // SECOND
            
    // Enable RTCC, clear RTCWREN         
    RTCCON1Lbits.RTCEN = 1;  
@@ -102,37 +118,37 @@ void RTCC_TimeSet(struct RTCTime *initialTime)
 
 }
 
-bool RTCC_BCDTimeGet(RTCTime *currentTime)
+bool RTCC_BCDTimeGet(bcdTime_t *currentTime)
 {
     uint16_t register_value;
     if(RTCSTATLbits.SYNC){
-        return false;
+        return 0;
     }
 
 
     __builtin_write_RTCC_WRLOCK();
    
     register_value = DATEH;
-    currentTime->time.year = (register_value & 0xFF00) >> 8;
-    currentTime->time.month = register_value & 0x00FF;
+    currentTime->tm_year = (register_value & 0xFF00) >> 8;
+    currentTime->tm_mon = register_value & 0x00FF;
     
     register_value = DATEL;
-    currentTime->time.monthday = (register_value & 0xFF00) >> 8;
-    currentTime->time.weekday = register_value & 0x00FF;
+    currentTime->tm_mday = (register_value & 0xFF00) >> 8;
+    currentTime->tm_wday = register_value & 0x00FF;
     
     register_value = TIMEH;
-    currentTime->time.hour = (register_value & 0xFF00) >> 8;
-    currentTime->time.minute = register_value & 0x00FF;
+    currentTime->tm_hour = (register_value & 0xFF00) >> 8;
+    currentTime->tm_min = register_value & 0x00FF;
    
     register_value = TIMEL;
-    currentTime->time.second = (register_value & 0xFF00) >> 8;
+    currentTime->tm_sec = (register_value & 0xFF00) >> 8;
    
     RTCC_Lock();
 
-    return true;
+    return 1;
 }
 
-void RTCC_BCDTimeSet(RTCTime *initialTime)
+void RTCC_BCDTimeSet(bcdTime_t *initialTime)
 {
 
    __builtin_write_RTCC_WRLOCK();
@@ -141,10 +157,10 @@ void RTCC_BCDTimeSet(RTCTime *initialTime)
    
 
    // set RTCC initial time
-   DATEH = (initialTime->time.year << 8) | (initialTime->time.month) ;  // YEAR/MONTH-1
-   DATEL = (initialTime->time.monthday << 8) | (initialTime->time.weekday) ;  // /DAY-1/WEEKDAY
-   TIMEH = (initialTime->time.hour << 8) | (initialTime->time.minute); // /HOURS/MINUTES
-   TIMEL = (initialTime->time.second << 8);   // SECONDS   
+   DATEH = (initialTime->tm_year << 8) | (initialTime->tm_mon) ;  // YEAR/MONTH-1
+   DATEL = (initialTime->tm_mday << 8) | (initialTime->tm_wday) ;  // /DAY-1/WEEKDAY
+   TIMEH = (initialTime->tm_hour << 8) | (initialTime->tm_min); // /HOURS/MINUTES
+   TIMEL = (initialTime->tm_sec << 8);   // SECONDS   
            
    // Enable RTCC, clear RTCWREN         
    RTCCON1Lbits.RTCEN = 1;  
@@ -171,7 +187,7 @@ void RTCC_TimestampAEventManualSet(void)
     RTCSTATLbits.TSAEVT = 1;
 }
 
-bool RTCC_TimestampADataGet(struct RTCTime *currentTime)
+bool RTCC_TimestampADataGet(struct tm *currentTime)
 {
     uint16_t register_value;
     if(!RTCSTATLbits.TSAEVT){
@@ -179,19 +195,19 @@ bool RTCC_TimestampADataGet(struct RTCTime *currentTime)
     }
   
     register_value = TSADATEH;
-    currentTime->time.year = ConvertBCDToHex((register_value & 0xFF00) >> 8);
-    currentTime->time.month = ConvertBCDToHex(register_value & 0x00FF);
+    currentTime->tm_year = ConvertBCDToHex((register_value & 0xFF00) >> 8);
+    currentTime->tm_mon = ConvertBCDToHex(register_value & 0x00FF);
     
     register_value = TSADATEL;
-    currentTime->time.monthday = ConvertBCDToHex((register_value & 0xFF00) >> 8);
-    currentTime->time.weekday = ConvertBCDToHex(register_value & 0x00FF);
+    currentTime->tm_mday = ConvertBCDToHex((register_value & 0xFF00) >> 8);
+    currentTime->tm_wday = ConvertBCDToHex(register_value & 0x00FF);
     
     register_value = TSATIMEH;
-    currentTime->time.hour = ConvertBCDToHex((register_value & 0xFF00) >> 8);
-    currentTime->time.minute = ConvertBCDToHex(register_value & 0x00FF);
+    currentTime->tm_hour = ConvertBCDToHex((register_value & 0xFF00) >> 8);
+    currentTime->tm_min = ConvertBCDToHex(register_value & 0x00FF);
     
     register_value = TSATIMEL;
-    currentTime->time.second = ConvertBCDToHex((register_value & 0xFF00) >> 8);
+    currentTime->tm_sec = ConvertBCDToHex((register_value & 0xFF00) >> 8);
    
     RTCSTATLbits.TSAEVT = 0;
 
@@ -200,7 +216,7 @@ bool RTCC_TimestampADataGet(struct RTCTime *currentTime)
 
 
 
-bool RTCC_TimestampA_BCDDataGet(RTCTime *currentTime)
+bool RTCC_TimestampA_BCDDataGet(bcdTime_t *currentTime)
 {
     uint16_t register_value;
     if(!RTCSTATLbits.TSAEVT){
@@ -208,19 +224,19 @@ bool RTCC_TimestampA_BCDDataGet(RTCTime *currentTime)
     }
   
     register_value = TSADATEH;
-    currentTime->time.year = (register_value & 0xFF00) >> 8;
-    currentTime->time.month = (register_value & 0x00FF);
+    currentTime->tm_year = (register_value & 0xFF00) >> 8;
+    currentTime->tm_mon = (register_value & 0x00FF);
     
     register_value = TSADATEL;
-    currentTime->time.monthday = (register_value & 0xFF00) >> 8;
-    currentTime->time.weekday = (register_value & 0x00FF);
+    currentTime->tm_mday = (register_value & 0xFF00) >> 8;
+    currentTime->tm_wday = (register_value & 0x00FF);
     
     register_value = TSATIMEH;
-    currentTime->time.hour = (register_value & 0xFF00) >> 8;
-    currentTime->time.minute = (register_value & 0x00FF);
+    currentTime->tm_hour = (register_value & 0xFF00) >> 8;
+    currentTime->tm_min = (register_value & 0x00FF);
     
     register_value = TSATIMEL;
-    currentTime->time.second = (register_value & 0xFF00) >> 8;
+    currentTime->tm_sec = (register_value & 0xFF00) >> 8;
    
     RTCSTATLbits.TSAEVT = 0;
 
@@ -260,7 +276,40 @@ bool RTCC_Task(void)
     status = IFS3bits.RTCIF;
     if( IFS3bits.RTCIF)
     {
-       IFS3bits.RTCIF = false;
+       IFS3bits.RTCIF = 0;
     }
     return status;
 }
+
+void displayTime(void)
+{
+    RTCC_TimeGet(&currentTime);                                             // Read current time from RTCC
+    LCDWriteIntXY(1,3,currentTime.tm_year,2,0);
+    LCDWriteChar('/');
+    LCDWriteString(month[currentTime.tm_mon]);
+    LCDWriteChar('/');
+    LCDWriteInt(currentTime.tm_mday,2,0);
+    LCDWriteStringXY(1,13,WeekDay[currentTime.tm_wday]);
+    LCDWriteIntXY(1,17,currentTime.tm_hour,2,0);
+    LCDWriteChar(':');
+    LCDWriteInt(currentTime.tm_min,2,0);
+    LCDWriteChar(':');
+    LCDWriteInt(currentTime.tm_sec,2,0);
+}
+
+int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
+{
+    static uint8_t run;
+    
+    if(hour == startHour[weekday] && minute == startMinute[weekday])
+    {
+        run = 1;
+    }
+    
+    if(hour == stopHour[weekday] && minute == stopMinute[weekday])
+    {
+        run = 0;
+    }
+    return run;
+}
+    

@@ -39,7 +39,7 @@ FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Silvia_Graphical_PWM.X.${IMAGE_TYPE}.
 endif
 
 ifeq ($(COMPARE_BUILD), true)
-COMPARISON_BUILD=
+COMPARISON_BUILD=-mafrlcsj
 else
 COMPARISON_BUILD=
 endif
@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=glcd.c interrupt_manager.c pid.c pin_manager.c system.c pwm.c adc.c rtcc.c user.c main.c rtccOld.c
+SOURCEFILES_QUOTED_IF_SPACED=glcd.c interrupt_manager.c pid.c pin_manager.c system.c pwm.c adc.c rtcc.c user.c main.c touch.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/system.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/adc.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/user.o ${OBJECTDIR}/main.o ${OBJECTDIR}/rtccOld.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/glcd.o.d ${OBJECTDIR}/interrupt_manager.o.d ${OBJECTDIR}/pid.o.d ${OBJECTDIR}/pin_manager.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/adc.o.d ${OBJECTDIR}/rtcc.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/rtccOld.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/system.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/adc.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/user.o ${OBJECTDIR}/main.o ${OBJECTDIR}/touch.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/glcd.o.d ${OBJECTDIR}/interrupt_manager.o.d ${OBJECTDIR}/pid.o.d ${OBJECTDIR}/pin_manager.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/adc.o.d ${OBJECTDIR}/rtcc.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/touch.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/system.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/adc.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/user.o ${OBJECTDIR}/main.o ${OBJECTDIR}/rtccOld.o
+OBJECTFILES=${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/system.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/adc.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/user.o ${OBJECTDIR}/main.o ${OBJECTDIR}/touch.o
 
 # Source Files
-SOURCEFILES=glcd.c interrupt_manager.c pid.c pin_manager.c system.c pwm.c adc.c rtcc.c user.c main.c rtccOld.c
+SOURCEFILES=glcd.c interrupt_manager.c pid.c pin_manager.c system.c pwm.c adc.c rtcc.c user.c main.c touch.c
 
 
 CFLAGS=
@@ -158,12 +158,12 @@ ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/rtccOld.o: rtccOld.c  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/touch.o: touch.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/rtccOld.o.d 
-	@${RM} ${OBJECTDIR}/rtccOld.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  rtccOld.c  -o ${OBJECTDIR}/rtccOld.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/rtccOld.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/rtccOld.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	@${RM} ${OBJECTDIR}/touch.o.d 
+	@${RM} ${OBJECTDIR}/touch.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  touch.c  -o ${OBJECTDIR}/touch.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/touch.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/touch.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
 ${OBJECTDIR}/glcd.o: glcd.c  nbproject/Makefile-${CND_CONF}.mk
@@ -236,12 +236,12 @@ ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/rtccOld.o: rtccOld.c  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/touch.o: touch.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/rtccOld.o.d 
-	@${RM} ${OBJECTDIR}/rtccOld.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  rtccOld.c  -o ${OBJECTDIR}/rtccOld.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/rtccOld.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/rtccOld.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	@${RM} ${OBJECTDIR}/touch.o.d 
+	@${RM} ${OBJECTDIR}/touch.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  touch.c  -o ${OBJECTDIR}/touch.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/touch.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/touch.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

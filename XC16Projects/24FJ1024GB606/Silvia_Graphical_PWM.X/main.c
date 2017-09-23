@@ -61,7 +61,9 @@
                         // <editor-fold defaultstate="collapsed" desc="Globals">
 //int __attribute__ ((space(eedata))) Settings[43];                               // Global variable located in EEPROM (created by the space()attribute
 
-RTCTime time;                                                                   // declare the type of the time object
+extern struct tm currentTime;
+
+//RTCTime time;                                                                   // declare the type of the time object
 
 int const setpoint[]    =   {194, 275, 197};                                    //setpoint values
 
@@ -135,8 +137,10 @@ int main(void)
     while(1)
     {
         static int timer = 0;                                                   // Used to count up time in a loop, to auto exit if user in a menu too long
+
+        RTCC_TimeGet(&currentTime); 
         
-        time = getRTCTime();                                                    // get the time
+//        time = getRTCTime();                                                    // get the time
         
                         // <editor-fold defaultstate="collapsed" desc="Temperature Measurment">
         shortTermTemp[0] = ADCRead(13);                                          //Assign the ADC(13) (Boiler Temp) to a temporary variable
@@ -187,9 +191,9 @@ int main(void)
 // ******************************************************************************
                         // <editor-fold defaultstate="collapsed" desc="AutoStart, Timing, & Error Detection">
 
-        if(previous_time != time.second)
+        if(previous_time != currentTime.tm_sec)
         {
-            ONTimer = runTimer(time.weekday,time.hour,time.minute);
+            ONTimer = runTimer(currentTime.tm_wday, currentTime.tm_hour, currentTime.tm_min);
             
             if(power==1 || ONTimer==1)
             {
@@ -214,7 +218,7 @@ int main(void)
                 errorCount<20?airPump=1:(airPump=0);
             }
             
-            previous_time = time.second;
+            previous_time = currentTime.tm_sec;
         // </editor-fold>
 // ******************************************************************************
                         // <editor-fold defaultstate="collapsed" desc="InternalBGV & TempCalc (in user.c)">
@@ -327,7 +331,7 @@ int main(void)
                 count+=1;
             }
 */
-            if(time.minute == 0 && time.second < 5)
+            if(currentTime.tm_min == 0 && currentTime.tm_sec < 5)
             {
                 airPump = 1;
             }
@@ -586,8 +590,34 @@ int main(void)
                     goto done2;
                 }
             }
-            SetTime();
+
+ 
             
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            //            SetTime();
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             timer = 0;
 
             loadimg(&menu3[0], 1024,0);                         //Draw Menu3
@@ -630,7 +660,23 @@ int main(void)
             }
             
             timer = 0;
-            writeStartStopTimes();
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+//            writeStartStopTimes();
+
+
+
+
+
+
             loadimg(&menu3[0], 1024,0);                          //Draw Menu2
             __delay_ms(500);
             

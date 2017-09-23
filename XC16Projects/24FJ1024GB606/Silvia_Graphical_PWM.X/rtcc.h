@@ -1,26 +1,18 @@
 #ifndef _RTCC_H
 #define _RTCC_H
 
-#include <xc.h>
 #include "system.h"
+#include <stdbool.h>
+#include <stdint.h>
+#include <time.h>
 
-///#include <stdbool.h>
-//#include <stdint.h>
-//#include <time.h>
+typedef struct tm bcdTime_t;
 
-typedef struct _RTCTime
-{
- 	unsigned int year;
-	unsigned int month;
-	unsigned int day;
-    unsigned int monthday;
-	unsigned int weekday; // Monday is 0, Sunday is 6
-	unsigned int hour;
-	unsigned int minute;
-	unsigned int second;
-}
-RTCTime;
 
+
+/**
+ Section: Interface Routines
+*/
 
 /**
   @Summary
@@ -78,7 +70,7 @@ void RTCC_Initialize(void);
     Refer to the example for the function RTCC_Initialize
 */
 
-bool RTCC_TimeGet(struct RTCTime *currentTime);
+bool RTCC_TimeGet(struct tm *currentTime);
 
 /**
   @Summary
@@ -101,7 +93,7 @@ bool RTCC_TimeGet(struct RTCTime *currentTime);
     Refer to the example for the function RTCC_Initialize
 */
 
-void RTCC_TimeSet(struct RTCTime *initialTime);
+void RTCC_TimeSet(struct tm *initialTime);
 /**
   @Summary
     Returns the current time from the RTCC peripheral
@@ -125,7 +117,7 @@ void RTCC_TimeSet(struct RTCTime *initialTime);
     Refer to the example for the function RTCC_Initialize
 */
 
-bool RTCC_BCDTimeGet(RTCTime *currentTime);
+bool RTCC_BCDTimeGet(bcdTime_t *currentTime);
 
 /**
   @Summary
@@ -147,7 +139,7 @@ bool RTCC_BCDTimeGet(RTCTime *currentTime);
   @Example
     Refer to the example for the function RTCC_Initialize
 */
-void RTCC_BCDTimeSet(RTCTime *initialTime);
+void RTCC_BCDTimeSet(bcdTime_t *initialTime);
 
 /**
   @Summary
@@ -217,7 +209,7 @@ void RTCC_TimestampAEventManualSet(void);
   @Example
     Refer to the example for the function RTCC_Initialize
 */
-bool RTCC_TimestampADataGet(struct RTCTime *currentTime);
+bool RTCC_TimestampADataGet(struct tm *currentTime);
 
 
 /**
@@ -244,7 +236,7 @@ bool RTCC_TimestampADataGet(struct RTCTime *currentTime);
   @Example
     Refer to the example for the function RTCC_Initialize
 */
-bool RTCC_TimestampA_BCDDataGet(RTCTime *currentTime);
+bool RTCC_TimestampA_BCDDataGet(bcdTime_t *currentTime);
 
 
 /* Function:
@@ -258,8 +250,8 @@ bool RTCC_TimestampA_BCDDataGet(RTCTime *currentTime);
 */
 bool RTCC_Task(void);
 
-#endif // _RTCC_H
+void displayTime(void);
 
-/**
- End of File
-*/
+int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute);
+
+#endif

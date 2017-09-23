@@ -1,6 +1,5 @@
-build/default/production/adc.o:  \
-adc.c  \
-adc.h  \
+build/default/production/main.o:  \
+main.c  \
 system.h  \
 rtcc.h  \
 pin_manager.h  \
@@ -8,6 +7,8 @@ pin_manager.h  \
 traps.h  \
 glcd.h  \
 pid.h  \
+adc.h  \
 touch.h  \
 pwm.h  \
-user.h 
+user.h  \
+ menu.h 
