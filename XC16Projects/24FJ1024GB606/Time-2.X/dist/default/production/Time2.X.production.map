@@ -15,11 +15,11 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC30F/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC33F/gld \
+  build/default/production/mcc_generated_files/rtcc.o \
   build/default/production/main.o \
   build/default/production/glcd.o \
-  build/default/production/pin_manager.o \
-  build/default/production/rtcc.o \
   build/default/production/system.o \
+  build/default/production/pin_manager.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
   -Tp24FJ1024GB606.gld.00 \
@@ -55,7 +55,7 @@ c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normalda.Leo)
                               (__crt_start_mode_normal)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
-                              build/default/production/glcd.o (___delay32)
+                              build/default/production/main.o (___delay32)
 
 
 Selected CodeGuard Options:
@@ -87,11 +87,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x100               0x10a           0x18f  (399)
 .const                       0x20a               0x130           0x1c8  (456)
-.text                        0x33a               0x84a           0xc6f  (3183)
-.init.delay32                0xb84                0x1c            0x2a  (42)
-.dinit                       0xba0                 0x8             0xc  (12)
+.text                        0x33a               0x80c           0xc12  (3090)
+.init.delay32                0xb46                0x1c            0x2a  (42)
+.dinit                       0xb62                 0x8             0xc  (12)
 
-                 Total program memory used (bytes):          0xffc  (4092) <1%
+                 Total program memory used (bytes):          0xf9f  (3999) <1%
 
 
 Data Memory  [Origin = 0x800, Length = 0x8000]
@@ -143,11 +143,11 @@ External Symbols in Program Memory (by address):
                   0x000914                  _RTCC_TimestampADataGet
                   0x000998                  _RTCC_TimestampA_BCDDataGet
                   0x000a54                  _RTCC_Task
-                  0x000a7a                  _main
-                  0x000af8                  _PIN_MANAGER_Initialize
-                  0x000b44                  _SYSTEM_Initialize
-                  0x000b5a                  _OSCILLATOR_Initialize
-                  0x000b84                  ___delay32
+                  0x000a7a                  _PIN_MANAGER_Initialize
+                  0x000ac6                  _main
+                  0x000b08                  _SYSTEM_Initialize
+                  0x000b1c                  _OSCILLATOR_Initialize
+                  0x000b46                  ___delay32
                   0x0abf00                  __FSEC.sec
 
 External Symbols in Program Memory (by name):
@@ -156,8 +156,8 @@ External Symbols in Program Memory (by name):
                   0x00037c                  _LCDWriteChar
                   0x0003d6                  _LCDWriteInt
                   0x0003b0                  _LCDWriteString
-                  0x000b5a                  _OSCILLATOR_Initialize
-                  0x000af8                  _PIN_MANAGER_Initialize
+                  0x000b1c                  _OSCILLATOR_Initialize
+                  0x000a7a                  _PIN_MANAGER_Initialize
                   0x000834                  _RTCC_BCDTimeGet
                   0x0008ac                  _RTCC_BCDTimeSet
                   0x0006e2                  _RTCC_Initialize
@@ -168,10 +168,10 @@ External Symbols in Program Memory (by name):
                   0x000914                  _RTCC_TimestampADataGet
                   0x00090c                  _RTCC_TimestampAEventManualSet
                   0x000998                  _RTCC_TimestampA_BCDDataGet
-                  0x000b44                  _SYSTEM_Initialize
+                  0x000b08                  _SYSTEM_Initialize
                   0x000204                  __DefaultInterrupt
                   0x0abf00                  __FSEC.sec
-                  0x000b84                  ___delay32
+                  0x000b46                  ___delay32
                   0x000152                  __data_init
                   0x000152                  __data_init_da
                   0x00013c                  __psv_init
@@ -185,7 +185,7 @@ External Symbols in Program Memory (by name):
                   0x00020a                  _font
                   0x00060a                  _init_lcd
                   0x000494                  _loadimg
-                  0x000a7a                  _main
+                  0x000ac6                  _main
 
 Memory Configuration
 
@@ -209,11 +209,11 @@ aivt             0x000000           0xffffffff
 
 Linker script and memory map
 
+LOAD build/default/production/mcc_generated_files/rtcc.o
 LOAD build/default/production/main.o
 LOAD build/default/production/glcd.o
-LOAD build/default/production/pin_manager.o
-LOAD build/default/production/rtcc.o
 LOAD build/default/production/system.o
+LOAD build/default/production/pin_manager.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libfx-elf.a
@@ -300,44 +300,45 @@ __FDEVOPT1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x1ad9
+.debug_info       0x000000       0x1b94
  *(.debug_info)
- .debug_info      0x000000        0x26a build/default/production/main.o
- .debug_info      0x00026a        0x70e build/default/production/glcd.o
- .debug_info      0x000978        0x529 build/default/production/pin_manager.o
- .debug_info      0x000ea1        0x990 build/default/production/rtcc.o
- .debug_info      0x001831        0x2a8 build/default/production/system.o
+ .debug_info      0x000000        0x9ae build/default/production/mcc_generated_files/rtcc.o
+ .debug_info      0x0009ae        0x307 build/default/production/main.o
+ .debug_info      0x000cb5        0x70e build/default/production/glcd.o
+ .debug_info      0x0013c3        0x2a8 build/default/production/system.o
+ .debug_info      0x00166b        0x529 build/default/production/pin_manager.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x3e7
+.debug_abbrev     0x000000        0x476
  *(.debug_abbrev)
- .debug_abbrev    0x000000         0x63 build/default/production/main.o
- .debug_abbrev    0x000063        0x152 build/default/production/glcd.o
- .debug_abbrev    0x0001b5         0x4c build/default/production/pin_manager.o
- .debug_abbrev    0x000201        0x17c build/default/production/rtcc.o
- .debug_abbrev    0x00037d         0x6a build/default/production/system.o
+ .debug_abbrev    0x000000        0x1b3 build/default/production/mcc_generated_files/rtcc.o
+ .debug_abbrev    0x0001b3         0xbb build/default/production/main.o
+ .debug_abbrev    0x00026e        0x152 build/default/production/glcd.o
+ .debug_abbrev    0x0003c0         0x6a build/default/production/system.o
+ .debug_abbrev    0x00042a         0x4c build/default/production/pin_manager.o
 
-.debug_line       0x000000        0x57e
+.debug_line       0x000000        0x606
  *(.debug_line)
- .debug_line      0x000000         0x98 build/default/production/main.o
- .debug_line      0x000098        0x1a1 build/default/production/glcd.o
- .debug_line      0x000239         0xbb build/default/production/pin_manager.o
- .debug_line      0x0002f4        0x18d build/default/production/rtcc.o
- .debug_line      0x000481         0xfd build/default/production/system.o
+ .debug_line      0x000000        0x1a2 build/default/production/mcc_generated_files/rtcc.o
+ .debug_line      0x0001a2        0x10d build/default/production/main.o
+ .debug_line      0x0002af        0x1a1 build/default/production/glcd.o
+ .debug_line      0x000450         0xfb build/default/production/system.o
+ .debug_line      0x00054b         0xbb build/default/production/pin_manager.o
 
 .debug_frame      0x000000        0x3b2
  *(.debug_frame)
- .debug_frame     0x000000         0x30 build/default/production/main.o
- .debug_frame     0x000030        0x164 build/default/production/glcd.o
- .debug_frame     0x000194         0x30 build/default/production/pin_manager.o
- .debug_frame     0x0001c4        0x1a2 build/default/production/rtcc.o
- .debug_frame     0x000366         0x4c build/default/production/system.o
+ .debug_frame     0x000000        0x1a2 build/default/production/mcc_generated_files/rtcc.o
+ .debug_frame     0x0001a2         0x30 build/default/production/main.o
+ .debug_frame     0x0001d2        0x164 build/default/production/glcd.o
+ .debug_frame     0x000336         0x4c build/default/production/system.o
+ .debug_frame     0x000382         0x30 build/default/production/pin_manager.o
 
-.debug_str        0x000000         0xd2
+.debug_str        0x000000         0xdc
  *(.debug_str)
- .debug_str       0x000000         0x12 build/default/production/glcd.o
- .debug_str       0x000012         0xa4 build/default/production/rtcc.o
- .debug_str       0x0000b6         0x1c build/default/production/system.o
+ .debug_str       0x000000         0xa4 build/default/production/mcc_generated_files/rtcc.o
+ .debug_str       0x0000a4          0xa build/default/production/main.o
+ .debug_str       0x0000ae         0x12 build/default/production/glcd.o
+ .debug_str       0x0000c0         0x1c build/default/production/system.o
 
 .debug_loc
  *(.debug_loc)
@@ -349,15 +350,15 @@ __FDEVOPT1
                   0x000000        0x231
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x1b build/default/production/main.o
+                  0x000000         0xed build/default/production/mcc_generated_files/rtcc.o
  .debug_pubnames
-                  0x00001b         0xba build/default/production/glcd.o
+                  0x0000ed         0x1b build/default/production/main.o
  .debug_pubnames
-                  0x0000d5         0x2d build/default/production/pin_manager.o
+                  0x000108         0xba build/default/production/glcd.o
  .debug_pubnames
-                  0x000102         0xed build/default/production/rtcc.o
+                  0x0001c2         0x42 build/default/production/system.o
  .debug_pubnames
-                  0x0001ef         0x42 build/default/production/system.o
+                  0x000204         0x2d build/default/production/pin_manager.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -365,15 +366,15 @@ __FDEVOPT1
 .debug_aranges    0x000000         0x78
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/main.o
+                  0x000000         0x18 build/default/production/mcc_generated_files/rtcc.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/glcd.o
+                  0x000018         0x18 build/default/production/main.o
  .debug_aranges
-                  0x000030         0x18 build/default/production/pin_manager.o
+                  0x000030         0x18 build/default/production/glcd.o
  .debug_aranges
-                  0x000048         0x18 build/default/production/rtcc.o
+                  0x000048         0x18 build/default/production/system.o
  .debug_aranges
-                  0x000060         0x18 build/default/production/system.o
+                  0x000060         0x18 build/default/production/pin_manager.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -2397,43 +2398,39 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000078        0x155
+                  0x000078        0x182
  .debug_pubtypes
-                  0x000078         0x19 build/default/production/main.o
+                  0x000078         0xa7 build/default/production/mcc_generated_files/rtcc.o
  .debug_pubtypes
-                  0x000091         0x65 build/default/production/glcd.o
+                  0x00011f         0x46 build/default/production/main.o
  .debug_pubtypes
-                  0x0000f6         0x12 build/default/production/pin_manager.o
+                  0x000165         0x65 build/default/production/glcd.o
  .debug_pubtypes
-                  0x000108         0xa7 build/default/production/rtcc.o
+                  0x0001ca         0x1e build/default/production/system.o
  .debug_pubtypes
-                  0x0001af         0x1e build/default/production/system.o
+                  0x0001e8         0x12 build/default/production/pin_manager.o
 
 __c30_signature
-                  0x0001cd         0x30
+                  0x0001fa         0x30
  __c30_signature
-                  0x0001cd          0x6 build/default/production/main.o
+                  0x0001fa          0x6 build/default/production/mcc_generated_files/rtcc.o
  __c30_signature
-                  0x0001d3          0x6 build/default/production/glcd.o
+                  0x000200          0x6 build/default/production/main.o
  __c30_signature
-                  0x0001d9          0x6 build/default/production/pin_manager.o
+                  0x000206          0x6 build/default/production/glcd.o
  __c30_signature
-                  0x0001df          0x6 build/default/production/rtcc.o
+                  0x00020c          0x6 build/default/production/system.o
  __c30_signature
-                  0x0001e5          0x6 build/default/production/system.o
+                  0x000212          0x6 build/default/production/pin_manager.o
  __c30_signature
-                  0x0001eb          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
+                  0x000218          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
  __c30_signature
-                  0x0001f1          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
+                  0x00021e          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
  __c30_signature
-                  0x0001f7          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
+                  0x000224          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
 
 .nbss               0x0800          0x2
- .nbss              0x0800          0x2 build/default/production/rtcc.o
-
-.config_BTMODE    0x801800          0x2
- .config_BTMODE
-                  0x801800          0x2 build/default/production/system.o
+ .nbss              0x0800          0x2 build/default/production/mcc_generated_files/rtcc.o
 
 .config_ALTVREF
                   0x0abf2c          0x2
@@ -2457,11 +2454,14 @@ __c30_signature
 .config_IESO      0x0abf18          0x2
  .config_IESO     0x0abf18          0x2 build/default/production/system.o
 
+.config_BSLIM     0x0abf10          0x2
+ .config_BSLIM    0x0abf10          0x2 build/default/production/system.o
+
 .const              0x820a        0x130 load address 0x00020a  
  .const             0x820a        0x130 build/default/production/glcd.o
                     0x820a                  _font
 
-.text             0x00033a        0x84a
+.text             0x00033a        0x80c
  .text            0x00033a        0x3a8 build/default/production/glcd.o
                   0x00033a                  _GoToXY
                   0x00037c                  _LCDWriteChar
@@ -2475,7 +2475,7 @@ __c30_signature
                   0x000642                  _e_togg
                   0x000652                  _cls
                   0x0006a4                  _displayOn
- .text            0x0006e2        0x398 build/default/production/rtcc.o
+ .text            0x0006e2        0x398 build/default/production/mcc_generated_files/rtcc.o
                   0x0006e2                  _RTCC_Initialize
                   0x00072e                  _RTCC_TimeGet
                   0x0007bc                  _RTCC_TimeSet
@@ -2486,17 +2486,17 @@ __c30_signature
                   0x000914                  _RTCC_TimestampADataGet
                   0x000998                  _RTCC_TimestampA_BCDDataGet
                   0x000a54                  _RTCC_Task
- .text            0x000a7a         0x7e build/default/production/main.o
-                  0x000a7a                  _main
- .text            0x000af8         0x4c build/default/production/pin_manager.o
-                  0x000af8                  _PIN_MANAGER_Initialize
- .text            0x000b44         0x40 build/default/production/system.o
-                  0x000b44                  _SYSTEM_Initialize
-                  0x000b5a                  _OSCILLATOR_Initialize
+ .text            0x000a7a         0x4c build/default/production/pin_manager.o
+                  0x000a7a                  _PIN_MANAGER_Initialize
+ .text            0x000ac6         0x42 build/default/production/main.o
+                  0x000ac6                  _main
+ .text            0x000b08         0x3e build/default/production/system.o
+                  0x000b08                  _SYSTEM_Initialize
+                  0x000b1c                  _OSCILLATOR_Initialize
 
-.init.delay32     0x000b84         0x1c
- .init.delay32    0x000b84         0x1c c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
-                  0x000b84                  ___delay32
+.init.delay32     0x000b46         0x1c
+ .init.delay32    0x000b46         0x1c c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
+                  0x000b46                  ___delay32
 
-.dinit            0x000ba0          0x8
- .dinit           0x000ba0          0x8 data_init
+.dinit            0x000b62          0x8
+ .dinit           0x000b62          0x8 data_init

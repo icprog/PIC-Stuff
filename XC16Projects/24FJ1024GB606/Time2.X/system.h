@@ -2,10 +2,8 @@
 #define	SYSTEM_H
 
 #include    <xc.h>
-#include "mcc_generated_files/pin_manager.h"
-#include "mcc_generated_files/rtcc.h"
-
-//#include    "pin_manager.h"
+#include    "pin_manager.h"
+#include    "rtcc.h"
 #include    <stdint.h>
 #include    <stdbool.h>
 //#include    "interrupt_manager.h"
@@ -22,8 +20,8 @@
 //#include    "menu.h"
 
 
-#define _XTAL_FREQ  32000000UL
-#define FOSC        32000000UL
+#define _XTAL_FREQ  8000000UL
+#define FOSC        8000000UL
 #define FCY         FOSC/2
 
 #include <libpic30.h>                   // FOSC & FCY "MUST" be defined before including libPIC30H
