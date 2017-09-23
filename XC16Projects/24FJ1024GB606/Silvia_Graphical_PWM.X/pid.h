@@ -1,7 +1,7 @@
 #ifndef PID_H
 #define	PID_H
-
-#include <stdint.h>
+#include "system.h"
+//#include <stdint.h>
 
 // **************** Calculate PID (Call more often for fast loops) *************
 // *** Output will update every time this is called, so, Reset & derivative ****

@@ -1,19 +1,17 @@
 #include    "system.h"                                                             // System funct/params, like osc/peripheral config
 #include    "menu.h"
-// ***************************************************************************************************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Defines">
 // *************** Outputs ***************************************************************************************************************************************
-#define boilerOutput            _LATB7
-#define groupheadOutput         _LATB8
-#define piezoOutput             _LATF1
-#define backLightOn             _LATD4
-#define airPump                 _LATD5
+#define boilerOutput            _LATB7          //Change
+#define groupheadOutput         _LATB8          //Change
+#define piezoOutput             _LATF1                                          // Piezo Alarm Output G
+#define backLightOn             _LATD4                                          // Backlight On/Off G
+#define airPump                 _LATD5                                          // Air pump (for level sensing) G
 
-// *************** Intputs ****************************************************************************************************************************************
-#define power                   _RG9                
-#define steamSwitch             _RB5 
-#define brewSwitch              _RB4
-#define waterSwitch             _RB2
+// *************** Inputs ****************************************************************************************************************************************
+#define power                   _RG9                                            // Power Switch Input G             
+#define steamSwitch             _RB5                                            // Steam Switch Input G
+#define brewSwitch              _RB4                                            // Brew Switch Input G
+#define waterSwitch             _RB3                                            // Water Switch Input G
 // ***************************************************************************************************************************************************************
 
 //***************************Timer2 set in pwm.c
@@ -21,7 +19,7 @@
 
 #define max                     2048                                // This needs to move to EEPROM
 #define min                     400                                 // Also needs to move to EEPROM & have User interface coded
-#define preInfusionDutyCycle    500                                  // This needs to move to EEPROM & have a User Interface set up so user can change it
+#define preInfusionDutyCycle    500                                 // This needs to move to EEPROM & have a User Interface set up so user can change it
 #define preInfusionTime         (25)                                // length of time to run pump to preInfuse puck
 #define soakTime                (preInfusionTime + 15)              // Length of time for wetted puck to soak
 #define startRamp               (soakTime + 25)                     // StartRamp starts pump and Ramps up to Max Pressure
@@ -56,53 +54,30 @@
 #define waterLevel              level                                           //ADCRead(14) is Water Tank level signal
 #define numSamples              60                                              //Number of samples to average for temp[] readings (Do not set higher than 20, or keep Max temp below 325F)
                                                                                 //You have 65535/(max temp * 10) samples available Changed to float, 300 no worries!! Should be able to get 
-// </editor-fold>
 // ***************************************************************************************************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Globals">
-//int __attribute__ ((space(eedata))) Settings[43];                               // Global variable located in EEPROM (created by the space()attribute
-
 extern struct tm currentTime;
-
-//RTCTime time;                                                                   // declare the type of the time object
 
 int const setpoint[]    =   {194, 275, 197};                                    //setpoint values
 
-int const deadband[]    =   {  5,   1,   5};                                          //dead band values
-
-//int const Kp[]          =   { 10,  20,  10};
-
-//int const Ki[]          =   { 25,  25,  25};
-
-//int const Kd[]          =   { 35,  35,  35};
+int const deadband[]    =   {  5,   1,   5};                                    //dead band values
 
 char *desc[] = {"Water Temp:","Steam Temp:","Group Temp:"};
 
 int powerFail = 1;                                                              //Setting powerFail to 1, instructs the user to set the time
 
-// </editor-fold>
 // ******************************************************************************
 int main(void)
 {
-                        // <editor-fold defaultstate="collapsed" desc="Initiializations">
     SYSTEM_Initialize();
 // ******************************************************************************
-//    unsigned char initCon = 0;
     
-//    for(initCon=0;initCon<3;initCon++)
-  //  {
-    //    Init_PID(initCon,eepromGetData(Kp[initCon]),eepromGetData(Ki[initCon]),eepromGetData(Kd[initCon]),0,(PIDDuration + 1));
-    //}
-        // </editor-fold>
-// ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Local Variables">
-    
-    uint8_t blink = 1, errorCount = 0, count2 = 0;
-    
-    uint16_t dutyCycle = 0;
+    uint8_t blink = 1, errorCount = 0, count2 = 0;                              // blink flashes display when level low, errorCount disables
+                                                                                // power, if level remains low too long, count2 ramps pump pressure
+    uint16_t dutyCycle = 0;                                                     // Water Pump duty cycle?? 
 
     int samples[3][numSamples];                                                 //Used to average temp[] over "numSamples" of samples
     
-    int temp[3], shortTermTemp[3];
+    int temp[3], shortTermTemp[3];                                              
     
     unsigned char sampleIndex = 0;                                              //Used to calculate average sample of temp[]
     
@@ -110,7 +85,7 @@ int main(void)
 
     int i = 0, a = 0;                                                           // x is used for holding shot timer value for 20 seconds before resetting to zero
     
-    char TestKey;   //, testSwitch;                                             // Variable used for Storing Which Menu Key is Pressed, or which hardware key is on
+    char TestKey;                                                               // Variable used for Storing Which Menu Key is Pressed
 
     int internalBGV;
     
@@ -120,15 +95,12 @@ int main(void)
             
     int counter[6] = {0,0,0,0,0,0};                                             //PID Counter for boiler temp, steam temp, and grouphead temp, as well as shot progress counter, shot timer, and warning timer
     
-///    int switches[3] = {0,0,0};                                                  //powerSwitchinput, steamSwitch, brewSwitch, waterSwitch
-    
     unsigned int level = 0;
     
     char ONTimer = 0, powerSwitch = 0;
     
     uint16_t count = 0;
     
- // </editor-fold>
 // ******************************************************************************
     setDutyCycle(dutyCycle);
     
@@ -140,10 +112,7 @@ int main(void)
 
         RTCC_TimeGet(&currentTime); 
         
-//        time = getRTCTime();                                                    // get the time
-        
-                        // <editor-fold defaultstate="collapsed" desc="Temperature Measurment">
-        shortTermTemp[0] = ADCRead(13);                                          //Assign the ADC(13) (Boiler Temp) to a temporary variable
+        shortTermTemp[0] = ADCRead(13);                                         //Assign the ADC(13) (Boiler Temp) to a temporary variable
         
         total[0] = total[0] - samples[0][sampleIndex];                          // Subtract the oldest sample data from the total
 
@@ -187,10 +156,8 @@ int main(void)
             sampleIndex = 0;                                                    //Reset to zero
         }
         GroupHeadTemp = total[2] / numSamples;                                  // Assign the average value of total to the GroupHeadTemp variable
-        // </editor-fold>
-// ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="AutoStart, Timing, & Error Detection">
 
+// ******************************************************************************
         if(previous_time != currentTime.tm_sec)
         {
             ONTimer = runTimer(currentTime.tm_wday, currentTime.tm_hour, currentTime.tm_min);
@@ -219,20 +186,16 @@ int main(void)
             }
             
             previous_time = currentTime.tm_sec;
-        // </editor-fold>
-// ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="InternalBGV & TempCalc (in user.c)">
 
+// ******************************************************************************
             internalBGV = ADCRead(0x1A);
       
             for(i = 0;i<2;++i)
             {
                 temp[i] = TempCalc(temp[i]);
-            } 
-            // </editor-fold>
-// ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Main Menu Display">
+            }
             
+// ******************************************************************************
 /*            if (dutyCycle < 0x800)                  // 0x800 = 2048, 100 % output is 2047, but going to 2048 ensures the pin will stay at 100%                            
             {
                 count +=1;
@@ -317,12 +280,7 @@ int main(void)
             }
         }
         
-
-            // </editor-fold>
 // ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Power Switch is ON">
-        
-
         if(powerSwitch == 1)
         {
 /*            if(IFS0bits.T2IF)
@@ -350,10 +308,8 @@ int main(void)
             }
 
     //        GroupHeadPID = PID_Calculate(2, setpoint, temp);
-        // </editor-fold>
-// ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Steam Switch is ON">
             
+// ******************************************************************************
             if(steamSwitch == 1)                                                //Steam setpoint takes priority
             {
                 if(steamSetpoint - boilerTemperature > steamDeadband)
@@ -405,10 +361,8 @@ int main(void)
                     }
                 }
             }
-            // </editor-fold>
+            
 // ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="GroupHead Temperature Control">
-        
             if((groupHeadSetpoint - GroupHeadTemp) > GroupHeadDeadband)
             {
                 groupheadOutput = 1;
@@ -432,10 +386,8 @@ int main(void)
                     groupheadOutput = 0;
                 }
             }
-            // </editor-fold>
+
 // ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="BrewSwitch is ON">
-          
             if(brewSwitch == 1)
             {   
                 a = 0;
@@ -530,10 +482,8 @@ int main(void)
                     shotTimer =         0;
                 }
             }
-            // </editor-fold>
-// ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="WaterSwitch is ON">
 
+// ******************************************************************************
             if(waterSwitch)
             {
                 dutyCycle = 2048;
@@ -547,18 +497,14 @@ int main(void)
             dutyCycle           = 0;
             piezoOutput         = 0;
         }
-            // </editor-fold>
+
 // ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Read Switches">
-        
         if(!brewSwitch && !steamSwitch && !waterSwitch)
         {
             dutyCycle =     0;
         }
-        // </editor-fold>
-// ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Touch Menu's">
 
+// ******************************************************************************
         TestKey = menuRead();
 // ******************************************************************************
 //        heartBeat();                                                            // HeartBeat displays the HeartBeat on the LCD,
@@ -787,7 +733,7 @@ int main(void)
         }
  
         Exit:
-        // </editor-fold>
+                        
 // ******************************************************************************
         ClrWdt();                                                               //Clear (Re-Set) the WatchDog Timer
     }

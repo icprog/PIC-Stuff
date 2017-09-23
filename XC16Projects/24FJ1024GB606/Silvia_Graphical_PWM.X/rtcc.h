@@ -94,6 +94,12 @@ bool RTCC_TimeGet(struct tm *currentTime);
 */
 
 void RTCC_TimeSet(struct tm *initialTime);
+
+
+void displayTime(void);
+
+int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute);
+
 /**
   @Summary
     Returns the current time from the RTCC peripheral
@@ -117,7 +123,7 @@ void RTCC_TimeSet(struct tm *initialTime);
     Refer to the example for the function RTCC_Initialize
 */
 
-bool RTCC_BCDTimeGet(bcdTime_t *currentTime);
+//bool RTCC_BCDTimeGet(bcdTime_t *currentTime);
 
 /**
   @Summary
@@ -139,7 +145,7 @@ bool RTCC_BCDTimeGet(bcdTime_t *currentTime);
   @Example
     Refer to the example for the function RTCC_Initialize
 */
-void RTCC_BCDTimeSet(bcdTime_t *initialTime);
+//void RTCC_BCDTimeSet(bcdTime_t *initialTime);
 
 /**
   @Summary
@@ -209,7 +215,7 @@ void RTCC_TimestampAEventManualSet(void);
   @Example
     Refer to the example for the function RTCC_Initialize
 */
-bool RTCC_TimestampADataGet(struct tm *currentTime);
+//bool RTCC_TimestampADataGet(struct tm *currentTime);
 
 
 /**
@@ -236,7 +242,7 @@ bool RTCC_TimestampADataGet(struct tm *currentTime);
   @Example
     Refer to the example for the function RTCC_Initialize
 */
-bool RTCC_TimestampA_BCDDataGet(bcdTime_t *currentTime);
+//bool RTCC_TimestampA_BCDDataGet(bcdTime_t *currentTime);
 
 
 /* Function:
@@ -248,10 +254,6 @@ bool RTCC_TimestampA_BCDDataGet(bcdTime_t *currentTime);
   Description:
     This is the status function for the RTCC peripheral. 
 */
-bool RTCC_Task(void);
-
-void displayTime(void);
-
-int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute);
+//bool RTCC_Task(void);
 
 #endif

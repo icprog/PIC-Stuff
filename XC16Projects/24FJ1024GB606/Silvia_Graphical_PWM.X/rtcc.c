@@ -118,6 +118,65 @@ void RTCC_TimeSet(struct tm *initialTime)
 
 }
 
+
+void displayTime(void)
+{
+    RTCC_TimeGet(&currentTime);                                             // Read current time from RTCC
+    LCDWriteIntXY(1,3,currentTime.tm_year,2,0);
+    LCDWriteChar('/');
+    LCDWriteString(month[currentTime.tm_mon]);
+    LCDWriteChar('/');
+    LCDWriteInt(currentTime.tm_mday,2,0);
+    LCDWriteStringXY(1,13,WeekDay[currentTime.tm_wday]);
+    LCDWriteIntXY(1,17,currentTime.tm_hour,2,0);
+    LCDWriteChar(':');
+    LCDWriteInt(currentTime.tm_min,2,0);
+    LCDWriteChar(':');
+    LCDWriteInt(currentTime.tm_sec,2,0);
+}
+
+int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
+{
+    static uint8_t run;
+    
+    if(hour == startHour[weekday] && minute == startMinute[weekday])
+    {
+        run = 1;
+    }
+    
+    if(hour == stopHour[weekday] && minute == stopMinute[weekday])
+    {
+        run = 0;
+    }
+    return run;
+}
+
+static uint8_t ConvertHexToBCD(uint8_t hexvalue)
+{
+    uint8_t bcdvalue;
+    bcdvalue = (hexvalue / 10) << 4;
+    bcdvalue = bcdvalue | (hexvalue % 10);
+    return (bcdvalue);
+}
+
+static uint8_t ConvertBCDToHex(uint8_t bcdvalue)
+{
+    uint8_t hexvalue;
+    hexvalue = (((bcdvalue & 0xF0) >> 4)* 10) + (bcdvalue & 0x0F);
+    return hexvalue;
+}
+
+void RTCC_TimeReset(bool reset)
+{
+    rtccTimeInitialized = reset;
+}
+
+static bool RTCCTimeInitialized(void)
+{
+    return(rtccTimeInitialized);
+}
+
+/*
 bool RTCC_BCDTimeGet(bcdTime_t *currentTime)
 {
     uint16_t register_value;
@@ -167,21 +226,14 @@ void RTCC_BCDTimeSet(bcdTime_t *initialTime)
    RTCC_Lock();
 
 }
-
+*/
 /**
  This function implements RTCC_TimeReset.This function is used to
  used by application to reset the RTCC value and reinitialize RTCC value.
 */
-void RTCC_TimeReset(bool reset)
-{
-    rtccTimeInitialized = reset;
-}
 
-static bool RTCCTimeInitialized(void)
-{
-    return(rtccTimeInitialized);
-}
 
+/*
 void RTCC_TimestampAEventManualSet(void)
 {
     RTCSTATLbits.TSAEVT = 1;
@@ -242,23 +294,7 @@ bool RTCC_TimestampA_BCDDataGet(bcdTime_t *currentTime)
 
     return true;
 }
-
-
-
-static uint8_t ConvertHexToBCD(uint8_t hexvalue)
-{
-    uint8_t bcdvalue;
-    bcdvalue = (hexvalue / 10) << 4;
-    bcdvalue = bcdvalue | (hexvalue % 10);
-    return (bcdvalue);
-}
-
-static uint8_t ConvertBCDToHex(uint8_t bcdvalue)
-{
-    uint8_t hexvalue;
-    hexvalue = (((bcdvalue & 0xF0) >> 4)* 10) + (bcdvalue & 0x0F);
-    return hexvalue;
-}
+*/
 
 
 /* Function:
@@ -270,6 +306,8 @@ static uint8_t ConvertBCDToHex(uint8_t bcdvalue)
   Description:
     This is the status function for the RTCC peripheral. 
 */
+
+/*
 bool RTCC_Task(void)
 {
     bool status;
@@ -280,36 +318,4 @@ bool RTCC_Task(void)
     }
     return status;
 }
-
-void displayTime(void)
-{
-    RTCC_TimeGet(&currentTime);                                             // Read current time from RTCC
-    LCDWriteIntXY(1,3,currentTime.tm_year,2,0);
-    LCDWriteChar('/');
-    LCDWriteString(month[currentTime.tm_mon]);
-    LCDWriteChar('/');
-    LCDWriteInt(currentTime.tm_mday,2,0);
-    LCDWriteStringXY(1,13,WeekDay[currentTime.tm_wday]);
-    LCDWriteIntXY(1,17,currentTime.tm_hour,2,0);
-    LCDWriteChar(':');
-    LCDWriteInt(currentTime.tm_min,2,0);
-    LCDWriteChar(':');
-    LCDWriteInt(currentTime.tm_sec,2,0);
-}
-
-int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
-{
-    static uint8_t run;
-    
-    if(hour == startHour[weekday] && minute == startMinute[weekday])
-    {
-        run = 1;
-    }
-    
-    if(hour == stopHour[weekday] && minute == stopMinute[weekday])
-    {
-        run = 0;
-    }
-    return run;
-}
-    
+  */  
