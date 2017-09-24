@@ -99,8 +99,8 @@ uint8_t menuRead()
 
     if (key != KEY_NONE)
     {
-        k = 15;
-        L = 25;
+        k = 150;
+        L = 250;
         
         
         if (lastKeyState != key)

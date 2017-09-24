@@ -1,8 +1,6 @@
 #ifndef RTCCMENU_H
 #define	RTCCMENU_H
 
-#include <xc.h>
-
 
 const unsigned char rtccMenu [] = 
 {

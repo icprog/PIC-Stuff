@@ -6,69 +6,9 @@
 #include <stdint.h>
 #include <time.h>
 
-typedef struct tm bcdTime_t;
-
-
-
-/**
- Section: Interface Routines
-*/
-
-/**
-  @Summary
-    Initializes and enables RTCC peripheral
-
-  @Description
-    This function sets a time in the RTCC and enables 
-    RTCC for operation. It will also configure the Alarm settings.
-
-  @Preconditions
-    None
-
-  @Param
-    None
-
-  @Returns
-    None
-
-  @Example
-    <code>
-    struct tm currentTime;
-
-    RTCC_Initialize();
-
-    while(!RTCC_TimeGet(&currentTime))
-    {
-        // Do something
-    }
-    </code>
-*/
+//typedef struct tm bcdTime_t;
 
 void RTCC_Initialize(void);
-
-
-/**
-  @Summary
-    Returns the current time from the RTCC peripheral
-
-  @Description
-    This function returns the current time from the RTCC peripheral. This
-    function uses the C library type struct tm parameter.
-
-  @Preconditions
-    None
-
-  @Param
-    currentTime - This the parameter which gets filled in by the function. The
-    values are set by reading the hardware peripheral
-
-  @Returns
-    Whether the data is available or not, true if the data is available.
-    false if the data is not available.
-
-  @Example
-    Refer to the example for the function RTCC_Initialize
-*/
 
 bool RTCC_TimeGet(struct tm *currentTime);
 
@@ -93,7 +33,7 @@ bool RTCC_TimeGet(struct tm *currentTime);
     Refer to the example for the function RTCC_Initialize
 */
 
-void RTCC_TimeSet(struct tm *initialTime);
+void RTCC_TimeSet(struct tm *currentTime);
 
 
 void displayTime(void);

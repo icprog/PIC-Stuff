@@ -1,5 +1,5 @@
 #include "system.h"
-#include "rtcc.h"
+#include "rtccMenu.h"
 
 
 static void RTCC_Lock(void);
@@ -8,9 +8,10 @@ static bool RTCCTimeInitialized(void);
 static uint8_t ConvertHexToBCD(uint8_t hexvalue);
 static uint8_t ConvertBCDToHex(uint8_t bcdvalue);
 
-struct tm initialTime;
+//struct tm initialTime;
 struct tm currentTime;
 
+extern int powerFail;
 
 
 char *WeekDay[7]    = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
@@ -38,9 +39,9 @@ void RTCC_Initialize(void)
    {
        // set 2017-09-22 11-09-15
        DATEH = 0x1709;    // Year/Month
-       DATEL = 0x2205;    // Date/Wday
-       TIMEH = 0x1109;    // hours/minutes
-       TIMEL = 0x1500;    // seconds
+       DATEL = 0x2400;    // Date/Wday
+       TIMEH = 0x0239;    // hours/minutes
+       TIMEL = 0x5500;    // seconds
    }
 
    // PWCPS 1:1; PS 1:1; CLKSEL SOSC; FDIV 0; 
@@ -98,24 +99,283 @@ bool RTCC_TimeGet(struct tm *currentTime)
     return 1;
 }
 
-void RTCC_TimeSet(struct tm *initialTime)
+
+void RTCC_TimeSet(struct tm *currentTime)
 {
+    uint8_t sel = 0, done = 0;
+    
+    uint16_t timer = 0;                                                     // Used to return to operation if user does not finish setting time!
 
-  __builtin_write_RTCC_WRLOCK();
+    while(!done)
+    {
+        if(timer < 1)
+        {
+            cls();
+            loadimg(&rtccMenu[0], 1024,0);                                           //Draw rtccMenu
+        }
+        
+        timer += 1;
+                    
+        if(timer > 10000)                      
+        {
+            timer = 0;
+            cls();
+            done = 1;                                                           // Exit while loop
+        }
+        
+        displayTime();
 
-   RTCCON1Lbits.RTCEN = 0;
+        __builtin_write_RTCC_WRLOCK();
+
+        RTCCON1Lbits.RTCEN = 0;
+        
+        LCDWriteStringXY(3,3,"\"Enter\" for n");
+        LCDWriteStringXY(3,16,"ext Field");
+        LCDWriteStringXY(4,3,"Up/Dn keys to");
+        LCDWriteStringXY(4,17,"change Time.")
+        
+        
+        if(sel == 0)
+        {
+            LCDWriteStringXY(2,3,"^^");                                         // Draw Pointer, to show what we are setting
+        }
+        
+        if(sel == 1)
+        {
+            LCDWriteStringXY(2,3,"   ^^^");                                      // Draw Pointer, to show what we are setting
+        }
+        
+        if(sel == 2)
+        {
+            LCDWriteStringXY(2,6,"    ^^");                              // Draw Pointer
+        }
+        
+        if(sel == 3)
+        {
+            LCDWriteStringXY(2,10,"   ^^^");                              // Draw Pointer
+        }
+        
+        if(sel== 4)
+        {
+            LCDWriteStringXY(2,13,"   ");
+            LCDWriteStringXY(2,17,"^^");
+        }
+        
+        if (sel == 5)
+        {
+            LCDWriteStringXY(2,17,"   ^^");
+        }
+        if(sel == 6)
+        {
+            LCDWriteStringXY(2,20,"   ^^");
+        }
+        
+        char key = menuRead();
+
+        switch(key)
+        {
+            case KEY_2:
+                if(sel==0)
+                {
+                    if (currentTime->tm_year == 99)
+                    {
+                        currentTime->tm_year = 00;
+                    }
+                    else
+                    {
+                        currentTime->tm_year += 1;
+                    }
+                }
+                
+                if(sel==1)
+                {
+                    if (currentTime->tm_mon == 12)
+                    {
+                        currentTime->tm_mon = 1;
+                    }
+                    else
+                    {
+                        currentTime->tm_mon += 1;
+                    }
+                }
+                
+                if(sel==2)
+                {
+                    if (currentTime->tm_mday == 31)
+                    {
+                        currentTime->tm_mday = 1;
+                    }
+                    else
+                    {
+                        currentTime->tm_mday +=1;
+                    }
+                }
+
+                if(sel==3)
+                {
+                    if (currentTime->tm_wday == 6)
+                    {
+                        currentTime->tm_wday = 0;
+                    }
+                    else
+                    {
+                        currentTime->tm_wday += 1;
+                    }
+                }
+
+                if(sel==4)
+                {
+                    if (currentTime->tm_hour == 23)
+                    {
+                        currentTime->tm_hour = 0;
+                    }
+                    else
+                    {
+                        currentTime->tm_hour += 1;
+                    }
+                }
+                
+                if(sel == 5)    
+                {
+                    if(currentTime->tm_min == 59)
+                    {
+                        currentTime->tm_min = 0;
+                    }
+                    else
+                    {
+                        currentTime->tm_min += 1;
+                    }
+                }
+                
+                if (sel == 6)
+                {
+                    if (currentTime->tm_sec == 59)
+                    {
+                        currentTime->tm_sec = 0;
+                    }
+                    else
+                    {
+                        currentTime->tm_sec += 1;
+                    }
+                }
+            break;
+            
+            case KEY_1:
+                if(sel == 0)
+                {
+                    if (currentTime->tm_year == 0)
+                    {
+                        currentTime->tm_year = 99;
+                    }
+                    else
+                    {
+                        currentTime->tm_year -= 1;
+                    }
+                }
+                
+                if(sel == 1)
+                {
+                    if (currentTime->tm_mon == 1)
+                    {
+                        currentTime->tm_mon = 12;
+                    }
+                    else
+                    {
+                        currentTime->tm_mon -= 1;
+                    }
+                }
+                
+                if(sel == 2)
+                {
+                    if (currentTime->tm_mday == 1)
+                    {
+                        currentTime->tm_mday = 31;
+                    }
+                    else
+                    {
+                        currentTime->tm_mday -= 1;
+                    }
+                }
+
+                if(sel == 3)
+                {
+                    if (currentTime->tm_wday == 0)
+                    {
+                        currentTime->tm_wday = 6;
+                    }
+                    else
+                    {
+                        currentTime->tm_wday -= 1;
+                    }
+                }
+
+                if(sel == 4)
+                {
+                    if (currentTime->tm_hour == 0)
+                    {
+                        currentTime->tm_hour = 23;
+                    }
+                    else
+                    {
+                        currentTime->tm_hour -= 1;
+                    }
+                }
+                
+                if(sel == 5)    
+                {
+                    if(currentTime->tm_min == 0)
+                    {
+                        currentTime->tm_min = 59;
+                    }
+                    else
+                    {
+                        currentTime->tm_min -= 1;
+                    }
+                }
+                
+                if (sel == 6)
+                {
+                    if (currentTime->tm_sec == 0)
+                    {
+                        currentTime->tm_sec = 59;
+                    }
+                    else
+                    {
+                        currentTime->tm_sec -= 1;
+                    }
+                }
+            break;
+                
+            case KEY_3:     // Change our selection
+                
+                if (sel == 6)
+                {
+                    sel = 0;
+                    cls();
+                    done = 1;
+                }
+                else
+                {
+                    sel += 1;
+                }
+            break;
+        }
+        
    
 
-   // set RTCC initial time
-   DATEH = (ConvertHexToBCD(initialTime->tm_year) << 8) | ConvertHexToBCD(initialTime->tm_mon) ;  // YEAR/MONTH-1
-   DATEL = (ConvertHexToBCD(initialTime->tm_mday) << 8) | ConvertHexToBCD(initialTime->tm_wday) ;  // /DAY-1/WEEKDAY
-   TIMEH = (ConvertHexToBCD(initialTime->tm_hour) << 8)  | ConvertHexToBCD(initialTime->tm_min); // /HOURS/MINUTES
-   TIMEL = (ConvertHexToBCD(initialTime->tm_sec) << 8) ;   // SECOND
+        // set RTCC current time
+        DATEH = (ConvertHexToBCD(currentTime->tm_year) << 8) | ConvertHexToBCD(currentTime->tm_mon) ;  // YEAR/MONTH-1
+        DATEL = (ConvertHexToBCD(currentTime->tm_mday) << 8) | ConvertHexToBCD(currentTime->tm_wday) ;  // /DAY-1/WEEKDAY
+        TIMEH = (ConvertHexToBCD(currentTime->tm_hour) << 8)  | ConvertHexToBCD(currentTime->tm_min); // /HOURS/MINUTES
+        TIMEL = (ConvertHexToBCD(currentTime->tm_sec) << 8) ;   // SECOND
            
-   // Enable RTCC, clear RTCWREN         
-   RTCCON1Lbits.RTCEN = 1;  
-   RTCC_Lock();
-
+        // Enable RTCC, clear RTCWREN         
+        RTCCON1Lbits.RTCEN = 1;  
+        RTCC_Lock();
+    }
+    cls();
+    powerFail = 0; 
+  
 }
 
 

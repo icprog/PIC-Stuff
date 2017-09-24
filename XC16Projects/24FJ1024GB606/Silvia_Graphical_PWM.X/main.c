@@ -1,14 +1,15 @@
 #include    "system.h"                                                             // System funct/params, like osc/peripheral config
 #include    "menu.h"
 // *************** Outputs ***************************************************************************************************************************************
-#define boilerOutput            _LATB7          //Change
-#define groupheadOutput         _LATB8          //Change
+#define boilerOutput            _LATD6          //Change
+#define groupheadOutput         _LATD7          //Change
 #define piezoOutput             _LATF1                                          // Piezo Alarm Output G
 #define backLightOn             _LATD4                                          // Backlight On/Off G
 #define airPump                 _LATD5                                          // Air pump (for level sensing) G
 
 // *************** Inputs ****************************************************************************************************************************************
-#define power                   _RG9                                            // Power Switch Input G             
+#define power                   1                                            // Power Switch Input G             
+//#define power                   _RG9                                            // Power Switch Input G             
 #define steamSwitch             _RB5                                            // Steam Switch Input G
 #define brewSwitch              _RB4                                            // Brew Switch Input G
 #define waterSwitch             _RB3                                            // Water Switch Input G
@@ -56,6 +57,8 @@
                                                                                 //You have 65535/(max temp * 10) samples available Changed to float, 300 no worries!! Should be able to get 
 // ***************************************************************************************************************************************************************
 extern struct tm currentTime;
+
+//extern struct tm initialTime;
 
 int const setpoint[]    =   {194, 275, 197};                                    //setpoint values
 
@@ -111,7 +114,7 @@ int main(void)
         static int timer = 0;                                                   // Used to count up time in a loop, to auto exit if user in a menu too long
 
         RTCC_TimeGet(&currentTime); 
-        
+
         shortTermTemp[0] = ADCRead(13);                                         //Assign the ADC(13) (Boiler Temp) to a temporary variable
         
         total[0] = total[0] - samples[0][sampleIndex];                          // Subtract the oldest sample data from the total
@@ -196,15 +199,15 @@ int main(void)
             }
             
 // ******************************************************************************
-/*            if (dutyCycle < 0x800)                  // 0x800 = 2048, 100 % output is 2047, but going to 2048 ensures the pin will stay at 100%                            
-            {
-                count +=1;
-                if(count > 15)
-                {
-                    dutyCycle+=1;
-                }
-            }
-*/        
+//            if (dutyCycle < 0x800)                  // 0x800 = 2048, 100 % output is 2047, but going to 2048 ensures the pin will stay at 100%                            
+  //          {
+    //            count +=1;
+      //          if(count > 15)
+        //        {
+          //          dutyCycle+=1;
+            //    }
+            //}
+        
             setDutyCycle(dutyCycle);
 
  
@@ -283,12 +286,12 @@ int main(void)
 // ******************************************************************************
         if(powerSwitch == 1)
         {
-/*            if(IFS0bits.T2IF)
-            {
-                IFS0bits.T2IF = 0;
-                count+=1;
-            }
-*/
+//            if(IFS0bits.T2IF)
+  //          {
+    //            IFS0bits.T2IF = 0;
+      //          count+=1;
+        //    }
+
             if(currentTime.tm_min == 0 && currentTime.tm_sec < 5)
             {
                 airPump = 1;
@@ -537,33 +540,8 @@ int main(void)
                 }
             }
 
- 
+            RTCC_TimeSet(&currentTime);
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            //            SetTime();
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             timer = 0;
 
             loadimg(&menu3[0], 1024,0);                         //Draw Menu3
@@ -705,30 +683,30 @@ int main(void)
             
  //           TestKey = 0;
             
-/*            cls();
-            loadimg(&menu2[0], 1024,0);              //Draw Menu2
-            LCDWriteStringXY(1,1,"SetPoint = ");
-            eepromPutData(setpoint[choice], setParameter(1,16,1750,2950,eepromGetData(setpoint[choice])));
+//            cls();
+  //          loadimg(&menu2[0], 1024,0);              //Draw Menu2
+    //        LCDWriteStringXY(1,1,"SetPoint = ");
+      //      eepromPutData(setpoint[choice], setParameter(1,16,1750,2950,eepromGetData(setpoint[choice])));
             
-            LCDWriteStringXY(2,1,"DeadBand =");
-            eepromPutData(deadband[choice], setParameter(2,16,5,100,eepromGetData(deadband[choice])));            
+        //    LCDWriteStringXY(2,1,"DeadBand =");
+          //  eepromPutData(deadband[choice], setParameter(2,16,5,100,eepromGetData(deadband[choice])));            
 
-            LCDWriteStringXY(3,1,"Gain =");
-            eepromPutData(Kp[choice], setParameter(3,16,0,200,eepromGetData(Kp[choice])));
+//            LCDWriteStringXY(3,1,"Gain =");
+  //          eepromPutData(Kp[choice], setParameter(3,16,0,200,eepromGetData(Kp[choice])));
 
-            LCDWriteStringXY(4,1,"Integral =");
-            eepromPutData(Ki[choice], setParameter(4,16,0,500,eepromGetData(Ki[choice])));
+    //        LCDWriteStringXY(4,1,"Integral =");
+      //      eepromPutData(Ki[choice], setParameter(4,16,0,500,eepromGetData(Ki[choice])));
 
-            LCDWriteStringXY(5,1,"Derivative =");
-            eepromPutData(Kd[choice], setParameter(5,16,0,100,eepromGetData(Kd[choice])));
+//            LCDWriteStringXY(5,1,"Derivative =");
+  //          eepromPutData(Kd[choice], setParameter(5,16,0,100,eepromGetData(Kd[choice])));
             
             
-            Init_PID(choice,eepromGetData(Kp[choice]),eepromGetData(Ki[choice]),eepromGetData(Kd[choice]),0,4095);                
+    //        Init_PID(choice,eepromGetData(Kp[choice]),eepromGetData(Ki[choice]),eepromGetData(Kd[choice]),0,4095);                
 
-            timer = 0;
-*/
-            cls();
-            loadimg(&menu3[0], 1024,0);                  //Draw Menu2
+      //      timer = 0;
+
+        //    cls();
+        //    loadimg(&menu3[0], 1024,0);                  //Draw Menu2
             __delay_ms(500);
         }
  
