@@ -1,7 +1,4 @@
 #include    "user.h"
-#include    "system.h"                      // Needed to calculate __delay_() Functions
-#include    "touch.h"
-#include    "glcd.h"
 
 //uint8_t  halfSec, lastState, toggle = 2;
 
@@ -47,7 +44,7 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
         
         timer += 1;
         
-        __delay_ms(10);                 // 175 mS delay to extend dead time to 150mS x number of counts below, before auto-exit of function
+        __delay_ms(30);                 // 30 mS delay to extend dead time to 150mS x number of timer counts below, before auto-exit of function
                     
         if(timer > 1000)                // Number of counts multiplied by the delay value above to more or less set the time out delay
         {

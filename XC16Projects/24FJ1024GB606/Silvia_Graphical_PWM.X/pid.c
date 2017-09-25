@@ -10,7 +10,16 @@ float pidPrevError[3]   = {  0,  0,  0};
 float pidPrevInput[3]   = {  0,  0,  0};
 int pidMinOutput[3]     = {  0,  0,  0};     // Minimum output limit of Controller
 int pidMaxOutput[3]= {1023,1023,1023};  // Maximum output limit of Controller
+extern int8_t choice;
 
+void Init_PID(int8_t controller, float Kp, float Ki, float Kd)
+{
+    Kp[controller]         = Kp;
+    Ki[controller]         = Ki;
+    Kd[controller]         = Kd;
+    pidIntegrated[controller] = 0;
+    pidPrevInput[controller] = 0;
+}
 
 // *************** Calculate PID Runs faster if called more often **************    
 float PID_Calculate(uint8_t controller, uint16_t const setpoint[controller], uint16_t temp[controller])

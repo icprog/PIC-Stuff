@@ -58,13 +58,17 @@
 // ***************************************************************************************************************************************************************
 extern struct tm currentTime;
 
-//extern struct tm initialTime;
+extern float Kp[];
+extern float Ki[];
+extern float Kd[];
 
-int const setpoint[]    =   {194, 275, 197};                                    //setpoint values
+uint16_t setpoint[]    =   {194, 275, 197};                                     //setpoint values
 
-int const deadband[]    =   {  5,   1,   5};                                    //dead band values
+uint16_t deadband[]    =   {  5,   1,   5};                                     //dead band values
 
 char *desc[] = {"Water Temp:","Steam Temp:","Group Temp:"};
+
+int8_t choice = 0;
 
 int powerFail = 1;                                                              //Setting powerFail to 1, instructs the user to set the time
 
@@ -626,7 +630,7 @@ int main(void)
             }
             
             
-            signed char choice = 0;
+//            int8_t choice = 0;
 
             while(TestKey != KEY_3)
             {
@@ -681,32 +685,32 @@ int main(void)
                 timer += 1;
             }
             
- //           TestKey = 0;
+            TestKey = 0;
             
-//            cls();
-  //          loadimg(&menu2[0], 1024,0);              //Draw Menu2
-    //        LCDWriteStringXY(1,1,"SetPoint = ");
-      //      eepromPutData(setpoint[choice], setParameter(1,16,1750,2950,eepromGetData(setpoint[choice])));
+            cls();
+            loadimg(&menu2[0], 1024,0);              //Draw Menu2
+            LCDWriteStringXY(1,1,"SetPoint = ");
+            setpoint[choice] = setParameter(1,16,1750,2950,setpoint[choice]);
             
-        //    LCDWriteStringXY(2,1,"DeadBand =");
-          //  eepromPutData(deadband[choice], setParameter(2,16,5,100,eepromGetData(deadband[choice])));            
+            LCDWriteStringXY(2,1,"DeadBand =");
+            deadband[choice] = setParameter(2,16,5,100,deadband[choice]);            
 
-//            LCDWriteStringXY(3,1,"Gain =");
-  //          eepromPutData(Kp[choice], setParameter(3,16,0,200,eepromGetData(Kp[choice])));
+            LCDWriteStringXY(3,1,"Gain =");
+            Kp[choice] = setParameter(3,16,0,200,Kp[choice]);
 
-    //        LCDWriteStringXY(4,1,"Integral =");
-      //      eepromPutData(Ki[choice], setParameter(4,16,0,500,eepromGetData(Ki[choice])));
+            LCDWriteStringXY(4,1,"Integral =");
+            Ki[choice] = setParameter(4,16,0,500,Ki[choice]);
 
-//            LCDWriteStringXY(5,1,"Derivative =");
-  //          eepromPutData(Kd[choice], setParameter(5,16,0,100,eepromGetData(Kd[choice])));
+            LCDWriteStringXY(5,1,"Derivative =");
+            Kd[choice] = setParameter(5,16,0,100,Kd[choice]);
             
             
-    //        Init_PID(choice,eepromGetData(Kp[choice]),eepromGetData(Ki[choice]),eepromGetData(Kd[choice]),0,4095);                
+            Init_PID(choice,Kp[choice],Ki[choice],Kd[choice]);                
 
-      //      timer = 0;
+            timer = 0;
 
-        //    cls();
-        //    loadimg(&menu3[0], 1024,0);                  //Draw Menu2
+            cls();
+            loadimg(&menu3[0], 1024,0);                  //Draw Menu2
             __delay_ms(500);
         }
  

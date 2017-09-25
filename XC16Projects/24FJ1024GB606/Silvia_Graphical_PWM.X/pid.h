@@ -3,6 +3,8 @@
 #include "system.h"
 //#include <stdint.h>
 
+void Init_PID(int8_t controller, float Kp, float Ki, float Kd);
+
 // **************** Calculate PID (Call more often for fast loops) *************
 // *** Output will update every time this is called, so, Reset & derivative ****
 // ** actions happen more often, same as if Overall Loop Gain were increased! **

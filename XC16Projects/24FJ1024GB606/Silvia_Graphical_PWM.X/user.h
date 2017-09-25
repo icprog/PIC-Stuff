@@ -1,8 +1,7 @@
 #ifndef     USER_H
 #define     USER_H
 
-#include    <xc.h>                          // include processor files - each processor file is guarded. 
-#include    <stdint.h>
+#include    "system.h"
 
 // ***************************************************************************************************************************************************************
 //void heartBeat(void);
