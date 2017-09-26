@@ -10,4 +10,6 @@ pid.h  \
 adc.h  \
 touch.h  \
 pwm.h  \
- user.h 
+ start_stop_timer.h  \
+user.h  \
+menu.h 

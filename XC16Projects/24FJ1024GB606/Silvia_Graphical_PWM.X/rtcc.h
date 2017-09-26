@@ -38,7 +38,6 @@ void RTCC_TimeSet(struct tm *currentTime);
 
 void displayTime(void);
 
-int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute);
 
 /**
   @Summary

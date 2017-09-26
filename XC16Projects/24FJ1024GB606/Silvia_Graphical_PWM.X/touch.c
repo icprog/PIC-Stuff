@@ -24,6 +24,8 @@
 #define row_3_max           3300                    //maximum value (read on ADC) to define row 3 boundary
 
 // ***************************************************************************************************************************************************************
+extern uint8_t call;
+
 uint8_t menuRead()
 {
     static uint8_t lastKeyState = KEY_NONE, key = KEY_NONE, j, k, L;
@@ -99,8 +101,16 @@ uint8_t menuRead()
 
     if (key != KEY_NONE)
     {
-        k = 150;
-        L = 250;
+        if (call != 0)
+        {
+            k = 25;
+            L = 250;
+        }
+        
+        else
+
+        k = 250;
+        L = 150;
         
         
         if (lastKeyState != key)
@@ -111,19 +121,19 @@ uint8_t menuRead()
         {
             j += 1;                                 //increment the "button pressed" counter,
             
-            if(j == 1)
+            if(j == 2)
             {
                 return (lastKeyState);              //and return the value of that button
             }
             
-            else if(j >1 && j <= k)
+            else if(j >2 && j <= k)
             {
                 return (KEY_NONE);
             }
                 
-            else if(j > k)                                   //If button has been pressed for an additional 30 program cycles,
+            else if(j > k)                          //If button has is still pressed for an additional "k" program cycles,
             {
-                __delay_ms(L);                     //return the key every program cycle, with a delay between Key presses if Key is held down
+                __delay_ms(L);                      //return the key every program cycle, with a delay between Key presses if Key is held down
                 return (lastKeyState);
             }
             
@@ -134,5 +144,5 @@ uint8_t menuRead()
         }
     }
     j = 0;
-    return (KEY_NONE);                                  // If all else fails ...
+    return (KEY_NONE);                              // If all else fails ...
 }

@@ -2,7 +2,7 @@
 
 //uint8_t  halfSec, lastState, toggle = 2;
 
-//extern char call;
+extern uint8_t call;
 
 int timer = 0;              // level = 0;
 
@@ -32,6 +32,8 @@ int TempCalc(int a)
 
 int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
 {
+    call = 1;
+    
     int16_t result = b;
     
     int8_t TestKey;
@@ -57,31 +59,34 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
         
         switch(TestKey)
         {
-            case KEY_1:
-            {
-                result -=1;
-                            
-                if (result <= min)
-                    {
-                        result = min;
-                    }
+        case KEY_1:
+        {
+            result -=1;
+                           
+            if (result <= min)
+                {
+                    result = min;
                 }
-            break;
-                        
-            case KEY_2:
-            {
-                result += 1;
-                            
-                if(result >= max)
-                    {
-                        result = max;
-                    }
-                }
-            break;
             }
+        break;
+            
+                        
+        case KEY_2:
+        {
+            result += 1;
+                           
+            if(result >= max)
+                {
+                    result = max;
+                }
+            }
+        break;
         }
+    }
         
-        timer = 0;
+    timer = 0;
+        
+    call = 0;
     
     return (result);
 }

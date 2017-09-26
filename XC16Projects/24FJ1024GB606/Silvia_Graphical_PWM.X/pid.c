@@ -12,11 +12,11 @@ int pidMinOutput[3]     = {  0,  0,  0};     // Minimum output limit of Controll
 int pidMaxOutput[3]= {1023,1023,1023};  // Maximum output limit of Controller
 extern int8_t choice;
 
-void Init_PID(int8_t controller, float Kp, float Ki, float Kd)
+void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd)
 {
-    Kp[controller]         = Kp;
-    Ki[controller]         = Ki;
-    Kd[controller]         = Kd;
+    Kp[controller]         = pidKp;
+    Ki[controller]         = pidKi;
+    Kd[controller]         = pidKd;
     pidIntegrated[controller] = 0;
     pidPrevInput[controller] = 0;
 }

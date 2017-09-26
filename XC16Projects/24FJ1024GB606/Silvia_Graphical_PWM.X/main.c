@@ -18,7 +18,7 @@
 //***************************Timer2 set in pwm.c
 //***************************All times are in 1/100th's of a second, so 100 = 1 seconds, 300 = 3 seconds, 150 = 1.5 seconds, etc 
 
-#define max                     2048                                // This needs to move to EEPROM
+#define max                     1023                                // This needs to move to EEPROM
 #define min                     400                                 // Also needs to move to EEPROM & have User interface coded
 #define preInfusionDutyCycle    500                                 // This needs to move to EEPROM & have a User Interface set up so user can change it
 #define preInfusionTime         (25)                                // length of time to run pump to preInfuse puck
@@ -62,15 +62,17 @@ extern float Kp[];
 extern float Ki[];
 extern float Kd[];
 
-uint16_t setpoint[]    =   {194, 275, 197};                                     //setpoint values
+uint16_t setpoint[]    =   {1940, 2750, 1970};                                     //setpoint values
 
-uint16_t deadband[]    =   {  5,   1,   5};                                     //dead band values
+uint16_t deadband[]    =   {  50,   10,   50};                                     //dead band values
 
 char *desc[] = {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int8_t choice = 0;
+uint8_t call = 0;
 
-int powerFail = 1;                                                              //Setting powerFail to 1, instructs the user to set the time
+int8_t powerFail = 1;
+
+uint16_t timeFU = 0;                                                              //Setting powerFail to 1, instructs the user to set the time
 
 // ******************************************************************************
 int main(void)
@@ -265,7 +267,8 @@ int main(void)
                     LCDWriteChar ('%');
                     
                     LCDWriteIntXY(5,4,dutyCycle,5,0);
-                    LCDWriteIntXY(5,16,count,5,0);
+                    LCDWriteIntXY(5,16,timeFU,5,0);
+//                    LCDWriteIntXY(5,16,count,5,0);
                     LCDWriteIntXY(5,22,shotProgressCounter,5,0);
                     
                     if(level < 25)
@@ -515,7 +518,7 @@ int main(void)
         TestKey = menuRead();
 // ******************************************************************************
 //        heartBeat();                                                            // HeartBeat displays the HeartBeat on the LCD,
-// ******************************************************************************  but, also increments mainTimer every second 
+// ******************************************************************************  
         if (TestKey == KEY_1)
         {
             if(timer<1)
@@ -598,7 +601,7 @@ int main(void)
             
             
             
-//            writeStartStopTimes();
+            writeStartStopTimes();
 
 
 
@@ -630,7 +633,7 @@ int main(void)
             }
             
             
-//            int8_t choice = 0;
+            int8_t choice = 0;
 
             while(TestKey != KEY_3)
             {

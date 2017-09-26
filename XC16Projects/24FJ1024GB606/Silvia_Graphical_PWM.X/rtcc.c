@@ -8,71 +8,70 @@ static bool RTCCTimeInitialized(void);
 static uint8_t ConvertHexToBCD(uint8_t hexvalue);
 static uint8_t ConvertBCDToHex(uint8_t bcdvalue);
 
-//struct tm initialTime;
 struct tm currentTime;
 
 extern int powerFail;
 
+extern uint8_t call;
+
+extern uint16_t timeFU;
 
 char *WeekDay[7]    = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+
 char *month[13]     = {"NUL","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
-
-int const startHour[]   =   { 8, 6, 6, 6, 6, 6, 8};
-
-int const startMinute[] =   {00,45,45,45,45,45,00};
-
-int const stopHour[]    =   {11, 7, 7, 7, 7,10,11};
-
-int const stopMinute[]  =   {00,25,25,25,25,25,00};
-
 
 
 void RTCC_Initialize(void)
 {
-
    RTCCON1Lbits.RTCEN = 0;
    
    __builtin_write_RTCC_WRLOCK();
    
-   
-   if(!RTCCTimeInitialized())
+   if(!RTCCTimeInitialized())   // set 2017-09-22 11-09-15
    {
-       // set 2017-09-22 11-09-15
-       DATEH = 0x1709;    // Year/Month
-       DATEL = 0x2400;    // Date/Wday
-       TIMEH = 0x0239;    // hours/minutes
-       TIMEL = 0x5500;    // seconds
+       DATEH = 0x1709;          // Year/Month
+       DATEL = 0x2400;          // Date/Wday
+       TIMEH = 0x0239;          // hours/minutes
+       TIMEL = 0x5500;          // seconds
    }
 
-   // PWCPS 1:1; PS 1:1; CLKSEL SOSC; FDIV 0; 
-   RTCCON2L = 0x0000;
-   // DIV 16383; 
-   RTCCON2H = 0x3FFF;
-   // PWCSTAB 0; PWCSAMP 0; 
-   RTCCON3L = 0x0000;
-
-   // RTCEN enabled; OUTSEL Alarm Event; PWCPOE disabled; PWCEN disabled; WRLOCK disabled; PWCPOL disabled; TSAEN disabled; RTCOE disabled; 
-   RTCCON1L = 0x8000; 
+// A crystal oscillator that is connected to the RTCC may be calibrated to provide an accurate 1 second clock in
+// two  ways. First, coarse frequency adjustment is  per-formed by adjusting the value written to the DIV<15:0>
+// bits.  Secondly,  a  5-bit  value  can  be  written  to  the FDIV<4:0> control bits to perform a fine clock division.
+// The DIVx and FDIVx values can be concatenated and considered as a 21-bit prescaler value. If the oscillator
+// source is slightly faster than ideal, the FDIV<4:0> value can be increased to make a small decrease in the RTC
+// frequency.  The  value  of  DIV<15:0>  should  be increased  to  make  larger  decreases  in  the  RTC
+// frequency. If the oscillator source is slower than ideal, FDIV<4:0>  may  be  decreased  for  small  calibration
+// changes and DIV<15:0> may need to be decreased to make larger calibration changes. 
+   
+   RTCCON2L = 0xF800;           // PWCPS 1:1; PS 1:1; CLKSEL SOSC; FDIV 0; Bits 15 to 11 are for Fine Clock speed adjustment (Pg 316))
+   
+   RTCCON2H = 0x3FFF;           // DIV 16383; Register used for Coarse speed adjustment of RTCC (Pg 317)
+   
+   RTCCON3L = 0x0000;           // PWCSTAB 0; PWCSAMP 0; Used to wake up (and Power down) an external device & sample it's value
+   
+   RTCCON1L = 0x8000;           // RTCEN enabled; OUTSEL Alarm Event; PWCPOE disabled; PWCEN disabled; WRLOCK disabled; PWCPOL disabled; TSAEN disabled; RTCOE disabled; 
    
    RTCC_Lock();
-
 }
 
 static void RTCC_Lock(void)
 {
-    asm volatile("DISI #6");
-    asm volatile("MOV #NVMKEY, W1");
-    asm volatile("MOV #0x55, W2");
-    asm volatile("MOV W2, [W1]");
-    asm volatile("MOV #0xAA, W3");
+    asm volatile("DISI #6");                    // Disable Interrupts for 6 instruction cycles
+    asm volatile("MOV #NVMKEY, W1");            //
+    asm volatile("MOV #0x55, W2");              // First Unlock Code (55))
+    asm volatile("MOV W2, [W1]");               // Write Unlock sequence (to working reg?)
+    asm volatile("MOV #0xAA, W3");              // Second Unlock Code (AA)
     asm volatile("MOV W3, [W1]");
-    asm volatile("BSET RTCCON1L, #11");
+    asm volatile("BSET RTCCON1L, #11");         // Clear the WriteLock bit
 }
 
 bool RTCC_TimeGet(struct tm *currentTime)
 {
     uint16_t register_value;
-    if(RTCSTATLbits.SYNC){
+    
+    if(RTCSTATLbits.SYNC)
+    {
         return 0;
     }
 
@@ -102,12 +101,20 @@ bool RTCC_TimeGet(struct tm *currentTime)
 
 void RTCC_TimeSet(struct tm *currentTime)
 {
+    call = 1;
+    
     uint8_t sel = 0, done = 0;
     
     uint16_t timer = 0;                                                     // Used to return to operation if user does not finish setting time!
 
     while(!done)
     {
+        displayTime();
+
+        __builtin_write_RTCC_WRLOCK();
+
+        RTCCON1Lbits.RTCEN = 0;
+        
         if(timer < 1)
         {
             cls();
@@ -122,12 +129,6 @@ void RTCC_TimeSet(struct tm *currentTime)
             cls();
             done = 1;                                                           // Exit while loop
         }
-        
-        displayTime();
-
-        __builtin_write_RTCC_WRLOCK();
-
-        RTCCON1Lbits.RTCEN = 0;
         
         LCDWriteStringXY(3,3,"\"Enter\" for n");
         LCDWriteStringXY(3,16,"ext Field");
@@ -374,6 +375,7 @@ void RTCC_TimeSet(struct tm *currentTime)
         RTCC_Lock();
     }
     cls();
+    call = 0;
     powerFail = 0; 
   
 }
@@ -381,7 +383,14 @@ void RTCC_TimeSet(struct tm *currentTime)
 
 void displayTime(void)
 {
-    RTCC_TimeGet(&currentTime);                                             // Read current time from RTCC
+    int8_t test = 0;
+    
+    test = RTCC_TimeGet(&currentTime);              // Read current time from RTCC
+    
+    if(test == 0)
+    {
+        timeFU+=1;
+    }                                             
     LCDWriteIntXY(1,3,currentTime.tm_year,2,0);
     LCDWriteChar('/');
     LCDWriteString(month[currentTime.tm_mon]);
@@ -393,22 +402,6 @@ void displayTime(void)
     LCDWriteInt(currentTime.tm_min,2,0);
     LCDWriteChar(':');
     LCDWriteInt(currentTime.tm_sec,2,0);
-}
-
-int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
-{
-    static uint8_t run;
-    
-    if(hour == startHour[weekday] && minute == startMinute[weekday])
-    {
-        run = 1;
-    }
-    
-    if(hour == stopHour[weekday] && minute == stopMinute[weekday])
-    {
-        run = 0;
-    }
-    return run;
 }
 
 static uint8_t ConvertHexToBCD(uint8_t hexvalue)

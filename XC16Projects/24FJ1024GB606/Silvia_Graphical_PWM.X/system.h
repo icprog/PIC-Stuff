@@ -13,8 +13,10 @@
 #include    "adc.h"
 #include    "touch.h"
 #include    "pwm.h"
+#include    "start_stop_timer.h"
 #include    "traps.h"
 #include    "user.h"
+#include    "menu.h"
 
 
 #define _XTAL_FREQ  8000000UL
