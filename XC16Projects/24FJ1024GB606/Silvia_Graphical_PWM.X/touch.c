@@ -62,15 +62,15 @@ uint8_t menuRead()
         j = 0;
     }
     
-    if(x >= col_1_min && x < col_1_max)
+    if(x >= col_1_min && x < col_1_max && y < row_1_max)
     {
         col = 1;
     }
-    else if(x >= col_2_min && x < col_2_max)
+    else if(x >= col_2_min && x < col_2_max && y < row_1_max)
     {
         col = 2;
     }
-    else if(x >= col_3_min)
+    else if(x >= col_3_min && y < row_1_max)
     {
         col = 3;
     }
@@ -79,6 +79,7 @@ uint8_t menuRead()
         col = 0;
     }
     
+     
    if(col == 1)
     {
         key = KEY_1;
@@ -90,6 +91,10 @@ uint8_t menuRead()
     else if(col == 3)
     {
         key = KEY_3;
+    }
+    else if(y > row_2_min)
+    {
+        key = KEY_4;
     }
     else
     {

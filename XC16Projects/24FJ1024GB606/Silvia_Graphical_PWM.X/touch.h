@@ -8,6 +8,7 @@
 #define KEY_1           1
 #define KEY_2           2
 #define KEY_3           3
+#define KEY_4           4
 /*
 #define KEY_RESET       0
 #define KEY_RIGHT   	1

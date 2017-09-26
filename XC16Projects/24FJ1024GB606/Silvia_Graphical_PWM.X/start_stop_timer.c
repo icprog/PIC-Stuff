@@ -11,17 +11,13 @@ int stopMinute[]  =   {00,25,25,25,25,25,00};
 
 signed char choice;
 
-//unsigned int timer = 0;                                                         // Used to return to operation if user does not finish!
-
-
 extern char *WeekDay[7];
-//char *dayOfWeek[] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
 
 unsigned char TestKey = KEY_NONE;
 
-char sel = 0;
+//char sel = 0;
     
-char done = 0;
+//char done = 0;
 
 extern char call;
 
@@ -54,14 +50,14 @@ void writeStartStopTimes(void)
     {
         TestKey = menuRead();
         
-        if(timer > 1500)
+        if(timer > 3500)
         {
             goto Exit;                                                 
         }
 
         switch(TestKey)
         {
-             case KEY_2:
+             case KEY_1:
              {
                 choice -=1;
                             
@@ -72,7 +68,7 @@ void writeStartStopTimes(void)
             }
             break;
             
-            case KEY_1:
+            case KEY_2:
             {
                 choice += 1;
                             
@@ -94,8 +90,10 @@ void writeStartStopTimes(void)
         if(timer < 3)
         {
             cls();
+            loadimg(&menu4[0], 1024,0);                  //Draw Menu4
         }
 
+//        loadimg(&menu4[0], 1024,0);                  //Draw Menu4
         
         LCDWriteStringXY(1,3,"Start/Stop fo");
         LCDWriteStringXY(1,16,"r ");

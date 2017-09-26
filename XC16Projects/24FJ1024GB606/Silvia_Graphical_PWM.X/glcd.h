@@ -1,8 +1,9 @@
 #ifndef GLCD_H
 #define	GLCD_H
 
-#include <xc.h>     // include processor files - each processor file is guarded. 
-#include <stdint.h>
+#include    "system.h"
+//#include <xc.h>     // include processor files - each processor file is guarded. 
+//#include <stdint.h>
 //#include "menu.h"
 
 //Macro Definitions

@@ -266,7 +266,8 @@ int main(void)
                     LCDWriteChar (' ');
                     LCDWriteChar ('%');
                     
-                    LCDWriteIntXY(5,4,dutyCycle,5,0);
+                    LCDWriteIntXY(5,4,TestKey,5,0);
+//                    LCDWriteIntXY(5,4,dutyCycle,5,0);
                     LCDWriteIntXY(5,16,timeFU,5,0);
 //                    LCDWriteIntXY(5,16,count,5,0);
                     LCDWriteIntXY(5,22,shotProgressCounter,5,0);
@@ -719,6 +720,14 @@ int main(void)
  
         Exit:
                         
+// ******************************************************************************
+        if (TestKey == KEY_4)
+        {
+            init_lcd();
+            cls();
+            loadimg(&menu3[0], 1024,0);                         //Draw Menu3
+        }
+        
 // ******************************************************************************
         ClrWdt();                                                               //Clear (Re-Set) the WatchDog Timer
     }
