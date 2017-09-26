@@ -1,11 +1,11 @@
-Microchip MPLAB XC8 Compiler V1.35 ()
+Microchip MPLAB XC8 Compiler V1.38 ()
 
 Linker command line:
 
--W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.35\dat\en_msgs.txt -cs \
+-W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.38\dat\en_msgs.txt -cs \
   -h+dist/default/production\5110Again.X.production.sym \
   --cmf=dist/default/production\5110Again.X.production.cmf -z -Q16F18855 \
-  -oC:\Users\DAVE\AppData\Local\Temp\s4t4.2 \
+  -oC:\Users\DAVE\AppData\Local\Temp\s444.2 \
   -Mdist/default/production/5110Again.X.production.map -E1 -ver=XC8 \
   -ASTACK=0200Eh-023efh -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
@@ -29,9 +29,10 @@ Linker command line:
   -ASFR28=0E00h-0E6Fh -ASFR29=0E80h-0EEFh -ASFR30=0F00h-0F6Fh \
   -ASFR31=0F80h-0FEFh -preset_vec=00h,intentry,init,end_init -ppowerup=CODE \
   -pcinit=CODE -pfunctab=CODE -ACONFIG=08007h-0800Bh -pconfig=CONFIG \
-  -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 -DCODE=2 \
+  -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 \
+  -AEEDATA=00h-0FFh/0F000h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
-  C:\Users\DAVE\AppData\Local\Temp\s4t4.obj \
+  C:\Users\DAVE\AppData\Local\Temp\s444.obj \
   dist/default/production\5110Again.X.production.obj 
 
 Object code version is 3.11
@@ -41,24 +42,24 @@ Machine type is 16F18855
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\DAVE\AppData\Local\Temp\s4t4.obj
+C:\Users\DAVE\AppData\Local\Temp\s444.obj
                 end_init                              2        2        2        0       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5    1000E       0
 dist/default/production\5110Again.X.production.obj
                 cinit                               7FB      7FB        5      FF6       0
-                text7                               723      723       25      E46       0
-                text6                               6C4      6C4       13      D88       0
-                text5                               748      748       28      E90       0
-                text4                               770      770       3B      EE0       0
-                text3                               708      708       1B      E10       0
-                text2                               7AB      7AB       50      F56       0
-                text1                               6D7      6D7       17      DAE       0
-                maintext                            6EE      6EE       1A      DDC       0
+                text7                               728      728       25      E50       0
+                text6                               6C9      6C9       13      D92       0
+                text5                               74D      74D       28      E9A       0
+                text4                               775      775       3B      EEA       0
+                text3                               70D      70D       1B      E1A       0
+                text2                               7B0      7B0       4B      F60       0
+                text1                               6DC      6DC       17      DB8       0
+                maintext                            6F3      6F3       1A      DE6       0
                 cstackBANK0                          20       20        C       20       1
                 cstackCOMMON                         70       70        E       70       1
                 bssBANK0                             2C       2C        2       20       1
-                stringtext                          800      800      1E8     1000       0
+                stringtext                          800      800      206     1000       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   STACK          
@@ -67,17 +68,17 @@ TOTAL           Name                               Link     Load   Length     Sp
                 end_init                              2        2        2         0
                 cinit                               7FB      7FB        5         0
                 reset_vec                             0        0        2         0
-                text7                               723      723       25         0
-                text6                               6C4      6C4       13         0
-                text5                               748      748       28         0
-                text4                               770      770       3B         0
-                text3                               708      708       1B         0
-                text2                               7AB      7AB       50         0
-                text1                               6D7      6D7       17         0
-                maintext                            6EE      6EE       1A         0
+                text7                               728      728       25         0
+                text6                               6C9      6C9       13         0
+                text5                               74D      74D       28         0
+                text4                               775      775       3B         0
+                text3                               70D      70D       1B         0
+                text2                               7B0      7B0       4B         0
+                text1                               6DC      6DC       17         0
+                maintext                            6F3      6F3       1A         0
 
         CLASS   STRCODE        
-                stringtext                          800      800      1E8         0
+                stringtext                          800      800      206         0
 
         CLASS   STRING         
 
@@ -192,6 +193,8 @@ TOTAL           Name                               Link     Load   Length     Sp
 
         CLASS   IDLOC          
 
+        CLASS   EEDATA         
+
         CLASS   BANK31         
 
         CLASS   BANK30         
@@ -230,8 +233,6 @@ TOTAL           Name                               Link     Load   Length     Sp
 
         CLASS   BANK13         
 
-        CLASS   EEDATA         
-
 
 
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
@@ -239,16 +240,16 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
                 reset_vec                      000000  000004  000004         0       0  CODE        2
                 cstackBANK0                    000020  00000E  00002E        20       1  BANK0       1
                 cstackCOMMON                   000070  00000E  00007E        70       1  COMMON      1
-                text6                          0006C4  000013  0006D7       D88       0  CODE        2
-                text1                          0006D7  000017  0006EE       DAE       0  CODE        2
-                maintext                       0006EE  00001A  000708       DDC       0  CODE        2
-                text3                          000708  00001B  000723       E10       0  CODE        2
-                text7                          000723  000025  000748       E46       0  CODE        2
-                text5                          000748  000028  000770       E90       0  CODE        2
-                text4                          000770  00003B  0007AB       EE0       0  CODE        2
-                text2                          0007AB  000050  0007FB       F56       0  CODE        2
+                text6                          0006C9  000013  0006DC       D92       0  CODE        2
+                text1                          0006DC  000017  0006F3       DB8       0  CODE        2
+                maintext                       0006F3  00001A  00070D       DE6       0  CODE        2
+                text3                          00070D  00001B  000728       E1A       0  CODE        2
+                text7                          000728  000025  00074D       E50       0  CODE        2
+                text5                          00074D  000028  000775       E9A       0  CODE        2
+                text4                          000775  00003B  0007B0       EEA       0  CODE        2
+                text2                          0007B0  00004B  0007FB       F60       0  CODE        2
                 cinit                          0007FB  000005  000800       FF6       0  CODE        2
-                stringtext                     000800  0001E8  0009E8      1000       0  STRCODE     2
+                stringtext                     000800  000206  000A06      1000       0  STRCODE     2
                 config                         008007  000005  00800C     1000E       0  CONFIG      2
 
 
@@ -269,12 +270,13 @@ UNUSED ADDRESS RANGES
         BANK8            00420-0046F              50           1
         BANK9            004A0-004EF              50           1
         BIGRAM           02000-023EF             3F0           1
-        CODE             00004-006C3             6C0           2
-                         009E8-01FFF             800
-        CONST            00004-006C3             100           2
-                         009E8-01FFF             100
-        ENTRY            00004-006C3             100           2
-                         009E8-01FFF             100
+        CODE             00004-006C8             6C5           2
+                         00A06-01FFF             800
+        CONST            00004-006C8             100           2
+                         00A06-01FFF             100
+        EEDATA           0F000-0F0FF             100           2
+        ENTRY            00004-006C8             100           2
+                         00A06-01FFF             100
         IDLOC            08000-08003               4           2
         RAM              0002E-0006F              42           1
                          000A0-000EF              50
@@ -322,10 +324,10 @@ UNUSED ADDRESS RANGES
         SFR8             00400-0041F              20           1
         SFR9             00480-0049F              20           1
         STACK            0200E-023EF             3E2           1
-        STRCODE          00004-006C3             6C0           2
-                         009E8-01FFF            1618
-        STRING           00004-006C3             100           2
-                         009E8-01FFF             100
+        STRCODE          00004-006C8             6C5           2
+                         00A06-01FFF            15FA
+        STRING           00004-006C8             100           2
+                         00A06-01FFF             100
 
                                   Symbol Table
 
@@ -345,11 +347,11 @@ _LATA                    (abs)        00016
 _LATB                    (abs)        00017
 _LATC                    (abs)        00018
 _LATCbits                (abs)        00018
-_LCDCharacter            text2        007AB
-_LCDClear                text5        00748
-_LCDInit                 text4        00770
-_LCDString               text1        006D7
-_LCDWrite                text7        00723
+_LCDCharacter            text2        007B0
+_LCDClear                text5        0074D
+_LCDInit                 text4        00775
+_LCDString               text1        006DC
+_LCDWrite                text7        00728
 _TRISA                   (abs)        00011
 _TRISB                   (abs)        00012
 _TRISC                   (abs)        00013
@@ -563,36 +565,37 @@ __Ltext                  text         00000
 __S0                     (abs)        0800C
 __S1                     (abs)        0007E
 __S2                     (abs)        00000
+__S3                     (abs)        00000
 ___int_sp                stack        00000
 ___latbits               (abs)        00002
 ___sp                    stack        00000
-___wmul                  text3        00708
+___wmul                  text3        0070D
 ___wmul@multiplicand     cstackCOMMON 00072
 ___wmul@multiplier       cstackCOMMON 00070
 ___wmul@product          cstackCOMMON 00074
 __end_of_LCDCharacter    text2        007FB
-__end_of_LCDClear        text5        00770
-__end_of_LCDInit         text4        007AB
-__end_of_LCDString       text1        006EE
-__end_of_LCDWrite        text7        00748
-__end_of___wmul          text3        00723
+__end_of_LCDClear        text5        00775
+__end_of_LCDInit         text4        007B0
+__end_of_LCDString       text1        006F3
+__end_of_LCDWrite        text7        0074D
+__end_of___wmul          text3        00728
 __end_of__initialization cinit        007FD
-__end_of_fonts           stringtext   009DB
-__end_of_gotoXY          text6        006D7
-__end_of_main            maintext     00708
+__end_of_fonts           stringtext   0092F
+__end_of_gotoXY          text6        006DC
+__end_of_main            maintext     0070D
 __initialization         cinit        007FB
 __pbssBANK0              bssBANK0     0002C
 __pcstackBANK0           cstackBANK0  00020
 __pcstackCOMMON          cstackCOMMON 00070
-__pmaintext              maintext     006EE
+__pmaintext              maintext     006F3
 __pstringtext            stringtext   00800
-__ptext1                 text1        006D7
-__ptext2                 text2        007AB
-__ptext3                 text3        00708
-__ptext4                 text4        00770
-__ptext5                 text5        00748
-__ptext6                 text6        006C4
-__ptext7                 text7        00723
+__ptext1                 text1        006DC
+__ptext2                 text2        007B0
+__ptext3                 text3        0070D
+__ptext4                 text4        00775
+__ptext5                 text5        0074D
+__ptext6                 text6        006C9
+__ptext7                 text7        00728
 __size_of_LCDCharacter   (abs)        00000
 __size_of_LCDClear       (abs)        00000
 __size_of_LCDInit        (abs)        00000
@@ -602,8 +605,8 @@ __size_of___wmul         (abs)        00000
 __size_of_gotoXY         (abs)        00000
 __size_of_main           (abs)        00000
 _fonts                   stringtext   00800
-_gotoXY                  text6        006C4
-_main                    maintext     006EE
+_gotoXY                  text6        006C9
+_main                    maintext     006F3
 btemp                    (abs)        0007E
 end_of_initialization    cinit        007FD
 gotoXY@x                 cstackCOMMON 0007D
@@ -676,14 +679,14 @@ Total ram usage:        4 bytes
 
  *************** function _LCDString *****************
  Defined at:
-		line 149 in file "5110lcd.c"
+		line 252 in file "5110lcd.c"
  Parameters:    Size  Location     Type
   characters      2    5[BANK0 ] PTR unsigned char 
-		 -> STR_1(13), 
+		 -> STR_1(215), 
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type
-		None               void
+                  1    wreg      void 
  Registers used:
 		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
  Tracked objects:
@@ -707,14 +710,14 @@ Total ram usage:        3 bytes
 
  *************** function _LCDCharacter *****************
  Defined at:
-		line 136 in file "5110lcd.c"
+		line 239 in file "5110lcd.c"
  Parameters:    Size  Location     Type
   character       1    wreg     unsigned char 
  Auto vars:     Size  Location     Type
   character       1   11[COMMON] unsigned char 
   index           2   12[COMMON] int 
  Return value:  Size  Location     Type
-		None               void
+                  1    wreg      void 
  Registers used:
 		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
  Tracked objects:
@@ -739,7 +742,7 @@ Total ram usage:        8 bytes
 
  *************** function ___wmul *****************
  Defined at:
-		line 15 in file "C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\Umul16.c"
+		line 15 in file "C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c"
  Parameters:    Size  Location     Type
   multiplier      2    0[COMMON] unsigned int 
   multiplicand    2    2[COMMON] unsigned int 
@@ -769,13 +772,13 @@ Total ram usage:        6 bytes
 
  *************** function _LCDInit *****************
  Defined at:
-		line 160 in file "5110lcd.c"
+		line 263 in file "5110lcd.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type
-		None               void
+                  1    wreg      void 
  Registers used:
 		wreg, status,2, status,0, pclath, cstack
  Tracked objects:
@@ -799,13 +802,13 @@ Total ram usage:        1 bytes
 
  *************** function _LCDClear *****************
  Defined at:
-		line 154 in file "5110lcd.c"
+		line 257 in file "5110lcd.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
   index           2    1[BANK0 ] int 
  Return value:  Size  Location     Type
-		None               void
+                  1    wreg      void 
  Registers used:
 		wreg, status,2, status,0, pclath, cstack
  Tracked objects:
@@ -830,14 +833,14 @@ Total ram usage:        3 bytes
 
  *************** function _gotoXY *****************
  Defined at:
-		line 118 in file "5110lcd.c"
+		line 221 in file "5110lcd.c"
  Parameters:    Size  Location     Type
   x               1    wreg     char 
   y               1   11[COMMON] char 
  Auto vars:     Size  Location     Type
   x               1   13[COMMON] char 
  Return value:  Size  Location     Type
-		None               void
+                  1    wreg      void 
  Registers used:
 		wreg, status,2, status,0, pclath, cstack
  Tracked objects:
@@ -861,7 +864,7 @@ Total ram usage:        3 bytes
 
  *************** function _LCDWrite *****************
  Defined at:
-		line 191 in file "5110lcd.c"
+		line 286 in file "5110lcd.c"
  Parameters:    Size  Location     Type
   data_or_comm    1    wreg     unsigned char 
   data            1    6[COMMON] unsigned char 
@@ -870,7 +873,7 @@ Total ram usage:        3 bytes
   i               1   10[COMMON] unsigned char 
   d               1    9[COMMON] unsigned char 
  Return value:  Size  Location     Type
-		None               void
+                  1    wreg      void 
  Registers used:
 		wreg, status,2, status,0
  Tracked objects:
@@ -900,28 +903,28 @@ MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
 5110lcd.c
-		_LCDClear      		CODE           	0748	0000	41
-		_LCDWrite      		CODE           	0723	0000	38
-		_LCDInit       		CODE           	0770	0000	60
-		_LCDCharacter  		CODE           	07AB	0000	81
-		_LCDString     		CODE           	06D7	0000	24
-		_gotoXY        		CODE           	06C4	0000	20
+		_LCDClear      		CODE           	074D	0000	41
+		_LCDWrite      		CODE           	0728	0000	38
+		_LCDInit       		CODE           	0775	0000	60
+		_LCDCharacter  		CODE           	07B0	0000	76
+		_LCDString     		CODE           	06DC	0000	24
+		_gotoXY        		CODE           	06C9	0000	20
 
-5110lcd.c estimated size: 264
+5110lcd.c estimated size: 259
+
+C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
+		___wmul        		CODE           	070D	0000	28
+
+C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c estimated size: 28
 
 shared
-		_fonts         		STRCODE        	0800	0000	476
+		_fonts         		STRCODE        	0800	0000	304
 		__initialization		CODE           	07FB	0000	3
 
-shared estimated size: 479
-
-C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\Umul16.c
-		___wmul        		CODE           	0708	0000	28
-
-C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\Umul16.c estimated size: 28
+shared estimated size: 307
 
 main.c
-		_main          		CODE           	06EE	0000	27
+		_main          		CODE           	06F3	0000	27
 
 main.c estimated size: 27
 

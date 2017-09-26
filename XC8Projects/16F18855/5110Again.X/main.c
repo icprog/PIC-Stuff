@@ -25,7 +25,7 @@ int main(int argc, char** argv)
     
     LCDClear();
 
-    LCDString("Hello World!");
+    LCDString("Hello World! Not sure what happens if this keeps going on and on and on?Hello World! Not sure what happens if this keeps going on and on and onHello World! Not sure what happens if this keeps going on and on and on");
     
     while(1)
     {
