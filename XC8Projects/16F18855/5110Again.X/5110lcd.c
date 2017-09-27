@@ -1,19 +1,21 @@
 #include "5110lcd.h"
 
 
-#define LCD_CLK LATCbits.LATC5
-#define LCD_DIN LATCbits.LATC4
-#define LCD_DC LATCbits.LATC3
-#define LCD_CE LATCbits.LATC6
-#define LCD_RST LATCbits.LATC7
-//The DC pin tells the LCD if we are sending a command or data
-#define LCD_COMMAND 0
-#define LCD_DATA 1
-//You may find a different size screen, but this one is 84 by 48 pixels
-#define LCD_X 84
-#define LCD_Y 48
+#define LCD_CLK     LATCbits.LATC5
+#define LCD_DIN     LATCbits.LATC4
+#define LCD_DC      LATCbits.LATC3
+#define LCD_CE      LATCbits.LATC6
+#define LCD_RST     LATCbits.LATC7
 
-const unsigned char fonts[][3] = 
+#define LCD_COMMAND 0
+#define LCD_DATA    1
+
+#define LCD_X       84                                      // LCD Width  29mm
+#define LCD_Y       48                                      // LCD Height 19 mm
+
+                            // <editor-fold defaultstate="collapsed" desc="3 Bit Wide Font">
+
+const uint8_t fonts[][3] = 
 {
     0x00, 0x00, 0x00,  // sp
     0x00, 0x4E, 0x00,  // ! *
@@ -215,17 +217,18 @@ const unsigned char fonts[][3] =
 ,{0x78, 0x46, 0x41, 0x46, 0x78} // 7f DEL*/
 };
 
+// </editor-fold>
 
 int8_t x, y;
 
 void gotoXY(int8_t x, int8_t y)
 {
-    LCDWrite(0, 0x80 | x); // Column.
-    LCDWrite(0, 0x40 | y); // Row. ?
+    LCDWrite(0, 0x80 | x);                                  // Column.
+    LCDWrite(0, 0x40 | y);                                  // Row.
 }
 
 
-void LCDBitmap(char my_array[])     //This takes a large array of bits and sends them to the LCD
+void LCDBitmap(int8_t my_array[])                             //This takes a large array of bits and sends them to the LCD
 {
 for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
 LCDWrite(LCD_DATA, my_array[index]);
@@ -236,7 +239,8 @@ LCDWrite(LCD_DATA, my_array[index]);
 //And writes it to the screen
 //Each character is 8 bits tall and 5 bits wide. We pad one blank column of
 //pixels on each side of the character for readability.
-void LCDCharacter(char character)
+
+void LCDCharacter(const char character)
 {
 //    LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
     
@@ -248,17 +252,22 @@ void LCDCharacter(char character)
     LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
     
 }
+
 //Given a string of characters, one by one is passed to the LCD
-void LCDString(char *characters) {
+void LCDString(const char *characters) 
+{
 while (*characters)
 LCDCharacter(*characters++);
 }
+
 //Clears the LCD by writing zeros to the entire screen
-void LCDClear(void) {
+void LCDClear(void)
+{
 for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
 LCDWrite(LCD_DATA, 0x00);
 gotoXY(0, 0); //After we clear the display, return to the home position
 }
+
 //This sends the magical commands to the PCD8544
 void LCDInit(void)
 {
@@ -274,17 +283,28 @@ LCD_DC  = 0;
 LCD_RST = 0;
 LCD_RST = 1;
 LCDWrite(LCD_COMMAND, 0x21); //Tell LCD that extended commands follow
+
+//The code for changing the contrast on the fly is easy. Set the SCE pin to low to enable the serial interface.
+//Set the D/C pin to low (which tells the LCD you are sending commands, not pixel data), then send byte 0x21 which enables the extended instruction set,
+//then send the contrast byte, then send byte 0x20 which returns to the basic instruction set. You do not need to reset the panel or anything like that.
+//The acceptable range is between 0x80 (being a contrast value of 0) and 0xFF (being a contrast value of 127)
 LCDWrite(LCD_COMMAND, 0xBB); //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
+
 LCDWrite(LCD_COMMAND, 0x04); //Set Temp coefficent
+
 LCDWrite(LCD_COMMAND, 0x14); //LCD bias mode 1:48: Try 0x13 or 0x14
-LCDWrite(LCD_COMMAND, 0x20); //We must send 0x20 before modifying the display control mode
+
+LCDWrite(LCD_COMMAND, 0x20); //We must send 0x20 to tell the display to use standard commands
+
 LCDWrite(LCD_COMMAND, 0x0C); //Set display control, normal mode. 0x0D for inverse
 }
+
+
 //There are two memory banks in the LCD, data/RAM and commands. This
 //function sets the DC pin high or low depending, and then sends
 //the data byte
-void LCDWrite(unsigned char data_or_command, unsigned char data) {
-unsigned char i,d;
+void LCDWrite(uint8_t data_or_command, uint8_t data) {
+uint8_t i,d;
 d=data;
 if(data_or_command == 0)
 {
@@ -313,3 +333,31 @@ LCD_CE=1;
 }
 
 
+void drawBox(void)
+{
+    int j;
+    
+    for(j = 0; j < 84; j++) // top
+    {
+        gotoXY(j, 0);
+        LCDWrite(LCD_DATA,0x01);
+    }
+
+    for(j = 0; j < 84; j++) //Bottom
+    {
+        gotoXY(j, 5);
+        LCDWrite(LCD_DATA,0x80);
+    }
+    
+    for(j = 0; j < 6; j++) // Right
+    {
+        gotoXY(83, j);
+        LCDWrite(LCD_DATA,0xff);
+    }
+    
+    for(j = 0; j < 6; j++) // Left
+    {
+        gotoXY(0, j);
+        LCDWrite(LCD_DATA,0xff);
+    }
+}

@@ -4,9 +4,10 @@
 #include <stdint.h> /* For uint8_t definition */
 #include <stdbool.h> /* For true/false definition */
 #include "5110lcd.h"
+#include "coffee.h"
 
 
-int main(int argc, char** argv)
+int main(void)
 {
     LATA    =   0x00;
     LATB    =   0x00;
@@ -25,7 +26,21 @@ int main(int argc, char** argv)
     
     LCDClear();
 
-    LCDString("Hello World! Not sure what happens if this keeps going on and on and on?Hello World! Not sure what happens if this keeps going on and on and onHello World! Not sure what happens if this keeps going on and on and on");
+    drawBox();
+    
+    gotoXY(65,4);
+    
+    LCDString("Hello World!");
+    
+    gotoXY(0,0);
+    
+    LCDString("Hello Again");
+    
+    LCDClear();
+    
+    LCDBitmap(coffee);
+    
+   // drawBox();
     
     while(1)
     {
