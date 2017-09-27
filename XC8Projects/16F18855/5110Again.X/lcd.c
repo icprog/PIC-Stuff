@@ -1,4 +1,4 @@
-#include "5110lcd.h"
+#include "lcd.h"
 
 
 #define LCD_CLK     LATCbits.LATC5
@@ -228,7 +228,7 @@ void gotoXY(int8_t x, int8_t y)
 }
 
 
-void LCDBitmap(int8_t my_array[])                             //This takes a large array of bits and sends them to the LCD
+void LCDBitmap(const char my_array[])                             //This takes a large array of bits and sends them to the LCD
 {
 for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
 LCDWrite(LCD_DATA, my_array[index]);
@@ -254,7 +254,7 @@ void LCDCharacter(const char character)
 }
 
 //Given a string of characters, one by one is passed to the LCD
-void LCDString(const char *characters) 
+void LCDWriteString(const char *characters) 
 {
 while (*characters)
 LCDCharacter(*characters++);
@@ -266,6 +266,62 @@ void LCDClear(void)
 for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
 LCDWrite(LCD_DATA, 0x00);
 gotoXY(0, 0); //After we clear the display, return to the home position
+}
+
+void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign)     //writes a integer type value to LCD module
+{
+	char str[5]={0,0,0,0,0};            // Integer can be up to 5 characters long
+	int i=4,j=0;
+
+    if(value<0)                         // Handle negative integers
+    {
+        LCDCharacter('-');              // Write Negative sign to the LCD
+        value=value*-1;                 // convert negative value to a positive value
+    }
+    
+    else
+    {
+        if(sign == 1)
+        {
+            LCDCharacter('+');
+        }
+    }
+
+	while(value)
+	{
+            str[i]=value%10;
+            value=value/10;
+            i--;
+	}
+	if(fieldLength==-1)                 // if fieldLength is -1, the field length is # of digits in the value
+    {
+		while(str[j]==0)
+        {
+            j++;
+        }
+    }
+	else
+    {
+		j=5-fieldLength;                // fieldLength must be between 1 and 5
+    }
+
+	for(i=j;i<(5-numPlaces);i++)
+	{
+        LCDCharacter(48+str[i]);            // Write out Integer value to the screen as characters
+	}
+
+    if(numPlaces == 1)
+    {
+        LCDCharacter(46);                   //A decimal period!
+        LCDCharacter(48+str[4]);
+    }
+
+    if(numPlaces == 2)
+    {
+        LCDCharacter(46);                   //A decimal period!
+        LCDCharacter(48+str[3]);
+        LCDCharacter(48+str[4]);
+    }
 }
 
 //This sends the magical commands to the PCD8544

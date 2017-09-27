@@ -1,9 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <xc.h> /* XC8 General Include File */
-#include <stdint.h> /* For uint8_t definition */
-#include <stdbool.h> /* For true/false definition */
-#include "5110lcd.h"
+#include    "system.h"
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <xc.h> /* XC8 General Include File */
+//#include <stdint.h> /* For uint8_t definition */
+//#include <stdbool.h> /* For true/false definition */
+//#include "lcd.h"
 #include "coffee.h"
 
 
@@ -21,30 +22,35 @@ int main(void)
     ANSELB  =   0x00;
     ANSELC  =   0x00;
     
+    uint16_t count = 0;
     
     LCDInit(); //Init the LCD
     
     LCDClear();
-
+    LCDBitmap(coffee);
+    __delay_ms(3000);
+    LCDClear();
     drawBox();
     
-    gotoXY(65,4);
+//    gotoXY(30,1);
     
-    LCDString("Hello World!");
+    LCDWriteStringXY(30,1,"A N D ,");
+    __delay_ms(1000);
+    gotoXY(8,3);
     
-    gotoXY(0,0);
-    
-    LCDString("Hello Again");
+    LCDWriteString("Layne Sucks COCK!!");
+    gotoXY(8,4);
+    LCDWriteString("and Likes it!!");
     
     LCDClear();
-    
-    LCDBitmap(coffee);
-    
-   // drawBox();
-    
     while(1)
     {
-        ;
+        count +=1;
+//        gotoXY(0,0);
+//        LCDString("Count = ");
+        LCDWriteIntXY(0,0,count,-1,0,0);
+    //    __delay_ms(2000);
+        
     }
-    return (EXIT_SUCCESS);
+    return (1);
 }

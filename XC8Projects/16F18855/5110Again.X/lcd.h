@@ -1,14 +1,24 @@
-//#ifndef 5110LCD_H
+#ifndef LCD_H
+#define	LCD_H
 
-//#define	5110LCD_H
+#include    "system.h"
 
-#include <xc.h>
-#include <stdint.h>
+// ****MACROS*****************************************************************************************************************************************************
+#define LCDWriteStringXY(x,y,a){\
+ gotoXY(x,y);\
+ LCDWriteString(a);\
+}
+// ***************************************************************************************************************************************************************
+#define LCDWriteIntXY(x,y,val,field_length, numPlaces, sign) {\
+ gotoXY(x,y);\
+ LCD_Write_Int(val,field_length, numPlaces, sign);\
+}
+
 
 void gotoXY(int8_t x, int8_t y);
 
 //This takes a large array of bits and sends them to the LCD
-void LCDBitmap(int8_t my_array[]);
+void LCDBitmap(const char my_array[]);
 
 //This function takes in a character, looks it up in the font table/array
 //And writes it to the screen
@@ -18,11 +28,13 @@ void LCDCharacter(const char character);
 
 
 //Given a string of characters, one by one is passed to the LCD
-void LCDString(const char *characters);
+void LCDWriteString(const char *characters);
 
 
 //Clears the LCD by writing zeros to the entire screen
 void LCDClear(void);
+
+void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
 //This sends the magical commands to the PCD8544
 void LCDInit(void);
@@ -33,4 +45,5 @@ void LCDInit(void);
 void LCDWrite(uint8_t data_or_command, uint8_t data);
 
 void drawBox(void);
-//#endif
+
+#endif
