@@ -6,7 +6,7 @@
 // ****MACROS*****************************************************************************************************************************************************
 #define LCDWriteStringXY(x,y,a){\
  gotoXY(x,y);\
- LCDWriteString(a);\
+ LCD_Write_String(a);\
 }
 // ***************************************************************************************************************************************************************
 #define LCDWriteIntXY(x,y,val,field_length, numPlaces, sign) {\
@@ -24,15 +24,15 @@ void LCDBitmap(const char my_array[]);
 //And writes it to the screen
 //Each character is 8 bits tall and 5 bits wide. We pad one blank column of
 //pixels on each side of the character for readability.
-void LCDCharacter(const char character);
+void LCD_Write_Character(const char character);
 
 
 //Given a string of characters, one by one is passed to the LCD
-void LCDWriteString(const char *characters);
+void LCD_Write_String(const char *characters);
 
 
 //Clears the LCD by writing zeros to the entire screen
-void LCDClear(void);
+void LCD_Clear(void);
 
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 

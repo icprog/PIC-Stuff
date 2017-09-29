@@ -10,26 +10,17 @@
 
 int main(void)
 {
-    LATA    =   0x00;
-    LATB    =   0x00;
-    LATC    =   0x00;
-    
-    TRISA   =   0x00;
-    TRISB   =   0x00;
-    TRISC   =   0x00;
-    
-    ANSELA  =   0x00;
-    ANSELB  =   0x00;
-    ANSELC  =   0x00;
-    
+    Init();
     uint16_t count = 0;
+    char b = 0; 
+    
     
     LCDInit(); //Init the LCD
     
-    LCDClear();
+    LCD_Clear();
     LCDBitmap(coffee);
     __delay_ms(3000);
-    LCDClear();
+    LCD_Clear();
     drawBox();
     
 //    gotoXY(30,1);
@@ -38,19 +29,33 @@ int main(void)
     __delay_ms(1000);
     gotoXY(8,3);
     
-    LCDWriteString("Layne Sucks COCK!!");
+    LCD_Write_String("Layne Sucks COCK!!");
     gotoXY(8,4);
-    LCDWriteString("and Likes it!!");
+    LCD_Write_String("and Likes it!!");
     
-    LCDClear();
+    __delay_ms(2000);
+    
+    LCD_Clear();
     while(1)
     {
-        count +=1;
+//        count +=1;
 //        gotoXY(0,0);
 //        LCDString("Count = ");
         LCDWriteIntXY(0,0,count,-1,0,0);
+        LCD_Write_String("     ");
     //    __delay_ms(2000);
+        count = ADC_Read(0);
         
+        b = readButton();
+        
+        if(b == Enter)
+        {
+        LCDWriteIntXY(1,1,b,5,0,0);
+        }
+        else
+        {
+        LCDWriteIntXY(1,2,readButton(),5,0,0);
+        }
     }
     return (1);
 }

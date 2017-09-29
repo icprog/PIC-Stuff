@@ -12592,19 +12592,56 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
-[; ;system.h: 16: void ConfigureOscillator(void);
+[; ;adcc.h: 6: typedef uint16_t adc_result_t;
+[; ;adcc.h: 9: typedef enum
+[; ;adcc.h: 10: {
+[; ;adcc.h: 12: channel_VSS = 0x3C,
+[; ;adcc.h: 13: channel_Temp = 0x3D,
+[; ;adcc.h: 14: channel_DAC1 = 0x3E,
+[; ;adcc.h: 15: channel_FVR = 0x3F
+[; ;adcc.h: 16: } adcc_channel_t;
+[; ;adcc.h: 19: void ADC_Init(void);
+[; ;adcc.h: 21: void ADCC_StartConversion(adcc_channel_t channel);
+[; ;adcc.h: 23: bool ADCC_IsConversionDone();
+[; ;adcc.h: 25: adc_result_t ADCC_GetConversionResult(void);
+[; ;adcc.h: 27: adc_result_t ADC_Read(adcc_channel_t channel);
+[; ;adcc.h: 29: void ADCC_StopConversion(void);
+[; ;adcc.h: 31: void ADCC_SetStopOnInterrupt(void);
+[; ;adcc.h: 33: void ADCC_DischargeSampleCapacitor(void);
+[; ;adcc.h: 35: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adcc.h: 37: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adcc.h: 39: void ADCC_SetRepeatCount(uint8_t);
+[; ;adcc.h: 41: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adcc.h: 43: void ADCC_ClearAccumulator(void);
+[; ;adcc.h: 45: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adcc.h: 47: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adcc.h: 49: uint16_t ADCC_GetFilterValue(void);
+[; ;adcc.h: 73: uint16_t ADCC_GetPreviousResult(void);
+[; ;adcc.h: 97: void ADCC_DefineSetPoint(uint16_t);
+[; ;adcc.h: 122: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adcc.h: 147: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adcc.h: 170: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adcc.h: 192: void ADCC_EnableDoubleSampling(void);
+[; ;adcc.h: 214: void ADCC_EnableContinuousConversion(void);
+[; ;adcc.h: 236: void ADCC_DisableContinuousConversion(void);
+[; ;adcc.h: 258: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adcc.h: 280: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adcc.h: 302: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;buttons.h: 13: char readButton(void);
+[; ;system.h: 18: void Init(void);
+[; ;system.h: 20: void ConfigureOscillator(void);
 [; ;lcd.h: 18: void gotoXY(int8_t x, int8_t y);
 [; ;lcd.h: 21: void LCDBitmap(const char my_array[]);
-[; ;lcd.h: 27: void LCDCharacter(const char character);
-[; ;lcd.h: 31: void LCDWriteString(const char *characters);
-[; ;lcd.h: 35: void LCDClear(void);
+[; ;lcd.h: 27: void LCD_Write_Character(const char character);
+[; ;lcd.h: 31: void LCD_Write_String(const char *characters);
+[; ;lcd.h: 35: void LCD_Clear(void);
 [; ;lcd.h: 37: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 [; ;lcd.h: 40: void LCDInit(void);
 [; ;lcd.h: 45: void LCDWrite(uint8_t data_or_command, uint8_t data);
 [; ;lcd.h: 47: void drawBox(void);
-[v F13584 `Cuc ~T0 @X0 -> 3 `i t ]
+[v F13648 `Cuc ~T0 @X0 -> 3 `i t ]
 "18 lcd.c
-[v _fonts `F13584 ~T0 @X0 -> 0 `x e ]
+[v _fonts `F13648 ~T0 @X0 -> 0 `x e ]
 [i _fonts
 :U ..
 :U ..
@@ -13376,12 +13413,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 1520 ]
 }
 "243
-[v _LCDCharacter `(v ~T0 @X0 1 ef1`Cuc ]
+[v _LCD_Write_Character `(v ~T0 @X0 1 ef1`Cuc ]
 "244
 {
-[; ;lcd.c: 243: void LCDCharacter(const char character)
+[; ;lcd.c: 243: void LCD_Write_Character(const char character)
 [; ;lcd.c: 244: {
-[e :U _LCDCharacter ]
+[e :U _LCD_Write_Character ]
 "243
 [v _character `Cuc ~T0 @X0 1 r1 ]
 "244
@@ -13417,12 +13454,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 1524 ]
 }
 "257
-[v _LCDWriteString `(v ~T0 @X0 1 ef1`*Cuc ]
+[v _LCD_Write_String `(v ~T0 @X0 1 ef1`*Cuc ]
 "258
 {
-[; ;lcd.c: 257: void LCDWriteString(const char *characters)
+[; ;lcd.c: 257: void LCD_Write_String(const char *characters)
 [; ;lcd.c: 258: {
-[e :U _LCDWriteString ]
+[e :U _LCD_Write_String ]
 "257
 [v _characters `*Cuc ~T0 @X0 1 r1 ]
 "258
@@ -13431,9 +13468,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "259
 [e $U 1529  ]
 [e :U 1530 ]
-[; ;lcd.c: 260: LCDCharacter(*characters++);
+[; ;lcd.c: 260: LCD_Write_Character(*characters++);
 "260
-[e ( _LCDCharacter (1 *U ++ _characters * -> -> 1 `i `x -> -> # *U _characters `i `x ]
+[e ( _LCD_Write_Character (1 *U ++ _characters * -> -> 1 `i `x -> -> # *U _characters `i `x ]
 [e :U 1529 ]
 "259
 [e $ != -> *U _characters `i -> -> -> 0 `i `Cuc `i 1530  ]
@@ -13443,12 +13480,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 1528 ]
 }
 "264
-[v _LCDClear `(v ~T0 @X0 1 ef ]
+[v _LCD_Clear `(v ~T0 @X0 1 ef ]
 "265
 {
-[; ;lcd.c: 264: void LCDClear(void)
+[; ;lcd.c: 264: void LCD_Clear(void)
 [; ;lcd.c: 265: {
-[e :U _LCDClear ]
+[e :U _LCD_Clear ]
 [f ]
 [; ;lcd.c: 266: for (int index = 0 ; index < (84 * 48 / 8) ; index++)
 "266
@@ -13488,8 +13525,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `c ~T0 @X0 1 r4 ]
 "272
 [f ]
-[v F13601 `uc ~T0 @X0 -> 5 `i s ]
-[i F13601
+[v F13665 `uc ~T0 @X0 -> 5 `i s ]
+[i F13665
 :U ..
 "273
 -> -> 0 `i `uc
@@ -13501,7 +13538,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _str `uc ~T0 @X0 -> 5 `i a ]
 [; ;lcd.c: 273: char str[5]={0,0,0,0,0};
-[e = _str F13601 ]
+[e = _str F13665 ]
 "274
 [v _i `i ~T0 @X0 1 a ]
 [; ;lcd.c: 274: int i=4,j=0;
@@ -13514,9 +13551,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 277: {
 "277
 {
-[; ;lcd.c: 278: LCDCharacter('-');
+[; ;lcd.c: 278: LCD_Write_Character('-');
 "278
-[e ( _LCDCharacter (1 -> -> 45 `ui `uc ]
+[e ( _LCD_Write_Character (1 -> -> 45 `ui `uc ]
 [; ;lcd.c: 279: value=value*-1;
 "279
 [e = _value * _value -U -> 1 `i ]
@@ -13536,9 +13573,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 285: {
 "285
 {
-[; ;lcd.c: 286: LCDCharacter('+');
+[; ;lcd.c: 286: LCD_Write_Character('+');
 "286
-[e ( _LCDCharacter (1 -> -> 43 `ui `uc ]
+[e ( _LCD_Write_Character (1 -> -> 43 `ui `uc ]
 "287
 }
 [e :U 1539 ]
@@ -13619,9 +13656,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 1548 ]
 [; ;lcd.c: 309: {
 {
-[; ;lcd.c: 310: LCDCharacter(48+str[i]);
+[; ;lcd.c: 310: LCD_Write_Character(48+str[i]);
 "310
-[e ( _LCDCharacter (1 -> + -> 48 `i -> *U + &U _str * -> -> _i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
+[e ( _LCD_Write_Character (1 -> + -> 48 `i -> *U + &U _str * -> -> _i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
 "311
 }
 "308
@@ -13638,12 +13675,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 314: {
 "314
 {
-[; ;lcd.c: 315: LCDCharacter(46);
+[; ;lcd.c: 315: LCD_Write_Character(46);
 "315
-[e ( _LCDCharacter (1 -> -> 46 `i `uc ]
-[; ;lcd.c: 316: LCDCharacter(48+str[4]);
+[e ( _LCD_Write_Character (1 -> -> 46 `i `uc ]
+[; ;lcd.c: 316: LCD_Write_Character(48+str[4]);
 "316
-[e ( _LCDCharacter (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
+[e ( _LCD_Write_Character (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
 "317
 }
 [e :U 1552 ]
@@ -13654,15 +13691,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 320: {
 "320
 {
-[; ;lcd.c: 321: LCDCharacter(46);
+[; ;lcd.c: 321: LCD_Write_Character(46);
 "321
-[e ( _LCDCharacter (1 -> -> 46 `i `uc ]
-[; ;lcd.c: 322: LCDCharacter(48+str[3]);
+[e ( _LCD_Write_Character (1 -> -> 46 `i `uc ]
+[; ;lcd.c: 322: LCD_Write_Character(48+str[3]);
 "322
-[e ( _LCDCharacter (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 3 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
-[; ;lcd.c: 323: LCDCharacter(48+str[4]);
+[e ( _LCD_Write_Character (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 3 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
+[; ;lcd.c: 323: LCD_Write_Character(48+str[4]);
 "323
-[e ( _LCDCharacter (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
+[e ( _LCD_Write_Character (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
 "324
 }
 [e :U 1553 ]

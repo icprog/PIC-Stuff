@@ -1,4 +1,26 @@
 Version 3.2 HI-TECH Software Intermediate Code
+"755 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _LATA `Vuc ~T0 @X0 0 e@22 ]
+"816
+[v _LATB `Vuc ~T0 @X0 0 e@23 ]
+"877
+[v _LATC `Vuc ~T0 @X0 0 e@24 ]
+"572
+[v _TRISA `Vuc ~T0 @X0 0 e@17 ]
+"633
+[v _TRISB `Vuc ~T0 @X0 0 e@18 ]
+"694
+[v _TRISC `Vuc ~T0 @X0 0 e@19 ]
+"31087
+[v _ANSELA `Vuc ~T0 @X0 0 e@3896 ]
+"31697
+[v _ANSELB `Vuc ~T0 @X0 0 e@3907 ]
+"32307
+[v _ANSELC `Vuc ~T0 @X0 0 e@3918 ]
+"19 adcc.h
+[v _ADC_Init `(v ~T0 @X0 0 ef ]
+"20 system.h
+[v _ConfigureOscillator `(v ~T0 @X0 0 ef ]
 "2 system.c
 [p x FEXTOSC=OFF ]
 "3
@@ -12618,13 +12640,107 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;adcc.h: 6: typedef uint16_t adc_result_t;
+[; ;adcc.h: 9: typedef enum
+[; ;adcc.h: 10: {
+[; ;adcc.h: 12: channel_VSS = 0x3C,
+[; ;adcc.h: 13: channel_Temp = 0x3D,
+[; ;adcc.h: 14: channel_DAC1 = 0x3E,
+[; ;adcc.h: 15: channel_FVR = 0x3F
+[; ;adcc.h: 16: } adcc_channel_t;
+[; ;adcc.h: 19: void ADC_Init(void);
+[; ;adcc.h: 21: void ADCC_StartConversion(adcc_channel_t channel);
+[; ;adcc.h: 23: bool ADCC_IsConversionDone();
+[; ;adcc.h: 25: adc_result_t ADCC_GetConversionResult(void);
+[; ;adcc.h: 27: adc_result_t ADC_Read(adcc_channel_t channel);
+[; ;adcc.h: 29: void ADCC_StopConversion(void);
+[; ;adcc.h: 31: void ADCC_SetStopOnInterrupt(void);
+[; ;adcc.h: 33: void ADCC_DischargeSampleCapacitor(void);
+[; ;adcc.h: 35: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adcc.h: 37: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adcc.h: 39: void ADCC_SetRepeatCount(uint8_t);
+[; ;adcc.h: 41: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adcc.h: 43: void ADCC_ClearAccumulator(void);
+[; ;adcc.h: 45: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adcc.h: 47: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adcc.h: 49: uint16_t ADCC_GetFilterValue(void);
+[; ;adcc.h: 73: uint16_t ADCC_GetPreviousResult(void);
+[; ;adcc.h: 97: void ADCC_DefineSetPoint(uint16_t);
+[; ;adcc.h: 122: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adcc.h: 147: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adcc.h: 170: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adcc.h: 192: void ADCC_EnableDoubleSampling(void);
+[; ;adcc.h: 214: void ADCC_EnableContinuousConversion(void);
+[; ;adcc.h: 236: void ADCC_DisableContinuousConversion(void);
+[; ;adcc.h: 258: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adcc.h: 280: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adcc.h: 302: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;buttons.h: 13: char readButton(void);
 [; ;lcd.h: 18: void gotoXY(int8_t x, int8_t y);
 [; ;lcd.h: 21: void LCDBitmap(const char my_array[]);
-[; ;lcd.h: 27: void LCDCharacter(const char character);
-[; ;lcd.h: 31: void LCDWriteString(const char *characters);
-[; ;lcd.h: 35: void LCDClear(void);
+[; ;lcd.h: 27: void LCD_Write_Character(const char character);
+[; ;lcd.h: 31: void LCD_Write_String(const char *characters);
+[; ;lcd.h: 35: void LCD_Clear(void);
 [; ;lcd.h: 37: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 [; ;lcd.h: 40: void LCDInit(void);
 [; ;lcd.h: 45: void LCDWrite(uint8_t data_or_command, uint8_t data);
 [; ;lcd.h: 47: void drawBox(void);
-[; ;system.h: 16: void ConfigureOscillator(void);
+[; ;system.h: 18: void Init(void);
+[; ;system.h: 20: void ConfigureOscillator(void);
+"35 system.c
+[v _Init `(v ~T0 @X0 1 ef ]
+"36
+{
+[; ;system.c: 35: void Init(void)
+[; ;system.c: 36: {
+[e :U _Init ]
+[f ]
+[; ;system.c: 37: LATA = 0x01;
+"37
+[e = _LATA -> -> 1 `i `uc ]
+[; ;system.c: 38: LATB = 0x00;
+"38
+[e = _LATB -> -> 0 `i `uc ]
+[; ;system.c: 39: LATC = 0x00;
+"39
+[e = _LATC -> -> 0 `i `uc ]
+[; ;system.c: 41: TRISA = 0x00;
+"41
+[e = _TRISA -> -> 0 `i `uc ]
+[; ;system.c: 42: TRISB = 0x00;
+"42
+[e = _TRISB -> -> 0 `i `uc ]
+[; ;system.c: 43: TRISC = 0x00;
+"43
+[e = _TRISC -> -> 0 `i `uc ]
+[; ;system.c: 45: ANSELA = 0x01;
+"45
+[e = _ANSELA -> -> 1 `i `uc ]
+[; ;system.c: 46: ANSELB = 0x00;
+"46
+[e = _ANSELB -> -> 0 `i `uc ]
+[; ;system.c: 47: ANSELC = 0x00;
+"47
+[e = _ANSELC -> -> 0 `i `uc ]
+[; ;system.c: 49: ADC_Init();
+"49
+[e ( _ADC_Init ..  ]
+[; ;system.c: 51: ConfigureOscillator();
+"51
+[e ( _ConfigureOscillator ..  ]
+[; ;system.c: 52: }
+"52
+[e :UE 1519 ]
+}
+"54
+[v _ConfigureOscillator `(v ~T0 @X0 1 ef ]
+"55
+{
+[; ;system.c: 54: void ConfigureOscillator(void)
+[; ;system.c: 55: {
+[e :U _ConfigureOscillator ]
+[f ]
+[; ;system.c: 57: }
+"57
+[e :UE 1520 ]
+}

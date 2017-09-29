@@ -16680,7 +16680,91 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
 typedef unsigned char bool;
 
-# 16 "system.h"
+# 6 "adcc.h"
+typedef uint16_t adc_result_t;
+
+
+typedef enum
+{
+
+channel_VSS = 0x3C,
+channel_Temp = 0x3D,
+channel_DAC1 = 0x3E,
+channel_FVR = 0x3F
+} adcc_channel_t;
+
+
+void ADC_Init(void);
+
+void ADCC_StartConversion(adcc_channel_t channel);
+
+bool ADCC_IsConversionDone();
+
+adc_result_t ADCC_GetConversionResult(void);
+
+adc_result_t ADC_Read(adcc_channel_t channel);
+
+void ADCC_StopConversion(void);
+
+void ADCC_SetStopOnInterrupt(void);
+
+void ADCC_DischargeSampleCapacitor(void);
+
+void ADCC_LoadAcquisitionRegister(uint8_t);
+
+void ADCC_SetPrechargeTime(uint8_t);
+
+void ADCC_SetRepeatCount(uint8_t);
+
+uint8_t ADCC_GetCurrentCountofConversions(void);
+
+void ADCC_ClearAccumulator(void);
+
+uint16_t ADCC_GetAccumulatorValue(void);
+
+bool ADCC_HasAccumulatorOverflowed(void);
+
+uint16_t ADCC_GetFilterValue(void);
+
+# 73
+uint16_t ADCC_GetPreviousResult(void);
+
+# 97
+void ADCC_DefineSetPoint(uint16_t);
+
+# 122
+void ADCC_SetUpperThreshold(uint16_t);
+
+# 147
+void ADCC_SetLowerThreshold(uint16_t);
+
+# 170
+uint16_t ADCC_GetErrorCalculation(void);
+
+# 192
+void ADCC_EnableDoubleSampling(void);
+
+# 214
+void ADCC_EnableContinuousConversion(void);
+
+# 236
+void ADCC_DisableContinuousConversion(void);
+
+# 258
+bool ADCC_HasErrorCrossedUpperThreshold(void);
+
+# 280
+bool ADCC_HasErrorCrossedLowerThreshold(void);
+
+# 302
+uint8_t ADCC_GetConversionStageStatus(void);
+
+# 13 "buttons.h"
+char readButton(void);
+
+# 18 "system.h"
+void Init(void);
+
 void ConfigureOscillator(void);
 
 # 18 "lcd.h"
@@ -16690,15 +16774,15 @@ void gotoXY(int8_t x, int8_t y);
 void LCDBitmap(const char my_array[]);
 
 # 27
-void LCDCharacter(const char character);
+void LCD_Write_Character(const char character);
 
 
 
-void LCDWriteString(const char *characters);
+void LCD_Write_String(const char *characters);
 
 
 
-void LCDClear(void);
+void LCD_Clear(void);
 
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
@@ -16838,7 +16922,7 @@ LCDWrite(1, my_array[index]);
 }
 
 # 243
-void LCDCharacter(const char character)
+void LCD_Write_Character(const char character)
 {
 
 
@@ -16852,14 +16936,14 @@ LCDWrite(1, 0x00);
 }
 
 
-void LCDWriteString(const char *characters)
+void LCD_Write_String(const char *characters)
 {
 while (*characters)
-LCDCharacter(*characters++);
+LCD_Write_Character(*characters++);
 }
 
 
-void LCDClear(void)
+void LCD_Clear(void)
 {
 for (int index = 0 ; index < (84 * 48 / 8) ; index++)
 LCDWrite(1, 0x00);
@@ -16873,7 +16957,7 @@ int i=4,j=0;
 
 if(value<0)
 {
-LCDCharacter('-');
+LCD_Write_Character('-');
 value=value*-1;
 }
 
@@ -16881,7 +16965,7 @@ else
 {
 if(sign == 1)
 {
-LCDCharacter('+');
+LCD_Write_Character('+');
 }
 }
 
@@ -16905,20 +16989,20 @@ j=5-fieldLength;
 
 for(i=j;i<(5-numPlaces);i++)
 {
-LCDCharacter(48+str[i]);
+LCD_Write_Character(48+str[i]);
 }
 
 if(numPlaces == 1)
 {
-LCDCharacter(46);
-LCDCharacter(48+str[4]);
+LCD_Write_Character(46);
+LCD_Write_Character(48+str[4]);
 }
 
 if(numPlaces == 2)
 {
-LCDCharacter(46);
-LCDCharacter(48+str[3]);
-LCDCharacter(48+str[4]);
+LCD_Write_Character(46);
+LCD_Write_Character(48+str[3]);
+LCD_Write_Character(48+str[4]);
 }
 }
 

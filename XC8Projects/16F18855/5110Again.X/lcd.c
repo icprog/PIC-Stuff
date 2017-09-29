@@ -240,7 +240,7 @@ LCDWrite(LCD_DATA, my_array[index]);
 //Each character is 8 bits tall and 5 bits wide. We pad one blank column of
 //pixels on each side of the character for readability.
 
-void LCDCharacter(const char character)
+void LCD_Write_Character(const char character)
 {
 //    LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
     
@@ -254,14 +254,14 @@ void LCDCharacter(const char character)
 }
 
 //Given a string of characters, one by one is passed to the LCD
-void LCDWriteString(const char *characters) 
+void LCD_Write_String(const char *characters) 
 {
 while (*characters)
-LCDCharacter(*characters++);
+LCD_Write_Character(*characters++);
 }
 
 //Clears the LCD by writing zeros to the entire screen
-void LCDClear(void)
+void LCD_Clear(void)
 {
 for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
 LCDWrite(LCD_DATA, 0x00);
@@ -275,7 +275,7 @@ void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, sig
 
     if(value<0)                         // Handle negative integers
     {
-        LCDCharacter('-');              // Write Negative sign to the LCD
+        LCD_Write_Character('-');              // Write Negative sign to the LCD
         value=value*-1;                 // convert negative value to a positive value
     }
     
@@ -283,7 +283,7 @@ void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, sig
     {
         if(sign == 1)
         {
-            LCDCharacter('+');
+            LCD_Write_Character('+');
         }
     }
 
@@ -307,20 +307,20 @@ void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, sig
 
 	for(i=j;i<(5-numPlaces);i++)
 	{
-        LCDCharacter(48+str[i]);            // Write out Integer value to the screen as characters
+        LCD_Write_Character(48+str[i]);            // Write out Integer value to the screen as characters
 	}
 
     if(numPlaces == 1)
     {
-        LCDCharacter(46);                   //A decimal period!
-        LCDCharacter(48+str[4]);
+        LCD_Write_Character(46);                   //A decimal period!
+        LCD_Write_Character(48+str[4]);
     }
 
     if(numPlaces == 2)
     {
-        LCDCharacter(46);                   //A decimal period!
-        LCDCharacter(48+str[3]);
-        LCDCharacter(48+str[4]);
+        LCD_Write_Character(46);                   //A decimal period!
+        LCD_Write_Character(48+str[3]);
+        LCD_Write_Character(48+str[4]);
     }
 }
 

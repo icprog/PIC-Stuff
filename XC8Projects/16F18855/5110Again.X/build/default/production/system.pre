@@ -16711,6 +16711,88 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
 typedef unsigned char bool;
 
+# 6 "adcc.h"
+typedef uint16_t adc_result_t;
+
+
+typedef enum
+{
+
+channel_VSS = 0x3C,
+channel_Temp = 0x3D,
+channel_DAC1 = 0x3E,
+channel_FVR = 0x3F
+} adcc_channel_t;
+
+
+void ADC_Init(void);
+
+void ADCC_StartConversion(adcc_channel_t channel);
+
+bool ADCC_IsConversionDone();
+
+adc_result_t ADCC_GetConversionResult(void);
+
+adc_result_t ADC_Read(adcc_channel_t channel);
+
+void ADCC_StopConversion(void);
+
+void ADCC_SetStopOnInterrupt(void);
+
+void ADCC_DischargeSampleCapacitor(void);
+
+void ADCC_LoadAcquisitionRegister(uint8_t);
+
+void ADCC_SetPrechargeTime(uint8_t);
+
+void ADCC_SetRepeatCount(uint8_t);
+
+uint8_t ADCC_GetCurrentCountofConversions(void);
+
+void ADCC_ClearAccumulator(void);
+
+uint16_t ADCC_GetAccumulatorValue(void);
+
+bool ADCC_HasAccumulatorOverflowed(void);
+
+uint16_t ADCC_GetFilterValue(void);
+
+# 73
+uint16_t ADCC_GetPreviousResult(void);
+
+# 97
+void ADCC_DefineSetPoint(uint16_t);
+
+# 122
+void ADCC_SetUpperThreshold(uint16_t);
+
+# 147
+void ADCC_SetLowerThreshold(uint16_t);
+
+# 170
+uint16_t ADCC_GetErrorCalculation(void);
+
+# 192
+void ADCC_EnableDoubleSampling(void);
+
+# 214
+void ADCC_EnableContinuousConversion(void);
+
+# 236
+void ADCC_DisableContinuousConversion(void);
+
+# 258
+bool ADCC_HasErrorCrossedUpperThreshold(void);
+
+# 280
+bool ADCC_HasErrorCrossedLowerThreshold(void);
+
+# 302
+uint8_t ADCC_GetConversionStageStatus(void);
+
+# 13 "buttons.h"
+char readButton(void);
+
 # 18 "lcd.h"
 void gotoXY(int8_t x, int8_t y);
 
@@ -16718,15 +16800,15 @@ void gotoXY(int8_t x, int8_t y);
 void LCDBitmap(const char my_array[]);
 
 # 27
-void LCDCharacter(const char character);
+void LCD_Write_Character(const char character);
 
 
 
-void LCDWriteString(const char *characters);
+void LCD_Write_String(const char *characters);
 
 
 
-void LCDClear(void);
+void LCD_Clear(void);
 
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
@@ -16740,6 +16822,33 @@ void LCDWrite(uint8_t data_or_command, uint8_t data);
 
 void drawBox(void);
 
-# 16 "system.h"
+# 18 "system.h"
+void Init(void);
+
 void ConfigureOscillator(void);
+
+# 35 "system.c"
+void Init(void)
+{
+LATA = 0x01;
+LATB = 0x00;
+LATC = 0x00;
+
+TRISA = 0x00;
+TRISB = 0x00;
+TRISC = 0x00;
+
+ANSELA = 0x01;
+ANSELB = 0x00;
+ANSELC = 0x00;
+
+ADC_Init();
+
+ConfigureOscillator();
+}
+
+void ConfigureOscillator(void)
+{
+
+}
 

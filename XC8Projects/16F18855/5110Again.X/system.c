@@ -32,6 +32,29 @@
 
 #include "system.h"
 
+void Init(void)
+{
+    LATA    =   0x01;
+    LATB    =   0x00;
+    LATC    =   0x00;
+    
+    TRISA   =   0x00;
+    TRISB   =   0x00;
+    TRISC   =   0x00;
+    
+    ANSELA  =   0x01;
+    ANSELB  =   0x00;
+    ANSELC  =   0x00;
+    
+    ADC_Init();
+    
+    ConfigureOscillator();
+}
+
+void ConfigureOscillator(void)
+{
+ 
+}
 
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
@@ -71,8 +94,4 @@
 #pragma config CPD = OFF        // DataNVM code protection bit (Data EEPROM code protection disabled)
 
 
-void ConfigureOscillator(void)
-{
- 
-}
 */

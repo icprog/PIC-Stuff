@@ -1,27 +1,11 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
-"755 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
-[v _LATA `Vuc ~T0 @X0 0 e@22 ]
-"816
-[v _LATB `Vuc ~T0 @X0 0 e@23 ]
-"877
-[v _LATC `Vuc ~T0 @X0 0 e@24 ]
-"572
-[v _TRISA `Vuc ~T0 @X0 0 e@17 ]
-"633
-[v _TRISB `Vuc ~T0 @X0 0 e@18 ]
-"694
-[v _TRISC `Vuc ~T0 @X0 0 e@19 ]
-"31087
-[v _ANSELA `Vuc ~T0 @X0 0 e@3896 ]
-"31697
-[v _ANSELB `Vuc ~T0 @X0 0 e@3907 ]
-"32307
-[v _ANSELC `Vuc ~T0 @X0 0 e@3918 ]
+"18 system.h
+[v _Init `(v ~T0 @X0 0 ef ]
 "40 lcd.h
 [v _LCDInit `(v ~T0 @X0 0 ef ]
 "35
-[v _LCDClear `(v ~T0 @X0 0 ef ]
+[v _LCD_Clear `(v ~T0 @X0 0 ef ]
 "21
 [v _LCDBitmap `(v ~T0 @X0 0 ef1`*Cuc ]
 [v F13525 `(v ~T0 @X0 1 tf1`ul ]
@@ -33,9 +17,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 "18
 [v _gotoXY `(v ~T0 @X0 0 ef2`c`c ]
 "31
-[v _LCDWriteString `(v ~T0 @X0 0 ef1`*Cuc ]
+[v _LCD_Write_String `(v ~T0 @X0 0 ef1`*Cuc ]
 "37
 [v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
+"47 main.c
+[c E13559 60 61 62 63 .. ]
+[n E13559 . channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
+"27 adcc.h
+[v _ADC_Read `(ui ~T0 @X0 0 ef1`E13559 ]
+"13 buttons.h
+[v _readButton `(uc ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12611,16 +12602,53 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;adcc.h: 6: typedef uint16_t adc_result_t;
+[; ;adcc.h: 9: typedef enum
+[; ;adcc.h: 10: {
+[; ;adcc.h: 12: channel_VSS = 0x3C,
+[; ;adcc.h: 13: channel_Temp = 0x3D,
+[; ;adcc.h: 14: channel_DAC1 = 0x3E,
+[; ;adcc.h: 15: channel_FVR = 0x3F
+[; ;adcc.h: 16: } adcc_channel_t;
+[; ;adcc.h: 19: void ADC_Init(void);
+[; ;adcc.h: 21: void ADCC_StartConversion(adcc_channel_t channel);
+[; ;adcc.h: 23: bool ADCC_IsConversionDone();
+[; ;adcc.h: 25: adc_result_t ADCC_GetConversionResult(void);
+[; ;adcc.h: 27: adc_result_t ADC_Read(adcc_channel_t channel);
+[; ;adcc.h: 29: void ADCC_StopConversion(void);
+[; ;adcc.h: 31: void ADCC_SetStopOnInterrupt(void);
+[; ;adcc.h: 33: void ADCC_DischargeSampleCapacitor(void);
+[; ;adcc.h: 35: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adcc.h: 37: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adcc.h: 39: void ADCC_SetRepeatCount(uint8_t);
+[; ;adcc.h: 41: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adcc.h: 43: void ADCC_ClearAccumulator(void);
+[; ;adcc.h: 45: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adcc.h: 47: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adcc.h: 49: uint16_t ADCC_GetFilterValue(void);
+[; ;adcc.h: 73: uint16_t ADCC_GetPreviousResult(void);
+[; ;adcc.h: 97: void ADCC_DefineSetPoint(uint16_t);
+[; ;adcc.h: 122: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adcc.h: 147: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adcc.h: 170: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adcc.h: 192: void ADCC_EnableDoubleSampling(void);
+[; ;adcc.h: 214: void ADCC_EnableContinuousConversion(void);
+[; ;adcc.h: 236: void ADCC_DisableContinuousConversion(void);
+[; ;adcc.h: 258: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adcc.h: 280: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adcc.h: 302: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;buttons.h: 13: char readButton(void);
 [; ;lcd.h: 18: void gotoXY(int8_t x, int8_t y);
 [; ;lcd.h: 21: void LCDBitmap(const char my_array[]);
-[; ;lcd.h: 27: void LCDCharacter(const char character);
-[; ;lcd.h: 31: void LCDWriteString(const char *characters);
-[; ;lcd.h: 35: void LCDClear(void);
+[; ;lcd.h: 27: void LCD_Write_Character(const char character);
+[; ;lcd.h: 31: void LCD_Write_String(const char *characters);
+[; ;lcd.h: 35: void LCD_Clear(void);
 [; ;lcd.h: 37: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 [; ;lcd.h: 40: void LCDInit(void);
 [; ;lcd.h: 45: void LCDWrite(uint8_t data_or_command, uint8_t data);
 [; ;lcd.h: 47: void drawBox(void);
-[; ;system.h: 16: void ConfigureOscillator(void);
+[; ;system.h: 18: void Init(void);
+[; ;system.h: 20: void ConfigureOscillator(void);
 "6 coffee.h
 [v _coffee `Cuc ~T0 @X0 -> 0 `x e ]
 [i _coffee
@@ -13205,109 +13233,131 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 12: {
 [e :U _main ]
 [f ]
-[; ;main.c: 13: LATA = 0x00;
+[; ;main.c: 13: Init();
 "13
-[e = _LATA -> -> 0 `i `uc ]
-[; ;main.c: 14: LATB = 0x00;
+[e ( _Init ..  ]
 "14
-[e = _LATB -> -> 0 `i `uc ]
-[; ;main.c: 15: LATC = 0x00;
-"15
-[e = _LATC -> -> 0 `i `uc ]
-[; ;main.c: 17: TRISA = 0x00;
-"17
-[e = _TRISA -> -> 0 `i `uc ]
-[; ;main.c: 18: TRISB = 0x00;
-"18
-[e = _TRISB -> -> 0 `i `uc ]
-[; ;main.c: 19: TRISC = 0x00;
-"19
-[e = _TRISC -> -> 0 `i `uc ]
-[; ;main.c: 21: ANSELA = 0x00;
-"21
-[e = _ANSELA -> -> 0 `i `uc ]
-[; ;main.c: 22: ANSELB = 0x00;
-"22
-[e = _ANSELB -> -> 0 `i `uc ]
-[; ;main.c: 23: ANSELC = 0x00;
-"23
-[e = _ANSELC -> -> 0 `i `uc ]
-"25
 [v _count `ui ~T0 @X0 1 a ]
-[; ;main.c: 25: uint16_t count = 0;
+[; ;main.c: 14: uint16_t count = 0;
 [e = _count -> -> 0 `i `ui ]
-[; ;main.c: 27: LCDInit();
-"27
+"15
+[v _b `uc ~T0 @X0 1 a ]
+[; ;main.c: 15: char b = 0;
+[e = _b -> -> 0 `i `uc ]
+[; ;main.c: 18: LCDInit();
+"18
 [e ( _LCDInit ..  ]
-[; ;main.c: 29: LCDClear();
-"29
-[e ( _LCDClear ..  ]
-[; ;main.c: 30: LCDBitmap(coffee);
-"30
+[; ;main.c: 20: LCD_Clear();
+"20
+[e ( _LCD_Clear ..  ]
+[; ;main.c: 21: LCDBitmap(coffee);
+"21
 [e ( _LCDBitmap (1 &U _coffee ]
-[; ;main.c: 31: _delay((unsigned long)((3000)*(1000000L/4000.0)));
-"31
+[; ;main.c: 22: _delay((unsigned long)((3000)*(1000000L/4000.0)));
+"22
 [e ( __delay (1 -> * -> -> 3000 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;main.c: 32: LCDClear();
-"32
-[e ( _LCDClear ..  ]
-[; ;main.c: 33: drawBox();
-"33
+[; ;main.c: 23: LCD_Clear();
+"23
+[e ( _LCD_Clear ..  ]
+[; ;main.c: 24: drawBox();
+"24
 [e ( _drawBox ..  ]
-[; ;main.c: 37: { gotoXY(30,1); LCDWriteString("A N D ,");};
-"37
+[; ;main.c: 28: { gotoXY(30,1); LCD_Write_String("A N D ,");};
+"28
 {
 [e ( _gotoXY (2 , -> -> 30 `i `c -> -> 1 `i `c ]
-[e ( _LCDWriteString (1 :s 1C ]
+[e ( _LCD_Write_String (1 :s 1C ]
 }
-[; ;main.c: 38: _delay((unsigned long)((1000)*(1000000L/4000.0)));
-"38
+[; ;main.c: 29: _delay((unsigned long)((1000)*(1000000L/4000.0)));
+"29
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;main.c: 39: gotoXY(8,3);
-"39
+[; ;main.c: 30: gotoXY(8,3);
+"30
 [e ( _gotoXY (2 , -> -> 8 `i `c -> -> 3 `i `c ]
-[; ;main.c: 41: LCDWriteString("Layne Sucks COCK!!");
-"41
-[e ( _LCDWriteString (1 :s 2C ]
-[; ;main.c: 42: gotoXY(8,4);
-"42
+[; ;main.c: 32: LCD_Write_String("Layne Sucks COCK!!");
+"32
+[e ( _LCD_Write_String (1 :s 2C ]
+[; ;main.c: 33: gotoXY(8,4);
+"33
 [e ( _gotoXY (2 , -> -> 8 `i `c -> -> 4 `i `c ]
-[; ;main.c: 43: LCDWriteString("and Likes it!!");
-"43
-[e ( _LCDWriteString (1 :s 3C ]
-[; ;main.c: 45: LCDClear();
-"45
-[e ( _LCDClear ..  ]
-[; ;main.c: 46: while(1)
-"46
+[; ;main.c: 34: LCD_Write_String("and Likes it!!");
+"34
+[e ( _LCD_Write_String (1 :s 3C ]
+[; ;main.c: 36: _delay((unsigned long)((2000)*(1000000L/4000.0)));
+"36
+[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;main.c: 38: LCD_Clear();
+"38
+[e ( _LCD_Clear ..  ]
+[; ;main.c: 39: while(1)
+"39
 [e :U 1521 ]
-[; ;main.c: 47: {
-"47
+[; ;main.c: 40: {
+"40
 {
-[; ;main.c: 48: count +=1;
-"48
-[e =+ _count -> -> 1 `i `ui ]
-[; ;main.c: 51: { gotoXY(0,0); LCD_Write_Int(count,-1, 0, 0);};
-"51
+[; ;main.c: 44: { gotoXY(0,0); LCD_Write_Int(count,-1, 0, 0);};
+"44
 {
 [e ( _gotoXY (2 , -> -> 0 `i `c -> -> 0 `i `c ]
 [e ( _LCD_Write_Int (4 , , , -> _count `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
 }
+[; ;main.c: 45: LCD_Write_String("     ");
+"45
+[e ( _LCD_Write_String (1 :s 4C ]
+[; ;main.c: 47: count = ADC_Read(0);
+"47
+[e = _count ( _ADC_Read (1 -> -> 0 `i `E13559 ]
+[; ;main.c: 49: b = readButton();
+"49
+[e = _b ( _readButton ..  ]
+[; ;main.c: 51: if(b == 2)
+"51
+[e $ ! == -> _b `i -> 2 `i 1523  ]
+[; ;main.c: 52: {
+"52
+{
+[; ;main.c: 53: { gotoXY(1,1); LCD_Write_Int(b,5, 0, 0);};
+"53
+{
+[e ( _gotoXY (2 , -> -> 1 `i `c -> -> 1 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> _b `i -> -> 5 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
 "54
 }
+[; ;main.c: 54: }
+[e $U 1524  ]
+"55
+[e :U 1523 ]
+[; ;main.c: 55: else
+[; ;main.c: 56: {
+"56
+{
+[; ;main.c: 57: { gotoXY(1,2); LCD_Write_Int(readButton(),5, 0, 0);};
+"57
+{
+[e ( _gotoXY (2 , -> -> 1 `i `c -> -> 2 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> ( _readButton ..  `i -> -> 5 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+"58
+}
+[e :U 1524 ]
+"59
+}
 [e :U 1520 ]
-"46
+"39
 [e $U 1521  ]
 [e :U 1522 ]
-[; ;main.c: 54: }
-[; ;main.c: 55: return (1);
-"55
+[; ;main.c: 58: }
+[; ;main.c: 59: }
+[; ;main.c: 60: return (1);
+"60
 [e ) -> 1 `i ]
 [e $UE 1519  ]
-[; ;main.c: 56: }
-"56
+[; ;main.c: 61: }
+"61
 [e :UE 1519 ]
 }
 [a 1C 65 32 78 32 68 32 44 0 ]
 [a 3C 97 110 100 32 76 105 107 101 115 32 105 116 33 33 0 ]
 [a 2C 76 97 121 110 101 32 83 117 99 107 115 32 67 79 67 75 33 33 0 ]
+[a 4C 32 32 32 32 32 0 ]
