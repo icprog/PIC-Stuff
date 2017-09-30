@@ -14,7 +14,7 @@
 #define LCD_Y       48                                      // LCD Height 19 mm
 
 
-const char fonts [] = {
+const char fonts [][3] = {
     0x00, 0x00, 0x00,  // sp
     0x00, 0x4E, 0x00,  // ! *
     0x06, 0x00, 0x06,  // " *
@@ -142,38 +142,16 @@ void LCDBitmap(const char my_array[])                             //This takes a
 
 void LCD_Write_Character(const char character)
 {
-    uint16_t base;
-    base = character - 32;
-    base *= 3;                          // 3 bit Font, so location * 3 will pull up correct font
-    LCDWrite(LCD_DATA,fonts[base]);             // fonts are written 1 vertical line of 8 bits at a time
-    LCDWrite(LCD_DATA,fonts[base + 1]);         // so, this is the second vertical line
-    LCDWrite(LCD_DATA,fonts[base + 2]);         // third vertical line of font character
-    LCDWrite(LCD_DATA, 0x00);                      // write a blank line to space the font
-}
-
-/*   uint16_t base,z;
-    base = character - 32;
-    base *= 3;                          // 3 bit Font, so location * 3 will pull up correct font
-    z = base;
-    for(x=base;base<(z+3);base++)
-    {
-    LCDWrite(LCD_DATA,fonts[base]);             // fonts are written 1 vertical line of 8 bits at a time
-    }
-*/  //Test if above works, saves 3 bytes
-
-//void LCD_Write_Character(const char character)
-//{
-
 //    LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
-//    int index;
-  //  for (index = 0 ; index < 3 ; index++)
-    //{
-//    LCDWrite(LCD_DATA, fonts[character - 0x20][index]); //0x20 is the ASCII character for Space (? ?). The font table starts with this character
-  //  }
+    int index;
+    for (index = 0 ; index < 3 ; index++)
+    {
+    LCDWrite(LCD_DATA, fonts[character - 0x20][index]); //0x20 is the ASCII character for Space (? ?). The font table starts with this character
+    }
     
-    //LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
+    LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
     
-//}
+}
 
 //Given a string of characters, one by one is passed to the LCD
 void LCD_Write_String(const char *characters) 
