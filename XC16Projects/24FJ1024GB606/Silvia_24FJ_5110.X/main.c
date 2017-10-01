@@ -1,18 +1,19 @@
 #include    "system.h"                                                             // System funct/params, like osc/peripheral config
 //#include    "menu.h"
 // *************** Outputs ***************************************************************************************************************************************
-#define boilerOutput            _LATD6          //Change
-#define groupheadOutput         _LATD7          //Change
-#define piezoOutput             _LATF1                                          // Piezo Alarm Output G
-#define backLightOn             _LATD4                                          // Backlight On/Off G
+#define boilerOutput            _LATD6                                          //                              Change
+#define groupheadOutput         _LATD7                                          //                              Change
+#define piezoOutput             _LATF1                                          // Piezo Alarm Output           G
+#define backLightOn             _LATD4                                          // Backlight On/Off             G
 #define airPump                 _LATD5                                          // Air pump (for level sensing) G
 
 // *************** Inputs ****************************************************************************************************************************************
-#define power                   1                                            // Power Switch Input G             
-//#define power                   _RG9                                            // Power Switch Input G             
-#define steamSwitch             _RB5                                            // Steam Switch Input G
-#define brewSwitch              _RB4                                            // Brew Switch Input G
-#define waterSwitch             _RB3                                            // Water Switch Input G
+#define power                   1                                               // Power Switch Input           CHANGE 
+//#define power                   _RG9                                            // Power Switch Input         G             
+#define steamSwitch             _RB5                                            // Steam Switch Input           G
+#define brewSwitch              _RB4                                            // Brew Switch Input            G
+#define waterSwitch             _RB3                                            // Water Switch Input           G
+// ADC Input to read Button press (User Input Keys) on _RB6 (AN6)                                               G
 // ***************************************************************************************************************************************************************
 
 //***************************Timer2 set in pwm.c
@@ -72,8 +73,6 @@ uint8_t call = 0;
 
 int8_t powerFail = 1;
 
-uint16_t timeFU = 0;                                                              //Setting powerFail to 1, instructs the user to set the time
-
 // ******************************************************************************
 int main(void)
 {
@@ -94,7 +93,7 @@ int main(void)
 
     int i = 0, a = 0;                                                           // x is used for holding shot timer value for 20 seconds before resetting to zero
     
-    char TestKey;                                                               // Variable used for Storing Which Menu Key is Pressed
+    char testKey;                                                               // Variable used for Storing Which Menu Key is Pressed
 
     int internalBGV;
     
@@ -110,6 +109,7 @@ int main(void)
     
     uint16_t count = 0;
     
+            drawBox();
 // ******************************************************************************
   //  setDutyCycle(dutyCycle);
     
@@ -266,7 +266,7 @@ int main(void)
                     LCDWriteChar (' ');
                     LCDWriteChar ('%');
                     
-                    LCDWriteIntXY(5,4,TestKey,5,0);
+                    LCDWriteIntXY(5,4,testKey,5,0);
 //                    LCDWriteIntXY(5,4,dutyCycle,5,0);
                     LCDWriteIntXY(5,16,timeFU,5,0);
 //                    LCDWriteIntXY(5,16,count,5,0);
@@ -514,13 +514,13 @@ int main(void)
         {
             dutyCycle =     0;
         }
-
+*/
 // ******************************************************************************
-        TestKey = readButton();
+        testKey = readButton();
 // ******************************************************************************
 //        heartBeat();                                                            // HeartBeat displays the HeartBeat on the LCD,
 // ******************************************************************************  
-        if (TestKey == KEY_1)
+/*        if (testKey == KEY_1)
         {
             if(timer<1)
             {
@@ -534,9 +534,9 @@ int main(void)
             LCDWriteStringXY(3,2,"Press 'ENTER' ");
             LCDWriteStringXY(3,16,"to Set the Time");
 
-            while(TestKey != KEY_3)
+            while(testKey != KEY_3)
             {
-                TestKey = readButton();
+                testKey = readButton();
                 timer +=1;
                 __delay_ms(10);
                 if (timer > 500)
@@ -560,7 +560,7 @@ int main(void)
         
 // ******************************************************************************
         
-        if(TestKey == KEY_2)
+        if(testKey == KEY_2)
         {
             if(timer<1)
             {
@@ -569,16 +569,16 @@ int main(void)
                 goto Exit2;
             }
 
-//            TestKey = KEY_NONE;
+//            testKey = KEY_NONE;
             
             LCD_Clear();
             LCDBitmap(&menu2[0], 1024,0);                         //Draw Menu2
             LCDWriteStringXY(3,1,"ENTER to Set St");
             LCDWriteStringXY(3,16,"art/Stop Times");
 
-            while(TestKey != KEY_3)
+            while(testKey != KEY_3)
             {
-                TestKey = readButton();
+                testKey = readButton();
                  timer +=1;
                  __delay_ms(10);
                
@@ -616,7 +616,7 @@ int main(void)
         }
 // ******************************************************************************
 
-        if (TestKey == KEY_3)
+        if (testKey == KEY_3)
         {
             if(timer<1)
             {
@@ -629,16 +629,16 @@ int main(void)
             {
                 LCD_Clear();
                 LCDBitmap(&menu2[0], 1024,0);                     //Draw Menu2
-                TestKey = KEY_NONE;
+                testKey = KEY_NONE;
                 __delay_ms(750);
             }
             
             
             int8_t choice = 0;
 
-            while(TestKey != KEY_3)
+            while(testKey != KEY_3)
             {
-                TestKey = readButton();
+                testKey = readButton();
                 __delay_ms(10);
                 
                 if(timer > 500)
@@ -646,11 +646,11 @@ int main(void)
                     timer = 0;
                     LCD_Clear();
                     LCDBitmap(&menu3[0], 1024,0);                  //Draw Menu3
-                    goto Exit;                                   //This uses less memory than TestKey = KEY_3
-//                    TestKey = KEY_3;                           // This functions fine, but forces a write to EEProm
+                    goto Exit;                                   //This uses less memory than testKey = KEY_3
+//                    testKey = KEY_3;                           // This functions fine, but forces a write to EEProm
                 }
 
-                switch(TestKey)
+                switch(testKey)
                 {
                     case KEY_1:
                     {
@@ -689,7 +689,7 @@ int main(void)
                 timer += 1;
             }
             
-            TestKey = 0;
+            testKey = 0;
             
             LCD_Clear();
             LCDBitmap(&menu2[0], 1024,0);              //Draw Menu2
@@ -721,7 +721,7 @@ int main(void)
         Exit:
                         
 // ******************************************************************************
-        if (TestKey == KEY_4)
+        if (testKey == KEY_4)
         {
             init_lcd();
             LCD_Clear();
@@ -729,7 +729,11 @@ int main(void)
         }
         
 // ******************************************************************************
-*/        ClrWdt();                                                               //Clear (Re-Set) the WatchDog Timer
+*/    
+        LCDWriteStringXY(1,1,"Hello!!!!");
+        displayTime();
+        LCDWriteIntXY(4,2,testKey,1,0,0);
+        ClrWdt();                                                               //Clear (Re-Set) the WatchDog Timer
     }
     return(1);
 }

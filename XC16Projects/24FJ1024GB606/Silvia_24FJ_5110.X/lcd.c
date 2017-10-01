@@ -14,6 +14,7 @@
 #define LCD_Y       48                                      // LCD Height 19 mm
 
 
+                                                            // <editor-fold defaultstate="collapsed" desc="3 Bit wide Font">
 const char fonts [] = {
     0x00, 0x00, 0x00,  // sp
     0x00, 0x4E, 0x00,  // ! *
@@ -117,6 +118,7 @@ const char fonts [] = {
     0xFF, 0xFF, 0xFF,  // <
     0xFF, 0xFF, 0xFF,  // 
 };
+// </editor-fold>
 
 char x, y;
 
@@ -127,7 +129,7 @@ void gotoXY(char x, char y)
 }
 
 
-void LCDBitmap(const char my_array[])                             //This takes a large array of bits and sends them to the LCD
+void LCDBitmap(const char my_array[])    //This takes a large array of bits and sends them to the LCD
 {
     int index;
     for (index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)

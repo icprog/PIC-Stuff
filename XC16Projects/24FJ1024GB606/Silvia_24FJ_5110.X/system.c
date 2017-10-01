@@ -116,12 +116,12 @@ void SYSTEM_Initialize(void)
 {
     PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
-//    ADCInit();
+    ADCInit();
 //    INTERRUPT_Initialize();
-  //  RTCC_Initialize();
-//    LCDInit();
+    RTCC_Initialize();
+    LCDInit();
     __delay_ms(100);
-  //  LCD_Clear();
+    LCD_Clear();
 }
 
 void OSCILLATOR_Initialize(void)

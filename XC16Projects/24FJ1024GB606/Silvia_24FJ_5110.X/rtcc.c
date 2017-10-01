@@ -387,21 +387,17 @@ void displayTime(void)
     
     test = RTCC_TimeGet(&currentTime);              // Read current time from RTCC
     
-    if(test == 0)
-    {
-        timeFU+=1;
-    }                                             
-    LCDWriteIntXY(1,3,currentTime.tm_year,2,0,0);
+    LCDWriteIntXY(2,0,currentTime.tm_year,2,0,0);
     LCD_Write_Character('/');
     LCD_Write_String(month[currentTime.tm_mon]);
     LCD_Write_Character('/');
-    LCD_Write_Int(currentTime.tm_mday,2,0);
-    LCDWriteStringXY(1,13,WeekDay[currentTime.tm_wday]);
-    LCDWriteIntXY(1,17,currentTime.tm_hour,2,0,0);
+    LCD_Write_Int(currentTime.tm_mday,2,0,0);
+    LCDWriteStringXY(38,0,WeekDay[currentTime.tm_wday]);
+    LCDWriteIntXY(50,0,currentTime.tm_hour,2,0,0);
     LCD_Write_Character(':');
-    LCD_Write_Int(currentTime.tm_min,2,0);
+    LCD_Write_Int(currentTime.tm_min,2,0,0);
     LCD_Write_Character(':');
-    LCD_Write_Int(currentTime.tm_sec,2,0);
+    LCD_Write_Int(currentTime.tm_sec,2,0,0);
 }
 
 static uint8_t ConvertHexToBCD(uint8_t hexvalue)

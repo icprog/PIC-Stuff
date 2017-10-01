@@ -5,15 +5,15 @@
 #include    <stdint.h>
 #include    <stdbool.h>
 
+#include    "adc.h"
 #include    "lcd.h"
-//#include    "rtcc.h"
+#include    "rtcc.h"
 #include    "pin_manager.h"
-//#include    "buttons.h"
+#include    "buttons.h"
 //#include    "interrupt_manager.h"
 //#include    "traps.h"
 //#include    "glcd.h"
 //#include    "pid.h"  
-//#include    "adc.h"
 //#include    "touch.h"
 //#include    "pwm.h"
 //#include    "start_stop_timer.h"
