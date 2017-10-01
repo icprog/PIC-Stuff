@@ -6,4 +6,5 @@ lcd.h  \
 rtcc.h  \
  pin_manager.h  \
 buttons.h  \
+user.h  \
 rtccMenu.h 

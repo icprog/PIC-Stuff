@@ -147,7 +147,7 @@ char setStartHour(char b)
         
         
         LCDWriteStringXY(1,2,"Start Hour =");
-        LCDWriteIntXY(1,16,result,2,0);
+        LCDWriteIntXY(1,16,result,2,0,0);
 
         switch(TestKey)
         {

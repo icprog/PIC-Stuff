@@ -55,7 +55,7 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
             TestKey = Enter;
         }
         
-        LCDWriteIntXY(X,Y,result,4,1);
+        LCDWriteIntXY(X,Y,result,4,1,0);
         
         switch(TestKey)
         {
