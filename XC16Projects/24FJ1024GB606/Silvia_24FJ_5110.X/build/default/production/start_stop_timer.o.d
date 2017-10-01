@@ -7,5 +7,7 @@ lcd.h  \
 rtcc.h  \
 pin_manager.h  \
 buttons.h  \
- user.h  \
+ pid.h  \
+pwm.h  \
+user.h  \
 menu4.h 

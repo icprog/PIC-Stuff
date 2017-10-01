@@ -13,10 +13,10 @@
 //#include    "interrupt_manager.h"
 //#include    "traps.h"
 //#include    "glcd.h"
-//#include    "pid.h"  
+#include    "pid.h"  
 //#include    "touch.h"
-//#include    "pwm.h"
-//#include    "start_stop_timer.h"
+#include    "pwm.h"
+#include    "start_stop_timer.h"
 //#include    "traps.h"
 #include    "user.h"
 
