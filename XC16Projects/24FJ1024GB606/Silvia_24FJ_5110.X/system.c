@@ -121,7 +121,7 @@ void SYSTEM_Initialize(void)
     RTCC_Initialize();
     LCDInit();
     __delay_ms(100);
-    LCD_Clear();
+    LCDClear();
 }
 
 void OSCILLATOR_Initialize(void)

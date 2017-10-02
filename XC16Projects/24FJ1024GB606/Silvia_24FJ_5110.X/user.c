@@ -50,7 +50,7 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
                     
         if(timer > 1000)                // Number of counts multiplied by the delay value above to more or less set the time out delay
         {
-            LCD_Clear();
+            LCDClear();
             timer = 0;
             TestKey = Enter;
         }

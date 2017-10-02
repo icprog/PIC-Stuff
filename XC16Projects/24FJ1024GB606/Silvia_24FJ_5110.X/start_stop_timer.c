@@ -81,7 +81,7 @@ void writeStartStopTimes(void)
                     
 //            case KEY_RESET:
   //          {
-    //            LCD_Clear();
+    //            LCDClear();
       //          goto Exit;
         //    }
           //  break;
@@ -89,7 +89,7 @@ void writeStartStopTimes(void)
 
         if(timer < 3)
         {
-            LCD_Clear();
+            LCDClear();
             LCDBitmap(&menu4[0]);                  //Draw Menu4
         }
 
@@ -97,7 +97,7 @@ void writeStartStopTimes(void)
         
         LCDWriteStringXY(1,3,"Start/Stop fo");
         LCDWriteStringXY(1,16,"r ");
-        LCD_Write_String(WeekDay[choice]);
+        LCDWriteString(WeekDay[choice]);
         LCDWriteStringXY(2,3,"Up/Dn Keys to");
         LCDWriteStringXY(2,17,"change.");
         LCDWriteStringXY(3,3,"Enter Key for");
@@ -106,7 +106,7 @@ void writeStartStopTimes(void)
         timer += 1;
     }
     
-    LCD_Clear();
+    LCDClear();
     LCDBitmap(&menu4[0]);                  //Draw Menu4
     startHour[choice] = setStartHour(startHour[choice]);
     startMinute[choice] = setStartMinute(startMinute[choice]);
@@ -114,7 +114,7 @@ void writeStartStopTimes(void)
     stopMinute[choice] = setStopMinute(stopMinute[choice]);
 
     Exit:
-    LCD_Clear();
+    LCDClear();
     timer = 0;
 }
 

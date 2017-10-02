@@ -101,8 +101,6 @@ bool RTCC_TimeGet(struct tm *currentTime)
 
 void RTCC_TimeSet(struct tm *currentTime)
 {
-    call = 1;
-    
     uint8_t sel = 0, done = 0;
     
     uint16_t timer = 0;                                                     // Used to return to operation if user does not finish setting time!
@@ -117,8 +115,8 @@ void RTCC_TimeSet(struct tm *currentTime)
         
         if(timer < 1)
         {
-            LCD_Clear();
-            LCDBitmap(&rtccMenu[0]);                                           //Draw rtccMenu
+            LCDClear();
+//            LCDBitmap(&rtccMenu[0]);                                           //Draw rtccMenu
         }
         
         timer += 1;
@@ -126,49 +124,47 @@ void RTCC_TimeSet(struct tm *currentTime)
         if(timer > 10000)                      
         {
             timer = 0;
-            LCD_Clear();
+            LCDClear();
             done = 1;                                                           // Exit while loop
         }
         
-        LCDWriteStringXY(3,3,"\"Enter\" for n");
-        LCDWriteStringXY(3,16,"ext Field");
-        LCDWriteStringXY(4,3,"Up/Dn keys to");
-        LCDWriteStringXY(4,17,"change Time.")
+        LCDWriteStringXY(4,2,"\"Enter\" = next Field");
+        LCDWriteStringXY(4,3,"Up/Dn to change Time");
         
         
         if(sel == 0)
         {
-            LCDWriteStringXY(2,3,"^^");                                         // Draw Pointer, to show what we are setting
+            LCDWriteStringXY(2,1,"^^");                                         // Draw Pointer, to show what we are setting
         }
         
         if(sel == 1)
         {
-            LCDWriteStringXY(2,3,"   ^^^");                                      // Draw Pointer, to show what we are setting
+            LCDWriteStringXY(2,1,"   ^^^");                                      // Draw Pointer, to show what we are setting
         }
         
         if(sel == 2)
         {
-            LCDWriteStringXY(2,6,"    ^^");                              // Draw Pointer
+            LCDWriteStringXY(14,1,"    ^^");                              // Draw Pointer
         }
         
         if(sel == 3)
         {
-            LCDWriteStringXY(2,10,"   ^^^");                              // Draw Pointer
+            LCDWriteStringXY(26,1,"   ^^^");                              // Draw Pointer
         }
         
         if(sel== 4)
         {
-            LCDWriteStringXY(2,13,"   ");
-            LCDWriteStringXY(2,17,"^^");
+            LCDWriteStringXY(38,1,"   ");
+            LCDWriteStringXY(50,1,"^^");
         }
         
         if (sel == 5)
         {
-            LCDWriteStringXY(2,17,"   ^^");
+            LCDWriteStringXY(50,1,"   ^^");
         }
         if(sel == 6)
         {
-            LCDWriteStringXY(2,20,"   ^^");
+            LCDWriteStringXY(62,1,"   ^^");
         }
         
         char key = readButton();
@@ -352,7 +348,7 @@ void RTCC_TimeSet(struct tm *currentTime)
                 if (sel == 6)
                 {
                     sel = 0;
-                    LCD_Clear();
+                    LCDClear();
                     done = 1;
                 }
                 else
@@ -374,7 +370,7 @@ void RTCC_TimeSet(struct tm *currentTime)
         RTCCON1Lbits.RTCEN = 1;  
         RTCC_Lock();
     }
-    LCD_Clear();
+    LCDClear();
     call = 0;
     powerFail = 0; 
   
@@ -388,16 +384,16 @@ void displayTime(void)
     test = RTCC_TimeGet(&currentTime);              // Read current time from RTCC
     
     LCDWriteIntXY(2,0,currentTime.tm_year,2,0,0);
-    LCD_Write_Character('/');
-    LCD_Write_String(month[currentTime.tm_mon]);
-    LCD_Write_Character('/');
-    LCD_Write_Int(currentTime.tm_mday,2,0,0);
+    LCDWriteCharacter('/');
+    LCDWriteString(month[currentTime.tm_mon]);
+    LCDWriteCharacter('/');
+    LCDWriteInt(currentTime.tm_mday,2,0,0);
     LCDWriteStringXY(38,0,WeekDay[currentTime.tm_wday]);
     LCDWriteIntXY(50,0,currentTime.tm_hour,2,0,0);
-    LCD_Write_Character(':');
-    LCD_Write_Int(currentTime.tm_min,2,0,0);
-    LCD_Write_Character(':');
-    LCD_Write_Int(currentTime.tm_sec,2,0,0);
+    LCDWriteCharacter(':');
+    LCDWriteInt(currentTime.tm_min,2,0,0);
+    LCDWriteCharacter(':');
+    LCDWriteInt(currentTime.tm_sec,2,0,0);
 }
 
 static uint8_t ConvertHexToBCD(uint8_t hexvalue)

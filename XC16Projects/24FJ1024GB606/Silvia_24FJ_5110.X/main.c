@@ -109,7 +109,7 @@ int main(void)
     
     uint16_t count = 0;
     
-            drawBox();
+//    LCDDrawBox();
 // ******************************************************************************
   //  setDutyCycle(dutyCycle);
     
@@ -183,7 +183,7 @@ int main(void)
             errorCount>9?powerSwitch=0:powerSwitch;
             
 //            level = waterTankLevel();
-            level = 30;
+            level = 24;
  
             level<10?powerSwitch=0:powerSwitch;
             
@@ -197,7 +197,7 @@ int main(void)
             previous_time = currentTime.tm_sec;
 
 // ******************************************************************************
-            internalBGV = ADCRead(0x1A);
+            internalBGV = ADCRead(ADC_CHANNEL_VBG);
       
             for(i = 0;i<2;++i)
             {
@@ -219,8 +219,7 @@ int main(void)
  
             if(powerFail == 1)
             {
-                LCDWriteStringXY(3,6,"Please Set");
-                LCDWriteStringXY(3,17,"the Time!");
+                LCDWriteStringXY(4,0,"Please Set the Time");
             }
             else
             {
@@ -230,62 +229,53 @@ int main(void)
 
                 if(steamSwitch)
                 {
-                    LCD_Write_String(desc[1]);
-                    LCD_Write_String("/Set");
-                    gotoXY(2,25);
-                    LCD_Write_Character('/');
-                    LCD_Write_Int(setpoint[1],4,1,0);
+                    LCDWriteString(desc[1]);
+                    LCDWriteIntXY(48,1,steamTemperature,4,1,0);
+                    LCDWriteCharacter(123);                                          // generate degree symbol in font list
+                    LCDWriteCharacter(70);
                 }
                 else
                 {
-                    LCD_Write_String(desc[0]);
-                    LCD_Write_String("/Set");
-                    gotoXY(2,25);
-                    LCD_Write_Character('/');
-                    LCD_Write_Int(setpoint[0],4,1,0);
+                    LCDWriteString(desc[0]);
+                    LCDWriteIntXY(48,1,boilerTemperature,4,1,0);
+                    LCDWriteCharacter(123);                                          // generate degree symbol in font list
+                    LCDWriteCharacter(70);
                 }
 
-                LCDWriteIntXY(2,17,boilerTemperature,4,1,0);
-                LCD_Write_Character(129);                                          // generate degree symbol in font list
-                LCD_Write_Character(70);
-
-                gotoXY(3,1);                                                //LCD Line 3 Display
-                LCD_Write_String(desc[2]);
-                LCD_Write_String("/Set");
-                LCDWriteIntXY(3,17,GroupHeadTemp,4,1,0);
-                LCD_Write_Character(129);                                          // generate degree symbol in font list
-                LCD_Write_Character(70);
-                LCD_Write_Character(' ');
-                LCD_Write_Character('/');
-                LCD_Write_Int(setpoint[2],4,1,0);
+                LCDWriteStringXY(2,2,desc[2]);
+                LCDWriteIntXY(48,2,GroupHeadTemp,4,1,0);
+                LCDWriteCharacter(123);                                          // generate degree symbol in font list
+                LCDWriteCharacter(70);
+                LCDWriteCharacter(' ');
                 
                 if(shotTimer == 0)
                 {
-                    LCDWriteStringXY(4,3,"Tank Level:");
-                    LCDWriteIntXY(4,17,level,3,0,0);
-                    LCD_Write_Character(' ');
-                    LCD_Write_Character ('%');
+                    LCDWriteStringXY(2,3,"Tank Level:");
+                    LCDWriteIntXY(48,3,level,-1,0,0);
+                    LCDWriteCharacter('%');
+                    LCDWriteCharacter(' ');
+                    LCDWriteCharacter(' ');
                     
-                    LCDWriteIntXY(5,4,testKey,5,0,0);
+      //              LCDWriteIntXY(5,4,testKey,5,0,0);
 //                    LCDWriteIntXY(5,4,dutyCycle,5,0);
 //                    LCDWriteIntXY(5,16,count,5,0);
-                    LCDWriteIntXY(5,22,shotProgressCounter,5,0,0);
+        //            LCDWriteIntXY(5,22,shotProgressCounter,5,0,0);
                     
                     if(level < 25)
                     {
                         blink = 1 - blink;
                         if(blink)
                         {
-                            LCDWriteStringXY(4,17,"LOW");
-                            LCD_Write_Character(' ');
-                            LCD_Write_Character(' ');
+                            LCDWriteStringXY(48,3,"LOW");
+                            LCDWriteCharacter(' ');
+                            LCDWriteCharacter(' ');
                         }
                     }
                 }
                 else
                 {
-                    LCDWriteStringXY(4,3,"Shot Timer:");
-                    LCDWriteIntXY(4,17,shotTimer,4,1,0);
+                    LCDWriteStringXY(2,3,"Shot Timer:");
+                    LCDWriteIntXY(48,3,shotTimer,4,1,0);
                 }
             }
         }
@@ -528,8 +518,8 @@ int main(void)
                 goto done2;
             }
             
-            LCD_Clear();
-            LCDBitmap(&menu2[0]);                         //Draw Menu2
+            LCDClear();
+//            LCDBitmap(&menu2[0]);                         //Draw Menu2
             LCDWriteStringXY(3,2,"Press 'ENTER' ");
             LCDWriteStringXY(3,16,"to Set the Time");
 
@@ -541,8 +531,8 @@ int main(void)
                 if (timer > 500)
                 {
                     timer = 0;
-                    LCD_Clear();
-                    LCDBitmap(&menu3[0]);                  //Draw Menu3
+                    LCDClear();
+//                    LCDBitmap(&menu3[0]);                  //Draw Menu3
                     goto done2;
                 }
             }
@@ -551,7 +541,7 @@ int main(void)
             
             timer = 0;
 
-            LCDBitmap(&menu3[0]);                         //Draw Menu3
+//            LCDBitmap(&menu3[0]);                         //Draw Menu3
             __delay_ms(500);
             
             done2:;
@@ -570,8 +560,8 @@ int main(void)
 
 //            testKey = None;
             
-            LCD_Clear();
-            LCDBitmap(&menu2[0]);                         //Draw Menu2
+            LCDClear();
+//            LCDBitmap(&menu2[0]);                         //Draw Menu2
             LCDWriteStringXY(3,1,"ENTER to Set St");
             LCDWriteStringXY(3,16,"art/Stop Times");
 
@@ -584,8 +574,8 @@ int main(void)
                 if(timer > 500)
                 {
                     timer = 0;
-                    LCD_Clear();
-                    LCDBitmap(&menu3[0]);                  //Draw Menu2
+                    LCDClear();
+//                    LCDBitmap(&menu3[0]);                  //Draw Menu2
                     goto Exit2;                                                 
                 }
             }
@@ -608,7 +598,7 @@ int main(void)
 
 
 
-            LCDBitmap(&menu3[0]);                          //Draw Menu2
+//            LCDBitmap(&menu3[0]);                          //Draw Menu2
             __delay_ms(500);
             
             Exit2:; 
@@ -626,8 +616,8 @@ int main(void)
 
             if(timer < 2)
             {
-                LCD_Clear();
-                LCDBitmap(&menu2[0]);                     //Draw Menu2
+                LCDClear();
+//                LCDBitmap(&menu2[0]);                     //Draw Menu2
                 testKey = None;
                 __delay_ms(750);
             }
@@ -643,8 +633,8 @@ int main(void)
                 if(timer > 500)
                 {
                     timer = 0;
-                    LCD_Clear();
-                    LCDBitmap(&menu3[0]);                  //Draw Menu3
+                    LCDClear();
+//                    LCDBitmap(&menu3[0]);                  //Draw Menu3
                     goto Exit;                                   //This uses less memory than testKey = Down
 //                    testKey = Down;                           // This functions fine, but forces a write to EEProm
                 }
@@ -677,9 +667,9 @@ int main(void)
 
 
                 gotoXY(1,2);
-                LCD_Write_String("PID Settings f");
+                LCDWriteString("PID Settings f");
                 LCDWriteStringXY(1,16,"or ");
-                LCD_Write_String(desc[choice]);
+                LCDWriteString(desc[choice]);
                 LCDWriteStringXY(2,6,"Up/Dn Keys");
                 LCDWriteStringXY(2,17,"to change");
                 LCDWriteStringXY(3,7,"\"Enter\" t")
@@ -690,8 +680,8 @@ int main(void)
             
             testKey = 0;
             
-            LCD_Clear();
-            LCDBitmap(&menu2[0]);              //Draw Menu2
+            LCDClear();
+//            LCDBitmap(&menu2[0]);              //Draw Menu2
             LCDWriteStringXY(1,1,"SetPoint = ");
             setpoint[choice] = setParameter(1,16,1750,2950,setpoint[choice]);
             
@@ -712,8 +702,8 @@ int main(void)
 
             timer = 0;
 
-            LCD_Clear();
-            LCDBitmap(&menu3[0]);                  //Draw Menu2
+            LCDClear();
+ //           LCDBitmap(&menu3[0]);                  //Draw Menu2
             __delay_ms(500);
         }
  
@@ -723,8 +713,8 @@ int main(void)
         if (testKey == Up)
         {
             LCDInit();
-            LCD_Clear();
-            LCDBitmap(&menu3[0]);                         //Draw Menu3
+            LCDClear();
+//            LCDBitmap(&menu3[0]);                         //Draw Menu3
         }
         
 // ******************************************************************************
