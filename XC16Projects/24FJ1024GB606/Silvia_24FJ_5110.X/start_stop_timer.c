@@ -1,5 +1,5 @@
-#include "start_stop_timer.h"
-#include "menu4.h"
+#include    "start_stop_timer.h"
+#include    "menu4.h"
 
 int startHour[]   =   { 8, 6, 6, 6, 6, 6, 8};
 
@@ -18,8 +18,6 @@ unsigned char TestKey = None;
 //char sel = 0;
     
 //char done = 0;
-
-extern char call;
 
 //***************************************************************************************************************************************************************
 
@@ -90,24 +88,21 @@ void writeStartStopTimes(void)
         if(timer < 3)
         {
             LCDClear();
-            LCDBitmap(&menu4[0]);                  //Draw Menu4
+            LCDBitmap(&menu4[0], 5, 84);                  //Draw Menu4
         }
 
 //        LCDBitmap(&menu4[0], 1024,0);                  //Draw Menu4
         
-        LCDWriteStringXY(1,3,"Start/Stop fo");
-        LCDWriteStringXY(1,16,"r ");
+        LCDWriteStringXY(0,0,"Start/Stop for ");
         LCDWriteString(WeekDay[choice]);
-        LCDWriteStringXY(2,3,"Up/Dn Keys to");
-        LCDWriteStringXY(2,17,"change.");
-        LCDWriteStringXY(3,3,"Enter Key for");
-        LCDWriteStringXY(3,17,"Yes");
+        LCDWriteStringXY(0,2,"Up/Dn Keys to choose");
+        LCDWriteStringXY(0,3,"Enter Key to Set");
                                                                                 // but, also increments mainTimer every second
         timer += 1;
     }
     
     LCDClear();
-    LCDBitmap(&menu4[0]);                  //Draw Menu4
+    LCDBitmap(&menu4[0], 5, 84);                  //Draw Menu4
     startHour[choice] = setStartHour(startHour[choice]);
     startMinute[choice] = setStartMinute(startMinute[choice]);
     stopHour[choice] = setStopHour(stopHour[choice]);
@@ -121,8 +116,6 @@ void writeStartStopTimes(void)
 //***************************************************************************************************************************************************************
 char setStartHour(char b)
 {
-    call = 1;
-    
     unsigned int timer = 0;                                                         // Used to return to operation if user does not finish!
     
     char result = b;
@@ -146,8 +139,8 @@ char setStartHour(char b)
         }
         
         
-        LCDWriteStringXY(1,2,"Start Hour =");
-        LCDWriteIntXY(1,16,result,2,0,0);
+        LCDWriteStringXY(0,1,"Start Hour = ");
+        LCDWriteIntXY(61,1,result,2,0,0);
 
         switch(TestKey)
         {
@@ -176,8 +169,6 @@ char setStartHour(char b)
     }
         
     timer = 0;
-        
-    call = 0;
     
     return (result);
 }
@@ -186,8 +177,6 @@ char setStartHour(char b)
 //***************************************************************************************************************************************************************
 char setStartMinute(char b)
 {
-    call = 1;
-    
     unsigned int timer = 0;                                                         // Used to return to operation if user does not finish!
     
     char result = b;
@@ -211,8 +200,8 @@ char setStartMinute(char b)
         }
         
         
-        LCDWriteStringXY(2,2,"Start Minute =");
-        LCDWriteIntXY(2,16,result,2,0,0);
+        LCDWriteStringXY(0,2,"Start Minute = ");
+        LCDWriteIntXY(61,2,result,2,0,0);
 
 
         switch(TestKey)
@@ -242,8 +231,6 @@ char setStartMinute(char b)
     }
         
     timer = 0;
-        
-    call = 0;
     
     return (result);
 }
@@ -251,8 +238,6 @@ char setStartMinute(char b)
 //***************************************************************************************************************************************************************
 char setStopHour(char b)
 {
-    call = 1;
-    
     unsigned int timer = 0;                                                         // Used to return to operation if user does not finish!
     
     char result = b;
@@ -276,8 +261,8 @@ char setStopHour(char b)
         }
         
         
-        LCDWriteStringXY(3,2,"Stop Hour =");
-        LCDWriteIntXY(3,16,result,2,0,0);
+        LCDWriteStringXY(0,3,"Stop Hour =");
+        LCDWriteIntXY(61,3,result,2,0,0);
 
 //        heartBeat();
         
@@ -309,9 +294,7 @@ char setStopHour(char b)
     }
         
     timer = 0;
-        
-    call = 0;
-    
+
     return (result);
 }
 
@@ -319,8 +302,6 @@ char setStopHour(char b)
 //***************************************************************************************************************************************************************
 char setStopMinute(char b)
 {
-    call = 1;
-    
     unsigned int timer = 0;                                                         // Used to return to operation if user does not finish!
     
     char result = b;
@@ -344,8 +325,8 @@ char setStopMinute(char b)
         }
         
         
-        LCDWriteStringXY(4,2,"Stop Minute =");
-        LCDWriteIntXY(4,16,result,2,0,0);
+        LCDWriteStringXY(0,4,"Stop Minute =");
+        LCDWriteIntXY(61,4,result,2,0,0);
 
 //        heartBeat();
         
@@ -377,8 +358,6 @@ char setStopMinute(char b)
     }
         
     timer = 0;
-        
-    call = 0;
     
     return (result);
 }

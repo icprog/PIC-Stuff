@@ -69,8 +69,6 @@ uint16_t deadband[]    =   {  50,   10,   50};                                  
 
 char *desc[] = {"Water Temp:","Steam Temp:","Group Temp:"};
 
-uint8_t call = 0;
-
 int8_t powerFail = 1;
 
 // ******************************************************************************
@@ -113,7 +111,7 @@ int main(void)
 // ******************************************************************************
   //  setDutyCycle(dutyCycle);
     
-//    LCDBitmap(&menu3[0]);                 //Draw Menu3
+    LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu
 
     while(1)
     {
@@ -205,7 +203,7 @@ int main(void)
             }
             
 // ******************************************************************************
-//            if (dutyCycle < 0x800)                  // 0x800 = 2048, 100 % output is 2047, but going to 2048 ensures the pin will stay at 100%                            
+//            if (dutyCycle < 0x800)                        // 0x800 = 2048, 100 % output is 2047, but going to 2048 ensures the pin will stay at 100%                            
   //          {
     //            count +=1;
       //          if(count > 15)
@@ -219,32 +217,33 @@ int main(void)
  
             if(powerFail == 1)
             {
-                LCDWriteStringXY(4,0,"Please Set the Time");
+                LCDWriteStringXY(4,0,"Press \"Time\" to Set");
+                LCDWriteStringXY(4,1,"the Current Time");
             }
             else
             {
                 displayTime();
 
-                gotoXY(2,1);                                                //LCD Line 2 Display
+                gotoXY(2,1);                                //LCD Line 2 Display
 
                 if(steamSwitch)
                 {
                     LCDWriteString(desc[1]);
                     LCDWriteIntXY(48,1,steamTemperature,4,1,0);
-                    LCDWriteCharacter(123);                                          // generate degree symbol in font list
+                    LCDWriteCharacter(123);                 // generate degree symbol in font list
                     LCDWriteCharacter(70);
                 }
                 else
                 {
                     LCDWriteString(desc[0]);
                     LCDWriteIntXY(48,1,boilerTemperature,4,1,0);
-                    LCDWriteCharacter(123);                                          // generate degree symbol in font list
+                    LCDWriteCharacter(123);                 // generate degree symbol in font list
                     LCDWriteCharacter(70);
                 }
 
                 LCDWriteStringXY(2,2,desc[2]);
                 LCDWriteIntXY(48,2,GroupHeadTemp,4,1,0);
-                LCDWriteCharacter(123);                                          // generate degree symbol in font list
+                LCDWriteCharacter(123);                     // generate degree symbol in font list
                 LCDWriteCharacter(70);
                 LCDWriteCharacter(' ');
                 
@@ -310,7 +309,7 @@ int main(void)
     //        GroupHeadPID = PID_Calculate(2, setpoint, temp);
             
 // ******************************************************************************
-            if(steamSwitch == 1)                                                //Steam setpoint takes priority
+            if(steamSwitch == 1)                            //Steam setpoint takes priority
             {
                 if(steamSetpoint - boilerTemperature > steamDeadband)
                 {
@@ -336,7 +335,7 @@ int main(void)
                 }
             }
 
-            else                                                                //Water setpoint takes priority
+            else                                            //Water setpoint takes priority
             {            
                 if(waterSetpoint - boilerTemperature > waterDeadband)
                 {
@@ -429,23 +428,23 @@ int main(void)
                         dutyCycle = 20;
                     }
                 
-                if (shotProgressCounter >= warning)                             // 90 Seconds has elapsed without Brew Switch being turned off,
+                if (shotProgressCounter >= warning)         // 90 Seconds has elapsed without Brew Switch being turned off,
                 {                  
-                    piezoOutput = 1;                                            // Activate Piezo Buzzer for 1/2 second
+                    piezoOutput = 1;                        // Activate Piezo Buzzer for 1/2 second
                 }
 
-                if(shotProgressCounter >= warning + 50)                          // Piezo has been on for 1/2 second
+                if(shotProgressCounter >= warning + 50)     // Piezo has been on for 1/2 second
                 { 
-                    piezoOutput = 0;                                            // So, Shut it off! (pulsing alarm)
-                    shotProgressCounter = (warning - 50);                       // set time back 2 seconds, so it can go again.(in 1.5 seconds)
-                    warningTimer++;                                             // Increment z every 2 seconds, after 10 counts, alarm will go solid
+                    piezoOutput = 0;                        // So, Shut it off! (pulsing alarm)
+                    shotProgressCounter = (warning - 50);   // set time back 2 seconds, so it can go again.(in 1.5 seconds)
+                    warningTimer++;                         // Increment z every 2 seconds, after 10 counts, alarm will go solid
                 }
 
-                if(warningTimer >= 10)                                          // After 10 seconds of pulsing alarm being ignored,
+                if(warningTimer >= 10)                      // After 10 seconds of pulsing alarm being ignored,
                 { 
-                    piezoOutput = 1;                                            // turn Piezo on constantly,
-                    shotProgressCounter = (warning - 250);                       // and set tenCount to below the pulsing alarm time,
-                    warningTimer = 10;                                          // so Piezo will not start pulsing alarm again.
+                    piezoOutput = 1;                        // turn Piezo on constantly,
+                    shotProgressCounter = (warning - 250);  // and set tenCount to below the pulsing alarm time,
+                    warningTimer = 10;                      // so Piezo will not start pulsing alarm again.
                 }                                       
                 
                 
@@ -477,7 +476,7 @@ int main(void)
                 shotProgressCounter =   0;
                 dutyCycle =             0;
                 a += 1;
-                if(a >= 12500)                                                  //Approximately 20 seconds (about 625 counts/second)
+                if(a >= 12500)                              //Approximately 20 seconds (about 625 counts/second)
                 {
                     shotTimer =         0;
                 }
@@ -507,7 +506,7 @@ int main(void)
 // ******************************************************************************
         testKey = readButton();
 // ******************************************************************************
-//        heartBeat();                                                            // HeartBeat displays the HeartBeat on the LCD,
+//        heartBeat();                                      // HeartBeat displays the HeartBeat on the LCD,
 // ******************************************************************************  
         if (testKey == Menu)
         {
@@ -519,11 +518,11 @@ int main(void)
             }
             
             LCDClear();
-//            LCDBitmap(&menu2[0]);                         //Draw Menu2
-            LCDWriteStringXY(3,2,"Press 'ENTER' ");
-            LCDWriteStringXY(3,16,"to Set the Time");
+            LCDBitmap(&menu2[0], 5, 84);                    //Draw Menu2
+            LCDWriteStringXY(4,1,"Press \"ENTER\" Key");
+            LCDWriteStringXY(4,2,"to Set the Time");
 
-            while(testKey != Down)
+            while(testKey != Enter)
             {
                 testKey = readButton();
                 timer +=1;
@@ -532,7 +531,7 @@ int main(void)
                 {
                     timer = 0;
                     LCDClear();
-//                    LCDBitmap(&menu3[0]);                  //Draw Menu3
+                    LCDBitmap(&menu2[0], 5, 84);            //Draw Menu2
                     goto done2;
                 }
             }
@@ -541,7 +540,7 @@ int main(void)
             
             timer = 0;
 
-//            LCDBitmap(&menu3[0]);                         //Draw Menu3
+            LCDBitmap(&menu0[0], 5, 84);                    //Draw Menu0
             __delay_ms(500);
             
             done2:;
@@ -561,11 +560,11 @@ int main(void)
 //            testKey = None;
             
             LCDClear();
-//            LCDBitmap(&menu2[0]);                         //Draw Menu2
-            LCDWriteStringXY(3,1,"ENTER to Set St");
-            LCDWriteStringXY(3,16,"art/Stop Times");
+            LCDBitmap(&menu1[0], 5, 84);                    //Draw Menu1
+            LCDWriteStringXY(0,1,"Press \"ENTER\" to Set Start/Stop Times");
+//            LCDWriteStringXY(3,16,"art/Stop Times");
 
-            while(testKey != Down)
+            while(testKey != Enter)
             {
                 testKey = readButton();
                  timer +=1;
@@ -575,30 +574,16 @@ int main(void)
                 {
                     timer = 0;
                     LCDClear();
-//                    LCDBitmap(&menu3[0]);                  //Draw Menu2
+                    LCDBitmap(&menu1[0], 5, 84);            //Draw Menu2
                     goto Exit2;                                                 
                 }
             }
             
             timer = 0;
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
             writeStartStopTimes();
 
-
-
-
-
-
-//            LCDBitmap(&menu3[0]);                          //Draw Menu2
+            LCDBitmap(&menu0[0], 5, 84);                    //Draw Menu0
             __delay_ms(500);
             
             Exit2:; 
@@ -617,7 +602,7 @@ int main(void)
             if(timer < 2)
             {
                 LCDClear();
-//                LCDBitmap(&menu2[0]);                     //Draw Menu2
+                LCDBitmap(&menu2[0], 5, 84);                //Draw Menu2
                 testKey = None;
                 __delay_ms(750);
             }
@@ -625,7 +610,7 @@ int main(void)
             
             int8_t choice = 0;
 
-            while(testKey != Down)
+            while(testKey != Enter)
             {
                 testKey = readButton();
                 __delay_ms(10);
@@ -634,14 +619,14 @@ int main(void)
                 {
                     timer = 0;
                     LCDClear();
-//                    LCDBitmap(&menu3[0]);                  //Draw Menu3
-                    goto Exit;                                   //This uses less memory than testKey = Down
-//                    testKey = Down;                           // This functions fine, but forces a write to EEProm
+                    LCDBitmap(&menu0[0], 5, 84);            //Draw Menu0
+                    goto Exit;                              //This uses less memory than testKey = Down
+//                    testKey = Down;                       // This functions fine, but forces a write to EEProm
                 }
 
                 switch(testKey)
                 {
-                    case Menu:
+                    case Down:
                     {
                         choice -=1;
                             
@@ -653,7 +638,7 @@ int main(void)
                     break;
 
                         
-                    case Enter:
+                    case Up:
                     {
                         choice += 1;
                             
@@ -666,14 +651,14 @@ int main(void)
                 }
 
 
-                gotoXY(1,2);
-                LCDWriteString("PID Settings f");
-                LCDWriteStringXY(1,16,"or ");
-                LCDWriteString(desc[choice]);
-                LCDWriteStringXY(2,6,"Up/Dn Keys");
-                LCDWriteStringXY(2,17,"to change");
-                LCDWriteStringXY(3,7,"\"Enter\" t")
-                LCDWriteStringXY(3,16,"o Accept")
+//                gotoXY(1,2);
+                LCDWriteStringXY(0,0,"PID Settings for");
+//                LCDWriteStringXY(1,16,"or ");
+                LCDWriteStringXY(0,1,desc[choice]);
+                LCDWriteStringXY(0,3,"Up/Dn Keys to Change");
+//                LCDWriteStringXY(2,17,"to change");
+                LCDWriteStringXY(0,4,"  \"Enter\" to Accept ")
+  //              LCDWriteStringXY(3,16,"o Accept")
 
                 timer += 1;
             }
@@ -681,21 +666,21 @@ int main(void)
             testKey = 0;
             
             LCDClear();
-//            LCDBitmap(&menu2[0]);              //Draw Menu2
-            LCDWriteStringXY(1,1,"SetPoint = ");
-            setpoint[choice] = setParameter(1,16,1750,2950,setpoint[choice]);
+            LCDBitmap(&menu2[0], 5, 84);                    //Draw Menu2
+            LCDWriteStringXY(0,0,"SetPoint = ");
+            setpoint[choice] = setParameter(44,0,1750,2950,setpoint[choice]);
             
-            LCDWriteStringXY(2,1,"DeadBand =");
-            deadband[choice] = setParameter(2,16,5,100,deadband[choice]);            
+            LCDWriteStringXY(0,1,"DeadBand =");
+            deadband[choice] = setParameter(44,1,5,100,deadband[choice]);            
 
-            LCDWriteStringXY(3,1,"Gain =");
-            Kp[choice] = setParameter(3,16,0,200,Kp[choice]);
+            LCDWriteStringXY(0,2,"Gain =");
+            Kp[choice] = setParameter(44,2,0,200,Kp[choice]);
 
-            LCDWriteStringXY(4,1,"Integral =");
-            Ki[choice] = setParameter(4,16,0,500,Ki[choice]);
+            LCDWriteStringXY(0,3,"Integral =");
+            Ki[choice] = setParameter(44,3,0,500,Ki[choice]);
 
-            LCDWriteStringXY(5,1,"Derivative =");
-            Kd[choice] = setParameter(5,16,0,100,Kd[choice]);
+            LCDWriteStringXY(0,4,"Derivative =");
+            Kd[choice] = setParameter(44,4,0,100,Kd[choice]);
             
             
             Init_PID(choice,Kp[choice],Ki[choice],Kd[choice]);                
@@ -703,18 +688,18 @@ int main(void)
             timer = 0;
 
             LCDClear();
- //           LCDBitmap(&menu3[0]);                  //Draw Menu2
+            LCDBitmap(&menu0[0], 5, 84);                    //Draw Menu0
             __delay_ms(500);
         }
  
         Exit:
                         
 // ******************************************************************************
-        if (testKey == Up)
+        if (testKey == Up)                                  // Reset the LCD
         {
             LCDInit();
             LCDClear();
-//            LCDBitmap(&menu3[0]);                         //Draw Menu3
+            LCDBitmap(&menu0[0], 5,84);                     //Draw Menu0
         }
         
 // ******************************************************************************

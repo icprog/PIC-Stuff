@@ -12,10 +12,6 @@ struct tm currentTime;
 
 extern int powerFail;
 
-extern uint8_t call;
-
-extern uint16_t timeFU;
-
 char *WeekDay[7]    = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
 char *month[13]     = {"NUL","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
@@ -116,7 +112,7 @@ void RTCC_TimeSet(struct tm *currentTime)
         if(timer < 1)
         {
             LCDClear();
-//            LCDBitmap(&rtccMenu[0]);                                           //Draw rtccMenu
+            LCDBitmap(&rtccMenu[0],5,84);                                           //Draw rtccMenu
         }
         
         timer += 1;
@@ -134,27 +130,27 @@ void RTCC_TimeSet(struct tm *currentTime)
         
         if(sel == 0)
         {
-            LCDWriteStringXY(2,1,"^^");                                         // Draw Pointer, to show what we are setting
+            LCDWriteStringXY(0,1,"^^");                                         // Draw Pointer, to show what we are setting
         }
         
         if(sel == 1)
         {
-            LCDWriteStringXY(2,1,"   ^^^");                                      // Draw Pointer, to show what we are setting
+            LCDWriteStringXY(0,1,"   ^^^");                                      // Draw Pointer, to show what we are setting
         }
         
         if(sel == 2)
         {
-            LCDWriteStringXY(14,1,"    ^^");                              // Draw Pointer
+            LCDWriteStringXY(12,1,"    ^^");                              // Draw Pointer
         }
         
         if(sel == 3)
         {
-            LCDWriteStringXY(26,1,"   ^^^");                              // Draw Pointer
+            LCDWriteStringXY(24,1,"   ^^^");                              // Draw Pointer
         }
         
         if(sel== 4)
         {
-            LCDWriteStringXY(38,1,"   ");
+            LCDWriteStringXY(37,1,"   ");
             LCDWriteStringXY(50,1,"^^");
         }
         
@@ -371,7 +367,7 @@ void RTCC_TimeSet(struct tm *currentTime)
         RTCC_Lock();
     }
     LCDClear();
-    call = 0;
+
     powerFail = 0; 
   
 }
@@ -383,12 +379,12 @@ void displayTime(void)
     
     test = RTCC_TimeGet(&currentTime);              // Read current time from RTCC
     
-    LCDWriteIntXY(2,0,currentTime.tm_year,2,0,0);
+    LCDWriteIntXY(0,0,currentTime.tm_year,2,0,0);
     LCDWriteCharacter('/');
     LCDWriteString(month[currentTime.tm_mon]);
     LCDWriteCharacter('/');
     LCDWriteInt(currentTime.tm_mday,2,0,0);
-    LCDWriteStringXY(38,0,WeekDay[currentTime.tm_wday]);
+    LCDWriteStringXY(37,0,WeekDay[currentTime.tm_wday]);
     LCDWriteIntXY(50,0,currentTime.tm_hour,2,0,0);
     LCDWriteCharacter(':');
     LCDWriteInt(currentTime.tm_min,2,0,0);

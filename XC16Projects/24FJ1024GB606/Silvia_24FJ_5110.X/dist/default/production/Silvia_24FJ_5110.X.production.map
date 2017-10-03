@@ -15,17 +15,17 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC30F/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/adc.o \
-  build/default/production/buttons.o \
   build/default/production/lcd.o \
   build/default/production/pin_manager.o \
-  build/default/production/rtcc.o \
   build/default/production/system.o \
-  build/default/production/user.o \
-  build/default/production/start_stop_timer.o \
+  build/default/production/adc.o \
+  build/default/production/rtcc.o \
+  build/default/production/buttons.o \
+  build/default/production/main.o \
   build/default/production/pid.o \
   build/default/production/pwm.o \
-  build/default/production/main.o \
+  build/default/production/start_stop_timer.o \
+  build/default/production/user.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
   -Tp24FJ1024GB606.gld.00 \
@@ -61,9 +61,9 @@ c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normalda.Leo)
                               (__crt_start_mode_normal)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
-                              build/default/production/adc.o (___delay32)
+                              build/default/production/system.o (___delay32)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(addsf3.daeo)
-                              build/default/production/pid.o (___subsf3)
+                              build/default/production/main.o (___subsf3)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(divsf3.daeo)
                               build/default/production/main.o (___divsf3)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(feqltle.daeo)
@@ -73,7 +73,7 @@ c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fgtge.d
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fixsfsi.daeo)
                               build/default/production/main.o (_(float, int, long long, short, float, short, int))
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(floatsisf.daeo)
-                              build/default/production/pid.o (___floatsisf)
+                              build/default/production/main.o (___floatsisf)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(floatunsisf.daeo)
                               build/default/production/pid.o (___floatunsisf)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fpack.daeo)
@@ -122,28 +122,29 @@ Program Memory  [Origin = 0x100, Length = 0xabe00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x100               0x460           0x690  (1680)
-.const                       0x560              0x133a          0x1cd7  (7383)
-.text                       0x189a              0x15ae          0x2085  (8325)
-.dinit                      0x2e48                0xb6           0x111  (273)
-.text                       0x2efe               0x28a           0x3cf  (975)
-.init.delay32               0x3188                0x1c            0x2a  (42)
+.const                       0x560               0x4f6           0x771  (1905)
+.text                        0xa56              0x15d8          0x20c4  (8388)
+.dinit                      0x202e                0xb6           0x111  (273)
+.text                       0x20e4               0x284           0x3c6  (966)
+.init.delay32               0x2368                0x1c            0x2a  (42)
 
-                 Total program memory used (bytes):         0x48f6  (18678) 1%
+                 Total program memory used (bytes):         0x33c6  (13254) 1%
 
 
 Data Memory  [Origin = 0x800, Length = 0x8000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0            0x12  (18)
-.ndata                       0x812                   0             0x2  (2)
-.data                        0x814                   0            0x62  (98)
-.bss                         0x876                   0            0x2a  (42)
-.data                        0x8a0                   0            0x28  (40)
-.bss                         0x8c8                   0            0x12  (18)
-.data                        0x8da                   0            0x12  (18)
+.nbss                        0x800                   0             0xc  (12)
+.ndata                       0x80c                   0             0x2  (2)
+.nbss                        0x80e                   0             0x4  (4)
+.data                        0x812                   0            0x62  (98)
+.bss                         0x874                   0            0x2a  (42)
+.data                        0x89e                   0            0x28  (40)
+.bss                         0x8c6                   0            0x12  (18)
+.data                        0x8d8                   0            0x12  (18)
 
-                 Total data memory used (bytes):           0xec  (236) <1%
+                 Total data memory used (bytes):           0xea  (234) <1%
 
 
 Dynamic Memory Usage
@@ -151,9 +152,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x8ec                              0x7714  (30484)
+stack                        0x8ea                              0x7716  (30486)
 
-                 Maximum dynamic memory (bytes):         0x7714  (30484)
+                 Maximum dynamic memory (bytes):         0x7716  (30486)
 
 
 External Symbols in Data Memory (by address):
@@ -164,56 +165,54 @@ External Symbols in Data Memory (by address):
                     0x0804                  _j
                     0x0806                  _choice
                     0x0807                  _TestKey
-                    0x080a                  _call
+                    0x080c                  _powerFail
                     0x0810                  _timer
-                    0x0812                  _powerFail
-                    0x0814                  _startHour
-                    0x0822                  _startMinute
-                    0x0830                  _stopHour
-                    0x083e                  _stopMinute
-                    0x084c                  _Kp
-                    0x0858                  _Ki
-                    0x0864                  _Kd
-                    0x0870                  _pidMaxOutput
-                    0x0876                  _pidIntegrated
-                    0x0882                  _pidPrevError
-                    0x088e                  _pidPrevInput
-                    0x089a                  _pidMinOutput
-                    0x08a0                  _WeekDay
-                    0x08ae                  _month
-                    0x08c8                  _currentTime
-                    0x08da                  _setpoint
-                    0x08e0                  _deadband
-                    0x08e6                  _desc
+                    0x0812                  _startHour
+                    0x0820                  _startMinute
+                    0x082e                  _stopHour
+                    0x083c                  _stopMinute
+                    0x084a                  _Kp
+                    0x0856                  _Ki
+                    0x0862                  _Kd
+                    0x086e                  _pidMaxOutput
+                    0x0874                  _pidIntegrated
+                    0x0880                  _pidPrevError
+                    0x088c                  _pidPrevInput
+                    0x0898                  _pidMinOutput
+                    0x089e                  _WeekDay
+                    0x08ac                  _month
+                    0x08c6                  _currentTime
+                    0x08d8                  _setpoint
+                    0x08de                  _deadband
+                    0x08e4                  _desc
 
 External Symbols in Data Memory (by name):
 
-                    0x0864                  _Kd
-                    0x0858                  _Ki
-                    0x084c                  _Kp
+                    0x0862                  _Kd
+                    0x0856                  _Ki
+                    0x084a                  _Kp
                     0x0807                  _TestKey
-                    0x08a0                  _WeekDay
+                    0x089e                  _WeekDay
                     0x0802                  _button
-                    0x080a                  _call
                     0x0806                  _choice
-                    0x08c8                  _currentTime
-                    0x08e0                  _deadband
-                    0x08e6                  _desc
+                    0x08c6                  _currentTime
+                    0x08de                  _deadband
+                    0x08e4                  _desc
                     0x0804                  _j
                     0x0803                  _lastButton
-                    0x08ae                  _month
-                    0x0876                  _pidIntegrated
-                    0x0870                  _pidMaxOutput
-                    0x089a                  _pidMinOutput
-                    0x0882                  _pidPrevError
-                    0x088e                  _pidPrevInput
-                    0x0812                  _powerFail
+                    0x08ac                  _month
+                    0x0874                  _pidIntegrated
+                    0x086e                  _pidMaxOutput
+                    0x0898                  _pidMinOutput
+                    0x0880                  _pidPrevError
+                    0x088c                  _pidPrevInput
+                    0x080c                  _powerFail
                     0x0800                  _readButtons
-                    0x08da                  _setpoint
-                    0x0814                  _startHour
-                    0x0822                  _startMinute
-                    0x0830                  _stopHour
-                    0x083e                  _stopMinute
+                    0x08d8                  _setpoint
+                    0x0812                  _startHour
+                    0x0820                  _startMinute
+                    0x082e                  _stopHour
+                    0x083c                  _stopMinute
                     0x0810                  _timer
 
 External Symbols in Program Memory (by address):
@@ -244,76 +243,77 @@ External Symbols in Program Memory (by address):
                   0x0004ac                  __fcompare
                   0x0004e2                  ___floatdisf
                   0x000502                  ___floatundisf
-                  0x000560                  _menu2
-                  0x000960                  _menu3
-                  0x000e64                  _rtccMenu
-                  0x0012fa                  _menu4
-                  0x00176a                  _fonts
-                  0x00189a                  _main
-                  0x002096                  _RTCC_Initialize
-                  0x0020e4                  _RTCC_TimeGet
-                  0x002172                  _RTCC_TimeSet
-                  0x0024b0                  _displayTime
-                  0x00257a                  _RTCC_TimeReset
-                  0x002590                  _runTimer
-                  0x0025e4                  _writeStartStopTimes
-                  0x00271e                  _setStartHour
-                  0x0027ba                  _setStartMinute
-                  0x002858                  _setStopHour
-                  0x0028f4                  _setStopMinute
-                  0x002992                  _gotoXY
-                  0x0029b0                  _LCDBitmap
-                  0x0029d6                  _LCDWriteCharacter
-                  0x002a18                  _LCDWriteString
-                  0x002a32                  _LCDClear
-                  0x002a54                  _LCDWriteInt
-                  0x002b20                  _LCDInit
-                  0x002b5e                  _LCDWrite
-                  0x002b9e                  _LCDDrawBox
-                  0x002c1c                  _Init_PID
-                  0x002c76                  _PID_Calculate
-                  0x002efe                  _TempCalc
-                  0x002f14                  _setParameter
-                  0x002fa2                  _readButton
-                  0x003044                  _InitializeTimers
-                  0x003070                  _Initialize_PWM
-                  0x00309a                  _setDutyCycle
-                  0x0030a6                  _ADCInit
-                  0x0030be                  _ADCRead
-                  0x0030f6                  _PIN_MANAGER_Initialize
-                  0x003146                  _SYSTEM_Initialize
-                  0x00315e                  _OSCILLATOR_Initialize
-                  0x003188                  ___delay32
+                  0x000560                  _menu0
+                  0x0005b4                  _menu1
+                  0x000608                  _menu2
+                  0x00077a                  _fonts
+                  0x0008aa                  _rtccMenu
+                  0x000994                  _menu4
+                  0x000a56                  _main
+                  0x00129a                  _RTCC_Initialize
+                  0x0012e8                  _RTCC_TimeGet
+                  0x001376                  _RTCC_TimeSet
+                  0x0016ba                  _displayTime
+                  0x001784                  _RTCC_TimeReset
+                  0x00179a                  _runTimer
+                  0x0017ee                  _writeStartStopTimes
+                  0x001912                  _setStartHour
+                  0x0019a8                  _setStartMinute
+                  0x001a40                  _setStopHour
+                  0x001ad6                  _setStopMinute
+                  0x001b6e                  _gotoXY
+                  0x001b8c                  _LCDBitmap
+                  0x001bbc                  _LCDWriteCharacter
+                  0x001bfe                  _LCDWriteString
+                  0x001c18                  _LCDClear
+                  0x001c3a                  _LCDWriteInt
+                  0x001d06                  _LCDInit
+                  0x001d44                  _LCDWrite
+                  0x001d84                  _LCDDrawBox
+                  0x001e02                  _Init_PID
+                  0x001e5c                  _PID_Calculate
+                  0x0020e4                  _readButton
+                  0x002186                  _TempCalc
+                  0x00219c                  _setParameter
+                  0x002224                  _InitializeTimers
+                  0x002250                  _Initialize_PWM
+                  0x00227a                  _setDutyCycle
+                  0x002286                  _PIN_MANAGER_Initialize
+                  0x0022d6                  _ADCInit
+                  0x0022ee                  _ADCRead
+                  0x002326                  _SYSTEM_Initialize
+                  0x00233e                  _OSCILLATOR_Initialize
+                  0x002368                  ___delay32
                   0x0abf00                  __FSEC.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x0030a6                  _ADCInit
-                  0x0030be                  _ADCRead
-                  0x002c1c                  _Init_PID
-                  0x003044                  _InitializeTimers
-                  0x003070                  _Initialize_PWM
-                  0x0029b0                  _LCDBitmap
-                  0x002a32                  _LCDClear
-                  0x002b9e                  _LCDDrawBox
-                  0x002b20                  _LCDInit
-                  0x002b5e                  _LCDWrite
-                  0x0029d6                  _LCDWriteCharacter
-                  0x002a54                  _LCDWriteInt
-                  0x002a18                  _LCDWriteString
-                  0x00315e                  _OSCILLATOR_Initialize
-                  0x002c76                  _PID_Calculate
-                  0x0030f6                  _PIN_MANAGER_Initialize
-                  0x002096                  _RTCC_Initialize
-                  0x0020e4                  _RTCC_TimeGet
-                  0x00257a                  _RTCC_TimeReset
-                  0x002172                  _RTCC_TimeSet
-                  0x003146                  _SYSTEM_Initialize
-                  0x002efe                  _TempCalc
+                  0x0022d6                  _ADCInit
+                  0x0022ee                  _ADCRead
+                  0x001e02                  _Init_PID
+                  0x002224                  _InitializeTimers
+                  0x002250                  _Initialize_PWM
+                  0x001b8c                  _LCDBitmap
+                  0x001c18                  _LCDClear
+                  0x001d84                  _LCDDrawBox
+                  0x001d06                  _LCDInit
+                  0x001d44                  _LCDWrite
+                  0x001bbc                  _LCDWriteCharacter
+                  0x001c3a                  _LCDWriteInt
+                  0x001bfe                  _LCDWriteString
+                  0x00233e                  _OSCILLATOR_Initialize
+                  0x001e5c                  _PID_Calculate
+                  0x002286                  _PIN_MANAGER_Initialize
+                  0x00129a                  _RTCC_Initialize
+                  0x0012e8                  _RTCC_TimeGet
+                  0x001784                  _RTCC_TimeReset
+                  0x001376                  _RTCC_TimeSet
+                  0x002326                  _SYSTEM_Initialize
+                  0x002186                  _TempCalc
                   0x000204                  __DefaultInterrupt
                   0x0abf00                  __FSEC.sec
                   0x00020c                  ___addsf3
-                  0x003188                  ___delay32
+                  0x002368                  ___delay32
                   0x0002c6                  ___divsf3
                   0x00034a                  ___eqsf2
                   0x000352                  ___fixsfsi
@@ -338,23 +338,24 @@ External Symbols in Program Memory (by name):
                   0x000414                  __funpack2
                   0x00013c                  __psv_init
                   0x000100                  __resetPRI
-                  0x0024b0                  _displayTime
-                  0x00176a                  _fonts
-                  0x002992                  _gotoXY
-                  0x00189a                  _main
-                  0x000560                  _menu2
-                  0x000960                  _menu3
-                  0x0012fa                  _menu4
-                  0x002fa2                  _readButton
-                  0x000e64                  _rtccMenu
-                  0x002590                  _runTimer
-                  0x00309a                  _setDutyCycle
-                  0x002f14                  _setParameter
-                  0x00271e                  _setStartHour
-                  0x0027ba                  _setStartMinute
-                  0x002858                  _setStopHour
-                  0x0028f4                  _setStopMinute
-                  0x0025e4                  _writeStartStopTimes
+                  0x0016ba                  _displayTime
+                  0x00077a                  _fonts
+                  0x001b6e                  _gotoXY
+                  0x000a56                  _main
+                  0x000560                  _menu0
+                  0x0005b4                  _menu1
+                  0x000608                  _menu2
+                  0x000994                  _menu4
+                  0x0020e4                  _readButton
+                  0x0008aa                  _rtccMenu
+                  0x00179a                  _runTimer
+                  0x00227a                  _setDutyCycle
+                  0x00219c                  _setParameter
+                  0x001912                  _setStartHour
+                  0x0019a8                  _setStartMinute
+                  0x001a40                  _setStopHour
+                  0x001ad6                  _setStopMinute
+                  0x0017ee                  _writeStartStopTimes
 
 Memory Configuration
 
@@ -378,17 +379,17 @@ aivt             0x000000           0xffffffff
 
 Linker script and memory map
 
-LOAD build/default/production/adc.o
-LOAD build/default/production/buttons.o
 LOAD build/default/production/lcd.o
 LOAD build/default/production/pin_manager.o
-LOAD build/default/production/rtcc.o
 LOAD build/default/production/system.o
-LOAD build/default/production/user.o
-LOAD build/default/production/start_stop_timer.o
+LOAD build/default/production/adc.o
+LOAD build/default/production/rtcc.o
+LOAD build/default/production/buttons.o
+LOAD build/default/production/main.o
 LOAD build/default/production/pid.o
 LOAD build/default/production/pwm.o
-LOAD build/default/production/main.o
+LOAD build/default/production/start_stop_timer.o
+LOAD build/default/production/user.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libfx-elf.a
@@ -522,74 +523,74 @@ __FDEVOPT1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x431e
+.debug_info       0x000000       0x432a
  *(.debug_info)
- .debug_info      0x000000        0x7e9 build/default/production/adc.o
- .debug_info      0x0007e9        0x20a build/default/production/buttons.o
- .debug_info      0x0009f3        0x76e build/default/production/lcd.o
- .debug_info      0x001161        0x534 build/default/production/pin_manager.o
- .debug_info      0x001695        0x7ea build/default/production/rtcc.o
- .debug_info      0x001e7f        0x2b3 build/default/production/system.o
- .debug_info      0x002132        0x255 build/default/production/user.o
- .debug_info      0x002387        0x4f3 build/default/production/start_stop_timer.o
- .debug_info      0x00287a        0x38e build/default/production/pid.o
- .debug_info      0x002c08        0xa0e build/default/production/pwm.o
- .debug_info      0x003616        0xd08 build/default/production/main.o
+ .debug_info      0x000000        0x794 build/default/production/lcd.o
+ .debug_info      0x000794        0x534 build/default/production/pin_manager.o
+ .debug_info      0x000cc8        0x2b3 build/default/production/system.o
+ .debug_info      0x000f7b        0x7e9 build/default/production/adc.o
+ .debug_info      0x001764        0x7da build/default/production/rtcc.o
+ .debug_info      0x001f3e        0x20a build/default/production/buttons.o
+ .debug_info      0x002148        0xd49 build/default/production/main.o
+ .debug_info      0x002e91        0x38e build/default/production/pid.o
+ .debug_info      0x00321f        0xa0e build/default/production/pwm.o
+ .debug_info      0x003c2d        0x4d3 build/default/production/start_stop_timer.o
+ .debug_info      0x004100        0x22a build/default/production/user.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0xb1c
+.debug_abbrev     0x000000        0xb01
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x147 build/default/production/adc.o
- .debug_abbrev    0x000147         0x96 build/default/production/buttons.o
- .debug_abbrev    0x0001dd        0x141 build/default/production/lcd.o
- .debug_abbrev    0x00031e         0x4c build/default/production/pin_manager.o
- .debug_abbrev    0x00036a        0x211 build/default/production/rtcc.o
- .debug_abbrev    0x00057b         0x6a build/default/production/system.o
- .debug_abbrev    0x0005e5         0x85 build/default/production/user.o
- .debug_abbrev    0x00066a        0x13c build/default/production/start_stop_timer.o
- .debug_abbrev    0x0007a6         0xef build/default/production/pid.o
- .debug_abbrev    0x000895         0xde build/default/production/pwm.o
- .debug_abbrev    0x000973        0x1a9 build/default/production/main.o
+ .debug_abbrev    0x000000        0x141 build/default/production/lcd.o
+ .debug_abbrev    0x000141         0x4c build/default/production/pin_manager.o
+ .debug_abbrev    0x00018d         0x6a build/default/production/system.o
+ .debug_abbrev    0x0001f7        0x147 build/default/production/adc.o
+ .debug_abbrev    0x00033e        0x208 build/default/production/rtcc.o
+ .debug_abbrev    0x000546         0x96 build/default/production/buttons.o
+ .debug_abbrev    0x0005dc        0x1a0 build/default/production/main.o
+ .debug_abbrev    0x00077c         0xef build/default/production/pid.o
+ .debug_abbrev    0x00086b         0xde build/default/production/pwm.o
+ .debug_abbrev    0x000949        0x133 build/default/production/start_stop_timer.o
+ .debug_abbrev    0x000a7c         0x85 build/default/production/user.o
 
-.debug_line       0x000000        0xc58
+.debug_line       0x000000        0xc51
  *(.debug_line)
- .debug_line      0x000000        0x103 build/default/production/adc.o
- .debug_line      0x000103         0xa9 build/default/production/buttons.o
- .debug_line      0x0001ac        0x160 build/default/production/lcd.o
- .debug_line      0x00030c         0xbb build/default/production/pin_manager.o
- .debug_line      0x0003c7        0x1cf build/default/production/rtcc.o
- .debug_line      0x000596         0xfe build/default/production/system.o
- .debug_line      0x000694         0xb4 build/default/production/user.o
- .debug_line      0x000748        0x181 build/default/production/start_stop_timer.o
- .debug_line      0x0008c9         0xb1 build/default/production/pid.o
- .debug_line      0x00097a         0xa5 build/default/production/pwm.o
- .debug_line      0x000a1f        0x239 build/default/production/main.o
+ .debug_line      0x000000        0x161 build/default/production/lcd.o
+ .debug_line      0x000161         0xbb build/default/production/pin_manager.o
+ .debug_line      0x00021c         0xfe build/default/production/system.o
+ .debug_line      0x00031a        0x103 build/default/production/adc.o
+ .debug_line      0x00041d        0x1cf build/default/production/rtcc.o
+ .debug_line      0x0005ec         0xa9 build/default/production/buttons.o
+ .debug_line      0x000695        0x23e build/default/production/main.o
+ .debug_line      0x0008d3         0xb1 build/default/production/pid.o
+ .debug_line      0x000984         0xa5 build/default/production/pwm.o
+ .debug_line      0x000a29        0x176 build/default/production/start_stop_timer.o
+ .debug_line      0x000b9f         0xb2 build/default/production/user.o
 
 .debug_frame      0x000000        0x526
  *(.debug_frame)
- .debug_frame     0x000000         0x4c build/default/production/adc.o
- .debug_frame     0x00004c         0x30 build/default/production/buttons.o
- .debug_frame     0x00007c        0x110 build/default/production/lcd.o
- .debug_frame     0x00018c         0x30 build/default/production/pin_manager.o
- .debug_frame     0x0001bc        0x116 build/default/production/rtcc.o
- .debug_frame     0x0002d2         0x4c build/default/production/system.o
- .debug_frame     0x00031e         0x4c build/default/production/user.o
- .debug_frame     0x00036a         0xc2 build/default/production/start_stop_timer.o
- .debug_frame     0x00042c         0x5a build/default/production/pid.o
- .debug_frame     0x000486         0x68 build/default/production/pwm.o
- .debug_frame     0x0004ee         0x38 build/default/production/main.o
+ .debug_frame     0x000000        0x110 build/default/production/lcd.o
+ .debug_frame     0x000110         0x30 build/default/production/pin_manager.o
+ .debug_frame     0x000140         0x4c build/default/production/system.o
+ .debug_frame     0x00018c         0x4c build/default/production/adc.o
+ .debug_frame     0x0001d8        0x116 build/default/production/rtcc.o
+ .debug_frame     0x0002ee         0x30 build/default/production/buttons.o
+ .debug_frame     0x00031e         0x38 build/default/production/main.o
+ .debug_frame     0x000356         0x5a build/default/production/pid.o
+ .debug_frame     0x0003b0         0x68 build/default/production/pwm.o
+ .debug_frame     0x000418         0xc2 build/default/production/start_stop_timer.o
+ .debug_frame     0x0004da         0x4c build/default/production/user.o
 
-.debug_str        0x000000        0x1f8
+.debug_str        0x000000        0x201
  *(.debug_str)
- .debug_str       0x000000         0x2a build/default/production/adc.o
- .debug_str       0x00002a         0x17 build/default/production/buttons.o
- .debug_str       0x000041         0x26 build/default/production/lcd.o
- .debug_str       0x000067         0x66 build/default/production/rtcc.o
- .debug_str       0x0000cd         0x1c build/default/production/system.o
- .debug_str       0x0000e9         0x3f build/default/production/start_stop_timer.o
- .debug_str       0x000128         0x4d build/default/production/pid.o
- .debug_str       0x000175         0x2c build/default/production/pwm.o
- .debug_str       0x0001a1         0x57 build/default/production/main.o
+ .debug_str       0x000000         0x26 build/default/production/lcd.o
+ .debug_str       0x000026         0x1c build/default/production/system.o
+ .debug_str       0x000042         0x2a build/default/production/adc.o
+ .debug_str       0x00006c         0x6f build/default/production/rtcc.o
+ .debug_str       0x0000db         0x17 build/default/production/buttons.o
+ .debug_str       0x0000f2         0x57 build/default/production/main.o
+ .debug_str       0x000149         0x4d build/default/production/pid.o
+ .debug_str       0x000196         0x2c build/default/production/pwm.o
+ .debug_str       0x0001c2         0x3f build/default/production/start_stop_timer.o
 
 .debug_loc
  *(.debug_loc)
@@ -598,30 +599,30 @@ __FDEVOPT1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x48d
+                  0x000000        0x48e
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x2a build/default/production/adc.o
+                  0x000000         0xa3 build/default/production/lcd.o
  .debug_pubnames
-                  0x00002a         0x51 build/default/production/buttons.o
+                  0x0000a3         0x2d build/default/production/pin_manager.o
  .debug_pubnames
-                  0x00007b         0xa3 build/default/production/lcd.o
+                  0x0000d0         0x42 build/default/production/system.o
  .debug_pubnames
-                  0x00011e         0x2d build/default/production/pin_manager.o
+                  0x000112         0x2a build/default/production/adc.o
  .debug_pubnames
-                  0x00014b         0x9e build/default/production/rtcc.o
+                  0x00013c         0x9e build/default/production/rtcc.o
  .debug_pubnames
-                  0x0001e9         0x42 build/default/production/system.o
+                  0x0001da         0x51 build/default/production/buttons.o
  .debug_pubnames
-                  0x00022b         0x3a build/default/production/user.o
+                  0x00022b         0x6a build/default/production/main.o
  .debug_pubnames
-                  0x000265         0xd8 build/default/production/start_stop_timer.o
+                  0x000295         0x9c build/default/production/pid.o
  .debug_pubnames
-                  0x00033d         0x9c build/default/production/pid.o
+                  0x000331         0x4b build/default/production/pwm.o
  .debug_pubnames
-                  0x0003d9         0x4b build/default/production/pwm.o
+                  0x00037c         0xd8 build/default/production/start_stop_timer.o
  .debug_pubnames
-                  0x000424         0x69 build/default/production/main.o
+                  0x000454         0x3a build/default/production/user.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -629,27 +630,27 @@ __FDEVOPT1
 .debug_aranges    0x000000        0x108
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/adc.o
+                  0x000000         0x18 build/default/production/lcd.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/buttons.o
+                  0x000018         0x18 build/default/production/pin_manager.o
  .debug_aranges
-                  0x000030         0x18 build/default/production/lcd.o
+                  0x000030         0x18 build/default/production/system.o
  .debug_aranges
-                  0x000048         0x18 build/default/production/pin_manager.o
+                  0x000048         0x18 build/default/production/adc.o
  .debug_aranges
                   0x000060         0x18 build/default/production/rtcc.o
  .debug_aranges
-                  0x000078         0x18 build/default/production/system.o
+                  0x000078         0x18 build/default/production/buttons.o
  .debug_aranges
-                  0x000090         0x18 build/default/production/user.o
+                  0x000090         0x18 build/default/production/main.o
  .debug_aranges
-                  0x0000a8         0x18 build/default/production/start_stop_timer.o
+                  0x0000a8         0x18 build/default/production/pid.o
  .debug_aranges
-                  0x0000c0         0x18 build/default/production/pid.o
+                  0x0000c0         0x18 build/default/production/pwm.o
  .debug_aranges
-                  0x0000d8         0x18 build/default/production/pwm.o
+                  0x0000d8         0x18 build/default/production/start_stop_timer.o
  .debug_aranges
-                  0x0000f0         0x18 build/default/production/main.o
+                  0x0000f0         0x18 build/default/production/user.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -2673,92 +2674,92 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000108        0x41e
+                  0x000108        0x412
  .debug_pubtypes
-                  0x000108         0x92 build/default/production/adc.o
+                  0x000108         0xa3 build/default/production/lcd.o
  .debug_pubtypes
-                  0x00019a         0x2a build/default/production/buttons.o
+                  0x0001ab         0x12 build/default/production/pin_manager.o
  .debug_pubtypes
-                  0x0001c4         0xa3 build/default/production/lcd.o
+                  0x0001bd         0x1e build/default/production/system.o
  .debug_pubtypes
-                  0x000267         0x12 build/default/production/pin_manager.o
+                  0x0001db         0x92 build/default/production/adc.o
  .debug_pubtypes
-                  0x000279         0x87 build/default/production/rtcc.o
+                  0x00026d         0x87 build/default/production/rtcc.o
  .debug_pubtypes
-                  0x000300         0x1e build/default/production/system.o
+                  0x0002f4         0x2a build/default/production/buttons.o
  .debug_pubtypes
-                  0x00031e         0x35 build/default/production/user.o
+                  0x00031e         0xd2 build/default/production/main.o
  .debug_pubtypes
-                  0x000353         0x35 build/default/production/start_stop_timer.o
+                  0x0003f0         0x36 build/default/production/pid.o
  .debug_pubtypes
-                  0x000388         0x36 build/default/production/pid.o
+                  0x000426         0x96 build/default/production/pwm.o
  .debug_pubtypes
-                  0x0003be         0x96 build/default/production/pwm.o
+                  0x0004bc         0x35 build/default/production/start_stop_timer.o
  .debug_pubtypes
-                  0x000454         0xd2 build/default/production/main.o
+                  0x0004f1         0x29 build/default/production/user.o
 
 __c30_signature
-                  0x000526         0xae
+                  0x00051a         0xae
  __c30_signature
-                  0x000526          0x6 build/default/production/adc.o
+                  0x00051a          0x6 build/default/production/lcd.o
  __c30_signature
-                  0x00052c          0x6 build/default/production/buttons.o
+                  0x000520          0x6 build/default/production/pin_manager.o
  __c30_signature
-                  0x000532          0x6 build/default/production/lcd.o
+                  0x000526          0x6 build/default/production/system.o
  __c30_signature
-                  0x000538          0x6 build/default/production/pin_manager.o
+                  0x00052c          0x6 build/default/production/adc.o
  __c30_signature
-                  0x00053e          0x6 build/default/production/rtcc.o
+                  0x000532          0x6 build/default/production/rtcc.o
  __c30_signature
-                  0x000544          0x6 build/default/production/system.o
+                  0x000538          0x6 build/default/production/buttons.o
  __c30_signature
-                  0x00054a          0x6 build/default/production/user.o
+                  0x00053e          0x6 build/default/production/main.o
+ __c30_signature
+                  0x000544          0x6 build/default/production/pid.o
+ __c30_signature
+                  0x00054a          0x6 build/default/production/pwm.o
  __c30_signature
                   0x000550          0x6 build/default/production/start_stop_timer.o
  __c30_signature
-                  0x000556          0x6 build/default/production/pid.o
+                  0x000556          0x6 build/default/production/user.o
  __c30_signature
-                  0x00055c          0x6 build/default/production/pwm.o
+                  0x00055c          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
  __c30_signature
-                  0x000562          0x6 build/default/production/main.o
+                  0x000562          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
  __c30_signature
-                  0x000568          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
+                  0x000568          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
  __c30_signature
-                  0x00056e          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
+                  0x00056e          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(addsf3.daeo)
  __c30_signature
-                  0x000574          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
+                  0x000574          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(divsf3.daeo)
  __c30_signature
-                  0x00057a          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(addsf3.daeo)
+                  0x00057a          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(feqltle.daeo)
  __c30_signature
-                  0x000580          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(divsf3.daeo)
+                  0x000580          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fgtge.daeo)
  __c30_signature
-                  0x000586          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(feqltle.daeo)
+                  0x000586          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fixsfsi.daeo)
  __c30_signature
-                  0x00058c          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fgtge.daeo)
+                  0x00058c          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(floatsisf.daeo)
  __c30_signature
-                  0x000592          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fixsfsi.daeo)
+                  0x000592          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(floatunsisf.daeo)
  __c30_signature
-                  0x000598          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(floatsisf.daeo)
+                  0x000598          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fpack.daeo)
  __c30_signature
-                  0x00059e          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(floatunsisf.daeo)
+                  0x00059e          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(funpack.daeo)
  __c30_signature
-                  0x0005a4          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fpack.daeo)
+                  0x0005a4          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(funpack2.daeo)
  __c30_signature
-                  0x0005aa          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(funpack.daeo)
+                  0x0005aa          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(futil.daeo)
  __c30_signature
-                  0x0005b0          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(funpack2.daeo)
+                  0x0005b0          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(mulsf3.daeo)
  __c30_signature
-                  0x0005b6          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(futil.daeo)
+                  0x0005b6          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fcompare.daeo)
  __c30_signature
-                  0x0005bc          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(mulsf3.daeo)
+                  0x0005bc          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(floatdisf.daeo)
  __c30_signature
-                  0x0005c2          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fcompare.daeo)
- __c30_signature
-                  0x0005c8          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(floatdisf.daeo)
- __c30_signature
-                  0x0005ce          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(floatundisf.daeo)
+                  0x0005c2          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(floatundisf.daeo)
 
-.nbss               0x0800         0x12
+.nbss               0x0800          0xc
  .nbss              0x0800          0x6 build/default/production/buttons.o
                     0x0800                  _readButtons
                     0x0802                  _button
@@ -2767,49 +2768,50 @@ __c30_signature
  .nbss              0x0806          0x4 build/default/production/start_stop_timer.o
                     0x0806                  _choice
                     0x0807                  _TestKey
- .nbss              0x080a          0x4 build/default/production/main.o
-                    0x080a                  _call
- .nbss              0x080e          0x2 build/default/production/rtcc.o
+ .nbss              0x080a          0x2 build/default/production/rtcc.o
+
+.ndata              0x080c          0x2
+ .ndata             0x080c          0x2 build/default/production/main.o
+                    0x080c                  _powerFail
+
+.nbss               0x080e          0x4
+ .nbss              0x080e          0x2 build/default/production/main.o
  .nbss              0x0810          0x2 build/default/production/user.o
                     0x0810                  _timer
 
-.ndata              0x0812          0x2
- .ndata             0x0812          0x2 build/default/production/main.o
-                    0x0812                  _powerFail
+.data               0x0812         0x62
+ .data              0x0812         0x38 build/default/production/start_stop_timer.o
+                    0x0812                  _startHour
+                    0x0820                  _startMinute
+                    0x082e                  _stopHour
+                    0x083c                  _stopMinute
+ .data              0x084a         0x2a build/default/production/pid.o
+                    0x084a                  _Kp
+                    0x0856                  _Ki
+                    0x0862                  _Kd
+                    0x086e                  _pidMaxOutput
 
-.data               0x0814         0x62
- .data              0x0814         0x38 build/default/production/start_stop_timer.o
-                    0x0814                  _startHour
-                    0x0822                  _startMinute
-                    0x0830                  _stopHour
-                    0x083e                  _stopMinute
- .data              0x084c         0x2a build/default/production/pid.o
-                    0x084c                  _Kp
-                    0x0858                  _Ki
-                    0x0864                  _Kd
-                    0x0870                  _pidMaxOutput
+.bss                0x0874         0x2a
+ .bss               0x0874         0x2a build/default/production/pid.o
+                    0x0874                  _pidIntegrated
+                    0x0880                  _pidPrevError
+                    0x088c                  _pidPrevInput
+                    0x0898                  _pidMinOutput
 
-.bss                0x0876         0x2a
- .bss               0x0876         0x2a build/default/production/pid.o
-                    0x0876                  _pidIntegrated
-                    0x0882                  _pidPrevError
-                    0x088e                  _pidPrevInput
-                    0x089a                  _pidMinOutput
+.data               0x089e         0x28
+ .data              0x089e         0x28 build/default/production/rtcc.o
+                    0x089e                  _WeekDay
+                    0x08ac                  _month
 
-.data               0x08a0         0x28
- .data              0x08a0         0x28 build/default/production/rtcc.o
-                    0x08a0                  _WeekDay
-                    0x08ae                  _month
+.bss                0x08c6         0x12
+ .bss               0x08c6         0x12 build/default/production/rtcc.o
+                    0x08c6                  _currentTime
 
-.bss                0x08c8         0x12
- .bss               0x08c8         0x12 build/default/production/rtcc.o
-                    0x08c8                  _currentTime
-
-.data               0x08da         0x12
- .data              0x08da         0x12 build/default/production/main.o
-                    0x08da                  _setpoint
-                    0x08e0                  _deadband
-                    0x08e6                  _desc
+.data               0x08d8         0x12
+ .data              0x08d8         0x12 build/default/production/main.o
+                    0x08d8                  _setpoint
+                    0x08de                  _deadband
+                    0x08e4                  _desc
 
 .config_ALTVREF
                   0x0abf2c          0x2
@@ -2836,69 +2838,70 @@ __c30_signature
 .config_BSLIM     0x0abf10          0x2
  .config_BSLIM    0x0abf10          0x2 build/default/production/system.o
 
-.const              0x8560       0x133a load address 0x000560  
- .const             0x8560        0x904 build/default/production/main.o
-                    0x8560                  _menu2
-                    0x8960                  _menu3
- .const             0x8e64        0x496 build/default/production/rtcc.o
-                    0x8e64                  _rtccMenu
- .const             0x92fa        0x470 build/default/production/start_stop_timer.o
-                    0x92fa                  _menu4
- .const             0x976a        0x130 build/default/production/lcd.o
-                    0x976a                  _fonts
+.const              0x8560        0x4f6 load address 0x000560  
+ .const             0x8560        0x21a build/default/production/main.o
+                    0x8560                  _menu0
+                    0x85b4                  _menu1
+                    0x8608                  _menu2
+ .const             0x877a        0x130 build/default/production/lcd.o
+                    0x877a                  _fonts
+ .const             0x88aa         0xea build/default/production/rtcc.o
+                    0x88aa                  _rtccMenu
+ .const             0x8994         0xc2 build/default/production/start_stop_timer.o
+                    0x8994                  _menu4
 
-.text             0x00189a       0x15ae
- .text            0x00189a        0x7fc build/default/production/main.o
-                  0x00189a                  _main
- .text            0x002096        0x4fa build/default/production/rtcc.o
-                  0x002096                  _RTCC_Initialize
-                  0x0020e4                  _RTCC_TimeGet
-                  0x002172                  _RTCC_TimeSet
-                  0x0024b0                  _displayTime
-                  0x00257a                  _RTCC_TimeReset
- .text            0x002590        0x402 build/default/production/start_stop_timer.o
-                  0x002590                  _runTimer
-                  0x0025e4                  _writeStartStopTimes
-                  0x00271e                  _setStartHour
-                  0x0027ba                  _setStartMinute
-                  0x002858                  _setStopHour
-                  0x0028f4                  _setStopMinute
- .text            0x002992        0x28a build/default/production/lcd.o
-                  0x002992                  _gotoXY
-                  0x0029b0                  _LCDBitmap
-                  0x0029d6                  _LCDWriteCharacter
-                  0x002a18                  _LCDWriteString
-                  0x002a32                  _LCDClear
-                  0x002a54                  _LCDWriteInt
-                  0x002b20                  _LCDInit
-                  0x002b5e                  _LCDWrite
-                  0x002b9e                  _LCDDrawBox
- .text            0x002c1c        0x22c build/default/production/pid.o
-                  0x002c1c                  _Init_PID
-                  0x002c76                  _PID_Calculate
+.text             0x000a56       0x15d8
+ .text            0x000a56        0x844 build/default/production/main.o
+                  0x000a56                  _main
+ .text            0x00129a        0x500 build/default/production/rtcc.o
+                  0x00129a                  _RTCC_Initialize
+                  0x0012e8                  _RTCC_TimeGet
+                  0x001376                  _RTCC_TimeSet
+                  0x0016ba                  _displayTime
+                  0x001784                  _RTCC_TimeReset
+ .text            0x00179a        0x3d4 build/default/production/start_stop_timer.o
+                  0x00179a                  _runTimer
+                  0x0017ee                  _writeStartStopTimes
+                  0x001912                  _setStartHour
+                  0x0019a8                  _setStartMinute
+                  0x001a40                  _setStopHour
+                  0x001ad6                  _setStopMinute
+ .text            0x001b6e        0x294 build/default/production/lcd.o
+                  0x001b6e                  _gotoXY
+                  0x001b8c                  _LCDBitmap
+                  0x001bbc                  _LCDWriteCharacter
+                  0x001bfe                  _LCDWriteString
+                  0x001c18                  _LCDClear
+                  0x001c3a                  _LCDWriteInt
+                  0x001d06                  _LCDInit
+                  0x001d44                  _LCDWrite
+                  0x001d84                  _LCDDrawBox
+ .text            0x001e02        0x22c build/default/production/pid.o
+                  0x001e02                  _Init_PID
+                  0x001e5c                  _PID_Calculate
 
-.dinit            0x002e48         0xb6
- .dinit           0x002e48         0xb6 data_init
+.dinit            0x00202e         0xb6
+ .dinit           0x00202e         0xb6 data_init
 
-.text             0x002efe        0x28a
- .text            0x002efe         0xa4 build/default/production/user.o
-                  0x002efe                  _TempCalc
-                  0x002f14                  _setParameter
- .text            0x002fa2         0xa2 build/default/production/buttons.o
-                  0x002fa2                  _readButton
- .text            0x003044         0x62 build/default/production/pwm.o
-                  0x003044                  _InitializeTimers
-                  0x003070                  _Initialize_PWM
-                  0x00309a                  _setDutyCycle
- .text            0x0030a6         0x50 build/default/production/adc.o
-                  0x0030a6                  _ADCInit
-                  0x0030be                  _ADCRead
- .text            0x0030f6         0x50 build/default/production/pin_manager.o
-                  0x0030f6                  _PIN_MANAGER_Initialize
- .text            0x003146         0x42 build/default/production/system.o
-                  0x003146                  _SYSTEM_Initialize
-                  0x00315e                  _OSCILLATOR_Initialize
+.text             0x0020e4        0x284
+ .text            0x0020e4         0xa2 build/default/production/buttons.o
+                  0x0020e4                  _readButton
+ .text            0x002186         0x9e build/default/production/user.o
+                  0x002186                  _TempCalc
+                  0x00219c                  _setParameter
+ .text            0x002224         0x62 build/default/production/pwm.o
+                  0x002224                  _InitializeTimers
+                  0x002250                  _Initialize_PWM
+                  0x00227a                  _setDutyCycle
+ .text            0x002286         0x50 build/default/production/pin_manager.o
+                  0x002286                  _PIN_MANAGER_Initialize
+ .text            0x0022d6         0x50 build/default/production/adc.o
+                  0x0022d6                  _ADCInit
+                  0x0022ee                  _ADCRead
+ .text            0x002326         0x42 build/default/production/system.o
+                  0x002326                  _SYSTEM_Initialize
+                  0x00233e                  _OSCILLATOR_Initialize
 
-.init.delay32     0x003188         0x1c
- .init.delay32    0x003188         0x1c c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
-                  0x003188                  ___delay32
+.init.delay32     0x002368         0x1c
+ .init.delay32    0x002368         0x1c c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
+                  0x002368                  ___delay32
