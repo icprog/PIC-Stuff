@@ -1,23 +1,19 @@
 #include    "start_stop_timer.h"
-#include    "menu4.h"
+#include    "menu4.h"                                                           // Including this here(rather than the header file, seems to relieve complaints about "multiple declarations))
 
-int startHour[]   =   { 8, 6, 6, 6, 6, 6, 8};
+int8_t startHour[]   =   { 8, 6, 6, 6, 6, 6, 8};
 
-int startMinute[] =   {45,45,45,45,45,45,45};
+int8_t startMinute[] =   {45,45,45,45,45,45,45};
 
-int stopHour[]    =   {11, 7, 7, 7, 7, 7,11};
+int8_t stopHour[]    =   {11, 7, 7, 7, 7, 7,11};
 
-int stopMinute[]  =   {00,25,25,25,25,25,00};
+int8_t stopMinute[]  =   {00,25,25,25,25,25,00};
 
-signed char choice;
+int8_t choice;
 
 extern char *WeekDay[7];
 
-unsigned char TestKey = None;
-
-//char sel = 0;
-    
-//char done = 0;
+uint8_t TestKey = None;
 
 //***************************************************************************************************************************************************************
 
@@ -40,7 +36,7 @@ int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
 //***************************************************************************************************************************************************************
 void writeStartStopTimes(void)
 {
-    unsigned int timer = 0;                                                     // Used to return to operation if user does not finish!
+    uint16_t timer = 0;                                                     // Used to return to operation if user does not finish!
     
     TestKey = None;
     
@@ -48,7 +44,7 @@ void writeStartStopTimes(void)
     {
         TestKey = readButton();
         
-        if(timer > 3500)
+        if(timer > 1750)
         {
             goto Exit;                                                 
         }
@@ -77,12 +73,12 @@ void writeStartStopTimes(void)
             }
             break;
                     
-//            case KEY_RESET:
-  //          {
-    //            LCDClear();
-      //          goto Exit;
-        //    }
-          //  break;
+            case Menu:
+            {
+                LCDClear();
+                goto Exit;
+            }
+            break;
         }
 
         if(timer < 3)
@@ -91,12 +87,10 @@ void writeStartStopTimes(void)
             LCDBitmap(&menu4[0], 5, 84);                  //Draw Menu4
         }
 
-//        LCDBitmap(&menu4[0], 1024,0);                  //Draw Menu4
-        
-        LCDWriteStringXY(0,0,"Start/Stop for ");
+        LCDWriteStringXY(0,1,"Start/Stop for ");
         LCDWriteString(WeekDay[choice]);
-        LCDWriteStringXY(0,2,"Up/Dn Keys to choose");
-        LCDWriteStringXY(0,3,"Enter Key to Set");
+        LCDWriteStringXY(0,3,"Up/Dn Keys to choose");
+        LCDWriteStringXY(0,4,"Enter Key to Set");
                                                                                 // but, also increments mainTimer every second
         timer += 1;
     }
@@ -114,13 +108,13 @@ void writeStartStopTimes(void)
 }
 
 //***************************************************************************************************************************************************************
-char setStartHour(char b)
+char setStartHour(int8_t b)
 {
-    unsigned int timer = 0;                                                         // Used to return to operation if user does not finish!
+    uint16_t timer = 0;                                                         // Used to return to operation if user does not finish!
     
-    char result = b;
+    int8_t result = b;
     
-    char TestKey = None;
+    int8_t TestKey = None;
 
     TestKey = readButton();
     
@@ -130,9 +124,9 @@ char setStartHour(char b)
         
         timer += 1;
         
-        __delay_ms(75);            // 175 delay to extend dead time to delay x number of counts below, before auto-exit of function
+        __delay_ms(15);            // 175 delay to extend dead time to delay x number of counts below, before auto-exit of function
                     
-        if(timer > 1500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
+        if(timer > 500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
             TestKey = Enter;
@@ -175,13 +169,13 @@ char setStartHour(char b)
 
 
 //***************************************************************************************************************************************************************
-char setStartMinute(char b)
+char setStartMinute(int8_t b)
 {
-    unsigned int timer = 0;                                                         // Used to return to operation if user does not finish!
+    uint16_t timer = 0;                                                         // Used to return to operation if user does not finish!
     
-    char result = b;
+    int8_t result = b;
     
-    char TestKey = None;
+    int8_t TestKey = None;
 
     TestKey = readButton();
     
@@ -191,9 +185,9 @@ char setStartMinute(char b)
         
         timer += 1;
         
-        __delay_ms(75);            // 175 delay to extend dead time to delay x number of counts below, before auto-exit of function
+        __delay_ms(15);            // 175 delay to extend dead time to delay x number of counts below, before auto-exit of function
                     
-        if(timer > 1500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
+        if(timer > 500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
             TestKey = Enter;
@@ -236,13 +230,13 @@ char setStartMinute(char b)
 }
 
 //***************************************************************************************************************************************************************
-char setStopHour(char b)
+char setStopHour(int8_t b)
 {
-    unsigned int timer = 0;                                                         // Used to return to operation if user does not finish!
+    uint16_t timer = 0;                                                         // Used to return to operation if user does not finish!
     
-    char result = b;
+    int8_t result = b;
     
-    char TestKey = None;
+    int8_t TestKey = None;
 
     TestKey = readButton();
     
@@ -252,9 +246,9 @@ char setStopHour(char b)
         
         timer += 1;
         
-        __delay_ms(75);            // 175 delay to extend dead time to delay x number of counts below, before auto-exit of function
+       __delay_ms(15);            // 15 delay to extend dead time to delay x number of counts below, before auto-exit of function
                     
-        if(timer > 1500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
+        if(timer > 500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
             TestKey = Enter;
@@ -300,13 +294,13 @@ char setStopHour(char b)
 
 
 //***************************************************************************************************************************************************************
-char setStopMinute(char b)
+char setStopMinute(int8_t b)
 {
-    unsigned int timer = 0;                                                         // Used to return to operation if user does not finish!
+    uint16_t timer = 0;                                                         // Used to return to operation if user does not finish!
     
-    char result = b;
+    int8_t result = b;
     
-    char TestKey = None;
+    int8_t TestKey = None;
 
     TestKey = readButton();
     
@@ -316,9 +310,9 @@ char setStopMinute(char b)
         
         timer += 1;
         
-        __delay_ms(75);            // 175 delay to extend dead time to delay x number of counts below, before auto-exit of function
+        __delay_ms(15);             // 15 delay to extend dead time to delay x number of counts below, before auto-exit of function
                     
-        if(timer > 1500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
+        if(timer > 500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
             TestKey = Enter;

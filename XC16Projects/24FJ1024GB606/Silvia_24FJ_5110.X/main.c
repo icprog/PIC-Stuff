@@ -1,4 +1,4 @@
-#include    "system.h"                                                             // System funct/params, like osc/peripheral config
+#include    "system.h"                                                          // System funct/params, like osc/peripheral config
 #include    "menu.h"
 // *************** Outputs ***************************************************************************************************************************************
 #define boilerOutput            _LATD6                                          //                              Change
@@ -83,9 +83,9 @@ int main(void)
 
     int samples[3][numSamples];                                                 //Used to average temp[] over "numSamples" of samples
     
-    int temp[3], shortTermTemp[3];                                              
+    uint16_t temp[3], shortTermTemp[3];                                              
     
-    unsigned char sampleIndex = 0;                                              //Used to calculate average sample of temp[]
+    uint8_t sampleIndex = 0;                                                    //Used to calculate average sample of temp[]
     
     float total[3] = {0,0,0};                                                   //Running total of temp[] samples 
 
@@ -299,14 +299,14 @@ int main(void)
 
             if(steamSwitch == 1)
             {
-//                SteamPID = PID_Calculate(1, setpoint, temp);
+                SteamPID = PID_Calculate(1, setpoint, temp);
             }
             else
             {
-  //              WaterPID = PID_Calculate(0, setpoint, temp);
+                WaterPID = PID_Calculate(0, setpoint, temp);
             }
 
-    //        GroupHeadPID = PID_Calculate(2, setpoint, temp);
+            GroupHeadPID = PID_Calculate(2, setpoint, temp);
             
 // ******************************************************************************
             if(steamSwitch == 1)                            //Steam setpoint takes priority
