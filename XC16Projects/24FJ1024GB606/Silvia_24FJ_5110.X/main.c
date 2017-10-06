@@ -8,8 +8,7 @@
 #define airPump                 _LATD5                                          // Air pump (for level sensing) G
 
 // *************** Inputs ****************************************************************************************************************************************
-#define power                   1                                               // Power Switch Input           CHANGE 
-//#define power                   _RG9                                            // Power Switch Input         G             
+//#define power                   0                                            // Power Switch Input         G             
 #define steamSwitch             _RB5                                            // Steam Switch Input           G
 #define brewSwitch              _RB4                                            // Brew Switch Input            G
 #define waterSwitch             _RB3                                            // Water Switch Input           G
@@ -91,7 +90,7 @@ int main(void)
 
     int i = 0, a = 0;                                                           // x is used for holding shot timer value for 20 seconds before resetting to zero
     
-    char testKey;                                                               // Variable used for Storing Which Menu Key is Pressed
+    char testKey, power;                                                               // Variable used for Storing Which Menu Key is Pressed
 
     int internalBGV;
     
@@ -107,6 +106,8 @@ int main(void)
     
     uint16_t count = 0;
     
+    uint16_t xxx = 0, yyy = 0;
+    
 //    LCDDrawBox();
 // ******************************************************************************
   //  setDutyCycle(dutyCycle);
@@ -115,6 +116,17 @@ int main(void)
 
     while(1)
     {
+        power = !_RG9;
+
+        if(power == 1)
+        {
+            xxx +=1;
+        }
+        if(power == 0)
+        {
+            yyy+=1;
+        }
+
         static int timer = 0;                                                   // Used to count up time in a loop, to auto exit if user in a menu too long
 
         RTCC_TimeGet(&currentTime); 
@@ -219,6 +231,11 @@ int main(void)
             {
                 LCDWriteStringXY(4,0,"Press \"Time\" to Set");
                 LCDWriteStringXY(4,1,"the Current Time");
+                 
+                LCDWriteIntXY(4,3,xxx,5,0,0);
+                LCDWriteCharacter(' ');    
+                LCDWriteIntXY(4,4,yyy,5,0,0);
+                LCDWriteCharacter(' ');    
             }
             else
             {

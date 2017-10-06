@@ -15,12 +15,12 @@ void PIN_MANAGER_Initialize(void)
     // *************************************************************************
     // * Setting the GPIO Direction SFR(s)
     // *************************************************************************
-    TRISB = 0x0040;
+    TRISB = 0x3878;                 // 3,4,5,6,11,12, and 13 as Inputs
     TRISC = 0x0000;
     TRISD = 0x0000;
     TRISE = 0x0000;
     TRISF = 0x0000;
-    TRISG = 0x0000;
+    TRISG = 0x0200;                 // 9 as Input
 
     // *************************************************************************
     // * Setting the Weak Pull Up and Weak Pull Down SFR(s)
@@ -31,12 +31,12 @@ void PIN_MANAGER_Initialize(void)
     IOCPDE = 0x0000;
     IOCPDF = 0x0000;
     IOCPDG = 0x0000;
-    IOCPUB = 0x0000;
+    IOCPUB = 0x0028;                // Enable Weak Pull-ups on RB3,4, and 5
     IOCPUC = 0x0000;
     IOCPUD = 0x0000;
     IOCPUE = 0x0000;
     IOCPUF = 0x0000;
-    IOCPUG = 0x0000;
+    IOCPUG = 0x0200;                // Enable weak Pull-up on RG9
 
     //**************************************************************************
     // * Setting the Open Drain SFR(s)
@@ -51,7 +51,7 @@ void PIN_MANAGER_Initialize(void)
     // *************************************************************************
     // * Setting the Analog/Digital Configuration SFR(s)
     // *************************************************************************
-    ANSB = 0x0040;          //AN6
+    ANSB = 0x3840;          // 6,11,12, and 13 as Analog
     ANSC = 0x0000;
     ANSD = 0x0000;
     ANSE = 0x0000;
