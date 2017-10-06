@@ -1,5 +1,5 @@
 
-# 1 "main.c"
+# 1 "buttons.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -17336,9 +17336,6 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 
-# 16 "pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\stdint.h"
 typedef signed char int8_t;
 
@@ -17429,6 +17426,14 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
+# 6 "buttons.h"
+void tempSetpoint(void);
+
+void readButtons(void);
+
+# 16 "pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+
 # 9 "pwm6.h"
 void PWM6_Initialize(void);
 
@@ -17438,25 +17443,6 @@ void PWM6_LoadDutyValue(uint16_t dutyValue);
 void TMR0_Initialize(void);
 
 void TMR2_Initialize(void);
-
-# 38 "lcd.h"
-void InitCustomChars();
-
-void LCD_Port(char a);
-
-void LCD_Cmd(char a);
-
-void LCD_Clear();
-
-void LCD_Set_Cursor(char x, char y);
-
-void LCD_Init(char style);
-
-void LCD_Write_Char(const char a);
-
-void LCD_Write_String(const char *a);
-
-void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\stdbool.h"
 typedef unsigned char bool;
@@ -17546,146 +17532,135 @@ void Init_PID(void);
 # 20
 float PID_Calculate(int const setpoint, float temp);
 
-# 6 "buttons.h"
-void tempSetpoint(void);
-
-void readButtons(void);
-
 # 18 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 30 "C:\Program Files (x86)\Microchip\xc8\v1.44\include\math.h"
-extern double fabs(double);
-extern double floor(double);
-extern double ceil(double);
-extern double modf(double, double *);
-extern double sqrt(double);
-extern double atof(const char *);
-extern double sin(double) ;
-extern double cos(double) ;
-extern double tan(double) ;
-extern double asin(double) ;
-extern double acos(double) ;
-extern double atan(double);
-extern double atan2(double, double) ;
-extern double log(double);
-extern double log10(double);
-extern double pow(double, double) ;
-extern double exp(double) ;
-extern double sinh(double) ;
-extern double cosh(double) ;
-extern double tanh(double);
-extern double eval_poly(double, const double *, int);
-extern double frexp(double, int *);
-extern double ldexp(double, int);
-extern double fmod(double, double);
-extern double trunc(double);
-extern double round(double);
+# 38 "lcd.h"
+void InitCustomChars();
 
-# 9 "main.c"
-uint16_t samples[50];
-uint8_t setpoint = 70, presets[5]={0,70,95,105,120};
+void LCD_Port(char a);
+
+void LCD_Cmd(char a);
+
+void LCD_Clear();
+
+void LCD_Set_Cursor(char x, char y);
+
+void LCD_Init(char style);
+
+void LCD_Write_Char(const char a);
+
+void LCD_Write_String(const char *a);
+
+void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+
+# 7 "buttons.c"
+uint8_t downCount = 0, upCount = 0, oldSetpoint, toggleCount = 0, x = 0;
+extern uint8_t setpoint;
+extern uint8_t presets[];
 
 
-void main(void)
+void tempSetpoint(void)
 {
-SYSTEM_Initialize();
+uint8_t counter = 0;
 
-uint16_t readTemperature, PWM_Output = 0, readTemperatureOld, displayTemp, seconds = 0, counter = 0, minutes = 0;
+oldSetpoint = setpoint;
 
-uint8_t toggle = 0;
-
-float R, steinhart;
-
-static uint16_t sampleIndex = 0;
-
-int32_t totals = 0;
-
-
-while (1)
+while(downCount >= 5)
 {
-readTemperature = ADCC_GetSingleConversion(2);
-
-totals = totals - samples[sampleIndex];
-
-samples[sampleIndex] = readTemperature;
-
-totals = totals + samples[sampleIndex];
-
-sampleIndex += 1;
-
-if(sampleIndex >= 50)
+counter+=1;
+if(counter<=1)
 {
-sampleIndex = 0;
+LCD_Clear();
 }
-
-readTemperature = totals / 50;
-
-
-R = 10200/(1023/(float)readTemperature - 1);
-
-steinhart = R /10061;
-steinhart = log(steinhart);
-steinhart /= 3995;
-steinhart += 1.0 / (25 + 273.15);
-steinhart = 1.0 / steinhart;
-steinhart -= 273.15;
-
-
-displayTemp = (uint16_t)(steinhart*10);
-
-if(toggle == 1)
-{
-displayTemp = displayTemp*9/5+320;
-
-{ LCD_Set_Cursor(0,0); LCD_Write_Int(displayTemp,-1, 1, 0);};
-LCD_Write_Char(0);
-LCD_Write_Char('F');
-LCD_Write_Char(' ');
-}
-else
-{
-{ LCD_Set_Cursor(0,0); LCD_Write_Int(displayTemp,-1, 1, 0);};
+setpoint-=1;
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+{ LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
 LCD_Write_Char(0);
 LCD_Write_Char('C');
 LCD_Write_Char(' ');
-}
-
-{ LCD_Set_Cursor(1,0); LCD_Write_String("Time:");}
-{ LCD_Set_Cursor(1,5); LCD_Write_Int(minutes,3, 0, 0);};
-
-
-counter +=1;
-
-if(counter>12)
-{
-toggle = 1-toggle;
-counter = 0;
-PWM_Output = (int)PID_Calculate(setpoint, steinhart);
-PWM6_LoadDutyValue(PWM_Output);
-}
-
-
-if(TMR0IF)
-{
-TMR0H = 0x24;
-TMR0L = 0x9F;
-TMR0IF = 0;
-seconds+=1;
-}
-
-if(setpoint - steinhart < 2)
-{
-if(seconds>63)
-{
-minutes+=1;
-seconds = 0;
-}
-}
-
+_delay((unsigned long)((350)*(1000000/4000.0)));
 readButtons();
-tempSetpoint();
+}
+
+while(upCount >= 5)
+{
+counter+=1;
+if(counter<=1)
+{
+LCD_Clear();
+}
+setpoint+=1;
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+{ LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_Char(' ');
+_delay((unsigned long)((350)*(1000000/4000.0)));
+readButtons();
+}
+
+counter = 0;
+
+if(oldSetpoint!=setpoint)
+{
+_delay((unsigned long)((2000)*(1000000/4000.0)));
+LCD_Clear();
+}
+}
+
+
+void readButtons(void)
+{
+while(RA3 == 0 && RA4 == 0)
+{
+downCount = 0;
+upCount = 0;
+toggleCount+=1;
+if(toggleCount >=6)
+{
+x+=1;
+if(x>4)
+{
+x=0;
+}
+setpoint = presets[x];
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+{ LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_Char(' ');
+_delay((unsigned long)((1500)*(1000000/4000.0)));
+toggleCount = 0;
+LCD_Clear();
+}
+}
+
+if(RA3 == 0)
+{
+downCount +=1;
+if(downCount>5)
+{
+downCount = 5;
+}
+}
+else
+{
+downCount = 0;
+}
+
+if(RA4 == 0)
+{
+upCount +=1;
+if(upCount>5)
+{
+upCount = 5;
+}
+}
+else
+{
+upCount = 0;
 }
 }

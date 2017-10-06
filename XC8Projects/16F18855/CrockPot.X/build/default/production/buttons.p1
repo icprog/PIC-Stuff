@@ -1,52 +1,28 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"775 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic16f18855.h
-[v _LATA `Vuc ~T0 @X0 0 e@22 ]
-"837
-[v _LATB `Vuc ~T0 @X0 0 e@23 ]
-"899
-[v _LATC `Vuc ~T0 @X0 0 e@24 ]
-"33053
-[v _WPUA `Vuc ~T0 @X0 0 e@3897 ]
-"33673
-[v _WPUB `Vuc ~T0 @X0 0 e@3908 ]
-"34293
-[v _WPUC `Vuc ~T0 @X0 0 e@3919 ]
-"34851
-[v _WPUE `Vuc ~T0 @X0 0 e@3941 ]
-"589
-[v _TRISA `Vuc ~T0 @X0 0 e@17 ]
-"651
-[v _TRISB `Vuc ~T0 @X0 0 e@18 ]
-"713
-[v _TRISC `Vuc ~T0 @X0 0 e@19 ]
-"32991
-[v _ANSELA `Vuc ~T0 @X0 0 e@3896 ]
-"33611
-[v _ANSELB `Vuc ~T0 @X0 0 e@3907 ]
-"34231
-[v _ANSELC `Vuc ~T0 @X0 0 e@3918 ]
-"21557
-[s S975 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S975 . INTE . IOCIE TMR0IE ]
-"21556
-[u S974 `S975 1 ]
-[n S974 . . ]
-"21564
-[v _PIE0bits `VS974 ~T0 @X0 0 e@1814 ]
-"36757
-[v _GIE `Vb ~T0 @X0 0 e@95 ]
-"29763
-[v _PPSLOCK `Vuc ~T0 @X0 0 e@3727 ]
-"29769
-[s S1306 :1 `uc 1 ]
-[n S1306 . PPSLOCKED ]
-"29768
-[u S1305 `S1306 1 ]
-[n S1305 . . ]
-"29773
-[v _PPSLOCKbits `VS1305 ~T0 @X0 0 e@3727 ]
-"31841
-[v _RA1PPS `Vuc ~T0 @X0 0 e@3857 ]
+"8 buttons.c
+[v _setpoint `uc ~T0 @X0 0 e ]
+"44 lcd.h
+[v _LCD_Clear `(v ~T0 @X0 0 ef ]
+"46
+[v _LCD_Set_Cursor `(v ~T0 @X0 0 ef2`uc`uc ]
+"52
+[v _LCD_Write_String `(v ~T0 @X0 0 ef1`*Cuc ]
+"54
+[v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
+"50
+[v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
+[v F14219 `(v ~T0 @X0 1 tf1`ul ]
+"153 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic.h
+[v __delay `JF14219 ~T0 @X0 0 e ]
+[p i __delay ]
+"8 buttons.h
+[v _readButtons `(v ~T0 @X0 0 ef ]
+"9 buttons.c
+[v _presets `uc ~T0 @X0 -> 0 `x e ]
+"38315 C:\Program Files (x86)\Microchip\xc8\v1.44\include\pic16f18855.h
+[v _RA3 `Vb ~T0 @X0 0 e@99 ]
+"38329
+[v _RA4 `Vb ~T0 @X0 0 e@100 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -13126,90 +13102,441 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 193: extern __bank0 unsigned char __resetbits;
 [; ;pic.h: 194: extern __bank0 __bit __powerdown;
 [; ;pic.h: 195: extern __bank0 __bit __timeout;
+[; ;stdint.h: 13: typedef signed char int8_t;
+[; ;stdint.h: 20: typedef signed int int16_t;
+[; ;stdint.h: 28: typedef signed short long int int24_t;
+[; ;stdint.h: 36: typedef signed long int int32_t;
+[; ;stdint.h: 43: typedef unsigned char uint8_t;
+[; ;stdint.h: 49: typedef unsigned int uint16_t;
+[; ;stdint.h: 56: typedef unsigned short long int uint24_t;
+[; ;stdint.h: 63: typedef unsigned long int uint32_t;
+[; ;stdint.h: 71: typedef signed char int_least8_t;
+[; ;stdint.h: 78: typedef signed int int_least16_t;
+[; ;stdint.h: 90: typedef signed short long int int_least24_t;
+[; ;stdint.h: 98: typedef signed long int int_least32_t;
+[; ;stdint.h: 105: typedef unsigned char uint_least8_t;
+[; ;stdint.h: 111: typedef unsigned int uint_least16_t;
+[; ;stdint.h: 121: typedef unsigned short long int uint_least24_t;
+[; ;stdint.h: 128: typedef unsigned long int uint_least32_t;
+[; ;stdint.h: 137: typedef signed char int_fast8_t;
+[; ;stdint.h: 144: typedef signed int int_fast16_t;
+[; ;stdint.h: 156: typedef signed short long int int_fast24_t;
+[; ;stdint.h: 164: typedef signed long int int_fast32_t;
+[; ;stdint.h: 171: typedef unsigned char uint_fast8_t;
+[; ;stdint.h: 177: typedef unsigned int uint_fast16_t;
+[; ;stdint.h: 187: typedef unsigned short long int uint_fast24_t;
+[; ;stdint.h: 194: typedef unsigned long int uint_fast32_t;
+[; ;stdint.h: 200: typedef int32_t intmax_t;
+[; ;stdint.h: 205: typedef uint32_t uintmax_t;
+[; ;stdint.h: 210: typedef int16_t intptr_t;
+[; ;stdint.h: 215: typedef uint16_t uintptr_t;
+[; ;buttons.h: 6: void tempSetpoint(void);
+[; ;buttons.h: 8: void readButtons(void);
 [; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
+[; ;pwm6.h: 9: void PWM6_Initialize(void);
+[; ;pwm6.h: 11: void PWM6_LoadDutyValue(uint16_t dutyValue);
+[; ;timers.h: 5: void TMR0_Initialize(void);
+[; ;timers.h: 7: void TMR2_Initialize(void);
 [; ;stdbool.h: 12: typedef unsigned char bool;
-"5 pin_manager.c
-[v _PIN_MANAGER_Initialize `(v ~T0 @X0 1 ef ]
-"6
-{
-[; ;pin_manager.c: 5: void PIN_MANAGER_Initialize(void)
-[; ;pin_manager.c: 6: {
-[e :U _PIN_MANAGER_Initialize ]
-[f ]
-[; ;pin_manager.c: 7: LATA = 0x00;
-"7
-[e = _LATA -> -> 0 `i `uc ]
-[; ;pin_manager.c: 8: LATB = 0x0;
-"8
-[e = _LATB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 9: LATC = 0x0;
-"9
-[e = _LATC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 11: WPUA = 0x18;
-"11
-[e = _WPUA -> -> 24 `i `uc ]
-[; ;pin_manager.c: 12: WPUB = 0x00;
+[; ;adcc.h: 9: typedef uint16_t adc_result_t;
+[; ;adcc.h: 12: typedef enum
+[; ;adcc.h: 13: {
+[; ;adcc.h: 15: channel_VSS = 0x3C,
+[; ;adcc.h: 16: channel_Temp = 0x3D,
+[; ;adcc.h: 17: channel_DAC1 = 0x3E,
+[; ;adcc.h: 18: channel_FVR = 0x3F
+[; ;adcc.h: 19: } adcc_channel_t;
+[; ;adcc.h: 22: void ADCC_Initialize(void);
+[; ;adcc.h: 24: void ADCC_StartConversion(adcc_channel_t channel);
+[; ;adcc.h: 26: bool ADCC_IsConversionDone();
+[; ;adcc.h: 28: adc_result_t ADCC_GetConversionResult(void);
+[; ;adcc.h: 30: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+[; ;adcc.h: 32: void ADCC_StopConversion(void);
+[; ;adcc.h: 34: void ADCC_SetStopOnInterrupt(void);
+[; ;adcc.h: 36: void ADCC_DischargeSampleCapacitor(void);
+[; ;adcc.h: 38: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adcc.h: 40: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adcc.h: 42: void ADCC_SetRepeatCount(uint8_t);
+[; ;adcc.h: 44: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adcc.h: 46: void ADCC_ClearAccumulator(void);
+[; ;adcc.h: 48: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adcc.h: 50: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adcc.h: 52: uint16_t ADCC_GetFilterValue(void);
+[; ;adcc.h: 76: uint16_t ADCC_GetPreviousResult(void);
+[; ;adcc.h: 100: void ADCC_DefineSetPoint(uint16_t);
+[; ;adcc.h: 125: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adcc.h: 150: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adcc.h: 173: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adcc.h: 195: void ADCC_EnableDoubleSampling(void);
+[; ;adcc.h: 217: void ADCC_EnableContinuousConversion(void);
+[; ;adcc.h: 239: void ADCC_DisableContinuousConversion(void);
+[; ;adcc.h: 261: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adcc.h: 283: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adcc.h: 305: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;pid.h: 12: void Init_PID(void);
+[; ;pid.h: 20: float PID_Calculate(int const setpoint, float temp);
+[; ;system.h: 18: void SYSTEM_Initialize(void);
+[; ;system.h: 20: void OSCILLATOR_Initialize(void);
+[; ;lcd.h: 38: void InitCustomChars();
+[; ;lcd.h: 40: void LCD_Port(char a);
+[; ;lcd.h: 42: void LCD_Cmd(char a);
+[; ;lcd.h: 44: void LCD_Clear();
+[; ;lcd.h: 46: void LCD_Set_Cursor(char x, char y);
+[; ;lcd.h: 48: void LCD_Init(char style);
+[; ;lcd.h: 50: void LCD_Write_Char(const char a);
+[; ;lcd.h: 52: void LCD_Write_String(const char *a);
+[; ;lcd.h: 54: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+"7 buttons.c
+[v _downCount `uc ~T0 @X0 1 e ]
+[i _downCount
+-> -> 0 `i `uc
+]
+[v _upCount `uc ~T0 @X0 1 e ]
+[i _upCount
+-> -> 0 `i `uc
+]
+[v _oldSetpoint `uc ~T0 @X0 1 e ]
+[v _toggleCount `uc ~T0 @X0 1 e ]
+[i _toggleCount
+-> -> 0 `i `uc
+]
+[v _x `uc ~T0 @X0 1 e ]
+[i _x
+-> -> 0 `i `uc
+]
+[; ;buttons.c: 7: uint8_t downCount = 0, upCount = 0, oldSetpoint, toggleCount = 0, x = 0;
+[; ;buttons.c: 8: extern uint8_t setpoint;
+[; ;buttons.c: 9: extern uint8_t presets[];
 "12
-[e = _WPUB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 13: WPUC = 0x00;
+[v _tempSetpoint `(v ~T0 @X0 1 ef ]
 "13
-[e = _WPUC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 14: WPUE = 0x8;
+{
+[; ;buttons.c: 12: void tempSetpoint(void)
+[; ;buttons.c: 13: {
+[e :U _tempSetpoint ]
+[f ]
 "14
-[e = _WPUE -> -> 8 `i `uc ]
-[; ;pin_manager.c: 16: TRISA = 0x1C;
+[v _counter `uc ~T0 @X0 1 a ]
+[; ;buttons.c: 14: uint8_t counter = 0;
+[e = _counter -> -> 0 `i `uc ]
+[; ;buttons.c: 16: oldSetpoint = setpoint;
 "16
-[e = _TRISA -> -> 28 `i `uc ]
-[; ;pin_manager.c: 17: TRISB = 0x00;
-"17
-[e = _TRISB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 18: TRISC = 0x10;
+[e = _oldSetpoint _setpoint ]
+[; ;buttons.c: 18: while(downCount >= 5)
 "18
-[e = _TRISC -> -> 16 `i `uc ]
-[; ;pin_manager.c: 20: ANSELA = 0x04;
+[e $U 1564  ]
+[e :U 1565 ]
+[; ;buttons.c: 19: {
+"19
+{
+[; ;buttons.c: 20: counter+=1;
 "20
-[e = _ANSELA -> -> 4 `i `uc ]
-[; ;pin_manager.c: 21: ANSELB = 0x00;
+[e =+ _counter -> -> 1 `i `uc ]
+[; ;buttons.c: 21: if(counter<=1)
 "21
-[e = _ANSELB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 22: ANSELC = 0x00;
+[e $ ! <= -> _counter `i -> 1 `i 1567  ]
+[; ;buttons.c: 22: {
 "22
-[e = _ANSELC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 24: PIE0bits.IOCIE = 0;
+{
+[; ;buttons.c: 23: LCD_Clear();
+"23
+[e ( _LCD_Clear ..  ]
 "24
-[e = . . _PIE0bits 0 2 -> -> 0 `i `uc ]
+}
+[e :U 1567 ]
+[; ;buttons.c: 24: }
+[; ;buttons.c: 25: setpoint-=1;
 "25
-[v _state `uc ~T0 @X0 1 a ]
-[; ;pin_manager.c: 25: bool state = GIE;
-[e = _state -> -> _GIE `i `uc ]
-[; ;pin_manager.c: 26: GIE = 0;
+[e =- _setpoint -> -> 1 `i `uc ]
+[; ;buttons.c: 26: { LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
 "26
-[e = _GIE -> -> 0 `i `b ]
-[; ;pin_manager.c: 27: PPSLOCK = 0x55;
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_String (1 :s 1C ]
+}
+[; ;buttons.c: 27: { LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
 "27
-[e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 28: PPSLOCK = 0xAA;
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , -> _setpoint `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+[; ;buttons.c: 28: LCD_Write_Char(0);
 "28
-[e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 29: PPSLOCKbits.PPSLOCKED = 0x00;
+[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
+[; ;buttons.c: 29: LCD_Write_Char('C');
 "29
-[e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
-[; ;pin_manager.c: 32: RA1PPS = 0x000E;
+[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
+[; ;buttons.c: 30: LCD_Write_Char(' ');
+"30
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;buttons.c: 31: _delay((unsigned long)((350)*(1000000/4000.0)));
+"31
+[e ( __delay (1 -> * -> -> 350 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;buttons.c: 32: readButtons();
 "32
-[e = _RA1PPS -> -> 14 `i `uc ]
-[; ;pin_manager.c: 36: PPSLOCK = 0x55;
+[e ( _readButtons ..  ]
+"33
+}
+[e :U 1564 ]
+"18
+[e $ >= -> _downCount `i -> 5 `i 1565  ]
+[e :U 1566 ]
+[; ;buttons.c: 33: }
+[; ;buttons.c: 35: while(upCount >= 5)
+"35
+[e $U 1568  ]
+[e :U 1569 ]
+[; ;buttons.c: 36: {
 "36
-[e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 37: PPSLOCK = 0xAA;
+{
+[; ;buttons.c: 37: counter+=1;
 "37
-[e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 38: PPSLOCKbits.PPSLOCKED = 0x01;
+[e =+ _counter -> -> 1 `i `uc ]
+[; ;buttons.c: 38: if(counter<=1)
 "38
-[e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
-[; ;pin_manager.c: 39: GIE = state;
+[e $ ! <= -> _counter `i -> 1 `i 1571  ]
+[; ;buttons.c: 39: {
 "39
-[e = _GIE -> _state `b ]
-[; ;pin_manager.c: 40: }
+{
+[; ;buttons.c: 40: LCD_Clear();
 "40
+[e ( _LCD_Clear ..  ]
+"41
+}
+[e :U 1571 ]
+[; ;buttons.c: 41: }
+[; ;buttons.c: 42: setpoint+=1;
+"42
+[e =+ _setpoint -> -> 1 `i `uc ]
+[; ;buttons.c: 43: { LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+"43
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_String (1 :s 2C ]
+}
+[; ;buttons.c: 44: { LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+"44
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , -> _setpoint `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+[; ;buttons.c: 45: LCD_Write_Char(0);
+"45
+[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
+[; ;buttons.c: 46: LCD_Write_Char('C');
+"46
+[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
+[; ;buttons.c: 47: LCD_Write_Char(' ');
+"47
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;buttons.c: 48: _delay((unsigned long)((350)*(1000000/4000.0)));
+"48
+[e ( __delay (1 -> * -> -> 350 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;buttons.c: 49: readButtons();
+"49
+[e ( _readButtons ..  ]
+"50
+}
+[e :U 1568 ]
+"35
+[e $ >= -> _upCount `i -> 5 `i 1569  ]
+[e :U 1570 ]
+[; ;buttons.c: 50: }
+[; ;buttons.c: 52: counter = 0;
+"52
+[e = _counter -> -> 0 `i `uc ]
+[; ;buttons.c: 54: if(oldSetpoint!=setpoint)
+"54
+[e $ ! != -> _oldSetpoint `i -> _setpoint `i 1572  ]
+[; ;buttons.c: 55: {
+"55
+{
+[; ;buttons.c: 56: _delay((unsigned long)((2000)*(1000000/4000.0)));
+"56
+[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;buttons.c: 57: LCD_Clear();
+"57
+[e ( _LCD_Clear ..  ]
+"58
+}
+[e :U 1572 ]
+[; ;buttons.c: 58: }
+[; ;buttons.c: 59: }
+"59
 [e :UE 1563 ]
 }
+"62
+[v _readButtons `(v ~T0 @X0 1 ef ]
+"63
+{
+[; ;buttons.c: 62: void readButtons(void)
+[; ;buttons.c: 63: {
+[e :U _readButtons ]
+[f ]
+[; ;buttons.c: 64: while(RA3 == 0 && RA4 == 0)
+"64
+[e $U 1574  ]
+[e :U 1575 ]
+[; ;buttons.c: 65: {
+"65
+{
+[; ;buttons.c: 66: downCount = 0;
+"66
+[e = _downCount -> -> 0 `i `uc ]
+[; ;buttons.c: 67: upCount = 0;
+"67
+[e = _upCount -> -> 0 `i `uc ]
+[; ;buttons.c: 68: toggleCount+=1;
+"68
+[e =+ _toggleCount -> -> 1 `i `uc ]
+[; ;buttons.c: 69: if(toggleCount >=6)
+"69
+[e $ ! >= -> _toggleCount `i -> 6 `i 1577  ]
+[; ;buttons.c: 70: {
+"70
+{
+[; ;buttons.c: 71: x+=1;
+"71
+[e =+ _x -> -> 1 `i `uc ]
+[; ;buttons.c: 72: if(x>4)
+"72
+[e $ ! > -> _x `i -> 4 `i 1578  ]
+[; ;buttons.c: 73: {
+"73
+{
+[; ;buttons.c: 74: x=0;
+"74
+[e = _x -> -> 0 `i `uc ]
+"75
+}
+[e :U 1578 ]
+[; ;buttons.c: 75: }
+[; ;buttons.c: 76: setpoint = presets[x];
+"76
+[e = _setpoint *U + &U _presets * -> _x `ux -> -> # *U &U _presets `ui `ux ]
+[; ;buttons.c: 77: { LCD_Set_Cursor(0,0); LCD_Write_String("Setpoint?");};
+"77
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_String (1 :s 3C ]
+}
+[; ;buttons.c: 78: { LCD_Set_Cursor(1,0); LCD_Write_Int(setpoint,3, 0, 0);};
+"78
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , -> _setpoint `i -> -> 3 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+[; ;buttons.c: 79: LCD_Write_Char(0);
+"79
+[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
+[; ;buttons.c: 80: LCD_Write_Char('C');
+"80
+[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
+[; ;buttons.c: 81: LCD_Write_Char(' ');
+"81
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;buttons.c: 82: _delay((unsigned long)((1500)*(1000000/4000.0)));
+"82
+[e ( __delay (1 -> * -> -> 1500 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;buttons.c: 83: toggleCount = 0;
+"83
+[e = _toggleCount -> -> 0 `i `uc ]
+[; ;buttons.c: 84: LCD_Clear();
+"84
+[e ( _LCD_Clear ..  ]
+"85
+}
+[e :U 1577 ]
+"86
+}
+[e :U 1574 ]
+"64
+[e $ && == -> _RA3 `i -> 0 `i == -> _RA4 `i -> 0 `i 1575  ]
+[e :U 1576 ]
+[; ;buttons.c: 85: }
+[; ;buttons.c: 86: }
+[; ;buttons.c: 88: if(RA3 == 0)
+"88
+[e $ ! == -> _RA3 `i -> 0 `i 1579  ]
+[; ;buttons.c: 89: {
+"89
+{
+[; ;buttons.c: 90: downCount +=1;
+"90
+[e =+ _downCount -> -> 1 `i `uc ]
+[; ;buttons.c: 91: if(downCount>5)
+"91
+[e $ ! > -> _downCount `i -> 5 `i 1580  ]
+[; ;buttons.c: 92: {
+"92
+{
+[; ;buttons.c: 93: downCount = 5;
+"93
+[e = _downCount -> -> 5 `i `uc ]
+"94
+}
+[e :U 1580 ]
+"95
+}
+[; ;buttons.c: 94: }
+[; ;buttons.c: 95: }
+[e $U 1581  ]
+"96
+[e :U 1579 ]
+[; ;buttons.c: 96: else
+[; ;buttons.c: 97: {
+"97
+{
+[; ;buttons.c: 98: downCount = 0;
+"98
+[e = _downCount -> -> 0 `i `uc ]
+"99
+}
+[e :U 1581 ]
+[; ;buttons.c: 99: }
+[; ;buttons.c: 101: if(RA4 == 0)
+"101
+[e $ ! == -> _RA4 `i -> 0 `i 1582  ]
+[; ;buttons.c: 102: {
+"102
+{
+[; ;buttons.c: 103: upCount +=1;
+"103
+[e =+ _upCount -> -> 1 `i `uc ]
+[; ;buttons.c: 104: if(upCount>5)
+"104
+[e $ ! > -> _upCount `i -> 5 `i 1583  ]
+[; ;buttons.c: 105: {
+"105
+{
+[; ;buttons.c: 106: upCount = 5;
+"106
+[e = _upCount -> -> 5 `i `uc ]
+"107
+}
+[e :U 1583 ]
+"108
+}
+[; ;buttons.c: 107: }
+[; ;buttons.c: 108: }
+[e $U 1584  ]
+"109
+[e :U 1582 ]
+[; ;buttons.c: 109: else
+[; ;buttons.c: 110: {
+"110
+{
+[; ;buttons.c: 111: upCount = 0;
+"111
+[e = _upCount -> -> 0 `i `uc ]
+"112
+}
+[e :U 1584 ]
+[; ;buttons.c: 112: }
+[; ;buttons.c: 113: }
+"113
+[e :UE 1573 ]
+}
+[a 1C 83 101 116 112 111 105 110 116 63 0 ]
+[a 2C 83 101 116 112 111 105 110 116 63 0 ]
+[a 3C 83 101 116 112 111 105 110 116 63 0 ]
