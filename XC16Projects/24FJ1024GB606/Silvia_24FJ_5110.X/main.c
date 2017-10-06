@@ -90,7 +90,7 @@ int main(void)
 
     int i = 0, a = 0;                                                           // x is used for holding shot timer value for 20 seconds before resetting to zero
     
-    char testKey, power;                                                               // Variable used for Storing Which Menu Key is Pressed
+    char testKey, power;                                                        // Variable used for Storing Which Menu Key is Pressed, and power switch state
 
     int internalBGV;
     
@@ -314,26 +314,29 @@ int main(void)
                 airPump = 0;
             }
 
-            if(steamSwitch == 1)
-            {
-                SteamPID = PID_Calculate(1, setpoint, temp);
-            }
-            else
-            {
-                WaterPID = PID_Calculate(0, setpoint, temp);
-            }
+//            if(steamSwitch == 1)
+  //          {
+    //            SteamPID = PID_Calculate(1, setpoint, temp);
+      //      }
+        //    else
+          //  {
+            //    WaterPID = PID_Calculate(0, setpoint, temp);
+            //}
 
-            GroupHeadPID = PID_Calculate(2, setpoint, temp);
+//            GroupHeadPID = PID_Calculate(2, setpoint, temp);
             
 // ******************************************************************************
             if(steamSwitch == 1)                            //Steam setpoint takes priority
             {
+                
                 if(steamSetpoint - boilerTemperature > steamDeadband)
                 {
                     boilerOutput = 1;
                 }
                 else
                 {
+                    SteamPID = PID_Calculate(1, setpoint, temp);
+
                     steamPIDPeriodCounter+=1;
         
                     if (steamPIDPeriodCounter > PIDDuration)
@@ -360,6 +363,8 @@ int main(void)
                 }
                 else
                 {
+                    WaterPID = PID_Calculate(0, setpoint, temp);
+                    
                     waterPIDPeriodCounter+=1;
        
                     if (waterPIDPeriodCounter > PIDDuration)
@@ -386,6 +391,8 @@ int main(void)
 
             else 
             {
+                GroupHeadPID = PID_Calculate(2, setpoint, temp);
+                
                 groupPIDPeriodCounter+=1;
         
                 if(groupPIDPeriodCounter > PIDDuration)
