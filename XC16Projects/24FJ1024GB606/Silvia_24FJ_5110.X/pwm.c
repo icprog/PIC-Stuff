@@ -21,18 +21,18 @@ void InitializeTimers(void)
 
 void Initialize_PWM(void)
 {
-    OC3R =                  0x0000;                 // Set On time (Duty Clcle))
+    OC6R =                  0x0000;                 // Set On time (Duty Clcle))
 //    OC3RS =                 0x0000;                 // Set Period for Edge aligned PWM
-    OC3CON2bits.SYNCSEL =   0X0B;                   // Set Timer 1 as Sync source
-    OC3CON2bits.OCTRIG =    0;                      // Set OC3 as Sync source
-    OC3CON1bits.OCTSEL =    0X4;                    // Set Timer 1 as clock source
-    OC3TMR =                0x0000;                 // Set OC3 timer to zero
-    OC3CON1bits.OCM =       0x6;                    // Set OC3 Mode to Edge aligned PWM (Center aligned works as well, except it is on until OCxR, turns off until OCxRS, so, 
+    OC6CON2bits.SYNCSEL =   0X0C;                   // Set Timer 2 as Sync source
+    OC6CON2bits.OCTRIG =    0;                      // Set OC6 as Sync source
+    OC6CON1bits.OCTSEL =    0X0;                    // Set Timer 2 as clock source
+    OC6TMR =                0x0000;                 // Set OC6 timer to zero
+    OC6CON1bits.OCM =       0x6;                    // Set OC6 Mode to Edge aligned PWM (Center aligned works as well, except it is on until OCxR, turns off until OCxRS, so, 
 }                                                   // dutyCycle of zero turns ON OC, until it hits OCxRS (works fine down to dC of 1, then goes to pulsing mode)
 // *****************************************************************************
 void setDutyCycle(unsigned int dutyCycle)
 {
-    OC3R = dutyCycle;                              
+    OC6R = dutyCycle;                              
 }
 // *****************************************************************************
 
