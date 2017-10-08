@@ -6,23 +6,27 @@
 
 void InitializeTimers(void)
 {
-    T1CONbits.TON =     0;                          // Timer1 is used for generating PWM frequency
-    T1CONbits.TCS =     1;                          // Timer Clock source selected by T1ECS
+    T1CONbits.TON   =   0;                          // Timer1 is used for generating PWM frequency
+    T1CONbits.TCS   =   1;                          // Timer Clock source selected by T1ECS
     T1CONbits.T1ECS =   0x0;                        // Timer 1 Extended Clock Selection bits (00 = Secondary Oscillator)
     T1CONbits.TCKPS =   0x1;                        // Timer 1 input clock pre-scale bits 01 = 1:8 
-    TMR1 =              0x0000;                     // Timer 1 preset value??
-    PR1 =               0x03FF;                     // Timer 1 Period value of .25 Seconds for a Frequency of 4Hz
-    T1CONbits.TON =     1;                          // TIMER 1 ON
-    T2CONbits.TON =     0;                          // Turn Timer OFF
-    PR2 =               0x4D30;                     // Period value set in Timer 2, to make it so Timer 2 rolls over every 1/100th seconds
-    T2CONbits.TON =     1;                          // Turn Timer 2 ON
+    TMR1            =   0x0000;                     // Timer 1 preset value??
+    PR1             =   0x03FF;                     // Timer 1 Period value of .25 Seconds for a Frequency of 4Hz
+    T1CONbits.TON   =   1;                          // TIMER 1 ON
+    
+    T2CONbits.TON   =   0;                          // Turn Timer OFF
+    T2CONbits.TCS   =   1;                          // Timer 2 Clock source selected by T2ECS
+    T2CONbits.TECS  =   0x0;                        // Run Timer 2 from Secondary Oscillator
+    TMR2            =   0x0000;
+    PR2             =   0x03FF;                     // Period value set in Timer 2, to make it so Timer 2 rolls over every .25 seconds
+    T2CONbits.TON   =   1;                          // Turn Timer 2 ON
 }
 // *****************************************************************************
 
 void Initialize_PWM(void)
 {
     OC6R =                  0x0000;                 // Set On time (Duty Clcle))
-//    OC3RS =                 0x0000;                 // Set Period for Edge aligned PWM
+//    OC6RS =                 0x0000;                 // Set Period for Edge aligned PWM
     OC6CON2bits.SYNCSEL =   0X0C;                   // Set Timer 2 as Sync source
     OC6CON2bits.OCTRIG =    0;                      // Set OC6 as Sync source
     OC6CON1bits.OCTSEL =    0X0;                    // Set Timer 2 as clock source

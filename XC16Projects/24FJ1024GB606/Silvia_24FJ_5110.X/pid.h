@@ -1,7 +1,6 @@
 #ifndef PID_H
 #define	PID_H
 #include "system.h"
-//#include <stdint.h>
 
 void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd);
 

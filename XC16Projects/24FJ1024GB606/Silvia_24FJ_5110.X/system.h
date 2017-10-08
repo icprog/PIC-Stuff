@@ -3,6 +3,8 @@
 
 #include    <xc.h>
 #include    <stdint.h>                  // Must be included before lcd.h, so lcd.h can use functionality by including system.h
+#include    <stdbool.h>
+#include    <time.h>
 #include    "pin_manager.h"
 #include    "adc.h"
 #include    "buttons.h"
@@ -12,7 +14,6 @@
 #include    "rtcc.h"
 #include    "start_stop_timer.h"
 #include    "user.h"
-//#include    <stdbool.h>
 //#include    "interrupt_manager.h"
 //#include    "traps.h"
 

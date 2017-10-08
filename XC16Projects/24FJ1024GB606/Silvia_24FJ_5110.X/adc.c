@@ -36,7 +36,7 @@ int ADCRead(ADC_CHANNEL channel)
 {
     uint16_t result;
     AD1CHS = channel;
-    if(AD1CHS == 0x1A)                                                          //If reading Internal Band Gap Voltage
+    if(AD1CHS == 0x1C)                                                          //If reading Internal Band Gap Voltage
     {
         _BGREQ = 1;                                                             //Enable Band Gap Reference
         __delay_us(20);                                                 
