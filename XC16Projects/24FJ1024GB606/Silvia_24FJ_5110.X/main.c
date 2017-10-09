@@ -1,8 +1,10 @@
 #include    "system.h"                                                          // System funct/params, like osc/peripheral config
 #include    "menu.h"
 // *************** Outputs ***************************************************************************************************************************************
-#define boilerOutput            _LATD6                                          //                              Change
-#define groupheadOutput         _LATD7                                          //                              Change
+//#define boilerOutput            _LATD6                                          //                              Change
+//#define groupheadOutput         _LATD7                                          //                              Change
+#define boilerOutput            _LATD10                                         //                              Change
+#define groupheadOutput         _LATD11                                         //                              Change
 #define piezoOutput             _LATF1                                          // Piezo Alarm Output           G
 #define backLightOn             _LATD4                                          // Backlight On/Off             G
 #define airPump                 _LATD5                                          // Air pump (for level sensing) G
@@ -10,7 +12,8 @@
 // *************** Inputs ****************************************************************************************************************************************
 //#define power                   0                                            // Power Switch Input         G             
 #define steamSwitch             _RB5                                            // Steam Switch Input           G
-#define brewSwitch              _RB4                                            // Brew Switch Input            G
+//#define brewSwitch              _RB4                                            // Brew Switch Input            G
+#define brewSwitch              1                                            // Brew Switch Input            G
 #define waterSwitch             _RB3                                            // Water Switch Input           G
 // ADC Input to read Button press (User Input Keys) on _RB6 (AN6)                                               G
 // ***************************************************************************************************************************************************************
@@ -78,7 +81,7 @@ int main(void)
     
     uint8_t blink = 1, errorCount = 0, count2 = 0;                              // blink flashes display when level low, errorCount disables
                                                                                 // power, if level remains low too long, count2 ramps pump pressure
-    uint16_t dutyCycle = 0;                                                     // Water Pump duty cycle?? 
+    uint16_t dutyCycle = 300;                                                     // Water Pump duty cycle?? 
 
     int samples[3][numSamples];                                                 //Used to average temp[] over "numSamples" of samples
     
@@ -104,28 +107,35 @@ int main(void)
     
     char ONTimer = 0, powerSwitch = 0;
     
-    uint16_t count = 0;
+    uint16_t count = 0, count3 = 0;
     
     uint16_t xxx = 0, yyy = 0;
     
 //    LCDDrawBox();
 // ******************************************************************************
-  //  setDutyCycle(dutyCycle);
+    setDutyCycle(dutyCycle);
     
     LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu
-
+    
+    T1CONbits.TON = 1;
+    T2CONbits.TON = 1;
     while(1)
     {
-        power = !_RG9;
+        xxx +=1;
+        if(IFS0bits.T2IF)
+        {
+            IFS0bits.T2IF = 0;
+            count+=1;
+        }
+        if(IFS0bits.T1IF)
+        {
+            IFS0bits.T1IF = 0;
+            count3+=1;
+        }
 
-        if(power == 1)
-        {
-            xxx +=1;
-        }
-        if(power == 0)
-        {
-            yyy+=1;
-        }
+        setDutyCycle(1000);
+
+        power = !_RG9;
 
         static int timer = 0;                                                   // Used to count up time in a loop, to auto exit if user in a menu too long
 
@@ -206,6 +216,17 @@ int main(void)
             
             previous_time = currentTime.tm_sec;
 
+            if(power == 1)
+            {
+                xxx +=1;
+//                dutyCycle +=1;
+            }
+            if(power == 0)
+            {
+                yyy+=1;
+ //               dutyCycle -=1;
+            }
+            
 // ******************************************************************************
             internalBGV = ADCRead(ADC_CHANNEL_VBG);
       
@@ -236,6 +257,8 @@ int main(void)
                 LCDWriteCharacter(' ');    
                 LCDWriteIntXY(4,4,yyy,5,0,0);
                 LCDWriteCharacter(' ');    
+                LCDWriteIntXY(42,4,count,5,0,0);
+                LCDWriteIntXY(42,3,count3,5,0,0);
             }
             else
             {
@@ -299,11 +322,11 @@ int main(void)
 // ******************************************************************************
         if(powerSwitch == 1)
         {
-//            if(IFS0bits.T2IF)
-  //          {
-    //            IFS0bits.T2IF = 0;
-      //          count+=1;
-        //    }
+            if(IFS0bits.T2IF)
+            {
+                IFS0bits.T2IF = 0;
+                count+=1;
+            }
 
             if(currentTime.tm_min == 0 && currentTime.tm_sec < 5)
             {
@@ -417,19 +440,19 @@ int main(void)
                 
                 if(shotProgressCounter <= preInfusionTime)
                 {
-                    dutyCycle = preInfusionDutyCycle;
+//                    dutyCycle = preInfusionDutyCycle;
                 }
                 
                 if(shotProgressCounter > preInfusionTime && shotProgressCounter <= soakTime)
                 {
-                    dutyCycle = 0;
+//                    dutyCycle = 0;
                 }
 
                 if (shotProgressCounter > soakTime && shotProgressCounter <= startRamp)               
                 {
                     if(dutyCycle <= max)
                     {
-                        dutyCycle +=2;
+//                        dutyCycle +=2;
                     }
                 }
             
@@ -441,7 +464,7 @@ int main(void)
                         
                         if(count2 > 9)
                         {
-                            dutyCycle -=1;
+//                            dutyCycle -=1;
                             count2 = 0;
                         }
                     }
@@ -449,7 +472,7 @@ int main(void)
                     
                     if(shotProgressCounter > (250 + preInfusionTime + soakTime))
                     {
-                        dutyCycle = 20;
+//                        dutyCycle = 20;
                     }
                 
                 if (shotProgressCounter >= warning)         // 90 Seconds has elapsed without Brew Switch being turned off,
@@ -496,9 +519,9 @@ int main(void)
             {
                 piezoOutput =           0;
                 warningTimer =          0;
-                T2CONbits.TON =         0;
+//                T2CONbits.TON =         0;
                 shotProgressCounter =   0;
-                dutyCycle =             0;
+//                dutyCycle =             0;
                 a += 1;
                 if(a >= 12500)                              //Approximately 20 seconds (about 625 counts/second)
                 {
@@ -509,7 +532,7 @@ int main(void)
 // ******************************************************************************
             if(waterSwitch)
             {
-                dutyCycle = 2048;
+//                dutyCycle = 2048;
             }
         }
         else
@@ -517,14 +540,14 @@ int main(void)
             boilerOutput        = 0;
             groupheadOutput     = 0;
             shotTimer           = 0;
-            dutyCycle           = 0;
+//            dutyCycle           = 0;
             piezoOutput         = 0;
         }
 
 // ******************************************************************************
         if(!brewSwitch && !steamSwitch && !waterSwitch)
         {
-            dutyCycle =     0;
+//            dutyCycle =     0;
         }
 
 // ******************************************************************************

@@ -119,6 +119,8 @@ void SYSTEM_Initialize(void)
     ADCInit();
 //    INTERRUPT_Initialize();
     RTCC_Initialize();
+    void InitializeTimers(void);
+    void Initialize_PWM(void);
     LCDInit();
     __delay_ms(100);
     LCDClear();

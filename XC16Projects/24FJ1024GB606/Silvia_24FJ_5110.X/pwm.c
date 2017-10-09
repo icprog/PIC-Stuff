@@ -1,5 +1,6 @@
 #include "pwm.h"
 
+
 // PWM Setup    Timer 1 is set to use Secondary Oscillator (32768 Hz), with the Pre-Scaler set at 1:8, giving us 4096 Hz (32768/8)
 // We then set PR1 to 0x3FF (1023, which gives us 1024 counts, 0 - 1023), so the timer will roll over 4 times in one second.
 // We then can set our dutyCycle anywhere between 0 (OFF) and 2047 (ON 100%)
@@ -18,25 +19,24 @@ void InitializeTimers(void)
     T2CONbits.TCS   =   1;                          // Timer 2 Clock source selected by T2ECS
     T2CONbits.TECS  =   0x0;                        // Run Timer 2 from Secondary Oscillator
     TMR2            =   0x0000;
-    PR2             =   0x03FF;                     // Period value set in Timer 2, to make it so Timer 2 rolls over every .25 seconds
+    PR2             =   0x2000;                     // Period value set in Timer 2, to make it so Timer 2 rolls over every .25 seconds
     T2CONbits.TON   =   1;                          // Turn Timer 2 ON
 }
 // *****************************************************************************
 
 void Initialize_PWM(void)
 {
-    OC6R =                  0x0000;                 // Set On time (Duty Clcle))
-//    OC6RS =                 0x0000;                 // Set Period for Edge aligned PWM
-    OC6CON2bits.SYNCSEL =   0X0C;                   // Set Timer 2 as Sync source
-    OC6CON2bits.OCTRIG =    0;                      // Set OC6 as Sync source
-    OC6CON1bits.OCTSEL =    0X0;                    // Set Timer 2 as clock source
-    OC6TMR =                0x0000;                 // Set OC6 timer to zero
-    OC6CON1bits.OCM =       0x6;                    // Set OC6 Mode to Edge aligned PWM (Center aligned works as well, except it is on until OCxR, turns off until OCxRS, so, 
+    OC4R =                  0x0000;                 // Set On time (Duty Clcle))
+//    OC6RS =                 0xf000;                 // Set Period for Edge aligned PWM
+    OC4CON2bits.SYNCSEL =   0X1F;                   // Set Timer 2 as Sync source
+    OC4CON2bits.OCTRIG =    0;                      // Set OC6 as Sync source
+//    OC6CON1bits.OCTSEL =    0X0;                    // Set Timer 2 as clock source
+//    OC6TMR =                0x0000;                 // Set OC6 timer to zero
+    OC4CON1bits.OCM =       0x6;                    // Set OC6 Mode to Edge aligned PWM (Center aligned works as well, except it is on until OCxR, turns off until OCxRS, so, 
 }                                                   // dutyCycle of zero turns ON OC, until it hits OCxRS (works fine down to dC of 1, then goes to pulsing mode)
 // *****************************************************************************
 void setDutyCycle(unsigned int dutyCycle)
 {
-    OC6R = dutyCycle;                              
+    OC4R = dutyCycle;                              
 }
 // *****************************************************************************
-
