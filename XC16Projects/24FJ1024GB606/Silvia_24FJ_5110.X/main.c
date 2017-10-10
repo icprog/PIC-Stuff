@@ -117,8 +117,8 @@ int main(void)
     
     LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu
     
-    T1CONbits.TON = 1;
-    T2CONbits.TON = 1;
+//    T1CONbits.TON = 1;
+  //  T2CONbits.TON = 1;
     while(1)
     {
         xxx +=1;

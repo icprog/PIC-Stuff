@@ -1,11 +1,6 @@
                     // <editor-fold defaultstate="collapsed" desc="Includes">
 #include "rtcc.h"
-#include "glcd.h"
-#include "touch.h"
 #include "rtccMenu.h"
-#include "eeprom.h"
-#include "user.h"
-#include "system.h"
 
 // </editor-fold>
 //***************************************************************************************************************************************************************
@@ -191,17 +186,17 @@ RTCTime getRTCTime()
     {
         RTCTime time;                                                               // declare the type of the time object
         time = getRTCTime();                                                        // Read current time from RTCC
-        LCDWriteIntXY(1,3,time.year,2,0);
-        LCDWriteChar('/');
+        LCDWriteIntXY(1,3,time.year,2,0,0);
+        LCDWriteCharacter('/');
         LCDWriteString(month[time.month]);
-        LCDWriteChar('/');
-        LCDWriteInt(time.day,2,0);
+        LCDWriteCharacter('/');
+        LCDWriteInt(time.day,2,0,0);
         LCDWriteStringXY(1,13,WeekDay[time.weekday]);
-        LCDWriteIntXY(1,17,time.hour,2,0);
-        LCDWriteChar(':');
-        LCDWriteInt(time.minute,2,0);
-        LCDWriteChar(':');
-        LCDWriteInt(time.second,2,0);
+        LCDWriteIntXY(1,17,time.hour,2,0,0);
+        LCDWriteCharacter(':');
+        LCDWriteInt(time.minute,2,0,0);
+        LCDWriteCharacter(':');
+        LCDWriteInt(time.second,2,0,0);
     }
 // </editor-fold>
 //***************************************************************************************************************************************************************
@@ -221,8 +216,8 @@ void SetTime()
     {
         if(timer < 1)
         {
-            cls();
-            loadimg(&rtccMenu[0], 1024,0);                                           //Draw rtccMenu
+            LCDClear();
+            LCDBitmap(&rtccMenu[0], 5, 84);                                           //Draw rtccMenu
         }
         
         timer += 1;
@@ -230,7 +225,7 @@ void SetTime()
         if(timer > 10000)                      
         {
             timer = 0;
-            cls();
+            LCDClear();
             done = 1;                                                           // Exit while loop
         }
         
@@ -457,7 +452,7 @@ void SetTime()
                 if (sel == 6)
                 {
                     sel = 0;
-                    cls();
+                    LCDClear();
                     done = 1;
                 }
                 else
@@ -484,7 +479,7 @@ void SetTime()
         
         //setRTCTime(time.year, time.month, time.day, time.weekday, time.hour, time.minute, time.second);
     }
-    cls();
+    LCDClear();
     powerFail = 0;                                                              //We have just set the time, so, re-set the powerFail Status Bit
 }
 
@@ -553,8 +548,8 @@ void writeStartStopTimes(void)
 
         if(timer < 3)
         {
-            cls();
-            loadimg(&rtccMenu[0], 1024,0);                                      //Draw rtccMenu
+            LCDClear();
+            LCDBitmap(&rtccMenu[0], 5, 84);                                      //Draw rtccMenu
         }
 
         
@@ -569,15 +564,15 @@ void writeStartStopTimes(void)
         timer += 1;
     }
     
-    cls();
-    loadimg(&rtccMenu[0], 1024,0);                                              //Draw rtccMenu
+    LCDClear();
+    LCDBitmap(&rtccMenu[0], 5, 84);                                              //Draw rtccMenu
     eepromPutData(startHour[choice], setStartHour(eepromGetData(startHour[choice])));
     eepromPutData(startMinute[choice], setStartMinute(eepromGetData(startMinute[choice])));
     eepromPutData(stopHour[choice], setStopHour(eepromGetData(stopHour[choice])));
     eepromPutData(stopMinute[choice], setStopMinute(eepromGetData(stopMinute[choice])));
 
     Exit:
-    cls();
+    LCDClear();
     timer = 0;
 }
 
@@ -611,7 +606,7 @@ int8_t setStartHour(int8_t b)
         
         
         LCDWriteStringXY(1,2,"Start Hour =");
-        LCDWriteIntXY(1,16,result,2,0);
+        LCDWriteIntXY(1,16,result,2,0,0);
 
         switch(TestKey)
         {
@@ -675,7 +670,7 @@ int8_t setStartMinute(int8_t b)
         
         
         LCDWriteStringXY(2,2,"Start Minute =");
-        LCDWriteIntXY(2,16,result,2,0);
+        LCDWriteIntXY(2,16,result,2,0,0);
 
 
         switch(TestKey)
@@ -739,7 +734,7 @@ int8_t setStopHour(int8_t b)
         
         
         LCDWriteStringXY(3,2,"Stop Hour =");
-        LCDWriteIntXY(3,16,result,2,0);
+        LCDWriteIntXY(3,16,result,2,0,0);
 
 //        heartBeat();
         
@@ -809,7 +804,7 @@ int8_t setStopMinute(int8_t b)
         
         
         LCDWriteStringXY(4,2,"Stop Minute =");
-        LCDWriteIntXY(4,16,result,2,0);
+        LCDWriteIntXY(4,16,result,2,0,0);
 
 //        heartBeat();
         

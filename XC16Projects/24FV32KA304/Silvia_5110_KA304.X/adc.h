@@ -3,9 +3,6 @@
 #ifndef ADC_H
 #define	ADC_H
 
-#include <xc.h> // include processor files - each processor file is guarded.
-#include "stdint.h"                     // Includes uint16_t definition
-//#include <stdbool.h>                    // Includes true/false definition
 #include "system.h"                     // Needed to calculate __delay_() Functions
 
 // This routine defines the channels that are available for the module to use.

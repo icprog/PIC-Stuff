@@ -2,7 +2,7 @@
 #ifndef EEPROM_H
 #define	EEPROM_H
 
-#include <xc.h> // include processor files - each processor file is guarded.  
+#include    "system.h"
 
 void eepromPutData(int offset, int data);
 

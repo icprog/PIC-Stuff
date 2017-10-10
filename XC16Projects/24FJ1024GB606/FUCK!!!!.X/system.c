@@ -120,7 +120,7 @@ void SYSTEM_Initialize(void)
 //    INTERRUPT_Initialize();
   //  RTCC_Initialize();
     void InitializeTimers(void);
-//    void Initialize_PWM(void);
+    void Initialize_PWM(void);
     LCDInit();
     __delay_ms(100);
     LCDClear();

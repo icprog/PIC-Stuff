@@ -1,10 +1,10 @@
 #include "lcd.h"
 
-#define LCD_CLK     LATGbits.LATG8              // Clock Pin
-#define LCD_DIN     LATGbits.LATG7              // Data Pin
-#define LCD_DC      LATGbits.LATG6              // Register Select Pin
-#define LCD_CE      LATEbits.LATE7              // Chip Enable Pin
-#define LCD_RST     LATEbits.LATE6              // Display Reset Pin
+#define LCD_CLK     LATCbits.LATC5              // Clock Pin
+#define LCD_DIN     LATCbits.LATC4              // Data Pin
+#define LCD_DC      LATCbits.LATC3              // Register Select Pin
+#define LCD_CE      LATCbits.LATC7              // Chip Enable Pin
+#define LCD_RST     LATCbits.LATC6              // Display Reset Pin
 
 #define LCD_COMMAND 0                           
 #define LCD_DATA    1
@@ -246,11 +246,11 @@ void LCDWriteInt(int value,signed char fieldLength, signed char numPlaces, signe
 
 void LCDInit(void)
 {
-    TRISGbits.TRISG8    =   0;
-    TRISGbits.TRISG7    =   0;
-    TRISGbits.TRISG6    =   0;
-    TRISEbits.TRISE7    =   0;
-    TRISEbits.TRISE6    =   0;
+    TRISCbits.TRISC5    =   0;
+    TRISCbits.TRISC4    =   0;
+    TRISCbits.TRISC3    =   0;
+    TRISCbits.TRISC7    =   0;
+    TRISCbits.TRISC6    =   0;
     LCD_DIN = 0;
     LCD_CLK = 0;
     LCD_DC  = 0;

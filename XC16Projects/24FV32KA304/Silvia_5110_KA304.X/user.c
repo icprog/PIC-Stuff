@@ -1,7 +1,6 @@
-#include    "user.h"
 #include    "system.h"                      // Needed to calculate __delay_() Functions
-#include    "touch.h"
-#include    "glcd.h"
+#include    "user.h"
+
 
 //uint8_t  halfSec, lastState, toggle = 2;
 
@@ -105,7 +104,7 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
         if (halfSec != lastState)                                               //If halfSec changed since last read
         {
             toggle = 3 - toggle;                                                //toggle = (a + b) - toggle, set toggle to either a or b, and it toggles between them
-            GoToXY(3,19);
+            gotoXY(3,19);
             LCDWriteChar(toggle);                                             //Display HeartBeat Symbol Open Heart
         }
     }
@@ -123,234 +122,234 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
     {
         case 4:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(3);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(3);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(3);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
         
         case 5:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(4);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(3);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(3);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
 
         case 6:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(5);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(3);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(3);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
         
         case 7:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(6);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(3);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(3);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
         
         case 8:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(3);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(3);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
         
         case 9:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(4);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(3);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
         
         case 10:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(5);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(3);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
         
         case 11:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(6);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(3);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
         
         case 12:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(7);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(3);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
         
         case 13:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(7);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(4);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
         
         case 14:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(7);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(5);
-             GoToXY(0,0);
+             gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
         
         case 15:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(7);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(6);
-             GoToXY(0,0);
+             gotoXY(0,0);
             LCD_Write_Char(3);
         }
         break;
         
         case 16:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(7);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(7);
-             GoToXY(0,0);
+             gotoXY(0,0);
             LCD_Write_Char(3);
        }
         break;
         
         case 17:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(7);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(7);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(4);
         }
         break;
         
         case 18:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(7);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(7);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(5);
         }
         break;
         
         case 19:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(7);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(7);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(6);
         }
         break;
         
         case 20:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(7);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(7);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(7);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(7);
         }
         break;
         
         default:
         {
-            GoToXY(3,0);
+            gotoXY(3,0);
             LCD_Write_Char(3);
-            GoToXY(2,0);
+            gotoXY(2,0);
             LCD_Write_Char(3);
-            GoToXY(1,0);
+            gotoXY(1,0);
             LCD_Write_Char(3);
-            GoToXY(0,0);
+            gotoXY(0,0);
             LCD_Write_Char(3);
         }
     }

@@ -1,7 +1,7 @@
-build/default/production/system.o:  \
-system.c  \
-system.h  \
+build/default/production/lcd.o:  \
+lcd.c  \
 lcd.h  \
+system.h  \
 user.h  \
 rtcc.h  \
  eeprom.h  \

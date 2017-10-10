@@ -11,14 +11,14 @@
 #include "system.h"                                                             // System funct/params, like osc/peripheral config
 #include "lcd.h"                                                               // Graphical LCD Driver functionality
 
-//#include "user.h"                                                               // User Functions (Setting Setpoints, DeadBands, etc...)
-//#include "rtcc.h"                                                               // Real Time clock & Calendar Functions
-//#include "eeprom.h"
-//#include "touch.h"
-//#include "adc.h"
-//#include "PID_Lib.h"
-//#include "level.h"
-//#include "pwm.h"
+#include "user.h"                                                               // User Functions (Setting Setpoints, DeadBands, etc...)
+#include "rtcc.h"                                                               // Real Time clock & Calendar Functions
+#include "eeprom.h"
+#include "touch.h"
+#include "adc.h"
+#include "PID_Lib.h"
+#include "level.h"
+#include "pwm.h"
 
 
 //********** Add the following to solve __delay_ms() issues in XC16 ************

@@ -86,10 +86,10 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x100               0x10a           0x18f  (399)
 .const                       0x20a               0x130           0x1c8  (456)
-.text                        0x33a               0x3a8           0x57c  (1404)
-.init.delay32                0x6e2                0x1c            0x2a  (42)
+.text                        0x33a               0x412           0x61b  (1563)
+.init.delay32                0x74c                0x1c            0x2a  (42)
 
-                 Total program memory used (bytes):          0x8fd  (2301) <1%
+                 Total program memory used (bytes):          0x99c  (2460) <1%
 
 
 Data Memory  [Origin = 0x800, Length = 0x8000]
@@ -114,8 +114,8 @@ External Symbols in Program Memory (by address):
 
                   0x000100                  __resetPRI
                   0x00013c                  __psv_init
-                  0x000152                  __data_init
                   0x000152                  __data_init_da
+                  0x000152                  __data_init
                   0x000204                  __DefaultInterrupt
                   0x00020a                  _fonts
                   0x00033a                  _gotoXY
@@ -127,17 +127,17 @@ External Symbols in Program Memory (by address):
                   0x0004d2                  _LCDInit
                   0x000510                  _LCDWrite
                   0x000550                  _LCDDrawBox
-                  0x0005ce                  _SYSTEM_Initialize
-                  0x0005e2                  _OSCILLATOR_Initialize
-                  0x00060c                  _InitializeTimers
-                  0x000642                  _PIN_MANAGER_Initialize
-                  0x000698                  _main
-                  0x0006e2                  ___delay32
+                  0x0005fa                  _main
+                  0x000682                  _SYSTEM_Initialize
+                  0x000696                  _OSCILLATOR_Initialize
+                  0x0006c0                  _InitializeTimers
+                  0x0006f6                  _PIN_MANAGER_Initialize
+                  0x00074c                  ___delay32
                   0x0abf00                  __FSEC.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x00060c                  _InitializeTimers
+                  0x0006c0                  _InitializeTimers
                   0x000358                  _LCDBitmap
                   0x0003e4                  _LCDClear
                   0x000550                  _LCDDrawBox
@@ -146,19 +146,19 @@ External Symbols in Program Memory (by name):
                   0x000388                  _LCDWriteCharacter
                   0x000406                  _LCDWriteInt
                   0x0003ca                  _LCDWriteString
-                  0x0005e2                  _OSCILLATOR_Initialize
-                  0x000642                  _PIN_MANAGER_Initialize
-                  0x0005ce                  _SYSTEM_Initialize
+                  0x000696                  _OSCILLATOR_Initialize
+                  0x0006f6                  _PIN_MANAGER_Initialize
+                  0x000682                  _SYSTEM_Initialize
                   0x000204                  __DefaultInterrupt
                   0x0abf00                  __FSEC.sec
-                  0x0006e2                  ___delay32
+                  0x00074c                  ___delay32
                   0x000152                  __data_init
                   0x000152                  __data_init_da
                   0x00013c                  __psv_init
                   0x000100                  __resetPRI
                   0x00020a                  _fonts
                   0x00033a                  _gotoXY
-                  0x000698                  _main
+                  0x0005fa                  _main
 
 Memory Configuration
 
@@ -272,40 +272,40 @@ __FDEVOPT1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x1e33
+.debug_info       0x000000       0x23d5
  *(.debug_info)
  .debug_info      0x000000        0x78c build/default/production/lcd.o
  .debug_info      0x00078c        0x5b5 build/default/production/pin_manager.o
- .debug_info      0x000d41        0xa24 build/default/production/system.o
- .debug_info      0x001765        0x6ce build/default/production/main.o
+ .debug_info      0x000d41        0xa39 build/default/production/system.o
+ .debug_info      0x00177a        0xc5b build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x3c0
+.debug_abbrev     0x000000        0x428
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x141 build/default/production/lcd.o
  .debug_abbrev    0x000141         0x4c build/default/production/pin_manager.o
- .debug_abbrev    0x00018d        0x137 build/default/production/system.o
- .debug_abbrev    0x0002c4         0xfc build/default/production/main.o
+ .debug_abbrev    0x00018d        0x148 build/default/production/system.o
+ .debug_abbrev    0x0002d5        0x153 build/default/production/main.o
 
-.debug_line       0x000000        0x41b
+.debug_line       0x000000        0x43f
  *(.debug_line)
  .debug_line      0x000000        0x161 build/default/production/lcd.o
  .debug_line      0x000161         0xbb build/default/production/pin_manager.o
  .debug_line      0x00021c        0x10d build/default/production/system.o
- .debug_line      0x000329         0xf2 build/default/production/main.o
+ .debug_line      0x000329        0x116 build/default/production/main.o
 
-.debug_frame      0x000000        0x1d8
+.debug_frame      0x000000        0x22c
  *(.debug_frame)
  .debug_frame     0x000000        0x110 build/default/production/lcd.o
  .debug_frame     0x000110         0x30 build/default/production/pin_manager.o
  .debug_frame     0x000140         0x68 build/default/production/system.o
- .debug_frame     0x0001a8         0x30 build/default/production/main.o
+ .debug_frame     0x0001a8         0x84 build/default/production/main.o
 
-.debug_str        0x000000         0x96
+.debug_str        0x000000         0xb8
  *(.debug_str)
  .debug_str       0x000000         0x26 build/default/production/lcd.o
  .debug_str       0x000026         0x53 build/default/production/system.o
- .debug_str       0x000079         0x1d build/default/production/main.o
+ .debug_str       0x000079         0x3f build/default/production/main.o
 
 .debug_loc
  *(.debug_loc)
@@ -2360,7 +2360,7 @@ LOAD FSEC
 LOAD default_isr
 
 .debug_pubtypes
-                  0x000060        0x1c5
+                  0x000060        0x20b
  .debug_pubtypes
                   0x000060         0xa3 build/default/production/lcd.o
  .debug_pubtypes
@@ -2368,24 +2368,24 @@ LOAD default_isr
  .debug_pubtypes
                   0x000115         0x96 build/default/production/system.o
  .debug_pubtypes
-                  0x0001ab         0x7a build/default/production/main.o
+                  0x0001ab         0xc0 build/default/production/main.o
 
 __c30_signature
-                  0x000225         0x2a
+                  0x00026b         0x2a
  __c30_signature
-                  0x000225          0x6 build/default/production/lcd.o
+                  0x00026b          0x6 build/default/production/lcd.o
  __c30_signature
-                  0x00022b          0x6 build/default/production/pin_manager.o
+                  0x000271          0x6 build/default/production/pin_manager.o
  __c30_signature
-                  0x000231          0x6 build/default/production/system.o
+                  0x000277          0x6 build/default/production/system.o
  __c30_signature
-                  0x000237          0x6 build/default/production/main.o
+                  0x00027d          0x6 build/default/production/main.o
  __c30_signature
-                  0x00023d          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
+                  0x000283          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
  __c30_signature
-                  0x000243          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
+                  0x000289          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
  __c30_signature
-                  0x000249          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
+                  0x00028f          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
 
 .config_ALTVREF
                   0x0abf2c          0x2
@@ -2416,7 +2416,7 @@ __c30_signature
  .const             0x820a        0x130 build/default/production/lcd.o
                     0x820a                  _fonts
 
-.text             0x00033a        0x3a8
+.text             0x00033a        0x412
  .text            0x00033a        0x294 build/default/production/lcd.o
                   0x00033a                  _gotoXY
                   0x000358                  _LCDBitmap
@@ -2427,15 +2427,15 @@ __c30_signature
                   0x0004d2                  _LCDInit
                   0x000510                  _LCDWrite
                   0x000550                  _LCDDrawBox
- .text            0x0005ce         0x74 build/default/production/system.o
-                  0x0005ce                  _SYSTEM_Initialize
-                  0x0005e2                  _OSCILLATOR_Initialize
-                  0x00060c                  _InitializeTimers
- .text            0x000642         0x56 build/default/production/pin_manager.o
-                  0x000642                  _PIN_MANAGER_Initialize
- .text            0x000698         0x4a build/default/production/main.o
-                  0x000698                  _main
+ .text            0x0005ce         0xb4 build/default/production/main.o
+                  0x0005fa                  _main
+ .text            0x000682         0x74 build/default/production/system.o
+                  0x000682                  _SYSTEM_Initialize
+                  0x000696                  _OSCILLATOR_Initialize
+                  0x0006c0                  _InitializeTimers
+ .text            0x0006f6         0x56 build/default/production/pin_manager.o
+                  0x0006f6                  _PIN_MANAGER_Initialize
 
-.init.delay32     0x0006e2         0x1c
- .init.delay32    0x0006e2         0x1c c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
-                  0x0006e2                  ___delay32
+.init.delay32     0x00074c         0x1c
+ .init.delay32    0x00074c         0x1c c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
+                  0x00074c                  ___delay32
