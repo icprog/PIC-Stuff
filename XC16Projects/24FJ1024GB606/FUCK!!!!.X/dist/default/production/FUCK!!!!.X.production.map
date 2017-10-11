@@ -15,10 +15,10 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC30F/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/main.o \
   build/default/production/lcd.o \
   build/default/production/pin_manager.o \
   build/default/production/system.o \
+  build/default/production/main.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
   -Tp24FJ1024GB606.gld.00 \
@@ -186,10 +186,10 @@ aivt             0x000000           0xffffffff
 
 Linker script and memory map
 
-LOAD build/default/production/main.o
 LOAD build/default/production/lcd.o
 LOAD build/default/production/pin_manager.o
 LOAD build/default/production/system.o
+LOAD build/default/production/main.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libfx-elf.a
@@ -278,38 +278,38 @@ __FDEVOPT1
 
 .debug_info       0x000000       0x1c52
  *(.debug_info)
- .debug_info      0x000000        0x309 build/default/production/main.o
- .debug_info      0x000309        0x78c build/default/production/lcd.o
- .debug_info      0x000a95        0x5b5 build/default/production/pin_manager.o
- .debug_info      0x00104a        0xc08 build/default/production/system.o
+ .debug_info      0x000000        0x78c build/default/production/lcd.o
+ .debug_info      0x00078c        0x5b5 build/default/production/pin_manager.o
+ .debug_info      0x000d41        0xc08 build/default/production/system.o
+ .debug_info      0x001949        0x309 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x32e
  *(.debug_abbrev)
- .debug_abbrev    0x000000         0x90 build/default/production/main.o
- .debug_abbrev    0x000090        0x141 build/default/production/lcd.o
- .debug_abbrev    0x0001d1         0x4c build/default/production/pin_manager.o
- .debug_abbrev    0x00021d        0x111 build/default/production/system.o
+ .debug_abbrev    0x000000        0x141 build/default/production/lcd.o
+ .debug_abbrev    0x000141         0x4c build/default/production/pin_manager.o
+ .debug_abbrev    0x00018d        0x111 build/default/production/system.o
+ .debug_abbrev    0x00029e         0x90 build/default/production/main.o
 
 .debug_line       0x000000        0x424
  *(.debug_line)
- .debug_line      0x000000         0xf4 build/default/production/main.o
- .debug_line      0x0000f4        0x161 build/default/production/lcd.o
- .debug_line      0x000255         0xbb build/default/production/pin_manager.o
- .debug_line      0x000310        0x114 build/default/production/system.o
+ .debug_line      0x000000        0x161 build/default/production/lcd.o
+ .debug_line      0x000161         0xbb build/default/production/pin_manager.o
+ .debug_line      0x00021c        0x114 build/default/production/system.o
+ .debug_line      0x000330         0xf4 build/default/production/main.o
 
 .debug_frame      0x000000        0x210
  *(.debug_frame)
- .debug_frame     0x000000         0x30 build/default/production/main.o
- .debug_frame     0x000030        0x110 build/default/production/lcd.o
- .debug_frame     0x000140         0x30 build/default/production/pin_manager.o
- .debug_frame     0x000170         0xa0 build/default/production/system.o
+ .debug_frame     0x000000        0x110 build/default/production/lcd.o
+ .debug_frame     0x000110         0x30 build/default/production/pin_manager.o
+ .debug_frame     0x000140         0xa0 build/default/production/system.o
+ .debug_frame     0x0001e0         0x30 build/default/production/main.o
 
 .debug_str        0x000000         0x97
  *(.debug_str)
- .debug_str       0x000000          0x9 build/default/production/main.o
- .debug_str       0x000009         0x26 build/default/production/lcd.o
- .debug_str       0x00002f         0x68 build/default/production/system.o
+ .debug_str       0x000000         0x26 build/default/production/lcd.o
+ .debug_str       0x000026         0x68 build/default/production/system.o
+ .debug_str       0x00008e          0x9 build/default/production/main.o
 
 .debug_loc
  *(.debug_loc)
@@ -321,13 +321,13 @@ __FDEVOPT1
                   0x000000        0x166
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x1b build/default/production/main.o
+                  0x000000         0xa3 build/default/production/lcd.o
  .debug_pubnames
-                  0x00001b         0xa3 build/default/production/lcd.o
+                  0x0000a3         0x2d build/default/production/pin_manager.o
  .debug_pubnames
-                  0x0000be         0x2d build/default/production/pin_manager.o
+                  0x0000d0         0x7b build/default/production/system.o
  .debug_pubnames
-                  0x0000eb         0x7b build/default/production/system.o
+                  0x00014b         0x1b build/default/production/main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -335,13 +335,13 @@ __FDEVOPT1
 .debug_aranges    0x000000         0x60
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/main.o
+                  0x000000         0x18 build/default/production/lcd.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/lcd.o
+                  0x000018         0x18 build/default/production/pin_manager.o
  .debug_aranges
-                  0x000030         0x18 build/default/production/pin_manager.o
+                  0x000030         0x18 build/default/production/system.o
  .debug_aranges
-                  0x000048         0x18 build/default/production/system.o
+                  0x000048         0x18 build/default/production/main.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -2366,24 +2366,24 @@ LOAD default_isr
 .debug_pubtypes
                   0x000060        0x193
  .debug_pubtypes
-                  0x000060         0x3c build/default/production/main.o
+                  0x000060         0xa3 build/default/production/lcd.o
  .debug_pubtypes
-                  0x00009c         0xa3 build/default/production/lcd.o
+                  0x000103         0x12 build/default/production/pin_manager.o
  .debug_pubtypes
-                  0x00013f         0x12 build/default/production/pin_manager.o
+                  0x000115         0xa2 build/default/production/system.o
  .debug_pubtypes
-                  0x000151         0xa2 build/default/production/system.o
+                  0x0001b7         0x3c build/default/production/main.o
 
 __c30_signature
                   0x0001f3         0x2a
  __c30_signature
-                  0x0001f3          0x6 build/default/production/main.o
+                  0x0001f3          0x6 build/default/production/lcd.o
  __c30_signature
-                  0x0001f9          0x6 build/default/production/lcd.o
+                  0x0001f9          0x6 build/default/production/pin_manager.o
  __c30_signature
-                  0x0001ff          0x6 build/default/production/pin_manager.o
+                  0x0001ff          0x6 build/default/production/system.o
  __c30_signature
-                  0x000205          0x6 build/default/production/system.o
+                  0x000205          0x6 build/default/production/main.o
  __c30_signature
                   0x00020b          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
  __c30_signature

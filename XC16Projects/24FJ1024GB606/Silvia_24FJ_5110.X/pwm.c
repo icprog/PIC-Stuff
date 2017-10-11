@@ -59,7 +59,12 @@ void setDutyCycle(unsigned int dutyCycle)
 {
     OC4R = dutyCycle;                              
     OC5R = dutyCycle;                              
-    OC6R = dutyCycle;                              
+    OC6R = dutyCycle; 
+    
+    if(_OC6IF)
+    {
+        ;
+    }
 }
 
 /*void InitializeTimers(void)
