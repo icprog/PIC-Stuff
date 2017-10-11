@@ -1,10 +1,6 @@
 #include    "system.h"                                                          // System funct/params, like osc/peripheral config
 #include    "menu.h"
 // *************** Outputs ***************************************************************************************************************************************
-//#define boilerOutput            _LATD6                                          //                              Change
-//#define groupheadOutput         _LATD7                                          //                              Change
-#define boilerOutput            _LATD10                                         //                              Change
-#define groupheadOutput         _LATD11                                         //                              Change
 #define piezoOutput             _LATF1                                          // Piezo Alarm Output           G
 #define backLightOn             _LATD4                                          // Backlight On/Off             G
 #define airPump                 _LATD5                                          // Air pump (for level sensing) G
@@ -77,11 +73,15 @@ int8_t powerFail = 1;
 int main(void)
 {
     SYSTEM_Initialize();
+        
+    InitializeTimers();
+    
+    Initialize_PWM();
 // ******************************************************************************
     
     uint8_t blink = 1, errorCount = 0, count2 = 0;                              // blink flashes display when level low, errorCount disables
                                                                                 // power, if level remains low too long, count2 ramps pump pressure
-    uint16_t dutyCycle = 300;                                                     // Water Pump duty cycle?? 
+    uint16_t dutyCycle[] = {0,0,0};                                                     // Water Pump duty cycle?? 
 
     int samples[3][numSamples];                                                 //Used to average temp[] over "numSamples" of samples
     
@@ -95,7 +95,7 @@ int main(void)
     
     char testKey, power;                                                        // Variable used for Storing Which Menu Key is Pressed, and power switch state
 
-    int internalBGV;
+//    int internalBGV;
     
     int PIDValue[] = {0,0,0};                                                   // PID calculated values
     
@@ -107,39 +107,22 @@ int main(void)
     
     char ONTimer = 0, powerSwitch = 0;
     
-    uint16_t count = 0, count3 = 0;
+    uint16_t count = 0;
     
-    uint16_t xxx = 0, yyy = 0;
-    
-//    LCDDrawBox();
 // ******************************************************************************
-    setDutyCycle(dutyCycle);
     
-    LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu
+    //setDutyCycle(dutyCycle);
     
-//    T1CONbits.TON = 1;
-  //  T2CONbits.TON = 1;
+    LCDBitmap(&menu0[0], 5, 84);                //Draw Menu
+
+
     while(1)
     {
-        xxx +=1;
-        if(IFS0bits.T2IF)
-        {
-            IFS0bits.T2IF = 0;
-            count+=1;
-        }
-        if(IFS0bits.T1IF)
-        {
-            IFS0bits.T1IF = 0;
-            count3+=1;
-        }
+        power = !_RG9;                          // RG9 is pulled high normally, pulled low by turning ON power switch, so 0 is ON, 1 is OFF
 
-        setDutyCycle(1000);
+        static int timer = 0;                   // Used to count up time in a loop, to auto exit if user in a menu too long
 
-        power = !_RG9;
-
-        static int timer = 0;                                                   // Used to count up time in a loop, to auto exit if user in a menu too long
-
-        RTCC_TimeGet(&currentTime); 
+        RTCC_TimeGet(&currentTime);             // Read the current Time from the RTCC
 
         shortTermTemp[0] = ADCRead(13);                                         //Assign the ADC(13) (Boiler Temp) to a temporary variable
         
@@ -153,7 +136,7 @@ int main(void)
         
 //        steamTemperature = boilerTemperature;                                   //This is a single boiler, so Steam & Water temps are the same measurement
 
-       shortTermTemp[1] = ADCRead(12);                                          //Assign the ADC(12) (Steam Temp) to a temporary variable
+        shortTermTemp[1] = ADCRead(12);                                          //Assign the ADC(12) (Steam Temp) to a temporary variable
         
         total[1] = total[1] - samples[1][sampleIndex];                          // Subtract the oldest sample data from the total
 
@@ -216,19 +199,9 @@ int main(void)
             
             previous_time = currentTime.tm_sec;
 
-            if(power == 1)
-            {
-                xxx +=1;
-//                dutyCycle +=1;
-            }
-            if(power == 0)
-            {
-                yyy+=1;
- //               dutyCycle -=1;
-            }
-            
+           
 // ******************************************************************************
-            internalBGV = ADCRead(ADC_CHANNEL_VBG);
+//            internalBGV = ADCRead(ADC_CHANNEL_VBG);
       
             for(i = 0;i<2;++i)
             {
@@ -236,29 +209,11 @@ int main(void)
             }
             
 // ******************************************************************************
-//            if (dutyCycle < 0x800)                        // 0x800 = 2048, 100 % output is 2047, but going to 2048 ensures the pin will stay at 100%                            
-  //          {
-    //            count +=1;
-      //          if(count > 15)
-        //        {
-          //          dutyCycle+=1;
-            //    }
-            //}
-        
-//            setDutyCycle(dutyCycle);
-
  
             if(powerFail == 1)
             {
                 LCDWriteStringXY(4,0,"Press \"Time\" to Set");
                 LCDWriteStringXY(4,1,"the Current Time");
-                 
-                LCDWriteIntXY(4,3,xxx,5,0,0);
-                LCDWriteCharacter(' ');    
-                LCDWriteIntXY(4,4,yyy,5,0,0);
-                LCDWriteCharacter(' ');    
-                LCDWriteIntXY(42,4,count,5,0,0);
-                LCDWriteIntXY(42,3,count3,5,0,0);
             }
             else
             {
@@ -322,12 +277,6 @@ int main(void)
 // ******************************************************************************
         if(powerSwitch == 1)
         {
-            if(IFS0bits.T2IF)
-            {
-                IFS0bits.T2IF = 0;
-                count+=1;
-            }
-
             if(currentTime.tm_min == 0 && currentTime.tm_sec < 5)
             {
                 airPump = 1;
@@ -352,29 +301,15 @@ int main(void)
             if(steamSwitch == 1)                            //Steam setpoint takes priority
             {
                 
-                if(steamSetpoint - boilerTemperature > steamDeadband)
+                if(steamSetpoint - steamTemperature > steamDeadband)
                 {
-                    boilerOutput = 1;
+                    OC5R = 8192;
                 }
                 else
                 {
                     SteamPID = PID_Calculate(1, setpoint, temp);
-
-                    steamPIDPeriodCounter+=1;
-        
-                    if (steamPIDPeriodCounter > PIDDuration)
-                    {
-                        steamPIDPeriodCounter = 0;
-                    }
-        
-                    if (SteamPID > steamPIDPeriodCounter)
-                    {
-                        boilerOutput = 1;
-                    }
-                    else
-                    {
-                        boilerOutput = 0;
-                    }
+                    
+                    OC5R = SteamPID;
                 }
             }
 
@@ -382,55 +317,27 @@ int main(void)
             {            
                 if(waterSetpoint - boilerTemperature > waterDeadband)
                 {
-                    boilerOutput = 1;
+                    OC6R = 8192;
                 }
                 else
                 {
                     WaterPID = PID_Calculate(0, setpoint, temp);
                     
-                    waterPIDPeriodCounter+=1;
-       
-                    if (waterPIDPeriodCounter > PIDDuration)
-                    {
-                        waterPIDPeriodCounter = 0;
-                    }
-        
-                    if (WaterPID > waterPIDPeriodCounter)
-                    {
-                        boilerOutput = 1;
-                    }
-                    else
-                    {
-                        boilerOutput = 0;
-                    }
+                    OC6R = WaterPID;
                 }
             }
             
 // ******************************************************************************
             if((groupHeadSetpoint - GroupHeadTemp) > GroupHeadDeadband)
             {
-                groupheadOutput = 1;
+                OC4R = 8192;
             }
 
             else 
             {
                 GroupHeadPID = PID_Calculate(2, setpoint, temp);
                 
-                groupPIDPeriodCounter+=1;
-        
-                if(groupPIDPeriodCounter > PIDDuration)
-                {
-                    groupPIDPeriodCounter = 0;
-                }
-        
-                if(GroupHeadPID > groupPIDPeriodCounter)
-                {
-                    groupheadOutput = 1;
-                }
-                else
-                {
-                    groupheadOutput = 0;
-                }
+                OC4R = GroupHeadPID;
             }
 
 // ******************************************************************************
@@ -450,21 +357,21 @@ int main(void)
 
                 if (shotProgressCounter > soakTime && shotProgressCounter <= startRamp)               
                 {
-                    if(dutyCycle <= max)
+                    if(dutyCycle[2] <= max)
                     {
-//                        dutyCycle +=2;
+                        dutyCycle[2] +=2;
                     }
                 }
             
                 if(shotProgressCounter > startRamp && shotProgressCounter <= continuePull)
                 {
-                    if(dutyCycle >= min)
+                    if(dutyCycle[2] >= min)
                     {   
                         count2 +=1;
                         
                         if(count2 > 9)
                         {
-//                            dutyCycle -=1;
+                            dutyCycle[2] -=1;
                             count2 = 0;
                         }
                     }
@@ -495,7 +402,7 @@ int main(void)
                 }                                       
                 
                 
-                if(IFS0bits.T2IF)
+                if(IFS0bits.T1IF)
                 {
                     count+=1;
 
@@ -511,7 +418,7 @@ int main(void)
                         count = 0;
                     }
 
-                    IFS0bits.T2IF = 0;
+                    IFS0bits.T1IF = 0;
                 }
             }
 
@@ -519,7 +426,7 @@ int main(void)
             {
                 piezoOutput =           0;
                 warningTimer =          0;
-//                T2CONbits.TON =         0;
+                T1CONbits.TON =         0;
                 shotProgressCounter =   0;
 //                dutyCycle =             0;
                 a += 1;
@@ -532,22 +439,22 @@ int main(void)
 // ******************************************************************************
             if(waterSwitch)
             {
-//                dutyCycle = 2048;
+                OC4R = 8192;
             }
         }
         else
         {
-            boilerOutput        = 0;
-            groupheadOutput     = 0;
-            shotTimer           = 0;
-//            dutyCycle           = 0;
-            piezoOutput         = 0;
+            OC6R = 0;                           // Boiler Output is Shut OFF
+            OC5R = 0;                           // Steam Boiler Output is Shut OFF
+            OC4R = 0;                           // GroupHead Output is Shut OFF
+            shotTimer           = 0;            // shotTimer reset to 0
+            piezoOutput         = 0;            // Piezo is turned OFF
         }
 
 // ******************************************************************************
         if(!brewSwitch && !steamSwitch && !waterSwitch)
         {
-//            dutyCycle =     0;
+            OC4R = 0;                           // Turn Water Pump OFF
         }
 
 // ******************************************************************************

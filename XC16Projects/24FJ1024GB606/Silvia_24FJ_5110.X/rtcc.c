@@ -368,7 +368,7 @@ void RTCC_TimeSet(struct tm *currentTime)
     }
     LCDClear();
 
-//    powerFail = 0; 
+    powerFail = 0; 
   
 }
 

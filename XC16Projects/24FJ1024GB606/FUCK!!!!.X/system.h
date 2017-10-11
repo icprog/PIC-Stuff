@@ -30,4 +30,8 @@ void OSCILLATOR_Initialize(void);
 
 void InitializeTimers(void);
 
+void Initialize_PWM(void);
+
+void setDutyCycle(unsigned int dutyCycle);
+
 #endif
