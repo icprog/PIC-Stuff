@@ -6,16 +6,11 @@
 #define airPump                 _LATD5                                          // Air pump (for level sensing) G
 
 // *************** Inputs ****************************************************************************************************************************************
-//#define power                   0                                            // Power Switch Input         G             
-#define steamSwitch             _RB5                                            // Steam Switch Input           G
-//#define brewSwitch              _RB4                                            // Brew Switch Input            G
-#define brewSwitch              1                                            // Brew Switch Input            G
-#define waterSwitch             _RB3                                            // Water Switch Input           G
 // ADC Input to read Button press (User Input Keys) on _RB6 (AN6)                                               G
 // ***************************************************************************************************************************************************************
 
-//***************************Timer2 set in pwm.c
-//***************************All times are in 1/100th's of a second, so 100 = 1 seconds, 300 = 3 seconds, 150 = 1.5 seconds, etc 
+//*************************** Timer1 and Timer2 set in pwm.c *****************************************************************************************************
+//*************************** All times are in 1/100th's of a second, so 100 = 1 seconds, 300 = 3 seconds, 150 = 1.5 seconds, etc ********************************
 
 #define max                     1023                                // This needs to move to EEPROM
 #define min                     400                                 // Also needs to move to EEPROM & have User interface coded
@@ -61,9 +56,9 @@ extern float Kp[];
 extern float Ki[];
 extern float Kd[];
 
-uint16_t setpoint[]    =   {1940, 2750, 1970};                                     //setpoint values
+uint16_t setpoint[]    =   {1940, 2750, 1970};                                  //setpoint values
 
-uint16_t deadband[]    =   {  50,   10,   50};                                     //dead band values
+uint16_t deadband[]    =   {  50,   10,   50};                                  //dead band values
 
 char *desc[] = {"Water Temp:","Steam Temp:","Group Temp:"};
 
@@ -79,33 +74,51 @@ int main(void)
     Initialize_PWM();
 // ******************************************************************************
     
-    uint8_t blink = 1, errorCount = 0, count2 = 0;                              // blink flashes display when level low, errorCount disables
-                                                                                // power, if level remains low too long, count2 ramps pump pressure
-    uint16_t dutyCycle[] = {0,0,0};                                                     // Water Pump duty cycle?? 
+    uint8_t blink = 1;                          // blink flashes display when water level low
+    
+    uint8_t errorCount = 0;                     // errorCount disables power, if water level remains low too long
+    
+    uint8_t count2 = 0;                         // count2 ramps pump pressure
+    
+    uint16_t dutyCycle[] = {0,0,0};   //fix          // Water Pump duty cycle?? 
 
-    int samples[3][numSamples];                                                 //Used to average temp[] over "numSamples" of samples
+    int samples[3][numSamples];                 //Used to average temp[] over "numSamples" of samples
     
-    uint16_t temp[3], shortTermTemp[3];                                              
+    uint16_t temp[3];
     
-    uint8_t sampleIndex = 0;                                                    //Used to calculate average sample of temp[]
+    uint16_t shortTermTemp[3];                                              
     
-    float total[3] = {0,0,0};                                                   //Running total of temp[] samples 
+    uint8_t sampleIndex = 0;                    // Used to calculate average sample of temp[]
+    
+    float total[3] = {0,0,0};                   // Running total of temp[] samples 
 
-    int i = 0, a = 0;                                                           // x is used for holding shot timer value for 20 seconds before resetting to zero
+    uint16_t i = 0;                             // x is used for holding shot timer value for 20 seconds before resetting to zero
     
-    char testKey, power;                                                        // Variable used for Storing Which Menu Key is Pressed, and power switch state
+    uint16_t a = 0;
+    
+    uint8_t testKey = 0;                        // Variable used for Storing Which Menu Key is Pressed
+    
+    uint8_t power = 1;                          // Power switch input state     G
 
+    uint8_t brewSwitch = 1;                     // Brew Switch Input            G
+
+    uint8_t steamSwitch = 1;                    // Steam Switch Input           G
+    
+    uint8_t waterSwitch = 1;                    // Water Switch Input           G
+    
 //    int internalBGV;
     
-    int PIDValue[] = {0,0,0};                                                   // PID calculated values
+    int PIDValue[] = {0,0,0};                   // PID calculated values
     
-    int previous_time = 0;                                                      //Used with time.second to limit some stuff to once a second
+    int previous_time = 0;                      // Used with time.second to limit some stuff to once a second
             
-    int counter[6] = {0,0,0,0,0,0};                                             //PID Counter for boiler temp, steam temp, and grouphead temp, as well as shot progress counter, shot timer, and warning timer
+    int counter[6] = {0,0,0,0,0,0};    // fix   // PID Counter for boiler temp, steam temp, and grouphead temp, as well as shot progress counter, shot timer, and warning timer
     
-    unsigned int level = 0;
+    uint16_t level = 0;
     
-    char ONTimer = 0, powerSwitch = 0;
+    uint8_t ONTimer = 0;
+    
+    uint8_t powerSwitch = 0;
     
     uint16_t count = 0;
     
@@ -113,34 +126,40 @@ int main(void)
     
     //setDutyCycle(dutyCycle);
     
-    LCDBitmap(&menu0[0], 5, 84);                //Draw Menu
+    LCDBitmap(&menu0[0], 5, 84);                // Draw Menu0
 
 
     while(1)
     {
-        power = !_RG9;                          // RG9 is pulled high normally, pulled low by turning ON power switch, so 0 is ON, 1 is OFF
-
-        static int timer = 0;                   // Used to count up time in a loop, to auto exit if user in a menu too long
-
-        RTCC_TimeGet(&currentTime);             // Read the current Time from the RTCC
-
-        shortTermTemp[0] = ADCRead(13);                                         //Assign the ADC(13) (Boiler Temp) to a temporary variable
+        power = !_RG9;                                  // RG9 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
-        total[0] = total[0] - samples[0][sampleIndex];                          // Subtract the oldest sample data from the total
-
-        samples[0][sampleIndex] = shortTermTemp[0];                             // Assign the just read temperature to the location of the current oldest data
+        brewSwitch = !_RB4;                             // RB4 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
-        total[0] = total[0] + samples[0][sampleIndex];                          // Add that new sample to the total
-
-        boilerTemperature = total[0] / numSamples;                              // Assign the average value of total to the boilerTemperature variable
+        steamSwitch = !_RB5;                            // RB5 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
         
-//        steamTemperature = boilerTemperature;                                   //This is a single boiler, so Steam & Water temps are the same measurement
+        waterSwitch = !_RB3;                            // RB3 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
 
-        shortTermTemp[1] = ADCRead(12);                                          //Assign the ADC(12) (Steam Temp) to a temporary variable
+        static int timer = 0;                           // Used to count up time in a loop, to auto exit if user in a menu too long
+
+        RTCC_TimeGet(&currentTime);                     // Read the current Time from the RTCC
+
+        shortTermTemp[0] = ADCRead(13);                 // Assign the ADC(13) (Boiler Temp) to a temporary variable
         
-        total[1] = total[1] - samples[1][sampleIndex];                          // Subtract the oldest sample data from the total
+        total[0] = total[0] - samples[0][sampleIndex];  // Subtract the oldest sample data from the total
 
-        samples[1][sampleIndex] = shortTermTemp[1];                             // Assign the just read temperature to the location of the current oldest data
+        samples[0][sampleIndex] = shortTermTemp[0];     // Assign the just read temperature to the location of the current oldest data
+        
+        total[0] = total[0] + samples[0][sampleIndex];  // Add that new sample to the total
+
+        boilerTemperature = total[0] / numSamples;      // Assign the average value of total to the boilerTemperature variable
+        
+//        steamTemperature = boilerTemperature;           //This is a single boiler, so Steam & Water temps are the same measurement
+
+        shortTermTemp[1] = ADCRead(12);                 // Assign the ADC(12) (Steam Temp) to a temporary variable
+        
+        total[1] = total[1] - samples[1][sampleIndex];  // Subtract the oldest sample data from the total
+
+        samples[1][sampleIndex] = shortTermTemp[1];     // Assign the just read temperature to the location of the current oldest data
         
         total[1] = total[1] + samples[1][sampleIndex];                          // Add that new sample to the total
         
