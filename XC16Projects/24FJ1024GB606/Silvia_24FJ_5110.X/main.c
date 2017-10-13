@@ -317,7 +317,7 @@ int main(void)
 //            GroupHeadPID = PID_Calculate(2, setpoint, temp);
             
 // ******************************************************************************
-            if(steamSwitch == 1)                            //Steam setpoint takes priority
+/*            if(steamSwitch == 1)                            //Steam setpoint takes priority
             {
                 
                 if(steamSetpoint - steamTemperature > steamDeadband)
@@ -358,7 +358,7 @@ int main(void)
                 
                 OC4R = GroupHeadPID;
             }
-
+*/
 // ******************************************************************************
             if(brewSwitch == 1)
             {   
@@ -376,21 +376,21 @@ int main(void)
 
                 if (shotProgressCounter > soakTime && shotProgressCounter <= startRamp)               
                 {
-                    if(dutyCycle[2] <= max)
+//                    if(dutyCycle[2] <= max)
                     {
-                        dutyCycle[2] +=2;
+  //                      dutyCycle[2] +=2;
                     }
                 }
             
                 if(shotProgressCounter > startRamp && shotProgressCounter <= continuePull)
                 {
-                    if(dutyCycle[2] >= min)
+    //                if(dutyCycle[2] >= min)
                     {   
                         count2 +=1;
                         
                         if(count2 > 9)
                         {
-                            dutyCycle[2] -=1;
+      //                      dutyCycle[2] -=1;
                             count2 = 0;
                         }
                     }
@@ -458,14 +458,18 @@ int main(void)
 // ******************************************************************************
             if(waterSwitch)
             {
-                OC4R = 8192;
+//                OC4R = 8192;
             }
         }
         else
         {
-            OC6R = 0;                           // Boiler Output is Shut OFF
-            OC5R = 0;                           // Steam Boiler Output is Shut OFF
-            OC4R = 0;                           // GroupHead Output is Shut OFF
+            OC5R = 4180;                           // Steam Boiler Output is Shut OFF
+
+            OC6R = OC5R;
+
+            (OC6R+2193>=0x2000)?(OC6RS = 0x2000):(OC6RS = OC6R + 2193);
+            
+            OC4R = 3000;                           // GroupHead Output is Shut OFF
             shotTimer           = 0;            // shotTimer reset to 0
             piezoOutput         = 0;            // Piezo is turned OFF
         }
@@ -473,7 +477,7 @@ int main(void)
 // ******************************************************************************
         if(!brewSwitch && !steamSwitch && !waterSwitch)
         {
-            OC4R = 0;                           // Turn Water Pump OFF
+//            OC4R = 0;                           // Turn Water Pump OFF
         }
 
 // ******************************************************************************

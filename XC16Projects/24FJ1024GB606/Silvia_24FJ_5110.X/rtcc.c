@@ -145,7 +145,7 @@ void RTCC_TimeSet(struct tm *currentTime)
         
         if(sel == 3)
         {
-            LCDWriteStringXY(24,1,"   ^^^");                              // Draw Pointer
+            LCDWriteStringXY(25,1,"   ^^^");                              // Draw Pointer
         }
         
         if(sel== 4)
