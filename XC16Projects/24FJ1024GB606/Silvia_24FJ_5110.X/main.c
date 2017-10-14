@@ -80,8 +80,6 @@ int main(void)
     
     uint8_t count2 = 0;                         // count2 ramps pump pressure
     
-    uint16_t dutyCycle[] = {0,0,0};   //fix          // Water Pump duty cycle?? 
-
     int samples[3][numSamples];                 //Used to average temp[] over "numSamples" of samples
     
     uint16_t temp[3];
@@ -123,9 +121,6 @@ int main(void)
     uint16_t count = 0;
     
 // ******************************************************************************
-    
-    //setDutyCycle(dutyCycle);
-    
     LCDBitmap(&menu0[0], 5, 84);                // Draw Menu0
 
 

@@ -7,7 +7,4 @@ void InitializeTimers(void);
 
 void Initialize_PWM(void);
 
-void setDutyCycle(unsigned int dutyCycle);
-
-
 #endif

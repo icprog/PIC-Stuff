@@ -55,17 +55,7 @@ void Initialize_PWM(void)
     OC6CON1bits.OCM =       0x7;                    // Set OC3 Mode to Edge aligned PWM (Center aligned works as well, except it is on until OCxR, turns off until OCxRS, so, 
 }                                                   // dutyCycle of zero turns ON OC, until it hits OCxRS (works fine down to dC of 1, then goes to pulsing mode)
 // *****************************************************************************
-void setDutyCycle(unsigned int dutyCycle)
-{
-    OC4R = dutyCycle;                              
-    OC5R = dutyCycle -1000;                              
-    OC6R = dutyCycle; 
-    
-    if(_OC6IF)
-    {
-        ;
-    }
-}
+
 
 /*void InitializeTimers(void)
 {

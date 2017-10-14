@@ -248,7 +248,18 @@ int16_t main(void)
                         Out[i] = 0;
                     }
                 }
-                    
+
+                if(Out[0] == 0)   // Added this to fix Master running because of Deck  // If Deck Air Temp is NOT calling,
+                {
+                    Out[1] = 0;                                                     // turn OFF Deck Floor Out           
+                }
+       
+                if(Out[10] == 0)                                                    // If Garage Air Temp is NOT calling,
+                {
+                    Out[9] = 0;                                                     // turn OFF Garage Floor Out
+                }
+                
+                
                 for(i=0;i<11;i++)                                                                                               //Set screen state indicators
                 {
                     if(enabled[i] == 1)
