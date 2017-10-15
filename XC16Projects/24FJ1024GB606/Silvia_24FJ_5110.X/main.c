@@ -49,7 +49,7 @@
 #define waterLevel              level                                           //ADCRead(14) is Water Tank level signal
 #define numSamples              60                                              //Number of samples to average for temp[] readings (Do not set higher than 20, or keep Max temp below 325F)
                                                                                 //You have 65535/(max temp * 10) samples available Changed to float, 300 no worries!! Should be able to get 
-// ***************************************************************************************************************************************************************
+// *************** Global Variables ********************************************
 extern struct tm currentTime;
 
 extern float Kp[];
@@ -62,9 +62,11 @@ uint16_t deadband[]    =   {  50,   10,   50};                                  
 
 char *desc[] = {"Water Temp:","Steam Temp:","Group Temp:"};
 
+uint16_t dutyCycle[]    =   {0,0,0};
+
 int8_t powerFail = 1;
 
-// ******************************************************************************
+// *************** Main Function ***********************************************
 int main(void)
 {
     SYSTEM_Initialize();
@@ -72,7 +74,8 @@ int main(void)
     InitializeTimers();
     
     Initialize_PWM();
-// ******************************************************************************
+    
+// *************** Local Variables *********************************************
     
     uint8_t blink = 1;                          // blink flashes display when water level low
     
@@ -120,7 +123,7 @@ int main(void)
     
     uint16_t count = 0;
     
-// ******************************************************************************
+// *************** Draw the Main Screen Menu Display ***************************
     LCDBitmap(&menu0[0], 5, 84);                // Draw Menu0
 
 
@@ -138,6 +141,7 @@ int main(void)
 
         RTCC_TimeGet(&currentTime);                     // Read the current Time from the RTCC
 
+// *************** Grab Temperatures, & Average over time **********************
         shortTermTemp[0] = ADCRead(13);                 // Assign the ADC(13) (Boiler Temp) to a temporary variable
         
         total[0] = total[0] - samples[0][sampleIndex];  // Subtract the oldest sample data from the total
@@ -150,56 +154,57 @@ int main(void)
         
 //        steamTemperature = boilerTemperature;           //This is a single boiler, so Steam & Water temps are the same measurement
 
+
         shortTermTemp[1] = ADCRead(12);                 // Assign the ADC(12) (Steam Temp) to a temporary variable
         
         total[1] = total[1] - samples[1][sampleIndex];  // Subtract the oldest sample data from the total
 
         samples[1][sampleIndex] = shortTermTemp[1];     // Assign the just read temperature to the location of the current oldest data
         
-        total[1] = total[1] + samples[1][sampleIndex];                          // Add that new sample to the total
+        total[1] = total[1] + samples[1][sampleIndex];  // Add that new sample to the total
         
-        sampleIndex += 1;                                                       // and move to the next index location
+        sampleIndex += 1;                               // and move to the next index location
         
-        if(sampleIndex >= numSamples)                                           //If we have reached the max number of samples
+        if(sampleIndex >= numSamples)                   //If we have reached the max number of samples
         {
-            sampleIndex = 0;                                                    //Reset to zero
+            sampleIndex = 0;                            //Reset to zero
         }
-        steamTemperature = total[1] / numSamples;                               // Assign the average value of total to the GroupHeadTemp variable
+        steamTemperature = total[1] / numSamples;       // Assign the average value of total to the GroupHeadTemp variable
 
 
-        shortTermTemp[2] = ADCRead(11);                                         //Assign the ADC(11) (GroupHead Temp) to a temporary variable
+        shortTermTemp[2] = ADCRead(11);                 //Assign the ADC(11) (GroupHead Temp) to a temporary variable
         
-        total[2] = total[2] - samples[2][sampleIndex];                          // Subtract the oldest sample data from the total
+        total[2] = total[2] - samples[2][sampleIndex];  // Subtract the oldest sample data from the total
 
-        samples[2][sampleIndex] = shortTermTemp[2];                             // Assign the just read temperature to the location of the current oldest data
+        samples[2][sampleIndex] = shortTermTemp[2];     // Assign the just read temperature to the location of the current oldest data
         
-        total[2] = total[2] + samples[2][sampleIndex];                          // Add that new sample to the total
+        total[2] = total[2] + samples[2][sampleIndex];  // Add that new sample to the total
         
-        sampleIndex += 1;                                                       // and move to the next index location
+        sampleIndex += 1;                               // and move to the next index location
         
-        if(sampleIndex >= numSamples)                                           //If we have reached the max number of samples
+        if(sampleIndex >= numSamples)                   //If we have reached the max number of samples
         {
-            sampleIndex = 0;                                                    //Reset to zero
+            sampleIndex = 0;                            //Reset to zero
         }
-        GroupHeadTemp = total[2] / numSamples;                                  // Assign the average value of total to the GroupHeadTemp variable
+        GroupHeadTemp = total[2] / numSamples;          // Assign the average value of total to the GroupHeadTemp variable
 
-// ******************************************************************************
-        if(previous_time != currentTime.tm_sec)
+// *************** Only Update once a Second! **********************************
+        if(previous_time != currentTime.tm_sec)         // It is a new Second, lets do some shit!!
         {
-            ONTimer = runTimer(currentTime.tm_wday, currentTime.tm_hour, currentTime.tm_min);
+            ONTimer = runTimer(currentTime.tm_wday, currentTime.tm_hour, currentTime.tm_min);   // Set ONTimer bit, if AutoStart Times are a match
             
-            if(power==1 || ONTimer==1)
+            if(power==1 || ONTimer==1)                  // If Power Switch is on, or we are in an Auto Time Startup Period
             {
-                powerSwitch = 1;
+                powerSwitch = 1;        
             }
             else
             {
                 powerSwitch = 0;
             }
             
-            errorCount>9?powerSwitch=0:powerSwitch;
+            errorCount>9?powerSwitch=0:powerSwitch;     // If we have an error, persisting for 10 seconds, shut it down!
             
-//            level = waterTankLevel();
+//            level = waterTankLevel();                                             // FIX
             level = 24;
  
             level<10?powerSwitch=0:powerSwitch;
@@ -300,60 +305,67 @@ int main(void)
                 airPump = 0;
             }
 
-//            if(steamSwitch == 1)
-  //          {
-    //            SteamPID = PID_Calculate(1, setpoint, temp);
-      //      }
-        //    else
-          //  {
-            //    WaterPID = PID_Calculate(0, setpoint, temp);
-            //}
-
-//            GroupHeadPID = PID_Calculate(2, setpoint, temp);
-            
 // ******************************************************************************
-/*            if(steamSwitch == 1)                            //Steam setpoint takes priority
-            {
-                
-                if(steamSetpoint - steamTemperature > steamDeadband)
-                {
-                    OC5R = 8192;
-                }
-                else
-                {
-                    SteamPID = PID_Calculate(1, setpoint, temp);
-                    
-                    OC5R = SteamPID;
-                }
-            }
-
-            else                                            //Water setpoint takes priority
-            {            
-                if(waterSetpoint - boilerTemperature > waterDeadband)
-                {
-                    OC6R = 8192;
-                }
-                else
-                {
-                    WaterPID = PID_Calculate(0, setpoint, temp);
-                    
-                    OC6R = WaterPID;
-                }
-            }
+            GroupHeadPID = PID_Calculate(2, setpoint, temp);
             
-// ******************************************************************************
             if((groupHeadSetpoint - GroupHeadTemp) > GroupHeadDeadband)
             {
-                OC4R = 8192;
+                dutyCycle[0] = 8191;            // Turn OC5 on 100%
             }
-
             else 
             {
                 GroupHeadPID = PID_Calculate(2, setpoint, temp);
                 
-                OC4R = GroupHeadPID;
+                dutyCycle[0] = GroupHeadPID;    // Drive OC5 with PID PWM
             }
-*/
+            
+// ******************************************************************************
+            if(steamSetpoint - steamTemperature > steamDeadband)
+            {
+                dutyCycle[2] = 8191;
+            }
+            else
+            {
+                SteamPID = PID_Calculate(1, setpoint, temp);
+                    
+                dutyCycle[2] = SteamPID;
+            }
+                
+            if(waterSetpoint - boilerTemperature > waterDeadband)
+            {
+                dutyCycle[1] = 8191;
+            }
+            else
+            {
+                WaterPID = PID_Calculate(0, setpoint, temp);
+                   
+                dutyCycle[1] = WaterPID;
+            }
+
+// ******************************************************************************
+            if(steamSwitch == 1)                //Steam setpoint takes priority
+            {
+                OC6R = 0;                           
+            
+                OC6RS = dutyCycle[2];           // Steam Boiler Output
+
+                OC4R = OC6RS;
+
+                (OC4R+dutyCycle[1]>=0x2000)?(OC4RS = 0x2000):(OC4RS = OC4R + dutyCycle[1]); //Water Boiler Output
+            }
+
+            else                                //Water setpoint takes priority
+            {            
+                OC4R = 0;                           
+            
+                OC4RS = dutyCycle[1];           // Water Boiler Output is Shut OFF
+
+                OC6R = OC4RS;
+
+                (OC6R+dutyCycle[2]>=0x2000)?(OC6RS = 0x2000):(OC6RS = OC6R + dutyCycle[2]); //Steam Boiler Output is Shut OFF
+            }
+            
+ 
 // ******************************************************************************
             if(brewSwitch == 1)
             {   
@@ -453,18 +465,19 @@ int main(void)
 // ******************************************************************************
             if(waterSwitch)
             {
-//                OC4R = 8192;
+//                run the PUMP 100%                                                                         //FIX
             }
         }
-        else
+
+// ******************************************************************************
+        else                                    // If Power Switch is OFF
         {
-            OC5R = 4180;                           // Steam Boiler Output is Shut OFF
-
-            OC6R = OC5R;
-
-            (OC6R+2193>=0x2000)?(OC6RS = 0x2000):(OC6RS = OC6R + 2193);
-            
-            OC4R = 3000;                           // GroupHead Output is Shut OFF
+            OC5R = 0;                           // This is Edge aligned, so, as long as R is 0, no Output                           
+            OC5RS = 0x2000;                     // This is Edge aligned, so, This sets the Period
+            OC4R = 0x2000;                      // This is Center aligned, so, as long as R is Higher that RS, no Output
+            OC4RS = 0;                          // This is Center aligned, so, as long as R is Higher that RS, no Output
+            OC6R = 0x2000;                      // This is Center aligned, so, as long as R is Higher that RS, no Output
+            OC6RS = 0;                          // This is Center aligned, so, as long as R is Higher that RS, no Output
             shotTimer           = 0;            // shotTimer reset to 0
             piezoOutput         = 0;            // Piezo is turned OFF
         }
@@ -472,7 +485,7 @@ int main(void)
 // ******************************************************************************
         if(!brewSwitch && !steamSwitch && !waterSwitch)
         {
-//            OC4R = 0;                           // Turn Water Pump OFF
+//                                       // Turn Water Pump OFF                                                // FIX
         }
 
 // ******************************************************************************
