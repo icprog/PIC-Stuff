@@ -123,13 +123,16 @@ int main(void)
     
     uint16_t count = 0;
     
+    uint16_t    fuck = 0;
+    
 // *************** Draw the Main Screen Menu Display ***************************
     LCDBitmap(&menu0[0], 5, 84);                // Draw Menu0
 
 
     while(1)
     {
-        power = !_RG9;                                  // RG9 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
+        power = _RG9;                                  // FIX
+//        power = !_RG9;                                  // RG9 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
         brewSwitch = !_RB4;                             // RB4 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
@@ -322,7 +325,7 @@ int main(void)
 // ******************************************************************************
             if(steamSetpoint - steamTemperature > steamDeadband)
             {
-                dutyCycle[2] = 8191;
+                dutyCycle[2] = 8192;
             }
             else
             {
@@ -333,7 +336,17 @@ int main(void)
                 
             if(waterSetpoint - boilerTemperature > waterDeadband)
             {
-                dutyCycle[1] = 8191;
+                fuck+=1;
+                if(fuck>200)
+                {
+                    dutyCycle[1]+=1;
+                }
+                
+                if(dutyCycle[1]>8000)
+                {
+                    dutyCycle[1] = 0;
+                }
+//                dutyCycle[1] = 8192;
             }
             else
             {
