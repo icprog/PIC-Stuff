@@ -136,6 +136,7 @@ int main(void)
         
         brewSwitch = !_RB4;                             // RB4 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
+//        steamSwitch = _RB5;                            // RB5 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
         steamSwitch = !_RB5;                            // RB5 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
         
         waterSwitch = !_RB3;                            // RB3 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
@@ -208,7 +209,7 @@ int main(void)
             errorCount>9?powerSwitch=0:powerSwitch;     // If we have an error, persisting for 10 seconds, shut it down!
             
 //            level = waterTankLevel();                                             // FIX
-            level = 24;
+            level = 35;
  
             level<10?powerSwitch=0:powerSwitch;
             
@@ -323,9 +324,9 @@ int main(void)
             }
             
 // ******************************************************************************
-            if(steamSetpoint - steamTemperature > steamDeadband)
+  /*          if(steamSetpoint - steamTemperature > steamDeadband)
             {
-                dutyCycle[2] = 8192;
+                dutyCycle[2] = 8191;
             }
             else
             {
@@ -336,17 +337,7 @@ int main(void)
                 
             if(waterSetpoint - boilerTemperature > waterDeadband)
             {
-                fuck+=1;
-                if(fuck>200)
-                {
-                    dutyCycle[1]+=1;
-                }
-                
-                if(dutyCycle[1]>8000)
-                {
-                    dutyCycle[1] = 0;
-                }
-//                dutyCycle[1] = 8192;
+                dutyCycle[1] = 8191;
             }
             else
             {
@@ -354,8 +345,20 @@ int main(void)
                    
                 dutyCycle[1] = WaterPID;
             }
-
+   
 // ******************************************************************************
+*/          
+            
+            dutyCycle[2] = 0x8191;
+            
+            dutyCycle[1] = 0x8191;
+            
+            
+              
+            (dutyCycle[0]==0)?(OC5CON2bits.OCTRIS = 1):(OC5CON2bits.OCTRIS = 0);
+            (dutyCycle[1]==0)?(OC4CON2bits.OCTRIS = 1):(OC4CON2bits.OCTRIS = 0);
+            (dutyCycle[2]==0)?(OC6CON2bits.OCTRIS = 1):(OC6CON2bits.OCTRIS = 0);
+              
             if(steamSwitch == 1)                //Steam setpoint takes priority
             {
                 OC6R = 0;                           
@@ -378,6 +381,7 @@ int main(void)
                 (OC6R+dutyCycle[2]>=0x2000)?(OC6RS = 0x2000):(OC6RS = OC6R + dutyCycle[2]); //Steam Boiler Output is Shut OFF
             }
             
+            OC5R = dutyCycle[0];
  
 // ******************************************************************************
             if(brewSwitch == 1)
@@ -538,10 +542,11 @@ int main(void)
             
             timer = 0;
 
-            LCDBitmap(&menu0[0], 5, 84);                    //Draw Menu0
+//            LCDBitmap(&menu0[0], 5, 84);                    //Draw Menu0
             __delay_ms(500);
             
             done2:;
+            LCDBitmap(&menu0[0], 5, 84);                    //Draw Menu0
         }
         
 // ******************************************************************************
