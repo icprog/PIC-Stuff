@@ -1,8 +1,6 @@
 #include    "system.h"
-
-#include "menu.h"
+#include    "menu.h"
 // ***************************************************************************************************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Defines">
 #define boilerOutput            _LATB7
 #define groupheadOutput         _LATC8
 #define piezoOutput             _LATC9
@@ -14,6 +12,7 @@
 #define brewSwitch              1
 //#define brewSwitch              _RA0
 #define waterSwitch             _RB2
+
 // ***************************************************************************************************************************************************************
 
 //***************************Timer2 set in pwm.c
@@ -56,9 +55,7 @@
 #define waterLevel              level                                           //ADCRead(14) is Water Tank level signal
 #define numSamples              60                                              //Number of samples to average for temp[] readings (Do not set higher than 20, or keep Max temp below 325F)
                                                                                 //You have 65535/(max temp * 10) samples available Changed to float, 300 no worries!! Should be able to get 
-// </editor-fold>
 // ***************************************************************************************************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Globals">
 int __attribute__ ((space(eedata))) Settings[43];                               // Global variable located in EEPROM (created by the space()attribute
 
 RTCTime time;                                                                   // declare the type of the time object
@@ -77,25 +74,12 @@ char *desc[] = {"Water Temp:","Steam Temp:","Group Temp:"};
 
 int powerFail = 1;                                                              //Setting powerFail to 1, instructs the user to set the time
 
-// </editor-fold>
 // ******************************************************************************
 int main(void)
-{
-                        // <editor-fold defaultstate="collapsed" desc="Initiializations">
-
+{                       
     ConfigureOscillator();
 
     InitApp();
-    
-    ADCInit();
-
-    LCDInit();
-    
-    __delay_ms(100);
-    
-    LCDClear();
-    
-    RTCC_Initialize();
     
     InitializeTimers();
 
@@ -108,10 +92,8 @@ int main(void)
     {
         Init_PID(initCon,eepromGetData(Kp[initCon]),eepromGetData(Ki[initCon]),eepromGetData(Kd[initCon]),0,(PIDDuration + 1));
     }
-        // </editor-fold>
+        
 // ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Local Variables">
-    
     uint8_t blink = 1, errorCount = 0, count2 = 0;
     
     uint16_t dutyCycle = 0;
@@ -144,7 +126,6 @@ int main(void)
     
     uint16_t count = 0;
     
- // </editor-fold>
 // ******************************************************************************
     setDutyCycle(dutyCycle);
     
@@ -216,17 +197,15 @@ int main(void)
             }
             
             previous_time = time.second;
-        // </editor-fold>
-// ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="InternalBGV & TempCalc (in user.c)">
 
+// ******************************************************************************
             internalBGV = ADCRead(0x1A);
       
             for(i = 0;i<2;++i)
             {
                 temp[i] = TempCalc(temp[i]);
             } 
-            // </editor-fold>
+            
 // ******************************************************************************
                         // <editor-fold defaultstate="collapsed" desc="Main Menu Display">
             
@@ -570,7 +549,7 @@ int main(void)
             }
             
             LCDClear();
-            LCDBitmap(&menu2[0], 1024,0);                         //Draw Menu2
+            LCDBitmap(&menu2[0], 5,84);                         //Draw Menu2
             LCDWriteStringXY(3,2,"Press 'ENTER' ");
             LCDWriteStringXY(3,16,"to Set the Time");
 
@@ -611,7 +590,7 @@ int main(void)
 //            TestKey = KEY_NONE;
             
             LCDClear();
-            LCDBitmap(&menu2[0], 1024,0);                         //Draw Menu2
+            LCDBitmap(&menu2[0], 5, 84);                         //Draw Menu2
             LCDWriteStringXY(3,1,"ENTER to Set St");
             LCDWriteStringXY(3,16,"art/Stop Times");
 
@@ -625,14 +604,14 @@ int main(void)
                 {
                     timer = 0;
                     LCDClear();
-                    LCDBitmap(&menu3[0], 1024,0);                  //Draw Menu2
+                    LCDBitmap(&menu2[0], 5, 84);                  //Draw Menu2
                     goto Exit2;                                                 
                 }
             }
             
             timer = 0;
             writeStartStopTimes();
-            LCDBitmap(&menu3[0], 1024,0);                          //Draw Menu2
+            LCDBitmap(&menu2[0], 5, 84);                          //Draw Menu2
             __delay_ms(500);
             
             Exit2:; 
@@ -651,7 +630,7 @@ int main(void)
             if(timer < 2)
             {
                 LCDClear();
-                LCDBitmap(&menu2[0], 1024,0);                     //Draw Menu2
+                LCDBitmap(&menu2[0], 5, 84);                     //Draw Menu2
                 TestKey = KEY_NONE;
                 __delay_ms(750);
             }
@@ -715,7 +694,7 @@ int main(void)
  //           TestKey = 0;
             
             LCDClear();
-            LCDBitmap(&menu2[0], 1024,0);              //Draw Menu2
+            LCDBitmap(&menu2[0], 5, 84);              //Draw Menu2
             LCDWriteStringXY(1,1,"SetPoint = ");
             eepromPutData(setpoint[choice], setParameter(1,16,1750,2950,eepromGetData(setpoint[choice])));
             
@@ -737,7 +716,7 @@ int main(void)
             timer = 0;
 
             LCDClear();
-            LCDBitmap(&menu3[0], 1024,0);                  //Draw Menu2
+            LCDBitmap(&menu2[0], 5, 84);                  //Draw Menu2
             __delay_ms(500);
         }
  

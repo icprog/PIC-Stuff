@@ -6,11 +6,11 @@
 #define _XTAL_FREQ      8000000
 
 #include <xc.h>
-#include <stdint.h>          /* For uint32_t definition */
-#include <stdbool.h>         /* For true/false definition */
+#include <stdint.h>          
+#include <stdbool.h>        
 #include "system.h"                                                             // System funct/params, like osc/peripheral config
-#include "lcd.h"                                                               // Graphical LCD Driver functionality
 
+#include "lcd.h"                                                               // Graphical LCD Driver functionality
 #include "user.h"                                                               // User Functions (Setting Setpoints, DeadBands, etc...)
 #include "rtcc.h"                                                               // Real Time clock & Calendar Functions
 #include "eeprom.h"
@@ -26,8 +26,8 @@
 //******************************************************************************
     
 
-void ConfigureOscillator(void);     /* Handles clock switching/osc initialization */
+void ConfigureOscillator(void);    
 //***************************************************************************************************************************************************************
-void InitApp(void);                 /* I/O and Peripheral Initialization */
+void InitApp(void);                
 //***************************************************************************************************************************************************************
 #endif

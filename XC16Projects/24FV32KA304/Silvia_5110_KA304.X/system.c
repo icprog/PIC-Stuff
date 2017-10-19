@@ -45,5 +45,11 @@ void InitApp(void)                  // Setup analog functionality and port direc
     PORTA = 0x0000;                 // Power up state of the Port Pins(ie as a 1 or a 0)
     PORTB = 0x0000;
     PORTC = 0x0000;                 // Make sure Pin 13 always initialized low, is reset pin for LCD
+    
+    ADCInit();
+    LCDInit();
+    __delay_ms(100);
+    LCDClear();
+    RTCC_Initialize();
 }
 //***************************************************************************************************************************************************************
