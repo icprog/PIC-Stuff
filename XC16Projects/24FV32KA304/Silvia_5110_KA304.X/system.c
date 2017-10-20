@@ -46,6 +46,8 @@ void InitApp(void)                  // Setup analog functionality and port direc
     PORTB = 0x0000;
     PORTC = 0x0000;                 // Make sure Pin 13 always initialized low, is reset pin for LCD
     
+
+    ConfigureOscillator();
     ADCInit();
     LCDInit();
     __delay_ms(100);

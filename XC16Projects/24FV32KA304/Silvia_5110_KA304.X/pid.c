@@ -2,21 +2,21 @@
 #include "pid.h"
 
 // **************** Variables available to all Functions in Program ************ 
-float Kp[]              = {  50,  50,  50}; // Controller Gain      (inverse of Proportional Band)
-float Ki[]              = {  15,  15,  15}; // Controller Integral Reset/Unit Time, determined by how often PID is calculated
-float Kd[]              = {  25,  25,  25}; // Controller Derivative (or Rate))
-float pidIntegrated[3]  = {   0,   0,   0};
-float pidPrevError[3]   = {   0,   0,   0};
-float pidPrevInput[3]   = {   0,   0,   0};
-int pidMinOutput[3]     = {   0,   0,   0}; // Minimum output limit of Controller
-int pidMaxOutput[3]     = {8191,8191,8191}; // Maximum output limit of Controller
-extern int8_t choice;                                                                   // WTF this is doing here?? FIX
+float internalKp[]              = {  50,  50,  50}; // Controller Gain      (inverse of Proportional Band)
+float internalKi[]              = {  15,  15,  15}; // Controller Integral Reset/Unit Time, determined by how often PID is calculated
+float internalKd[]              = {  25,  25,  25}; // Controller Derivative (or Rate))
+float pidIntegrated[3]          = {   0,   0,   0};
+float pidPrevError[3]           = {   0,   0,   0};
+float pidPrevInput[3]           = {   0,   0,   0};
+int pidMinOutput[3]             = {   0,   0,   0}; // Minimum output limit of Controller
+int pidMaxOutput[3]             = {8191,8191,8191}; // Maximum output limit of Controller
+extern int8_t choice;                                                                           // Not needed? FIX
 
 void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd)
 {
-    Kp[controller]              = pidKp;
-    Ki[controller]              = pidKi;
-    Kd[controller]              = pidKd;
+    internalKp[controller]              = pidKp;
+    internalKi[controller]              = pidKi;
+    internalKd[controller]              = pidKd;
     pidIntegrated[controller]   = 0;
     pidPrevInput[controller]    = 0;
 }
@@ -29,10 +29,10 @@ float PID_Calculate(uint8_t controller, uint16_t const setpoint[controller], uin
 // **************** Calculate Gain *********************************************    
     error = setpoint[controller] - temp[controller];                                // error calculation
 
-    errorValue  = error * Kp[controller];                           // Calculate proportional value
+    errorValue  = error * internalKp[controller];                           // Calculate proportional value
 
 // **************** Calculate Integral *****************************************    
-    pidIntegrated[controller] = pidIntegrated[controller] + (error * Ki[controller]);       // Calculate integral value
+    pidIntegrated[controller] = pidIntegrated[controller] + (error * internalKi[controller]);       // Calculate integral value
 
     if (pidIntegrated[controller]< pidMinOutput[controller])                        // limit output minimum value
     {
@@ -45,7 +45,7 @@ float PID_Calculate(uint8_t controller, uint16_t const setpoint[controller], uin
     }
 
 // *************** Calculate Derivative ****************************************    
-        derivativeValue=(error-pidPrevError[controller])*Kd[controller];
+        derivativeValue=(error-pidPrevError[controller])*internalKd[controller];
         pidPrevError[controller] = error;
   
 // *************** Calculate Final Output **************************************    

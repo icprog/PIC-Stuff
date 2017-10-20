@@ -12,11 +12,12 @@
 
 #include "lcd.h"                                                               // Graphical LCD Driver functionality
 #include "user.h"                                                               // User Functions (Setting Setpoints, DeadBands, etc...)
+#include "buttons.h"
 #include "rtcc.h"                                                               // Real Time clock & Calendar Functions
 #include "eeprom.h"
 #include "touch.h"
 #include "adc.h"
-#include "PID_Lib.h"
+#include "pid.h"
 #include "level.h"
 #include "pwm.h"
 

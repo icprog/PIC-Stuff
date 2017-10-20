@@ -3,10 +3,11 @@ user.c  \
 system.h  \
 lcd.h  \
 user.h  \
-rtcc.h  \
- eeprom.h  \
+buttons.h  \
+ rtcc.h  \
+eeprom.h  \
 touch.h  \
 adc.h  \
-PID_Lib.h  \
+pid.h  \
 level.h  \
 pwm.h 

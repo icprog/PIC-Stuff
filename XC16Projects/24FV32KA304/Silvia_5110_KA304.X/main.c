@@ -1,18 +1,14 @@
 #include    "system.h"
 #include    "menu.h"
+#include    "coffee.h"
 // ***************************************************************************************************************************************************************
-#define boilerOutput            _LATB7
-#define groupheadOutput         _LATC8
 #define piezoOutput             _LATC9
-//    #define backLightOn             _LATA1
+#define backLightOn             _LATA1
 #define airPump                 _LATA8
+// ***************************************************************************************************************************************************************
 
-#define power                   _RB15                
-#define steamSwitch             _RB7 
-#define brewSwitch              1
-//#define brewSwitch              _RA0
-#define waterSwitch             _RB2
-
+// *************** Inputs ****************************************************************************************************************************************
+// ADC Input to read Button press (User Input Keys) on _RB6 (AN6)                                               G
 // ***************************************************************************************************************************************************************
 
 //***************************Timer2 set in pwm.c
@@ -43,7 +39,8 @@
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
-#define groupHeadSetpoint       eepromGetData(setpoint[2])
+#define groupHeadSetpoint       50
+//#define groupHeadSetpoint       eepromGetData(setpoint[2])
 
 #define waterDeadband           eepromGetData(deadband[0])
 #define steamDeadband           eepromGetData(deadband[1])
@@ -60,7 +57,7 @@ int __attribute__ ((space(eedata))) Settings[43];                               
 
 RTCTime time;                                                                   // declare the type of the time object
 
-int const setpoint[]    =   {0, 2,  4};                                          //setpoint EEPROM Address "offset" values
+uint16_t const setpoint[]    =   {0, 2,  4};                                          //setpoint EEPROM Address "offset" values
 
 int const deadband[]    =   {6, 8, 10};                                          //dead band EEPROM Address "offset" values
 
@@ -77,8 +74,6 @@ int powerFail = 1;                                                              
 // ******************************************************************************
 int main(void)
 {                       
-    ConfigureOscillator();
-
     InitApp();
     
     InitializeTimers();
@@ -90,25 +85,41 @@ int main(void)
     
     for(initCon=0;initCon<3;initCon++)
     {
-        Init_PID(initCon,eepromGetData(Kp[initCon]),eepromGetData(Ki[initCon]),eepromGetData(Kd[initCon]),0,(PIDDuration + 1));
+        Init_PID(initCon,eepromGetData(Kp[initCon]),eepromGetData(Ki[initCon]),eepromGetData(Kd[initCon]));
     }
         
 // ******************************************************************************
-    uint8_t blink = 1, errorCount = 0, count2 = 0;
+    uint8_t blink = 1;                          // blink flashes display when water level low
     
-    uint16_t dutyCycle = 0;
+    uint8_t errorCount = 0;                     // errorCount disables power, if water level remains low too long
 
-    int samples[2][numSamples];                                                 //Used to average temp[] over "numSamples" of samples
+    uint8_t count2 = 0;                         // count2 ramps pump pressure
     
-    int temp[3], shortTermTemp[2];
-    
-    unsigned char sampleIndex = 0;                                              //Used to calculate average sample of temp[]
-    
-    float total[2] = {0,0};                                                     //Running total of temp[] samples 
+//    uint16_t dutyCycle = 0;
 
-    int i = 0, a = 0;                                                           // x is used for holding shot timer value for 20 seconds before resetting to zero
+    int samples[3][numSamples];                 //Used to average temp[] over "numSamples" of samples
     
-    char TestKey;   //, testSwitch;                                             // Variable used for Storing Which Menu Key is Pressed, or which hardware key is on
+    uint16_t temp[3];
+    
+    uint16_t shortTermTemp[3];                                              
+    
+    uint8_t sampleIndex = 0;                    // Used to calculate average sample of temp[]
+    
+    float total[3] = {0,0,0};                   // Running total of temp[] samples 
+
+    uint16_t i = 0;                             // x is used for holding shot timer value for 20 seconds before resetting to zero
+    
+    uint16_t a = 0;
+    
+    uint8_t testKey = 0;                        // Variable used for Storing Which Menu Key is Pressed
+    
+    uint8_t power = 1;                          // Power switch input state     G
+
+    uint8_t brewSwitch = 1;                     // Brew Switch Input            G
+
+    uint8_t steamSwitch = 1;                    // Steam Switch Input           G
+    
+    uint8_t waterSwitch = 1;                    // Water Switch Input           G
 
     int internalBGV;
     
@@ -118,26 +129,34 @@ int main(void)
             
     int counter[6] = {0,0,0,0,0,0};                                             //PID Counter for boiler temp, steam temp, and grouphead temp, as well as shot progress counter, shot timer, and warning timer
     
-///    int switches[3] = {0,0,0};                                                  //powerSwitchinput, steamSwitch, brewSwitch, waterSwitch
+    uint16_t level = 0;
     
-    unsigned int level = 0;
+    uint8_t ONTimer = 0;
     
-    char ONTimer = 0, powerSwitch = 0;
+    uint8_t powerSwitch = 0;
     
     uint16_t count = 0;
     
 // ******************************************************************************
-    setDutyCycle(dutyCycle);
-    
     LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
 
     while(1)
     {
+ //       power = _RG9;                                  // FIX
+//        power = !_RG9;                                  // RG9 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
+        
+        brewSwitch = !_RB4;                             // RB4 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
+        
+//        steamSwitch = _RB5;                            // RB5 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
+        steamSwitch = !_RB5;                            // RB5 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
+        
+        waterSwitch = !_RB3;                            // RB3 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
+
         static int timer = 0;                                                   // Used to count up time in a loop, to auto exit if user in a menu too long
         
         time = getRTCTime();                                                    // get the time
         
-                        // <editor-fold defaultstate="collapsed" desc="Temperature Measurment">
+
         shortTermTemp[0] = ADCRead(17);                                          //Assign the ADC(17) Temp to a temporary variable
         
         total[0] = total[0] - samples[0][sampleIndex];                          // Subtract the oldest sample data from the total
@@ -148,15 +167,33 @@ int main(void)
 
         boilerTemperature = total[0] / numSamples;                              // Assign the average value of total to the boilerTemperature variable
         
-        steamTemperature = boilerTemperature;                                   //This is a single boiler, so Steam & Water temps are the same measurement
+//        steamTemperature = boilerTemperature;                                   //This is a single boiler, so Steam & Water temps are the same measurement
 
-        shortTermTemp[1] = ADCRead(18);                                          //Assign the ADC(18) Temp to a temporary variable
-        
-        total[1] = total[1] - samples[1][sampleIndex];                          // Subtract the oldest sample data from the total
 
-        samples[1][sampleIndex] = shortTermTemp[1];                             // Assign the just read temperature to the location of the current oldest data
+        shortTermTemp[1] = ADCRead(12);                 // Assign the ADC(12) (Steam Temp) to a temporary variable
         
-        total[1] = total[1] + samples[1][sampleIndex];                          // Add that new sample to the total
+        total[1] = total[1] - samples[1][sampleIndex];  // Subtract the oldest sample data from the total
+
+        samples[1][sampleIndex] = shortTermTemp[1];     // Assign the just read temperature to the location of the current oldest data
+        
+        total[1] = total[1] + samples[1][sampleIndex];  // Add that new sample to the total
+        
+        sampleIndex += 1;                               // and move to the next index location
+        
+        if(sampleIndex >= numSamples)                   //If we have reached the max number of samples
+        {
+            sampleIndex = 0;                            //Reset to zero
+        }
+        steamTemperature = total[1] / numSamples;       // Assign the average value of total to the GroupHeadTemp variable
+
+ 
+        shortTermTemp[2] = ADCRead(18);                                          //Assign the ADC(18) Temp to a temporary variable
+        
+        total[2] = total[2] - samples[2][sampleIndex];                          // Subtract the oldest sample data from the total
+
+        samples[2][sampleIndex] = shortTermTemp[2];                             // Assign the just read temperature to the location of the current oldest data
+        
+        total[2] = total[2] + samples[2][sampleIndex];                          // Add that new sample to the total
         
         sampleIndex += 1;                                                       // and move to the next index location
         
@@ -164,11 +201,10 @@ int main(void)
         {
             sampleIndex = 0;                                                    //Reset to zero
         }
-        GroupHeadTemp = total[1] / numSamples;                                  // Assign the average value of total to the GroupHeadTemp variable
-        // </editor-fold>
-// ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="AutoStart, Timing, & Error Detection">
+        GroupHeadTemp = total[2] / numSamples;                                  // Assign the average value of total to the GroupHeadTemp variable
 
+// *****************************************************************************
+                        
         if(previous_time != time.second)
         {
             ONTimer = runTimer(time.weekday,time.hour,time.minute);
@@ -207,79 +243,58 @@ int main(void)
             } 
             
 // ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Main Menu Display">
-            
-/*            if (dutyCycle < 0x800)                  // 0x800 = 2048, 100 % output is 2047, but going to 2048 ensures the pin will stay at 100%                            
-            {
-                count +=1;
-                if(count > 15)
-                {
-                    dutyCycle+=1;
-                }
-            }
-*/        
-            setDutyCycle(dutyCycle);
-
  
             if(powerFail == 1)
             {
-                LCDWriteStringXY(3,6,"Please Set");
-                LCDWriteStringXY(3,17,"the Time!");
+                LCDWriteStringXY(4,0,"Press \"Time\" to Set");
+                LCDWriteStringXY(4,1,"the Current Time");
             }
             else
             {
                 displayTime();
 
-                gotoXY(2,1);                                                //LCD Line 2 Display
+                gotoXY(2,1);                                //LCD Line 2 Display
 
                 if(steamSwitch)
                 {
                     LCDWriteString(desc[1]);
-                    LCDWriteString("/Set");
-                    gotoXY(2,25);
-                    LCDWriteCharacter('/');
-                    LCDWriteInt(eepromGetData(setpoint[1]),4,1,0);
+                    LCDWriteIntXY(48,1,steamTemperature,4,1,0);
+                    LCDWriteCharacter(123);                 // generate degree symbol in font list
+                    LCDWriteCharacter(70);
                 }
                 else
                 {
                     LCDWriteString(desc[0]);
-                    LCDWriteString("/Set");
-                    gotoXY(2,25);
-                    LCDWriteCharacter('/');
-                    LCDWriteInt(eepromGetData(setpoint[0]),4,1,0);
+                    LCDWriteIntXY(48,1,boilerTemperature,4,1,0);
+                    LCDWriteCharacter(123);                 // generate degree symbol in font list
+                    LCDWriteCharacter(70);
                 }
 
-                LCDWriteIntXY(2,17,boilerTemperature,4,1,0);
-                LCDWriteCharacter(129);                                          // generate degree symbol in font list
-                LCDWriteCharacter(70);
-
-                gotoXY(3,1);                                                //LCD Line 3 Display
-                LCDWriteString(desc[2]);
-                LCDWriteString("/Set");
-                LCDWriteIntXY(3,17,GroupHeadTemp,4,1,0);
-                LCDWriteCharacter(129);                                          // generate degree symbol in font list
+                LCDWriteStringXY(2,2,desc[2]);
+                LCDWriteIntXY(48,2,GroupHeadTemp,4,1,0);
+                LCDWriteCharacter(123);                     // generate degree symbol in font list
                 LCDWriteCharacter(70);
                 LCDWriteCharacter(' ');
-                LCDWriteCharacter('/');
-                LCDWriteInt(eepromGetData(setpoint[2]),4,1,0);
                 
                 if(shotTimer == 0)
                 {
-                    LCDWriteStringXY(4,3,"Tank Level:");
-                    LCDWriteIntXY(4,17,level,3,0,0);
-                    LCDWriteCharacter(' ');
+                    LCDWriteStringXY(2,3,"Tank Level:");
+                    LCDWriteIntXY(48,3,level,-1,0,0);
                     LCDWriteCharacter('%');
+                    LCDWriteCharacter(' ');
+                    LCDWriteCharacter(' ');
                     
-                    LCDWriteIntXY(5,4,dutyCycle,5,0,0);
-                    LCDWriteIntXY(5,16,count,5,0,0);
-                    LCDWriteIntXY(5,22,shotProgressCounter,5,0,0);
+      //              LCDWriteIntXY(5,4,testKey,5,0,0);
+//                    LCDWriteIntXY(5,4,dutyCycle,5,0);
+//                    LCDWriteIntXY(5,16,count,5,0);
+        //            LCDWriteIntXY(5,22,shotProgressCounter,5,0,0);
                     
                     if(level < 25)
                     {
                         blink = 1 - blink;
                         if(blink)
                         {
-                            LCDWriteStringXY(4,17,"LOW");
+                            LCDWriteStringXY(48,3,"LOW");
                             LCDWriteCharacter(' ');
                             LCDWriteCharacter(' ');
                         }
@@ -287,18 +302,13 @@ int main(void)
                 }
                 else
                 {
-                    LCDWriteStringXY(4,3,"Shot Timer:");
-                    LCDWriteIntXY(4,17,shotTimer,4,1,0);
+                    LCDWriteStringXY(2,3,"Shot Timer:");
+                    LCDWriteIntXY(48,3,shotTimer,4,1,0);
                 }
             }
         }
-        
 
-            // </editor-fold>
 // ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Power Switch is ON">
-        
-
         if(powerSwitch == 1)
         {
 /*            if(IFS0bits.T2IF)
@@ -316,21 +326,100 @@ int main(void)
                 airPump = 0;
             }
 
-            if(steamSwitch == 1)
+// ******************************************************************************
+//            GroupHeadPID = PID_Calculate(2, groupHeadSetpoint, temp);
+            
+            if((groupHeadSetpoint - GroupHeadTemp) > GroupHeadDeadband)
+            {
+ //               dutyCycle[0] = 8191;            // Turn OC5 on 100%
+            }
+            else 
+            {
+                GroupHeadPID = PID_Calculate(2, groupHeadSetpoint, temp[2]);
+                
+ //               dutyCycle[0] = GroupHeadPID;    // Drive OC5 with PID PWM
+            }
+            
+  /*          if(steamSetpoint - steamTemperature > steamDeadband)
+            {
+                dutyCycle[2] = 8191;
+            }
+            else
             {
                 SteamPID = PID_Calculate(1, setpoint, temp);
+                    
+                dutyCycle[2] = SteamPID;
+            }
+                
+            if(waterSetpoint - boilerTemperature > waterDeadband)
+            {
+                dutyCycle[1] = 8191;
             }
             else
             {
                 WaterPID = PID_Calculate(0, setpoint, temp);
+                   
+                dutyCycle[1] = WaterPID;
+            }
+   
+// ******************************************************************************
+*/          
+            
+//            dutyCycle[2] = 0x8191;
+            
+ //           dutyCycle[1] = 0x8191;
+            
+            
+              
+//            (dutyCycle[0]==0)?(OC5CON2bits.OCTRIS = 1):(OC5CON2bits.OCTRIS = 0);
+  //          (dutyCycle[1]==0)?(OC4CON2bits.OCTRIS = 1):(OC4CON2bits.OCTRIS = 0);
+    //        (dutyCycle[2]==0)?(OC6CON2bits.OCTRIS = 1):(OC6CON2bits.OCTRIS = 0);
+              
+
+
+            if(steamSwitch == 1)                //Steam setpoint takes priority
+            {
+      //          OC6R = 0;                           
+            
+        //        OC6RS = dutyCycle[2];           // Steam Boiler Output
+
+          //      OC4R = OC6RS;
+
+            //    (OC4R+dutyCycle[1]>=0x2000)?(OC4RS = 0x2000):(OC4RS = OC4R + dutyCycle[1]); //Water Boiler Output
             }
 
-            GroupHeadPID = PID_Calculate(2, setpoint, temp);
-        // </editor-fold>
-// ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Steam Switch is ON">
+            else                                //Water setpoint takes priority
+            {            
+              //  OC4R = 0;                           
             
-            if(steamSwitch == 1)                                                //Steam setpoint takes priority
+//                OC4RS = dutyCycle[1];           // Water Boiler Output is Shut OFF
+
+  //              OC6R = OC4RS;
+
+    //            (OC6R+dutyCycle[2]>=0x2000)?(OC6RS = 0x2000):(OC6RS = OC6R + dutyCycle[2]); //Steam Boiler Output is Shut OFF
+            }
+            
+      //      OC5R = dutyCycle[0];
+ 
+
+            
+            
+            
+            
+            
+//            if(steamSwitch == 1)
+  //          {
+    //            SteamPID = PID_Calculate(1, setpoint, temp);
+      //      }
+        //    else
+          //  {
+            //    WaterPID = PID_Calculate(0, setpoint, temp);
+            //}
+
+            //GroupHeadPID = PID_Calculate(2, setpoint, temp);
+// ******************************************************************************
+            
+/*            if(steamSwitch == 1)                                                //Steam setpoint takes priority
             {
                 if(steamSetpoint - boilerTemperature > steamDeadband)
                 {
@@ -381,9 +470,7 @@ int main(void)
                     }
                 }
             }
-            // </editor-fold>
 // ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="GroupHead Temperature Control">
         
             if((groupHeadSetpoint - GroupHeadTemp) > GroupHeadDeadband)
             {
@@ -408,41 +495,40 @@ int main(void)
                     groupheadOutput = 0;
                 }
             }
-            // </editor-fold>
-// ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="BrewSwitch is ON">
-          
+ */
+ // ******************************************************************************
+           
             if(brewSwitch == 1)
             {   
                 a = 0;
                 
                 if(shotProgressCounter <= preInfusionTime)
                 {
-                    dutyCycle = preInfusionDutyCycle;
+//                    dutyCycle = preInfusionDutyCycle;
                 }
                 
                 if(shotProgressCounter > preInfusionTime && shotProgressCounter <= soakTime)
                 {
-                    dutyCycle = 0;
+  //                  dutyCycle = 0;
                 }
 
                 if (shotProgressCounter > soakTime && shotProgressCounter <= startRamp)               
                 {
-                    if(dutyCycle <= max)
+    //                if(dutyCycle <= max)
                     {
-                        dutyCycle +=2;
+      //                  dutyCycle +=2;
                     }
                 }
             
                 if(shotProgressCounter > startRamp && shotProgressCounter <= continuePull)
                 {
-                    if(dutyCycle >= min)
+        //            if(dutyCycle >= min)
                     {   
                         count2 +=1;
                         
                         if(count2 > 9)
                         {
-                            dutyCycle -=1;
+          //                  dutyCycle -=1;
                             count2 = 0;
                         }
                     }
@@ -450,7 +536,7 @@ int main(void)
                     
                     if(shotProgressCounter > (250 + preInfusionTime + soakTime))
                     {
-                        dutyCycle = 20;
+            //            dutyCycle = 20;
                     }
                 
                 if (shotProgressCounter >= warning)                             // 90 Seconds has elapsed without Brew Switch being turned off,
@@ -499,47 +585,41 @@ int main(void)
                 warningTimer =          0;
                 T2CONbits.TON =         0;
                 shotProgressCounter =   0;
-                dutyCycle =             0;
+//                dutyCycle =             0;
                 a += 1;
                 if(a >= 12500)                                                  //Approximately 20 seconds (about 625 counts/second)
                 {
                     shotTimer =         0;
                 }
             }
-            // </editor-fold>
 // ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="WaterSwitch is ON">
 
             if(waterSwitch)
             {
-                dutyCycle = 2048;
+//                dutyCycle = 2048;
             }
         }
         else
         {
-            boilerOutput        = 0;
-            groupheadOutput     = 0;
+  //          boilerOutput        = 0;
+//            groupheadOutput     = 0;
             shotTimer           = 0;
-            dutyCycle           = 0;
+    //        dutyCycle           = 0;
             piezoOutput         = 0;
         }
-            // </editor-fold>
 // ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Read Switches">
         
         if(!brewSwitch && !steamSwitch && !waterSwitch)
         {
-            dutyCycle =     0;
+//            dutyCycle =     0;
         }
-        // </editor-fold>
 // ******************************************************************************
-                        // <editor-fold defaultstate="collapsed" desc="Touch Menu's">
 
-        TestKey = menuRead();
+        testKey = readButton();
 // ******************************************************************************
 //        heartBeat();                                                            // HeartBeat displays the HeartBeat on the LCD,
 // ******************************************************************************  but, also increments mainTimer every second 
-        if (TestKey == KEY_1)
+        if (testKey == Menu)
         {
             if(timer<1)
             {
@@ -550,19 +630,19 @@ int main(void)
             
             LCDClear();
             LCDBitmap(&menu2[0], 5,84);                         //Draw Menu2
-            LCDWriteStringXY(3,2,"Press 'ENTER' ");
-            LCDWriteStringXY(3,16,"to Set the Time");
+            LCDWriteStringXY(4,1,"Press \"ENTER\" Key");
+            LCDWriteStringXY(4,2,"to Set the Time");
 
-            while(TestKey != KEY_3)
+            while(testKey != Enter)
             {
-                TestKey = menuRead();
+                testKey = readButton();
                 timer +=1;
                 __delay_ms(10);
                 if (timer > 500)
                 {
                     timer = 0;
                     LCDClear();
-                        LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
+                    LCDBitmap(&menu2[0], 5, 84);            //Draw Menu2
                     goto done2;
                 }
             }
@@ -570,15 +650,16 @@ int main(void)
             
             timer = 0;
 
-                LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
+//                LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
             __delay_ms(500);
             
             done2:;
+            LCDBitmap(&menu0[0], 5, 84);                    //Draw Menu0
         }
         
 // ******************************************************************************
         
-        if(TestKey == KEY_2)
+        if(testKey == Enter)
         {
             if(timer<1)
             {
@@ -587,16 +668,15 @@ int main(void)
                 goto Exit2;
             }
 
-//            TestKey = KEY_NONE;
+//            testKey = KEY_NONE;
             
             LCDClear();
             LCDBitmap(&menu2[0], 5, 84);                         //Draw Menu2
-            LCDWriteStringXY(3,1,"ENTER to Set St");
-            LCDWriteStringXY(3,16,"art/Stop Times");
+            LCDWriteStringXY(0,1,"Press \"ENTER\" to Set Start/Stop Times");
 
-            while(TestKey != KEY_3)
+            while(testKey != Enter)
             {
-                TestKey = menuRead();
+                testKey = readButton();
                  timer +=1;
                  __delay_ms(10);
                
@@ -618,7 +698,7 @@ int main(void)
         }
 // ******************************************************************************
 
-        if (TestKey == KEY_3)
+        if (testKey == Down)
         {
             if(timer<1)
             {
@@ -631,30 +711,29 @@ int main(void)
             {
                 LCDClear();
                 LCDBitmap(&menu2[0], 5, 84);                     //Draw Menu2
-                TestKey = KEY_NONE;
+                testKey = None;
                 __delay_ms(750);
             }
             
             
-            signed char choice = 0;
+            int8_t choice = 0;
 
-            while(TestKey != KEY_3)
+            while(testKey != Enter)
             {
-                TestKey = menuRead();
+                testKey = readButton();
                 __delay_ms(10);
                 
                 if(timer > 500)
                 {
                     timer = 0;
                     LCDClear();
-                        LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
+                    LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
                     goto Exit;                                   //This uses less memory than TestKey = KEY_3
-//                    TestKey = KEY_3;                           // This functions fine, but forces a write to EEProm
                 }
 
-                switch(TestKey)
+                switch(testKey)
                 {
-                    case KEY_1:
+                    case Down:
                     {
                         choice -=1;
                             
@@ -666,7 +745,7 @@ int main(void)
                     break;
 
                         
-                    case KEY_2:
+                    case Up:
                     {
                         choice += 1;
                             
@@ -679,50 +758,55 @@ int main(void)
                 }
 
 
-                gotoXY(1,2);
-                LCDWriteString("PID Settings f");
-                LCDWriteStringXY(1,16,"or ");
-                LCDWriteString(desc[choice]);
-                LCDWriteStringXY(2,6,"Up/Dn Keys");
-                LCDWriteStringXY(2,17,"to change");
-                LCDWriteStringXY(3,7,"\"Enter\" t")
-                LCDWriteStringXY(3,16,"o Accept")
+                LCDWriteStringXY(0,0,"PID Settings for");
+                LCDWriteStringXY(0,1,desc[choice]);
+                LCDWriteStringXY(0,3,"Up/Dn Keys to Change");
+                LCDWriteStringXY(0,4,"  \"Enter\" to Accept ")
 
                 timer += 1;
             }
             
- //           TestKey = 0;
+            testKey = 0;
             
             LCDClear();
             LCDBitmap(&menu2[0], 5, 84);              //Draw Menu2
-            LCDWriteStringXY(1,1,"SetPoint = ");
-            eepromPutData(setpoint[choice], setParameter(1,16,1750,2950,eepromGetData(setpoint[choice])));
+            LCDWriteStringXY(0,0,"SetPoint = ");
+            eepromPutData(setpoint[choice], setParameter(44,0,1750,2950,eepromGetData(setpoint[choice])));
             
-            LCDWriteStringXY(2,1,"DeadBand =");
-            eepromPutData(deadband[choice], setParameter(2,16,5,100,eepromGetData(deadband[choice])));            
+            LCDWriteStringXY(0,1,"DeadBand =");
+            eepromPutData(deadband[choice], setParameter(44,1,5,100,eepromGetData(deadband[choice])));            
 
-            LCDWriteStringXY(3,1,"Gain =");
-            eepromPutData(Kp[choice], setParameter(3,16,0,200,eepromGetData(Kp[choice])));
+            LCDWriteStringXY(0,2,"Gain =");
+            eepromPutData(Kp[choice], setParameter(44,2,0,200,eepromGetData(Kp[choice])));
 
             LCDWriteStringXY(4,1,"Integral =");
-            eepromPutData(Ki[choice], setParameter(4,16,0,500,eepromGetData(Ki[choice])));
+            eepromPutData(Ki[choice], setParameter(44,3,0,500,eepromGetData(Ki[choice])));
 
             LCDWriteStringXY(5,1,"Derivative =");
-            eepromPutData(Kd[choice], setParameter(5,16,0,100,eepromGetData(Kd[choice])));
+            eepromPutData(Kd[choice], setParameter(44,4,0,100,eepromGetData(Kd[choice])));
             
             
-            Init_PID(choice,eepromGetData(Kp[choice]),eepromGetData(Ki[choice]),eepromGetData(Kd[choice]),0,4095);                
+            Init_PID(choice,eepromGetData(Kp[choice]),eepromGetData(Ki[choice]),eepromGetData(Kd[choice]));                
 
             timer = 0;
 
             LCDClear();
-            LCDBitmap(&menu2[0], 5, 84);                  //Draw Menu2
+            LCDBitmap(&menu0[0], 5, 84);                  //Draw Menu0
             __delay_ms(500);
         }
  
         Exit:
-        // </editor-fold>
+                        
 // ******************************************************************************
+        if (testKey == Up)                                  // Reset the LCD
+        {
+            LCDInit();
+            LCDClear();
+            LCDBitmap(&coffee[0], 0, 504);                  //Draw I "Heart" coffee
+            __delay_ms(3000);
+        }
+                        
+ // ******************************************************************************
         ClrWdt();                                                               //Clear (Re-Set) the WatchDog Timer
     }
     return(1);

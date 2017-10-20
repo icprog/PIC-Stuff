@@ -1,5 +1,6 @@
-build/default/production/system.o:  \
-system.c  \
+build/default/production/pid.o:  \
+pid.c  \
+pid.h  \
 system.h  \
 lcd.h  \
 user.h  \
@@ -8,6 +9,5 @@ rtcc.h  \
 eeprom.h  \
 touch.h  \
 adc.h  \
-pid.h  \
 level.h  \
 pwm.h 

@@ -4,9 +4,10 @@ adc.h  \
 system.h  \
 lcd.h  \
 user.h  \
+ buttons.h  \
 rtcc.h  \
- eeprom.h  \
+eeprom.h  \
 touch.h  \
-PID_Lib.h  \
+pid.h  \
 level.h  \
 pwm.h 

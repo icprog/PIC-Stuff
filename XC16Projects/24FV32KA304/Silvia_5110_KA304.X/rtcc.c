@@ -21,7 +21,7 @@ int const stopMinute[]  =   {82,84,86,88,90,92,94};
 
 signed char choice;
 
-unsigned char TestKey = KEY_NONE;
+unsigned char testKey = None;
 
 char sel = 0;
     
@@ -230,52 +230,50 @@ void SetTime()
         }
         
         displayTime();
-        LCDWriteStringXY(3,3,"\"Enter\" for n");
-        LCDWriteStringXY(3,16,"ext Field");
-        LCDWriteStringXY(4,3,"Up/Dn keys to");
-        LCDWriteStringXY(4,17,"change Time.")
+        LCDWriteStringXY(4,2,"\"Enter\" = next Field");
+        LCDWriteStringXY(4,3,"Up/Dn to change Time");
         
         
         if(sel == 0)
         {
-            LCDWriteStringXY(2,3,"^^");                                         // Draw Pointer, to show what we are setting
+            LCDWriteStringXY(0,1,"^^");                                         // Draw Pointer, to show what we are setting
         }
         
         if(sel == 1)
         {
-            LCDWriteStringXY(2,3,"   ^^^");                                      // Draw Pointer, to show what we are setting
+            LCDWriteStringXY(0,1,"   ^^^");                                      // Draw Pointer, to show what we are setting
         }
         
         if(sel == 2)
         {
-            LCDWriteStringXY(2,6,"    ^^");                              // Draw Pointer
+            LCDWriteStringXY(12,1,"    ^^");                              // Draw Pointer
         }
         
         if(sel == 3)
         {
-            LCDWriteStringXY(2,10,"   ^^^");                              // Draw Pointer
+            LCDWriteStringXY(25,1,"   ^^^");                              // Draw Pointer
         }
         
         if(sel== 4)
         {
-            LCDWriteStringXY(2,13,"   ");
-            LCDWriteStringXY(2,17,"^^");
+            LCDWriteStringXY(37,1,"   ");
+            LCDWriteStringXY(50,1,"^^");
         }
         
         if (sel == 5)
         {
-            LCDWriteStringXY(2,17,"   ^^");
+            LCDWriteStringXY(50,1,"   ^^");
         }
         if(sel == 6)
         {
-            LCDWriteStringXY(2,20,"   ^^");
+            LCDWriteStringXY(62,1,"   ^^");
         }
         
-        char key = menuRead();
+        char key = readButton();
 
         switch(key)
         {
-            case KEY_2:
+            case Up:
                 if(sel==0)
                 {
                     if (time.year == 99)
@@ -361,7 +359,7 @@ void SetTime()
                 }
             break;
             
-            case KEY_1:
+            case Down:
                 if(sel == 0)
                 {
                     if (time.year == 0)
@@ -447,7 +445,7 @@ void SetTime()
                 }
             break;
                 
-            case KEY_3:     // Change our selection
+            case Enter:     // Change our selection
                 
                 if (sel == 6)
                 {
@@ -510,18 +508,18 @@ void writeStartStopTimes(void)
 {
     int16_t timer = 0;                                                     // Used to return to operation if user does not finish!
     
-    TestKey = KEY_NONE;
+    testKey = KEY_NONE;
     
-    while(TestKey != KEY_3)
+    while(testKey != KEY_3)
     {
-        TestKey = menuRead();
+        testKey = readButton();
         
         if(timer > 1500)
         {
             goto Exit;                                                 
         }
 
-        switch(TestKey)
+        switch(testKey)
         {
              case KEY_1:
              {
@@ -586,13 +584,13 @@ int8_t setStartHour(int8_t b)
     
     int8_t result = b;
     
-    int8_t TestKey = KEY_NONE;
+    int8_t testKey = KEY_NONE;
 
-    TestKey = menuRead();
+    testKey = readButton();
     
-    while(TestKey != KEY_3)
+    while(testKey != KEY_3)
         {
-        TestKey = menuRead();
+        testKey = readButton();
         
         timer += 1;
         
@@ -601,14 +599,14 @@ int8_t setStartHour(int8_t b)
         if(timer > 500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
-            TestKey = KEY_3;
+            testKey = KEY_3;
         }
         
         
         LCDWriteStringXY(1,2,"Start Hour =");
         LCDWriteIntXY(1,16,result,2,0,0);
 
-        switch(TestKey)
+        switch(testKey)
         {
             case KEY_1:
             {
@@ -650,13 +648,13 @@ int8_t setStartMinute(int8_t b)
     
     int8_t result = b;
     
-    int8_t TestKey = KEY_NONE;
+    int8_t testKey = KEY_NONE;
 
-    TestKey = menuRead();
+    testKey = readButton();
     
-    while(TestKey != KEY_3)
+    while(testKey != KEY_3)
         {
-        TestKey = menuRead();
+        testKey = readButton();
         
         timer += 1;
         
@@ -665,7 +663,7 @@ int8_t setStartMinute(int8_t b)
         if(timer > 1500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
-            TestKey = KEY_3;
+            testKey = KEY_3;
         }
         
         
@@ -673,7 +671,7 @@ int8_t setStartMinute(int8_t b)
         LCDWriteIntXY(2,16,result,2,0,0);
 
 
-        switch(TestKey)
+        switch(testKey)
         {
             case KEY_1:
             {
@@ -714,13 +712,13 @@ int8_t setStopHour(int8_t b)
     
     int8_t result = b;
     
-    int8_t TestKey = KEY_NONE;
+    int8_t testKey = KEY_NONE;
 
-    TestKey = menuRead();
+    testKey = readButton();
     
-    while(TestKey != KEY_3)
+    while(testKey != KEY_3)
         {
-        TestKey = menuRead();
+        testKey = readButton();
         
         timer += 1;
         
@@ -729,7 +727,7 @@ int8_t setStopHour(int8_t b)
         if(timer > 1500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
-            TestKey = KEY_3;
+            testKey = KEY_3;
         }
         
         
@@ -739,7 +737,7 @@ int8_t setStopHour(int8_t b)
 //        heartBeat();
         
 
-        switch(TestKey)
+        switch(testKey)
         {
             case KEY_1:
             {
@@ -784,13 +782,13 @@ int8_t setStopMinute(int8_t b)
     
     int8_t result = b;
     
-    int8_t TestKey = KEY_NONE;
+    int8_t testKey = KEY_NONE;
 
-    TestKey = menuRead();
+    testKey = readButton();
     
-    while(TestKey != KEY_3)
+    while(testKey != KEY_3)
         {
-        TestKey = menuRead();
+        testKey = readButton();
         
         timer += 1;
         
@@ -799,7 +797,7 @@ int8_t setStopMinute(int8_t b)
         if(timer > 1500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
-            TestKey = KEY_3;
+            testKey = KEY_3;
         }
         
         
@@ -809,7 +807,7 @@ int8_t setStopMinute(int8_t b)
 //        heartBeat();
         
 
-        switch(TestKey)
+        switch(testKey)
         {
             case KEY_1:
             {

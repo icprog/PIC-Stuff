@@ -4,10 +4,11 @@ rtcc.h  \
 system.h  \
 lcd.h  \
 user.h  \
- eeprom.h  \
+ buttons.h  \
+eeprom.h  \
 touch.h  \
 adc.h  \
-PID_Lib.h  \
+pid.h  \
 level.h  \
 pwm.h  \
 rtccMenu.h 

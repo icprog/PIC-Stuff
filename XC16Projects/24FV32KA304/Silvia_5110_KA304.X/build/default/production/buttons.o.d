@@ -1,5 +1,5 @@
-build/default/production/system.o:  \
-system.c  \
+build/default/production/buttons.o:  \
+buttons.c  \
 system.h  \
 lcd.h  \
 user.h  \

@@ -36,13 +36,13 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
 {
     int16_t result = b;
     
-    int8_t TestKey;
+    int8_t testKey;
     
-    TestKey = menuRead();
+    testKey = readButton();
     
-    while(TestKey != KEY_3)
+    while(testKey != KEY_3)
         {
-        TestKey = menuRead();
+        testKey = readButton();
         
         timer += 1;
         
@@ -52,12 +52,12 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
         {
            LCDClear();
             timer = 0;
-            TestKey = KEY_3;
+            testKey = KEY_3;
         }
         
         LCDWriteIntXY(X,Y,result,4,1,0);
         
-        switch(TestKey)
+        switch(testKey)
         {
             case KEY_1:
             {
