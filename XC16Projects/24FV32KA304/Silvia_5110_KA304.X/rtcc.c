@@ -1,10 +1,7 @@
-                    // <editor-fold defaultstate="collapsed" desc="Includes">
 #include "rtcc.h"
 #include "rtccMenu.h"
 
-// </editor-fold>
 //***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="Globals">
 
 extern char powerFail;
 
@@ -26,10 +23,8 @@ unsigned char testKey = None;
 char sel = 0;
     
 char done = 0;
-// </editor-fold>
-//***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="binary to bcd">
 
+//***************************************************************************************************************************************************************
 
 unsigned short bin2bcd(unsigned short binary_value)
 {
@@ -57,10 +52,7 @@ unsigned short bin2bcd(unsigned short binary_value)
 
   return(retval);
 }
-// </editor-fold>
 //***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="bcd to binary">
-
 // Input range - 00 to 99.
 unsigned short bcd2bin(unsigned short bcd_value)
 {
@@ -76,11 +68,8 @@ unsigned short bcd2bin(unsigned short bcd_value)
 
   return(temp + (temp >> 2) + (bcd_value & 0x0f));
 } 
-// </editor-fold>
+
 //***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="RTCC Initialize">
-
-
 void RTCC_Initialize(void) {
     
     __builtin_write_OSCCONL(0x02);              // Turn on the secondary oscillator
@@ -114,46 +103,8 @@ void RTCC_Initialize(void) {
 
     IEC3bits.RTCIE = 1;
 }
-// </editor-fold>
+
 //***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="Time Setting "NO Longer used"">
-/*
-void setRTCTime(unsigned int year, unsigned int month, unsigned int day, unsigned int weekday, unsigned int hour, unsigned int minute, unsigned int second)
-{
-	// Enable RTCC Timer Access
-	//
-	//	NVMKEY is a write only register that is used to prevent accidental writes/erasures of Flash or
-	//	EEPROM memory. To start a programming or an erase sequence, the following steps must be
-	//	taken in the exact order shown:
-	//	1. Write 0x55 to NVMKEY.
-	//	2. Write 0xAA to NVMKEY. 
-	
-//	NVMKEY = 0x55;
-//	NVMKEY = 0xAA;
-//	RCFGCALbits.RTCWREN = 1;
-    
-    __builtin_write_RTCWEN();                           // This should be the same as above
-
-	RCFGCALbits.RTCEN = 0;                              // Disable RTCC module
-
-
-	// Write to RTCC Timer
-	RCFGCALbits.RTCPTR = 3;                             // RTCC Value Register Window Pointer bits
-	RTCVAL = bin2bcd(year);                             // Set Year (#0x00YY)
-	RTCVAL = (bin2bcd(month) << 8) + bin2bcd(day);      // Set Month and Day (#0xMMDD)
-	RTCVAL = (bin2bcd(weekday) << 8) + bin2bcd(hour); 	// Set Weekday and Hour (#0x0WHH). Weekday from 0 to 6	
-	RTCVAL = (bin2bcd(minute) << 8) + bin2bcd(second);  // Set Minute and Second (#0xMMSS)
-
-	// Enable RTCC module
-	RCFGCALbits.RTCEN = 1;
-
-	// Disable RTCC Timer Access
-	RCFGCALbits.RTCWREN = 0;
-}*/
-// </editor-fold>
-//***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="Get Time">
-
 RTCTime getRTCTime()
 {
 	RTCTime retVal;
@@ -178,10 +129,8 @@ RTCTime getRTCTime()
 
 	return retVal;
 }
-// </editor-fold>
-//***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="Display Time">
 
+//***************************************************************************************************************************************************************
 void displayTime(void)
 {
     RTCTime time;                                                               // declare the type of the time object
@@ -198,10 +147,9 @@ void displayTime(void)
     LCDWriteCharacter(':');
     LCDWriteInt(time.second,2,0,0);
 }
-// </editor-fold>
-//***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="Set Time">
 
+
+//***************************************************************************************************************************************************************
 void SetTime()
 {
     RTCTime time;                                                               // declare the type of the time object
@@ -481,10 +429,9 @@ void SetTime()
     powerFail = 0;                                                              //We have just set the time, so, re-set the powerFail Status Bit
 }
 
-// </editor-fold>
+
 //***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="Run Auto Start Times">
-/*
+
 int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
 {
     static char run;
@@ -500,17 +447,17 @@ int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
     }
     return run;
 }
-// </editor-fold>
-*/ //***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="Set Auto Start/Stop Times">
-/*
+
+//***************************************************************************************************************************************************************
+
+
 void writeStartStopTimes(void)
 {
     int16_t timer = 0;                                                     // Used to return to operation if user does not finish!
     
-    testKey = KEY_NONE;
+    testKey = None;
     
-    while(testKey != KEY_3)
+    while(testKey != Enter)
     {
         testKey = readButton();
         
@@ -521,7 +468,7 @@ void writeStartStopTimes(void)
 
         switch(testKey)
         {
-             case KEY_1:
+             case Down:
              {
                 choice -=1;
                             
@@ -532,7 +479,7 @@ void writeStartStopTimes(void)
             }
             break;
             
-            case KEY_2:
+            case Up:
             {
                 choice += 1;
                             
@@ -550,15 +497,11 @@ void writeStartStopTimes(void)
             LCDBitmap(&rtccMenu[0], 5, 84);                                      //Draw rtccMenu
         }
 
-        
-        LCDWriteStringXY(2,5,"Start/Stop");
-        LCDWriteStringXY(2,16,"for ");
+        LCDWriteStringXY(0,1,"Start/Stop for ");
         LCDWriteString(WeekDay[choice]);
-        LCDWriteStringXY(3,5,"Up/Dn Keys");
-        LCDWriteStringXY(3,16,"to change.");
-        LCDWriteStringXY(4,5,"Enter Key f");
-        LCDWriteStringXY(4,16,"or Yes");
-                                                                                // but, also increments mainTimer every second
+        LCDWriteStringXY(0,3,"Up/Dn Keys to choose");
+        LCDWriteStringXY(0,4,"Enter Key to Set");
+
         timer += 1;
     }
     
@@ -574,11 +517,11 @@ void writeStartStopTimes(void)
     timer = 0;
 }
 
-// </editor-fold>
- */
+
+
 //***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="Set Auto Start Hour">
-/*
+
+
 int8_t setStartHour(int8_t b)
 {
     int16_t timer = 0;                                                         // Used to return to operation if user does not finish!
@@ -589,7 +532,7 @@ int8_t setStartHour(int8_t b)
 
     testKey = readButton();
     
-    while(testKey != KEY_3)
+    while(testKey != Enter)
         {
         testKey = readButton();
         
@@ -600,16 +543,15 @@ int8_t setStartHour(int8_t b)
         if(timer > 500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
-            testKey = KEY_3;
+            testKey = Enter;
         }
         
-        
-        LCDWriteStringXY(1,2,"Start Hour =");
-        LCDWriteIntXY(1,16,result,2,0,0);
+        LCDWriteStringXY(0,1,"Start Hour = ");
+        LCDWriteIntXY(61,1,result,2,0,0);
 
         switch(testKey)
         {
-            case KEY_1:
+            case Down:
             {
                 result -= 1;
                             
@@ -620,7 +562,7 @@ int8_t setStartHour(int8_t b)
             }
             break;
                         
-            case KEY_2:
+            case Up:
             {
                 result += 1;
                             
@@ -639,9 +581,8 @@ int8_t setStartHour(int8_t b)
 }
 
 
-// </editor-fold>
-//***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="Set Auto Start Minute">
+
+ //***************************************************************************************************************************************************************
 
 int8_t setStartMinute(int8_t b)
 {
@@ -653,7 +594,7 @@ int8_t setStartMinute(int8_t b)
 
     testKey = readButton();
     
-    while(testKey != KEY_3)
+    while(testKey != Enter)
         {
         testKey = readButton();
         
@@ -664,17 +605,16 @@ int8_t setStartMinute(int8_t b)
         if(timer > 1500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
-            testKey = KEY_3;
+            testKey = Enter;
         }
         
+        LCDWriteStringXY(0,2,"Start Minute = ");
+        LCDWriteIntXY(61,2,result,2,0,0);
+
         
-        LCDWriteStringXY(2,2,"Start Minute =");
-        LCDWriteIntXY(2,16,result,2,0,0);
-
-
         switch(testKey)
         {
-            case KEY_1:
+            case Down:
             {
                 result -= 5;
                             
@@ -685,7 +625,7 @@ int8_t setStartMinute(int8_t b)
             }
             break;
                         
-            case KEY_2:
+            case Up:
             {
                 result += 5;
                             
@@ -703,9 +643,9 @@ int8_t setStartMinute(int8_t b)
     return (result);
 }
 
-// </editor-fold>
+
 //***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="Set Auto Stop Hour">
+
 
 int8_t setStopHour(int8_t b)
 {
@@ -717,7 +657,7 @@ int8_t setStopHour(int8_t b)
 
     testKey = readButton();
     
-    while(testKey != KEY_3)
+    while(testKey != Enter)
         {
         testKey = readButton();
         
@@ -728,19 +668,19 @@ int8_t setStopHour(int8_t b)
         if(timer > 1500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
-            testKey = KEY_3;
+            testKey = Enter;
         }
         
         
-        LCDWriteStringXY(3,2,"Stop Hour =");
-        LCDWriteIntXY(3,16,result,2,0,0);
+        LCDWriteStringXY(0,3,"Stop Hour =");
+        LCDWriteIntXY(61,3,result,2,0,0);
 
 //        heartBeat();
         
 
         switch(testKey)
         {
-            case KEY_1:
+            case Down:
             {
                 result -= 1;
                             
@@ -751,7 +691,7 @@ int8_t setStopHour(int8_t b)
             }
             break;
                         
-            case KEY_2:
+            case Up:
             {
                 result += 1;
                             
@@ -772,9 +712,7 @@ int8_t setStopHour(int8_t b)
 }
 
 
-// </editor-fold>
 //***************************************************************************************************************************************************************
-                    // <editor-fold defaultstate="collapsed" desc="Set Auto Stop Minute">
 
 
 int8_t setStopMinute(int8_t b)
@@ -787,7 +725,7 @@ int8_t setStopMinute(int8_t b)
 
     testKey = readButton();
     
-    while(testKey != KEY_3)
+    while(testKey != Enter)
         {
         testKey = readButton();
         
@@ -798,19 +736,19 @@ int8_t setStopMinute(int8_t b)
         if(timer > 1500)             // Number of counts multiplied by the delay value above to more or less set the time out delay in non-pressed key time
         {
             timer = 0;
-            testKey = KEY_3;
+            testKey = Enter;
         }
         
         
-        LCDWriteStringXY(4,2,"Stop Minute =");
-        LCDWriteIntXY(4,16,result,2,0,0);
+        LCDWriteStringXY(0,4,"Stop Minute =");
+        LCDWriteIntXY(61,4,result,2,0,0);
 
 //        heartBeat();
         
 
         switch(testKey)
         {
-            case KEY_1:
+            case Down:
             {
                 result -= 5;
                             
@@ -821,7 +759,7 @@ int8_t setStopMinute(int8_t b)
             }
             break;
                         
-            case KEY_2:
+            case Up:
             {
                 result += 5;
                             
@@ -838,5 +776,3 @@ int8_t setStopMinute(int8_t b)
     
     return (result);
 }
-// </editor-fold>
- */

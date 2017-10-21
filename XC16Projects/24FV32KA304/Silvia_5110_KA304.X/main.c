@@ -1,6 +1,5 @@
 #include    "system.h"
 #include    "menu.h"
-#include    "coffee.h"
 // ***************************************************************************************************************************************************************
 #define piezoOutput             _LATC9
 #define backLightOn             _LATA1
@@ -57,9 +56,9 @@ int __attribute__ ((space(eedata))) Settings[43];                               
 
 RTCTime time;                                                                   // declare the type of the time object
 
-uint16_t const setpoint[]    =   {0, 2,  4};                                          //setpoint EEPROM Address "offset" values
+unsigned int setpoint[]    =   {0, 2,  4};                                         //setpoint EEPROM Address "offset" values
 
-int const deadband[]    =   {6, 8, 10};                                          //dead band EEPROM Address "offset" values
+unsigned int deadband[]    =   {6, 8, 10};                                         //dead band EEPROM Address "offset" values
 
 int const Kp[]          =   {12, 16, 20};
 
@@ -103,9 +102,9 @@ int main(void)
 
     int samples[3][numSamples];                 //Used to average temp[] over "numSamples" of samples
     
-    uint16_t temp[3];
+    unsigned int temp[3];
     
-    uint16_t shortTermTemp[3];                                              
+    unsigned int shortTermTemp[3];                                              
     
     uint8_t sampleIndex = 0;                    // Used to calculate average sample of temp[]
     
@@ -310,6 +309,8 @@ int main(void)
                     LCDWriteStringXY(2,3,"Shot Timer:");
                     LCDWriteIntXY(48,3,shotTimer,4,1,0);
                 }
+                
+                LCDWriteIntXY(0,4,GroupHeadPID,5,0,0);
             }
         }
 
@@ -334,16 +335,16 @@ int main(void)
 // ******************************************************************************
 //            GroupHeadPID = PID_Calculate(2, groupHeadSetpoint, temp);
             
-            if((groupHeadSetpoint - GroupHeadTemp) > GroupHeadDeadband)
-            {
+//            if((groupHeadSetpoint - GroupHeadTemp) > GroupHeadDeadband)
+  //          {
  //               dutyCycle[0] = 8191;            // Turn OC5 on 100%
-            }
-            else 
-            {
+    //        }
+      //      else 
+        //    {
                 GroupHeadPID = PID_Calculate(2, groupHeadSetpoint, temp[2]);
                 
  //               dutyCycle[0] = GroupHeadPID;    // Drive OC5 with PID PWM
-            }
+          //  }
             
   /*          if(steamSetpoint - steamTemperature > steamDeadband)
             {
@@ -700,7 +701,7 @@ int main(void)
             
             timer = 0;
             writeStartStopTimes();
-            LCDBitmap(&menu2[0], 5, 84);                          //Draw Menu2
+            LCDBitmap(&menu0[0], 5, 84);                          //Draw Menu0
             __delay_ms(500);
             
             Exit2:; 
@@ -790,10 +791,10 @@ int main(void)
             LCDWriteStringXY(0,2,"Gain =");
             eepromPutData(Kp[choice], setParameter(44,2,0,200,eepromGetData(Kp[choice])));
 
-            LCDWriteStringXY(4,1,"Integral =");
+            LCDWriteStringXY(0,3,"Integral =");
             eepromPutData(Ki[choice], setParameter(44,3,0,500,eepromGetData(Ki[choice])));
 
-            LCDWriteStringXY(5,1,"Derivative =");
+            LCDWriteStringXY(0,4,"Derivative =");
             eepromPutData(Kd[choice], setParameter(44,4,0,100,eepromGetData(Kd[choice])));
             
             
@@ -802,29 +803,30 @@ int main(void)
             timer = 0;
 
             LCDClear();
-            LCDBitmap(&menu0[0], 5, 84);                  //Draw Menu0
+            LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
             __delay_ms(500);
         }
  
         Exit:
                         
 // ******************************************************************************
-        if (testKey == Up)                                  // Reset the LCD
+        if (testKey == Up)                      // Reset the LCD
         {
             LCDInit();
             __delay_ms(100);
             LCDClear();
-            _LATA9 = 0;
+            _LATA9 = 0;                         // Turn ON the BackLight
+            LCDBitmap(&menu0[0], 5, 84);        // Draw Menu0
         }
         
-        if(count3 > 64800)
+        if(count3 > 64800)                      // No Keys Pressed for 18 Minutes
         {
-            _LATA9 = 1;
-            count3 = 0;
+            _LATA9 = 1;                         // so, we might as well shut OFF the LCD BackLight
+            count3 = 0;                         // and, reset the count, so it will turn on with the next Key Press
         }
                         
  // ******************************************************************************
-        ClrWdt();                                                               //Clear (Re-Set) the WatchDog Timer
+        ClrWdt();                               // Clear (Re-Set) the WatchDog Timer
     }
     return(1);
 }

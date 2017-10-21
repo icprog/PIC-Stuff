@@ -1,17 +1,10 @@
-#include    "system.h"                      // Needed to calculate __delay_() Functions
+#include    "system.h"  
 #include    "user.h"
 
-
-//uint8_t  halfSec, lastState, toggle = 2;
-
-//extern char call;
 
 int timer = 0;              // level = 0;
 
 // ***************************************************************************************************************************************************************
-                    
-                    // <editor-fold defaultstate="collapsed" desc="Temperature Calculation">
-
 int TempCalc(int a)
 {
     if(a < 819)
@@ -25,13 +18,9 @@ int TempCalc(int a)
     return (a);               
     }
 }
-// </editor-fold>
+
 
 // ***************************************************************************************************************************************************************
-                    
-                    // <editor-fold defaultstate="collapsed" desc="PID Parameter Setting">
-
-
 int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
 {
     int16_t result = b;
@@ -40,26 +29,26 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
     
     testKey = readButton();
     
-    while(testKey != KEY_3)
+    while(testKey != Enter)
         {
         testKey = readButton();
         
         timer += 1;
         
-        __delay_ms(10);                 // 175 mS delay to extend dead time to 150mS x number of counts below, before auto-exit of function
+        __delay_ms(10);                     // 175 mS delay to extend dead time to 150mS x number of counts below, before auto-exit of function
                     
-        if(timer > 1000)                // Number of counts multiplied by the delay value above to more or less set the time out delay
+        if(timer > 1000)                    // Number of counts multiplied by the delay value above to more or less set the time out delay
         {
            LCDClear();
             timer = 0;
-            testKey = KEY_3;
+            testKey = None;
         }
         
         LCDWriteIntXY(X,Y,result,4,1,0);
         
         switch(testKey)
         {
-            case KEY_1:
+            case Down:
             {
                 result -=1;
                             
@@ -70,7 +59,7 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
                 }
             break;
                         
-            case KEY_2:
+            case Up:
             {
                 result += 1;
                             
@@ -81,14 +70,13 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
                 }
             break;
             }
+        ClrWdt();                               // Clear (Re-Set) the WatchDog Timer
         }
         
         timer = 0;
     
     return (result);
 }
-
-// </editor-fold>
 
 // ***************************************************************************************************************************************************************
 

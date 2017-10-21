@@ -17,17 +17,17 @@ void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd)
     internalKp[controller]              = pidKp;
     internalKi[controller]              = pidKi;
     internalKd[controller]              = pidKd;
-    pidIntegrated[controller]   = 0;
-    pidPrevInput[controller]    = 0;
+    pidIntegrated[controller]           = 0;
+    pidPrevInput[controller]            = 0;
 }
 
 // *************** Calculate PID Runs faster if called more often **************    
-float PID_Calculate(uint8_t controller, uint16_t const setpoint[controller], uint16_t temp[controller])
+float PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int temp)
 {
     float error, errorValue, derivativeValue = 0, Result;
         
 // **************** Calculate Gain *********************************************    
-    error = setpoint[controller] - temp[controller];                                // error calculation
+    error = setpoint - temp;                                // error calculation
 
     errorValue  = error * internalKp[controller];                           // Calculate proportional value
 

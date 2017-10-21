@@ -10,5 +10,4 @@ touch.h  \
 adc.h  \
 pid.h  \
 level.h  \
-pwm.h  \
-start_stop_timer.h 
+pwm.h 

@@ -15,16 +15,16 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC30F/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC33F/gld \
+  build/default/production/system.o \
+  build/default/production/pin_manager.o \
+  build/default/production/lcd.o \
   build/default/production/adc.o \
   build/default/production/buttons.o \
-  build/default/production/lcd.o \
-  build/default/production/pin_manager.o \
-  build/default/production/rtcc.o \
-  build/default/production/system.o \
-  build/default/production/user.o \
-  build/default/production/start_stop_timer.o \
   build/default/production/pid.o \
   build/default/production/pwm.o \
+  build/default/production/rtcc.o \
+  build/default/production/start_stop_timer.o \
+  build/default/production/user.o \
   build/default/production/main.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
@@ -61,7 +61,7 @@ c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normalda.Leo)
                               (__crt_start_mode_normal)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32da.Leo)
-                              build/default/production/adc.o (___delay32)
+                              build/default/production/system.o (___delay32)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(addsf3.daeo)
                               build/default/production/pid.o (___subsf3)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(divsf3.daeo)
@@ -384,16 +384,16 @@ aivt             0x000000           0xffffffff
 
 Linker script and memory map
 
+LOAD build/default/production/system.o
+LOAD build/default/production/pin_manager.o
+LOAD build/default/production/lcd.o
 LOAD build/default/production/adc.o
 LOAD build/default/production/buttons.o
-LOAD build/default/production/lcd.o
-LOAD build/default/production/pin_manager.o
-LOAD build/default/production/rtcc.o
-LOAD build/default/production/system.o
-LOAD build/default/production/user.o
-LOAD build/default/production/start_stop_timer.o
 LOAD build/default/production/pid.o
 LOAD build/default/production/pwm.o
+LOAD build/default/production/rtcc.o
+LOAD build/default/production/start_stop_timer.o
+LOAD build/default/production/user.o
 LOAD build/default/production/main.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
@@ -533,71 +533,71 @@ __FDEVOPT1
 
 .debug_info       0x000000       0x50c1
  *(.debug_info)
- .debug_info      0x000000        0x7e9 build/default/production/adc.o
- .debug_info      0x0007e9        0x20a build/default/production/buttons.o
- .debug_info      0x0009f3        0x794 build/default/production/lcd.o
- .debug_info      0x001187        0x5bd build/default/production/pin_manager.o
- .debug_info      0x001744        0x7da build/default/production/rtcc.o
- .debug_info      0x001f1e        0x2b3 build/default/production/system.o
- .debug_info      0x0021d1        0x22a build/default/production/user.o
- .debug_info      0x0023fb        0x4e3 build/default/production/start_stop_timer.o
- .debug_info      0x0028de        0x38e build/default/production/pid.o
- .debug_info      0x002c6c       0x1042 build/default/production/pwm.o
+ .debug_info      0x000000        0x2b3 build/default/production/system.o
+ .debug_info      0x0002b3        0x5bd build/default/production/pin_manager.o
+ .debug_info      0x000870        0x794 build/default/production/lcd.o
+ .debug_info      0x001004        0x7e9 build/default/production/adc.o
+ .debug_info      0x0017ed        0x20a build/default/production/buttons.o
+ .debug_info      0x0019f7        0x38e build/default/production/pid.o
+ .debug_info      0x001d85       0x1042 build/default/production/pwm.o
+ .debug_info      0x002dc7        0x7da build/default/production/rtcc.o
+ .debug_info      0x0035a1        0x4e3 build/default/production/start_stop_timer.o
+ .debug_info      0x003a84        0x22a build/default/production/user.o
  .debug_info      0x003cae       0x1413 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0xb00
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x147 build/default/production/adc.o
- .debug_abbrev    0x000147         0x96 build/default/production/buttons.o
- .debug_abbrev    0x0001dd        0x141 build/default/production/lcd.o
- .debug_abbrev    0x00031e         0x4c build/default/production/pin_manager.o
- .debug_abbrev    0x00036a        0x208 build/default/production/rtcc.o
- .debug_abbrev    0x000572         0x6a build/default/production/system.o
- .debug_abbrev    0x0005dc         0x85 build/default/production/user.o
- .debug_abbrev    0x000661        0x133 build/default/production/start_stop_timer.o
- .debug_abbrev    0x000794         0xef build/default/production/pid.o
- .debug_abbrev    0x000883         0xcd build/default/production/pwm.o
+ .debug_abbrev    0x000000         0x6a build/default/production/system.o
+ .debug_abbrev    0x00006a         0x4c build/default/production/pin_manager.o
+ .debug_abbrev    0x0000b6        0x141 build/default/production/lcd.o
+ .debug_abbrev    0x0001f7        0x147 build/default/production/adc.o
+ .debug_abbrev    0x00033e         0x96 build/default/production/buttons.o
+ .debug_abbrev    0x0003d4         0xef build/default/production/pid.o
+ .debug_abbrev    0x0004c3         0xcd build/default/production/pwm.o
+ .debug_abbrev    0x000590        0x208 build/default/production/rtcc.o
+ .debug_abbrev    0x000798        0x133 build/default/production/start_stop_timer.o
+ .debug_abbrev    0x0008cb         0x85 build/default/production/user.o
  .debug_abbrev    0x000950        0x1b0 build/default/production/main.o
 
 .debug_line       0x000000        0xc57
  *(.debug_line)
- .debug_line      0x000000        0x103 build/default/production/adc.o
- .debug_line      0x000103         0xa9 build/default/production/buttons.o
- .debug_line      0x0001ac        0x161 build/default/production/lcd.o
- .debug_line      0x00030d         0xbb build/default/production/pin_manager.o
- .debug_line      0x0003c8        0x1cf build/default/production/rtcc.o
- .debug_line      0x000597         0xfe build/default/production/system.o
- .debug_line      0x000695         0xb2 build/default/production/user.o
- .debug_line      0x000747        0x179 build/default/production/start_stop_timer.o
- .debug_line      0x0008c0         0xb1 build/default/production/pid.o
- .debug_line      0x000971         0xab build/default/production/pwm.o
+ .debug_line      0x000000         0xfe build/default/production/system.o
+ .debug_line      0x0000fe         0xbb build/default/production/pin_manager.o
+ .debug_line      0x0001b9        0x161 build/default/production/lcd.o
+ .debug_line      0x00031a        0x103 build/default/production/adc.o
+ .debug_line      0x00041d         0xa9 build/default/production/buttons.o
+ .debug_line      0x0004c6         0xb1 build/default/production/pid.o
+ .debug_line      0x000577         0xab build/default/production/pwm.o
+ .debug_line      0x000622        0x1cf build/default/production/rtcc.o
+ .debug_line      0x0007f1        0x179 build/default/production/start_stop_timer.o
+ .debug_line      0x00096a         0xb2 build/default/production/user.o
  .debug_line      0x000a1c        0x23b build/default/production/main.o
 
 .debug_frame      0x000000        0x50a
  *(.debug_frame)
- .debug_frame     0x000000         0x4c build/default/production/adc.o
- .debug_frame     0x00004c         0x30 build/default/production/buttons.o
+ .debug_frame     0x000000         0x4c build/default/production/system.o
+ .debug_frame     0x00004c         0x30 build/default/production/pin_manager.o
  .debug_frame     0x00007c        0x110 build/default/production/lcd.o
- .debug_frame     0x00018c         0x30 build/default/production/pin_manager.o
- .debug_frame     0x0001bc        0x116 build/default/production/rtcc.o
- .debug_frame     0x0002d2         0x4c build/default/production/system.o
- .debug_frame     0x00031e         0x4c build/default/production/user.o
- .debug_frame     0x00036a         0xc2 build/default/production/start_stop_timer.o
- .debug_frame     0x00042c         0x5a build/default/production/pid.o
- .debug_frame     0x000486         0x4c build/default/production/pwm.o
+ .debug_frame     0x00018c         0x4c build/default/production/adc.o
+ .debug_frame     0x0001d8         0x30 build/default/production/buttons.o
+ .debug_frame     0x000208         0x5a build/default/production/pid.o
+ .debug_frame     0x000262         0x4c build/default/production/pwm.o
+ .debug_frame     0x0002ae        0x116 build/default/production/rtcc.o
+ .debug_frame     0x0003c4         0xc2 build/default/production/start_stop_timer.o
+ .debug_frame     0x000486         0x4c build/default/production/user.o
  .debug_frame     0x0004d2         0x38 build/default/production/main.o
 
 .debug_str        0x000000        0x3aa
  *(.debug_str)
- .debug_str       0x000000         0x2a build/default/production/adc.o
- .debug_str       0x00002a         0x17 build/default/production/buttons.o
- .debug_str       0x000041         0x26 build/default/production/lcd.o
- .debug_str       0x000067         0x6f build/default/production/rtcc.o
- .debug_str       0x0000d6         0x1c build/default/production/system.o
- .debug_str       0x0000f2         0x3f build/default/production/start_stop_timer.o
- .debug_str       0x000131         0x4d build/default/production/pid.o
- .debug_str       0x00017e        0x139 build/default/production/pwm.o
+ .debug_str       0x000000         0x1c build/default/production/system.o
+ .debug_str       0x00001c         0x26 build/default/production/lcd.o
+ .debug_str       0x000042         0x2a build/default/production/adc.o
+ .debug_str       0x00006c         0x17 build/default/production/buttons.o
+ .debug_str       0x000083         0x4d build/default/production/pid.o
+ .debug_str       0x0000d0        0x139 build/default/production/pwm.o
+ .debug_str       0x000209         0x6f build/default/production/rtcc.o
+ .debug_str       0x000278         0x3f build/default/production/start_stop_timer.o
  .debug_str       0x0002b7         0xf3 build/default/production/main.o
 
 .debug_loc
@@ -610,25 +610,25 @@ __FDEVOPT1
                   0x000000        0x48b
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x2a build/default/production/adc.o
+                  0x000000         0x42 build/default/production/system.o
  .debug_pubnames
-                  0x00002a         0x51 build/default/production/buttons.o
+                  0x000042         0x2d build/default/production/pin_manager.o
  .debug_pubnames
-                  0x00007b         0xa3 build/default/production/lcd.o
+                  0x00006f         0xa3 build/default/production/lcd.o
  .debug_pubnames
-                  0x00011e         0x2d build/default/production/pin_manager.o
+                  0x000112         0x2a build/default/production/adc.o
  .debug_pubnames
-                  0x00014b         0x9e build/default/production/rtcc.o
+                  0x00013c         0x51 build/default/production/buttons.o
  .debug_pubnames
-                  0x0001e9         0x42 build/default/production/system.o
+                  0x00018d         0x9c build/default/production/pid.o
  .debug_pubnames
-                  0x00022b         0x3a build/default/production/user.o
+                  0x000229         0x3a build/default/production/pwm.o
  .debug_pubnames
-                  0x000265         0xd8 build/default/production/start_stop_timer.o
+                  0x000263         0x9e build/default/production/rtcc.o
  .debug_pubnames
-                  0x00033d         0x9c build/default/production/pid.o
+                  0x000301         0xd8 build/default/production/start_stop_timer.o
  .debug_pubnames
-                  0x0003d9         0x3a build/default/production/pwm.o
+                  0x0003d9         0x3a build/default/production/user.o
  .debug_pubnames
                   0x000413         0x78 build/default/production/main.o
 
@@ -638,25 +638,25 @@ __FDEVOPT1
 .debug_aranges    0x000000        0x108
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/adc.o
+                  0x000000         0x18 build/default/production/system.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/buttons.o
+                  0x000018         0x18 build/default/production/pin_manager.o
  .debug_aranges
                   0x000030         0x18 build/default/production/lcd.o
  .debug_aranges
-                  0x000048         0x18 build/default/production/pin_manager.o
+                  0x000048         0x18 build/default/production/adc.o
  .debug_aranges
-                  0x000060         0x18 build/default/production/rtcc.o
+                  0x000060         0x18 build/default/production/buttons.o
  .debug_aranges
-                  0x000078         0x18 build/default/production/system.o
+                  0x000078         0x18 build/default/production/pid.o
  .debug_aranges
-                  0x000090         0x18 build/default/production/user.o
+                  0x000090         0x18 build/default/production/pwm.o
  .debug_aranges
-                  0x0000a8         0x18 build/default/production/start_stop_timer.o
+                  0x0000a8         0x18 build/default/production/rtcc.o
  .debug_aranges
-                  0x0000c0         0x18 build/default/production/pid.o
+                  0x0000c0         0x18 build/default/production/start_stop_timer.o
  .debug_aranges
-                  0x0000d8         0x18 build/default/production/pwm.o
+                  0x0000d8         0x18 build/default/production/user.o
  .debug_aranges
                   0x0000f0         0x18 build/default/production/main.o
                     0x0000                  WREG0 = 0x0
@@ -2684,50 +2684,50 @@ LOAD data_init
 .debug_pubtypes
                   0x000108        0x514
  .debug_pubtypes
-                  0x000108         0x92 build/default/production/adc.o
+                  0x000108         0x1e build/default/production/system.o
  .debug_pubtypes
-                  0x00019a         0x2a build/default/production/buttons.o
+                  0x000126         0x12 build/default/production/pin_manager.o
  .debug_pubtypes
-                  0x0001c4         0xa3 build/default/production/lcd.o
+                  0x000138         0xa3 build/default/production/lcd.o
  .debug_pubtypes
-                  0x000267         0x12 build/default/production/pin_manager.o
+                  0x0001db         0x92 build/default/production/adc.o
  .debug_pubtypes
-                  0x000279         0x87 build/default/production/rtcc.o
+                  0x00026d         0x2a build/default/production/buttons.o
  .debug_pubtypes
-                  0x000300         0x1e build/default/production/system.o
+                  0x000297         0x36 build/default/production/pid.o
  .debug_pubtypes
-                  0x00031e         0x29 build/default/production/user.o
+                  0x0002cd        0x103 build/default/production/pwm.o
  .debug_pubtypes
-                  0x000347         0x42 build/default/production/start_stop_timer.o
+                  0x0003d0         0x87 build/default/production/rtcc.o
  .debug_pubtypes
-                  0x000389         0x36 build/default/production/pid.o
+                  0x000457         0x42 build/default/production/start_stop_timer.o
  .debug_pubtypes
-                  0x0003bf        0x103 build/default/production/pwm.o
+                  0x000499         0x29 build/default/production/user.o
  .debug_pubtypes
                   0x0004c2        0x15a build/default/production/main.o
 
 __c30_signature
                   0x00061c         0xb4
  __c30_signature
-                  0x00061c          0x6 build/default/production/adc.o
+                  0x00061c          0x6 build/default/production/system.o
  __c30_signature
-                  0x000622          0x6 build/default/production/buttons.o
+                  0x000622          0x6 build/default/production/pin_manager.o
  __c30_signature
                   0x000628          0x6 build/default/production/lcd.o
  __c30_signature
-                  0x00062e          0x6 build/default/production/pin_manager.o
+                  0x00062e          0x6 build/default/production/adc.o
  __c30_signature
-                  0x000634          0x6 build/default/production/rtcc.o
+                  0x000634          0x6 build/default/production/buttons.o
  __c30_signature
-                  0x00063a          0x6 build/default/production/system.o
+                  0x00063a          0x6 build/default/production/pid.o
  __c30_signature
-                  0x000640          0x6 build/default/production/user.o
+                  0x000640          0x6 build/default/production/pwm.o
  __c30_signature
-                  0x000646          0x6 build/default/production/start_stop_timer.o
+                  0x000646          0x6 build/default/production/rtcc.o
  __c30_signature
-                  0x00064c          0x6 build/default/production/pid.o
+                  0x00064c          0x6 build/default/production/start_stop_timer.o
  __c30_signature
-                  0x000652          0x6 build/default/production/pwm.o
+                  0x000652          0x6 build/default/production/user.o
  __c30_signature
                   0x000658          0x6 build/default/production/main.o
  __c30_signature
