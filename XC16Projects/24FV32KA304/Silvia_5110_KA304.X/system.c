@@ -34,13 +34,13 @@ void ConfigureOscillator(void)
 
 void InitApp(void)                  // Setup analog functionality and port direction
 {
-    TRISA = 0x0A8D;                 // RA2 & 3 (analog 13 & 14) Set as Input, Data Direction 1 = input, 0 = Output
+    TRISA = 0x088D;                 // RA0,2,3,6,9,11 (analog 13 & 14) Set as Input, Data Direction 1 = input, 0 = Output
     TRISB = 0xC064;                 // Data Direction 1 = input, 0 = Output
     TRISC = 0x00FF;                 // Data Direction 1 = input, 0 = Output
     
     ANSA =  0x000C;                 // AN13,14 (pins30,31)is Set as Analog. Analog or Digital 1 = Analog, 0 = Digital
     ANSB =  0x4060;                 // Analog or Digital 1 = Analog, 0 = Digital
-    ANSC =  0x0000;                 // Analog or Digital 1 = Analog, 0 = Digital
+    ANSC =  0x0002;                 // Analog or Digital 1 = Analog, 0 = Digital
     
     PORTA = 0x0000;                 // Power up state of the Port Pins(ie as a 1 or a 0)
     PORTB = 0x0000;

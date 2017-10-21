@@ -79,7 +79,7 @@ int main(void)
     InitializeTimers();
 
     Initialize_PWM();
-    
+
 // ******************************************************************************
     unsigned char initCon = 0;
     
@@ -93,8 +93,12 @@ int main(void)
     
     uint8_t errorCount = 0;                     // errorCount disables power, if water level remains low too long
 
+    uint16_t count = 0;                         // Used to Increment seconds count for Brew Timer
+    
     uint8_t count2 = 0;                         // count2 ramps pump pressure
     
+    uint16_t count3 = 0;                        // Used to count time until Backlight turns Off
+
 //    uint16_t dutyCycle = 0;
 
     int samples[3][numSamples];                 //Used to average temp[] over "numSamples" of samples
@@ -135,7 +139,6 @@ int main(void)
     
     uint8_t powerSwitch = 0;
     
-    uint16_t count = 0;
     
 // ******************************************************************************
     LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
@@ -231,6 +234,8 @@ int main(void)
                 errorCount>20?errorCount=20:errorCount;
                 errorCount<20?airPump=1:(airPump=0);
             }
+            
+            count3 +=1;                         // Seconds counter to turn OFF Backlight
             
             previous_time = time.second;
 
@@ -621,6 +626,8 @@ int main(void)
 // ******************************************************************************  but, also increments mainTimer every second 
         if (testKey == Menu)
         {
+            _LATA9 = 0;
+            
             if(timer<1)
             {
                 powerSwitch = 0;
@@ -661,6 +668,8 @@ int main(void)
         
         if(testKey == Enter)
         {
+            _LATA9 = 0;
+            
             if(timer<1)
             {
                 powerSwitch = 0;
@@ -700,6 +709,8 @@ int main(void)
 
         if (testKey == Down)
         {
+            _LATA9 = 0;
+            
             if(timer<1)
             {
                 powerSwitch = 0;
@@ -801,9 +812,15 @@ int main(void)
         if (testKey == Up)                                  // Reset the LCD
         {
             LCDInit();
+            __delay_ms(100);
             LCDClear();
-            LCDBitmap(&coffee[0], 0, 504);                  //Draw I "Heart" coffee
-            __delay_ms(3000);
+            _LATA9 = 0;
+        }
+        
+        if(count3 > 64800)
+        {
+            _LATA9 = 1;
+            count3 = 0;
         }
                         
  // ******************************************************************************

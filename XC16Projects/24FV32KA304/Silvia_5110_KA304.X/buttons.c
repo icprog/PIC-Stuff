@@ -8,24 +8,24 @@ int8_t      j           =   0;
 
 char readButton(void)
 {
-    readButtons = ADCRead(6);                           // Read AN6 (_RB6) Value to determine which button is pushed
+    readButtons = ADCRead(7);                           // Read AN6 (_RB6) Value to determine which button is pushed
     
-    if(readButtons > 1900 && readButtons < 2050)
+    if(readButtons > 1500 && readButtons < 2170)
     {
         button = Menu;                                  // Menu Button has been pressed
     }
     
-    else if(readButtons > 2250 && readButtons < 2460)
+    else if(readButtons >= 2170 && readButtons < 2690)
     {
         button = Enter;                                 // Enter Button has been pressed
     }
     
-    else if(readButtons > 2900 && readButtons < 3100)
+    else if(readButtons >= 2690 && readButtons < 3550)
     {
         button = Down;                                  // Down Button has been pressed
     }
     
-    else if(readButtons > 3900)
+    else if(readButtons > 3550)
     {
         button = Up;                                    // Up Button has been pressed
     }

@@ -182,22 +182,22 @@ RTCTime getRTCTime()
 //***************************************************************************************************************************************************************
                     // <editor-fold defaultstate="collapsed" desc="Display Time">
 
-    void displayTime(void)
-    {
-        RTCTime time;                                                               // declare the type of the time object
-        time = getRTCTime();                                                        // Read current time from RTCC
-        LCDWriteIntXY(1,3,time.year,2,0,0);
-        LCDWriteCharacter('/');
-        LCDWriteString(month[time.month]);
-        LCDWriteCharacter('/');
-        LCDWriteInt(time.day,2,0,0);
-        LCDWriteStringXY(1,13,WeekDay[time.weekday]);
-        LCDWriteIntXY(1,17,time.hour,2,0,0);
-        LCDWriteCharacter(':');
-        LCDWriteInt(time.minute,2,0,0);
-        LCDWriteCharacter(':');
-        LCDWriteInt(time.second,2,0,0);
-    }
+void displayTime(void)
+{
+    RTCTime time;                                                               // declare the type of the time object
+    time = getRTCTime();                                                        // Read current time from RTCC
+    LCDWriteIntXY(0,0,time.year,2,0,0);
+    LCDWriteCharacter('/');
+    LCDWriteString(month[time.month]);
+    LCDWriteCharacter('/');
+    LCDWriteInt(time.day,2,0,0);
+    LCDWriteStringXY(37,0,WeekDay[time.weekday]);
+    LCDWriteIntXY(50,0,time.hour,2,0,0);
+    LCDWriteCharacter(':');
+    LCDWriteInt(time.minute,2,0,0);
+    LCDWriteCharacter(':');
+    LCDWriteInt(time.second,2,0,0);
+}
 // </editor-fold>
 //***************************************************************************************************************************************************************
                     // <editor-fold defaultstate="collapsed" desc="Set Time">
@@ -484,7 +484,7 @@ void SetTime()
 // </editor-fold>
 //***************************************************************************************************************************************************************
                     // <editor-fold defaultstate="collapsed" desc="Run Auto Start Times">
-
+/*
 int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
 {
     static char run;
@@ -501,9 +501,9 @@ int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
     return run;
 }
 // </editor-fold>
-//***************************************************************************************************************************************************************
+*/ //***************************************************************************************************************************************************************
                     // <editor-fold defaultstate="collapsed" desc="Set Auto Start/Stop Times">
-
+/*
 void writeStartStopTimes(void)
 {
     int16_t timer = 0;                                                     // Used to return to operation if user does not finish!
@@ -575,9 +575,10 @@ void writeStartStopTimes(void)
 }
 
 // </editor-fold>
+ */
 //***************************************************************************************************************************************************************
                     // <editor-fold defaultstate="collapsed" desc="Set Auto Start Hour">
-
+/*
 int8_t setStartHour(int8_t b)
 {
     int16_t timer = 0;                                                         // Used to return to operation if user does not finish!
@@ -838,3 +839,4 @@ int8_t setStopMinute(int8_t b)
     return (result);
 }
 // </editor-fold>
+ */

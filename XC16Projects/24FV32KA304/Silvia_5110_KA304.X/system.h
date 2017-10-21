@@ -20,6 +20,7 @@
 #include "pid.h"
 #include "level.h"
 #include "pwm.h"
+#include "start_stop_timer.h"
 
 
 //********** Add the following to solve __delay_ms() issues in XC16 ************
