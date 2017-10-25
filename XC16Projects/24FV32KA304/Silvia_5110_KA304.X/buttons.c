@@ -8,7 +8,7 @@ int8_t      j           =   0;
 
 char readButton(void)
 {
-    readButtons = ADCRead(7);                           // Read AN6 (_RB6) Value to determine which button is pushed
+    readButtons = ADCRead(7);                           // Read AN7 (_RC1) Value to determine which button is pushed
     
     if(readButtons > 1500 && readButtons < 2170)
     {

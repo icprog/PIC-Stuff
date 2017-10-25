@@ -1,13 +1,12 @@
 #include    "system.h"
 #include    "menu.h"
 // ***************************************************************************************************************************************************************
-#define piezoOutput             _LATC9
-#define backLightOn             _LATA1
-#define airPump                 _LATA8
-// ***************************************************************************************************************************************************************
+#define piezoOutput             _LATC9          // FIX
+#define backLightOFF            _LATA9          // Backlight is active LOW, so "0" is "ON", "1" is "OFF"
+#define airPump                 _LATA8          // FIX
 
 // *************** Inputs ****************************************************************************************************************************************
-// ADC Input to read Button press (User Input Keys) on _RB6 (AN6)                                               G
+// ADC Input to read Button press (User Input Keys) on _RC1 (AN7)                                               G
 // ***************************************************************************************************************************************************************
 
 //***************************Timer2 set in pwm.c
@@ -55,17 +54,17 @@ int __attribute__ ((space(eedata))) Settings[43];                               
 
 RTCTime time;                                   // declare the type of the time object
 
-unsigned int setpoint[]    =   {0, 2,  4};      //setpoint EEPROM Address "offset" values
+unsigned int setpoint[]     =   {0, 2,  4};     //setpoint EEPROM Address "offset" values
 
-unsigned int deadband[]    =   {6, 8, 10};                                         //dead band EEPROM Address "offset" values
+unsigned int deadband[]     =   {6, 8, 10};     //dead band EEPROM Address "offset" values
 
-int const Kp[]          =   {12, 16, 20};
+int const Kp[]              =   {12, 16, 20};
 
-int const Ki[]          =   {24, 28, 32};
+int const Ki[]              =   {24, 28, 32};
 
-int const Kd[]          =   {34, 36, 38};
+int const Kd[]              =   {34, 36, 38};
 
-int dutyCycle[]         =   { 0,  0,  0};       // 
+int dutyCycle[]             =   { 0,  0,  0};   // Duty Cycle for PWM Outputs
 
 char *desc[] = {"Water Temp:","Steam Temp:","Group Temp:"};
 
@@ -98,8 +97,6 @@ int main(void)
     uint8_t count2 = 0;                         // count2 ramps pump pressure
     
     uint16_t count3 = 0;                        // Used to count time until Backlight turns Off
-
-//    uint16_t dutyCycle = 0;
 
     int samples[3][numSamples];                 //Used to average temp[] over "numSamples" of samples
     
@@ -149,15 +146,15 @@ int main(void)
 
     while(1)
     {
- //       power = _RG9;                                  // FIX
-//        power = !_RG9;                                  // RG9 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
+        power = _RB11;                          // FIX
+//        power = !_RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
-        brewSwitch = !_RB4;                             // RB4 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
+        brewSwitch = !_RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
-//        steamSwitch = _RB5;                            // RB5 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
-        steamSwitch = !_RB5;                            // RB5 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
+//        steamSwitch = _RA7;                     // RA7 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
+        steamSwitch = !_RA7;                    // RA7 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
         
-        waterSwitch = !_RB3;                            // RB3 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
+        waterSwitch = !_RC9;                    // RC9 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
 
         static int timer = 0;                                                   // Used to count up time in a loop, to auto exit if user in a menu too long
         
@@ -230,16 +227,20 @@ int main(void)
 //            level = waterTankLevel();
             level = 30;
  
-            level<10?powerSwitch=0:powerSwitch;
+            level<10?powerSwitch=0:powerSwitch; // If LEVEL is less than 10%, Disable Outputs
             
-            if(level < 10)
+            if(level < 15)
             {
-                errorCount +=1;
-                errorCount>20?errorCount=20:errorCount;
-                errorCount<20?airPump=1:(airPump=0);
+                errorCount +=1;                 // Increment the ERROR COUNTER
+                errorCount>20?errorCount=20:errorCount;// Limit Error Counter to 20
+                errorCount<20?airPump=1:(airPump=0);// Run Air Pump for up to 20 seconds if level is "LOW", ensure Level is actually LOW     //FIX           
+            }
+            else
+            {
+                errorCount = 0;
             }
             
-            count3 +=1;                         // Seconds counter to turn OFF Backlight
+            count3 +=1;                         // Increment the "Seconds" counter to turn OFF Backlight
             
             previous_time = time.second;
 
@@ -632,7 +633,7 @@ int main(void)
 // ******************************************************************************  but, also increments mainTimer every second 
         if (testKey == Menu)
         {
-            _LATA9 = 0;
+            count3 = 0;                         // Reset BackLight counter
             
             if(timer<1)
             {
@@ -642,7 +643,7 @@ int main(void)
             }
             
             LCDClear();
-            LCDBitmap(&menu2[0], 5,84);                         //Draw Menu2
+            LCDBitmap(&menu2[0], 5,84);         //Draw Menu2
             LCDWriteStringXY(4,1,"Press \"ENTER\" Key");
             LCDWriteStringXY(4,2,"to Set the Time");
 
@@ -655,7 +656,7 @@ int main(void)
                 {
                     timer = 0;
                     LCDClear();
-                    LCDBitmap(&menu2[0], 5, 84);            //Draw Menu2
+                    LCDBitmap(&menu2[0], 5, 84);//Draw Menu2
                     goto done2;
                 }
             }
@@ -667,14 +668,14 @@ int main(void)
             __delay_ms(500);
             
             done2:;
-            LCDBitmap(&menu0[0], 5, 84);                    //Draw Menu0
+            LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
         }
         
 // ******************************************************************************
         
         if(testKey == Enter)
         {
-            _LATA9 = 0;
+            count3 = 0;                         // Reset BackLight counter
             
             if(timer<1)
             {
@@ -686,7 +687,7 @@ int main(void)
 //            testKey = KEY_NONE;
             
             LCDClear();
-            LCDBitmap(&menu2[0], 5, 84);                         //Draw Menu2
+            LCDBitmap(&menu2[0], 5, 84);        //Draw Menu2
             LCDWriteStringXY(0,1,"Press \"ENTER\" to Set Start/Stop Times");
 
             while(testKey != Enter)
@@ -699,14 +700,14 @@ int main(void)
                 {
                     timer = 0;
                     LCDClear();
-                    LCDBitmap(&menu2[0], 5, 84);                  //Draw Menu2
+                    LCDBitmap(&menu2[0], 5, 84);//Draw Menu2
                     goto Exit2;                                                 
                 }
             }
             
             timer = 0;
             writeStartStopTimes();
-            LCDBitmap(&menu0[0], 5, 84);                          //Draw Menu0
+            LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
             __delay_ms(500);
             
             Exit2:; 
@@ -715,7 +716,7 @@ int main(void)
 
         if (testKey == Down)
         {
-            _LATA9 = 0;
+            count3 = 0;                         // Reset BackLight counter
             
             if(timer<1)
             {
@@ -727,7 +728,7 @@ int main(void)
             if(timer < 2)
             {
                 LCDClear();
-                LCDBitmap(&menu2[0], 5, 84);                     //Draw Menu2
+                LCDBitmap(&menu2[0], 5, 84);    //Draw Menu2
                 testKey = None;
                 __delay_ms(750);
             }
@@ -744,8 +745,8 @@ int main(void)
                 {
                     timer = 0;
                     LCDClear();
-                    LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
-                    goto Exit;                                   //This uses less memory than TestKey = KEY_3
+                    LCDBitmap(&menu0[0], 5, 84);//Draw Menu0
+                    goto Exit;                  //This uses less memory than TestKey = KEY_3
                 }
 
                 switch(testKey)
@@ -820,14 +821,18 @@ int main(void)
             LCDInit();
             __delay_ms(100);
             LCDClear();
-            _LATA9 = 0;                         // Turn ON the BackLight
+            count3 = 0;                         // Reset BackLight counter
             LCDBitmap(&menu0[0], 5, 84);        // Draw Menu0
         }
         
         if(count3 > 1200)                       // No Keys Pressed for 20 Minutes
         {
-            _LATA9 = 1;                         // so, we might as well shut OFF the LCD BackLight
-            count3 = 0;                         // and, reset the count, so it will turn on with the next Key Press
+            backLightOFF = 1;                   // so, we might as well shut OFF the LCD BackLight
+            count3 = 1200;                         // and, reset the count, so it will turn on with the next Key Press
+        }
+        else
+        {
+            backLightOFF = 0;
         }
                         
  // ******************************************************************************
