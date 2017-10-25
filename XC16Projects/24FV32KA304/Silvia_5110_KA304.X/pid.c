@@ -21,7 +21,7 @@ void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd)
     pidPrevInput[controller]            = 0;
 }
 
-// *************** Calculate PID Runs faster if called more often **************    
+// *************** PID_Calculate Runs faster if called more often **************    
 float PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int temp)
 {
     float error, errorValue, derivativeValue = 0, Result;

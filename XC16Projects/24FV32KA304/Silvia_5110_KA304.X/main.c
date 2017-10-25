@@ -38,12 +38,11 @@
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
-#define groupHeadSetpoint       50
-//#define groupHeadSetpoint       eepromGetData(setpoint[2])
+#define groupHeadSetpoint       eepromGetData(setpoint[2])
 
-#define waterDeadband           eepromGetData(deadband[0])
-#define steamDeadband           eepromGetData(deadband[1])
-#define GroupHeadDeadband       eepromGetData(deadband[2])
+//#define waterDeadband           eepromGetData(deadband[0])                    // FIX Remove all deadband Junk, work with PID
+//#define steamDeadband           eepromGetData(deadband[1])
+//#define GroupHeadDeadband       eepromGetData(deadband[2])
 
 #define boilerTemperature       temp[0]
 #define steamTemperature        temp[1]
@@ -54,9 +53,9 @@
 // ***************************************************************************************************************************************************************
 int __attribute__ ((space(eedata))) Settings[43];                               // Global variable located in EEPROM (created by the space()attribute
 
-RTCTime time;                                                                   // declare the type of the time object
+RTCTime time;                                   // declare the type of the time object
 
-unsigned int setpoint[]    =   {0, 2,  4};                                         //setpoint EEPROM Address "offset" values
+unsigned int setpoint[]    =   {0, 2,  4};      //setpoint EEPROM Address "offset" values
 
 unsigned int deadband[]    =   {6, 8, 10};                                         //dead band EEPROM Address "offset" values
 
@@ -65,6 +64,8 @@ int const Kp[]          =   {12, 16, 20};
 int const Ki[]          =   {24, 28, 32};
 
 int const Kd[]          =   {34, 36, 38};
+
+int dutyCycle[]         =   { 0,  0,  0};       // 
 
 char *desc[] = {"Water Temp:","Steam Temp:","Group Temp:"};
 
@@ -126,9 +127,13 @@ int main(void)
 
     int internalBGV;
     
-    int PIDValue[] = {0,0,0};                                                   // PID calculated values
+    int PIDValue[] = {0,0,0};                   // PID calculated values
     
-    int previous_time = 0;                                                      //Used with time.second to limit some stuff to once a second
+    int setRangeL[] =   {1750,2500,1800};       // Set Point Low Limits
+    
+    int setRangeH[] =   {2100,2850,2150};       // Set Point High Limits
+    
+    int previous_time = 0;                      //Used with time.second to limit some stuff to once a second
             
     int counter[6] = {0,0,0,0,0,0};                                             //PID Counter for boiler temp, steam temp, and grouphead temp, as well as shot progress counter, shot timer, and warning timer
     
@@ -783,7 +788,7 @@ int main(void)
             LCDClear();
             LCDBitmap(&menu2[0], 5, 84);              //Draw Menu2
             LCDWriteStringXY(0,0,"SetPoint = ");
-            eepromPutData(setpoint[choice], setParameter(44,0,1750,2950,eepromGetData(setpoint[choice])));
+            eepromPutData(setpoint[choice], setParameter(44,0,setRangeL[choice],setRangeH[choice],eepromGetData(setpoint[choice])));
             
             LCDWriteStringXY(0,1,"DeadBand =");
             eepromPutData(deadband[choice], setParameter(44,1,5,100,eepromGetData(deadband[choice])));            
@@ -819,7 +824,7 @@ int main(void)
             LCDBitmap(&menu0[0], 5, 84);        // Draw Menu0
         }
         
-        if(count3 > 64800)                      // No Keys Pressed for 18 Minutes
+        if(count3 > 1200)                       // No Keys Pressed for 20 Minutes
         {
             _LATA9 = 1;                         // so, we might as well shut OFF the LCD BackLight
             count3 = 0;                         // and, reset the count, so it will turn on with the next Key Press
