@@ -1,12 +1,13 @@
 #include    "system.h"
 #include    "menu.h"
+#include    "coffee.h"
 // ***************************************************************************************************************************************************************
-#define piezoOutput             _LATC9          // FIX
-#define backLightOFF            _LATA9          // Backlight is active LOW, so "0" is "ON", "1" is "OFF"
+#define piezoOutput             _LATA1          // Output to turn on Piezo, if Brew switch left on too long
+#define backLightOFF            _LATA9          // Backlight is active LOW, so "0" is "ON", "1" is "OFF" Pin 35
 #define airPump                 _LATA8          // FIX
 
 // *************** Inputs ****************************************************************************************************************************************
-// ADC Input to read Button press (User Input Keys) on _RC1 (AN7)                                               G
+// ADC Input to read Button press (User Input Keys) on _RC1 (AN7) Pin 26                                               G
 // ***************************************************************************************************************************************************************
 
 //***************************Timer2 set in pwm.c
@@ -91,12 +92,16 @@ int main(void)
     uint8_t blink = 1;                          // blink flashes display when water level low
     
     uint8_t errorCount = 0;                     // errorCount disables power, if water level remains low too long
+    
+    char errorSustained = 0;
 
     uint16_t count = 0;                         // Used to Increment seconds count for Brew Timer
     
     uint8_t count2 = 0;                         // count2 ramps pump pressure
     
     uint16_t count3 = 0;                        // Used to count time until Backlight turns Off
+    
+    char count4 = 2;                            // Used to display Splash Screen Periodically
 
     int samples[3][numSamples];                 //Used to average temp[] over "numSamples" of samples
     
@@ -161,37 +166,37 @@ int main(void)
         time = getRTCTime();                                                    // get the time
         
 
-        shortTermTemp[0] = ADCRead(17);                                          //Assign the ADC(17) Temp to a temporary variable
+        shortTermTemp[0] = ADCRead(4);          //Assign the ADC(4) Boiler Temp to a temporary variable
         
-        total[0] = total[0] - samples[0][sampleIndex];                          // Subtract the oldest sample data from the total
+        total[0] = total[0] - samples[0][sampleIndex];// Subtract the oldest sample data from the total
 
-        samples[0][sampleIndex] = shortTermTemp[0];                             // Assign the just read temperature to the location of the current oldest data
+        samples[0][sampleIndex] = shortTermTemp[0];   // Assign the just read temperature to the location of the current oldest data
         
-        total[0] = total[0] + samples[0][sampleIndex];                          // Add that new sample to the total
+        total[0] = total[0] + samples[0][sampleIndex];// Add that new sample to the total
 
-        boilerTemperature = total[0] / numSamples;                              // Assign the average value of total to the boilerTemperature variable
+        boilerTemperature = total[0] / numSamples;    // Assign the average value of total to the boilerTemperature variable
         
 //        steamTemperature = boilerTemperature;                                   //This is a single boiler, so Steam & Water temps are the same measurement
 
 
-        shortTermTemp[1] = ADCRead(12);                 // Assign the ADC(12) (Steam Temp) to a temporary variable
+        shortTermTemp[1] = ADCRead(5);          // Assign the ADC(5) (Steam Temp) to a temporary variable
         
-        total[1] = total[1] - samples[1][sampleIndex];  // Subtract the oldest sample data from the total
+        total[1] = total[1] - samples[1][sampleIndex];// Subtract the oldest sample data from the total
 
-        samples[1][sampleIndex] = shortTermTemp[1];     // Assign the just read temperature to the location of the current oldest data
+        samples[1][sampleIndex] = shortTermTemp[1];   // Assign the just read temperature to the location of the current oldest data
         
-        total[1] = total[1] + samples[1][sampleIndex];  // Add that new sample to the total
+        total[1] = total[1] + samples[1][sampleIndex];// Add that new sample to the total
         
-        sampleIndex += 1;                               // and move to the next index location
+        sampleIndex += 1;                             // and move to the next index location
         
-        if(sampleIndex >= numSamples)                   //If we have reached the max number of samples
+        if(sampleIndex >= numSamples)                 //If we have reached the max number of samples
         {
-            sampleIndex = 0;                            //Reset to zero
+            sampleIndex = 0;                          //Reset to zero
         }
-        steamTemperature = total[1] / numSamples;       // Assign the average value of total to the GroupHeadTemp variable
+        steamTemperature = total[1] / numSamples;     // Assign the average value of total to the GroupHeadTemp variable
 
  
-        shortTermTemp[2] = ADCRead(18);                                          //Assign the ADC(18) Temp to a temporary variable
+        shortTermTemp[2] = ADCRead(6);          //Assign the ADC(6) Group Head Temp to a temporary variable
         
         total[2] = total[2] - samples[2][sampleIndex];                          // Subtract the oldest sample data from the total
 
@@ -215,32 +220,48 @@ int main(void)
             
             if(power==1 || ONTimer==1)
             {
-                powerSwitch = 1;
+                powerSwitch = 1;                // powerSwitch is the Virtual Power control Variable
             }
             else
             {
-                powerSwitch = 0;
+                powerSwitch = 0;                // powerSwitch can turn OFF device, even if Power is ON
             }
             
-            errorCount>9?powerSwitch=0:powerSwitch;
+            errorCount>19?powerSwitch=0:powerSwitch;
             
 //            level = waterTankLevel();
             level = 30;
  
             level<10?powerSwitch=0:powerSwitch; // If LEVEL is less than 10%, Disable Outputs
             
-            if(level < 15)
+            if(level < 12)
             {
                 errorCount +=1;                 // Increment the ERROR COUNTER
                 errorCount>20?errorCount=20:errorCount;// Limit Error Counter to 20
-                errorCount<20?airPump=1:(airPump=0);// Run Air Pump for up to 20 seconds if level is "LOW", ensure Level is actually LOW     //FIX           
+//                errorCount<20?airPump=1:(airPump=0);// Run Air Pump for up to 20 seconds if level is "LOW", ensure Level is actually LOW     //FIX           
             }
             else
             {
-                errorCount = 0;
+                errorCount -= 1;
+            }
+            
+            if(errorCount > 1)
+            {
+                errorSustained>15?airPump=0:(airPump=1,errorSustained+=1);
+                
+                //if(errorSustained > 15)
+              //  {
+            //        airPump = 0;
+          //      }
+        //        else
+      //          {
+    //                airPump = 1;
+  //                  errorSustained +=1;
+//                }
             }
             
             count3 +=1;                         // Increment the "Seconds" counter to turn OFF Backlight
+            count4+=1;
             
             previous_time = time.second;
 
@@ -253,7 +274,6 @@ int main(void)
             } 
             
 // ******************************************************************************
- 
             if(powerFail == 1)
             {
                 LCDWriteStringXY(4,0,"Press \"Time\" to Set");
@@ -317,6 +337,8 @@ int main(void)
                 }
                 
                 LCDWriteIntXY(0,4,GroupHeadPID,5,0,0);
+                LCDWriteIntXY(24,4,powerSwitch,1,0,0);
+                LCDWriteIntXY(32,4,count4,4,0,0);
             }
         }
 
@@ -618,6 +640,13 @@ int main(void)
             shotTimer           = 0;
     //        dutyCycle           = 0;
             piezoOutput         = 0;
+            if(count4 >1)
+            {
+//                LCDBitmap(&menu2[0], 5,84);   //Draw Splash Screen
+                count4 -= 8;
+                backLightOFF = 1;
+                count3 = 0;
+            }
         }
 // ******************************************************************************
         
@@ -828,7 +857,7 @@ int main(void)
         if(count3 > 1200)                       // No Keys Pressed for 20 Minutes
         {
             backLightOFF = 1;                   // so, we might as well shut OFF the LCD BackLight
-            count3 = 1200;                         // and, reset the count, so it will turn on with the next Key Press
+            count3 = 1200;                      // and, reset the count, so it will turn on with the next Key Press
         }
         else
         {

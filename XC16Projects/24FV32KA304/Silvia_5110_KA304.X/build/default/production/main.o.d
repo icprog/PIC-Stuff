@@ -11,4 +11,5 @@ adc.h  \
 pid.h  \
 level.h  \
 pwm.h  \
-menu.h 
+menu.h  \
+coffee.h 
