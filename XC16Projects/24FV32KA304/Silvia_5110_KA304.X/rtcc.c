@@ -4,6 +4,8 @@
 //***************************************************************************************************************************************************************
 
 extern char powerFail;
+char run = 0;
+
 
 char *WeekDay[7]    = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 char *month[13]     = {"NUL","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
@@ -23,6 +25,8 @@ unsigned char testKey = None;
 char sel = 0;
     
 char done = 0;
+
+
 
 //***************************************************************************************************************************************************************
 
@@ -434,8 +438,6 @@ void SetTime()
 
 int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
 {
-    static char run;
-    
     if(hour == eepromGetData(startHour[weekday]) && minute == eepromGetData(startMinute[weekday]))
     {
         run = 1;

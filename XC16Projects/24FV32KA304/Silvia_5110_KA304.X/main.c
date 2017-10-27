@@ -15,10 +15,10 @@
 
 #define max                     2048                                // This needs to move to EEPROM
 #define min                     400                                 // Also needs to move to EEPROM & have User interface coded
-#define preInfusionDutyCycle    500                                  // This needs to move to EEPROM & have a User Interface set up so user can change it
-#define preInfusionTime         (25)                                // length of time to run pump to preInfuse puck
-#define soakTime                (preInfusionTime + 15)              // Length of time for wetted puck to soak
-#define startRamp               (soakTime + 25)                     // StartRamp starts pump and Ramps up to Max Pressure
+#define preInfusionDutyCycle    500        //FIX                         // This needs to move to EEPROM & have a User Interface set up so user can change it
+#define preInfusionTime         (25)            //FIX                    // length of time to run pump to preInfuse puck
+#define soakTime                (preInfusionTime + 15)   //FIX           // Length of time for wetted puck to soak
+#define startRamp               (soakTime + 25)               //FIX      // StartRamp starts pump and Ramps up to Max Pressure
 #define continuePull            (800 + 1)                           // Shot duration, 60 seconds from Start of Cycle(601)
 #define warning                 (850 + 1)                           // Turn on Warning Piezo, reminder to turn off switch (651)
 
@@ -55,21 +55,23 @@ int __attribute__ ((space(eedata))) Settings[43];                               
 
 RTCTime time;                                   // declare the type of the time object
 
-unsigned int setpoint[]     =   {0, 2,  4};     //setpoint EEPROM Address "offset" values
+unsigned int setpoint[] =   {0, 2,  4};         //setpoint EEPROM Address "offset" values
 
-unsigned int deadband[]     =   {6, 8, 10};     //dead band EEPROM Address "offset" values
+unsigned int deadband[] =   {6, 8, 10};         //dead band EEPROM Address "offset" values
 
-int const Kp[]              =   {12, 16, 20};
+int const Kp[]          =   {12, 16, 20};
 
-int const Ki[]              =   {24, 28, 32};
+int const Ki[]          =   {24, 28, 32};
 
-int const Kd[]              =   {34, 36, 38};
+int const Kd[]          =   {34, 36, 38};
 
-int dutyCycle[]             =   { 0,  0,  0};   // Duty Cycle for PWM Outputs
+int dutyCycle[]         =   { 0,  0,  0};       // Duty Cycle for PWM Outputs
 
-char *desc[] = {"Water Temp:","Steam Temp:","Group Temp:"};
+char *desc[]            = {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int powerFail = 1;                                                              //Setting powerFail to 1, instructs the user to set the time
+int powerFail           = 1;                    //Setting powerFail to 1, instructs the user to set the time
+
+extern char run;
 
 // ******************************************************************************
 int main(void)
@@ -91,7 +93,7 @@ int main(void)
 // ******************************************************************************
     uint8_t blink = 1;                          // blink flashes display when water level low
     
-    uint8_t errorCount = 0;                     // errorCount disables power, if water level remains low too long
+    char errorCount = 0;                     // errorCount disables power, if water level remains low too long
     
     char errorSustained = 0;
 
@@ -99,10 +101,8 @@ int main(void)
     
     uint8_t count2 = 0;                         // count2 ramps pump pressure
     
-    uint16_t count3 = 0;                        // Used to count time until Backlight turns Off
+    uint16_t count3 = 1200;                        // Used to count time until Backlight turns Off
     
-    char count4 = 2;                            // Used to display Splash Screen Periodically
-
     int samples[3][numSamples];                 //Used to average temp[] over "numSamples" of samples
     
     unsigned int temp[3];
@@ -139,20 +139,21 @@ int main(void)
             
     int counter[6] = {0,0,0,0,0,0};                                             //PID Counter for boiler temp, steam temp, and grouphead temp, as well as shot progress counter, shot timer, and warning timer
     
-    uint16_t level = 0;
+    uint16_t level      = 0;
     
-    uint8_t ONTimer = 0;
+    static char ONTimer = 0;
     
-    uint8_t powerSwitch = 0;
+    char powerSwitch    = 0;
     
+    char lastPowerState = 0;
     
 // ******************************************************************************
     LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
 
     while(1)
     {
-        power = _RB11;                          // FIX
-//        power = !_RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
+//        power = _RB11;                          // FIX
+        power = !_RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
         brewSwitch = !_RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
@@ -221,13 +222,14 @@ int main(void)
             if(power==1 || ONTimer==1)
             {
                 powerSwitch = 1;                // powerSwitch is the Virtual Power control Variable
+                (power==1)?(run=0):(run=run);   // if power switch is on, disable AutoStart, or Kill AutoStart by cycling Power Switch
             }
             else
             {
-                powerSwitch = 0;                // powerSwitch can turn OFF device, even if Power is ON
+                powerSwitch = 0;                // powerSwitch can turn OFF Machine, even if Power is ON
             }
             
-            errorCount>19?powerSwitch=0:powerSwitch;
+            errorCount>19?powerSwitch=0:powerSwitch;// If errorCount (water Level Low) > 19 seconds, turn OFF Power
             
 //            level = waterTankLevel();
             level = 30;
@@ -238,30 +240,19 @@ int main(void)
             {
                 errorCount +=1;                 // Increment the ERROR COUNTER
                 errorCount>20?errorCount=20:errorCount;// Limit Error Counter to 20
-//                errorCount<20?airPump=1:(airPump=0);// Run Air Pump for up to 20 seconds if level is "LOW", ensure Level is actually LOW     //FIX           
             }
             else
             {
                 errorCount -= 1;
+                errorCount<0?errorCount=0:errorCount;
             }
             
             if(errorCount > 1)
             {
                 errorSustained>15?airPump=0:(airPump=1,errorSustained+=1);
-                
-                //if(errorSustained > 15)
-              //  {
-            //        airPump = 0;
-          //      }
-        //        else
-      //          {
-    //                airPump = 1;
-  //                  errorSustained +=1;
-//                }
             }
             
             count3 +=1;                         // Increment the "Seconds" counter to turn OFF Backlight
-            count4+=1;
             
             previous_time = time.second;
 
@@ -274,71 +265,86 @@ int main(void)
             } 
             
 // ******************************************************************************
-            if(powerFail == 1)
+            if(powerSwitch)
             {
-                LCDWriteStringXY(4,0,"Press \"Time\" to Set");
-                LCDWriteStringXY(4,1,"the Current Time");
-            }
-            else
-            {
-                displayTime();
-
-                gotoXY(2,1);                                //LCD Line 2 Display
-
-                if(steamSwitch)
+                if(lastPowerState!=powerSwitch)
                 {
-                    LCDWriteString(desc[1]);
-                    LCDWriteIntXY(48,1,steamTemperature,4,1,0);
-                    LCDWriteCharacter(123);                 // generate degree symbol in font list
-                    LCDWriteCharacter(70);
+                    LCDClear();
+                    LCDBitmap(&menu0[0], 5, 84);//Draw Menu0
+                }
+                
+                if(powerFail == 1)
+                {
+                    LCDWriteStringXY(4,0,"Press \"Time\" to Set");
+                    LCDWriteStringXY(4,1,"the Current Time");
                 }
                 else
                 {
-                    LCDWriteString(desc[0]);
-                    LCDWriteIntXY(48,1,boilerTemperature,4,1,0);
-                    LCDWriteCharacter(123);                 // generate degree symbol in font list
-                    LCDWriteCharacter(70);
-                }
+                    displayTime();
 
-                LCDWriteStringXY(2,2,desc[2]);
-                LCDWriteIntXY(48,2,GroupHeadTemp,4,1,0);
-                LCDWriteCharacter(123);                     // generate degree symbol in font list
-                LCDWriteCharacter(70);
-                LCDWriteCharacter(' ');
+                    gotoXY(2,1);                                //LCD Line 2 Display
+
+                    if(steamSwitch)
+                    {
+                        LCDWriteString(desc[1]);
+                        LCDWriteIntXY(48,1,steamTemperature,4,1,0);
+                        LCDWriteCharacter(123);                 // generate degree symbol in font list
+                        LCDWriteCharacter(70);
+                    }
+                    else
+                    {
+                        LCDWriteString(desc[0]);
+                        LCDWriteIntXY(48,1,boilerTemperature,4,1,0);
+                        LCDWriteCharacter(123);                 // generate degree symbol in font list
+                        LCDWriteCharacter(70);
+                    }
+
+                    LCDWriteStringXY(2,2,desc[2]);
+                    LCDWriteIntXY(48,2,GroupHeadTemp,4,1,0);
+                    LCDWriteCharacter(123);                     // generate degree symbol in font list
+                    LCDWriteCharacter(70);
+                    LCDWriteCharacter(' ');
                 
-                if(shotTimer == 0)
-                {
-                    LCDWriteStringXY(2,3,"Tank Level:");
-                    LCDWriteIntXY(48,3,level,-1,0,0);
-                    LCDWriteCharacter('%');
-                    LCDWriteCharacter(' ');
-                    LCDWriteCharacter(' ');
+                    if(shotTimer == 0)
+                    {
+                        LCDWriteStringXY(2,3,"Tank Level:");
+                        LCDWriteIntXY(48,3,level,-1,0,0);
+                        LCDWriteCharacter('%');
+                        LCDWriteCharacter(' ');
+                        LCDWriteCharacter(' ');
                     
       //              LCDWriteIntXY(5,4,testKey,5,0,0);
 //                    LCDWriteIntXY(5,4,dutyCycle,5,0);
 //                    LCDWriteIntXY(5,16,count,5,0);
         //            LCDWriteIntXY(5,22,shotProgressCounter,5,0,0);
                     
-                    if(level < 25)
-                    {
-                        blink = 1 - blink;
-                        if(blink)
+                        if(level < 25)
                         {
-                            LCDWriteStringXY(48,3,"LOW");
-                            LCDWriteCharacter(' ');
-                            LCDWriteCharacter(' ');
+                            blink = 1 - blink;
+                            if(blink)
+                            {
+                                LCDWriteStringXY(48,3,"LOW");
+                                LCDWriteCharacter(' ');
+                                LCDWriteCharacter(' ');
+                            }
                         }
                     }
-                }
-                else
-                {
-                    LCDWriteStringXY(2,3,"Shot Timer:");
-                    LCDWriteIntXY(48,3,shotTimer,4,1,0);
-                }
+                    else
+                    {
+                        LCDWriteStringXY(2,3,"Shot Timer:");
+                        LCDWriteIntXY(48,3,shotTimer,4,1,0);
+                    }
                 
-                LCDWriteIntXY(0,4,GroupHeadPID,5,0,0);
-                LCDWriteIntXY(24,4,powerSwitch,1,0,0);
-                LCDWriteIntXY(32,4,count4,4,0,0);
+                    LCDWriteIntXY(0,4,GroupHeadPID,5,0,0);
+                    LCDWriteIntXY(24,4,powerSwitch,1,0,0);
+                }
+            }
+            else
+            {
+                LCDBitmap(&coffee[0], 0,504);   //Draw Splash Screen
+                gotoXY(1,4);
+                LCDWriteCharacter(' ');         // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
+                count3+=1200;                   // 1200 counts is the number required to turn OFF the Backlight
             }
         }
 
@@ -640,13 +646,6 @@ int main(void)
             shotTimer           = 0;
     //        dutyCycle           = 0;
             piezoOutput         = 0;
-            if(count4 >1)
-            {
-//                LCDBitmap(&menu2[0], 5,84);   //Draw Splash Screen
-                count4 -= 8;
-                backLightOFF = 1;
-                count3 = 0;
-            }
         }
 // ******************************************************************************
         
@@ -773,8 +772,6 @@ int main(void)
                 if(timer > 500)
                 {
                     timer = 0;
-                    LCDClear();
-                    LCDBitmap(&menu0[0], 5, 84);//Draw Menu0
                     goto Exit;                  //This uses less memory than TestKey = KEY_3
                 }
 
@@ -802,8 +799,13 @@ int main(void)
                         }
                     }
                     break;
+                    
+                    case Menu:
+                    {
+                        goto Exit;
+                    }
+                    break;
                 }
-
 
                 LCDWriteStringXY(0,0,"PID Settings for");
                 LCDWriteStringXY(0,1,desc[choice]);
@@ -840,9 +842,12 @@ int main(void)
             LCDClear();
             LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
             __delay_ms(500);
+
+            Exit:
+            LCDClear();
+            LCDBitmap(&menu0[0], 5, 84);            //Draw Menu0
         }
  
-        Exit:
                         
 // ******************************************************************************
         if (testKey == Up)                      // Reset the LCD
@@ -854,7 +859,7 @@ int main(void)
             LCDBitmap(&menu0[0], 5, 84);        // Draw Menu0
         }
         
-        if(count3 > 1200)                       // No Keys Pressed for 20 Minutes
+        if(count3 > 1199)                       // No Keys Pressed for 20 Minutes
         {
             backLightOFF = 1;                   // so, we might as well shut OFF the LCD BackLight
             count3 = 1200;                      // and, reset the count, so it will turn on with the next Key Press
@@ -863,7 +868,8 @@ int main(void)
         {
             backLightOFF = 0;
         }
-                        
+        
+        lastPowerState = powerSwitch;
  // ******************************************************************************
         ClrWdt();                               // Clear (Re-Set) the WatchDog Timer
     }
