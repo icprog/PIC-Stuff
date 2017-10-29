@@ -91,9 +91,9 @@ void RTCC_Initialize(void) {
     RCFGCALbits.CAL4 = 1;                      // Enable RTCC Calibration
     RCFGCALbits.CAL3 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL2 = 1;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL1 = 1;                      // Enable RTCC Calibration  changed to 1 & cal 0 to 0, Dec08, was slow by 3 seconds in 19 days            
-    RCFGCALbits.CAL0 = 0;                      // Enable RTCC Calibration changed to 1 Nov19/2016 Clock was slow by 7 seconds in 18 days
-    
+    RCFGCALbits.CAL1 = 0;                      // Enable RTCC Calibration  changed to 1 & cal 0 to 0, Dec08, was slow by 3 seconds in 19 days            
+    RCFGCALbits.CAL0 = 1;                      // Enable RTCC Calibration changed to 1 Nov19/2016 Clock was slow by 7 seconds in 18 days
+ // Oct 28/2017 Changed Cal1 back to 0, & Cal0 to 1, running Fast 1 second in 15 days   
     RCFGCALbits.RTCEN = 1;                      // Enable RTCC
 
     RCFGCALbits.RTCWREN = 0;                    // Clear RTCWREN

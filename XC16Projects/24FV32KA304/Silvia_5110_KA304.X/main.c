@@ -91,17 +91,17 @@ int main(void)
     }
         
 // ******************************************************************************
-    uint8_t blink = 1;                          // blink flashes display when water level low
+    char blink          = 1;                    // blink flashes display when water level low
     
-    char errorCount = 0;                     // errorCount disables power, if water level remains low too long
+    char errorCount     = 0;                    // errorCount disables power, if water level remains low too long
     
     char errorSustained = 0;
 
-    uint16_t count = 0;                         // Used to Increment seconds count for Brew Timer
+    int count           = 0;                    // Used to Increment seconds count for Brew Timer
     
-    uint8_t count2 = 0;                         // count2 ramps pump pressure
+    uint8_t count2      = 0;                    // count2 ramps pump pressure
     
-    uint16_t count3 = 1200;                        // Used to count time until Backlight turns Off
+    int count3          = 1200;                 // Used to count time until Backlight turns Off
     
     int samples[3][numSamples];                 //Used to average temp[] over "numSamples" of samples
     
@@ -313,11 +313,6 @@ int main(void)
                         LCDWriteCharacter(' ');
                         LCDWriteCharacter(' ');
                     
-      //              LCDWriteIntXY(5,4,testKey,5,0,0);
-//                    LCDWriteIntXY(5,4,dutyCycle,5,0);
-//                    LCDWriteIntXY(5,16,count,5,0);
-        //            LCDWriteIntXY(5,22,shotProgressCounter,5,0,0);
-                    
                         if(level < 25)
                         {
                             blink = 1 - blink;
@@ -334,9 +329,6 @@ int main(void)
                         LCDWriteStringXY(2,3,"Shot Timer:");
                         LCDWriteIntXY(48,3,shotTimer,4,1,0);
                     }
-                
-                    LCDWriteIntXY(0,4,GroupHeadPID,5,0,0);
-                    LCDWriteIntXY(24,4,powerSwitch,1,0,0);
                 }
             }
             else

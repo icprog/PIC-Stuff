@@ -216,21 +216,25 @@ int16_t main(void)
                     enabled[i] = 0;
                 }
             }
+            else if (((time.month < eepromGetData(startMonth)) || (time.month <= eepromGetData(startMonth) && time.day < eepromGetData(startDay)))  && ((time.month > eepromGetData(endMonth)) || ((time.month >= eepromGetData(endMonth)) && (time.day >= eepromGetData(endDay)))))
+            {
+                for(i=0;i<11;i++)
+                {
+                    if (eepromGetData(extendedRunEnable[i]) == 1)
+                    {
+                        enabled[i] = 1;
+                    }
+                    else
+                    {
+                        enabled[i] = 0;
+                    }
+                }
+            }
             else
             {
-                if (((time.month < eepromGetData(startMonth)) || (time.month <= eepromGetData(startMonth) && time.day < eepromGetData(startDay)))  && ((time.month > eepromGetData(endMonth)) || ((time.month >= eepromGetData(endMonth)) && (time.day >= eepromGetData(endDay)))))
+                for(i=0;i<11;i++)
                 {
-                    for(i=0;i<11;i++)
-                    {
-                        if (eepromGetData(extendedRunEnable[i]) == 1)
-                        {
-                            enabled[i] = 1;
-                        }
-                        else
-                        {
-                            enabled[i] = 0;
-                        }
-                    }
+                    enabled[i]=1;
                 }
             }
            
@@ -593,9 +597,9 @@ int16_t main(void)
 
             LCD_Clear();
 
-            LCDWriteStringXY(0,0,"Early End Month?");
+            LCDWriteStringXY(0,0,"Extended Run Month?");
             eepromPutData(extendedEndMonth, SetStartEndMonth(eepromGetData(extendedEndMonth)));
-            LCDWriteStringXY(2,0,"Early End Day?");
+            LCDWriteStringXY(2,0,"Extended Run Day?");
             eepromPutData(extendedEndDay, SetStartEndDay(eepromGetData(extendedEndDay)));
 
             LCD_Clear();
