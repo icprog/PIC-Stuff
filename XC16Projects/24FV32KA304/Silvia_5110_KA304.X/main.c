@@ -164,7 +164,7 @@ int main(void)
 
         static int timer = 0;                                                   // Used to count up time in a loop, to auto exit if user in a menu too long
         
-        time = getRTCTime();                                                    // get the time
+        time = getRTCTime();                    // get the time
         
 
         shortTermTemp[0] = ADCRead(4);          //Assign the ADC(4) Boiler Temp to a temporary variable
@@ -232,7 +232,7 @@ int main(void)
             errorCount>19?powerSwitch=0:powerSwitch;// If errorCount (water Level Low) > 19 seconds, turn OFF Power
             
 //            level = waterTankLevel();
-            level = 30;
+            level = 30;                         // FIX
  
             level<10?powerSwitch=0:powerSwitch; // If LEVEL is less than 10%, Disable Outputs
             
@@ -259,7 +259,7 @@ int main(void)
 // ******************************************************************************
             internalBGV = ADCRead(0x1A);
       
-            for(i = 0;i<2;++i)
+            for(i = 0;i<3;++i)
             {
                 temp[i] = TempCalc(temp[i]);
             } 
@@ -341,7 +341,7 @@ int main(void)
         }
 
 // ******************************************************************************
-        if(powerSwitch == 1)
+        if(powerSwitch)
         {
 /*            if(IFS0bits.T2IF)
             {
@@ -409,7 +409,7 @@ int main(void)
               
 
 
-            if(steamSwitch == 1)                //Steam setpoint takes priority
+            if(steamSwitch)                     //Steam setpoint takes priority
             {
       //          OC6R = 0;                           
             
@@ -530,7 +530,7 @@ int main(void)
  */
  // ******************************************************************************
            
-            if(brewSwitch == 1)
+            if(brewSwitch)
             {   
                 a = 0;
                 
@@ -648,9 +648,8 @@ int main(void)
 // ******************************************************************************
 
         testKey = readButton();
-// ******************************************************************************
-//        heartBeat();                                                            // HeartBeat displays the HeartBeat on the LCD,
-// ******************************************************************************  but, also increments mainTimer every second 
+
+
         if (testKey == Menu)
         {
             count3 = 0;                         // Reset BackLight counter
