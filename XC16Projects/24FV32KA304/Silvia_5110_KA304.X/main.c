@@ -48,7 +48,7 @@
 #define steamTemperature        temp[1]
 #define GroupHeadTemp           temp[2]
 #define waterLevel              level                                           //ADCRead(14) is Water Tank level signal
-#define numSamples              60                                              //Number of samples to average for temp[] readings (Do not set higher than 20, or keep Max temp below 325F)
+#define numSamples              5                                               //Number of samples to average for temp[] readings (Do not set higher than 20, or keep Max temp below 325F)
                                                                                 //You have 65535/(max temp * 10) samples available Changed to float, 300 no worries!! Should be able to get 
 // ***************************************************************************************************************************************************************
 int __attribute__ ((space(eedata))) Settings[43];                               // Global variable located in EEPROM (created by the space()attribute
@@ -72,6 +72,8 @@ char *desc[]            = {"Water Temp:","Steam Temp:","Group Temp:"};
 int powerFail           = 1;                    //Setting powerFail to 1, instructs the user to set the time
 
 extern char run;
+
+extern float R;
 
 // ******************************************************************************
 int main(void)
@@ -256,9 +258,9 @@ int main(void)
             
             previous_time = time.second;
 
-// ******************************************************************************
-            internalBGV = ADCRead(0x1A);
-      
+// *************** Calculate Temperatures **************************************
+//            internalBGV = ADCRead(0x1A);
+            LCDWriteIntXY(30,4,temp[0],5,0,0);
             for(i = 0;i<3;++i)
             {
                 temp[i] = TempCalc(temp[i]);
@@ -305,7 +307,8 @@ int main(void)
                     LCDWriteCharacter(70);
                     LCDWriteCharacter(' ');
                     
-    LCDWriteIntXY(48,4,ADCRead(9),5,0,0);
+    LCDWriteIntXY(0,4,shortTermTemp[0],5,0,0);
+    LCDWriteIntXY(58,4,R,5,0,0);
                     
                 
                     if(shotTimer == 0)

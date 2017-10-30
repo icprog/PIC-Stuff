@@ -6,9 +6,12 @@ int timer = 0;              // level = 0;
 float R, steinhart;         // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
 
 // *************** Calculate & Display Temp ************************************    
-int TempCalc(int a)
+int TempCalc(unsigned int a)
 {
-    R = 10000/(4096/(float)a - 1);              // Resistance of Thermistor (R Reference/1023/readTemp -1)
+    float b = (float)a;
+//    a=(float)a;
+    R = 10000*(b/(4095-b));
+ //   R = 10000/(4095/a - 1);              // Resistance of Thermistor (R Reference/1023/readTemp -1)
     steinhart = R /10000;                       // (R/Ro) R/R Standard (resistance of Thermistor at 25C)
     steinhart = log(steinhart);                 // ln(R/Ro)
     steinhart /= 3995;                          // 1/Beta * ln(R/Ro)
