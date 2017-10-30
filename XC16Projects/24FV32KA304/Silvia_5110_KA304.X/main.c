@@ -111,17 +111,17 @@ int main(void)
     
     uint8_t sampleIndex = 0;                    // Used to calculate average sample of temp[]
     
-    float total[3] = {0,0,0};                   // Running total of temp[] samples 
+    float total[3]      = {0,0,0};              // Running total of temp[] samples 
 
-    uint16_t i = 0;                             // x is used for holding shot timer value for 20 seconds before resetting to zero
+    uint16_t i          = 0;                    // x is used for holding shot timer value for 20 seconds before resetting to zero
     
-    uint16_t a = 0;
+    uint16_t a          = 0;
     
-    uint8_t testKey = 0;                        // Variable used for Storing Which Menu Key is Pressed
+    uint8_t testKey     = 0;                    // Variable used for Storing Which Menu Key is Pressed
     
-    uint8_t power = 1;                          // Power switch input state     G
+    uint8_t power       = 1;                    // Power switch input state     G
 
-    uint8_t brewSwitch = 1;                     // Brew Switch Input            G
+    uint8_t brewSwitch  = 1;                    // Brew Switch Input            G
 
     uint8_t steamSwitch = 1;                    // Steam Switch Input           G
     
@@ -129,15 +129,15 @@ int main(void)
 
     int internalBGV;
     
-    int PIDValue[] = {0,0,0};                   // PID calculated values
+    int PIDValue[]      = {0,0,0};              // PID calculated values (Water, Steam and Group)
     
-    int setRangeL[] =   {1750,2500,1800};       // Set Point Low Limits
+    int setRangeL[]     = {1750,2500,1800};     // Set Point Low Limits
     
-    int setRangeH[] =   {2100,2850,2150};       // Set Point High Limits
+    int setRangeH[]     = {2100,2850,2150};     // Set Point High Limits
     
-    int previous_time = 0;                      //Used with time.second to limit some stuff to once a second
+    int previous_time   = 0;                    //Used with time.second to limit some stuff to once a second
             
-    int counter[6] = {0,0,0,0,0,0};                                             //PID Counter for boiler temp, steam temp, and grouphead temp, as well as shot progress counter, shot timer, and warning timer
+    int counter[6]      = {0,0,0,0,0,0};                                             //PID Counter for boiler temp, steam temp, and grouphead temp, as well as shot progress counter, shot timer, and warning timer
     
     uint16_t level      = 0;
     
@@ -152,8 +152,8 @@ int main(void)
 
     while(1)
     {
-//        power = _RB11;                          // FIX
-        power = !_RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
+        power = _RB11;                          // FIX
+//        power = !_RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
         brewSwitch = !_RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
@@ -167,7 +167,7 @@ int main(void)
         time = getRTCTime();                    // get the time
         
 
-        shortTermTemp[0] = ADCRead(4);          //Assign the ADC(4) Boiler Temp to a temporary variable
+        shortTermTemp[0] = ADCRead(9);          //Assign the ADC(4) Boiler Temp to a temporary variable
         
         total[0] = total[0] - samples[0][sampleIndex];// Subtract the oldest sample data from the total
 
@@ -180,7 +180,7 @@ int main(void)
 //        steamTemperature = boilerTemperature;                                   //This is a single boiler, so Steam & Water temps are the same measurement
 
 
-        shortTermTemp[1] = ADCRead(5);          // Assign the ADC(5) (Steam Temp) to a temporary variable
+        shortTermTemp[1] = ADCRead(0);          // Assign the ADC(5) (Steam Temp) to a temporary variable
         
         total[1] = total[1] - samples[1][sampleIndex];// Subtract the oldest sample data from the total
 
@@ -197,7 +197,7 @@ int main(void)
         steamTemperature = total[1] / numSamples;     // Assign the average value of total to the GroupHeadTemp variable
 
  
-        shortTermTemp[2] = ADCRead(6);          //Assign the ADC(6) Group Head Temp to a temporary variable
+        shortTermTemp[2] = ADCRead(4);          //Assign the ADC(6) Group Head Temp to a temporary variable
         
         total[2] = total[2] - samples[2][sampleIndex];                          // Subtract the oldest sample data from the total
 
@@ -304,6 +304,9 @@ int main(void)
                     LCDWriteCharacter(123);                     // generate degree symbol in font list
                     LCDWriteCharacter(70);
                     LCDWriteCharacter(' ');
+                    
+    LCDWriteIntXY(48,4,ADCRead(9),5,0,0);
+                    
                 
                     if(shotTimer == 0)
                     {

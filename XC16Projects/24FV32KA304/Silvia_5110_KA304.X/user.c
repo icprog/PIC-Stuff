@@ -1,24 +1,41 @@
 #include    "system.h"  
 #include    "user.h"
-
+#include    <math.h>
 
 int timer = 0;              // level = 0;
+float R, steinhart;         // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
 
-// ***************************************************************************************************************************************************************
+// *************** Calculate & Display Temp ************************************    
 int TempCalc(int a)
 {
-    if(a < 819)
-    {
-        return a;
-    }
-    else
-    {
-//    return ((a - 819)/3.276 - 500);       // - 500 for -50.0 to 50.0 Range
-//    return ((a - 819)/6.552);               // Range of 0.0 to 50.0 C
-    return (a);               
-    }
-}
+    R = 10000/(4096/(float)a - 1);              // Resistance of Thermistor (R Reference/1023/readTemp -1)
+    steinhart = R /10000;                       // (R/Ro) R/R Standard (resistance of Thermistor at 25C)
+    steinhart = log(steinhart);                 // ln(R/Ro)
+    steinhart /= 3995;                          // 1/Beta * ln(R/Ro)
+    steinhart += 1.0 / (25 + 273.15);           // + (1/To, Temperature in degK @ 25C)
+    steinhart = 1.0 / steinhart;                // Invert
+    steinhart -= 273.15;                        // convert to DegC
 
+    return (a);               
+}
+/*
+ // *************** Calculate & Display Temp ************************************    
+        R = 10200/(1023/(float)readTemperature - 1);                    // Resistance of Thermistor (R Reference/1023/readTemp -1)
+        
+        steinhart = R /10061;                                           // (R/Ro) R/R Standard (resistance of Thermistor at 25C)
+        steinhart = log(steinhart);                                     // ln(R/Ro)
+        steinhart /= 3995;                                              // 1/Beta * ln(R/Ro)
+        steinhart += 1.0 / (25 + 273.15);                               // + (1/To, Temperature in degK @ 25C)
+        steinhart = 1.0 / steinhart;                                    // Invert
+        steinhart -= 273.15;                                            // convert to DegC
+ 
+
+        displayTemp = (uint16_t)(steinhart*10);
+        
+        if(toggle == 1)
+        {
+            displayTemp = displayTemp*9/5+320;                          // Display Temperature in DegF
+*/
 
 // ***************************************************************************************************************************************************************
 int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
