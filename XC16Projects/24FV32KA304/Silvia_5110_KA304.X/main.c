@@ -69,11 +69,9 @@ int dutyCycle[]         =   { 0,  0,  0};       // Duty Cycle for PWM Outputs
 
 char *desc[]            = {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int powerFail           = 1;                    //Setting powerFail to 1, instructs the user to set the time
+int powerFail           = 0;                    //Setting powerFail to 1, instructs the user to set the time
 
 extern char run;
-
-extern float R;
 
 // ******************************************************************************
 int main(void)
@@ -169,6 +167,7 @@ int main(void)
         time = getRTCTime();                    // get the time
         
 
+//        temp[0] = ADCRead(9);          //Assign the ADC(4) Boiler Temp to a temporary variable
         shortTermTemp[0] = ADCRead(9);          //Assign the ADC(4) Boiler Temp to a temporary variable
         
         total[0] = total[0] - samples[0][sampleIndex];// Subtract the oldest sample data from the total
@@ -260,7 +259,6 @@ int main(void)
 
 // *************** Calculate Temperatures **************************************
 //            internalBGV = ADCRead(0x1A);
-            LCDWriteIntXY(30,4,temp[0],5,0,0);
             for(i = 0;i<3;++i)
             {
                 temp[i] = TempCalc(temp[i]);
@@ -306,9 +304,7 @@ int main(void)
                     LCDWriteCharacter(123);                     // generate degree symbol in font list
                     LCDWriteCharacter(70);
                     LCDWriteCharacter(' ');
-                    
-    LCDWriteIntXY(0,4,shortTermTemp[0],5,0,0);
-    LCDWriteIntXY(58,4,R,5,0,0);
+LCDWriteIntXY(58,4,temp[1],5,0,0);
                     
                 
                     if(shotTimer == 0)
