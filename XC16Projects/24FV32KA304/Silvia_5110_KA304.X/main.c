@@ -103,11 +103,11 @@ int main(void)
     
     int count3          = 1200;                 // Used to count time until Backlight turns Off
     
-    int samples[3][numSamples];                 //Used to average temp[] over "numSamples" of samples
+    int samples[3][numSamples] ={[0 ... 2] = {0}};                 //Used to average temp[] over "numSamples" of samples
     
-    unsigned int temp[3];
+    unsigned int temp[3]= {0,0,0};
     
-    unsigned int shortTermTemp[3];                                              
+    unsigned int shortTermTemp[3]= {0,0,0};                                              
     
     uint8_t sampleIndex = 0;                    // Used to calculate average sample of temp[]
     
@@ -147,6 +147,7 @@ int main(void)
     
     char lastPowerState = 0;
     
+    
 // ******************************************************************************
     LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
 
@@ -169,18 +170,49 @@ int main(void)
 
 //        temp[0] = ADCRead(9);          //Assign the ADC(9) Boiler Temp to a temporary variable
         shortTermTemp[0] = ADCRead(9);          //Assign the ADC(9) Boiler Temp to a temporary variable
+
+//        LCDWriteIntXY(0,0,ADCRead(9),5,0,0);
+  //      LCDWriteIntXY(21,0,shortTermTemp[0],5,0,0);
+    //    LCDWriteIntXY(42,0,total[0],5,0,0);
+      //  LCDWriteIntXY(63,0,samples[0][sampleIndex],5,0,0);
+        //__delay_ms(5000);
+        
         
         total[0] = total[0] - samples[0][sampleIndex];// Subtract the oldest sample data from the total
-
+//        LCDWriteIntXY(0,1,ADCRead(9),5,0,0);
+  //      LCDWriteIntXY(21,1,shortTermTemp[0],5,0,0);
+    //    LCDWriteIntXY(42,1,total[0],5,0,0);
+      //  LCDWriteIntXY(63,1,samples[0][sampleIndex],5,0,0);
+        
+        //__delay_ms(5000);
+        
         samples[0][sampleIndex] = shortTermTemp[0];   // Assign the just read temperature to the location of the current oldest data
+//        LCDWriteIntXY(0,2,ADCRead(9),5,0,0);
+  //      LCDWriteIntXY(21,2,shortTermTemp[0],5,0,0);
+    //    LCDWriteIntXY(42,2,total[0],5,0,0);
+      //  LCDWriteIntXY(63,2,samples[0][sampleIndex],5,0,0);
+        
+        //__delay_ms(6000);
         
         total[0] = total[0] + samples[0][sampleIndex];// Add that new sample to the total
+//        LCDWriteIntXY(0,3,ADCRead(9),5,0,0);
+  //      LCDWriteIntXY(21,3,shortTermTemp[0],5,0,0);
+    //    LCDWriteIntXY(42,3,total[0],5,0,0);
+      //  LCDWriteIntXY(63,3,samples[0][sampleIndex],5,0,0);
+        //__delay_ms(6000);
 
         boilerTemperature = total[0] / numSamples;    // Assign the average value of total to the boilerTemperature variable
+//        LCDWriteIntXY(0,4,ADCRead(9),5,0,0);
+  //      LCDWriteIntXY(21,4,shortTermTemp[0],5,0,0);
+    //    LCDWriteIntXY(42,4,total[0],5,0,0);
+      //  LCDWriteIntXY(63,4,samples[0][sampleIndex],5,0,0);
+        //__delay_ms(6000);
         
+         
 //        steamTemperature = boilerTemperature;                                   //This is a single boiler, so Steam & Water temps are the same measurement
 
 
+//        temp[1] = ADCRead(0);          // Assign the ADC(0) (Steam Temp) to a temporary variable
         shortTermTemp[1] = ADCRead(0);          // Assign the ADC(0) (Steam Temp) to a temporary variable
         
         total[1] = total[1] - samples[1][sampleIndex];// Subtract the oldest sample data from the total
@@ -189,17 +221,18 @@ int main(void)
         
         total[1] = total[1] + samples[1][sampleIndex];// Add that new sample to the total
         
-        sampleIndex += 1;                             // and move to the next index location
+        //sampleIndex += 1;                             // and move to the next index location
         
-        if(sampleIndex >= numSamples)                 //If we have reached the max number of samples
-        {
-            sampleIndex = 0;                          //Reset to zero
-        }
+//        if(sampleIndex >= numSamples)                 //If we have reached the max number of samples
+  //      {
+    //        sampleIndex = 0;                          //Reset to zero
+      //  }
         steamTemperature = total[1] / numSamples;     // Assign the average value of total to the GroupHeadTemp variable
 
  
+//        temp[2] = ADCRead(4);          //Assign the ADC(4) Group Head Temp to a temporary variable
         shortTermTemp[2] = ADCRead(4);          //Assign the ADC(4) Group Head Temp to a temporary variable
-        
+       
         total[2] = total[2] - samples[2][sampleIndex];                          // Subtract the oldest sample data from the total
 
         samples[2][sampleIndex] = shortTermTemp[2];                             // Assign the just read temperature to the location of the current oldest data
@@ -215,7 +248,6 @@ int main(void)
         GroupHeadTemp = total[2] / numSamples;                                  // Assign the average value of total to the GroupHeadTemp variable
 
 // *****************************************************************************
-                        
         if(previous_time != time.second)
         {
             ONTimer = runTimer(time.weekday,time.hour,time.minute);
@@ -259,10 +291,12 @@ int main(void)
 
 // *************** Calculate Temperatures **************************************
 //            internalBGV = ADCRead(0x1A);
-            for(i = 0;i<3;++i)
-            {
-                temp[i] = TempCalc(temp[i]);
-            } 
+//            for(i = 0;i<3;++i)
+  //          {
+                temp[0] = TempCalc(temp[0]);
+                temp[1] = TempCalc(temp[1]);
+                temp[2] = TempCalc(temp[2]);
+    //        } 
             
 // ******************************************************************************
             if(powerSwitch)
@@ -863,7 +897,8 @@ LCDWriteIntXY(58,4,temp[1],5,0,0);
         }
         
         lastPowerState = powerSwitch;
- // ******************************************************************************
+        
+// *****************************************************************************
         ClrWdt();                               // Clear (Re-Set) the WatchDog Timer
     }
     return(1);
