@@ -167,8 +167,8 @@ int main(void)
         time = getRTCTime();                    // get the time
         
 
-//        temp[0] = ADCRead(9);          //Assign the ADC(4) Boiler Temp to a temporary variable
-        shortTermTemp[0] = ADCRead(9);          //Assign the ADC(4) Boiler Temp to a temporary variable
+//        temp[0] = ADCRead(9);          //Assign the ADC(9) Boiler Temp to a temporary variable
+        shortTermTemp[0] = ADCRead(9);          //Assign the ADC(9) Boiler Temp to a temporary variable
         
         total[0] = total[0] - samples[0][sampleIndex];// Subtract the oldest sample data from the total
 
@@ -181,7 +181,7 @@ int main(void)
 //        steamTemperature = boilerTemperature;                                   //This is a single boiler, so Steam & Water temps are the same measurement
 
 
-        shortTermTemp[1] = ADCRead(0);          // Assign the ADC(5) (Steam Temp) to a temporary variable
+        shortTermTemp[1] = ADCRead(0);          // Assign the ADC(0) (Steam Temp) to a temporary variable
         
         total[1] = total[1] - samples[1][sampleIndex];// Subtract the oldest sample data from the total
 
@@ -198,7 +198,7 @@ int main(void)
         steamTemperature = total[1] / numSamples;     // Assign the average value of total to the GroupHeadTemp variable
 
  
-        shortTermTemp[2] = ADCRead(4);          //Assign the ADC(6) Group Head Temp to a temporary variable
+        shortTermTemp[2] = ADCRead(4);          //Assign the ADC(4) Group Head Temp to a temporary variable
         
         total[2] = total[2] - samples[2][sampleIndex];                          // Subtract the oldest sample data from the total
 

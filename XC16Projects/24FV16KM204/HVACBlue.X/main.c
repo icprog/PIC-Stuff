@@ -38,114 +38,121 @@ uint8_t const earlyStartMonth = 140, earlyStartDay = 142, extendedEndMonth = 144
 
 uint8_t const extendedRunEnable[] = {148,150,152,154,156,158,160,162,164,166,168};
 
-int16_t Bias[] =                    {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};    //Set Bias values all to 0, in case of a startup when temps are between assigned switch points                                                        //Bias value added to Setpoint, based on outdoor air temp (will be a negative number when outside air is warmer)
+int16_t Bias[] =                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};    //Set Bias values all to 0, in case of a startup when temps are between assigned switch points                                                        //Bias value added to Setpoint, based on outdoor air temp (will be a negative number when outside air is warmer)
+
+char channel[] =                    {  0,  4,  5,  6, 10, 11, 12, 17, 18, 19, 20};
 
 char *desc[] = {"Deck Rm Air ","Deck Floor ","Utility Flr ","Entrance Flr ","Master Bath ","Office Floor ","Craft Rm Flr ","SE BedRm Flr ","Media Rm Flr ","Garage Floor ","Garage Rm Air"};
 
-_Bool enabled[11]               = {0};                                          // Determines if an Output should be on at this date.
+_Bool enabled[11]               = {0};                              // Determines if an Output should be on at this date.
 
-_Bool outState[11]              = {0};                                          //State of the output (1 or 0) not the actual output, which is _Bool Out[]
+_Bool outState[11]              = {0};                              // State of the output (1 or 0) not the actual output, which is _Bool Out[]
 
-_Bool lastOutState[11] = {0};                                                   //Used to check if the outState has changed
+_Bool lastOutState[11]          = {0};                              // Check if the outState has changed
 
-//int outStateCounter[11]         = {0,0,0,0,0,0,0,0,0,0,0};                      //Keeps track of which outputs are turning on most often
+unsigned int outStateCounter[11]= {0,0,0,0,0,0,0,0,0,0,0};          // Track which outputs are turning on most often
 
-int16_t outStateCounter[11] = {342,407,319,578,414,84,66,0,24,71,49};               //Keeps track of which outputs are turning on most often
+//int16_t outStateCounter[11] = {342,407,319,578,414,84,66,0,24,71,49}; //Keeps track of which outputs are turning on most often
 
-uint8_t call = 0;                                                                  //call is used to set HMI key delay time, based on what function you are in 
+uint8_t call = 0;                                                   // Set HMI key delay time, based on what function you are in 
 
-uint8_t powerFail = 1;                                                             //Setting powerFail to 1, displays "set Clock" Message
+_Bool powerFail = 1;                                                // Setting powerFail to 1, displays "set Clock" Message
 
-int16_t samples[numSamples];                                                        //Outside Air Temperature Samples to average temp over x number of samples
+int16_t samples[numSamples];                                        // Outside Air Temperature Samples to average temp over x number of samples
 
-// ******************************************************************************
+// *************** Main ********************************************************
 int16_t main(void)
 {
     InitApp();
     
-// ******************************************************************************
-    int8_t loopCounter = 12, previousLoopCounter = 12;                          //Loopcounter value determines which screen info is displayed on LCD
+// *****************************************************************************
+    int8_t loopCounter = 12, previousLoopCounter = 12;              // Loopcounter value determines which screen info is displayed on LCD
     
-    int16_t OutAirTemp;                                                         //Average Outside air temp (Avg of numSamples))
+    int16_t OutAirTemp;                                             // Average Outside air temp (Avg of numSamples))
     
-    int16_t tempOutAirTemp;                                                     //Temporary calculated Outside air temp as read by the ADC 
+    int16_t tempOutAirTemp;                                         // Temporary calculated Outside air temp as read by the ADC 
 
-    int16_t Temp[11];                                                           //Calculated loop temperatures as read by the ADC, these display in 1/10 of Degrees Celcius
+    int16_t Temp[11];                                               // Calculated loop temperatures as read by the ADC, these display in 1/10 of Degrees Celcius
     
-    uint8_t sampleIndex = 0;                                                    //Used to calculate average outdoor temp
+    uint8_t sampleIndex = 0;                                        // Calculate average outdoor temp over time with Sample averaging
     
-    int16_t total = 0;                                                          //Running total of Outside air samples 
+    int16_t total = 0;                                              // Running total of Outside air samples (for smoothing)
     
-    uint8_t StartUpDelay = 0;                                                   // Startup delay so outputs do not turn on until after OutAirTemp has been averaged
+    uint8_t StartUpDelay = 0;                                       // Startup delay so outputs do not turn on until after OutAirTemp has been averaged
     
-    int16_t OldTemp[11] = {300};                                                //Used to smooth temperature readings
+    int16_t OldTemp[11] = {300};                                    // Smooth (average) temperature readings
 
-    bool Out[11] = {0};                                                         // Startup values for all outputs, 0 = OFF (Output 0 - 11))
+    bool Out[11] = {0};                                             // Startup values for all outputs, 0 = OFF (Output 0 - 11))
     
-    _Bool OutSum = 0;                                                           // Sum of all Outputs
+    _Bool OutSum = 0;                                               // Sum of all Outputs
     
-    uint8_t i = 0;
+    uint8_t i = 0;                                                  // For loop counter
     
-    int8_t TestKey;                                                             // Variable used for Storing Which Menu Key is Pressed
+    int8_t TestKey;                                                 // Variable used for Storing Which Menu Key is Pressed
 
-    int16_t internalBGV;                                                        // Variable to store the internal BandGapVoltage as read by the ADC
+    int16_t internalBGV;                                            // Variable to store the internal BandGapVoltage as read by the ADC
     
-    int16_t backLightTimer = 0;                                                 //Used to turn off the LCD backlight after an interval of inactivity (60 seconds))
+    int16_t backLightTimer = 0;                                     // Turn off the LCD backlight after an interval of inactivity (60 seconds))
 
-    uint8_t previous_time = 0;                                                  //Used to limit temp readings and LCD updates to once a second
+    uint8_t previous_time = 0;                                      // Limit temp readings and LCD updates to once a second
 
-// ******************************************************************************
+// *****************************************************************************
     while(1)
     {
-        time = getRTCTime();                                                    // get the time
+        time = getRTCTime();                                        // get the time
         
-        uint16_t timer = 0;                                                     // Used to count up time in a loop, to auto exit if user in a menu too long
+        uint16_t timer = 0;                                         // Count up time in a loop, to auto exit if user in a menu too long
 
-// ******************************************************************************
-        if(previous_time != time.second)                                        // Only update if an additional second has passed
+// *************** Read Raw Temperature Data ***********************************
+        if(previous_time != time.second)                            // Only update if an additional second has passed
         {
-            tempOutAirTemp = ((ADCRead(9) - 840)/3.276 - 500);                  // Read Outdoor air temperature & assign it to a temporary variable 
+            tempOutAirTemp = ((ADCRead(9) - 840)/3.276 - 500);      // Read Outdoor air temperature & assign it to a temporary variable 
             
-            total = total - samples[sampleIndex];                               // Subtract the oldest sample data from the total
+            total = total - samples[sampleIndex];                   // Subtract the oldest sample data from the total
 
-            samples[sampleIndex] = tempOutAirTemp;                              // Assign the just read temperature to the location of the current oldest data
+            samples[sampleIndex] = tempOutAirTemp;                  // Assign the just read temperature to the location of the current oldest data
 
-            total = total + samples[sampleIndex];                               // Add that new sample to the total
+            total = total + samples[sampleIndex];                   // Add that new sample to the total
             
-            sampleIndex += 1;                                                   // and move to the next index location
+            sampleIndex += 1;                                       // and move to the next index location
             
             if(sampleIndex >= numSamples)
             {
                 sampleIndex = 0;
             }
             
-            OutAirTemp = total / numSamples;                                    // assign the average value of total to the OutAirTemp variable
-            
+            OutAirTemp = total / numSamples;                        // assign the average value of total to the OutAirTemp variable
+
+
+            for(i=0;i<11;i++)
+            {
+                Temp[i] = ADCRead(channel[i]);                      // Read All 11 Floor Temperatures
+            }
 // ******************************************************************************
-            Temp[0] = ADCRead(0);                                               //Read Deck air temperature Pin 19
+//            Temp[0] = ADCRead(0);                                               //Read Deck air temperature Pin 19
 // ******************************************************************************
-            Temp[1] = ADCRead(4);                                               //Read Deck floor temperature Pin 23
+//            Temp[1] = ADCRead(4);                                               //Read Deck floor temperature Pin 23
 // ******************************************************************************
-            Temp[2] = ADCRead(5);                                               //Read Utility room floor temperature Pin 24
+//            Temp[2] = ADCRead(5);                                               //Read Utility room floor temperature Pin 24
 // ******************************************************************************
-            Temp[3] = ADCRead(6);                                               //Read Entrance floor temperature Pin 25
+//            Temp[3] = ADCRead(6);                                               //Read Entrance floor temperature Pin 25
 // ******************************************************************************
-            Temp[4] = ADCRead(10);                                              //Read Master bathroom floor temperature Pin 14
+//            Temp[4] = ADCRead(10);                                              //Read Master bathroom floor temperature Pin 14
 // ******************************************************************************
-            Temp[5] = ADCRead(11);                                              //Read Office floor temperature Pin 11
+//            Temp[5] = ADCRead(11);                                              //Read Office floor temperature Pin 11
 // ******************************************************************************
-            Temp[6] = ADCRead(12);                                              //Read Craft room floor temperature Pin 10
+//            Temp[6] = ADCRead(12);                                              //Read Craft room floor temperature Pin 10
 // ******************************************************************************
-            Temp[7] = ADCRead(17);                                              //Read SE basement bedroom floor temperature Pin 41
+//            Temp[7] = ADCRead(17);                                              //Read SE basement bedroom floor temperature Pin 41
 // ******************************************************************************
-            Temp[8] = ADCRead(18);                                              //Read Media room floor temperature Pin 42
+//            Temp[8] = ADCRead(18);                                              //Read Media room floor temperature Pin 42
 // ******************************************************************************
-            Temp[9] = ADCRead(19);                                              //Read Garage floor temperature Pin 43
+//            Temp[9] = ADCRead(19);                                              //Read Garage floor temperature Pin 43
 // ******************************************************************************
-            Temp[10] = ADCRead(20);                                             //Read Garage room air temperature Pin 44
+//            Temp[10] = ADCRead(20);                                             //Read Garage room air temperature Pin 44
 // ******************************************************************************
-            internalBGV = ADCRead(0x1A);                                        //Read the internal band Gap Voltage, used later to measure input voltage
-// ******************************************************************************
+            internalBGV = ADCRead(0x1A);                            //Read the internal band Gap Voltage, used later to measure input voltage
+// *************** Calculate Temperatures **************************************
         
             for(i = 0;i<11;++i)
             {
@@ -158,7 +165,7 @@ int16_t main(void)
             }
             else Temp[i] = OldTemp[i];
             }
-// ******************************************************************************
+// *************** Determine Temperature Biases ********************************
             for(i=0;i<11;i++)
             {
                 if(OutAirTemp <= -250)
@@ -207,7 +214,7 @@ int16_t main(void)
                 }
             }
 
-// *********************************  Following lines turn off all outputs & disables writes to the output pins, unless between auto start & stop dates
+// *************** Turn off all outputs & disables writes to the output pins, unless between auto start & stop dates
 
             if (((time.month < eepromGetData(earlyStartMonth)) || (time.month <= eepromGetData(earlyStartMonth) && time.day < eepromGetData(earlyStartDay)))  && ((time.month > eepromGetData(extendedEndMonth)) || ((time.month >= eepromGetData(extendedEndMonth)) && (time.day >= eepromGetData(extendedEndDay)))))
             {
@@ -488,36 +495,33 @@ int16_t main(void)
                 LCDWriteStringXY(3,0," through Loop Info ");
             }
         }
+
         
-// ******************************************************************************
-//        TestKey = menuRead();
-// ******************************************************************************
-        heartBeat();                                                            // HeartBeat displays the HeartBeat on the LCD
-// ******************************************************************************  
-     
-        if(TestKey == KEY_NONE)             // If no key is pressed for 60 seconds
-        {                                   // Turn OFF the LCD Backlight
-            backLightTimer += 1;
+// *************** HeartBeat displays the HeartBeat on the LCD *****************
+        heartBeat();  
+        
+// *************** Back Light Control ******************************************  
+        if(TestKey == KEY_NONE)                             // If no key is pressed for 60 seconds
+        {                                                   // Turn OFF the LCD Backlight
+            backLightTimer += 1;                            // Increment Counter
         }
-        
         else
         {
-            backLightTimer = 0;
+            backLightTimer = 0;                             // Reset Counter
         }
         
         if (backLightTimer < 4450)
         {
             backLightOn = 1;
-            
         }
         else
         {
             backLightTimer = 4450;
             backLightOn = 0;
         }
-// ******************************************************************************
         
-        if (TestKey == KEY_RESET)                                               //This will soft reset the processor
+// *************** Processor Reset Key Test ************************************
+        if (TestKey == KEY_RESET)                           //This will soft reset the processor
         {
             TestKey = KEY_NONE;
             
