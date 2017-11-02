@@ -48,10 +48,10 @@
 #define steamTemperature        temp[1]
 #define GroupHeadTemp           temp[2]
 #define waterLevel              level                                           //ADCRead(14) is Water Tank level signal
-#define numSamples              5                                               //Number of samples to average for temp[] readings (Do not set higher than 20, or keep Max temp below 325F)
+#define numSamples              50                                              //Number of samples to average for temp[] readings (Do not set higher than 20, or keep Max temp below 325F)
                                                                                 //You have 65535/(max temp * 10) samples available Changed to float, 300 no worries!! Should be able to get 
-// ***************************************************************************************************************************************************************
-int __attribute__ ((space(eedata))) Settings[43];                               // Global variable located in EEPROM (created by the space()attribute
+// *************** Global Variables ********************************************
+int __attribute__ ((space(eedata))) Settings[43];// Global variable located in EEPROM (created by the space()attribute
 
 RTCTime time;                                   // declare the type of the time object
 
@@ -67,13 +67,13 @@ int const Kd[]          =   {34, 36, 38};
 
 int dutyCycle[]         =   { 0,  0,  0};       // Duty Cycle for PWM Outputs
 
-char *desc[]            = {"Water Temp:","Steam Temp:","Group Temp:"};
+char *desc[]            =   {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int powerFail           = 0;                    //Setting powerFail to 1, instructs the user to set the time
+int powerFail           =   0;                  //Setting powerFail to 1, instructs the user to set the time
 
 extern char run;
 
-// ******************************************************************************
+// *************** Main Routine ************************************************
 int main(void)
 {                       
     InitApp();
@@ -82,7 +82,7 @@ int main(void)
 
     Initialize_PWM();
 
-// ******************************************************************************
+// *************** PWM Controller Initialization *******************************
     unsigned char initCon = 0;
     
     for(initCon=0;initCon<3;initCon++)
@@ -90,7 +90,7 @@ int main(void)
         Init_PID(initCon,eepromGetData(Kp[initCon]),eepromGetData(Ki[initCon]),eepromGetData(Kd[initCon]));
     }
         
-// ******************************************************************************
+// *************** Local Variables *********************************************
     char blink          = 1;                    // blink flashes display when water level low
     
     char errorCount     = 0;                    // errorCount disables power, if water level remains low too long
@@ -103,7 +103,7 @@ int main(void)
     
     int count3          = 1200;                 // Used to count time until Backlight turns Off
     
-    int samples[3][numSamples] ={[0 ... 2] = {0}};                 //Used to average temp[] over "numSamples" of samples
+    int samples[3][numSamples] ={[0 ... 2] = {0}};//Used to average temp[] over "numSamples" of samples
     
     unsigned int temp[3]= {0,0,0};
     
@@ -141,11 +141,11 @@ int main(void)
     
     uint16_t level      = 0;
     
-    static char ONTimer = 0;
+    static char ONTimer = 0;                    // Bit to enable Auto Start of Machine
     
-    char powerSwitch    = 0;
+    char powerSwitch    = 0;                    // Soft Power Bit 
     
-    char lastPowerState = 0;
+    char lastPowerState = 0;                    // Last State of powerSwitch
     
     
 // ******************************************************************************
@@ -170,14 +170,11 @@ int main(void)
 
 //        temp[0] = ADCRead(9);          //Assign the ADC(9) Boiler Temp to a temporary variable
         shortTermTemp[0] = ADCRead(9);          //Assign the ADC(9) Boiler Temp to a temporary variable
-
 //        LCDWriteIntXY(0,0,ADCRead(9),5,0,0);
   //      LCDWriteIntXY(21,0,shortTermTemp[0],5,0,0);
     //    LCDWriteIntXY(42,0,total[0],5,0,0);
       //  LCDWriteIntXY(63,0,samples[0][sampleIndex],5,0,0);
         //__delay_ms(5000);
-        
-        
         total[0] = total[0] - samples[0][sampleIndex];// Subtract the oldest sample data from the total
 //        LCDWriteIntXY(0,1,ADCRead(9),5,0,0);
   //      LCDWriteIntXY(21,1,shortTermTemp[0],5,0,0);
@@ -185,7 +182,6 @@ int main(void)
       //  LCDWriteIntXY(63,1,samples[0][sampleIndex],5,0,0);
         
         //__delay_ms(5000);
-        
         samples[0][sampleIndex] = shortTermTemp[0];   // Assign the just read temperature to the location of the current oldest data
 //        LCDWriteIntXY(0,2,ADCRead(9),5,0,0);
   //      LCDWriteIntXY(21,2,shortTermTemp[0],5,0,0);
@@ -193,14 +189,12 @@ int main(void)
       //  LCDWriteIntXY(63,2,samples[0][sampleIndex],5,0,0);
         
         //__delay_ms(6000);
-        
         total[0] = total[0] + samples[0][sampleIndex];// Add that new sample to the total
 //        LCDWriteIntXY(0,3,ADCRead(9),5,0,0);
   //      LCDWriteIntXY(21,3,shortTermTemp[0],5,0,0);
     //    LCDWriteIntXY(42,3,total[0],5,0,0);
       //  LCDWriteIntXY(63,3,samples[0][sampleIndex],5,0,0);
         //__delay_ms(6000);
-
         boilerTemperature = total[0] / numSamples;    // Assign the average value of total to the boilerTemperature variable
 //        LCDWriteIntXY(0,4,ADCRead(9),5,0,0);
   //      LCDWriteIntXY(21,4,shortTermTemp[0],5,0,0);
@@ -221,12 +215,6 @@ int main(void)
         
         total[1] = total[1] + samples[1][sampleIndex];// Add that new sample to the total
         
-        //sampleIndex += 1;                             // and move to the next index location
-        
-//        if(sampleIndex >= numSamples)                 //If we have reached the max number of samples
-  //      {
-    //        sampleIndex = 0;                          //Reset to zero
-      //  }
         steamTemperature = total[1] / numSamples;     // Assign the average value of total to the GroupHeadTemp variable
 
  
@@ -291,12 +279,10 @@ int main(void)
 
 // *************** Calculate Temperatures **************************************
 //            internalBGV = ADCRead(0x1A);
-//            for(i = 0;i<3;++i)
-  //          {
-                temp[0] = TempCalc(temp[0]);
-                temp[1] = TempCalc(temp[1]);
-                temp[2] = TempCalc(temp[2]);
-    //        } 
+            for(i = 0;i<3;++i)
+            {
+                temp[i] = TempCalc(temp[i]);
+            } 
             
 // ******************************************************************************
             if(powerSwitch)
@@ -338,7 +324,6 @@ int main(void)
                     LCDWriteCharacter(123);                     // generate degree symbol in font list
                     LCDWriteCharacter(70);
                     LCDWriteCharacter(' ');
-LCDWriteIntXY(58,4,temp[1],5,0,0);
                     
                 
                     if(shotTimer == 0)

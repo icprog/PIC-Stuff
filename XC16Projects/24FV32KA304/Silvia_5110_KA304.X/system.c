@@ -79,19 +79,19 @@ void ConfigureOscillator(void)
 void InitApp(void)                  // Setup analog functionality and port direction
 {
     TRISA = 0x0081;                 // RA0 & RA7 Set as Input, Data Direction 1 = input, 0 = Output
-    TRISB = 0x8C0C;                 // Data Direction 1 = input, 0 = Output
-    TRISC = 0x0203;                 // Data Direction 1 = input, 0 = Output
+    TRISB = 0x8C0C;                 // RB2, 3, 10, 11, and 15 as Input, Data Direction 1 = input, 0 = Output
+    TRISC = 0x0203;                 // RC0, 1, and 9 as Inputs, Data Direction 1 = input, 0 = Output
     
     ANSA =  0x0001;                 // RA0 as Analog, 1 = Analog, 0 = Digital
-    ANSB =  0x800C;                 // Analog or Digital 1 = Analog, 0 = Digital
-    ANSC =  0x0003;                 // Analog or Digital 1 = Analog, 0 = Digital
+    ANSB =  0x800C;                 // RB2, 3, and 15 as Analog, Analog or Digital 1 = Analog, 0 = Digital
+    ANSC =  0x0003;                 // RC0 and 1 as Analog, Analog or Digital 1 = Analog, 0 = Digital
     
     PORTA = 0x0000;                 // Power up state of the Port Pins(ie as a 1 or a 0)
     PORTB = 0x0000;
     PORTC = 0x0000;                 // Make sure Pin 13 always initialized low, is reset pin for LCD
     
-    CNPU1 = 0x8200;                 // Enable Weak Pullups on CN9 & CN15 (Pin 6 & 9)
-    CNPU2 = 0x0009;                 // Enable Weak Pullups on CN16 & 19 (Pin 8 & 5)
+    CNPU1 = 0x8200;                 // Enable Weak Pull-ups on CN9 & CN15 (Pin 6 & 9)
+    CNPU2 = 0x0009;                 // Enable Weak Pull-ups on CN16 & 19 (Pin 8 & 5)
     
 
     ConfigureOscillator();

@@ -9,21 +9,37 @@ void InitializeTimers(void)
     T1CONbits.TON =     0;                          // Timer1 is used for generating PWM frequency
     T1CONbits.TCS =     1;                          // Timer Clock source selected by T1ECS
     T1CONbits.T1ECS =   0x0;                        // Timer 1 Extended Clock Selection bits (00 = Secondary Oscillator)
-    T1CONbits.TCKPS =   0x1;                        // Timer 1 input clock pre-scale bits 01 = 1:8 
-    TMR1 =              0x0000;                     // Timer 1 preset value??
-    PR1 =               0x03FF;                     // Timer 1 Period value of .25 Seconds for a Frequency of 4Hz
+    T1CONbits.TCKPS0 =  1;                          // Timer 1 input clock pre-scale bits (TCKPS) 11 = 1:256
+    T1CONbits.TCKPS1 =  1;    
     T1CONbits.TON =     1;                          // TIMER 1 ON
+
     T2CONbits.TON =     0;                          // Turn Timer OFF
-    PR2 =               0x4D30;                     // Period value set in Timer 2, to make it so Timer 2 rolls over every 1/100th seconds
+    PR2 =               0x4D30;                     // Period value set in Timer 2, to make it so Timer 2 rolls over every 1/100th seconds FIX
     T2CONbits.TON =     1;                          // Turn Timer 2 ON
 }
 // *****************************************************************************
 
 void Initialize_PWM(void)
 {
-    OC3R =                  0x0000;                 // Set On time (Duty Clcle))
-//    OC3RS =                 0x0000;                 // Set Period for Edge aligned PWM
-    OC3CON2bits.SYNCSEL =   0X0B;                   // Set Timer 1 as Sync source
+    OC1R                =   0x0010;
+    OC1RS               =   0x0020;                 // 0x20 = 32 counts x 1:256 Prescaler on Timer1, = .25 Seconds = 1 Pulse per cycle resolution
+    OC1CON2bits.SYNCSEL =   0X1F;                   // Set Self Sync as source
+    OC1CON2bits.OCTRIG =    0;                      // Set OC1 as Sync source
+    OC1CON1bits.OCTSEL =    0X4;                    // Set Timer 1 as clock source
+    OC1TMR =                0x0000;                 // Set OC1 timer to zero
+    OC1CON1bits.OCM =       0x6;                    // Set OC1 Mode to Edge aligned PWM (Center aligned works as well, except it is on until OCxR, turns off until OCxRS, so, 
+    
+    OC2R                =   0x7FFF;
+    OC2RS               =   0xFFFF;
+    OC2CON2bits.SYNCSEL =   0X1F;                   // Set Self Sync as source
+    OC2CON2bits.OCTRIG =    0;                      // Set OC2 as Sync source
+    OC2CON1bits.OCTSEL =    0X4;                    // Set Timer 1 as clock source
+    OC2TMR =                0x0000;                 // Set OC2 timer to zero
+    OC2CON1bits.OCM =       0x6;                    // Set OC2 Mode to Edge aligned PWM (Center aligned works as well, except it is on until OCxR, turns off until OCxRS, so, 
+
+    OC3R =                  0x7FFF;                 // Set On time (Duty Clcle))
+    OC3RS =                 0xFFFF;                 // Set Period for Edge aligned PWM
+    OC3CON2bits.SYNCSEL =   0X1F;                   // Set Timer 1 as Sync source
     OC3CON2bits.OCTRIG =    0;                      // Set OC3 as Sync source
     OC3CON1bits.OCTSEL =    0X4;                    // Set Timer 1 as clock source
     OC3TMR =                0x0000;                 // Set OC3 timer to zero
