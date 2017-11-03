@@ -12681,7 +12681,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;math.h: 55: extern double round(double);
 "8 ../PWMTest.X/main.c
 [v _samples `ui ~T0 @X0 -> 10 `i e ]
-[; ;main.c: 8: uint16_t samples[10];
+[i _samples
+:U ..
+-> -> 0 `i `ui
+..
+]
+[; ;main.c: 8: uint16_t samples[10] = {0};
 "11
 [v _main `(v ~T0 @X0 1 ef ]
 "12
@@ -12716,14 +12721,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _readTemperatureOld -> -> 20 `i `ui ]
 "25
 [v _R `f ~T0 @X0 1 a ]
+[v _steinhart `f ~T0 @X0 1 a ]
 "27
-[v F13720 `ui ~T0 @X0 1 s sampleIndex ]
-[i F13720
+[v F13721 `ui ~T0 @X0 1 s sampleIndex ]
+[i F13721
 -> -> 0 `i `ui
 ]
 "29
 [v _totals `l ~T0 @X0 1 a ]
-[; ;main.c: 25: float R;
+[; ;main.c: 25: float R, steinhart;
 [; ;main.c: 27: static uint16_t sampleIndex = 0;
 [; ;main.c: 29: int32_t totals = 0;
 [e = _totals -> -> 0 `i `l ]
@@ -12738,25 +12744,25 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _readTemperature ( _ADCC_GetSingleConversion (1 -> -> 2 `i `E13587 ]
 [; ;main.c: 37: totals = totals - samples[sampleIndex];
 "37
-[e = _totals - _totals -> *U + &U _samples * -> F13720 `ux -> -> # *U &U _samples `ui `ux `l ]
+[e = _totals - _totals -> *U + &U _samples * -> F13721 `ux -> -> # *U &U _samples `ui `ux `l ]
 [; ;main.c: 39: samples[sampleIndex] = readTemperature;
 "39
-[e = *U + &U _samples * -> F13720 `ux -> -> # *U &U _samples `ui `ux _readTemperature ]
+[e = *U + &U _samples * -> F13721 `ux -> -> # *U &U _samples `ui `ux _readTemperature ]
 [; ;main.c: 41: totals = totals + samples[sampleIndex];
 "41
-[e = _totals + _totals -> *U + &U _samples * -> F13720 `ux -> -> # *U &U _samples `ui `ux `l ]
+[e = _totals + _totals -> *U + &U _samples * -> F13721 `ux -> -> # *U &U _samples `ui `ux `l ]
 [; ;main.c: 43: sampleIndex += 1;
 "43
-[e =+ F13720 -> -> 1 `i `ui ]
+[e =+ F13721 -> -> 1 `i `ui ]
 [; ;main.c: 45: if(sampleIndex >= 10)
 "45
-[e $ ! >= F13720 -> -> 10 `i `ui 1523  ]
+[e $ ! >= F13721 -> -> 10 `i `ui 1523  ]
 [; ;main.c: 46: {
 "46
 {
 [; ;main.c: 47: sampleIndex = 0;
 "47
-[e = F13720 -> -> 0 `i `ui ]
+[e = F13721 -> -> 0 `i `ui ]
 "48
 }
 [e :U 1523 ]
@@ -12868,9 +12874,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 99: R = 9970/(1023/ (float)readTemperature - 1);
 "99
 [e = _R / -> -> 9970 `i `f - / -> -> 1023 `i `f -> _readTemperature `f -> -> 1 `i `f ]
-"104
-[v _steinhart `f ~T0 @X0 1 a ]
-[; ;main.c: 104: float steinhart;
 [; ;main.c: 105: steinhart = R / 9970;
 "105
 [e = _steinhart / _R -> -> 9970 `i `f ]
@@ -12889,17 +12892,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 110: steinhart -= 273.15;
 "110
 [e =- _steinhart -> .273.15 `f ]
-[; ;main.c: 128: { LCD_Set_Cursor(0,0); LCD_Write_Int(R,-1, 0, 0);};
+[; ;main.c: 128: { LCD_Set_Cursor(0,0); LCD_Write_Int((unsigned int)R,-1, 0, 0);};
 "128
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _R `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> -> _R `ui `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
 }
-[; ;main.c: 132: { LCD_Set_Cursor(1,0); LCD_Write_Int(steinhart,-1, 0, 0);};
+[; ;main.c: 132: { LCD_Set_Cursor(1,0); LCD_Write_Int((unsigned int)steinhart,-1, 0, 0);};
 "132
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _steinhart `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> -> _steinhart `ui `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
 }
 [; ;main.c: 133: LCD_Write_Char(' ');
 "133

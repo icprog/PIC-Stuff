@@ -5,7 +5,7 @@
 #define     numSamples  10                                                      // Number of Temperature readings to Average
 
 
-uint16_t samples[numSamples];
+uint16_t samples[numSamples] = {0};
 
 
 void main(void)
@@ -22,7 +22,7 @@ void main(void)
     
     uint16_t readTemperature, setpoint = 70, outCurrent = PWM6_INITIALIZE_DUTY_VALUE, readTemperatureOld = 20;
     
-    float R;
+    float R, steinhart;
     
     static uint16_t sampleIndex = 0;
 
@@ -101,7 +101,7 @@ void main(void)
 //        readTemperature = (1023 /(float)readTemperature) - 1;
   //      readTemperature = 10000 / (float)readTemperature;
  
-        float steinhart;
+//        float steinhart;
         steinhart = R / 9970;     // (R/Ro)
         steinhart = log(steinhart);                  // ln(R/Ro)
         steinhart /= 3490;                   // 1/B * ln(R/Ro)
@@ -125,11 +125,11 @@ void main(void)
       //  LCD_Write_Char(' ');
         //LCD_Write_Char(' ');
         
-        LCDWriteIntXY(0,0,R,-1,0,0);
+        LCDWriteIntXY(0,0,(unsigned int)R,-1,0,0);
 //        LCD_Write_Char(' ');
   //      LCD_Write_Char(' ');
  
-        LCDWriteIntXY(1,0,steinhart,-1,0,0);
+        LCDWriteIntXY(1,0,(unsigned int)steinhart,-1,0,0);
         LCD_Write_Char(' ');
 //        LCD_Write_Char(' ');
  
