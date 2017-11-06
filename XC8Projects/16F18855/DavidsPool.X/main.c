@@ -3,16 +3,18 @@
 #include <math.h>
 
 // *************** Defines *****************************************************    
-#define     numSamples  50                                              // Number of Temperature readings to Average
+#define     numSamples  41                                              // Number of Temperature readings to Average
 
 // *************** Externally available Variables ******************************    
-uint16_t samples[numSamples] = {0};
+//uint16_t samples[numSamples] = {0};
 
 // *************** Main Routine ************************************************    
 void main(void)
 {
     SYSTEM_Initialize();
    
+    uint16_t samples[numSamples] = {0};
+
     uint16_t readTemperature, readTemperatureOld, seconds = 0, counter = 0, minutes = 0;
     
     uint8_t  toggle = 0;

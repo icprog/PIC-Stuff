@@ -2,7 +2,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
 "15 system.h
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
-"29 main.c
+"31 main.c
 [c E14286 60 61 62 63 .. ]
 [n E14286 . channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
 "30 adcc.h
@@ -13199,15 +13199,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;math.h: 53: extern double fmod(double, double);
 [; ;math.h: 54: extern double trunc(double);
 [; ;math.h: 55: extern double round(double);
-"9 main.c
-[v _samples `ui ~T0 @X0 -> 50 `i e ]
-[i _samples
-:U ..
--> -> 0 `i `ui
-..
-]
-[; ;main.c: 9: uint16_t samples[50] = {0};
-"12
+"12 main.c
 [v _main `(v ~T0 @X0 1 ef ]
 "13
 {
@@ -13218,179 +13210,189 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 14: SYSTEM_Initialize();
 "14
 [e ( _SYSTEM_Initialize ..  ]
+[v F14414 `ui ~T0 @X0 -> 41 `i s ]
+[i F14414
+:U ..
 "16
+-> -> 0 `i `ui
+..
+]
+[v _samples `ui ~T0 @X0 -> 41 `i a ]
+[; ;main.c: 16: uint16_t samples[41] = {0};
+[e = _samples F14414 ]
+"18
 [v _readTemperature `ui ~T0 @X0 1 a ]
 [v _readTemperatureOld `ui ~T0 @X0 1 a ]
 [v _seconds `ui ~T0 @X0 1 a ]
-[; ;main.c: 16: uint16_t readTemperature, readTemperatureOld, seconds = 0, counter = 0, minutes = 0;
+[; ;main.c: 18: uint16_t readTemperature, readTemperatureOld, seconds = 0, counter = 0, minutes = 0;
 [e = _seconds -> -> 0 `i `ui ]
 [v _counter `ui ~T0 @X0 1 a ]
 [e = _counter -> -> 0 `i `ui ]
 [v _minutes `ui ~T0 @X0 1 a ]
 [e = _minutes -> -> 0 `i `ui ]
-"18
-[v _toggle `uc ~T0 @X0 1 a ]
-[; ;main.c: 18: uint8_t toggle = 0;
-[e = _toggle -> -> 0 `i `uc ]
 "20
+[v _toggle `uc ~T0 @X0 1 a ]
+[; ;main.c: 20: uint8_t toggle = 0;
+[e = _toggle -> -> 0 `i `uc ]
+"22
 [v _R `f ~T0 @X0 1 a ]
 [v _steinhart `f ~T0 @X0 1 a ]
 [v _displayTemp `f ~T0 @X0 1 a ]
-"22
-[v F14423 `ui ~T0 @X0 1 s sampleIndex ]
-[i F14423
+"24
+[v F14424 `ui ~T0 @X0 1 s sampleIndex ]
+[i F14424
 -> -> 0 `i `ui
 ]
-"24
+"26
 [v _totals `l ~T0 @X0 1 a ]
-[; ;main.c: 20: float R, steinhart, displayTemp;
-[; ;main.c: 22: static uint16_t sampleIndex = 0;
-[; ;main.c: 24: int32_t totals = 0;
+[; ;main.c: 22: float R, steinhart, displayTemp;
+[; ;main.c: 24: static uint16_t sampleIndex = 0;
+[; ;main.c: 26: int32_t totals = 0;
 [e = _totals -> -> 0 `i `l ]
-[; ;main.c: 27: while (1)
-"27
-[e :U 1565 ]
-[; ;main.c: 28: {
-"28
-{
-[; ;main.c: 29: readTemperature = ADCC_GetSingleConversion(2);
+[; ;main.c: 29: while (1)
 "29
-[e = _readTemperature ( _ADCC_GetSingleConversion (1 -> -> 2 `i `E14286 ]
-[; ;main.c: 31: totals = totals - samples[sampleIndex];
-"31
-[e = _totals - _totals -> *U + &U _samples * -> F14423 `ux -> -> # *U &U _samples `ui `ux `l ]
-[; ;main.c: 33: samples[sampleIndex] = readTemperature;
-"33
-[e = *U + &U _samples * -> F14423 `ux -> -> # *U &U _samples `ui `ux _readTemperature ]
-[; ;main.c: 35: totals = totals + samples[sampleIndex];
-"35
-[e = _totals + _totals -> *U + &U _samples * -> F14423 `ux -> -> # *U &U _samples `ui `ux `l ]
-[; ;main.c: 37: sampleIndex += 1;
-"37
-[e =+ F14423 -> -> 1 `i `ui ]
-[; ;main.c: 39: if(sampleIndex >= 50)
-"39
-[e $ ! >= F14423 -> -> 50 `i `ui 1567  ]
-[; ;main.c: 40: {
-"40
+[e :U 1565 ]
+[; ;main.c: 30: {
+"30
 {
-[; ;main.c: 41: sampleIndex = 0;
+[; ;main.c: 31: readTemperature = ADCC_GetSingleConversion(2);
+"31
+[e = _readTemperature ( _ADCC_GetSingleConversion (1 -> -> 2 `i `E14286 ]
+[; ;main.c: 33: totals = totals - samples[sampleIndex];
+"33
+[e = _totals - _totals -> *U + &U _samples * -> F14424 `ux -> -> # *U &U _samples `ui `ux `l ]
+[; ;main.c: 35: samples[sampleIndex] = readTemperature;
+"35
+[e = *U + &U _samples * -> F14424 `ux -> -> # *U &U _samples `ui `ux _readTemperature ]
+[; ;main.c: 37: totals = totals + samples[sampleIndex];
+"37
+[e = _totals + _totals -> *U + &U _samples * -> F14424 `ux -> -> # *U &U _samples `ui `ux `l ]
+[; ;main.c: 39: sampleIndex += 1;
+"39
+[e =+ F14424 -> -> 1 `i `ui ]
+[; ;main.c: 41: if(sampleIndex >= 41)
 "41
-[e = F14423 -> -> 0 `i `ui ]
+[e $ ! >= F14424 -> -> 41 `i `ui 1567  ]
+[; ;main.c: 42: {
 "42
+{
+[; ;main.c: 43: sampleIndex = 0;
+"43
+[e = F14424 -> -> 0 `i `ui ]
+"44
 }
 [e :U 1567 ]
-[; ;main.c: 42: }
-[; ;main.c: 44: readTemperature = totals / 50;
-"44
-[e = _readTemperature -> / _totals -> -> 50 `i `l `ui ]
-[; ;main.c: 47: R = 10200/(1023/(float)readTemperature - 1);
-"47
-[e = _R / -> -> 10200 `i `f - / -> -> 1023 `i `f -> _readTemperature `f -> -> 1 `i `f ]
-[; ;main.c: 49: steinhart = R /10061;
+[; ;main.c: 44: }
+[; ;main.c: 46: readTemperature = totals / 41;
+"46
+[e = _readTemperature -> / _totals -> -> 41 `i `l `ui ]
+[; ;main.c: 49: R = 10200/(1023/(float)readTemperature - 1);
 "49
-[e = _steinhart / _R -> -> 10061 `i `f ]
-[; ;main.c: 50: steinhart = log(steinhart);
-"50
-[e = _steinhart -> ( _log (1 -> _steinhart `d `f ]
-[; ;main.c: 51: steinhart /= 3995;
+[e = _R / -> -> 10200 `i `f - / -> -> 1023 `i `f -> _readTemperature `f -> -> 1 `i `f ]
+[; ;main.c: 51: steinhart = R /10061;
 "51
-[e =/ _steinhart -> -> 3995 `us `f ]
-[; ;main.c: 52: steinhart += 1.0 / (25 + 273.15);
+[e = _steinhart / _R -> -> 10061 `i `f ]
+[; ;main.c: 52: steinhart = log(steinhart);
 "52
-[e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]
-[; ;main.c: 53: steinhart = 1.0 / steinhart;
+[e = _steinhart -> ( _log (1 -> _steinhart `d `f ]
+[; ;main.c: 53: steinhart /= 3995;
 "53
-[e = _steinhart -> / .1.0 -> _steinhart `d `f ]
-[; ;main.c: 54: steinhart -= 273.15;
+[e =/ _steinhart -> -> 3995 `us `f ]
+[; ;main.c: 54: steinhart += 1.0 / (25 + 273.15);
 "54
+[e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]
+[; ;main.c: 55: steinhart = 1.0 / steinhart;
+"55
+[e = _steinhart -> / .1.0 -> _steinhart `d `f ]
+[; ;main.c: 56: steinhart -= 273.15;
+"56
 [e =- _steinhart -> .273.15 `f ]
-[; ;main.c: 57: displayTemp = steinhart*10;
-"57
-[e = _displayTemp * _steinhart -> -> 10 `i `f ]
-[; ;main.c: 59: if(toggle == 1)
+[; ;main.c: 59: displayTemp = steinhart*10;
 "59
-[e $ ! == -> _toggle `i -> 1 `i 1568  ]
-[; ;main.c: 60: {
-"60
-{
-[; ;main.c: 61: displayTemp = displayTemp*9/5+320;
+[e = _displayTemp * _steinhart -> -> 10 `i `f ]
+[; ;main.c: 61: if(toggle == 1)
 "61
-[e = _displayTemp + / * _displayTemp -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
-[; ;main.c: 63: { gotoXY(0,0); LCDWriteInt((int)displayTemp,-1, 1, 0);};
+[e $ ! == -> _toggle `i -> 1 `i 1568  ]
+[; ;main.c: 62: {
+"62
+{
+[; ;main.c: 63: displayTemp = displayTemp*9/5+320;
 "63
-{
-[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[e ( _LCDWriteInt (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
-}
-[; ;main.c: 64: LCDWriteCharacter(0);
-"64
-[e ( _LCDWriteCharacter (1 -> -> 0 `i `uc ]
-[; ;main.c: 65: LCDWriteCharacter('F');
+[e = _displayTemp + / * _displayTemp -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
+[; ;main.c: 65: { gotoXY(0,0); LCDWriteInt((int)displayTemp,-1, 1, 0);};
 "65
-[e ( _LCDWriteCharacter (1 -> -> 70 `ui `uc ]
-[; ;main.c: 66: LCDWriteCharacter(' ');
-"66
-[e ( _LCDWriteCharacter (1 -> -> 32 `ui `uc ]
-"67
-}
-[; ;main.c: 67: }
-[e $U 1569  ]
-"68
-[e :U 1568 ]
-[; ;main.c: 68: else
-[; ;main.c: 69: {
-"69
-{
-[; ;main.c: 70: { gotoXY(0,0); LCDWriteInt((int)displayTemp,-1, 1, 0);};
-"70
 {
 [e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
 [e ( _LCDWriteInt (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
 }
-[; ;main.c: 71: LCDWriteCharacter(0);
-"71
+[; ;main.c: 66: LCDWriteCharacter(0);
+"66
 [e ( _LCDWriteCharacter (1 -> -> 0 `i `uc ]
-[; ;main.c: 72: LCDWriteCharacter('C');
-"72
-[e ( _LCDWriteCharacter (1 -> -> 67 `ui `uc ]
-[; ;main.c: 73: LCDWriteCharacter(' ');
-"73
+[; ;main.c: 67: LCDWriteCharacter('F');
+"67
+[e ( _LCDWriteCharacter (1 -> -> 70 `ui `uc ]
+[; ;main.c: 68: LCDWriteCharacter(' ');
+"68
 [e ( _LCDWriteCharacter (1 -> -> 32 `ui `uc ]
+"69
+}
+[; ;main.c: 69: }
+[e $U 1569  ]
+"70
+[e :U 1568 ]
+[; ;main.c: 70: else
+[; ;main.c: 71: {
+"71
+{
+[; ;main.c: 72: { gotoXY(0,0); LCDWriteInt((int)displayTemp,-1, 1, 0);};
+"72
+{
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCDWriteInt (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
+}
+[; ;main.c: 73: LCDWriteCharacter(0);
+"73
+[e ( _LCDWriteCharacter (1 -> -> 0 `i `uc ]
+[; ;main.c: 74: LCDWriteCharacter('C');
 "74
+[e ( _LCDWriteCharacter (1 -> -> 67 `ui `uc ]
+[; ;main.c: 75: LCDWriteCharacter(' ');
+"75
+[e ( _LCDWriteCharacter (1 -> -> 32 `ui `uc ]
+"76
 }
 [e :U 1569 ]
-[; ;main.c: 74: }
-[; ;main.c: 77: counter +=1;
-"77
-[e =+ _counter -> -> 1 `i `ui ]
-[; ;main.c: 79: if(counter>12)
+[; ;main.c: 76: }
+[; ;main.c: 79: counter +=1;
 "79
-[e $ ! > _counter -> -> 12 `i `ui 1570  ]
-[; ;main.c: 80: {
-"80
-{
-[; ;main.c: 81: toggle = 1-toggle;
+[e =+ _counter -> -> 1 `i `ui ]
+[; ;main.c: 81: if(counter>12)
 "81
-[e = _toggle -> - -> 1 `i -> _toggle `i `uc ]
-[; ;main.c: 82: counter = 0;
+[e $ ! > _counter -> -> 12 `i `ui 1570  ]
+[; ;main.c: 82: {
 "82
-[e = _counter -> -> 0 `i `ui ]
+{
+[; ;main.c: 83: toggle = 1-toggle;
 "83
+[e = _toggle -> - -> 1 `i -> _toggle `i `uc ]
+[; ;main.c: 84: counter = 0;
+"84
+[e = _counter -> -> 0 `i `ui ]
+"85
 }
 [e :U 1570 ]
-[; ;main.c: 83: }
-[; ;main.c: 86: readButtons();
-"86
+[; ;main.c: 85: }
+[; ;main.c: 88: readButtons();
+"88
 [e ( _readButtons ..  ]
-"87
+"89
 }
 [e :U 1564 ]
-"27
+"29
 [e $U 1565  ]
 [e :U 1566 ]
-[; ;main.c: 87: }
-[; ;main.c: 88: }
-"88
+[; ;main.c: 89: }
+[; ;main.c: 90: }
+"90
 [e :UE 1563 ]
 }
