@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.38\dat\en_msgs.txt -cs \
   -h+dist/default/production\5110Again.X.production.sym \
   --cmf=dist/default/production\5110Again.X.production.cmf -z -Q16F18855 \
-  -oC:\Users\DAVE\AppData\Local\Temp\s5h4.2 \
+  -oC:\Users\DAVE\AppData\Local\Temp\s39k.2 \
   -Mdist/default/production/5110Again.X.production.map -E1 -ver=XC8 \
   -ASTACK=02028h-023efh -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
@@ -32,7 +32,7 @@ Linker command line:
   -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 \
   -AEEDATA=00h-0FFh/0F000h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
-  C:\Users\DAVE\AppData\Local\Temp\s5h4.obj \
+  C:\Users\DAVE\AppData\Local\Temp\s39k.obj \
   dist/default/production\5110Again.X.production.obj 
 
 Object code version is 3.11
@@ -42,7 +42,7 @@ Machine type is 16F18855
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\DAVE\AppData\Local\Temp\s5h4.obj
+C:\Users\DAVE\AppData\Local\Temp\s39k.obj
                 end_init                              2        2        2        0       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5    1000E       0
@@ -776,7 +776,7 @@ FUNCTION INFORMATION:
   count           2   27[BANK0 ] unsigned int 
   b               1   29[BANK0 ] unsigned char 
  Return value:  Size  Location     Type
-                  2   26[None  ] int 
+                  2  203[None  ] int 
  Registers used:
 		wreg, fsr0l, fsr0h, fsr1l, fsr1h, status,2, status,0, pclath, cstack
  Tracked objects:
@@ -861,8 +861,8 @@ Total ram usage:        4 bytes
  This function calls:
 		Nothing
  This function is called by:
-		_main
 		_readButton
+		_main
  This function uses a non-reentrant model
 
 
@@ -1149,9 +1149,9 @@ Total ram usage:        3 bytes
  This function calls:
 		_LCDWrite
  This function is called by:
-		_main
 		_LCD_Clear
 		_drawBox
+		_main
  This function uses a non-reentrant model
 
 

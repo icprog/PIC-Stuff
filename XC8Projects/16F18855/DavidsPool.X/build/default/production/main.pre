@@ -17539,12 +17539,13 @@ extern double fmod(double, double);
 extern double trunc(double);
 extern double round(double);
 
-# 12 "main.c"
+# 9 "main.c"
+uint16_t samples[50] = {0};
+
+
 void main(void)
 {
 SYSTEM_Initialize();
-
-uint16_t samples[41] = {0};
 
 uint16_t readTemperature, readTemperatureOld, seconds = 0, counter = 0, minutes = 0;
 
@@ -17569,12 +17570,12 @@ totals = totals + samples[sampleIndex];
 
 sampleIndex += 1;
 
-if(sampleIndex >= 41)
+if(sampleIndex >= 50)
 {
 sampleIndex = 0;
 }
 
-readTemperature = totals / 41;
+readTemperature = totals / 50;
 
 
 R = 10200/(1023/(float)readTemperature - 1);
