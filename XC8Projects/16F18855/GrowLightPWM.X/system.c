@@ -14,7 +14,7 @@
 #pragma config ZCD      = ON                    // Zero-cross detect disable->Zero-cross detect circuit is always enabled
 #pragma config PPS1WAY  = ON                    // Peripheral Pin Select one-way control->The PPSLOCK bit can be cleared and set only once in software
 #pragma config STVREN   = ON                    // Stack Overflow/Underflow Reset Enable bit->Stack Overflow or Underflow will cause a reset
-#pragma config DEBUG    = OFF                   // Background Debugger->Background Debugger disabled
+//#pragma config DEBUG    = OFF                   // Background Debugger->Background Debugger disabled
 
 // CONFIG3
 #pragma config WDTCPS   = WDTCPS_31             // WDT Period Select bits->Divider ratio 1:65536; software control of WDTPS
@@ -44,8 +44,8 @@ void SYSTEM_Initialize(void)
     LCD_Clear();                                // Clear the LCD
     INTERRUPT_GlobalInterruptEnable();          // Enable the Global Interrupts
     INTERRUPT_PeripheralInterruptEnable();      // Enable the Peripheral Interrupts
-    TMR2_Initialize();                          // Init Timer2, will control PWM Period
     PWM6_Initialize();                          // Init Pulse Width Modulation
+    TMR2_Initialize();                          // Init Timer2, will control PWM Period
 }
 
 void OSCILLATOR_Initialize(void)

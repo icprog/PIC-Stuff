@@ -2,9 +2,9 @@
 
 void TMR2_Initialize(void)
 {
-    T2CON = 0x02;                   // T2CKPS 1:4 Clock PreScaler; T2OUTPS 1:1 Out PostScaler; TMR2ON off;
+    T2CON = 0x60;                   // T2CKPS 1:64 Clock PreScaler; T2OUTPS 1:1 Out PostScaler; TMR2ON off; 4MHz/4=1MHz/256(PR2)=3906.25Hz/64=61Hz!!
     
-    T2CLKCON = 0x01;                // Pg 440, T2CS(T2 Clock Source) FOSC/4; 
+    T2CLKCON = 0x01;                // Pg 440, T2CS(T2 Clock Source) FOSC/4, MUST be FOSC/4 for PWM to function; 
     
     T2HLT = 0x00;                   // Pg 442, Hardware Limit Cntrl, T2PSYNC Not Synchronized; T2MODE Software control; T2CKPOL Ris ing Edge; T2CKSYNC Not Synchronized;
                                     // Setup as freerunning software gated
@@ -12,7 +12,7 @@ void TMR2_Initialize(void)
 
     T2PR = 0xFF;                    // Period register, PR2 120; 
 
-    T2TMR = 0x00;                   // TMR2 0;
+    T2TMR = 0x00;                   // TMR2 0; Timer2 Preset, resets to zero on a Timer overflow
     
     PIR4bits.TMR2IF = 0;            // Clearing IF flag.
 

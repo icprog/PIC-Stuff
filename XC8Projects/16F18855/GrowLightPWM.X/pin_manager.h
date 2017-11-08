@@ -1,6 +1,8 @@
 #ifndef PIN_MANAGER_H
 #define PIN_MANAGER_H
 
+#include "system.h"
+
 #define INPUT   1
 #define OUTPUT  0
 

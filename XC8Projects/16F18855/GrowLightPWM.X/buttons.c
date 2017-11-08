@@ -4,7 +4,7 @@
 #define downButton  RA3
 #define upButton    RA4
 
-uint8_t downCount = 0, upCount = 0, toggleCount = 0, x = 0;
+uint8_t downCount = 0, upCount = 0, toggleCount = 0, b = 0;
 
 void readButtons(void)
 {
@@ -15,19 +15,19 @@ void readButtons(void)
         toggleCount+=1;
         if(toggleCount >=6)
         {
-            x+=1;
-            if(x>4)
+            b+=1;
+            if(b>4)
             {
-                x=0;
+                b=0;
             }
 //            LCDWriteStringXY(0,0,"Setpoint?");
   //          LCDWriteIntXY(1,0,setpoint,3,0,0);
-            LCDWriteCharacter(0);
-            LCDWriteCharacter('C');
-            LCDWriteCharacter(' ');
+            LCD_Write_Character(0);
+            LCD_Write_Character('C');
+            LCD_Write_Character(' ');
             __delay_ms(1500);
             toggleCount = 0;
-            LCDClear();
+            LCD_Clear();
         }
     }
     

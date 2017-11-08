@@ -228,17 +228,14 @@ void gotoXY(int8_t x, int8_t y)
 }
 
 
-void LCDBitmap(const char my_array[])                             //This takes a large array of bits and sends them to the LCD
-{
-for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
-LCD_Write(LCD_DATA, my_array[index]);
-}
+//void LCDBitmap(const char my_array[])                             //This takes a large array of bits and sends them to the LCD
+//{
+//    for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
+//    LCD_Write(LCD_DATA, my_array[index]);
+//}
 
 
-//This function takes in a character, looks it up in the font table/array
-//And writes it to the screen
-//Each character is 8 bits tall and 5 bits wide. We pad one blank column of
-//pixels on each side of the character for readability.
+
 
 void LCD_Write_Character(const char character)
 {

@@ -1,26 +1,57 @@
 #include "system.h"
 
+#define     numSamples  50                      // Number of Temperature readings to Average
+
+unsigned int samples[numSamples]    = {0};
+
+extern unsigned int Vsense;                     // Voltage across Rsense
+
+
 
 void main(void)
 {
     SYSTEM_Initialize();                        // Initialize the Device
     
-    extern unsigned int I;                      // Average value of Vsense
+    unsigned int sampleIndex        = 0;
+
+    int32_t totals                  = 0;
     
-    unsigned int currentFlow    = 0;            // Calculated Current Flow (based on Vsense)
+    unsigned int I                  = 0;        // Average value of Vsense
     
-    unsigned int setPoint       = 700;          // Current Flow Set Point
+    unsigned int currentFlow        = 0;        // Calculated Current Flow (based on Vsense)
     
-    unsigned int dutyCycle      = 0;            // Output Duty Cycle required to drive LED's
+    unsigned int setPoint           = 700;      // Current Flow Set Point
     
-    signed char count           = 0;
+    unsigned int dutyCycle          = 0;        // Output Duty Cycle required to drive LED's
     
-    unsigned int count3 = 0;
+    signed char count               = 0;
     
     drawBox();                                  // Draw an Outline around the display
+    
 
     while (1)
     {
+        if(dutyCycle<1 || dutyCycle>1022)
+        {
+            Vsense = ADCRead(7);
+        }
+
+        totals = totals - samples[sampleIndex]; // Subtract the oldest sample data from the total
+
+        samples[sampleIndex] = Vsense;          // Assign the just read temperature to the location of the current oldest data
+
+        totals = totals + samples[sampleIndex]; // Add that new sample to the total
+            
+        sampleIndex += 1;                       // and move to the next index location
+            
+        if(sampleIndex >= numSamples)
+        {
+            sampleIndex = 0;
+        }
+            
+        I = totals / numSamples;                // assign the average value of total to the readTemperature variable
+        
+        
         currentFlow = I;                        // Do some math to make Voltage = Current in circuit  FIX
         
         if(currentFlow>setPoint)                // currentFlow is too high
@@ -43,6 +74,9 @@ void main(void)
             }
         }
         else
+        {
+            ;
+        }
 
             
         PWM6_LoadDutyValue(dutyCycle);          // Load the just calculated dutyCycle
@@ -58,17 +92,7 @@ void main(void)
         LCDWriteStringXY(4,3,"DutyCycle:");
         LCD_Write_Int(dutyCycle,5,0,0);
         
-        LCDWriteStringXY(20,4,"Count:");
-        LCD_Write_Int(count,-1,0,1);
-        LCD_Write_Character(' ');
-        LCD_Write_Character(' ');
-        
-        LCDWriteIntXY(4,5,count3,5,0,0)
-        
-        if(PIR4bits.TMR2IF)
-        {
-            count3+=1;
-        }
+        I+=1;                                   // If we stop updating the Amperage reading, increment it to force a shutdown
         
         CLRWDT();                               // Clear the WatchDog Timer
     }

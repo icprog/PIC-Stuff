@@ -1,8 +1,4 @@
-#include <xc.h>
 #include "pin_manager.h"
-#include "stdbool.h"
-
-
 
 void PIN_MANAGER_Initialize(void)
 {
@@ -29,8 +25,7 @@ void PIN_MANAGER_Initialize(void)
 
     
     PIE0bits.IOCIE = 0;                         // interrupts-on-change are globally disabled
-    bool state = GIE;
-    GIE = 0;
+    INTERRUPT_GlobalInterruptDisable();
     PPSLOCK = 0x55;
     PPSLOCK = 0xAA;
     PPSLOCKbits.PPSLOCKED = 0x00;               // unlock PPS
@@ -43,5 +38,5 @@ void PIN_MANAGER_Initialize(void)
     PPSLOCK = 0x55;
     PPSLOCK = 0xAA;
     PPSLOCKbits.PPSLOCKED = 0x01;               // lock PPS
-    GIE = state;
+    INTERRUPT_GlobalInterruptEnable();
 }
