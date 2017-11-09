@@ -10,7 +10,7 @@ void TMR2_Initialize(void)
                                     // Setup as freerunning software gated
     T2RST = 0x00;                   // Pg 443, External Reset Source, T2RSEL T2CKIPPS pin;
 
-    T2PR = 0xFF;                    // Period register, PR2 120; 
+    T2PR = 0xFF;                    // Period register, PR2 255 
 
     T2TMR = 0x00;                   // TMR2 0; Timer2 Preset, resets to zero on a Timer overflow
     
