@@ -17,11 +17,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S934 . . ]
 "19887
 [v _PIE2bits `VS934 ~T0 @X0 0 e@1816 ]
-"19 zcd.c
-[c E13569 60 61 62 63 .. ]
-[n E13569 . channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
-"23 adc.h
-[v _ADCRead `(ui ~T0 @X0 0 ef1`E13569 ]
+"4 zcd.c
+[v _readBit `uc ~T0 @X0 0 e ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12648,48 +12645,43 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.h: 20: void OSCILLATOR_Initialize(void);
 [; ;zcd.h: 6: void ZCD_Initialize(void);
 [; ;zcd.h: 22: void ZCD_ISR(void);
-"3 zcd.c
-[v _Vsense `ui ~T0 @X0 1 e ]
-[i _Vsense
--> -> 0 `i `ui
-]
-[; ;zcd.c: 3: unsigned int Vsense = 0;
-"6
+[; ;zcd.c: 4: extern bool readBit;
+"7 zcd.c
 [v _ZCD_Initialize `(v ~T0 @X0 1 ef ]
-"7
+"8
 {
-[; ;zcd.c: 6: void ZCD_Initialize (void)
-[; ;zcd.c: 7: {
+[; ;zcd.c: 7: void ZCD_Initialize (void)
+[; ;zcd.c: 8: {
 [e :U _ZCD_Initialize ]
 [f ]
-[; ;zcd.c: 8: ZCD1CON = 0x82;
-"8
+[; ;zcd.c: 9: ZCD1CON = 0x82;
+"9
 [e = _ZCD1CON -> -> 130 `i `uc ]
 [; ;zcd.c: 10: PIR2bits.ZCDIF = 0;
 "10
 [e = . . _PIR2bits 0 3 -> -> 0 `i `uc ]
-[; ;zcd.c: 12: PIE2bits.ZCDIE = 1;
-"12
+[; ;zcd.c: 11: PIE2bits.ZCDIE = 1;
+"11
 [e = . . _PIE2bits 0 3 -> -> 1 `i `uc ]
-[; ;zcd.c: 13: }
-"13
+[; ;zcd.c: 12: }
+"12
 [e :UE 1519 ]
 }
-"15
+"14
 [v _ZCD_ISR `(v ~T0 @X0 1 ef ]
-"16
+"15
 {
-[; ;zcd.c: 15: void ZCD_ISR(void)
-[; ;zcd.c: 16: {
+[; ;zcd.c: 14: void ZCD_ISR(void)
+[; ;zcd.c: 15: {
 [e :U _ZCD_ISR ]
 [f ]
-[; ;zcd.c: 17: PIR2bits.ZCDIF = 0;
-"17
+[; ;zcd.c: 16: PIR2bits.ZCDIF = 0;
+"16
 [e = . . _PIR2bits 0 3 -> -> 0 `i `uc ]
-[; ;zcd.c: 19: Vsense = ADCRead(7);
+[; ;zcd.c: 17: readBit = 1;
+"17
+[e = _readBit -> -> 1 `i `uc ]
+[; ;zcd.c: 19: }
 "19
-[e = _Vsense ( _ADCRead (1 -> -> 7 `i `E13569 ]
-[; ;zcd.c: 20: }
-"20
 [e :UE 1520 ]
 }

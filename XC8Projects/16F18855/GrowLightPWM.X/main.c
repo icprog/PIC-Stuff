@@ -1,10 +1,12 @@
 #include "system.h"
 
-#define     numSamples  50                      // Number of Temperature readings to Average
+#define     numSamples  61                      // Number of Temperature readings to Average (61 Hz, so 61 samples = 1 second of averaging)
 
 unsigned int samples[numSamples]    = {0};
 
-extern unsigned int Vsense;                     // Voltage across Rsense
+unsigned int Vsense                 = 0;        // Voltage across Rsense
+
+bool readBit                        = 1;        // Allow an ADCRead once a cycle to measure current
 
 
 
@@ -31,9 +33,18 @@ void main(void)
 
     while (1)
     {
-        if(dutyCycle<1 || dutyCycle>1022)
+        if(TMR2 >0x7F)
         {
-            Vsense = ADCRead(7);
+            if(readBit)
+            {
+                Vsense = ADCRead(7);            // Measure the Voltage across the sense resistor
+                readBit-=1;                     // Set readBit to 0, only allow one ADCRead/cycle (Set by ZCD Interrupt Flag)
+            }
+        }
+        
+        if(dutyCycle<1 || dutyCycle>1022)       // There is no Zero Cross to detect, so,
+        {
+            Vsense = ADCRead(7);                //  Read the ADC here
         }
 
         totals = totals - samples[sampleIndex]; // Subtract the oldest sample data from the total
@@ -58,7 +69,7 @@ void main(void)
         {
             count-=1;
             
-            if(count<-2)
+            if(count<-10)
             {
                 dutyCycle>0?dutyCycle-=1:dutyCycle; // if currentFlow is >0, decrement Output
                 count = 0;
@@ -67,7 +78,7 @@ void main(void)
         else if(currentFlow<setPoint)           // currentFlow is below setPoint, so,           
         {
             count+=1;
-            if(count>2)
+            if(count>10)
             {
                 dutyCycle<1023?dutyCycle+=1:dutyCycle;// if currentFlow is less than Maximum, increment Output
                 count = 0;

@@ -16807,9 +16807,11 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 
 # 5 "main.c"
-unsigned int samples[50] = {0};
+unsigned int samples[61] = {0};
 
-extern unsigned int Vsense;
+unsigned int Vsense = 0;
+
+bool readBit = 1;
 
 
 
@@ -16836,6 +16838,15 @@ drawBox();
 
 while (1)
 {
+if(TMR2 >0x7F)
+{
+if(readBit)
+{
+Vsense = ADCRead(7);
+readBit-=1;
+}
+}
+
 if(dutyCycle<1 || dutyCycle>1022)
 {
 Vsense = ADCRead(7);
@@ -16849,12 +16860,12 @@ totals = totals + samples[sampleIndex];
 
 sampleIndex += 1;
 
-if(sampleIndex >= 50)
+if(sampleIndex >= 61)
 {
 sampleIndex = 0;
 }
 
-I = totals / 50;
+I = totals / 61;
 
 
 currentFlow = I;
@@ -16863,7 +16874,7 @@ if(currentFlow>setPoint)
 {
 count-=1;
 
-if(count<-2)
+if(count<-10)
 {
 dutyCycle>0?dutyCycle-=1:dutyCycle;
 count = 0;
@@ -16872,7 +16883,7 @@ count = 0;
 else if(currentFlow<setPoint)
 {
 count+=1;
-if(count>2)
+if(count>10)
 {
 dutyCycle<1023?dutyCycle+=1:dutyCycle;
 count = 0;

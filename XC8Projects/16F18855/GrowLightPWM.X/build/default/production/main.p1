@@ -4,9 +4,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
 "47 lcd.h
 [v _drawBox `(v ~T0 @X0 0 ef ]
-"7 main.c
-[v _Vsense `ui ~T0 @X0 0 e ]
-"36
+"7573 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _TMR2 `Vuc ~T0 @X0 0 e@652 ]
+"40 main.c
 [c E13569 60 61 62 63 .. ]
 [n E13569 . channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
 "23 adc.h
@@ -12646,228 +12646,265 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.h: 18: void SYSTEM_Initialize(void);
 [; ;system.h: 20: void OSCILLATOR_Initialize(void);
 "5 main.c
-[v _samples `ui ~T0 @X0 -> 50 `i e ]
+[v _samples `ui ~T0 @X0 -> 61 `i e ]
 [i _samples
 :U ..
 -> -> 0 `i `ui
 ..
 ]
-[; ;main.c: 5: unsigned int samples[50] = {0};
-[; ;main.c: 7: extern unsigned int Vsense;
-"11
+[; ;main.c: 5: unsigned int samples[61] = {0};
+"7
+[v _Vsense `ui ~T0 @X0 1 e ]
+[i _Vsense
+-> -> 0 `i `ui
+]
+[; ;main.c: 7: unsigned int Vsense = 0;
+"9
+[v _readBit `uc ~T0 @X0 1 e ]
+[i _readBit
+-> -> 1 `i `uc
+]
+[; ;main.c: 9: bool readBit = 1;
+"13
 [v _main `(v ~T0 @X0 1 ef ]
-"12
+"14
 {
-[; ;main.c: 11: void main(void)
-[; ;main.c: 12: {
+[; ;main.c: 13: void main(void)
+[; ;main.c: 14: {
 [e :U _main ]
 [f ]
-[; ;main.c: 13: SYSTEM_Initialize();
-"13
-[e ( _SYSTEM_Initialize ..  ]
+[; ;main.c: 15: SYSTEM_Initialize();
 "15
-[v _sampleIndex `ui ~T0 @X0 1 a ]
-[; ;main.c: 15: unsigned int sampleIndex = 0;
-[e = _sampleIndex -> -> 0 `i `ui ]
+[e ( _SYSTEM_Initialize ..  ]
 "17
-[v _totals `l ~T0 @X0 1 a ]
-[; ;main.c: 17: int32_t totals = 0;
-[e = _totals -> -> 0 `i `l ]
+[v _sampleIndex `ui ~T0 @X0 1 a ]
+[; ;main.c: 17: unsigned int sampleIndex = 0;
+[e = _sampleIndex -> -> 0 `i `ui ]
 "19
-[v _I `ui ~T0 @X0 1 a ]
-[; ;main.c: 19: unsigned int I = 0;
-[e = _I -> -> 0 `i `ui ]
+[v _totals `l ~T0 @X0 1 a ]
+[; ;main.c: 19: int32_t totals = 0;
+[e = _totals -> -> 0 `i `l ]
 "21
-[v _currentFlow `ui ~T0 @X0 1 a ]
-[; ;main.c: 21: unsigned int currentFlow = 0;
-[e = _currentFlow -> -> 0 `i `ui ]
+[v _I `ui ~T0 @X0 1 a ]
+[; ;main.c: 21: unsigned int I = 0;
+[e = _I -> -> 0 `i `ui ]
 "23
-[v _setPoint `ui ~T0 @X0 1 a ]
-[; ;main.c: 23: unsigned int setPoint = 700;
-[e = _setPoint -> -> 700 `i `ui ]
+[v _currentFlow `ui ~T0 @X0 1 a ]
+[; ;main.c: 23: unsigned int currentFlow = 0;
+[e = _currentFlow -> -> 0 `i `ui ]
 "25
-[v _dutyCycle `ui ~T0 @X0 1 a ]
-[; ;main.c: 25: unsigned int dutyCycle = 0;
-[e = _dutyCycle -> -> 0 `i `ui ]
+[v _setPoint `ui ~T0 @X0 1 a ]
+[; ;main.c: 25: unsigned int setPoint = 700;
+[e = _setPoint -> -> 700 `i `ui ]
 "27
-[v _count `c ~T0 @X0 1 a ]
-[; ;main.c: 27: signed char count = 0;
-[e = _count -> -> 0 `i `c ]
-[; ;main.c: 29: drawBox();
+[v _dutyCycle `ui ~T0 @X0 1 a ]
+[; ;main.c: 27: unsigned int dutyCycle = 0;
+[e = _dutyCycle -> -> 0 `i `ui ]
 "29
+[v _count `c ~T0 @X0 1 a ]
+[; ;main.c: 29: signed char count = 0;
+[e = _count -> -> 0 `i `c ]
+[; ;main.c: 31: drawBox();
+"31
 [e ( _drawBox ..  ]
-[; ;main.c: 32: while (1)
-"32
-[e :U 1521 ]
-[; ;main.c: 33: {
-"33
-{
-[; ;main.c: 34: if(dutyCycle<1 || dutyCycle>1022)
+[; ;main.c: 34: while (1)
 "34
-[e $ ! || < _dutyCycle -> -> 1 `i `ui > _dutyCycle -> -> 1022 `i `ui 1523  ]
+[e :U 1521 ]
 [; ;main.c: 35: {
 "35
 {
-[; ;main.c: 36: Vsense = ADCRead(7);
+[; ;main.c: 36: if(TMR2 >0x7F)
 "36
-[e = _Vsense ( _ADCRead (1 -> -> 7 `i `E13569 ]
+[e $ ! > -> _TMR2 `i -> 127 `i 1523  ]
+[; ;main.c: 37: {
 "37
-}
-[e :U 1523 ]
-[; ;main.c: 37: }
-[; ;main.c: 39: totals = totals - samples[sampleIndex];
-"39
-[e = _totals - _totals -> *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux `l ]
-[; ;main.c: 41: samples[sampleIndex] = Vsense;
-"41
-[e = *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux _Vsense ]
-[; ;main.c: 43: totals = totals + samples[sampleIndex];
-"43
-[e = _totals + _totals -> *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux `l ]
-[; ;main.c: 45: sampleIndex += 1;
-"45
-[e =+ _sampleIndex -> -> 1 `i `ui ]
-[; ;main.c: 47: if(sampleIndex >= 50)
-"47
-[e $ ! >= _sampleIndex -> -> 50 `i `ui 1524  ]
-[; ;main.c: 48: {
-"48
 {
-[; ;main.c: 49: sampleIndex = 0;
-"49
-[e = _sampleIndex -> -> 0 `i `ui ]
-"50
+[; ;main.c: 38: if(readBit)
+"38
+[e $ ! != -> _readBit `i -> -> -> 0 `i `uc `i 1524  ]
+[; ;main.c: 39: {
+"39
+{
+[; ;main.c: 40: Vsense = ADCRead(7);
+"40
+[e = _Vsense ( _ADCRead (1 -> -> 7 `i `E13569 ]
+[; ;main.c: 41: readBit-=1;
+"41
+[e =- _readBit -> -> 1 `i `uc ]
+"42
 }
 [e :U 1524 ]
-[; ;main.c: 50: }
-[; ;main.c: 52: I = totals / 50;
+"43
+}
+[e :U 1523 ]
+[; ;main.c: 42: }
+[; ;main.c: 43: }
+[; ;main.c: 45: if(dutyCycle<1 || dutyCycle>1022)
+"45
+[e $ ! || < _dutyCycle -> -> 1 `i `ui > _dutyCycle -> -> 1022 `i `ui 1525  ]
+[; ;main.c: 46: {
+"46
+{
+[; ;main.c: 47: Vsense = ADCRead(7);
+"47
+[e = _Vsense ( _ADCRead (1 -> -> 7 `i `E13569 ]
+"48
+}
+[e :U 1525 ]
+[; ;main.c: 48: }
+[; ;main.c: 50: totals = totals - samples[sampleIndex];
+"50
+[e = _totals - _totals -> *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux `l ]
+[; ;main.c: 52: samples[sampleIndex] = Vsense;
 "52
-[e = _I -> / _totals -> -> 50 `i `l `ui ]
-[; ;main.c: 55: currentFlow = I;
-"55
-[e = _currentFlow _I ]
-[; ;main.c: 57: if(currentFlow>setPoint)
-"57
-[e $ ! > _currentFlow _setPoint 1525  ]
-[; ;main.c: 58: {
+[e = *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux _Vsense ]
+[; ;main.c: 54: totals = totals + samples[sampleIndex];
+"54
+[e = _totals + _totals -> *U + &U _samples * -> _sampleIndex `ux -> -> # *U &U _samples `ui `ux `l ]
+[; ;main.c: 56: sampleIndex += 1;
+"56
+[e =+ _sampleIndex -> -> 1 `i `ui ]
+[; ;main.c: 58: if(sampleIndex >= 61)
 "58
-{
-[; ;main.c: 59: count-=1;
+[e $ ! >= _sampleIndex -> -> 61 `i `ui 1526  ]
+[; ;main.c: 59: {
 "59
-[e =- _count -> -> 1 `i `c ]
-[; ;main.c: 61: if(count<-2)
-"61
-[e $ ! < -> _count `i -U -> 2 `i 1526  ]
-[; ;main.c: 62: {
-"62
 {
-[; ;main.c: 63: dutyCycle>0?dutyCycle-=1:dutyCycle;
-"63
-[e ? > _dutyCycle -> -> 0 `i `ui : =- _dutyCycle -> -> 1 `i `ui _dutyCycle ]
-[; ;main.c: 64: count = 0;
-"64
-[e = _count -> -> 0 `i `c ]
-"65
+[; ;main.c: 60: sampleIndex = 0;
+"60
+[e = _sampleIndex -> -> 0 `i `ui ]
+"61
 }
 [e :U 1526 ]
+[; ;main.c: 61: }
+[; ;main.c: 63: I = totals / 61;
+"63
+[e = _I -> / _totals -> -> 61 `i `l `ui ]
+[; ;main.c: 66: currentFlow = I;
 "66
-}
-[; ;main.c: 65: }
-[; ;main.c: 66: }
-[e $U 1527  ]
-"67
-[e :U 1525 ]
-[; ;main.c: 67: else if(currentFlow<setPoint)
-[e $ ! < _currentFlow _setPoint 1528  ]
-[; ;main.c: 68: {
+[e = _currentFlow _I ]
+[; ;main.c: 68: if(currentFlow>setPoint)
 "68
-{
-[; ;main.c: 69: count+=1;
+[e $ ! > _currentFlow _setPoint 1527  ]
+[; ;main.c: 69: {
 "69
-[e =+ _count -> -> 1 `i `c ]
-[; ;main.c: 70: if(count>2)
+{
+[; ;main.c: 70: count-=1;
 "70
-[e $ ! > -> _count `i -> 2 `i 1529  ]
-[; ;main.c: 71: {
-"71
-{
-[; ;main.c: 72: dutyCycle<1023?dutyCycle+=1:dutyCycle;
+[e =- _count -> -> 1 `i `c ]
+[; ;main.c: 72: if(count<-10)
 "72
-[e ? < _dutyCycle -> -> 1023 `i `ui : =+ _dutyCycle -> -> 1 `i `ui _dutyCycle ]
-[; ;main.c: 73: count = 0;
+[e $ ! < -> _count `i -U -> 10 `i 1528  ]
+[; ;main.c: 73: {
 "73
-[e = _count -> -> 0 `i `c ]
-"74
-}
-[e :U 1529 ]
-"75
-}
-[; ;main.c: 74: }
-[; ;main.c: 75: }
-[e $U 1530  ]
-"76
-[e :U 1528 ]
-[; ;main.c: 76: else
-[; ;main.c: 77: {
-"77
 {
-[; ;main.c: 78: ;
-"79
+[; ;main.c: 74: dutyCycle>0?dutyCycle-=1:dutyCycle;
+"74
+[e ? > _dutyCycle -> -> 0 `i `ui : =- _dutyCycle -> -> 1 `i `ui _dutyCycle ]
+[; ;main.c: 75: count = 0;
+"75
+[e = _count -> -> 0 `i `c ]
+"76
 }
-[e :U 1530 ]
+[e :U 1528 ]
+"77
+}
+[; ;main.c: 76: }
+[; ;main.c: 77: }
+[e $U 1529  ]
+"78
 [e :U 1527 ]
-[; ;main.c: 79: }
-[; ;main.c: 82: PWM6_LoadDutyValue(dutyCycle);
+[; ;main.c: 78: else if(currentFlow<setPoint)
+[e $ ! < _currentFlow _setPoint 1530  ]
+[; ;main.c: 79: {
+"79
+{
+[; ;main.c: 80: count+=1;
+"80
+[e =+ _count -> -> 1 `i `c ]
+[; ;main.c: 81: if(count>10)
+"81
+[e $ ! > -> _count `i -> 10 `i 1531  ]
+[; ;main.c: 82: {
 "82
-[e ( _PWM6_LoadDutyValue (1 _dutyCycle ]
-[; ;main.c: 84: { gotoXY(4,1); LCD_Write_String("Set Point:");};
+{
+[; ;main.c: 83: dutyCycle<1023?dutyCycle+=1:dutyCycle;
+"83
+[e ? < _dutyCycle -> -> 1023 `i `ui : =+ _dutyCycle -> -> 1 `i `ui _dutyCycle ]
+[; ;main.c: 84: count = 0;
 "84
+[e = _count -> -> 0 `i `c ]
+"85
+}
+[e :U 1531 ]
+"86
+}
+[; ;main.c: 85: }
+[; ;main.c: 86: }
+[e $U 1532  ]
+"87
+[e :U 1530 ]
+[; ;main.c: 87: else
+[; ;main.c: 88: {
+"88
+{
+[; ;main.c: 89: ;
+"90
+}
+[e :U 1532 ]
+[e :U 1529 ]
+[; ;main.c: 90: }
+[; ;main.c: 93: PWM6_LoadDutyValue(dutyCycle);
+"93
+[e ( _PWM6_LoadDutyValue (1 _dutyCycle ]
+[; ;main.c: 95: { gotoXY(4,1); LCD_Write_String("Set Point:");};
+"95
 {
 [e ( _gotoXY (2 , -> -> 4 `i `c -> -> 1 `i `c ]
 [e ( _LCD_Write_String (1 :s 1C ]
 }
-[; ;main.c: 85: LCD_Write_Int(setPoint,-1,0,0);
-"85
+[; ;main.c: 96: LCD_Write_Int(setPoint,-1,0,0);
+"96
 [e ( _LCD_Write_Int (4 , , , -> _setPoint `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
-[; ;main.c: 86: LCD_Write_String("mA ");
-"86
+[; ;main.c: 97: LCD_Write_String("mA ");
+"97
 [e ( _LCD_Write_String (1 :s 2C ]
-[; ;main.c: 88: { gotoXY(8,2); LCD_Write_String("Amperage:");};
-"88
+[; ;main.c: 99: { gotoXY(8,2); LCD_Write_String("Amperage:");};
+"99
 {
 [e ( _gotoXY (2 , -> -> 8 `i `c -> -> 2 `i `c ]
 [e ( _LCD_Write_String (1 :s 3C ]
 }
-[; ;main.c: 89: LCD_Write_Int(currentFlow,-1,0,0);
-"89
+[; ;main.c: 100: LCD_Write_Int(currentFlow,-1,0,0);
+"100
 [e ( _LCD_Write_Int (4 , , , -> _currentFlow `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
-[; ;main.c: 90: LCD_Write_String("mA ");
-"90
+[; ;main.c: 101: LCD_Write_String("mA ");
+"101
 [e ( _LCD_Write_String (1 :s 4C ]
-[; ;main.c: 92: { gotoXY(4,3); LCD_Write_String("DutyCycle:");};
-"92
+[; ;main.c: 103: { gotoXY(4,3); LCD_Write_String("DutyCycle:");};
+"103
 {
 [e ( _gotoXY (2 , -> -> 4 `i `c -> -> 3 `i `c ]
 [e ( _LCD_Write_String (1 :s 5C ]
 }
-[; ;main.c: 93: LCD_Write_Int(dutyCycle,5,0,0);
-"93
+[; ;main.c: 104: LCD_Write_Int(dutyCycle,5,0,0);
+"104
 [e ( _LCD_Write_Int (4 , , , -> _dutyCycle `i -> -> 5 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
-[; ;main.c: 95: I+=1;
-"95
+[; ;main.c: 106: I+=1;
+"106
 [e =+ _I -> -> 1 `i `ui ]
-[; ;main.c: 97: asm("clrwdt");
-"97
+[; ;main.c: 108: asm("clrwdt");
+"108
 [; <" clrwdt ;# ">
-"98
+"109
 }
 [e :U 1520 ]
-"32
+"34
 [e $U 1521  ]
 [e :U 1522 ]
-[; ;main.c: 98: }
-[; ;main.c: 99: }
-"99
+[; ;main.c: 109: }
+[; ;main.c: 110: }
+"110
 [e :UE 1519 ]
 }
 [a 1C 83 101 116 32 80 111 105 110 116 58 0 ]

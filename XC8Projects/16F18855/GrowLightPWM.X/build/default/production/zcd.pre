@@ -16806,23 +16806,21 @@ void ZCD_Initialize(void);
 # 22
 void ZCD_ISR(void);
 
-# 3 "zcd.c"
-unsigned int Vsense = 0;
+# 4 "zcd.c"
+extern bool readBit;
 
 
 void ZCD_Initialize (void)
 {
 ZCD1CON = 0x82;
-
 PIR2bits.ZCDIF = 0;
-
 PIE2bits.ZCDIE = 1;
 }
 
 void ZCD_ISR(void)
 {
 PIR2bits.ZCDIF = 0;
+readBit = 1;
 
-Vsense = ADCRead(7);
 }
 
