@@ -248,7 +248,7 @@ int16_t main(void)
 
             if (StartUpDelay > numSamples)
             {
-                for (i=0;i<11;i++)
+                for (i=1;i<10;i++)
                 {
                     if(enabled[i] == 1)
                     {
@@ -260,16 +260,27 @@ int16_t main(void)
                     }
                 }
 
-                if(Out[1] == 0)   // Added this to fix Master running because of Deck  // If Deck Air Temp is NOT calling, // Reversed both
+                if(Out[1] == 1)   // Added this to fix Master running because of Deck  // If Deck Air Temp is NOT calling, // Reversed both and reversed Out from 0 to 1
                 {
-                    Out[0] = 0;                                                     // turn OFF Deck Floor Out           // Reversed both
+                    Out[0] = 1;                                                     // turn OFF Deck Floor Out           // Reversed both and reversed Out from 0 to 1
+                    outState[0]=1;    
+                }
+                else 
+                {
+                    Out[0]=0;                       // Reversed both added else to turn off Output
+                    outState[0]=0;    
                 }
        
-                if(Out[9] == 0)                                                    // If Garage Air Temp is NOT calling, // Reversed both
+                if(Out[9] == 1)                                                    // If Garage Air Temp is NOT calling, // Reversed both and reversed Out from 0 to 1
                 {
-                    Out[10] = 0;                                                     // turn OFF Garage Floor Out // Reversed both
+                    Out[10] = 1;                                                     // turn OFF Garage Floor Out // Reversed both and reversed Out from 0 to 1
+                    outState[10]=1;    
                 }
-                
+                else
+                {
+                    Out[10]=0;                      // Reversed both added else to turn off Output
+                    outState[10]=0;    
+                }
                 
                 for(i=0;i<11;i++)                                                                                               //Set screen state indicators
                 {
@@ -305,13 +316,13 @@ int16_t main(void)
                     }
 // ******************************************************************************
                     
-                    OutSum = Out[0] + Out[2] + Out[3] + Out[4] + Out[5] + Out[6] + Out[7] + Out[8] + Out[10];
+                    OutSum = Out[1] + Out[2] + Out[3] + Out[4] + Out[5] + Out[6] + Out[7] + Out[8] + Out[9];// Reversed both
         
 //                    if(outSumOldState != OutSum)                                        // OutSum has changed,
   //                  {
                     if(OutSum != 0)                                             // because an Out is turned on
                     {
-                        for(i=0;i<11;i++)
+                        for(i=1;i<10;i++)                           // Reversed both (took 0 and 10 out of equation)
                         {
                             if(enabled[i] == 1)
                             {
@@ -330,17 +341,17 @@ int16_t main(void)
     //                    outSumOldState = OutSum;
       //              }
 // ******************************************************************************
-                    if(Out[0] == 0)                                                     // If Deck Air Temp is NOT calling,
+                    if(Out[1] == 1)                                                     // If Deck Air Temp is NOT calling, // Reversed both and reversed Out from 0 to 1
                     {
-                        Out[1] = 0;                                                     // turn OFF Deck Floor Out           
+                        Out[0] = 1;                                                     // turn OFF Deck Floor Out           // Reversed both and reversed Out from 0 to 1
                     }
         
-                    if(Out[10] == 0)                                                    // If Garage Air Temp is NOT calling,
+                    if(Out[9] == 1)                                                    // If Garage Air Temp is NOT calling,   // Reversed both and reversed Out from 0 to 1
                     {
-                        Out[9] = 0;                                                     // turn OFF Garage Floor Out
+                        Out[10] = 1;                                                     // turn OFF Garage Floor Out    // Reversed both and reversed Out from 0 to 1
                     }
         
-                    DeckFloorOut =          Out[1];
+                    DeckFloorOut =          Out[0];                 // Reversed both
                     UtilityRoomFloorOut =   Out[2];
                     EntranceFloorOut =      Out[3];
                     MasterBathFloorOut =    Out[4];
@@ -348,7 +359,7 @@ int16_t main(void)
                     CraftRoomFloorOut =     Out[6];
                     SEBasementFloorOut =    Out[7]; 
                     MediaRoomFloorOut =     Out[8];
-                    GarageFloorOut =        Out[9];
+                    GarageFloorOut =        Out[10];                // Reversed both
             
                 }
             }
@@ -432,8 +443,8 @@ int16_t main(void)
 
         if(loopCounter == 11)
         {
-            LCDWriteIntXY(0,0,outStateCounter[0],5,0,0);
-            LCDWriteIntXY(0,6,outStateCounter[1],5,0,0);
+            LCDWriteIntXY(0,0,outStateCounter[1],5,0,0);                // Reversed both
+            LCDWriteIntXY(0,6,outStateCounter[0],5,0,0);                // Reversed both
             LCDWriteIntXY(0,12,outStateCounter[2],5,0,0);
             LCDWriteIntXY(1,0,outStateCounter[3],5,0,0);
             LCDWriteIntXY(1,6,outStateCounter[4],5,0,0);
@@ -441,8 +452,8 @@ int16_t main(void)
             LCDWriteIntXY(2,0,outStateCounter[6],5,0,0);
             LCDWriteIntXY(2,6,outStateCounter[7],5,0,0);
             LCDWriteIntXY(2,12,outStateCounter[8],5,0,0);
-            LCDWriteIntXY(3,0,outStateCounter[9],5,0,0);
-            LCDWriteIntXY(3,6,outStateCounter[10],5,0,0);
+            LCDWriteIntXY(3,0,outStateCounter[10],5,0,0);               // Reversed both
+            LCDWriteIntXY(3,6,outStateCounter[9],5,0,0);                // Reversed both
             LCD_Set_Cursor(3,12);
             LCD_Write_Int(405515/internalBGV,3,2,0);                          //Write the BandGap voltage to the LCD
             LCD_Write_Char('V');

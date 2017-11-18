@@ -15,7 +15,6 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC30F/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/main.o \
   build/default/production/adc.o \
   build/default/production/eeprom.o \
   build/default/production/lcd.o \
@@ -23,6 +22,7 @@ Command:
   build/default/production/system.o \
   build/default/production/touch.o \
   build/default/production/user.o \
+  build/default/production/main.o \
   --defsym=__MPLAB_BUILD=1 \
   -Tp24FV16KM204.gld.00 \
   --stack=16 \
@@ -57,17 +57,17 @@ c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
                               (__crt_start_mode_normal)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
-                              build/default/production/main.o (___delay32)
+                              build/default/production/adc.o (___delay32)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(addsf3.eo)
                               build/default/production/main.o (___subsf3)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(divsf3.eo)
-                              build/default/production/main.o (___divsf3)
+                              build/default/production/user.o (___divsf3)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(divsi3.eo)
                               build/default/production/main.o (___divsi3)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fixsfsi.eo)
-                              build/default/production/main.o (_(float, int, long long, short, float, short, int))
+                              build/default/production/user.o (_(float, int, long long, short, float, short, int))
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(floatsisf.eo)
-                              build/default/production/main.o (___floatsisf)
+                              build/default/production/user.o (___floatsisf)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(fpack.eo)
                               c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(addsf3.eo) (__fpack)
 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libm-elf.a(funpack.eo)
@@ -122,12 +122,12 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x65e           0x98d  (2445)
 .const                       0x85e               0x394           0x55e  (1374)
-.text                        0xbf2              0x1e5e          0x2d8d  (11661)
-.dinit                      0x2a50                0x7a            0xb7  (183)
-.text                       0x2aca                0xd4           0x13e  (318)
-.init.delay32               0x2b9e                0x1c            0x2a  (42)
+.text                        0xbf2              0x1e6e          0x2da5  (11685)
+.dinit                      0x2a60                0x7a            0xb7  (183)
+.text                       0x2ada                0xd4           0x13e  (318)
+.init.delay32               0x2bae                0x1c            0x2a  (42)
 
-                 Total program memory used (bytes):         0x3e97  (16023) 99%
+                 Total program memory used (bytes):         0x3eaf  (16047) 99%
 
 
 Data EEPROM Memory  [Origin = 0x7ffe00, Length = 0x200]
@@ -276,79 +276,79 @@ External Symbols in Program Memory (by address):
                   0x0008b2                  _extendedEndDay
                   0x0008b3                  _extendedRunEnable
                   0x000bf2                  _main
-                  0x001b5e                  _heartBeat
-                  0x001b92                  _TempCalc
-                  0x001bb8                  _SetStartEndMonth
-                  0x001c48                  _SetStartEndDay
-                  0x001cd8                  _TempSetpoint
-                  0x001d6a                  _SetDeadband
-                  0x001dfe                  _SetBiasWarm
-                  0x001e96                  _SetBiasNeg5
-                  0x001f2e                  _SetBiasNeg15
-                  0x001fc6                  _SetBiasNeg25
-                  0x00205e                  _SetExtendedRunBit
-                  0x0020f4                  _SetOutput
-                  0x00212c                  _bin2bcd
-                  0x002156                  _bcd2bin
-                  0x002178                  _RTCC_Initialize
-                  0x0021c8                  _getRTCTime
-                  0x002246                  _displayTime
-                  0x0022c2                  _SetTime
-                  0x0025a0                  _InitCustomChars
-                  0x0025ce                  _LCD_Port
-                  0x002610                  _LCD_Cmd
-                  0x002628                  _LCD_Clear
-                  0x002636                  _LCD_Set_Cursor
-                  0x0026ce                  _LCD_Init
-                  0x00274a                  _LCD_Write_Char
-                  0x002782                  _LCD_Write_String
-                  0x0027a8                  _LCD_Write_Int
-                  0x002874                  _menuRead
-                  0x002aca                  _ADCInit
-                  0x002ae2                  _ADCRead
-                  0x002b1a                  _eepromPutData
-                  0x002b52                  _eepromGetData
-                  0x002b66                  _ConfigureOscillator
-                  0x002b6c                  _InitApp
-                  0x002b9e                  ___delay32
+                  0x001b6e                  _heartBeat
+                  0x001ba2                  _TempCalc
+                  0x001bc8                  _SetStartEndMonth
+                  0x001c58                  _SetStartEndDay
+                  0x001ce8                  _TempSetpoint
+                  0x001d7a                  _SetDeadband
+                  0x001e0e                  _SetBiasWarm
+                  0x001ea6                  _SetBiasNeg5
+                  0x001f3e                  _SetBiasNeg15
+                  0x001fd6                  _SetBiasNeg25
+                  0x00206e                  _SetExtendedRunBit
+                  0x002104                  _SetOutput
+                  0x00213c                  _bin2bcd
+                  0x002166                  _bcd2bin
+                  0x002188                  _RTCC_Initialize
+                  0x0021d8                  _getRTCTime
+                  0x002256                  _displayTime
+                  0x0022d2                  _SetTime
+                  0x0025b0                  _InitCustomChars
+                  0x0025de                  _LCD_Port
+                  0x002620                  _LCD_Cmd
+                  0x002638                  _LCD_Clear
+                  0x002646                  _LCD_Set_Cursor
+                  0x0026de                  _LCD_Init
+                  0x00275a                  _LCD_Write_Char
+                  0x002792                  _LCD_Write_String
+                  0x0027b8                  _LCD_Write_Int
+                  0x002884                  _menuRead
+                  0x002ada                  _ADCInit
+                  0x002af2                  _ADCRead
+                  0x002b2a                  _eepromPutData
+                  0x002b62                  _eepromGetData
+                  0x002b76                  _ConfigureOscillator
+                  0x002b7c                  _InitApp
+                  0x002bae                  ___delay32
                   0xf80000                  __FBS.sec
                   0xf80004                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x002aca                  _ADCInit
-                  0x002ae2                  _ADCRead
+                  0x002ada                  _ADCInit
+                  0x002af2                  _ADCRead
                   0x00087f                  _Bias0
                   0x000874                  _BiasWarm
-                  0x002b66                  _ConfigureOscillator
-                  0x002b6c                  _InitApp
-                  0x0025a0                  _InitCustomChars
-                  0x002628                  _LCD_Clear
-                  0x002610                  _LCD_Cmd
-                  0x0026ce                  _LCD_Init
-                  0x0025ce                  _LCD_Port
-                  0x002636                  _LCD_Set_Cursor
-                  0x00274a                  _LCD_Write_Char
-                  0x0027a8                  _LCD_Write_Int
-                  0x002782                  _LCD_Write_String
-                  0x002178                  _RTCC_Initialize
-                  0x001f2e                  _SetBiasNeg15
-                  0x001fc6                  _SetBiasNeg25
-                  0x001e96                  _SetBiasNeg5
-                  0x001dfe                  _SetBiasWarm
-                  0x001d6a                  _SetDeadband
-                  0x00205e                  _SetExtendedRunBit
-                  0x0020f4                  _SetOutput
-                  0x001c48                  _SetStartEndDay
-                  0x001bb8                  _SetStartEndMonth
-                  0x0022c2                  _SetTime
-                  0x001b92                  _TempCalc
-                  0x001cd8                  _TempSetpoint
+                  0x002b76                  _ConfigureOscillator
+                  0x002b7c                  _InitApp
+                  0x0025b0                  _InitCustomChars
+                  0x002638                  _LCD_Clear
+                  0x002620                  _LCD_Cmd
+                  0x0026de                  _LCD_Init
+                  0x0025de                  _LCD_Port
+                  0x002646                  _LCD_Set_Cursor
+                  0x00275a                  _LCD_Write_Char
+                  0x0027b8                  _LCD_Write_Int
+                  0x002792                  _LCD_Write_String
+                  0x002188                  _RTCC_Initialize
+                  0x001f3e                  _SetBiasNeg15
+                  0x001fd6                  _SetBiasNeg25
+                  0x001ea6                  _SetBiasNeg5
+                  0x001e0e                  _SetBiasWarm
+                  0x001d7a                  _SetDeadband
+                  0x00206e                  _SetExtendedRunBit
+                  0x002104                  _SetOutput
+                  0x001c58                  _SetStartEndDay
+                  0x001bc8                  _SetStartEndMonth
+                  0x0022d2                  _SetTime
+                  0x001ba2                  _TempCalc
+                  0x001ce8                  _TempSetpoint
                   0x0002c8                  __DefaultInterrupt
                   0xf80000                  __FBS.sec
                   0xf80004                  __FGS.sec
                   0x0002d0                  ___addsf3
-                  0x002b9e                  ___delay32
+                  0x002bae                  ___delay32
                   0x000682                  ___divdi3
                   0x00038a                  ___divsf3
                   0x00040e                  ___divsi3
@@ -374,26 +374,26 @@ External Symbols in Program Memory (by name):
                   0x0004ea                  __funpack2
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x002156                  _bcd2bin
+                  0x002166                  _bcd2bin
                   0x000895                  _biasNeg15
                   0x0008a0                  _biasNeg25
                   0x00088a                  _biasNeg5
-                  0x00212c                  _bin2bcd
+                  0x00213c                  _bin2bcd
                   0x000869                  _deadband
-                  0x002246                  _displayTime
+                  0x002256                  _displayTime
                   0x0008b0                  _earlyStartDay
                   0x0008af                  _earlyStartMonth
-                  0x002b52                  _eepromGetData
-                  0x002b1a                  _eepromPutData
+                  0x002b62                  _eepromGetData
+                  0x002b2a                  _eepromPutData
                   0x0008ae                  _endDay
                   0x0008ad                  _endMonth
                   0x0008b2                  _extendedEndDay
                   0x0008b1                  _extendedEndMonth
                   0x0008b3                  _extendedRunEnable
-                  0x0021c8                  _getRTCTime
-                  0x001b5e                  _heartBeat
+                  0x0021d8                  _getRTCTime
+                  0x001b6e                  _heartBeat
                   0x000bf2                  _main
-                  0x002874                  _menuRead
+                  0x002884                  _menuRead
                   0x00085e                  _setpoint
                   0x0008ac                  _startDay
                   0x0008ab                  _startMonth
@@ -420,7 +420,6 @@ FICD             0xf8000e           0x000002
 
 Linker script and memory map
 
-LOAD build/default/production/main.o
 LOAD build/default/production/adc.o
 LOAD build/default/production/eeprom.o
 LOAD build/default/production/lcd.o
@@ -428,6 +427,7 @@ LOAD build/default/production/rtcc.o
 LOAD build/default/production/system.o
 LOAD build/default/production/touch.o
 LOAD build/default/production/user.o
+LOAD build/default/production/main.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libfx-elf.a
@@ -570,58 +570,58 @@ __FICD
 
 .debug_info       0x000000       0x3993
  *(.debug_info)
- .debug_info      0x000000        0xbdc build/default/production/main.o
- .debug_info      0x000bdc        0x7dd build/default/production/adc.o
- .debug_info      0x0013b9        0x389 build/default/production/eeprom.o
- .debug_info      0x001742        0x5df build/default/production/lcd.o
- .debug_info      0x001d21        0x6ed build/default/production/rtcc.o
- .debug_info      0x00240e        0x288 build/default/production/system.o
- .debug_info      0x002696        0xb91 build/default/production/touch.o
- .debug_info      0x003227        0x76c build/default/production/user.o
+ .debug_info      0x000000        0x7dd build/default/production/adc.o
+ .debug_info      0x0007dd        0x389 build/default/production/eeprom.o
+ .debug_info      0x000b66        0x5df build/default/production/lcd.o
+ .debug_info      0x001145        0x6ed build/default/production/rtcc.o
+ .debug_info      0x001832        0x288 build/default/production/system.o
+ .debug_info      0x001aba        0xb91 build/default/production/touch.o
+ .debug_info      0x00264b        0x76c build/default/production/user.o
+ .debug_info      0x002db7        0xbdc build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x8d1
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x146 build/default/production/main.o
- .debug_abbrev    0x000146        0x112 build/default/production/adc.o
- .debug_abbrev    0x000258        0x116 build/default/production/eeprom.o
- .debug_abbrev    0x00036e        0x10f build/default/production/lcd.o
- .debug_abbrev    0x00047d        0x1ae build/default/production/rtcc.o
- .debug_abbrev    0x00062b         0x4c build/default/production/system.o
- .debug_abbrev    0x000677         0xf4 build/default/production/touch.o
- .debug_abbrev    0x00076b        0x166 build/default/production/user.o
+ .debug_abbrev    0x000000        0x112 build/default/production/adc.o
+ .debug_abbrev    0x000112        0x116 build/default/production/eeprom.o
+ .debug_abbrev    0x000228        0x10f build/default/production/lcd.o
+ .debug_abbrev    0x000337        0x1ae build/default/production/rtcc.o
+ .debug_abbrev    0x0004e5         0x4c build/default/production/system.o
+ .debug_abbrev    0x000531         0xf4 build/default/production/touch.o
+ .debug_abbrev    0x000625        0x166 build/default/production/user.o
+ .debug_abbrev    0x00078b        0x146 build/default/production/main.o
 
-.debug_line       0x000000        0xb7d
+.debug_line       0x000000        0xb83
  *(.debug_line)
- .debug_line      0x000000        0x2c5 build/default/production/main.o
- .debug_line      0x0002c5        0x101 build/default/production/adc.o
- .debug_line      0x0003c6         0x9d build/default/production/eeprom.o
- .debug_line      0x000463        0x173 build/default/production/lcd.o
- .debug_line      0x0005d6        0x1c2 build/default/production/rtcc.o
- .debug_line      0x000798         0xa6 build/default/production/system.o
- .debug_line      0x00083e         0xe6 build/default/production/touch.o
- .debug_line      0x000924        0x259 build/default/production/user.o
+ .debug_line      0x000000        0x101 build/default/production/adc.o
+ .debug_line      0x000101         0x9d build/default/production/eeprom.o
+ .debug_line      0x00019e        0x173 build/default/production/lcd.o
+ .debug_line      0x000311        0x1c2 build/default/production/rtcc.o
+ .debug_line      0x0004d3         0xa6 build/default/production/system.o
+ .debug_line      0x000579         0xe6 build/default/production/touch.o
+ .debug_line      0x00065f        0x259 build/default/production/user.o
+ .debug_line      0x0008b8        0x2cb build/default/production/main.o
 
 .debug_frame      0x000000        0x488
  *(.debug_frame)
- .debug_frame     0x000000         0x38 build/default/production/main.o
- .debug_frame     0x000038         0x4c build/default/production/adc.o
- .debug_frame     0x000084         0x4c build/default/production/eeprom.o
- .debug_frame     0x0000d0        0x110 build/default/production/lcd.o
- .debug_frame     0x0001e0         0xc8 build/default/production/rtcc.o
- .debug_frame     0x0002a8         0x4c build/default/production/system.o
- .debug_frame     0x0002f4         0x30 build/default/production/touch.o
- .debug_frame     0x000324        0x164 build/default/production/user.o
+ .debug_frame     0x000000         0x4c build/default/production/adc.o
+ .debug_frame     0x00004c         0x4c build/default/production/eeprom.o
+ .debug_frame     0x000098        0x110 build/default/production/lcd.o
+ .debug_frame     0x0001a8         0xc8 build/default/production/rtcc.o
+ .debug_frame     0x000270         0x4c build/default/production/system.o
+ .debug_frame     0x0002bc         0x30 build/default/production/touch.o
+ .debug_frame     0x0002ec        0x164 build/default/production/user.o
+ .debug_frame     0x000450         0x38 build/default/production/main.o
 
 .debug_str        0x000000        0x1d6
  *(.debug_str)
- .debug_str       0x000000         0xf0 build/default/production/main.o
- .debug_str       0x0000f0         0x2a build/default/production/adc.o
- .debug_str       0x00011a         0x14 build/default/production/eeprom.o
- .debug_str       0x00012e         0x14 build/default/production/lcd.o
- .debug_str       0x000142         0x1f build/default/production/rtcc.o
- .debug_str       0x000161         0x50 build/default/production/touch.o
- .debug_str       0x0001b1         0x25 build/default/production/user.o
+ .debug_str       0x000000         0x2a build/default/production/adc.o
+ .debug_str       0x00002a         0x14 build/default/production/eeprom.o
+ .debug_str       0x00003e         0x14 build/default/production/lcd.o
+ .debug_str       0x000052         0x1f build/default/production/rtcc.o
+ .debug_str       0x000071         0x50 build/default/production/touch.o
+ .debug_str       0x0000c1         0x25 build/default/production/user.o
+ .debug_str       0x0000e6         0xf0 build/default/production/main.o
 
 .debug_loc
  *(.debug_loc)
@@ -633,21 +633,21 @@ __FICD
                   0x000000        0x4db
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000        0x1a2 build/default/production/main.o
+                  0x000000         0x2a build/default/production/adc.o
  .debug_pubnames
-                  0x0001a2         0x2a build/default/production/adc.o
+                  0x00002a         0x36 build/default/production/eeprom.o
  .debug_pubnames
-                  0x0001cc         0x36 build/default/production/eeprom.o
+                  0x000060         0xb3 build/default/production/lcd.o
  .debug_pubnames
-                  0x000202         0xb3 build/default/production/lcd.o
+                  0x000113         0x7f build/default/production/rtcc.o
  .debug_pubnames
-                  0x0002b5         0x7f build/default/production/rtcc.o
+                  0x000192         0x36 build/default/production/system.o
  .debug_pubnames
-                  0x000334         0x36 build/default/production/system.o
+                  0x0001c8         0x66 build/default/production/touch.o
  .debug_pubnames
-                  0x00036a         0x66 build/default/production/touch.o
+                  0x00022e        0x10b build/default/production/user.o
  .debug_pubnames
-                  0x0003d0        0x10b build/default/production/user.o
+                  0x000339        0x1a2 build/default/production/main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -655,21 +655,21 @@ __FICD
 .debug_aranges    0x000000         0xc0
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/main.o
+                  0x000000         0x18 build/default/production/adc.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/adc.o
+                  0x000018         0x18 build/default/production/eeprom.o
  .debug_aranges
-                  0x000030         0x18 build/default/production/eeprom.o
+                  0x000030         0x18 build/default/production/lcd.o
  .debug_aranges
-                  0x000048         0x18 build/default/production/lcd.o
+                  0x000048         0x18 build/default/production/rtcc.o
  .debug_aranges
-                  0x000060         0x18 build/default/production/rtcc.o
+                  0x000060         0x18 build/default/production/system.o
  .debug_aranges
-                  0x000078         0x18 build/default/production/system.o
+                  0x000078         0x18 build/default/production/touch.o
  .debug_aranges
-                  0x000090         0x18 build/default/production/touch.o
+                  0x000090         0x18 build/default/production/user.o
  .debug_aranges
-                  0x0000a8         0x18 build/default/production/user.o
+                  0x0000a8         0x18 build/default/production/main.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -1462,40 +1462,40 @@ LOAD data_init
 .debug_pubtypes
                   0x0000c0        0x38d
  .debug_pubtypes
-                  0x0000c0         0xb2 build/default/production/main.o
+                  0x0000c0         0x92 build/default/production/adc.o
  .debug_pubtypes
-                  0x000172         0x92 build/default/production/adc.o
+                  0x000152         0x33 build/default/production/eeprom.o
  .debug_pubtypes
-                  0x000204         0x33 build/default/production/eeprom.o
+                  0x000185         0x5c build/default/production/lcd.o
  .debug_pubtypes
-                  0x000237         0x5c build/default/production/lcd.o
+                  0x0001e1         0x77 build/default/production/rtcc.o
  .debug_pubtypes
-                  0x000293         0x77 build/default/production/rtcc.o
+                  0x000258         0x12 build/default/production/system.o
  .debug_pubtypes
-                  0x00030a         0x12 build/default/production/system.o
+                  0x00026a         0xe5 build/default/production/touch.o
  .debug_pubtypes
-                  0x00031c         0xe5 build/default/production/touch.o
+                  0x00034f         0x4c build/default/production/user.o
  .debug_pubtypes
-                  0x000401         0x4c build/default/production/user.o
+                  0x00039b         0xb2 build/default/production/main.o
 
 __c30_signature
                   0x00044d         0xa2
  __c30_signature
-                  0x00044d          0x6 build/default/production/main.o
+                  0x00044d          0x6 build/default/production/adc.o
  __c30_signature
-                  0x000453          0x6 build/default/production/adc.o
+                  0x000453          0x6 build/default/production/eeprom.o
  __c30_signature
-                  0x000459          0x6 build/default/production/eeprom.o
+                  0x000459          0x6 build/default/production/lcd.o
  __c30_signature
-                  0x00045f          0x6 build/default/production/lcd.o
+                  0x00045f          0x6 build/default/production/rtcc.o
  __c30_signature
-                  0x000465          0x6 build/default/production/rtcc.o
+                  0x000465          0x6 build/default/production/system.o
  __c30_signature
-                  0x00046b          0x6 build/default/production/system.o
+                  0x00046b          0x6 build/default/production/touch.o
  __c30_signature
-                  0x000471          0x6 build/default/production/touch.o
+                  0x000471          0x6 build/default/production/user.o
  __c30_signature
-                  0x000477          0x6 build/default/production/user.o
+                  0x000477          0x6 build/default/production/main.o
  __c30_signature
                   0x00047d          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
  __c30_signature
@@ -1615,59 +1615,59 @@ __c30_signature
  .const             0x8b06         0x94 build/default/production/rtcc.o
  .const             0x8b9a         0x58 build/default/production/user.o
 
-.text             0x000bf2       0x1e5e
- .text            0x000bf2        0xf6c build/default/production/main.o
+.text             0x000bf2       0x1e6e
+ .text            0x000bf2        0xf7c build/default/production/main.o
                   0x000bf2                  _main
- .text            0x001b5e        0x5ce build/default/production/user.o
-                  0x001b5e                  _heartBeat
-                  0x001b92                  _TempCalc
-                  0x001bb8                  _SetStartEndMonth
-                  0x001c48                  _SetStartEndDay
-                  0x001cd8                  _TempSetpoint
-                  0x001d6a                  _SetDeadband
-                  0x001dfe                  _SetBiasWarm
-                  0x001e96                  _SetBiasNeg5
-                  0x001f2e                  _SetBiasNeg15
-                  0x001fc6                  _SetBiasNeg25
-                  0x00205e                  _SetExtendedRunBit
-                  0x0020f4                  _SetOutput
- .text            0x00212c        0x474 build/default/production/rtcc.o
-                  0x00212c                  _bin2bcd
-                  0x002156                  _bcd2bin
-                  0x002178                  _RTCC_Initialize
-                  0x0021c8                  _getRTCTime
-                  0x002246                  _displayTime
-                  0x0022c2                  _SetTime
- .text            0x0025a0        0x2d4 build/default/production/lcd.o
-                  0x0025a0                  _InitCustomChars
-                  0x0025ce                  _LCD_Port
-                  0x002610                  _LCD_Cmd
-                  0x002628                  _LCD_Clear
-                  0x002636                  _LCD_Set_Cursor
-                  0x0026ce                  _LCD_Init
-                  0x00274a                  _LCD_Write_Char
-                  0x002782                  _LCD_Write_String
-                  0x0027a8                  _LCD_Write_Int
- .text            0x002874        0x1dc build/default/production/touch.o
-                  0x002874                  _menuRead
+ .text            0x001b6e        0x5ce build/default/production/user.o
+                  0x001b6e                  _heartBeat
+                  0x001ba2                  _TempCalc
+                  0x001bc8                  _SetStartEndMonth
+                  0x001c58                  _SetStartEndDay
+                  0x001ce8                  _TempSetpoint
+                  0x001d7a                  _SetDeadband
+                  0x001e0e                  _SetBiasWarm
+                  0x001ea6                  _SetBiasNeg5
+                  0x001f3e                  _SetBiasNeg15
+                  0x001fd6                  _SetBiasNeg25
+                  0x00206e                  _SetExtendedRunBit
+                  0x002104                  _SetOutput
+ .text            0x00213c        0x474 build/default/production/rtcc.o
+                  0x00213c                  _bin2bcd
+                  0x002166                  _bcd2bin
+                  0x002188                  _RTCC_Initialize
+                  0x0021d8                  _getRTCTime
+                  0x002256                  _displayTime
+                  0x0022d2                  _SetTime
+ .text            0x0025b0        0x2d4 build/default/production/lcd.o
+                  0x0025b0                  _InitCustomChars
+                  0x0025de                  _LCD_Port
+                  0x002620                  _LCD_Cmd
+                  0x002638                  _LCD_Clear
+                  0x002646                  _LCD_Set_Cursor
+                  0x0026de                  _LCD_Init
+                  0x00275a                  _LCD_Write_Char
+                  0x002792                  _LCD_Write_String
+                  0x0027b8                  _LCD_Write_Int
+ .text            0x002884        0x1dc build/default/production/touch.o
+                  0x002884                  _menuRead
 
-.dinit            0x002a50         0x7a
- .dinit           0x002a50         0x7a data_init
+.dinit            0x002a60         0x7a
+ .dinit           0x002a60         0x7a data_init
 
-.text             0x002aca         0xd4
- .text            0x002aca         0x50 build/default/production/adc.o
-                  0x002aca                  _ADCInit
-                  0x002ae2                  _ADCRead
- .text            0x002b1a         0x4c build/default/production/eeprom.o
-                  0x002b1a                  _eepromPutData
-                  0x002b52                  _eepromGetData
- .text            0x002b66         0x38 build/default/production/system.o
-                  0x002b66                  _ConfigureOscillator
-                  0x002b6c                  _InitApp
+.text             0x002ada         0xd4
+ .text            0x002ada         0x50 build/default/production/adc.o
+                  0x002ada                  _ADCInit
+                  0x002af2                  _ADCRead
+ .text            0x002b2a         0x4c build/default/production/eeprom.o
+                  0x002b2a                  _eepromPutData
+                  0x002b62                  _eepromGetData
+ .text            0x002b76         0x38 build/default/production/system.o
+                  0x002b76                  _ConfigureOscillator
+                  0x002b7c                  _InitApp
 
-.init.delay32     0x002b9e         0x1c
- .init.delay32    0x002b9e         0x1c c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
-                  0x002b9e                  ___delay32
+.init.delay32     0x002bae         0x1c
+ .init.delay32    0x002bae         0x1c c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
+                  0x002bae                  ___delay32
 
 .eedata             0xfe00         0xaa load address 0x7ffe00  
  .eedata            0xfe00         0xaa build/default/production/main.o
