@@ -211,7 +211,7 @@ void SetTime()
         
         timer += 1;
                     
-        if(timer > 1500)                      
+        if(timer > 1000)                      
         {
             timer = 0;
             LCD_Clear();

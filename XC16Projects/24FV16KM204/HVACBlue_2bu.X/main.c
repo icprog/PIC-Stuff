@@ -443,8 +443,8 @@ int16_t main(void)
 
         if(loopCounter == 11)
         {
-            LCDWriteIntXY(0,0,outStateCounter[0],5,0,0);                // Reversed both
-            LCDWriteIntXY(0,6,outStateCounter[1],5,0,0);                // Reversed both
+            LCDWriteIntXY(0,0,outStateCounter[1],5,0,0);                // Reversed both
+            LCDWriteIntXY(0,6,outStateCounter[0],5,0,0);                // Reversed both
             LCDWriteIntXY(0,12,outStateCounter[2],5,0,0);
             LCDWriteIntXY(1,0,outStateCounter[3],5,0,0);
             LCDWriteIntXY(1,6,outStateCounter[4],5,0,0);
@@ -452,8 +452,8 @@ int16_t main(void)
             LCDWriteIntXY(2,0,outStateCounter[6],5,0,0);
             LCDWriteIntXY(2,6,outStateCounter[7],5,0,0);
             LCDWriteIntXY(2,12,outStateCounter[8],5,0,0);
-            LCDWriteIntXY(3,0,outStateCounter[9],5,0,0);               // Reversed both
-            LCDWriteIntXY(3,6,outStateCounter[10],5,0,0);                // Reversed both
+            LCDWriteIntXY(3,0,outStateCounter[10],5,0,0);               // Reversed both
+            LCDWriteIntXY(3,6,outStateCounter[9],5,0,0);                // Reversed both
             LCD_Set_Cursor(3,12);
             LCD_Write_Int(405515/internalBGV,3,2,0);                          //Write the BandGap voltage to the LCD
             LCD_Write_Char('V');
