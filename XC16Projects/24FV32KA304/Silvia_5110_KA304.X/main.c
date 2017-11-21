@@ -114,7 +114,7 @@ int main(void)
 
     uint16_t i          = 0;                    // x is used for holding shot timer value for 20 seconds before resetting to zero
     
-    unsigned char testKey     = 0;                    // Variable used for Storing Which Menu Key is Pressed
+    unsigned char testKey     = 0;              // Variable used for Storing Which Menu Key is Pressed
     
     int bits[7]   = {0};
  
@@ -143,8 +143,8 @@ int main(void)
         power = _RB11;                          // FIX
 //        power = !_RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
-        brewSwitch = _RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
-//        brewSwitch = !_RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
+  //      brewSwitch = _RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
+        brewSwitch = !_RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
 //        steamSwitch = _RA7;                     // RA7 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
         steamSwitch = !_RA7;                    // RA7 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
@@ -238,6 +238,8 @@ int main(void)
                 {
                     LCDClear();
                     LCDBitmap(&menu0[0], 5, 84);//Draw Menu0
+                    gotoXY(1,4);
+                    LCDWriteCharacter(' ');         // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
                 }
                 
                 if(powerFail == 1)
