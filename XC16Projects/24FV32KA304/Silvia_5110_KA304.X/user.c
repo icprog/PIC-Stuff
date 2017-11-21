@@ -20,24 +20,7 @@ float TempCalc(unsigned int a)
 
     return ((unsigned int)steinhart);               
 }
-/*
- // *************** Calculate & Display Temp ************************************    
-        R = 10200/(1023/(float)readTemperature - 1);                    // Resistance of Thermistor (R Reference/1023/readTemp -1)
-        
-        steinhart = R /10061;                                           // (R/Ro) R/R Standard (resistance of Thermistor at 25C)
-        steinhart = log(steinhart);                                     // ln(R/Ro)
-        steinhart /= 3995;                                              // 1/Beta * ln(R/Ro)
-        steinhart += 1.0 / (25 + 273.15);                               // + (1/To, Temperature in degK @ 25C)
-        steinhart = 1.0 / steinhart;                                    // Invert
-        steinhart -= 273.15;                                            // convert to DegC
- 
 
-        displayTemp = (uint16_t)(steinhart*10);
-        
-        if(toggle == 1)
-        {
-            displayTemp = displayTemp*9/5+320;                          // Display Temperature in DegF
-*/
 
 // ***************************************************************************************************************************************************************
 int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)

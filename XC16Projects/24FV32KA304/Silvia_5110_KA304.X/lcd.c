@@ -266,9 +266,9 @@ void LCDInit(void)
 //The acceptable range is between 0x80 (being a contrast value of 0) and 0xFF (being a contrast value of 127)
     
 //    LCDWrite(LCD_COMMAND, 0xBB);                //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
-    LCDWrite(LCD_COMMAND, 0xBF);                //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
+    LCDWrite(LCD_COMMAND, 0xBE);                //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
 
-    LCDWrite(LCD_COMMAND, 0x04);                //Set Temp coefficent (04,05,06,07)
+    LCDWrite(LCD_COMMAND, 0x05);                //Set Temp coefficent (04,05,06,07)
 
     LCDWrite(LCD_COMMAND, 0x14);                //LCD bias mode 1:48: Try 0x13 or 0x14, (or 15, Drop Vop to 0XB7 or so)
 
