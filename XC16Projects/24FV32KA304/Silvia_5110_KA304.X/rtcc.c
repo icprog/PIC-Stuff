@@ -4,7 +4,7 @@
 //***************************************************************************************************************************************************************
 
 extern int powerFail;
-int run = 0;
+int run = 0;                                    // Run is declared her, so it keeps it's value between calls to OnTimer function
 
 
 char *WeekDay[7]    = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
@@ -91,9 +91,9 @@ void RTCC_Initialize(void) {
 
 //    RTCPWC = 0x0400;                            // PWCPOL disabled; PWCEN disabled; RTCLK LPRC; PWCPRE disabled; RTCOUT Alarm Pulse; PWSPRE disabled;
     RTCPWC = 0x0000;                            // PWCPOL disabled; PWCEN disabled; RTCLK ExtOsc; PWCPRE disabled; RTCOUT Alarm Pulse; PWSPRE disabled;
-
-    RCFGCALbits.CAL7 = 1;                      // Enable RTCC Calibration all zeros but bit 7, too fast by ~1 sec in 24 hrs
-    RCFGCALbits.CAL6 = 1;                      // Enable RTCC Calibration
+// bit 7 & 6 Slow by 3 seconds in 2 days
+    RCFGCALbits.CAL7 = 0;                      // Enable RTCC Calibration all zeros but bit 7, too fast by ~1 sec in 24 hrs
+    RCFGCALbits.CAL6 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL5 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL4 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL3 = 0;                      // Enable RTCC Calibration

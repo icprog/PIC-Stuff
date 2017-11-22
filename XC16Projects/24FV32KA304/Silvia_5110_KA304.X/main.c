@@ -190,7 +190,7 @@ int main(void)
             if(power==1 || ONTimer==1)
             {
                 powerSwitch = 1;                // powerSwitch is the Virtual Power control Variable
-                (power==1)?(run=0):(run=run);   // if power switch is on, disable AutoStart, or Kill AutoStart by cycling Power Switch
+                (power==1)?(run=0):(run=run);   // if power switch is on, disable AutoStart, or Kill AutoStart by cycling Power Switch (run is in RTCC.C)
             }
             else
             {
@@ -238,8 +238,6 @@ int main(void)
                 {
                     LCDClear();
                     LCDBitmap(&menu0[0], 5, 84);//Draw Menu0
-                    gotoXY(1,4);
-                    LCDWriteCharacter(' ');         // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
                 }
                 
                 if(powerFail == 1)
