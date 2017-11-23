@@ -91,15 +91,17 @@ void RTCC_Initialize(void) {
 
 //    RTCPWC = 0x0400;                            // PWCPOL disabled; PWCEN disabled; RTCLK LPRC; PWCPRE disabled; RTCOUT Alarm Pulse; PWSPRE disabled;
     RTCPWC = 0x0000;                            // PWCPOL disabled; PWCEN disabled; RTCLK ExtOsc; PWCPRE disabled; RTCOUT Alarm Pulse; PWSPRE disabled;
-// bit 7 & 6 Slow by 3 seconds in 2 days
-    RCFGCALbits.CAL7 = 0;                      // Enable RTCC Calibration all zeros but bit 7, too fast by ~1 sec in 24 hrs
+// bit 7 & 6 Slow by 3 seconds in 2 days / cleared 7 & 6, fast by 6 seconds in 12 hours
+// Bit 6 is -64*4 counts, so, clearing it made 27 seconds of difference(-3 in 48 hrs, to +6 in 12 hrs, (24 in 2 days)
+// so, 3/27*64 =7, -64+7=-57 = 10111001!!    
+    RCFGCALbits.CAL7 = 1;                      // Enable RTCC Calibration all zeros but bit 7, too fast by ~1 sec in 24 hrs
     RCFGCALbits.CAL6 = 0;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL5 = 0;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL4 = 0;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL3 = 0;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL5 = 1;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL4 = 1;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL3 = 1;                      // Enable RTCC Calibration
     RCFGCALbits.CAL2 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL1 = 0;                      // Enable RTCC Calibration this and bit 7, at least 2 seconds fast in a day               
-    RCFGCALbits.CAL0 = 0;                      // Enable RTCC Calibration this and bit 7, at least 1 seconds slow in a day
+    RCFGCALbits.CAL0 = 1;                      // Enable RTCC Calibration this and bit 7, at least 1 seconds slow in a day
     
     RCFGCALbits.RTCEN = 1;                      // Enable RTCC
 
