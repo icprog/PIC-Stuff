@@ -140,8 +140,8 @@ int main(void)
 
     while(1)
     {
-        power = _RB11;                          // FIX
-//        power = !_RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
+//        power = _RB11;                          // FIX
+        power = !_RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
   //      brewSwitch = _RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         brewSwitch = !_RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
