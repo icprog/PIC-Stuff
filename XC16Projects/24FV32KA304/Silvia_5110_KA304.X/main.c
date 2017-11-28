@@ -72,7 +72,7 @@ int dutyCycle[]         =   { 0,  0,  0};       // Duty Cycle for PWM Outputs
 
 char *desc[]            =   {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int powerFail           =   0;                  //Setting powerFail to 1, instructs the user to set the time
+int powerFail           =   1;                  //Setting powerFail to 1, instructs the user to set the time
 
 extern int run;
 
@@ -140,18 +140,15 @@ int main(void)
 
     while(1)
     {
-//        power = _RB11;                          // FIX
         power = !_RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
-  //      brewSwitch = _RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         brewSwitch = !_RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
-//        steamSwitch = _RA7;                     // RA7 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
         steamSwitch = !_RA7;                    // RA7 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
         
         waterSwitch = !_RC9;                    // RC9 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
 
-        static int timer = 0;                                                   // Used to count up time in a loop, to auto exit if user in a menu too long
+        static int timer = 0;                   // Used to count up time in a loop, to auto exit if user in a menu too long
         
         time = getRTCTime();                    // get the time
         
@@ -338,8 +335,10 @@ int main(void)
 // *************** Brew a Shot of Espresso *************************************
             
             if(brewSwitch)
-            {   
-                shotDisplayTimer = 0;           // Timer to reset Shot Counter    
+            {
+                T2CONbits.TON       =   1;      // Turn Timer2 ON
+                
+                shotDisplayTimer    =   0;      // Timer to reset Shot Counter    
                 
                 if(shotProgressCounter <= preInfusionTime)
                 {
@@ -378,23 +377,23 @@ int main(void)
                         pumpOutput = min;
                     }
                 
-                if (shotProgressCounter >= warning)                             // 90 Seconds has elapsed without Brew Switch being turned off,
+                if (shotProgressCounter >= warning)     // 90 Seconds has elapsed without Brew Switch being turned off,
                 {                  
-                    piezoOutput = 1;                                            // Activate Piezo Buzzer for 1/2 second
+                    piezoOutput = 1;                    // Activate Piezo Buzzer for 1/2 second
                 }
 
-                if(shotProgressCounter >= warning + 50)                          // Piezo has been on for 1/2 second
+                if(shotProgressCounter >= warning + 5)  // Piezo has been on for 1/2 second
                 { 
-                    piezoOutput = 0;                                            // So, Shut it off! (pulsing alarm)
-                    shotProgressCounter = (warning - 50);                       // set time back 2 seconds, so it can go again.(in 1.5 seconds)
-                    warningTimer++;                                             // Increment z every 2 seconds, after 10 counts, alarm will go solid
+                    piezoOutput = 0;                    // So, Shut it off! (pulsing alarm)
+                    shotProgressCounter = (warning - 25);// set time back 2.5 seconds, so it can go again.(in 2 seconds)
+                    warningTimer+=1;                    // Increment warningTimer every 2.5 seconds, after 10 counts, alarm will go solid
                 }
 
-                if(warningTimer >= 10)                                          // After 10 seconds of pulsing alarm being ignored,
+                if(warningTimer >= 10)                  // After 10 counts of pulsing alarm being ignored,
                 { 
-                    piezoOutput = 1;                                            // turn Piezo on constantly,
-                    shotProgressCounter = (warning - 250);                      // and set tenCount to below the pulsing alarm time,
-                    warningTimer = 10;                                          // so Piezo will not start pulsing alarm again.
+                    piezoOutput = 1;                        // turn Piezo on constantly,
+                    shotProgressCounter = (warning - 250);  // and set tenCount to below the pulsing alarm time,
+                    warningTimer = 10;                      // so Piezo will not start pulsing alarm again.
                 }                                       
                 
                 

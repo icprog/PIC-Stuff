@@ -10,6 +10,8 @@ int run = 0;                                    // Run is declared her, so it ke
 char *WeekDay[7]    = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 char *month[13]     = {"NUL","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
 
+int8_t maxTimes[]       =   {23,55,23,55};
+
 int const startHour[]   =   {40,42,44,46,48,50,52};
 
 int const startMinute[] =   {54,56,58,60,62,64,66};
@@ -95,13 +97,13 @@ void RTCC_Initialize(void) {
 // Bit 6 is -64*4 counts, so, clearing it made 27 seconds of difference(-3 in 48 hrs, to +6 in 12 hrs, (24 in 2 days)
 // so, 3/27*64 =7, -64+7=-57 = 10111001!!    
     RCFGCALbits.CAL7 = 1;                      // Enable RTCC Calibration all zeros but bit 7, too fast by ~1 sec in 24 hrs
-    RCFGCALbits.CAL6 = 0;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL6 = 1;                      // Enable RTCC Calibration
     RCFGCALbits.CAL5 = 1;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL4 = 1;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL3 = 1;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL4 = 0;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL3 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL2 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL1 = 0;                      // Enable RTCC Calibration this and bit 7, at least 2 seconds fast in a day               
-    RCFGCALbits.CAL0 = 1;                      // Enable RTCC Calibration this and bit 7, at least 1 seconds slow in a day
+    RCFGCALbits.CAL0 = 0;                      // Enable RTCC Calibration this and bit 7, at least 1 seconds slow in a day
     
     RCFGCALbits.RTCEN = 1;                      // Enable RTCC
 
@@ -524,7 +526,10 @@ void writeStartStopTimes(void)
 
 
 //***************************************************************************************************************************************************************
-
+//int8_t setTimes(int8_t b, int8_t maxTimes)
+//{
+    
+//}
 
 int8_t setStartHour(int8_t b)
 {
