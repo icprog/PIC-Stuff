@@ -14,7 +14,7 @@
 // All times are in 1/10th's of a second, so 10 = 1 seconds, 30 = 3 seconds, 15 = 1.5 seconds, etc 
 
 #define max                     256             // Maximun Pump Output (256 = 100%)
-#define min                     40              // Minimum Pump Output (0 = OFF)
+#define min                     26              // Minimum Pump Output (0 = OFF)
 #define preInfusionDutyCycle    40 //FIX        // This needs to move to EEPROM & have a User Interface set up so user can change it
 #define preInfusionTime         (20) //FIX      // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
 #define soakTime                (preInfusionTime + 20)   //FIX           // Length of time for wetted puck to soak EEPROM FIX
@@ -72,7 +72,7 @@ int dutyCycle[]         =   { 0,  0,  0};       // Duty Cycle for PWM Outputs
 
 char *desc[]            =   {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int powerFail           =   1;                  //Setting powerFail to 1, instructs the user to set the time
+int powerFail           =   0;                  //Setting powerFail to 1, instructs the user to set the time
 
 extern int run;
 
@@ -94,45 +94,47 @@ int main(void)
     }
         
 // *************** Local Variables *********************************************
-//    char blink          = 1;                    // blink flashes display when water level low
+//    char blink              = 1;                // blink flashes display when water level low
     
-    char errorCount     = 0;                    // errorCount disables power, if water level remains low too long
+    unsigned int powerOut   = 0;                // Power Output Displayed to screen
     
-    char errorSustained = 0;
+    char errorCount         = 0;                // errorCount disables power, if water level remains low too long
+    
+    char errorSustained     = 0;
 
-    uint8_t count2      = 0;                    // count2 ramps pump pressure
+    uint8_t count2          = 0;                // count2 ramps pump pressure
     
     int samples[3][numSamples] ={[0 ... 2] = {0}};//Used to average temp[] over "numSamples" of samples
     
-    unsigned int temp[3]= {0,0,0};
+    unsigned int temp[3]    = {0,0,0};
     
     unsigned int shortTermTemp[3]= {0,0,0};                                              
     
-    uint8_t sampleIndex = 0;                    // Used to calculate average sample of temp[]
+    uint8_t sampleIndex     = 0;                // Used to calculate average sample of temp[]
     
-    float total[3]      = {0,0,0};              // Running total of temp[] samples 
+    float total[3]          = {0,0,0};          // Running total of temp[] samples 
 
-    uint16_t i          = 0;                    // x is used for holding shot timer value for 20 seconds before resetting to zero
+    uint16_t i              = 0;                // x is used for holding shot timer value for 20 seconds before resetting to zero
     
-    unsigned char testKey     = 0;              // Variable used for Storing Which Menu Key is Pressed
+    unsigned char testKey   = 0;                // Variable used for Storing Which Menu Key is Pressed
     
-    int bits[7]   = {0};
+    int bits[7]             = {0};
  
     //    int internalBGV;
     
-    int PIDValue[]      = {0,0,0};              // PID calculated values (Water, Steam and Group)
+    int PIDValue[]          = {0,0,0};          // PID calculated values (Water, Steam and Group)
     
-    int setRangeL[]     = {1750,2500,1800};     // Set Point Low Limits
+    int setRangeL[]         = {1750,2500,1800}; // Set Point Low Limits
     
-    int setRangeH[]     = {2100,2850,2150};     // Set Point High Limits
+    int setRangeH[]         = {2100,2850,2150}; // Set Point High Limits
     
-    int previous_time   = 0;                    //Used with time.second to limit some stuff to once a second
+    int previous_time       = 0;                //Used with time.second to limit some stuff to once a second
             
     unsigned int counter[5] = {0,0,0,0,1200};   // Shot progress, Shot timer, Warning timer, Shot display Timer, Back Light,
     
-    uint16_t level      = 0;
+    uint16_t level          = 0;
     
-    static char ONTimer = 0;                    // Bit to enable Auto Start of Machine
+    static char ONTimer     = 0;                // Bit to enable Auto Start of Machine
     
     
 // ******************************************************************************
@@ -336,6 +338,12 @@ int main(void)
             
             if(brewSwitch)
             {
+                LCDWriteStringXY(2,4,"Pump Output:");
+                LCDWriteInt(powerOut,3,0,0);
+                LCDWriteCharacter('%');
+                LCDWriteCharacter(' ');
+                LCDWriteCharacter(' ');
+                
                 T2CONbits.TON       =   1;      // Turn Timer2 ON
                 
                 shotDisplayTimer    =   0;      // Timer to reset Shot Counter    
@@ -354,7 +362,13 @@ int main(void)
                 {
                     if(pumpOutput <= max)
                     {
-                        pumpOutput +=2;
+                        count2+=1;
+                        
+                        if(count2 >5)           // 13 gets us to !00% in 2.5 seconds (the current amount of StartRamp Time)
+                        {
+                            if(pumpOutput<max) pumpOutput +=16;
+                            count2 = 0;
+                        }
                     }
                 }
             
@@ -364,7 +378,7 @@ int main(void)
                     {   
                         count2 +=1;
                         
-                        if(count2 > 9)
+                        if(count2 > 15)
                         {
                             pumpOutput -=1;
                             count2 = 0;
@@ -372,14 +386,15 @@ int main(void)
                     }
                 } 
                     
-                    if(shotProgressCounter > (250 + preInfusionTime + soakTime))
-                    {
-                        pumpOutput = min;
-                    }
+                if(shotProgressCounter > (300 + preInfusionTime + soakTime)&& (shotProgressCounter < warning))// Allow up to 30 second pull, them limit pump output to min
+                {
+                    pumpOutput = min;
+                }
                 
                 if (shotProgressCounter >= warning)     // 90 Seconds has elapsed without Brew Switch being turned off,
                 {                  
                     piezoOutput = 1;                    // Activate Piezo Buzzer for 1/2 second
+                    pumpOutput  = 0;                    // Turn off the Pump as well
                 }
 
                 if(shotProgressCounter >= warning + 5)  // Piezo has been on for 1/2 second
@@ -408,6 +423,7 @@ int main(void)
 
                     IFS0bits.T2IF = 0;
                 }
+                powerOut = pumpOutput*100/256;
             }
             else
             {
