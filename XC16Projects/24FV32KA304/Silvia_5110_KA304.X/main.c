@@ -386,15 +386,18 @@ int main(void)
                     }
                 } 
                     
-                if(shotProgressCounter > (300 + preInfusionTime + soakTime)&& (shotProgressCounter < warning))// Allow up to 30 second pull, them limit pump output to min
+                if(shotProgressCounter > 300 + preInfusionTime + soakTime)//&& shotProgressCounter < warning-30)// Allow up to 30 second pull, them limit pump output to min
                 {
                     pumpOutput = min;
                 }
                 
+                if(shotProgressCounter > 600) pumpOutput  = 0;// Turn off the Pump as well
+                
+                
                 if (shotProgressCounter >= warning)     // 90 Seconds has elapsed without Brew Switch being turned off,
                 {                  
                     piezoOutput = 1;                    // Activate Piezo Buzzer for 1/2 second
-                    pumpOutput  = 0;                    // Turn off the Pump as well
+//                    pumpOutput  = 0;                    // Turn off the Pump as well
                 }
 
                 if(shotProgressCounter >= warning + 5)  // Piezo has been on for 1/2 second
