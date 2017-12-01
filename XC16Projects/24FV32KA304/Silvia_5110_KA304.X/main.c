@@ -338,6 +338,8 @@ int main(void)
             
             if(brewSwitch)
             {
+                backLightCounter = 0;           // Turn on Backlight if you are pulling a shot.
+                
                 LCDWriteStringXY(2,4,"Pump Output:");
                 LCDWriteInt(powerOut,3,0,0);
                 LCDWriteCharacter('%');
