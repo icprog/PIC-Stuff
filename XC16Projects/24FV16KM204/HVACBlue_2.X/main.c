@@ -366,7 +366,7 @@ int16_t main(void)
                     CraftRoomFloorOut =     Out[6];
                     SEBasementFloorOut =    Out[7]; 
                     MediaRoomFloorOut =     Out[8];
-                    GarageFloorOut =        Out[10];                // Reversed both
+                    GarageFloorOut =        Out[10];                
             
                 }
             }
@@ -399,7 +399,7 @@ int16_t main(void)
             LCDWriteStringXY(0,13,"Loop ");
             LCD_Write_Int(loopCounter,2,0,0);
             
-            LCDWriteStringXY(1,0,"Bs");                                        //LCD Line 1 SetPoint Display
+            LCDWriteStringXY(1,0,"Bs");                                         //LCD Line 1 SetPoint Display
             LCDWriteIntXY(1,2,eepromGetData(setpoint[loopCounter]) + Bias[loopCounter],3,1,1);
             LCD_Write_Char(0);
             LCD_Write_Char('C');
@@ -450,8 +450,8 @@ int16_t main(void)
 
         if(loopCounter == 11)
         {
-            LCDWriteIntXY(0,0,outStateCounter[0],5,0,0);                // Reversed both
-            LCDWriteIntXY(0,6,outStateCounter[1],5,0,0);                // Reversed both
+            LCDWriteIntXY(0,0,outStateCounter[0],5,0,0);                
+            LCDWriteIntXY(0,6,outStateCounter[1],5,0,0);                
             LCDWriteIntXY(0,12,outStateCounter[2],5,0,0);
             LCDWriteIntXY(1,0,outStateCounter[3],5,0,0);
             LCDWriteIntXY(1,6,outStateCounter[4],5,0,0);
@@ -459,10 +459,10 @@ int16_t main(void)
             LCDWriteIntXY(2,0,outStateCounter[6],5,0,0);
             LCDWriteIntXY(2,6,outStateCounter[7],5,0,0);
             LCDWriteIntXY(2,12,outStateCounter[8],5,0,0);
-            LCDWriteIntXY(3,0,outStateCounter[9],5,0,0);               // Reversed both
-            LCDWriteIntXY(3,6,outStateCounter[10],5,0,0);                // Reversed both
+            LCDWriteIntXY(3,0,outStateCounter[9],5,0,0);               
+            LCDWriteIntXY(3,6,outStateCounter[10],5,0,0);               
             LCD_Set_Cursor(3,12);
-            LCD_Write_Int(405515/internalBGV,3,2,0);                          //Write the BandGap voltage to the LCD
+            LCD_Write_Int(405515/internalBGV,3,2,0);                            //Write the BandGap voltage to the LCD
             LCD_Write_Char('V');
 
             if(TestKey == KEY_RESET)                                            //KEY_RESET does a re-set on outStateCounter, if pressed on loop page 11
@@ -489,6 +489,7 @@ int16_t main(void)
                 {
                     outStateCounter[i]= 0;                                      //Set all outStateCounters to zero
                 }
+                LCD_Clear();
             }
         }
         
@@ -519,13 +520,13 @@ int16_t main(void)
         heartBeat();  
         
 // *************** Back Light Control ******************************************  
-        if(TestKey == KEY_NONE)                             // If no key is pressed for 60 seconds
-        {                                                   // Turn OFF the LCD Backlight
-            backLightTimer += 1;                            // Increment Counter
+        if(TestKey == KEY_NONE)                                                 // If no key is pressed for 60 seconds
+        {                                                                       // Turn OFF the LCD Backlight
+            backLightTimer += 1;                                                // Increment Counter
         }
         else
         {
-            backLightTimer = 0;                             // Reset Counter
+            backLightTimer = 0;                                                 // Reset Counter
         }
         
         if (backLightTimer < 4450)
@@ -539,7 +540,7 @@ int16_t main(void)
         }
         
 // *************** Processor Reset Key Test ************************************
-        if (TestKey == KEY_RESET)                           //This will soft reset the processor
+        if (TestKey == KEY_RESET)                                               //This will soft reset the processor
         {
             TestKey = KEY_NONE;
             
