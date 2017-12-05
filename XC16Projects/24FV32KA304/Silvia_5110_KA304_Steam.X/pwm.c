@@ -21,7 +21,7 @@ void InitializeTimers(void)
 
 void Initialize_PWM(void)
 {
-    OC1R                =   0x0000;                 // set DutyCycle to 0
+    OC1R                =   0x0000;                 // set WaterPump DutyCycle to 0
     OC1RS               =   0x0100;                 // 0x100 = 256 counts x 1:64 Prescaler on Timer1, = .25 Second period
     OC1CON2bits.SYNCSEL =   0X1F;                   // Set Self Sync as source
     OC1CON2bits.OCTRIG =    0;                      // Set OC1 as Sync source
@@ -29,17 +29,17 @@ void Initialize_PWM(void)
     OC1TMR =                0x0000;                 // Set OC1 timer to zero
     OC1CON1bits.OCM =       0x6;                    // Set OC1 Mode to Edge aligned PWM
     
-    OC2R                =   0x0000;                 // set DutyCycle to 0
+    OC2R                =   0x0000;                 // set Water Boiler DutyCycle to 0
     OC2RS               =   0x1E84;                 // Set Period = 1 second (2MHz/256 = 7812 = 1E84 Hex)
     OC2CON2bits.SYNCSEL =   0X1F;                   // Set Self Sync as source
     OC2CON2bits.OCTRIG =    0;                      // Set OC2 as Sync source
     OC2CON1bits.OCTSEL =    0X1;                    // Set Timer 3 as clock source
-    OC2CON1bits.OCM =       0x6;                    // Set OC2 Mode to Edge aligned PWM  FIX(Change to Center aligned)
+    OC2CON1bits.OCM =       0x7;                    // Set OC2 Mode to Edge aligned PWM  FIX(Change to Center aligned)
     
-    OC3R =                  0x0000;                 // set DutyCycle to 0
+    OC3R =                  0x0000;                 // set Steam Boiler DutyCycle to 0
     OC3RS =                 0x1E84;                 // Set Period = 1 second (2MHz/256 = 7812 = 1E84 Hex)
     OC3CON2bits.SYNCSEL =   0X1F;                   // Set OC3 as Sync source
     OC3CON2bits.OCTRIG =    0;                      // Set OC3 as Sync source
     OC3CON1bits.OCTSEL =    0X1;                    // Set Timer 3 as clock source
-    OC3CON1bits.OCM =       0x6;                    // Set OC3 Mode to Edge aligned PWM  FIX(Change to CenterAligned)
+    OC3CON1bits.OCM =       0x7;                    // Set OC3 Mode to Edge aligned PWM  FIX(Change to CenterAligned)
 }

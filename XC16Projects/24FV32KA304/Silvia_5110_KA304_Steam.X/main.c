@@ -44,9 +44,11 @@
 #define warningTimer            counter[2]      // Initiate Piezo Warning if Brew switch not turned OFF
 #define shotDisplayTimer        counter[3]      // Determines how long the Shot Timer Value remains on the Display
 #define backLightCounter        counter[4]      // Used to count time until Backlight turns Off
+#define groupPeriodCounter      counter[5]      // Group PID Period Counter
 
-#define waterLevel              level           //ADCRead(14) is Water Tank level signal
-#define numSamples              50              //Number of samples to average for temp[] readings 
+#define waterLevel              level           // ADCRead(14) is Water Tank level signal
+#define numSamples              50              // Number of samples to average for temp[] readings 
+#define PIDDuration             200             // Number of Program cycles (Period) for Group Head PID
  
 #define power                   bits[0]         // Power switch input state  
 #define brewSwitch              bits[1]         // Brew Switch Input
@@ -68,8 +70,6 @@ int const Kp[]          =   {6, 8, 10};
 int const Ki[]          =   {12,14,16};
 
 int const Kd[]          =   {18,20,22};
-
-int dutyCycle[]         =   { 0,  0,  0};       // Duty Cycle for PWM Outputs
 
 char *desc[]            =   {"Water Temp:","Steam Temp:","Group Temp:"};
 
@@ -131,7 +131,7 @@ int main(void)
     
     int previous_time       = 0;                //Used with time.second to limit some stuff to once a second
             
-    unsigned int counter[5] = {0,0,0,0,1200};   // Shot progress, Shot timer, Warning timer, Shot display Timer, Back Light,
+    unsigned int counter[6] = {0,0,0,0,1200,0};   // Shot progress, Shot timer, Warning timer, Shot display Timer, Back Light, groupPeriodCounter
     
     uint16_t level          = 0;
     
@@ -322,18 +322,50 @@ int main(void)
 // *************** Calculate & Drive PID Outputs *******************************
             
             GroupHeadPID = PID_Calculate(2, groupHeadSetpoint, temp[2]);
-            groupOutput = GroupHeadPID;
 
+            groupPeriodCounter+=1;
+        
+            if(groupPeriodCounter > PIDDuration)
+            {
+                groupPeriodCounter = 0;
+            }
+        
+            if(GroupHeadPID > groupPeriodCounter)
+            {
+                groupOutput = 1;
+            }
+            else
+            {
+                groupOutput = 0;
+            }
+
+ 
+//            (OC1R==0)?(OC1CON2bits.OCTRIS = 1):(OC1CON2bits.OCTRIS = 0);    // If Output is 0, Disable OC1 Module
+            (OC2R==0)?(OC2CON2bits.OCTRIS = 1):(OC2CON2bits.OCTRIS = 0);    // If Output is 0, Disable OC2 Module (Center aligned Output is always after timer reset)
+            (OC3R==0)?(OC3CON2bits.OCTRIS = 1):(OC3CON2bits.OCTRIS = 0);    // If Output is 0, Disable OC3 Module
+              
             if(steamSwitch)                     //Steam setpoint takes priority
             {
-                SteamPID = PID_Calculate(1, setpoint[1], temp[1]);
-                boilerOutput = SteamPID;        // Steam Boiler Output
+                OC3R = 0;                       // Start at 0    
+            
+                OC3RS = SteamPID;               // Duration of Steam Boiler Output (Out will be on until OC3RS matches SteamPID)
+
+                OC2R = OC3RS;                   // Set OC2R to OC3RS, to start second Output as soon as first is no longer needing cycle time
+
+                (OC2R+WaterPID>=0x1E84)?(OC2RS = 0x1E84):(OC2RS = OC2R + WaterPID); // Limit Water Boiler Output to available time left in Period
             }
+
             else                                //Water setpoint takes priority
             {            
-                WaterPID = PID_Calculate(0, setpoint[2], temp[0]);
-                boilerOutput = WaterPID;
+                OC2R = 0;                       // Start at 0    
+            
+                OC2RS = WaterPID;               // Water Boiler Output is Shut OFF
+
+                OC3R = OC2RS;                   // Duration of Water Boiler Output (Out will be on until OC2RS matches WaterPID)
+
+                (OC3R+SteamPID>=0x1E84)?(OC3RS = 0x1E84):(OC3RS = OC3R + SteamPID); //  Limit Steam Boiler Output to available time left in Period
             }
+ 
 
 // *************** Brew a Shot of Espresso *************************************
             
