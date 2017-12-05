@@ -5,12 +5,16 @@
 #define piezoOutput             _LATA1          // Output to turn on Piezo, if Brew switch left on too long
 #define backLightOFF            _LATA9          // Backlight is active LOW, so "0" is "ON", "1" is "OFF" Pin 35
 #define airPump                 _LATA8          // FIX
+#define pumpOutput              OC1R
+#define boilerOutput            OC2R
+#define steamOutput             OC3R
+#define groupOutput             _LATA11         //Fix, this was using Hardware PWM, now need to code software PWM
 
 // *************** Inputs ******************************************************
 // ADC Input to read Button press (User Input Keys) on _RC1 (AN7) Pin 26        
 // *****************************************************************************
 
-//**************** Timer2 set in pwm.c (Timer2 Runs the Water Pump)*************
+//**************** Timer2 set in pwm.c (Timer2 Runs the Shot Counter) **********
 // All times are in 1/10th's of a second, so 10 = 1 seconds, 30 = 3 seconds, 15 = 1.5 seconds, etc 
 
 #define max                     256             // Maximun Pump Output (256 = 100%)
@@ -19,8 +23,8 @@
 #define preInfusionTime         (20) //FIX      // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
 #define soakTime                (preInfusionTime + 20)   //FIX           // Length of time for wetted puck to soak EEPROM FIX
 #define startRamp               (soakTime + 25)               //FIX      // StartRamp starts pump and Ramps up to Max Pressure
-#define continuePull            (800 + 1)       // Shot duration, 60 seconds from Start of Cycle(601)
-#define warning                 (850 + 1)       // Turn on Warning Piezo, reminder to turn off switch (651)
+#define continuePull            (800 + 1)       // Shot duration, 80 seconds from Start of Cycle(801)
+#define warning                 (850 + 1)       // Turn on Warning Piezo, reminder to turn off switch (851)
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
@@ -34,9 +38,6 @@
 #define SteamPID                PIDValue[1]
 #define GroupHeadPID            PIDValue[2]
 
-#define pumpOutput              OC1R
-#define boilerOutput            OC2R
-#define groupOutput             OC3R
 
 #define shotProgressCounter     counter[0]      // Timer for Steps in an extraction
 #define shotTimer               counter[1]      // Times the duration of the extraction 
@@ -138,17 +139,17 @@ int main(void)
     
     
 // ******************************************************************************
-    LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
+    LCDBitmap(&menu0[0], 5, 84);                //Draw Menu0
 
     while(1)
     {
-        power = !_RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
+        power       =   !_RB11;                 // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
-        brewSwitch = !_RB10;                    // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
+        brewSwitch  =   !_RB10;                 // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
-        steamSwitch = !_RA7;                    // RA7 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
+        steamSwitch =   !_RA7;                  // RA7 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
         
-        waterSwitch = !_RC9;                    // RC9 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
+        waterSwitch =   !_RC9;                  // RC9 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
 
         static int timer = 0;                   // Used to count up time in a loop, to auto exit if user in a menu too long
         
