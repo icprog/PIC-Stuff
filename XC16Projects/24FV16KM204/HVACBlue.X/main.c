@@ -128,32 +128,9 @@ int16_t main(void)
             {
                 Temp[i] = ADCRead(channel[i]);                      // Read All 11 Floor Temperatures
             }
-// ******************************************************************************
-//            Temp[0] = ADCRead(0);                                               //Read Deck air temperature Pin 19
-// ******************************************************************************
-//            Temp[1] = ADCRead(4);                                               //Read Deck floor temperature Pin 23
-// ******************************************************************************
-//            Temp[2] = ADCRead(5);                                               //Read Utility room floor temperature Pin 24
-// ******************************************************************************
-//            Temp[3] = ADCRead(6);                                               //Read Entrance floor temperature Pin 25
-// ******************************************************************************
-//            Temp[4] = ADCRead(10);                                              //Read Master bathroom floor temperature Pin 14
-// ******************************************************************************
-//            Temp[5] = ADCRead(11);                                              //Read Office floor temperature Pin 11
-// ******************************************************************************
-//            Temp[6] = ADCRead(12);                                              //Read Craft room floor temperature Pin 10
-// ******************************************************************************
-//            Temp[7] = ADCRead(17);                                              //Read SE basement bedroom floor temperature Pin 41
-// ******************************************************************************
-//            Temp[8] = ADCRead(18);                                              //Read Media room floor temperature Pin 42
-// ******************************************************************************
-//            Temp[9] = ADCRead(19);                                              //Read Garage floor temperature Pin 43
-// ******************************************************************************
-//            Temp[10] = ADCRead(20);                                             //Read Garage room air temperature Pin 44
-// ******************************************************************************
             internalBGV = ADCRead(0x1A);                            //Read the internal band Gap Voltage, used later to measure input voltage
+            
 // *************** Calculate Temperatures **************************************
-        
             for(i = 0;i<11;++i)
             {
             Temp[i] = TempCalc(Temp[i]);
@@ -165,6 +142,7 @@ int16_t main(void)
             }
             else Temp[i] = OldTemp[i];
             }
+            
 // *************** Determine Temperature Biases ********************************
             for(i=0;i<11;i++)
             {
@@ -260,15 +238,15 @@ int16_t main(void)
                     }
                 }
 
-                if(Out[0] == 0)   // Added this to fix Master running because of Deck  // If Deck Air Temp is NOT calling,
-                {
-                    Out[1] = 0;                                                     // turn OFF Deck Floor Out           
-                }
+//                if(Out[0] == 0)   // Added this to fix Master running because of Deck  // If Deck Air Temp is NOT calling,
+  //              {
+    //                Out[1] = 0;                                                     // turn OFF Deck Floor Out           
+      //          }
        
-                if(Out[10] == 0)                                                    // If Garage Air Temp is NOT calling,
-                {
-                    Out[9] = 0;                                                     // turn OFF Garage Floor Out
-                }
+        //        if(Out[10] == 0)                                                    // If Garage Air Temp is NOT calling,
+          //      {
+            //        Out[9] = 0;                                                     // turn OFF Garage Floor Out
+              //  }
                 
                 
                 for(i=0;i<11;i++)                                                                                               //Set screen state indicators

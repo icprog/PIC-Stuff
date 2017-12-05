@@ -1,13 +1,9 @@
 build/default/production/touch.o:  \
 touch.c  \
 touch.h  \
-adc.h  \
 system.h  \
-lcd.h  \
- user.h  \
-buttons.h  \
-rtcc.h  \
+adc.h  \
 eeprom.h  \
-pid.h  \
-level.h  \
-pwm.h 
+ lcd.h  \
+rtcc.h  \
+user.h 

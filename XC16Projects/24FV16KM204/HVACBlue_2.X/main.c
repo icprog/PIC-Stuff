@@ -1,6 +1,5 @@
-
 #include "system.h"
-// ******************************************************************************
+// *****************************************************************************
 #define DeckFloorOut        _LATA3
 #define UtilityRoomFloorOut _LATA2
 #define EntranceFloorOut    _LATA11
@@ -13,52 +12,50 @@
 #define backLightOn         _LATA1
 #define numSamples          60                                                  //Number of samples to average for Outdoor Air temp
 
-// ******************************************************************************
-int16_t __attribute__ ((space(eedata))) Settings[85];                               // Global variable located in EEPROM (created by the space()attribute
+// *****************************************************************************
+int16_t __attribute__ ((space(eedata))) Settings[85];                           // Global variable located in EEPROM (created by the space()attribute
 
-RTCTime time;                                                                   // declare the type of the time object
+RTCTime time;                                                                   // declare the type of the time(structure) object
 
-uint8_t const setpoint[]  = {0,  8, 16, 24, 32, 40, 48, 56, 64, 72, 80};  //setpoint EEPROM Address "offset" values
+uint8_t const setpoint[]  = {0,  8, 16, 24, 32, 40, 48, 56, 64, 72, 80};        //setpoint EEPROM Address "offset" values
 
-uint8_t const deadband[]  = {2, 10, 18, 26, 34, 42, 50, 58, 66, 74, 82};  //dead band EEPROM Address "offset" values
+uint8_t const deadband[]  = {2, 10, 18, 26, 34, 42, 50, 58, 66, 74, 82};        //dead band EEPROM Address "offset" values
 
-uint8_t const BiasWarm[]  = {118,120,122,124,126,128,130,132,134,136,138};//Setpoint Bias when Temperature above +10C (EEPROM offset values)
+uint8_t const BiasWarm[]  = {118,120,122,124,126,128,130,132,134,136,138};      //Setpoint Bias when Temperature above +10C (EEPROM offset values)
 
-uint8_t const Bias0[]     = {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};  //Setpoint Bias when Temperature between -5C and 5C (Hard coded, non-EEPROM values)
+uint8_t const Bias0[]     = {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};        //Setpoint Bias when Temperature between -5C and 5C (Hard coded, non-EEPROM values)
 
-uint8_t const biasNeg5[]  = {96,98,100,102,104,106,108,110,112,114,116};  //Setpoint Bias when Temperature between -15C and -5C (EEPROM Address "offset" values)
+uint8_t const biasNeg5[]  = {96,98,100,102,104,106,108,110,112,114,116};        //Setpoint Bias when Temperature between -15C and -5C (EEPROM Address "offset" values)
 
-uint8_t const biasNeg15[] = {4, 12, 20, 28, 36, 44, 52, 60, 68, 76, 84};  //biasNeg15 (Temperature between -15C and -25C) EEPROM Address "offset" values
+uint8_t const biasNeg15[] = {4, 12, 20, 28, 36, 44, 52, 60, 68, 76, 84};        //biasNeg15 (Temperature between -15C and -25C) EEPROM Address "offset" values
 
-uint8_t const biasNeg25[] = {6, 14, 22, 30, 38, 46, 54, 62, 70, 78, 86};  //biasNeg25 (Temperature below -25C) EEPROM Address "offset" values
+uint8_t const biasNeg25[] = {6, 14, 22, 30, 38, 46, 54, 62, 70, 78, 86};        //biasNeg25 (Temperature below -25C) EEPROM Address "offset" values
 
-uint8_t const startMonth = 88, startDay = 90, endMonth = 92, endDay = 94; //EEPROM Address offset values to store user settable Start/Stop dates
+uint8_t const startMonth = 88, startDay = 90, endMonth = 92, endDay = 94;       //EEPROM Address offset values to store user settable Start/Stop dates
 
 uint8_t const earlyStartMonth = 140, earlyStartDay = 142, extendedEndMonth = 144, extendedEndDay = 146;
 
 uint8_t const extendedRunEnable[] = {148,150,152,154,156,158,160,162,164,166,168};
 
-int16_t Bias[] =                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};    // Storage Location for Bias Values (When between Switch points)
+int16_t Bias[] =                    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};// Storage Location for Bias Values (When between Switch points)
 
-char channel[] =                    {  4,  0,  5,  6, 10, 11, 12, 17, 18, 20, 19};  // Reversed both
+char channel[] =                    {  4,  0,  5,  6, 10, 11, 12, 17, 18, 20, 19};// ADC Channel Number to Pass to Temp Calculate Function
 
 char *desc[] = {"Deck Floor ","Deck Rm Air ","Utility Flr ","Entrance Flr ","Master Bath ","Office Floor ","Craft Rm Flr ","SE BedRm Flr ","Media Rm Flr ","Garage Rm Air","Garage Floor "};    // Reversed both
 
-_Bool enabled[11]               = {0};                              // Determines if an Output should be on at this date.
+_Bool enabled[11]               = {0};                                          // Determines if an Output should be on at this date.
 
-_Bool outState[11]              = {0};                              // State of the output (1 or 0) not the actual output, which is _Bool Out[]
+_Bool outState[11]              = {0};                                          // State of the output (1 or 0) not the actual output, which is _Bool Out[]
 
-_Bool lastOutState[11]          = {0};                              // Check if the outState has changed
+_Bool lastOutState[11]          = {0};                                          // Check if the outState has changed
 
-unsigned int outStateCounter[11]= {0,0,0,0,0,0,0,0,0,0,0};          // Track which outputs are turning on most often
+unsigned int outStateCounter[11]= {0,0,0,0,0,0,0,0,0,0,0};                      // Track which outputs are turning on most often
 
-//int16_t outStateCounter[11] = {342,407,319,578,414,84,66,0,24,71,49}; //Keeps track of which outputs are turning on most often
+uint8_t call = 0;                                                               // Set HMI key delay time, based on what function you are in 
 
-uint8_t call = 0;                                                   // Set HMI key delay time, based on what function you are in 
+_Bool powerFail = 1;                                                            // Setting powerFail to 1, displays "Set Clock" Message
 
-_Bool powerFail = 1;                                                // Setting powerFail to 1, displays "set Clock" Message
-
-int16_t samples[numSamples];                                        // Outside Air Temperature Samples to average temp over x number of samples
+int16_t samples[numSamples];                                                    // Outside Air Temperature Samples to average temp over x number of samples
 
 // *************** Main ********************************************************
 int16_t main(void)
@@ -123,48 +120,26 @@ int16_t main(void)
             
             OutAirTemp = total / numSamples;                        // assign the average value of total to the OutAirTemp variable
 
-
             for(i=0;i<11;i++)
             {
                 Temp[i] = ADCRead(channel[i]);                      // Read All 11 Floor Temperatures
             }
-// ******************************************************************************
-//            Temp[0] = ADCRead(0);                                               //Read Deck air temperature Pin 19
-// ******************************************************************************
-//            Temp[1] = ADCRead(4);                                               //Read Deck floor temperature Pin 23
-// ******************************************************************************
-//            Temp[2] = ADCRead(5);                                               //Read Utility room floor temperature Pin 24
-// ******************************************************************************
-//            Temp[3] = ADCRead(6);                                               //Read Entrance floor temperature Pin 25
-// ******************************************************************************
-//            Temp[4] = ADCRead(10);                                              //Read Master bathroom floor temperature Pin 14
-// ******************************************************************************
-//            Temp[5] = ADCRead(11);                                              //Read Office floor temperature Pin 11
-// ******************************************************************************
-//            Temp[6] = ADCRead(12);                                              //Read Craft room floor temperature Pin 10
-// ******************************************************************************
-//            Temp[7] = ADCRead(17);                                              //Read SE basement bedroom floor temperature Pin 41
-// ******************************************************************************
-//            Temp[8] = ADCRead(18);                                              //Read Media room floor temperature Pin 42
-// ******************************************************************************
-//            Temp[9] = ADCRead(19);                                              //Read Garage floor temperature Pin 43
-// ******************************************************************************
-//            Temp[10] = ADCRead(20);                                             //Read Garage room air temperature Pin 44
-// ******************************************************************************
+
             internalBGV = ADCRead(0x1A);                            //Read the internal band Gap Voltage, used later to measure input voltage
+
 // *************** Calculate Temperatures **************************************
-        
             for(i = 0;i<11;++i)
             {
-            Temp[i] = TempCalc(Temp[i]);
+                Temp[i] = TempCalc(Temp[i]);
         
-            if(Temp[i] > OldTemp[i] + 1 || Temp[i] < OldTemp[i] - 1)
-            {
-                Temp[i] = ((OldTemp[i] + Temp[i])/2);
-                OldTemp[i] = Temp[i];
+                if(Temp[i] > OldTemp[i] + 1 || Temp[i] < OldTemp[i] - 1)
+                {
+                    Temp[i] = ((OldTemp[i] + Temp[i])/2);
+                    OldTemp[i] = Temp[i];
+                }
+                else Temp[i] = OldTemp[i];
             }
-            else Temp[i] = OldTemp[i];
-            }
+            
 // *************** Determine Temperature Biases ********************************
             for(i=0;i<11;i++)
             {
@@ -215,7 +190,6 @@ int16_t main(void)
             }
 
 // *************** Turn off all outputs & disables writes to the output pins, unless between auto start & stop dates
-
             if (((time.month < eepromGetData(earlyStartMonth)) || (time.month <= eepromGetData(earlyStartMonth) && time.day < eepromGetData(earlyStartDay)))  && ((time.month > eepromGetData(extendedEndMonth)) || ((time.month >= eepromGetData(extendedEndMonth)) && (time.day >= eepromGetData(extendedEndDay)))))
             {
                 for(i=0;i<11;i++)
@@ -244,11 +218,10 @@ int16_t main(void)
                     enabled[i]=1;
                 }
             }
-           
 
             if (StartUpDelay > numSamples)
             {
-                for (i=1;i<10;i++)
+                for (i=0;i<11;i++)
                 {
                     if(enabled[i] == 1)
                     {
@@ -260,98 +233,132 @@ int16_t main(void)
                     }
                 }
 
-                if(Out[1] == 1)   // Added this to fix Master running because of Deck  // If Deck Air Temp is NOT calling, // Reversed both and reversed Out from 0 to 1
-                {
-                    Out[0] = 1;                                                     // turn OFF Deck Floor Out           // Reversed both and reversed Out from 0 to 1
-                    outState[0]=1;    
-                }
-                else 
-                {
-                    Out[0]=0;                       // Reversed both added else to turn off Output
-                    outState[0]=0;    
-                }
+//                if(Out[1] == 1)   // Added this to fix Master running because of Deck  // If Deck Air Temp is NOT calling, // Reversed both and reversed Out from 0 to 1
+  //              {
+    //                Out[0] = 1;                                                     // turn OFF Deck Floor Out           // Reversed both and reversed Out from 0 to 1
+      //              outState[0]=1;    
+        //        }
+          //      else 
+            //    {
+              //      Out[0]=0;                       // Reversed both added else to turn off Output
+                //    outState[0]=0;    
+                //}
        
-                if(Out[9] == 1)                                                    // If Garage Air Temp is NOT calling, // Reversed both and reversed Out from 0 to 1
+//                if(Out[9] == 1)                                                    // If Garage Air Temp is NOT calling, // Reversed both and reversed Out from 0 to 1
+  //              {
+    //                Out[10] = 1;                                                     // turn OFF Garage Floor Out // Reversed both and reversed Out from 0 to 1
+      //              outState[10]=1;    
+        //        }
+          //      else
+            //    {
+              //      Out[10]=0;                      // Reversed both added else to turn off Output
+                //    outState[10]=0;    
+                //}
+                
+//                for(i=0;i<11;i++)                                                                                               //Set screen state indicators
+  //              {
+    //                if(enabled[i] == 1)
+      //              {
+        //                if (Temp[i] <= eepromGetData(setpoint[i]) + Bias[i])            //If Out is not Off
+          //              {
+            //                outState[i] = 1;
+              //          }
+          
+                //        else if (Temp[i] >= eepromGetData(setpoint[i]) + Bias[i] + eepromGetData(deadband[i]))
+                  //      {
+                    //        outState[i] = 0;
+                      //  }
+            
+                        //else
+//                        {
+  //                          outState[i] = outState[i];
+    //                    }
+            
+      //                  if(outState[i] != 0)
+        //                {
+          //                  if (outState[i] != lastOutState[i])                         //If Out changed since last read
+            //                {
+              //                  outStateCounter[i]+=1;                                  //Increment the OutState Counter
+                //            }
+                  //      }
+                    //    lastOutState[i] = outState[i];                                  //And set them equal to each other, so, it doesn't count again next time through
+//                    }
+  //                  else
+    //                {
+      //                  outState[i] = 0;
+        //            }
+// ******************************************************************************
+                    
+                OutSum = Out[1] + Out[2] + Out[3] + Out[4] + Out[5] + Out[6] + Out[7] + Out[8] + Out[9];// Reversed both
+        
+                if(OutSum != 0)                                             // because an Out is turned on
                 {
-                    Out[10] = 1;                                                     // turn OFF Garage Floor Out // Reversed both and reversed Out from 0 to 1
-                    outState[10]=1;    
+                    for(i=1;i<10;i++)                           // Reversed both (took 0 and 10 out of equation)
+                    {
+                        if(enabled[i] == 1)
+                        {
+                            if (Temp[i] < eepromGetData(setpoint[i]) + eepromGetData(deadband[i]) + Bias[i])// Check for other PV's below SP + DB + Bias,
+                            {
+                                Out[i] = 1;                                 // and turn them on.
+                            }
+
+                            else
+                            {
+                                Out[i] = 0;                                 // Turn them off if they are already too hot!!
+                            }
+                        }
+                    }
+                }
+
+// ******************************************************************************
+                if(Out[1] == 1)                                                 // If Deck Air Temp is NOT calling, // Reversed both and reversed Out from 0 to 1
+                {
+                    Out[0] = Out[0];                                            // turn OFF Deck Floor Out           // Reversed both and reversed Out from 0 to 1
                 }
                 else
                 {
-                    Out[10]=0;                      // Reversed both added else to turn off Output
-                    outState[10]=0;    
+                    Out[0] = 0;
                 }
-                
-                for(i=0;i<11;i++)                                                                                               //Set screen state indicators
+       
+                if(Out[9] == 1)                                                 // If Garage Air Temp is NOT calling,   // Reversed both and reversed Out from 0 to 1
+                {
+                    Out[10] = Out[10];                                          // turn OFF Garage Floor Out    // Reversed both and reversed Out from 0 to 1
+                }
+                else
+                {
+                    Out[10] = 0;
+                }
+        
+                for(i=0;i<11;i++)                                               //Set screen state indicators
                 {
                     if(enabled[i] == 1)
                     {
-                        if (Temp[i] <= eepromGetData(setpoint[i]) + Bias[i])            //If Out is not Off
+                        if (Out[i])            
                         {
                             outState[i] = 1;
                         }
           
-                        else if (Temp[i] >= eepromGetData(setpoint[i]) + Bias[i] + eepromGetData(deadband[i]))
+                        else 
                         {
                             outState[i] = 0;
                         }
             
-                        else
-                        {
-                            outState[i] = outState[i];
-                        }
-            
                         if(outState[i] != 0)
                         {
-                            if (outState[i] != lastOutState[i])                         //If Out changed since last read
+                            if (outState[i] != lastOutState[i])                 //If Out changed since last read
                             {
-                                outStateCounter[i]+=1;                                  //Increment the OutState Counter
+                                outStateCounter[i]+=1;                          //Increment the OutState Counter
                             }
                         }
-                        lastOutState[i] = outState[i];                                  //And set them equal to each other, so, it doesn't count again next time through
+                        lastOutState[i] = outState[i];                          //And set them equal to each other, so, it doesn't count again next time through
                     }
                     else
                     {
                         outState[i] = 0;
                     }
-// ******************************************************************************
                     
-                    OutSum = Out[1] + Out[2] + Out[3] + Out[4] + Out[5] + Out[6] + Out[7] + Out[8] + Out[9];// Reversed both
-        
-//                    if(outSumOldState != OutSum)                                        // OutSum has changed,
-  //                  {
-                    if(OutSum != 0)                                             // because an Out is turned on
-                    {
-                        for(i=1;i<10;i++)                           // Reversed both (took 0 and 10 out of equation)
-                        {
-                            if(enabled[i] == 1)
-                            {
-                                if (Temp[i] < eepromGetData(setpoint[i]) + eepromGetData(deadband[i]) + Bias[i])// Check for other PV's below SP + DB + Bias,
-                                {
-                                    Out[i] = 1;                                 // and turn them on.
-                                }
-
-                                else
-                                {
-                                    Out[i] = 0;                                 // Turn them off if they are already too hot!!
-                                }
-                            }
-                        }
-                    }
-    //                    outSumOldState = OutSum;
-      //              }
-// ******************************************************************************
-                    if(Out[1] == 1)                                                     // If Deck Air Temp is NOT calling, // Reversed both and reversed Out from 0 to 1
-                    {
-                        Out[0] = 1;                                                     // turn OFF Deck Floor Out           // Reversed both and reversed Out from 0 to 1
-                    }
-        
-                    if(Out[9] == 1)                                                    // If Garage Air Temp is NOT calling,   // Reversed both and reversed Out from 0 to 1
-                    {
-                        Out[10] = 1;                                                     // turn OFF Garage Floor Out    // Reversed both and reversed Out from 0 to 1
-                    }
-        
-                    DeckFloorOut =          Out[0];                 // Reversed both
+// *****************************************************************************
+                    DeckFloorOut =          Out[0];                             // Reversed both
                     UtilityRoomFloorOut =   Out[2];
                     EntranceFloorOut =      Out[3];
                     MasterBathFloorOut =    Out[4];
