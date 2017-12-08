@@ -165,7 +165,7 @@ void SetTime()
     RTCTime time;                                                               // declare the type of the time object
     time = getRTCTime();                                                        // Read current time from RTCC
     
-    unsigned int timeSetField[]     =   {time.year, time.month, time.day, time.weekday, time.hour, time.minute, time.second};
+    unsigned int timeSetField[]     =   {&time.year, time.month, time.day, time.weekday, time.hour, time.minute, time.second};
     unsigned char timeSetMin[]      =   {00,01,01, 0,00,00,00}; 
     unsigned char timeSetMax[]      =   {99,12,31, 6,23,59,59};
 
@@ -190,7 +190,7 @@ void SetTime()
             done = 1;                                                           // Exit while loop
         }
         
-        time.year   = timeSetField[0];
+//        time.year   = timeSetField[0];
         time.month  = timeSetField[1];
         time.day    = timeSetField[2];
         time.weekday= timeSetField[3];
