@@ -2,31 +2,33 @@
 #include "rtccMenu.h"
 
 //***************************************************************************************************************************************************************
+//RTCTime time;                                   // declare the type of the time object
 
 extern int powerFail;
 int run = 0;                                    // Run is declared her, so it keeps it's value between calls to OnTimer function
 
 
-char *WeekDay[7]    = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-char *month[13]     = {"NUL","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
+char *WeekDay[7]                =   {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+char *month[13]                 =   {"NUL","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
 
-int8_t maxTimes[]       =   {23,55,23,55};
 
-int const startHour[]   =   {40,42,44,46,48,50,52};
+int8_t maxTimes[]               =   {23,55,23,55};
 
-int const startMinute[] =   {54,56,58,60,62,64,66};
+int const startHour[]           =   {40,42,44,46,48,50,52};
 
-int const stopHour[]    =   {68,70,72,74,76,78,80};
+int const startMinute[]         =   {54,56,58,60,62,64,66};
 
-int const stopMinute[]  =   {82,84,86,88,90,92,94};
+int const stopHour[]            =   {68,70,72,74,76,78,80};
 
-signed char choice;
+int const stopMinute[]          =   {82,84,86,88,90,92,94};
 
-unsigned char testKey = None;
+signed char choice              =   0;
 
-char sel = 0;
+unsigned char testKey           =   None;
+
+char sel                        =   0;
     
-char done = 0;
+char done                       =   0;
 
 
 
@@ -161,10 +163,13 @@ void displayTime(void)
 void SetTime()
 {
     RTCTime time;                                                               // declare the type of the time object
-
     time = getRTCTime();                                                        // Read current time from RTCC
+    
+    unsigned int timeSetField[]     =   {time.year, time.month, time.day, time.weekday, time.hour, time.minute, time.second};
+    unsigned char timeSetMin[]      =   {00,01,01, 0,00,00,00}; 
+    unsigned char timeSetMax[]      =   {99,12,31, 6,23,59,59};
 
-    char sel = 0, done = 0;
+    unsigned char sel = 0, done = 0;
     
     unsigned int timer = 0;                                                     // Used to return to operation if user does not finish setting time!
 
@@ -173,7 +178,7 @@ void SetTime()
         if(timer < 1)
         {
             LCDClear();
-            LCDBitmap(&rtccMenu[0], 5, 84);                                           //Draw rtccMenu
+            LCDBitmap(&rtccMenu[0], 5, 84);                                     //Draw rtccMenu
         }
         
         timer += 1;
@@ -185,6 +190,14 @@ void SetTime()
             done = 1;                                                           // Exit while loop
         }
         
+        time.year   = timeSetField[0];
+        time.month  = timeSetField[1];
+        time.day    = timeSetField[2];
+        time.weekday= timeSetField[3];
+        time.hour   = timeSetField[4];
+        time.minute = timeSetField[5];
+        time.second = timeSetField[6];
+                    
         displayTime();
         LCDWriteStringXY(4,2,"\"Enter\" = next Field");
         LCDWriteStringXY(4,3,"Up/Dn to change Time");
@@ -197,17 +210,17 @@ void SetTime()
         
         if(sel == 1)
         {
-            LCDWriteStringXY(0,1,"   ^^^");                                      // Draw Pointer, to show what we are setting
+            LCDWriteStringXY(0,1,"   ^^^");                                     // Draw Pointer, to show what we are setting
         }
         
         if(sel == 2)
         {
-            LCDWriteStringXY(12,1,"    ^^");                              // Draw Pointer
+            LCDWriteStringXY(12,1,"    ^^");                                    // Draw Pointer
         }
         
         if(sel == 3)
         {
-            LCDWriteStringXY(25,1,"   ^^^");                              // Draw Pointer
+            LCDWriteStringXY(25,1,"   ^^^");                                    // Draw Pointer
         }
         
         if(sel== 4)
@@ -230,182 +243,35 @@ void SetTime()
         switch(key)
         {
             case Up:
-                if(sel==0)
+                
+                if(timeSetField[sel]==timeSetMax[sel])
                 {
-                    if (time.year == 99)
-                    {
-                        time.year = 00;
-                    }
-                    else
-                    {
-                        time.year += 1;
-                    }
+                    timeSetField[sel]=timeSetMin[sel];
+                }
+                else
+                {
+                    timeSetField[sel]+=1;
                 }
                 
-                if(sel==1)
-                {
-                    if (time.month == 12)
-                    {
-                        time.month = 1;
-                    }
-                    else
-                    {
-                        time.month += 1;
-                    }
-                }
-                
-                if(sel==2)
-                {
-                    if (time.day == 31)
-                    {
-                        time.day = 1;
-                    }
-                    else
-                    {
-                        time.day +=1;
-                    }
-                }
-
-                if(sel==3)
-                {
-                    if (time.weekday == 6)
-                    {
-                        time.weekday = 0;
-                    }
-                    else
-                    {
-                        time.weekday += 1;
-                    }
-                }
-
-                if(sel==4)
-                {
-                    if (time.hour == 23)
-                    {
-                        time.hour = 0;
-                    }
-                    else
-                    {
-                        time.hour += 1;
-                    }
-                }
-                
-                if(sel == 5)    
-                {
-                    if(time.minute == 59)
-                    {
-                        time.minute = 0;
-                    }
-                    else
-                    {
-                        time.minute += 1;
-                    }
-                }
-                
-                if (sel == 6)
-                {
-                    if (time.second == 59)
-                    {
-                        time.second = 0;
-                    }
-                    else
-                    {
-                        time.second += 1;
-                    }
-                }
             break;
             
             case Down:
-                if(sel == 0)
+                
+                if(timeSetField[sel]==timeSetMin[sel])
                 {
-                    if (time.year == 0)
-                    {
-                        time.year = 99;
-                    }
-                    else
-                    {
-                        time.year -= 1;
-                    }
+                    timeSetField[sel]=timeSetMax[sel];
+                }
+                else
+                {
+                    timeSetField[sel]-=1;
                 }
                 
-                if(sel == 1)
-                {
-                    if (time.month == 1)
-                    {
-                        time.month = 12;
-                    }
-                    else
-                    {
-                        time.month -= 1;
-                    }
-                }
-                
-                if(sel == 2)
-                {
-                    if (time.day == 1)
-                    {
-                        time.day = 31;
-                    }
-                    else
-                    {
-                        time.day -= 1;
-                    }
-                }
-
-                if(sel == 3)
-                {
-                    if (time.weekday == 0)
-                    {
-                        time.weekday = 6;
-                    }
-                    else
-                    {
-                        time.weekday -= 1;
-                    }
-                }
-
-                if(sel == 4)
-                {
-                    if (time.hour == 0)
-                    {
-                        time.hour = 23;
-                    }
-                    else
-                    {
-                        time.hour -= 1;
-                    }
-                }
-                
-                if(sel == 5)    
-                {
-                    if(time.minute == 0)
-                    {
-                        time.minute = 59;
-                    }
-                    else
-                    {
-                        time.minute -= 1;
-                    }
-                }
-                
-                if (sel == 6)
-                {
-                    if (time.second == 0)
-                    {
-                        time.second = 59;
-                    }
-                    else
-                    {
-                        time.second -= 1;
-                    }
-                }
             break;
-                
-            case Enter:     // Change our selection
+
+            case Enter:                                                         // Change our selection
                 
                 if (sel == 6)
                 {
-                    sel = 0;
                     LCDClear();
                     done = 1;
                 }
@@ -416,30 +282,25 @@ void SetTime()
             break;
         }
 
-        __builtin_write_RTCWEN();                                   // This should be the same as above
+        __builtin_write_RTCWEN();                                               // RTC Write Enable
 
-        RCFGCALbits.RTCEN = 0;                                      // Disable RTCC module
+        RCFGCALbits.RTCEN = 0;                                                  // Disable RTCC module
 
-    	// Write to RTCC Timer
-        RCFGCALbits.RTCPTR = 3;                                     // RTCC Value Register Window Pointer bits
-    	RTCVAL = bin2bcd(time.year);                                // Set Year (#0x00YY)
-    	RTCVAL = (bin2bcd(time.month) << 8) + bin2bcd(time.day);    // Set Month and Day (#0xMMDD)
-        RTCVAL = (bin2bcd(time.weekday) << 8) + bin2bcd(time.hour); // Set Weekday and Hour (#0x0WHH). Weekday from 0 to 6	
-        RTCVAL = (bin2bcd(time.minute) << 8) + bin2bcd(time.second);// Set Minute and Second (#0xMMSS)
+        RCFGCALbits.RTCPTR = 3;                                                 // RTCC Value Register Window Pointer bits
+    	RTCVAL = bin2bcd(time.year);                                            // Set Year (#0x00YY)
+    	RTCVAL = (bin2bcd(time.month) << 8) + bin2bcd(time.day);                // Set Month and Day (#0xMMDD)
+        RTCVAL = (bin2bcd(time.weekday) << 8) + bin2bcd(time.hour);             // Set Weekday and Hour (#0x0WHH). Weekday from 0 to 6	
+        RTCVAL = (bin2bcd(time.minute) << 8) + bin2bcd(time.second);            // Set Minute and Second (#0xMMSS)
     	
-        RCFGCALbits.RTCEN = 1;                                      // Enable RTCC module
+        RCFGCALbits.RTCEN = 1;                                                  // Enable RTCC module
     	
-        RCFGCALbits.RTCWREN = 0;                                    // Disable RTCC Timer Access
-        
-        //setRTCTime(time.year, time.month, time.day, time.weekday, time.hour, time.minute, time.second);
+        RCFGCALbits.RTCWREN = 0;                                                // Disable RTCC Timer Access
     }
     LCDClear();
     powerFail = 0;                                                              //We have just set the time, so, re-set the powerFail Status Bit
 }
 
-
 //***************************************************************************************************************************************************************
-
 int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
 {
     if(hour == eepromGetData(startHour[weekday]) && minute == eepromGetData(startMinute[weekday]))

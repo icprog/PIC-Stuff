@@ -5,10 +5,10 @@
 #define piezoOutput             _LATA1          // Output to turn on Piezo, if Brew switch left on too long
 #define backLightOFF            _LATA9          // Backlight is active LOW, so "0" is "ON", "1" is "OFF" Pin 35
 #define airPump                 _LATA8          // FIX
-#define pumpOutput              OC1R
-#define boilerOutput            OC2R
-#define steamOutput             OC3R
-#define groupOutput             _LATA11         //Fix, this was using Hardware PWM, now need to code software PWM
+#define pumpOutput              OC1R            // OC1 will drive water pump
+#define boilerOutput            OC2R            // OC2 will drive Water Boiler
+#define steamOutput             OC3R            // OC3 will drive Steam Boiler
+#define groupOutput             _LATA11         // Fix, this was using Hardware PWM, now need to code software PWM
 
 // *************** Inputs ******************************************************
 // ADC Input to read Button press (User Input Keys) on _RC1 (AN7) Pin 26        
@@ -25,6 +25,7 @@
 #define startRamp               (soakTime + 25)               //FIX      // StartRamp starts pump and Ramps up to Max Pressure
 #define continuePull            (800 + 1)       // Shot duration, 80 seconds from Start of Cycle(801)
 #define warning                 (850 + 1)       // Turn on Warning Piezo, reminder to turn off switch (851)
+#define steamPumpPower          12              // DutyCycle to run pump during steam cycle
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
@@ -45,6 +46,7 @@
 #define shotDisplayTimer        counter[3]      // Determines how long the Shot Timer Value remains on the Display
 #define backLightCounter        counter[4]      // Used to count time until Backlight turns Off
 #define groupPeriodCounter      counter[5]      // Group PID Period Counter
+#define steamPumpRunCounter     counter[6]      // Counter for how long to run pump after steam switch is turned on
 
 #define waterLevel              level           // ADCRead(14) is Water Tank level signal
 #define numSamples              50              // Number of samples to average for temp[] readings 
@@ -131,7 +133,7 @@ int main(void)
     
     int previous_time       = 0;                //Used with time.second to limit some stuff to once a second
             
-    unsigned int counter[6] = {0,0,0,0,1200,0};   // Shot progress, Shot timer, Warning timer, Shot display Timer, Back Light, groupPeriodCounter
+    unsigned int counter[7] = {0,0,0,0,1200,0,0};   // Shot progress, Shot timer, Warning timer, Shot display Timer, Back Light, groupPeriodCounter, Steam Pump run Timer
     
     uint16_t level          = 0;
     
@@ -143,7 +145,7 @@ int main(void)
 
     while(1)
     {
-        power       =   !_RB11;                 // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
+        power       =   _RB11;                 // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
         brewSwitch  =   !_RB10;                 // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
@@ -340,28 +342,41 @@ int main(void)
             }
 
  
-//            (OC1R==0)?(OC1CON2bits.OCTRIS = 1):(OC1CON2bits.OCTRIS = 0);    // If Output is 0, Disable OC1 Module
-            (OC2R==0)?(OC2CON2bits.OCTRIS = 1):(OC2CON2bits.OCTRIS = 0);    // If Output is 0, Disable OC2 Module (Center aligned Output is always after timer reset)
-            (OC3R==0)?(OC3CON2bits.OCTRIS = 1):(OC3CON2bits.OCTRIS = 0);    // If Output is 0, Disable OC3 Module
+            (OC2R==0)?(OC2CON2bits.OCTRIS = 1):(OC2CON2bits.OCTRIS = 0);        // If Output is 0, Disable OC2 Module // (Center aligned Output is always ON for
+            (OC3R==0)?(OC3CON2bits.OCTRIS = 1):(OC3CON2bits.OCTRIS = 0);        // If Output is 0, Disable OC3 Module //  at least one cycle after timer reset)
               
             if(steamSwitch)                     //Steam setpoint takes priority
             {
-                OC3R = 0;                       // Start at 0    
+                OC3R = 0;                       // Turn on Steam Boiler Output at beginning of cycle    
             
                 OC3RS = SteamPID;               // Duration of Steam Boiler Output (Out will be on until OC3RS matches SteamPID)
 
-                OC2R = OC3RS;                   // Set OC2R to OC3RS, to start second Output as soon as first is no longer needing cycle time
+                OC2R = OC3RS;                   // Set OC2R to OC3RS, to start Water Boiler Output as soon as Steam Boiler is no longer needing cycle time
 
                 (OC2R+WaterPID>=0x1E84)?(OC2RS = 0x1E84):(OC2RS = OC2R + WaterPID); // Limit Water Boiler Output to available time left in Period
+                
+                steamPumpRunCounter+=1;
+                
+                if(steamPumpRunCounter<3100)
+                {
+                    OC1R = steamPumpPower;
+                }
+                else
+                {
+                    OC1R = 0;
+                    steamPumpRunCounter = 3100;
+                }
             }
 
             else                                //Water setpoint takes priority
-            {            
-                OC2R = 0;                       // Start at 0    
+            {
+                steamPumpRunCounter = 0;        // Reset the Steam Pump run counter, so, if Steam switch is pressed again, pump will run
+                
+                OC2R = 0;                       // Start Water Boiler Output at beginning of cycle    
             
-                OC2RS = WaterPID;               // Water Boiler Output is Shut OFF
+                OC2RS = WaterPID;               // OC2 (Water Boiler Output) is Shut OFF when PID Output matches OC2RS
 
-                OC3R = OC2RS;                   // Duration of Water Boiler Output (Out will be on until OC2RS matches WaterPID)
+                OC3R = OC2RS;                   // Start Steam Boiler Output when Water Boiler Output is no longer required
 
                 (OC3R+SteamPID>=0x1E84)?(OC3RS = 0x1E84):(OC3RS = OC3R + SteamPID); //  Limit Steam Boiler Output to available time left in Period
             }
@@ -470,14 +485,15 @@ int main(void)
                 T2CONbits.TON       =   0;
                 shotProgressCounter =   0;
                 pumpOutput          =   0;
-                shotDisplayTimer += 1;
-                if(shotDisplayTimer >= 12500)                                                  //Approximately 20 seconds (about 625 counts/second)
+                shotDisplayTimer    +=  1;
+
+                if(shotDisplayTimer >=12500)                                    // Approximately 20 seconds (about 625 counts/second)
                 {
                     shotTimer =         0;
                 }
             }
+            
 // ******************************************************************************
-
             if(waterSwitch)
             {
                 pumpOutput = max;
@@ -491,14 +507,14 @@ int main(void)
             pumpOutput              =   0;
             piezoOutput             =   0;
         }
-// ******************************************************************************
         
+// ******************************************************************************
         if(!brewSwitch && !steamSwitch && !waterSwitch)
         {
             pumpOutput              =   0;
         }
+        
 // ******************************************************************************
-
         testKey = readButton();
 
 
@@ -615,7 +631,7 @@ int main(void)
                 if(timer > 500)
                 {
                     timer = 0;
-                    goto Exit;                  //This uses less memory than TestKey = KEY_3
+                    goto Exit;                  
                 }
 
                 switch(testKey)
