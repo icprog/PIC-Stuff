@@ -6,7 +6,7 @@ int timer = 0;              // level = 0;
 float R, steinhart;         // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
 
 // *************** Calculate & Display Temp ************************************    
-float TempCalc(unsigned int a)
+float tempCalc(unsigned int a)
 {
     R = 10010/((4095/(float)a) - 1);            // Resistance of Thermistor (R Reference/1023/readTemp -1) 10K Resistor on board reads 10.01K
     steinhart = R /10090;                       // (R/Ro) R/R Standard (resistance of Thermistor at 25C)

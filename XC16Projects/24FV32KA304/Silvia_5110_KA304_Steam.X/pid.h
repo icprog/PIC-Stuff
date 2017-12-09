@@ -10,6 +10,6 @@ void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd);
 // ******* So, Temperature, poll less often, Flow or pressure more often. ******
 // ** This algorithm is a non-interactive PID as opposed to Classic PID, so, ***
 // ****** Tuning is handled differently, specifically, Gain is Stanalone. ******
-float PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int temp);
+int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int temp);
 
 #endif

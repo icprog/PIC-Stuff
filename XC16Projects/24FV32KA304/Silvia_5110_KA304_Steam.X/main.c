@@ -109,7 +109,7 @@ int main(void)
     
     int samples[3][numSamples] ={[0 ... 2] = {0}};//Used to average temp[] over "numSamples" of samples
     
-    unsigned int temp[3]    = {0,0,0};
+    static unsigned int temp[3]    = {0,0,0};
     
     unsigned int shortTermTemp[3]= {0,0,0};                                              
     
@@ -117,7 +117,7 @@ int main(void)
     
     float total[3]          = {0,0,0};          // Running total of temp[] samples 
 
-    uint16_t i              = 0;                // x is used for holding shot timer value for 20 seconds before resetting to zero
+    //uint16_t i              = 0;                // x is used for holding shot timer value for 20 seconds before resetting to zero
     
     unsigned char testKey   = 0;                // Variable used for Storing Which Menu Key is Pressed
     
@@ -127,7 +127,7 @@ int main(void)
     
     int PIDValue[]          = {0,0,0};          // PID calculated values (Water, Steam and Group)
     
-    int setRangeL[]         = {1750,2500,1800}; // Set Point Low Limits
+    int setRangeL[]         = {750,750,700}; // Set Point Low Limits      FIX Group Setpoint back to Min 180
     
     int setRangeH[]         = {2100,2850,2150}; // Set Point High Limits
     
@@ -158,21 +158,21 @@ int main(void)
         time = getRTCTime();                    // get the time
         
 
-        shortTermTemp[0] = ADCRead(9);          //Assign the ADC(9) Boiler Temp to a temporary variable
+        shortTermTemp[0] = tempCalc(ADCRead(9));          //Assign the ADC(9) Boiler Temp to a temporary variable
         total[0] = total[0] - samples[0][sampleIndex];// Subtract the oldest sample data from the total
         samples[0][sampleIndex] = shortTermTemp[0];   // Assign the just read temperature to the location of the current oldest data
         total[0] = total[0] + samples[0][sampleIndex];// Add that new sample to the total
         boilerTemperature = total[0] / numSamples;    // Assign the average value of total to the boilerTemperature variable
 
 
-        shortTermTemp[1] = ADCRead(0);          // Assign the ADC(0) (Steam Temp) to a temporary variable
+        shortTermTemp[1] = tempCalc(ADCRead(0));          // Assign the ADC(0) (Steam Temp) to a temporary variable
         total[1] = total[1] - samples[1][sampleIndex];// Subtract the oldest sample data from the total
         samples[1][sampleIndex] = shortTermTemp[1];   // Assign the just read temperature to the location of the current oldest data
         total[1] = total[1] + samples[1][sampleIndex];// Add that new sample to the total
         steamTemperature = total[1] / numSamples;     // Assign the average value of total to the GroupHeadTemp variable
 
  
-        shortTermTemp[2] = ADCRead(4);          //Assign the ADC(4) Group Head Temp to a temporary variable
+        shortTermTemp[2] = tempCalc(ADCRead(4));          //Assign the ADC(4) Group Head Temp to a temporary variable
         total[2] = total[2] - samples[2][sampleIndex];// Subtract the oldest sample data from the total
         samples[2][sampleIndex] = shortTermTemp[2];   // Assign the just read temperature to the location of the current oldest data
         total[2] = total[2] + samples[2][sampleIndex];// Add that new sample to the total
@@ -226,13 +226,6 @@ int main(void)
             
             previous_time = time.second;
 
-// *************** Calculate Temperatures **************************************
-//            internalBGV = ADCRead(0x1A);
-            for(i = 0;i<3;++i)
-            {
-                temp[i] = TempCalc(temp[i]);
-            } 
-            
 // ******************************************************************************
             if(powerSwitch)
             {
@@ -249,6 +242,10 @@ int main(void)
                 }
                 else
                 {
+                    WaterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
+                    SteamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
+                    GroupHeadPID    = PID_Calculate(2, groupHeadSetpoint, GroupHeadTemp);// Calculate Group PID Value
+                    
                     displayTime();
 
                     gotoXY(2,1);                                //LCD Line 2 Display
@@ -320,11 +317,9 @@ int main(void)
             {
                 airPump = 0;
             }
+//            GroupHeadTemp = tempCalc(temp[2]);
 
-// *************** Calculate & Drive PID Outputs *******************************
-            
-            GroupHeadPID = PID_Calculate(2, groupHeadSetpoint, temp[2]);
-
+// *************** Drive PID Outputs *******************************************
             groupPeriodCounter+=1;
         
             if(groupPeriodCounter > PIDDuration)
@@ -340,10 +335,9 @@ int main(void)
             {
                 groupOutput = 0;
             }
-
  
-            (OC2R==0)?(OC2CON2bits.OCTRIS = 1):(OC2CON2bits.OCTRIS = 0);        // If Output is 0, Disable OC2 Module // (Center aligned Output is always ON for
-            (OC3R==0)?(OC3CON2bits.OCTRIS = 1):(OC3CON2bits.OCTRIS = 0);        // If Output is 0, Disable OC3 Module //  at least one cycle after timer reset)
+            (WaterPID==0)?(OC2CON2bits.OCTRIS = 1):(OC2CON2bits.OCTRIS = 0);        // If Output is 0, Disable OC2 Module // (Center aligned Output is always ON for
+            (SteamPID==0)?(OC3CON2bits.OCTRIS = 1):(OC3CON2bits.OCTRIS = 0);        // If Output is 0, Disable OC3 Module //  at least one cycle after timer reset)
               
             if(steamSwitch)                     //Steam setpoint takes priority
             {
@@ -370,6 +364,11 @@ int main(void)
 
             else                                //Water setpoint takes priority
             {
+                LCDWriteIntXY(0,4,WaterPID,4,0,0);
+                LCDWriteIntXY(22,4,SteamPID,4,0,0);
+                LCDWriteIntXY(44,4,OC2RS,4,0,0);
+                LCDWriteIntXY(66,4,OC3RS,4,0,0);
+                
                 steamPumpRunCounter = 0;        // Reset the Steam Pump run counter, so, if Steam switch is pressed again, pump will run
                 
                 OC2R = 0;                       // Start Water Boiler Output at beginning of cycle    

@@ -15,6 +15,7 @@ void InitializeTimers(void)
     
     T3CONbits.TON       =   0;                          // T3 runs the PWM (center-aligned) to Split power between Water & Steam Boilers)
     T3CONbits.TCKPS     =   0x3;                        // T3 PreScaler = 1:256
+    PR3                 =   0x1E84;
     T3CONbits.TON       =   1;                          // T3 On
 }
 // *****************************************************************************
