@@ -19,8 +19,7 @@ void InitializeTimers(void)
     T3CONbits.TON       =   1;                          // T3 On
 }
 // *****************************************************************************
-
-void Initialize_PWM(void)
+void InitializePWM(void)
 {
     OC1R                =   0x0000;                 // set WaterPump DutyCycle to 0
     OC1RS               =   0x0100;                 // 0x100 = 256 counts x 1:64 Prescaler on Timer1, = .25 Second period
@@ -29,18 +28,18 @@ void Initialize_PWM(void)
     OC1CON1bits.OCTSEL =    0X4;                    // Set Timer 1 as clock source
     OC1TMR =                0x0000;                 // Set OC1 timer to zero
     OC1CON1bits.OCM =       0x6;                    // Set OC1 Mode to Edge aligned PWM
-    
-    OC2R                =   0x0000;                 // set Water Boiler DutyCycle to 0
-    OC2RS               =   0x1E84;                 // Set Period = 1 second (2MHz/256 = 7812 = 1E84 Hex)
-    OC2CON2bits.SYNCSEL =   0X1F;                   // Set Self Sync as source
-    OC2CON2bits.OCTRIG =    0;                      // Set OC2 as Sync source
-    OC2CON1bits.OCTSEL =    0X1;                    // Set Timer 3 as clock source
-    OC2CON1bits.OCM =       0x7;                    // Set OC2 Mode to Edge aligned PWM  FIX(Change to Center aligned)
-    
-    OC3R =                  0x0000;                 // set Steam Boiler DutyCycle to 0
-    OC3RS =                 0x1E84;                 // Set Period = 1 second (2MHz/256 = 7812 = 1E84 Hex)
-    OC3CON2bits.SYNCSEL =   0X1F;                   // Set OC3 as Sync source
+
+    OC3R                =   0x0000;                 // set Steam Boiler DutyCycle to 0
+    OC3RS               =   0x1E84;                 // Set Period = 1 second (2MHz/256 = 7812 = 1E84 Hex)
+    OC3CON2bits.SYNCSEL =   0X1F;                   // Set Self Sync as source
     OC3CON2bits.OCTRIG =    0;                      // Set OC3 as Sync source
     OC3CON1bits.OCTSEL =    0X1;                    // Set Timer 3 as clock source
-    OC3CON1bits.OCM =       0x7;                    // Set OC3 Mode to Edge aligned PWM  FIX(Change to CenterAligned)
+    OC3CON1bits.OCM =       0x6;                    // Set OC3 Mode to Edge aligned PWM  FIX(Change to Center aligned)
+    
+    OC2R =                  0x0000;                 // set Water Boiler DutyCycle to 0
+    OC2RS =                 0x1E84;                 // Set Period = 1 second (2MHz/256 = 7812 = 1E84 Hex)
+    OC2CON2bits.SYNCSEL =   0X02;                   // Set OC3 as Sync source
+    OC2CON2bits.OCTRIG =    0;                      // Set OC3 as Sync source(rather than trigger source)
+    OC2CON1bits.OCTSEL =    0X1;                    // Set Timer 3 as clock source
+    OC2CON1bits.OCM =       0x7;                    // Set OC2 Mode to Edge aligned PWM  FIX(Change to CenterAligned)
 }

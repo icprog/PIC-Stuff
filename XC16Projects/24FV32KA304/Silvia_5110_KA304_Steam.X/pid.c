@@ -9,7 +9,7 @@ int pidIntegrated[3]            = {   0,   0,   0};
 int pidPrevError[3]             = {   0,   0,   0};
 int pidPrevInput[3]             = {   0,   0,   0};
 int pidMinOutput[3]             = {   0,   0,   0}; // Minimum output limit of Controller
-int pidMaxOutput[3]             = {8191,8191, 201}; // Maximum output limit of Controller
+int pidMaxOutput[3]             = {7811,7812, 201}; // Maximum output limit of Controller
 //extern int8_t choice;                                                                           // Not needed? FIX
 
 void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd)

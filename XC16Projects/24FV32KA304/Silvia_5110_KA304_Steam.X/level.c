@@ -5,7 +5,7 @@ char waterTankLevel(void)
 {
     int level;
     
-    level = ADCRead(14);
+    level = ADCRead(6);
     
     if(level <796)
     {

@@ -5,6 +5,6 @@
 #define	PWM_H
     
     void InitializeTimers(void);
-    void Initialize_PWM(void);
+    void InitializePWM(void);
 
 #endif

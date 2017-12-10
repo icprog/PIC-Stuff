@@ -2,70 +2,75 @@
 #include    "menu.h"
 #include    "coffee.h"
 // *****************************************************************************
-#define piezoOutput             _LATA1          // Output to turn on Piezo, if Brew switch left on too long
-#define backLightOFF            _LATA9          // Backlight is active LOW, so "0" is "ON", "1" is "OFF" Pin 35
-#define airPump                 _LATA8          // FIX
-#define pumpOutput              OC1R            // OC1 will drive water pump
-#define boilerOutput            OC2R            // OC2 will drive Water Boiler
-#define steamOutput             OC3R            // OC3 will drive Steam Boiler
-#define groupOutput             _LATA11         // Fix, this was using Hardware PWM, now need to code software PWM
+#define piezoOutput             _LATA1          //FIX        // Output to turn on Piezo, if Brew switch left on too long, or water level too low  Add option for user to disable
+#define backLightOFF            _LATA9                  // Backlight is active LOW, so "0" is "ON", "1" is "OFF" Pin 35
+#define airPump                 _LATA11                 // Run air pump for bubbler for Water Tank Level
+#define pumpOutput              OC1R                    // OC1 will drive water pump
+#define boilerOutput            OC2R                    // OC2 will drive Water Boiler
+#define steamOutput             OC3R                    // OC3 will drive Steam Boiler
+#define groupOutput             _LATB8                  // Coded for software PWM
+#define waterSolenoid           _LATA3                  // Control the Water delivery Solenoid
+#define steamSolenoid           _LATA2                  // Control the Steam delivery Solenoid
 
 // *************** Inputs ******************************************************
-// ADC Input to read Button press (User Input Keys) on _RC1 (AN7) Pin 26        
+//#define waterLevel              level                   // ADCRead(6) is Water Tank level signal
+//#define readButtons           ADCRead(7)              // ADC Input to read Button press (User Input Keys) on _RC1 (AN7) Pin 26 
+
+#define boilerTemperature       temp[0]                 // ADCRead(9)
+#define steamTemperature        temp[1]                 // ADCRead(0)
+#define GroupHeadTemp           temp[2]                 // ADCRead(4)
+
+#define power                   bits[0]                 // _RB11 Power switch input state  
+#define brewSwitch              bits[1]                 // _RB10 Brew Switch Input
+#define steamSwitch             bits[2]                 // _RA7  Steam Switch Input          
+#define waterSwitch             bits[3]                 // _RC9  Water Switch Input          
+
+#define powerSwitch             bits[4]                 // Power Switch (Soft Bit)
+#define lastPowerState          bits[5]                 // Last State of powerSwitch (Soft Bit)
+#define blink                   bits[6]                 // blink flashes display when water level low
+       
 // *****************************************************************************
 
 //**************** Timer2 set in pwm.c (Timer2 Runs the Shot Counter) **********
 // All times are in 1/10th's of a second, so 10 = 1 seconds, 30 = 3 seconds, 15 = 1.5 seconds, etc 
 
-#define max                     256             // Maximun Pump Output (256 = 100%)
-#define min                     26              // Minimum Pump Output (0 = OFF)
-#define preInfusionDutyCycle    40 //FIX        // This needs to move to EEPROM & have a User Interface set up so user can change it
-#define preInfusionTime         (20) //FIX      // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
-#define soakTime                (preInfusionTime + 20)   //FIX           // Length of time for wetted puck to soak EEPROM FIX
-#define startRamp               (soakTime + 25)               //FIX      // StartRamp starts pump and Ramps up to Max Pressure
-#define continuePull            (800 + 1)       // Shot duration, 80 seconds from Start of Cycle(801)
-#define warning                 (850 + 1)       // Turn on Warning Piezo, reminder to turn off switch (851)
-#define steamPumpPower          12              // DutyCycle to run pump during steam cycle
+#define max                     256                     // Maximun Pump Output (256 = 100%)
+#define min                     26                      // Minimum Pump Output (0 = OFF)
+#define preInfusionDutyCycle    40              //FIX   // This needs to move to EEPROM & have a User Interface set up so user can change it
+#define preInfusionTime         (20)            //FIX   // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
+#define soakTime                (preInfusionTime + 20)//FIX    // Length of time for wetted puck to soak EEPROM
+#define startRamp               (soakTime + 25)//FIX    // StartRamp starts pump and Ramps up to Max Pressure
+#define continuePull            (800 + 1)               // Shot duration, 80 seconds from Start of Cycle(801)
+#define warning                 (850 + 1)               // Turn on Warning Piezo, reminder to turn off switch (851)
+#define steamPumpPower          12                      // DutyCycle to run pump during steam cycle
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
 #define groupHeadSetpoint       eepromGetData(setpoint[2])
-
-#define boilerTemperature       temp[0]
-#define steamTemperature        temp[1]
-#define GroupHeadTemp           temp[2]
 
 #define WaterPID                PIDValue[0]
 #define SteamPID                PIDValue[1]
 #define GroupHeadPID            PIDValue[2]
 
 
-#define shotProgressCounter     counter[0]      // Timer for Steps in an extraction
-#define shotTimer               counter[1]      // Times the duration of the extraction 
-#define warningTimer            counter[2]      // Initiate Piezo Warning if Brew switch not turned OFF
-#define shotDisplayTimer        counter[3]      // Determines how long the Shot Timer Value remains on the Display
-#define backLightCounter        counter[4]      // Used to count time until Backlight turns Off
-#define groupPeriodCounter      counter[5]      // Group PID Period Counter
-#define steamPumpRunCounter     counter[6]      // Counter for how long to run pump after steam switch is turned on
-
-#define waterLevel              level           // ADCRead(14) is Water Tank level signal
-#define numSamples              50              // Number of samples to average for temp[] readings 
-#define PIDDuration             200             // Number of Program cycles (Period) for Group Head PID
- 
-#define power                   bits[0]         // Power switch input state  
-#define brewSwitch              bits[1]         // Brew Switch Input
-#define steamSwitch             bits[2]         // Steam Switch Input           G
-#define waterSwitch             bits[3]         // Water Switch Input           G
-#define powerSwitch             bits[4]         // Soft Power Bit
-#define lastPowerState          bits[5]         // Last State of powerSwitch
-#define blink                   bits[6]         // blink flashes display when water level low
+#define shotProgressCounter     counter[0]              // Timer for Steps in an extraction
+#define shotTimer               counter[1]              // Times the duration of the extraction 
+#define warningTimer            counter[2]              // Initiate Piezo Warning if Brew switch not turned OFF
+#define shotDisplayTimer        counter[3]              // Determines how long the Shot Timer Value remains on the Display
+#define backLightCounter        counter[4]              // Used to count time until Backlight turns Off
+#define groupPeriodCounter      counter[5]              // Group PID Period Counter
+#define steamPumpRunCounter     counter[6]              // Counter for how long to run pump after steam switch is turned on
+#define lowWaterReminder        counter[7]              // Remind User level is Low when below 25%
+#define numSamples              50                      // Number of samples to average for temp[] readings 
+#define PIDDuration             200                     // Number of Program cycles (Period) for Group Head PID
+    
 
 // *************** Global Variables ********************************************
-int __attribute__ ((space(eedata))) Settings[43];// Global variable located in EEPROM (created by the space()attribute
+int __attribute__ ((space(eedata))) Settings[43];       // Global variable located in EEPROM (created by the space()attribute
 
-RTCTime time;                                   // declare the type of the time object
+RTCTime time;                                           // declare the type of the time object
 
-unsigned int setpoint[] =   {0, 2,  4};         //setpoint EEPROM Address "offset" values
+unsigned int setpoint[] =   {0, 2,  4};                 //setpoint EEPROM Address "offset" values
 
 int const Kp[]          =   {6, 8, 10};
 
@@ -75,7 +80,7 @@ int const Kd[]          =   {18,20,22};
 
 char *desc[]            =   {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int powerFail           =   0;                  //Setting powerFail to 1, instructs the user to set the time
+int powerFail           =   0;                          //Setting powerFail to 1, instructs the user to set the time
 
 extern int run;
 
@@ -85,8 +90,8 @@ int main(void)
     InitApp();
     
     InitializeTimers();
-
-    Initialize_PWM();
+    
+    InitializePWM();                                    // Init PWM for Water Pump, Water Boiler, and Steam Boiler
 
 // *************** PWM Controller Initialization *******************************
     unsigned char initCon = 0;
@@ -97,119 +102,117 @@ int main(void)
     }
         
 // *************** Local Variables *********************************************
-//    char blink              = 1;                // blink flashes display when water level low
+    unsigned int powerOut   = 0;                        // Power Output Displayed to screen
     
-    unsigned int powerOut   = 0;                // Power Output Displayed to screen
-    
-    char errorCount         = 0;                // errorCount disables power, if water level remains low too long
+    char errorCount         = 0;                        // errorCount disables power, if water level remains low too long
     
     char errorSustained     = 0;
 
-    uint8_t count2          = 0;                // count2 ramps pump pressure
+    uint8_t count2          = 0;                        // count2 ramps pump pressure
     
-    int samples[3][numSamples] ={[0 ... 2] = {0}};//Used to average temp[] over "numSamples" of samples
+    int samples[3][numSamples] ={[0 ... 2] = {0}};      //Used to average temp[] over "numSamples" of samples
     
     static unsigned int temp[3]    = {0,0,0};
     
     unsigned int shortTermTemp[3]= {0,0,0};                                              
     
-    uint8_t sampleIndex     = 0;                // Used to calculate average sample of temp[]
+    uint8_t sampleIndex     = 0;                        // Used to calculate average sample of temp[]
     
-    float total[3]          = {0,0,0};          // Running total of temp[] samples 
-
-    //uint16_t i              = 0;                // x is used for holding shot timer value for 20 seconds before resetting to zero
+    float total[3]          = {0,0,0};                  // Running total of temp[] samples 
     
-    unsigned char testKey   = 0;                // Variable used for Storing Which Menu Key is Pressed
+    unsigned char testKey   = 0;                        // Variable used for Storing Which Menu Key is Pressed
     
-    int bits[7]             = {0};
+    int bits[9]             = {0};
  
     //    int internalBGV;
     
-    int PIDValue[]          = {0,0,0};          // PID calculated values (Water, Steam and Group)
+    int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
     
-    int setRangeL[]         = {750,750,700}; // Set Point Low Limits      FIX Group Setpoint back to Min 180
+    int setRangeL[]         = {750,750,700};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
     
-    int setRangeH[]         = {2100,2850,2150}; // Set Point High Limits
+    int setRangeH[]         = {2100,2850,2150};         // Set Point High Limits
     
-    int previous_time       = 0;                //Used with time.second to limit some stuff to once a second
+    int previous_time       = 0;                        //Used with time.second to limit some stuff to once a second
             
-    unsigned int counter[7] = {0,0,0,0,1200,0,0};   // Shot progress, Shot timer, Warning timer, Shot display Timer, Back Light, groupPeriodCounter, Steam Pump run Timer
-    
+    unsigned int counter[8] = {0,0,0,0,1140,0,0,0};     // Shot progress, Shot timer, Shot Warning timer, Shot display Timer, Back Light, groupPeriodCounter,
+                                                        // Steam Pump run Timer, Low Water Reminder
     uint16_t level          = 0;
     
-    static char ONTimer     = 0;                // Bit to enable Auto Start of Machine
+    static char ONTimer     = 0;                        // Bit to enable Auto Start of Machine
     
     
 // ******************************************************************************
-    LCDBitmap(&menu0[0], 5, 84);                //Draw Menu0
+    LCDBitmap(&menu0[0], 5, 84);                        //Draw Menu0
 
     while(1)
     {
-        power       =   _RB11;                 // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
+        power       =   _RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
-        brewSwitch  =   !_RB10;                 // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
+        brewSwitch  =   !_RB10;                         // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
-        steamSwitch =   !_RA7;                  // RA7 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
+        steamSwitch =   !_RA7;                          // RA7 is pulled high normally, pulled low by turning ON Steam switch, so 0 is ON, 1 is OFF
         
-        waterSwitch =   !_RC9;                  // RC9 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
+        waterSwitch =   !_RC9;                          // RC9 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
 
-        static int timer = 0;                   // Used to count up time in a loop, to auto exit if user in a menu too long
+        static int timer = 0;                           // Used to count up time in a loop, to auto exit if user in a menu too long
         
-        time = getRTCTime();                    // get the time
+        time = getRTCTime();                            // get the time
         
 
-        shortTermTemp[0] = tempCalc(ADCRead(9));          //Assign the ADC(9) Boiler Temp to a temporary variable
-        total[0] = total[0] - samples[0][sampleIndex];// Subtract the oldest sample data from the total
-        samples[0][sampleIndex] = shortTermTemp[0];   // Assign the just read temperature to the location of the current oldest data
-        total[0] = total[0] + samples[0][sampleIndex];// Add that new sample to the total
-        boilerTemperature = total[0] / numSamples;    // Assign the average value of total to the boilerTemperature variable
+// *************** Calculate Temperature Averages ******************************
+        shortTermTemp[0] = tempCalc(ADCRead(9));        //Assign the ADC(9) Boiler Temp to a temporary variable
+        total[0] = total[0] - samples[0][sampleIndex];  // Subtract the oldest sample data from the total
+        samples[0][sampleIndex] = shortTermTemp[0];     // Assign the just read temperature to the location of the current oldest data
+        total[0] = total[0] + samples[0][sampleIndex];  // Add that new sample to the total
+        boilerTemperature = total[0] / numSamples;      // Assign the average value of total to the boilerTemperature variable
 
 
-        shortTermTemp[1] = tempCalc(ADCRead(0));          // Assign the ADC(0) (Steam Temp) to a temporary variable
-        total[1] = total[1] - samples[1][sampleIndex];// Subtract the oldest sample data from the total
-        samples[1][sampleIndex] = shortTermTemp[1];   // Assign the just read temperature to the location of the current oldest data
-        total[1] = total[1] + samples[1][sampleIndex];// Add that new sample to the total
-        steamTemperature = total[1] / numSamples;     // Assign the average value of total to the GroupHeadTemp variable
+        shortTermTemp[1] = tempCalc(ADCRead(0));        // Assign the ADC(0) (Steam Temp) to a temporary variable
+        total[1] = total[1] - samples[1][sampleIndex];  // Subtract the oldest sample data from the total
+        samples[1][sampleIndex] = shortTermTemp[1];     // Assign the just read temperature to the location of the current oldest data
+        total[1] = total[1] + samples[1][sampleIndex];  // Add that new sample to the total
+        steamTemperature = total[1] / numSamples;       // Assign the average value of total to the GroupHeadTemp variable
 
  
-        shortTermTemp[2] = tempCalc(ADCRead(4));          //Assign the ADC(4) Group Head Temp to a temporary variable
-        total[2] = total[2] - samples[2][sampleIndex];// Subtract the oldest sample data from the total
-        samples[2][sampleIndex] = shortTermTemp[2];   // Assign the just read temperature to the location of the current oldest data
-        total[2] = total[2] + samples[2][sampleIndex];// Add that new sample to the total
+        shortTermTemp[2] = tempCalc(ADCRead(4));        //Assign the ADC(4) Group Head Temp to a temporary variable
+        total[2] = total[2] - samples[2][sampleIndex];  // Subtract the oldest sample data from the total
+        samples[2][sampleIndex] = shortTermTemp[2];     // Assign the just read temperature to the location of the current oldest data
+        total[2] = total[2] + samples[2][sampleIndex];  // Add that new sample to the total
 
-        sampleIndex += 1;                       // and move to the next index location
-        if(sampleIndex >= numSamples)           //If we have reached the max number of samples
+        sampleIndex += 1;                               // and move to the next index location
+        if(sampleIndex >= numSamples)                   //If we have reached the max number of samples
         {
-            sampleIndex = 0;                    //Reset to zero
+            sampleIndex = 0;                            //Reset to zero
         }
-        GroupHeadTemp = total[2] / numSamples;  // Assign the average value of total to the GroupHeadTemp variable
+        GroupHeadTemp = total[2] / numSamples;          // Assign the average value of total to the GroupHeadTemp variable
 
-// *****************************************************************************
-        if(previous_time != time.second)
+// *************** Auto Turn ON Machine at User selected Dates & Times *********
+        if(previous_time != time.second)                // Only execute the following code once a second
         {
+            previous_time = time.second;
+
             ONTimer = runTimer(time.weekday,time.hour,time.minute);
             
             if(power==1 || ONTimer==1)
             {
-                powerSwitch = 1;                // powerSwitch is the Virtual Power control Variable
-                (power==1)?(run=0):(run=run);   // if power switch is on, disable AutoStart, or Kill AutoStart by cycling Power Switch (run is in RTCC.C)
+                powerSwitch = 1;                        // powerSwitch is the Virtual Power control Variable
+                (power==1)?(run=0):(run=run);           // if power switch is on, disable AutoStart, or Kill AutoStart by cycling Power Switch (run is in RTCC.C)
             }
             else
             {
-                powerSwitch = 0;                // powerSwitch can turn OFF Machine, even if Power is ON
+                powerSwitch = 0;                        // powerSwitch can turn OFF Machine, even if Power is ON
             }
             
-            errorCount>19?powerSwitch=0:powerSwitch;// If errorCount (water Level Low) > 19 seconds, turn OFF Power
+// *************** Check for and re-act to Low Water Level *********************
+            errorCount>9?powerSwitch=0:powerSwitch;    // If errorCount (water Level Low) > 9 seconds, turn OFF Power
             
-//            level = waterTankLevel();
-            level = 30;                         // FIX
- 
-            level<10?powerSwitch=0:powerSwitch; // If LEVEL is less than 10%, Disable Outputs
+            level = waterTankLevel();
             
-            if(level < 12)
+            if(level < 15)
             {
-                errorCount +=1;                 // Increment the ERROR COUNTER
-                errorCount>20?errorCount=20:errorCount;// Limit Error Counter to 20
+                errorCount +=1;                         // Increment the Error Counter
+                piezoOutput = 1-piezoOutput;            // Turn On the Piezo Alarm
+                errorCount>10?(errorCount=10,piezoOutput=0):errorCount; // Limit Error Counter to 10, and turn piezo OFF
             }
             else
             {
@@ -219,12 +222,11 @@ int main(void)
             
             if(errorCount > 1)
             {
-                errorSustained>15?airPump=0:(airPump=1,errorSustained+=1);
+                errorSustained>8?airPump=0:(airPump=1,errorSustained+=1);
             }
             
-            backLightCounter +=1;               // Increment the "Seconds" counter to turn OFF Backlight
-            
-            previous_time = time.second;
+// *************** Increment counter to Auto turn OFF BackLight ****************
+            backLightCounter +=1;                       // Increment the "Seconds" counter to turn OFF Backlight
 
 // ******************************************************************************
             if(powerSwitch)
@@ -232,7 +234,10 @@ int main(void)
                 if(lastPowerState!=powerSwitch)
                 {
                     LCDClear();
-                    LCDBitmap(&menu0[0], 5, 84);//Draw Menu0
+                    LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
+                    OC1CON2bits.OCTRIS = 0;
+                    OC2CON2bits.OCTRIS = 0;
+                    OC3CON2bits.OCTRIS = 0;
                 }
                 
                 if(powerFail == 1)
@@ -248,26 +253,26 @@ int main(void)
                     
                     displayTime();
 
-                    gotoXY(2,1);                                //LCD Line 2 Display
+                    gotoXY(2,1);                        //LCD Line 2 Display
 
                     if(steamSwitch)
                     {
                         LCDWriteString(desc[1]);
                         LCDWriteIntXY(48,1,steamTemperature,4,1,0);
-                        LCDWriteCharacter(123);                 // generate degree symbol in font list
+                        LCDWriteCharacter(123);         // generate degree symbol in font list
                         LCDWriteCharacter(70);
                     }
                     else
                     {
                         LCDWriteString(desc[0]);
                         LCDWriteIntXY(48,1,boilerTemperature,4,1,0);
-                        LCDWriteCharacter(123);                 // generate degree symbol in font list
+                        LCDWriteCharacter(123);         // generate degree symbol in font list
                         LCDWriteCharacter(70);
                     }
 
                     LCDWriteStringXY(2,2,desc[2]);
                     LCDWriteIntXY(48,2,GroupHeadTemp,4,1,0);
-                    LCDWriteCharacter(123);                     // generate degree symbol in font list
+                    LCDWriteCharacter(123);             // generate degree symbol in font list
                     LCDWriteCharacter(70);
                     LCDWriteCharacter(' ');
                     
@@ -280,14 +285,27 @@ int main(void)
                         LCDWriteCharacter(' ');
                         LCDWriteCharacter(' ');
                     
-                        if(level < 25)
+                        if(level < 25)                  // Tank level < 25%
                         {
-                            blink = 1 - blink;
+                            blink = 1 - blink;          // toggle blink variable
                             if(blink)
                             {
                                 LCDWriteStringXY(48,3,"LOW");
                                 LCDWriteCharacter(' ');
                                 LCDWriteCharacter(' ');
+
+                                lowWaterReminder+=1;    
+
+                                if(lowWaterReminder>29) // blink toggles every other second, so, 1/2 the delay time - 1.
+                                {
+                                    piezoOutput=1;
+                                    if(!brewSwitch)     // Disable delay if we are pulling a shot (will mess with pump timing)
+                                    {
+                                        __delay_ms(30); // Short, but, annoying piezo reminder
+                                    }
+                                    piezoOutput=0;      
+                                    lowWaterReminder=0;
+                                }
                             }
                         }
                     }
@@ -300,10 +318,15 @@ int main(void)
             }
             else
             {
-                LCDBitmap(&coffee[0], 0,504);   //Draw Splash Screen
+                LCDBitmap(&coffee[0], 0,504);           //Draw Splash Screen
                 gotoXY(1,4);
-                LCDWriteCharacter(' ');         // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
-                backLightCounter+=1200;         // 1200 counts is the number required to turn OFF the Backlight
+                LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
+                backLightCounter    +=1200;             // 1200 counts is the number required to turn OFF the Backlight
+                
+                OC1CON2bits.OCTRIS  = 1;                // Tri-State the OC1 Pin, if powerSwitch is OFF
+                OC2CON2bits.OCTRIS  = 1;                // Tri-State the OC2 Pin, if powerSwitch is OFF
+                OC3CON2bits.OCTRIS  = 1;                // Tri-State the OC3 Pin, if powerSwitch is OFF
+                shotTimer           = 0;                // Re-Set the ShotTimer
             }
         }
 // *************** Run Air Pump once an hour for Level transmitter *************
@@ -317,7 +340,6 @@ int main(void)
             {
                 airPump = 0;
             }
-//            GroupHeadTemp = tempCalc(temp[2]);
 
 // *************** Drive PID Outputs *******************************************
             groupPeriodCounter+=1;
@@ -336,20 +358,21 @@ int main(void)
                 groupOutput = 0;
             }
  
-            (WaterPID==0)?(OC2CON2bits.OCTRIS = 1):(OC2CON2bits.OCTRIS = 0);        // If Output is 0, Disable OC2 Module // (Center aligned Output is always ON for
-            (SteamPID==0)?(OC3CON2bits.OCTRIS = 1):(OC3CON2bits.OCTRIS = 0);        // If Output is 0, Disable OC3 Module //  at least one cycle after timer reset)
-              
-            if(steamSwitch)                     //Steam setpoint takes priority
-            {
-                OC3R = 0;                       // Turn on Steam Boiler Output at beginning of cycle    
-            
-                OC3RS = SteamPID;               // Duration of Steam Boiler Output (Out will be on until OC3RS matches SteamPID)
-
-                OC2R = OC3RS;                   // Set OC2R to OC3RS, to start Water Boiler Output as soon as Steam Boiler is no longer needing cycle time
-
-                (OC2R+WaterPID>=0x1E84)?(OC2RS = 0x1E84):(OC2RS = OC2R + WaterPID); // Limit Water Boiler Output to available time left in Period
+            if(steamSwitch)                             //Steam setpoint takes priority
+            { 
+                steamSolenoid=1;
                 
-                steamPumpRunCounter+=1;
+                // OC3 is Initialized as edge aligned, OC2 as center-aligned (OC3R is dutycycle for OC3, OC2R is start of cycle for OC2)
+                OC2R=OC3R=SteamPID;                     // Start Steam Boiler Output at beginning of cycle, can use up to 100% of cycle    
+                
+                (WaterPID+OC2R>0X1E84)?(OC2RS=0X1E84):(OC2RS=WaterPID+OC2R+1); // Water PID takes what it needs from whatever cycle is left
+                
+                LCDWriteIntXY(0,4,WaterPID,4,0,0);
+                LCDWriteIntXY(22,4,SteamPID,4,0,0);
+                LCDWriteIntXY(44,4,OC2R,4,0,0);
+                LCDWriteIntXY(66,4,OC3RS,4,0,0);
+
+                steamPumpRunCounter+=1;                 // Water Pump runs at Steam Power Level for 3100 Program cycles FIX (add EEPROM & HMI location to set duration)
                 
                 if(steamPumpRunCounter<3100)
                 {
@@ -361,25 +384,14 @@ int main(void)
                     steamPumpRunCounter = 3100;
                 }
             }
-
             else                                //Water setpoint takes priority
             {
-                LCDWriteIntXY(0,4,WaterPID,4,0,0);
-                LCDWriteIntXY(22,4,SteamPID,4,0,0);
-                LCDWriteIntXY(44,4,OC2RS,4,0,0);
-                LCDWriteIntXY(66,4,OC3RS,4,0,0);
-                
+                steamSolenoid=0;
                 steamPumpRunCounter = 0;        // Reset the Steam Pump run counter, so, if Steam switch is pressed again, pump will run
-                
-                OC2R = 0;                       // Start Water Boiler Output at beginning of cycle    
-            
-                OC2RS = WaterPID;               // OC2 (Water Boiler Output) is Shut OFF when PID Output matches OC2RS
 
-                OC3R = OC2RS;                   // Start Steam Boiler Output when Water Boiler Output is no longer required
-
-                (OC3R+SteamPID>=0x1E84)?(OC3RS = 0x1E84):(OC3RS = OC3R + SteamPID); //  Limit Steam Boiler Output to available time left in Period
+                OC3R=0;
+                OC2R=0x1E85-WaterPID;           // OC2R must be at least 1, so 0x1E85 instead of 0x1E84!!
             }
- 
 
 // *************** Brew a Shot of Espresso *************************************
             
@@ -483,7 +495,7 @@ int main(void)
                 warningTimer        =   0;
                 T2CONbits.TON       =   0;
                 shotProgressCounter =   0;
-                pumpOutput          =   0;
+//                pumpOutput          =   0;
                 shotDisplayTimer    +=  1;
 
                 if(shotDisplayTimer >=12500)                                    // Approximately 20 seconds (about 625 counts/second)
@@ -495,16 +507,13 @@ int main(void)
 // ******************************************************************************
             if(waterSwitch)
             {
+                waterSolenoid=1;
                 pumpOutput = max;
             }
-        }
-        else
-        {
-            boilerOutput            =   0;
-            groupOutput             =   0;
-            shotTimer               =   0;
-            pumpOutput              =   0;
-            piezoOutput             =   0;
+            else
+            {
+                waterSolenoid=0;
+            }
         }
         
 // ******************************************************************************
