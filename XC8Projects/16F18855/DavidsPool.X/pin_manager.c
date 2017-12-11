@@ -8,16 +8,16 @@ void PIN_MANAGER_Initialize(void)
     LATB = 0x0;
     LATC = 0x0;
 
-    WPUA = 0x18;
+    WPUA = 0x00;
     WPUB = 0x00;
     WPUC = 0x00;
     WPUE = 0x8;
 
-    TRISA = 0x1C;
+    TRISA = 0x00;
     TRISB = 0x00;
     TRISC = 0x10;
 
-    ANSELA = 0x04;
+    ANSELA = 0x00;
     ANSELB = 0x00;
     ANSELC = 0x00;
     

@@ -19,15 +19,17 @@
 [v _memcpyee memcpyee `(v  1 e 1 0 ]
 "3 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\interrupt_manager.c
 [v _INTERRUPT_InterruptManager INTERRUPT_InterruptManager `II(v  1 e 1 0 ]
-"224 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\lcd.c
+"230 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\lcd.c
 [v _gotoXY gotoXY `(v  1 e 1 0 ]
-"243
+"249
 [v _LCD_Write_Character LCD_Write_Character `(v  1 e 1 0 ]
-"264
+"263
+[v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
+"270
 [v _LCD_Clear LCD_Clear `(v  1 e 1 0 ]
-"328
+"334
 [v _LCD_Init LCD_Init `(v  1 e 1 0 ]
-"362
+"376
 [v _LCD_Write LCD_Write `(v  1 e 1 0 ]
 "3 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\main.c
 [v _main main `(v  1 e 1 0 ]
@@ -37,9 +39,7 @@
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
 "46
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
-"3 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\zcd.c
-[v _ZCD_Initialize ZCD_Initialize `(v  1 e 1 0 ]
-"16
+"16 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\zcd.c
 [v _ZCD_ISR ZCD_ISR `(v  1 e 1 0 ]
 [s S23 . 1 `uc 1 INTEDG 1 0 :1:0 
 `uc 1 . 1 0 :5:1 
@@ -51,56 +51,56 @@
 [v _INTCONbits INTCONbits `VES28  1 e 1 @11 ]
 "570
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
+[s S53 . 1 `uc 1 TRISA0 1 0 :1:0 
+`uc 1 TRISA1 1 0 :1:1 
+`uc 1 TRISA2 1 0 :1:2 
+`uc 1 TRISA3 1 0 :1:3 
+`uc 1 TRISA4 1 0 :1:4 
+`uc 1 TRISA5 1 0 :1:5 
+`uc 1 TRISA6 1 0 :1:6 
+`uc 1 TRISA7 1 0 :1:7 
+]
+"587
+[u S62 . 1 `S53 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES62  1 e 1 @17 ]
 "631
 [v _TRISB TRISB `VEuc  1 e 1 @18 ]
 "692
 [v _TRISC TRISC `VEuc  1 e 1 @19 ]
-[s S47 . 1 `uc 1 TRISC0 1 0 :1:0 
-`uc 1 TRISC1 1 0 :1:1 
-`uc 1 TRISC2 1 0 :1:2 
-`uc 1 TRISC3 1 0 :1:3 
-`uc 1 TRISC4 1 0 :1:4 
-`uc 1 TRISC5 1 0 :1:5 
-`uc 1 TRISC6 1 0 :1:6 
-`uc 1 TRISC7 1 0 :1:7 
-]
-"709
-[u S56 . 1 `S47 1 . 1 0 ]
-[v _TRISCbits TRISCbits `VES56  1 e 1 @19 ]
 "753
 [v _LATA LATA `VEuc  1 e 1 @22 ]
+[s S74 . 1 `uc 1 LATA0 1 0 :1:0 
+`uc 1 LATA1 1 0 :1:1 
+`uc 1 LATA2 1 0 :1:2 
+`uc 1 LATA3 1 0 :1:3 
+`uc 1 LATA4 1 0 :1:4 
+`uc 1 LATA5 1 0 :1:5 
+`uc 1 LATA6 1 0 :1:6 
+`uc 1 LATA7 1 0 :1:7 
+]
+"770
+[u S83 . 1 `S74 1 . 1 0 ]
+[v _LATAbits LATAbits `VES83  1 e 1 @22 ]
 "814
 [v _LATB LATB `VEuc  1 e 1 @23 ]
 "875
 [v _LATC LATC `VEuc  1 e 1 @24 ]
-[s S68 . 1 `uc 1 LATC0 1 0 :1:0 
-`uc 1 LATC1 1 0 :1:1 
-`uc 1 LATC2 1 0 :1:2 
-`uc 1 LATC3 1 0 :1:3 
-`uc 1 LATC4 1 0 :1:4 
-`uc 1 LATC5 1 0 :1:5 
-`uc 1 LATC6 1 0 :1:6 
-`uc 1 LATC7 1 0 :1:7 
-]
-"892
-[u S77 . 1 `S68 1 . 1 0 ]
-[v _LATCbits LATCbits `VES77  1 e 1 @24 ]
-[s S191 . 1 `uc 1 C1IF 1 0 :1:0 
+[s S193 . 1 `uc 1 C1IF 1 0 :1:0 
 `uc 1 C2IF 1 0 :1:1 
 `uc 1 . 1 0 :4:2 
 `uc 1 ZCDIF 1 0 :1:6 
 ]
 "20950
-[u S196 . 1 `S191 1 . 1 0 ]
-[v _PIR2bits PIR2bits `VES196  1 e 1 @1806 ]
-[s S178 . 1 `uc 1 C1IE 1 0 :1:0 
+[u S198 . 1 `S193 1 . 1 0 ]
+[v _PIR2bits PIR2bits `VES198  1 e 1 @1806 ]
+[s S180 . 1 `uc 1 C1IE 1 0 :1:0 
 `uc 1 C2IE 1 0 :1:1 
 `uc 1 . 1 0 :4:2 
 `uc 1 ZCDIE 1 0 :1:6 
 ]
 "21363
-[u S183 . 1 `S178 1 . 1 0 ]
-[v _PIE2bits PIE2bits `VES183  1 e 1 @1816 ]
+[u S185 . 1 `S180 1 . 1 0 ]
+[v _PIE2bits PIE2bits `VES185  1 e 1 @1816 ]
 "23022
 [v _OSCCON1 OSCCON1 `VEuc  1 e 1 @2189 ]
 "23160
@@ -133,68 +133,91 @@
 [v _ODCONC ODCONC `VEuc  1 e 1 @3920 ]
 "34387
 [v _WPUE WPUE `VEuc  1 e 1 @3941 ]
-"18 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\lcd.c
+"24 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\lcd.c
 [v _fonts fonts `DCC[101][3]uc  1 e 303 0 ]
 "3 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"15
+"16
 } 0
 "36 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
 {
 "44
 } 0
-"3 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\zcd.c
-[v _ZCD_Initialize ZCD_Initialize `(v  1 e 1 0 ]
-{
-"14
-} 0
 "3 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
 {
-"25
+"33
 } 0
 "46 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\system.c
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
 {
 "57
 } 0
-"328 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\lcd.c
+"334 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\lcd.c
 [v _LCD_Init LCD_Init `(v  1 e 1 0 ]
 {
-"356
+"370
 } 0
-"264
+"270
 [v _LCD_Clear LCD_Clear `(v  1 e 1 0 ]
 {
-"266
-[v LCD_Clear@index index `i  1 a 2 10 ]
-"269
+"272
+[v LCD_Clear@index index `i  1 a 2 4 ]
+"275
 } 0
-"224
+"230
 [v _gotoXY gotoXY `(v  1 e 1 0 ]
 {
-"225
+"231
 [v gotoXY@x x `c  1 a 1 wreg ]
 [v gotoXY@x x `c  1 a 1 wreg ]
-[v gotoXY@y y `c  1 p 1 6 ]
-[v gotoXY@x x `c  1 a 1 8 ]
-"228
+[v gotoXY@y y `c  1 p 1 0 ]
+[v gotoXY@x x `c  1 a 1 2 ]
+"234
 } 0
-"362
+"263
+[v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
+{
+[v LCD_Write_String@characters characters `*.25DCCuc  1 p 2 8 ]
+"267
+} 0
+"249
+[v _LCD_Write_Character LCD_Write_Character `(v  1 e 1 0 ]
+{
+[v LCD_Write_Character@character character `DCCuc  1 a 1 wreg ]
+"253
+[v LCD_Write_Character@index index `i  1 a 2 6 ]
+"249
+[v LCD_Write_Character@character character `DCCuc  1 a 1 wreg ]
+"253
+[v LCD_Write_Character@character character `DCCuc  1 a 1 5 ]
+"260
+} 0
+"15 C:\Program Files (x86)\Microchip\xc8\v1.41\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 5 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 1 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 3 ]
+"53
+} 0
+"376 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\lcd.c
 [v _LCD_Write LCD_Write `(v  1 e 1 0 ]
 {
 [v LCD_Write@data_or_command data_or_command `uc  1 a 1 wreg ]
-"363
-[v LCD_Write@i i `uc  1 a 1 5 ]
-[v LCD_Write@d d `uc  1 a 1 4 ]
-"362
+"377
+[v LCD_Write@i i `uc  1 a 1 11 ]
+[v LCD_Write@d d `uc  1 a 1 10 ]
+"376
 [v LCD_Write@data_or_command data_or_command `uc  1 a 1 wreg ]
-[v LCD_Write@data data `uc  1 p 1 1 ]
-"364
-[v LCD_Write@data_or_command data_or_command `uc  1 a 1 3 ]
-"389
+[v LCD_Write@data data `uc  1 p 1 7 ]
+"378
+[v LCD_Write@data_or_command data_or_command `uc  1 a 1 9 ]
+"403
 } 0
 "3 D:\PIC-Stuff\XC8Projects\16F18855\ZCD.X\interrupt_manager.c
 [v _INTERRUPT_InterruptManager INTERRUPT_InterruptManager `II(v  1 e 1 0 ]

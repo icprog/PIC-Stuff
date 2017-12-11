@@ -2,11 +2,9 @@
 #define	SYSTEM_H
 
 #include <xc.h>
-#include "pin_manager.h"
 #include <stdint.h>
 #include "lcd.h"
 #include "adcc.h"
-#include "buttons.h"
 
 
 #define _XTAL_FREQ  1000000         // Define clock freq for __delay_ms();

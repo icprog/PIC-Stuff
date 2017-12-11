@@ -2,7 +2,6 @@
  build/default/production/main.p1:  \
  main.c  \
 adcc.h  \
-pin_manager.h  \
 lcd.h  \
-system.h  \
-buttons.h 
+aloha.h  \
+system.h 

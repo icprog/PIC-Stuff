@@ -37,7 +37,7 @@ void SYSTEM_Initialize(void)
 {
     PIN_MANAGER_Initialize();                   // Set all I/O pin values
     OSCILLATOR_Initialize();                    // Initialize the Oscillator
-    ZCD_Initialize();                           // Initialize the Zero Cross Detector
+//    ZCD_Initialize();                           // Initialize the Zero Cross Detector
     LCD_Init();                                 // Initialize the Nokia 5110 Graphical LCD
     __delay_ms(75);                             // delay 75 ms
     LCD_Clear();                                // Clear the LCD

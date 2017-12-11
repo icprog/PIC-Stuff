@@ -10,6 +10,7 @@ void main(void)
 
     while (1)
     {
+        LCD_Write_String("FUCK!!");
         CLRWDT();
     }
 }

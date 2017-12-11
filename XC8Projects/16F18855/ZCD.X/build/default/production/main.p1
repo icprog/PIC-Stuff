@@ -10,6 +10,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S25 . . ]
 "348
 [v _INTCONbits `VS25 ~T0 @X0 0 e@11 ]
+"31 lcd.h
+[v _LCD_Write_String `(v ~T0 @X0 0 ef1`*Cuc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -13156,17 +13158,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 12: {
 "12
 {
-[; ;main.c: 13: asm("clrwdt");
+[; ;main.c: 13: LCD_Write_String("FUCK!!");
 "13
-[; <" clrwdt ;# ">
+[e ( _LCD_Write_String (1 :s 1C ]
+[; ;main.c: 14: asm("clrwdt");
 "14
+[; <" clrwdt ;# ">
+"15
 }
 [e :U 1564 ]
 "11
 [e $U 1565  ]
 [e :U 1566 ]
-[; ;main.c: 14: }
 [; ;main.c: 15: }
-"15
+[; ;main.c: 16: }
+"16
 [e :UE 1563 ]
 }
+[a 1C 70 85 67 75 33 33 0 ]
+

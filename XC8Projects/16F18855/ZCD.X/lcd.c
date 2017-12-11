@@ -1,11 +1,17 @@
 #include "lcd.h"
 
 
-#define LCD_CLK     LATCbits.LATC5
-#define LCD_DIN     LATCbits.LATC4
-#define LCD_DC      LATCbits.LATC3
-#define LCD_CE      LATCbits.LATC6
-#define LCD_RST     LATCbits.LATC7
+//#define LCD_CLK     LATCbits.LATC5
+//#define LCD_DIN     LATCbits.LATC4
+//#define LCD_DC      LATCbits.LATC3
+//#define LCD_CE      LATCbits.LATC6
+//#define LCD_RST     LATCbits.LATC7
+
+#define LCD_CLK     LATAbits.LATA4
+#define LCD_DIN     LATAbits.LATA3
+#define LCD_DC      LATAbits.LATA2
+#define LCD_CE      LATAbits.LATA1
+#define LCD_RST     LATAbits.LATA0
 
 #define LCD_COMMAND 0
 #define LCD_DATA    1
@@ -328,11 +334,19 @@ void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, sig
 void LCD_Init(void)
 {
 //Configure control pins
-TRISCbits.TRISC3    =   0;
-TRISCbits.TRISC4    =   0;
-TRISCbits.TRISC5    =   0;
-TRISCbits.TRISC6    =   0;
-TRISCbits.TRISC7    =   0;
+//TRISCbits.TRISC3    =   0;
+//TRISCbits.TRISC4    =   0;
+//TRISCbits.TRISC5    =   0;
+//TRISCbits.TRISC6    =   0;
+//TRISCbits.TRISC7    =   0;
+
+TRISAbits.TRISA2    =   0;
+TRISAbits.TRISA3    =   0;
+TRISAbits.TRISA4    =   0;
+TRISAbits.TRISA0    =   0;
+TRISAbits.TRISA1    =   0;
+
+
 LCD_DIN = 0;
 LCD_CLK = 0;
 LCD_DC  = 0;

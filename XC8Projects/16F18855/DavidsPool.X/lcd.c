@@ -1,10 +1,10 @@
 #include "lcd.h"
 
-#define LCD_CLK     LATCbits.LATC5              // Clock Pin
-#define LCD_DIN     LATCbits.LATC4              // Data Pin
-#define LCD_DC      LATCbits.LATC3              // Register Select Pin
-#define LCD_CE      LATCbits.LATC7              // Chip Enable Pin
-#define LCD_RST     LATCbits.LATC6              // Display Reset Pin
+#define LCD_CLK     LATAbits.LATA4              // Clock Pin
+#define LCD_DIN     LATAbits.LATA3              // Data Pin
+#define LCD_DC      LATAbits.LATA2              // Register Select Pin
+#define LCD_CE      LATAbits.LATA1              // Chip Enable Pin
+#define LCD_RST     LATAbits.LATA0              // Display Reset Pin
 
 #define LCD_COMMAND 0                           
 #define LCD_DATA    1
@@ -246,11 +246,11 @@ void LCDWriteInt(int value,signed char fieldLength, signed char numPlaces, signe
 
 void LCDInit(void)
 {
-    TRISCbits.TRISC5    =   0;
-    TRISCbits.TRISC4    =   0;
-    TRISCbits.TRISC3    =   0;
-    TRISCbits.TRISC7    =   0;
-    TRISCbits.TRISC6    =   0;
+    TRISAbits.TRISA0    =   0;
+    TRISAbits.TRISA1    =   0;
+    TRISAbits.TRISA2    =   0;
+    TRISAbits.TRISA3    =   0;
+    TRISAbits.TRISA4    =   0;
     LCD_DIN = 0;
     LCD_CLK = 0;
     LCD_DC  = 0;
@@ -265,7 +265,7 @@ void LCDInit(void)
 //then send the contrast byte, then send byte 0x20 which returns to the basic instruction set. You do not need to reset the panel or anything like that.
 //The acceptable range is between 0x80 (being a contrast value of 0) and 0xFF (being a contrast value of 127)
     
-    LCDWrite(LCD_COMMAND, 0xBB);                //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
+    LCDWrite(LCD_COMMAND, 0xBE);                //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
 
     LCDWrite(LCD_COMMAND, 0x04);                //Set Temp coefficent
 

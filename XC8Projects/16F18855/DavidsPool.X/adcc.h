@@ -27,7 +27,7 @@ bool ADCC_IsConversionDone();
 
 adc_result_t ADCC_GetConversionResult(void);
 
-adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+adc_result_t ADCRead(adcc_channel_t channel);
 
 void ADCC_StopConversion(void);
 

@@ -1,50 +1,110 @@
 // *************** Includes ****************************************************    
 #include "system.h"
 #include <math.h>
+#include "aloha.h"
 
 // *************** Defines *****************************************************    
 #define     numSamples  50                                              // Number of Temperature readings to Average
 
 // *************** Externally available Variables ******************************    
-uint16_t samples[numSamples] = {0};
+uint16_t samples[2][numSamples] = {0};
 
 // *************** Main Routine ************************************************    
 void main(void)
 {
     SYSTEM_Initialize();
    
-    uint16_t readTemperature, readTemperatureOld, seconds = 0, counter = 0, minutes = 0;
+    uint16_t solarInTemp, solarOutTemp;
     
-    uint8_t  toggle = 0;
+    float R, steinhart, displayTemp, displayTemp2;                                    // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
     
-    float R, steinhart, displayTemp;                                                 // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
-    
-    static uint16_t sampleIndex = 0;
+    static uint16_t sampleIndex0 = 0, sampleIndex1 = 0;
 
-    int32_t totals = 0;
+    int32_t totals[2] = {0};
 
+    char count          = 11;
+    
+   LCDBitmap(&aloha[0], 0, 336);
+   
+ //                  LCDBitmap(&coffee[0], 0,504);           //Draw Splash Screen
+   //             gotoXY(1,4);
+     //           LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
+
+   
+   __delay_ms(3000);
+   
 // *************** Read Temperature ********************************************    
     while (1)
     {
-        readTemperature = ADCC_GetSingleConversion(2);                  // Assign the just read temperature to the location of the current oldest data
-            
-        totals = totals - samples[sampleIndex];                         // Subtract the oldest sample data from the total
-
-        samples[sampleIndex] = readTemperature;                         // Assign the just read temperature to the location of the current oldest data
-
-        totals = totals + samples[sampleIndex];                         // Add that new sample to the total
-            
-        sampleIndex += 1;                                               // and move to the next index location
-            
-        if(sampleIndex >= numSamples)
+        if(count>10)
         {
-            sampleIndex = 0;
+            LCDWriteStringXY(0,4,"Input to Solar");
+            LCDWriteIntXY(60,4,(int)displayTemp,-1,1,0);
+//            LCDWriteCharacter(123);
+            LCDWriteCharacter('F');
+            LCDWriteCharacter(' ');
+            
+            LCDWriteStringXY(0,5,"Return to Pool");
+            LCDWriteIntXY(60,5,(int)displayTemp2,-1,1,0);
+  //          LCDWriteCharacter(123);
+            LCDWriteCharacter('F');
+            LCDWriteCharacter(' ');
+            count=0;
+        }
+
+        solarInTemp = ADCRead(9);                                       // Assign the just read temperature to the location of the current oldest data
+            
+        totals[0] = totals[0] - samples[0][sampleIndex0];                         // Subtract the oldest sample data from the total
+
+        samples[0][sampleIndex0] = solarInTemp;                         // Assign the just read temperature to the location of the current oldest data
+
+        totals[0] = totals[0] + samples[0][sampleIndex0];                         // Add that new sample to the total
+            
+        sampleIndex0 += 1;                                               // and move to the next index location
+            
+        if(sampleIndex0 >= numSamples)
+        {
+            sampleIndex0 = 0;
         }
             
-        readTemperature = totals / numSamples;                          // assign the average value of total to the readTemperature variable
+        solarInTemp = totals[0] / numSamples;                          // assign the average value of total to the readTemperature variable
+        
+
+
+        solarOutTemp = ADCRead(22);                                       // Assign the just read temperature to the location of the current oldest data
+            
+        totals[1] = totals[1] - samples[1][sampleIndex1];                         // Subtract the oldest sample data from the total
+
+        samples[1][sampleIndex1] = solarOutTemp;                         // Assign the just read temperature to the location of the current oldest data
+
+        totals[1] = totals[1] + samples[1][sampleIndex1];                         // Add that new sample to the total
+            
+        sampleIndex1 += 1;                                               // and move to the next index location
+            
+        if(sampleIndex1 >= numSamples)
+        {
+            sampleIndex1 = 0;
+        }
+            
+        solarOutTemp = totals[1] / numSamples;                          // assign the average value of total to the readTemperature variable
         
 // *************** Calculate & Display Temp ************************************    
-        R = 10200/(1023/(float)readTemperature - 1);                    // Resistance of Thermistor (R Reference/1023/readTemp -1)
+        R = 10010/(1023/(float)solarInTemp - 1);                    // Resistance of Thermistor (R Reference/1023/readTemp -1)
+        
+        steinhart = R /10061;                                           // (R/Ro) R/R Standard (resistance of Thermistor at 25C)
+        steinhart = log(steinhart);                                     // ln(R/Ro)
+        steinhart /= 3995;                                              // 1/Beta * ln(R/Ro)
+        steinhart += 1.0 / (25 + 273.15);                               // + (1/To, Temperature in degK @ 25C)
+        steinhart = 1.0 / steinhart;                                    // Invert
+        steinhart -= 273.15;                                            // convert to DegC
+
+        displayTemp = steinhart*10;
+        
+            displayTemp = displayTemp*9/5+320;                          // Display Temperature in DegF
+            
+
+            
+        R = 9975/(1023/(float)solarOutTemp - 1);                    // Resistance of Thermistor (R Reference/1023/readTemp -1)
         
         steinhart = R /10061;                                           // (R/Ro) R/R Standard (resistance of Thermistor at 25C)
         steinhart = log(steinhart);                                     // ln(R/Ro)
@@ -54,35 +114,12 @@ void main(void)
         steinhart -= 273.15;                                            // convert to DegC
  
 
-        displayTemp = steinhart*10;
+        displayTemp2 = steinhart*10;
         
-        if(toggle == 1)
-        {
-            displayTemp = displayTemp*9/5+320;                          // Display Temperature in DegF
+            displayTemp2 = displayTemp2*9/5+320;                          // Display Temperature in DegF
             
-            LCDWriteIntXY(0,0,(int)displayTemp,-1,1,0);
-            LCDWriteCharacter(0);
-            LCDWriteCharacter('F');
-            LCDWriteCharacter(' ');
-        }
-        else
-        {
-            LCDWriteIntXY(0,0,(int)displayTemp,-1,1,0);                      //Display Temperature in DegC
-            LCDWriteCharacter(0);
-            LCDWriteCharacter('C');
-            LCDWriteCharacter(' ');
-        }
         
-// *************** Timer for Display Update ************************************    
-        counter +=1;                                                    // toggle counter
-        
-        if(counter>12)
-        {
-            toggle = 1-toggle;                                          // toggle C or F on Display
-            counter = 0;
-        }
-
-// *************** Test if a Button or Buttons are being pressed ***************  (user.h)   
-        readButtons();                                                  // check if a button is pressed         
-    }
+        count+=1;
+       }
+  //  }
 }
