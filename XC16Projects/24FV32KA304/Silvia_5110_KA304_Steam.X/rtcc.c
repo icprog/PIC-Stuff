@@ -356,6 +356,12 @@ void writeStartStopTimes(void)
                 }
             }
             break;
+            
+            case Menu:
+            {
+                goto Exit;
+            }
+            break;
         }
 
         if(timer < 3)

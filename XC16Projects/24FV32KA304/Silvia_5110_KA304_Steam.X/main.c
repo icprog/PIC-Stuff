@@ -1,3 +1,6 @@
+// Add Escape keys to user menu's
+// Fix _LATB8 not connected to output pin
+
 #include    "system.h"
 #include    "menu.h"
 #include    "coffee.h"
@@ -128,7 +131,7 @@ int main(void)
     
     int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
     
-    int setRangeL[]         = {750,750,700};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
+    int setRangeL[]         = {1750,2650,1750};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
     
     int setRangeH[]         = {2100,2850,2150};         // Set Point High Limits
     
@@ -146,7 +149,7 @@ int main(void)
 
     while(1)
     {
-        power       =   _RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
+        power       =   !_RB11;                         // RB11 is pulled high normally, pulled low by turning ON Power switch, so 0 is ON, 1 is OFF
         
         brewSwitch  =   !_RB10;                         // RB10 is pulled high normally, pulled low by turning ON Brew switch, so 0 is ON, 1 is OFF
         
@@ -206,7 +209,8 @@ int main(void)
 // *************** Check for and re-act to Low Water Level *********************
             errorCount>9?powerSwitch=0:powerSwitch;    // If errorCount (water Level Low) > 9 seconds, turn OFF Power
             
-            level = waterTankLevel();
+//            level = waterTankLevel();
+            level = 30;
             
             if(level < 15)
             {
@@ -235,9 +239,10 @@ int main(void)
                 {
                     LCDClear();
                     LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
-                    OC1CON2bits.OCTRIS = 0;
-                    OC2CON2bits.OCTRIS = 0;
-                    OC3CON2bits.OCTRIS = 0;
+                    OC1CON2bits.OCTRIS  = 0;
+                    OC2CON2bits.OCTRIS  = 0;
+                    OC3CON2bits.OCTRIS  = 0;
+                    backLightCounter    = 0;
                 }
                 
                 if(powerFail == 1)
@@ -349,6 +354,9 @@ int main(void)
                 groupPeriodCounter = 0;
             }
         
+//            LCDWriteIntXY(0,4,groupPeriodCounter,4,0,0);
+  //          LCDWriteIntXY(22,4,GroupHeadPID,5,0,0);
+    //        LCDWriteIntXY(44,4,groupOutput,2,0,0);
             if(GroupHeadPID > groupPeriodCounter)
             {
                 groupOutput = 1;
@@ -363,7 +371,8 @@ int main(void)
                 steamSolenoid=1;
                 
                 // OC3 is Initialized as edge aligned, OC2 as center-aligned (OC3R is dutycycle for OC3, OC2R is start of cycle for OC2)
-                OC2R=OC3R=SteamPID;                     // Start Steam Boiler Output at beginning of cycle, can use up to 100% of cycle    
+                OC3R=SteamPID;                     // Start Steam Boiler Output at beginning of cycle, can use up to 100% of cycle    
+                OC2R=0X1E85-WaterPID+OC3R;
                 
                 (WaterPID+OC2R>0X1E84)?(OC2RS=0X1E84):(OC2RS=WaterPID+OC2R+1); // Water PID takes what it needs from whatever cycle is left
                 
@@ -386,6 +395,11 @@ int main(void)
             }
             else                                //Water setpoint takes priority
             {
+                LCDWriteIntXY(0,4,WaterPID,4,0,0);
+                LCDWriteIntXY(22,4,SteamPID,4,0,0);
+                LCDWriteIntXY(44,4,OC3R,4,0,0);
+                LCDWriteIntXY(66,4,OC2R,4,0,0);
+
                 steamSolenoid=0;
                 steamPumpRunCounter = 0;        // Reset the Steam Pump run counter, so, if Steam switch is pressed again, pump will run
 

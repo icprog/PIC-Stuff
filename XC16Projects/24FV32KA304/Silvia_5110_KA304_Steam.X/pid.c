@@ -49,7 +49,7 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
         pidPrevError[controller] = error;
   
 // *************** Calculate Final Output **************************************    
-    result = errorValue + pidIntegrated[controller]+ derivativeValue;   // Calculate total to send to Output
+    result = errorValue + pidIntegrated[controller]- derivativeValue;   // Calculate total to send to Output
     
     if (result < pidMinOutput[controller])                              // limit output minimum value
     {

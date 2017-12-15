@@ -72,7 +72,7 @@ int16_t setParameter(int8_t X, int8_t Y, int16_t min, int16_t max, int16_t b)
                 }
             break;
             }
-        ClrWdt();                               // Clear (Re-Set) the WatchDog Timer
+//        ClrWdt();                               // Clear (Re-Set) the WatchDog Timer
         }
         
         timer = 0;
