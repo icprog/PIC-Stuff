@@ -99,7 +99,7 @@ void RTCC_Initialize(void) {
 // Bit 6 is -64*4 counts, so, clearing it made 27 seconds of difference(-3 in 48 hrs, to +6 in 12 hrs, (24 in 2 days)
 // so, 3/27*64 =7, -64+7=-57 = 10111001!!    
     RCFGCALbits.CAL7 = 1;                      // Enable RTCC Calibration all zeros but bit 7, too fast by ~1 sec in 24 hrs
-    RCFGCALbits.CAL6 = 0;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL6 = 1;                      // Enable RTCC Calibration
     RCFGCALbits.CAL5 = 1;                      // Enable RTCC Calibration
     RCFGCALbits.CAL4 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL3 = 0;                      // Enable RTCC Calibration
