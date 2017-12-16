@@ -12,7 +12,7 @@
 #define boilerOutput            OC2R                    // OC2 will drive Water Boiler
 #define steamOutput             OC3R                    // OC3 will drive Steam Boiler
 #define groupOutput             _LATB8                  // Coded for software PWM
-#define waterSolenoid           _LATA3                  // Control the Water delivery Solenoid
+#define brewSolenoid            _LATA3                  // Control the Water delivery Solenoid
 #define steamSolenoid           _LATA2                  // Control the Steam delivery Solenoid
 
 // *************** Inputs ******************************************************
@@ -425,6 +425,7 @@ int main(void)
                 
                 if(shotProgressCounter <= preInfusionTime)
                 {
+                    brewSolenoid=1;
                     pumpOutput = preInfusionDutyCycle;
                 }
                 
@@ -505,6 +506,7 @@ int main(void)
             }
             else
             {
+                brewSolenoid        =   0;
                 piezoOutput         =   0;
                 warningTimer        =   0;
                 T2CONbits.TON       =   0;
@@ -521,12 +523,7 @@ int main(void)
 // ******************************************************************************
             if(waterSwitch)
             {
-                waterSolenoid=1;
                 pumpOutput = max;
-            }
-            else
-            {
-                waterSolenoid=0;
             }
         }
         
