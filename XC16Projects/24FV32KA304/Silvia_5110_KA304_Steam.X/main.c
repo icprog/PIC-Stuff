@@ -1,5 +1,4 @@
 // Add Escape keys to user menu's
-// Fix _LATB8 not connected to output pin
 
 #include    "system.h"
 #include    "menu.h"
@@ -21,7 +20,7 @@
 
 #define boilerTemperature       temp[0]                 // ADCRead(9)
 #define steamTemperature        temp[1]                 // ADCRead(0)
-#define GroupHeadTemp           temp[2]                 // ADCRead(4)
+#define groupHeadTemp           temp[2]                 // ADCRead(4)
 
 #define power                   bits[0]                 // _RB11 Power switch input state  
 #define brewSwitch              bits[1]                 // _RB10 Brew Switch Input
@@ -39,21 +38,21 @@
 
 #define max                     256                     // Maximun Pump Output (256 = 100%)
 #define min                     26                      // Minimum Pump Output (0 = OFF)
-#define preInfusionDutyCycle    40              //FIX   // This needs to move to EEPROM & have a User Interface set up so user can change it
-#define preInfusionTime         (20)            //FIX   // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
-#define soakTime                (preInfusionTime + 20)//FIX    // Length of time for wetted puck to soak EEPROM
+#define preInfusionDutyCycle    60              //FIX   // This needs to move to EEPROM & have a User Interface set up so user can change it
+#define preInfusionTime         (25)            //FIX   // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
+#define soakTime                (preInfusionTime + 25)//FIX    // Length of time for wetted puck to soak EEPROM
 #define startRamp               (soakTime + 25)//FIX    // StartRamp starts pump and Ramps up to Max Pressure
 #define continuePull            (800 + 1)               // Shot duration, 80 seconds from Start of Cycle(801)
 #define warning                 (850 + 1)               // Turn on Warning Piezo, reminder to turn off switch (851)
-#define steamPumpPower          12                      // DutyCycle to run pump during steam cycle
+#define steamPumpPower          18                      // DutyCycle to run pump during steam cycle
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
 #define groupHeadSetpoint       eepromGetData(setpoint[2])
 
-#define WaterPID                PIDValue[0]
-#define SteamPID                PIDValue[1]
-#define GroupHeadPID            PIDValue[2]
+#define waterPID                PIDValue[0]
+#define steamPID                PIDValue[1]
+#define groupHeadPID            PIDValue[2]
 
 
 #define shotProgressCounter     counter[0]              // Timer for Steps in an extraction
@@ -64,7 +63,7 @@
 #define groupPeriodCounter      counter[5]              // Group PID Period Counter
 #define steamPumpRunCounter     counter[6]              // Counter for how long to run pump after steam switch is turned on
 #define lowWaterReminder        counter[7]              // Remind User level is Low when below 25%
-#define numSamples              200                     // Number of samples to average for temp[] readings 
+#define numSamples              100                     // Number of samples to average for temp[] readings 
 #define PIDDuration             200                     // Number of Program cycles (Period) for Group Head PID
     
 
@@ -83,7 +82,7 @@ int const Kd[]          =   {18,20,22};
 
 char *desc[]            =   {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int powerFail           =   0;                          //Setting powerFail to 1, instructs the user to set the time
+int powerFail           =   1;                          //Setting powerFail to 1, instructs the user to set the time
 
 extern int run;
 
@@ -189,7 +188,7 @@ int main(void)
         {
             sampleIndex = 0;                            //Reset to zero
         }
-        GroupHeadTemp = total[2] / numSamples;          // Assign the average value of total to the GroupHeadTemp variable
+        groupHeadTemp = total[2] / numSamples;          // Assign the average value of total to the GroupHeadTemp variable
 
 // *************** Auto Turn ON Machine at User selected Dates & Times *********
         if(previous_time != time.second)                // Only execute the following code once a second
@@ -256,12 +255,12 @@ int main(void)
                 {
                     if(tuning)
                     {
-                        WaterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
+                        waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
                         goto there;
                     }
-                    WaterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
-                    SteamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
-                    GroupHeadPID    = PID_Calculate(2, groupHeadSetpoint, GroupHeadTemp);// Calculate Group PID Value
+                    waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
+                    steamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
+                    groupHeadPID    = PID_Calculate(2, groupHeadSetpoint, groupHeadTemp);// Calculate Group PID Value
                     
                     displayTime();
 
@@ -283,7 +282,7 @@ int main(void)
                     }
 
                     LCDWriteStringXY(2,2,desc[2]);
-                    LCDWriteIntXY(48,2,GroupHeadTemp,4,1,0);
+                    LCDWriteIntXY(48,2,groupHeadTemp,4,1,0);
                     LCDWriteCharacter(123);             // generate degree symbol in font list
                     LCDWriteCharacter(70);
                     LCDWriteCharacter(' ');
@@ -335,6 +334,8 @@ int main(void)
                 LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
                 backLightCounter    +=1200;             // 1200 counts is the number required to turn OFF the Backlight
                 
+                groupHeadPID        = 0;                // Turn OFF Group Head Heat
+                groupOutput         = 0;                // Zero Group output, as there will be no more writes, so, if we don't zero, we do not know where it will be
                 OC1CON2bits.OCTRIS  = 1;                // Tri-State the OC1 Pin, if powerSwitch is OFF
                 OC2CON2bits.OCTRIS  = 1;                // Tri-State the OC2 Pin, if powerSwitch is OFF
                 OC3CON2bits.OCTRIS  = 1;                // Tri-State the OC3 Pin, if powerSwitch is OFF
@@ -373,7 +374,7 @@ int main(void)
 //            LCDWriteIntXY(0,4,groupPeriodCounter,4,0,0);
   //          LCDWriteIntXY(22,4,GroupHeadPID,5,0,0);
     //        LCDWriteIntXY(44,4,groupOutput,2,0,0);
-            if(GroupHeadPID > groupPeriodCounter)
+            if(groupHeadPID > groupPeriodCounter)
             {
                 groupOutput = 1;
             }
@@ -387,13 +388,13 @@ int main(void)
                 steamSolenoid=1;
                 
                 // OC3 is Initialized as edge aligned, OC2 as center-aligned (OC3R is dutycycle for OC3, OC2R is start of cycle for OC2)
-                OC3R=SteamPID;                     // Start Steam Boiler Output at beginning of cycle, can use up to 100% of cycle    
-                OC2R=0X1E85-WaterPID+OC3R;
+                OC3R=steamPID;                     // Start Steam Boiler Output at beginning of cycle, can use up to 100% of cycle    
+                OC2R=0X1E85-waterPID+OC3R;
                 
-                (WaterPID+OC2R>0X1E84)?(OC2RS=0X1E84):(OC2RS=WaterPID+OC2R+1); // Water PID takes what it needs from whatever cycle is left
+                (waterPID+OC2R>0X1E84)?(OC2RS=0X1E84):(OC2RS=waterPID+OC2R+1); // Water PID takes what it needs from whatever cycle is left
                 
-                LCDWriteIntXY(0,4,WaterPID,4,0,0);
-                LCDWriteIntXY(22,4,SteamPID,4,0,0);
+                LCDWriteIntXY(0,4,waterPID,4,0,0);
+                LCDWriteIntXY(22,4,steamPID,4,0,0);
                 LCDWriteIntXY(44,4,OC2R,4,0,0);
                 LCDWriteIntXY(66,4,OC3RS,4,0,0);
 
@@ -411,8 +412,8 @@ int main(void)
             }
             else                                //Water setpoint takes priority
             {
-                LCDWriteIntXY(0,4,WaterPID,4,0,0);
-                LCDWriteIntXY(22,4,SteamPID,4,0,0);
+                LCDWriteIntXY(0,4,waterPID,4,0,0);
+                LCDWriteIntXY(22,4,steamPID,4,0,0);
                 LCDWriteIntXY(44,4,OC3R,4,0,0);
                 LCDWriteIntXY(66,4,OC2R,4,0,0);
 
@@ -420,7 +421,7 @@ int main(void)
                 steamPumpRunCounter = 0;        // Reset the Steam Pump run counter, so, if Steam switch is pressed again, pump will run
 
                 OC3R=0;
-                OC2R=0x1E85-WaterPID;           // OC2R must be at least 1, so 0x1E85 instead of 0x1E84!!
+                OC2R=0x1E85-waterPID;           // OC2R must be at least 1, so 0x1E85 instead of 0x1E84!!
             }
 
 // *************** Brew a Shot of Espresso *************************************

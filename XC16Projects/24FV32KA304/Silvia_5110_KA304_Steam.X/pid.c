@@ -99,8 +99,6 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
         LCDWriteStringXY(0,2,"PID I")
         LCDWriteIntXY(0,3,pidIntegrated[controller],5,0,0);            
         LCDWriteCharacter(' ');
-//        LCDWriteIntXY(60,0,error * internalKi[controller],5,0,0);
-  //      LCDWriteCharacter(' ');
         LCDWriteStringXY(32,2,"PID D")
         LCDWriteIntXY(32,3,derivativeValue,5,0,0);
         LCDWriteCharacter(' ');
