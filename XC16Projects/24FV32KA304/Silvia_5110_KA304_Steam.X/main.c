@@ -746,8 +746,10 @@ int main(void)
 // ******************************************************************************
         if (testKey == Up)                      // Reset the LCD
         {
-            LCDInit();
-            __delay_ms(100);
+            tuning = 1-tuning;
+            
+//            LCDInit();
+  //          __delay_ms(100);
             LCDClear();
             backLightCounter = 0;               // Reset BackLight counter
             LCDBitmap(&menu0[0], 5, 84);        // Draw Menu0

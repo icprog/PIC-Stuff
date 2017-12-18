@@ -8,9 +8,9 @@ int internalKd[]                = {   25,   25,  25}; // Controller Derivative (
 long pidIntegrated[3]           = {    0,    0,   0};
 long pidPrevError[3]            = {    0,    0,   0};
 long pidPrevInput[3]            = {    0,    0,   0};
-int controllerMinOutput[3]      = {    0,    0,   0};
-int integralMinOutput[3]        = { -100,  -50,  -1};   
-int pidMinOutput[3]             = { -500,- 400, -10}; // Minimum output limit of Controller
+int integralMinOutput[3]        = {  -100,    0,   0};
+int integralMaxOutput[3]        = {  100,  -0,  20};   
+int pidMinOutput[3]             = {    0,    0,   0}; // Minimum output limit of Controller
 int pidMaxOutput[3]             = { 7811, 7812, 200}; // Maximum output limit of Controller
 extern char tuning;                                   // Set to a 1 when tuning    
 
@@ -35,6 +35,16 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
  
     errorValue  = (long)error * internalKp[controller];                           // Calculate proportional value
     
+    if(errorValue<pidMinOutput[controller])
+    {
+        errorValue=pidMinOutput[controller];
+    }
+    
+    if(errorValue>pidMaxOutput[controller])
+    {
+        errorValue=pidMaxOutput[controller];
+    }
+
 // **************** Calculate Integral *****************************************    
     pidIntegrated[controller] += ((long)error * internalKi[controller]);       // Calculate integral value
 
@@ -43,33 +53,22 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
         pidIntegrated[controller]= integralMinOutput[controller];
     }
     
-    if (pidIntegrated[controller]> pidMaxOutput[controller])                        // limit output maximum value 
+    if (pidIntegrated[controller]> integralMaxOutput[controller])                        // limit output maximum value 
     {
-        pidIntegrated[controller]= pidMaxOutput[controller];
+        pidIntegrated[controller]= integralMaxOutput[controller];
     }
     
 // *************** Calculate Derivative **************************************** 
         derivativeValue=((long)error-pidPrevError[controller])*internalKd[controller];
-
-       if(error<15 && error>-15)
-        {
-            derivativeValue*=10;
-        }
-
-       else
-        {
-            derivativeValue*=5;
-        }
-
-       
+        
         if(derivativeValue>pidMaxOutput[controller])
         {
             derivativeValue=pidMaxOutput[controller];
         }
         
-        if(derivativeValue<pidMinOutput[controller])
+        if(derivativeValue<-7000)
        {
-            derivativeValue=pidMinOutput[controller];
+            derivativeValue=-7000;
         }
 
         pidPrevError[controller] = (long)error;
@@ -78,9 +77,9 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
 // *************** Calculate Final Output **************************************    
     result = (int)errorValue + (int)pidIntegrated[controller] + (int)derivativeValue;   // Calculate total to send to Output
     
-    if (result < controllerMinOutput[controller])                              // limit output minimum value
+    if (result < pidMinOutput[controller])                              // limit output minimum value
     {
-        result = controllerMinOutput[controller];
+        result = pidMinOutput[controller];
     }
     
     if (result > pidMaxOutput[controller])                              // limit output maximum value 
@@ -104,6 +103,7 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
         LCDWriteCharacter(' ');
         LCDWriteStringXY(58,2,"result")
         LCDWriteIntXY(58,3,result,5,0,0); 
+        __delay_ms(950);
     }
     return (result);
 }
