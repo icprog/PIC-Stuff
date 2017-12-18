@@ -64,7 +64,7 @@
 #define groupPeriodCounter      counter[5]              // Group PID Period Counter
 #define steamPumpRunCounter     counter[6]              // Counter for how long to run pump after steam switch is turned on
 #define lowWaterReminder        counter[7]              // Remind User level is Low when below 25%
-#define numSamples              50                      // Number of samples to average for temp[] readings 
+#define numSamples              200                     // Number of samples to average for temp[] readings 
 #define PIDDuration             200                     // Number of Program cycles (Period) for Group Head PID
     
 
@@ -86,6 +86,8 @@ char *desc[]            =   {"Water Temp:","Steam Temp:","Group Temp:"};
 int powerFail           =   0;                          //Setting powerFail to 1, instructs the user to set the time
 
 extern int run;
+
+char tuning             =   0;
 
 // *************** Main Routine ************************************************
 int main(void)
@@ -131,7 +133,7 @@ int main(void)
     
     int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
     
-    int setRangeL[]         = {1750,2650,1750};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
+    int setRangeL[]         = {1800,2650,1850};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
     
     int setRangeH[]         = {2100,2850,2150};         // Set Point High Limits
     
@@ -252,6 +254,11 @@ int main(void)
                 }
                 else
                 {
+                    if(tuning)
+                    {
+                        WaterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
+                        goto there;
+                    }
                     WaterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
                     SteamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
                     GroupHeadPID    = PID_Calculate(2, groupHeadSetpoint, GroupHeadTemp);// Calculate Group PID Value
@@ -334,6 +341,15 @@ int main(void)
                 shotTimer           = 0;                // Re-Set the ShotTimer
             }
         }
+        
+        there:
+        if(tuning)
+        {
+            LCDWriteStringXY(0,1,desc[0]);
+            LCDWriteIntXY(48,1,boilerTemperature,4,1,0);
+            LCDWriteCharacter(123);         // generate degree symbol in font list
+            LCDWriteCharacter(70);
+        }            
 // *************** Run Air Pump once an hour for Level transmitter *************
         if(powerSwitch)
         {
@@ -411,6 +427,7 @@ int main(void)
             
             if(brewSwitch)
             {
+                OC2R = 2;
                 backLightCounter = 0;           // Turn on Backlight if you are pulling a shot.
                 
                 LCDWriteStringXY(2,4,"Pump Output:");
@@ -456,7 +473,7 @@ int main(void)
                         
                         if(count2 > 15)
                         {
-                            pumpOutput -=1;
+                            pumpOutput -=2;
                             count2 = 0;
                         }
                     }
@@ -524,6 +541,7 @@ int main(void)
             if(waterSwitch)
             {
                 pumpOutput = max;
+                OC2R = 2;
             }
         }
         
@@ -707,7 +725,7 @@ int main(void)
             eepromPutData(Ki[choice], setParameter(44,2,0,500,eepromGetData(Ki[choice])));
 
             LCDWriteStringXY(0,3,"Derivative =");
-            eepromPutData(Kd[choice], setParameter(44,3,0,100,eepromGetData(Kd[choice])));
+            eepromPutData(Kd[choice], setParameter(44,3,0,500,eepromGetData(Kd[choice])));
             
             
             Init_PID(choice,eepromGetData(Kp[choice]),eepromGetData(Ki[choice]),eepromGetData(Kd[choice]));                
