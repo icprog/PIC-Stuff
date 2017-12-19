@@ -100,9 +100,9 @@ void RTCC_Initialize(void) {
 // so, 3/27*64 =7, -64+7=-57 = 10111001!!    
     RCFGCALbits.CAL7 = 1;                      // Enable RTCC Calibration all zeros but bit 7, too fast by ~1 sec in 24 hrs
     RCFGCALbits.CAL6 = 1;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL5 = 1;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL5 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL4 = 0;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL3 = 0;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL3 = 1;                      // Enable RTCC Calibration
     RCFGCALbits.CAL2 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL1 = 0;                      // Enable RTCC Calibration this and bit 7, at least 2 seconds fast in a day               
     RCFGCALbits.CAL0 = 0;                      // Enable RTCC Calibration this and bit 7, at least 1 seconds slow in a day
@@ -424,6 +424,7 @@ int8_t setStartHour(int8_t b)
         
         LCDWriteStringXY(0,1,"Start Hour = ");
         LCDWriteIntXY(61,1,result,2,0,0);
+        LCDWriteCharacter(' ');
 
         switch(testKey)
         {
@@ -431,7 +432,7 @@ int8_t setStartHour(int8_t b)
             {
                 result -= 1;
                             
-                if (result < 0)
+                if (result < -1)
                 {
                     result = 23;
                 }
@@ -444,7 +445,7 @@ int8_t setStartHour(int8_t b)
                             
                 if(result > 23)
                 {
-                    result = 0;
+                    result = -1;
                 }
             }
             break;
@@ -550,6 +551,7 @@ int8_t setStopHour(int8_t b)
         
         LCDWriteStringXY(0,3,"Stop Hour =");
         LCDWriteIntXY(61,3,result,2,0,0);
+        LCDWriteCharacter(' ');
 
 //        heartBeat();
         
@@ -560,7 +562,7 @@ int8_t setStopHour(int8_t b)
             {
                 result -= 1;
                             
-                if (result < 0)
+                if (result < -1)
                 {
                     result = 23;
                 }
@@ -573,7 +575,7 @@ int8_t setStopHour(int8_t b)
                             
                 if(result > 23)
                 {
-                    result = 0;
+                    result = -1;
                 }
             }
             break;

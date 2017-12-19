@@ -11,8 +11,9 @@
 #define boilerOutput            OC2R                    // OC2 will drive Water Boiler
 #define steamOutput             OC3R                    // OC3 will drive Steam Boiler
 #define groupOutput             _LATB8                  // Coded for software PWM
-#define brewSolenoid            _LATA3                  // Control the Water delivery Solenoid
-#define steamSolenoid           _LATA2                  // Control the Steam delivery Solenoid
+#define brewSolenoid            _LATA3                  // Control the Brew Water delivery Solenoid
+#define steamSolenoid           _LATB9                  // Control the Steam delivery Solenoid
+#define waterSolenoid           _LATA2                  // Control the Wand Water delivery Solenoid
 
 // *************** Inputs ******************************************************
 //#define waterLevel              level                   // ADCRead(6) is Water Tank level signal
@@ -44,7 +45,7 @@
 #define startRamp               (soakTime + 25)//FIX    // StartRamp starts pump and Ramps up to Max Pressure
 #define continuePull            (800 + 1)               // Shot duration, 80 seconds from Start of Cycle(801)
 #define warning                 (850 + 1)               // Turn on Warning Piezo, reminder to turn off switch (851)
-#define steamPumpPower          18                      // DutyCycle to run pump during steam cycle
+#define steamPumpPower          40                      // DutyCycle to run pump during steam cycle
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
@@ -132,7 +133,7 @@ int main(void)
     
     int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
     
-    int setRangeL[]         = {1800,2650,1850};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
+    int setRangeL[]         = {1300,2650,1850};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
     
     int setRangeH[]         = {2100,2850,2150};         // Set Point High Limits
     
@@ -541,15 +542,20 @@ int main(void)
 // ******************************************************************************
             if(waterSwitch)
             {
-                pumpOutput = max;
-                OC2R = 2;
+                waterSolenoid   =   1;
+                pumpOutput      =   max;
+                OC2R            =   2;
+            }
+            else
+            {
+                waterSolenoid   =   0;
             }
         }
         
 // ******************************************************************************
         if(!brewSwitch && !steamSwitch && !waterSwitch)
         {
-            pumpOutput              =   0;
+            pumpOutput          =   0;
         }
         
 // ******************************************************************************
@@ -558,7 +564,7 @@ int main(void)
 
         if (testKey == Menu)
         {
-            backLightCounter = 0;               // Reset BackLight counter
+            backLightCounter    =   0;               // Reset BackLight counter
             
             if(timer<1)
             {
