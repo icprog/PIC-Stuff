@@ -90,7 +90,7 @@ void InitApp(void)                  // Setup analog functionality and port direc
     PORTB = 0x0000;
     PORTC = 0x0000;                 // Make sure Pin 13 always initialized low, is reset pin for LCD
     
-    CNPU1 = 0x8200;                 // Enable Weak Pull-ups on CN9 & CN15 (Pin 6 & 9)
+    CNPU1 = 0x0200;                 // Enable Weak Pull-ups on CN9 (Pin 6)
     CNPU2 = 0x0009;                 // Enable Weak Pull-ups on CN16 & 19 (Pin 8 & 5)
     
 

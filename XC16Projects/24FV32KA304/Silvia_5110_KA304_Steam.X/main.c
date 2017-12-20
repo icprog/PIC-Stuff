@@ -143,8 +143,8 @@ int main(void)
     
     int setRangeH[]         = {2100,2850,2150};         // Set Point High Limits
     
-    int previous_time       = 0;                        //Used with time.second to limit some stuff to once a second
-            
+    int previousSecond     = 0;                        //Used with time.second to limit some stuff to once a second
+    
     unsigned int counter[8] = {0,0,0,0,1140,0,0,0};     // Shot progress, Shot timer, Shot Warning timer, Shot display Timer, Back Light, groupPeriodCounter,
                                                         // Steam Pump run Timer, Low Water Reminder
     uint16_t level          = 0;
@@ -198,9 +198,9 @@ int main(void)
         groupHeadTemp = total[2] / numSamples;          // Assign the average value of total to the GroupHeadTemp variable
 
 // *************** Auto Turn ON Machine at User selected Dates & Times *********
-        if(previous_time != time.second)                // Only execute the following code once a second
+        if(previousSecond != time.second)                // Only execute the following code once a second
         {
-            previous_time = time.second;
+            previousSecond = time.second;
 
             ONTimer = runTimer(time.weekday,time.hour,time.minute);
             
@@ -279,9 +279,19 @@ int main(void)
                     LCDWriteCharacter(123);         // generate degree symbol in font list
                     LCDWriteCharacter(70);
 
-                    toggle=1-toggle;
+                    toggle+=1;
                     
-                    if(toggle)
+                    if(toggle>4)
+                    {
+                        toggle=5-toggle;
+                        LCDWriteStringXY(0,2,desc[2]);
+                        LCDWriteIntXY(52,2,groupHeadTemp,4,1,0);
+                        LCDWriteCharacter(123);             // generate degree symbol in font list
+                        LCDWriteCharacter(70);
+                        LCDWriteCharacter(' ');
+                    }
+                    
+                    if(toggle>1)
                     {
                         LCDWriteIntXY(0,2,steamPower,1,0,0);
                         LCDWriteCharacter(' ');
@@ -289,14 +299,6 @@ int main(void)
                         LCDWriteIntXY(52,2,steamTemperature,4,1,0);
                         LCDWriteCharacter(123);         // generate degree symbol in font list
                         LCDWriteCharacter(70);
-                    }
-                    else
-                    {
-                        LCDWriteStringXY(0,2,desc[2]);
-                        LCDWriteIntXY(52,2,groupHeadTemp,4,1,0);
-                        LCDWriteCharacter(123);             // generate degree symbol in font list
-                        LCDWriteCharacter(70);
-                        LCDWriteCharacter(' ');
                     }
                 
                     if(shotTimer == 0)
