@@ -1,4 +1,8 @@
 // Add Escape keys to user menu's
+// remove steam pump run counter
+// move clock to line 5
+// move pump output, etc to line 1
+
 
 #include    "system.h"
 #include    "menu.h"
@@ -31,6 +35,8 @@
 #define powerSwitch             bits[4]                 // Power Switch (Soft Bit)
 #define lastPowerState          bits[5]                 // Last State of powerSwitch (Soft Bit)
 #define blink                   bits[6]                 // blink flashes display when water level low
+#define steamPower              bits[7]                 // set to turn on steam boiler
+#define toggle                  bits[8]                 // toggle display between steam & group Temperatures
        
 // *****************************************************************************
 
@@ -45,7 +51,7 @@
 #define startRamp               (soakTime + 25)//FIX    // StartRamp starts pump and Ramps up to Max Pressure
 #define continuePull            (800 + 1)               // Shot duration, 80 seconds from Start of Cycle(801)
 #define warning                 (850 + 1)               // Turn on Warning Piezo, reminder to turn off switch (851)
-#define steamPumpPower          40                      // DutyCycle to run pump during steam cycle
+#define steamPumpPower          43                      // DutyCycle to run pump during steam cycle
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
@@ -64,7 +70,7 @@
 #define groupPeriodCounter      counter[5]              // Group PID Period Counter
 #define steamPumpRunCounter     counter[6]              // Counter for how long to run pump after steam switch is turned on
 #define lowWaterReminder        counter[7]              // Remind User level is Low when below 25%
-#define numSamples              100                     // Number of samples to average for temp[] readings 
+#define numSamples              1                       // Number of samples to average for temp[] readings 
 #define PIDDuration             200                     // Number of Program cycles (Period) for Group Head PID
     
 
@@ -83,7 +89,7 @@ int const Kd[]          =   {18,20,22};
 
 char *desc[]            =   {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int powerFail           =   1;                          //Setting powerFail to 1, instructs the user to set the time
+int powerFail           =   0;                          //Setting powerFail to 1, instructs the user to set the time
 
 extern int run;
 
@@ -127,13 +133,13 @@ int main(void)
     
     unsigned char testKey   = 0;                        // Variable used for Storing Which Menu Key is Pressed
     
-    int bits[9]             = {0};
+    int bits[9]             = {0,0,0,0,0,0,0,1,0};
  
     //    int internalBGV;
     
     int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
     
-    int setRangeL[]         = {1300,2650,1850};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
+    int setRangeL[]         = {1300,2250,1850};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
     
     int setRangeH[]         = {2100,2850,2150};         // Set Point High Limits
     
@@ -256,43 +262,47 @@ int main(void)
                 {
                     if(tuning)
                     {
-                        waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
+      //                  waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
+                        steamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
+        //                groupHeadPID    = PID_Calculate(2, groupHeadSetpoint, groupHeadTemp);// Calculate Group PID Value
                         goto there;
                     }
+
                     waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
                     steamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
                     groupHeadPID    = PID_Calculate(2, groupHeadSetpoint, groupHeadTemp);// Calculate Group PID Value
                     
                     displayTime();
 
-                    gotoXY(2,1);                        //LCD Line 2 Display
+                    LCDWriteStringXY(0,1,desc[0]);
+                    LCDWriteIntXY(52,1,boilerTemperature,4,1,0);
+                    LCDWriteCharacter(123);         // generate degree symbol in font list
+                    LCDWriteCharacter(70);
 
-                    if(steamSwitch)
+                    toggle=1-toggle;
+                    
+                    if(toggle)
                     {
+                        LCDWriteIntXY(0,2,steamPower,1,0,0);
+                        LCDWriteCharacter(' ');
                         LCDWriteString(desc[1]);
-                        LCDWriteIntXY(48,1,steamTemperature,4,1,0);
+                        LCDWriteIntXY(52,2,steamTemperature,4,1,0);
                         LCDWriteCharacter(123);         // generate degree symbol in font list
                         LCDWriteCharacter(70);
                     }
                     else
                     {
-                        LCDWriteString(desc[0]);
-                        LCDWriteIntXY(48,1,boilerTemperature,4,1,0);
-                        LCDWriteCharacter(123);         // generate degree symbol in font list
+                        LCDWriteStringXY(0,2,desc[2]);
+                        LCDWriteIntXY(52,2,groupHeadTemp,4,1,0);
+                        LCDWriteCharacter(123);             // generate degree symbol in font list
                         LCDWriteCharacter(70);
+                        LCDWriteCharacter(' ');
                     }
-
-                    LCDWriteStringXY(2,2,desc[2]);
-                    LCDWriteIntXY(48,2,groupHeadTemp,4,1,0);
-                    LCDWriteCharacter(123);             // generate degree symbol in font list
-                    LCDWriteCharacter(70);
-                    LCDWriteCharacter(' ');
-                    
                 
                     if(shotTimer == 0)
                     {
                         LCDWriteStringXY(2,3,"Tank Level:");
-                        LCDWriteIntXY(48,3,level,-1,0,0);
+                        LCDWriteIntXY(52,3,level,-1,0,0);
                         LCDWriteCharacter('%');
                         LCDWriteCharacter(' ');
                         LCDWriteCharacter(' ');
@@ -347,8 +357,8 @@ int main(void)
         there:
         if(tuning)
         {
-            LCDWriteStringXY(0,1,desc[0]);
-            LCDWriteIntXY(48,1,boilerTemperature,4,1,0);
+            LCDWriteStringXY(0,1,desc[1]);
+            LCDWriteIntXY(48,1,steamTemperature,4,1,0);
             LCDWriteCharacter(123);         // generate degree symbol in font list
             LCDWriteCharacter(70);
         }            
@@ -384,12 +394,24 @@ int main(void)
                 groupOutput = 0;
             }
  
-            if(steamSwitch)                             //Steam setpoint takes priority
+            if(steamPower)                             //Steam setpoint takes priority
             { 
-                steamSolenoid=1;
+//                steamSolenoid=1;
                 
                 // OC3 is Initialized as edge aligned, OC2 as center-aligned (OC3R is dutycycle for OC3, OC2R is start of cycle for OC2)
                 OC3R=steamPID;                     // Start Steam Boiler Output at beginning of cycle, can use up to 100% of cycle    
+
+                if(steamSwitch)
+                {
+                    steamSolenoid   =   1;
+                    OC3R            +=  6300;
+                    pumpOutput      =   steamPumpPower;
+                }
+                else
+                {
+                    steamSolenoid   =   0;
+                }
+
                 OC2R=0X1E85-waterPID+OC3R;
                 
                 (waterPID+OC2R>0X1E84)?(OC2RS=0X1E84):(OC2RS=waterPID+OC2R+1); // Water PID takes what it needs from whatever cycle is left
@@ -399,17 +421,17 @@ int main(void)
                 LCDWriteIntXY(44,4,OC2R,4,0,0);
                 LCDWriteIntXY(66,4,OC3RS,4,0,0);
 
-                steamPumpRunCounter+=1;                 // Water Pump runs at Steam Power Level for 3100 Program cycles FIX (add EEPROM & HMI location to set duration)
+//                steamPumpRunCounter+=1;                 // Water Pump runs at Steam Power Level for 3100 Program cycles FIX (add EEPROM & HMI location to set duration)
                 
-                if(steamPumpRunCounter<3100)
-                {
-                    OC1R = steamPumpPower;
-                }
-                else
-                {
-                    OC1R = 0;
-                    steamPumpRunCounter = 3100;
-                }
+  //              if(steamPumpRunCounter<3100)
+    //            {
+//                    OC1R = steamPumpPower;
+      //          }
+        //        else
+          //      {
+            //        OC1R = 0;
+              //      steamPumpRunCounter = 3100;
+                //}
             }
             else                                //Water setpoint takes priority
             {
@@ -424,6 +446,7 @@ int main(void)
                 OC3R=0;
                 OC2R=0x1E85-waterPID;           // OC2R must be at least 1, so 0x1E85 instead of 0x1E84!!
             }
+            
 
 // *************** Brew a Shot of Espresso *************************************
             
@@ -432,11 +455,11 @@ int main(void)
                 OC2R = 2;
                 backLightCounter = 0;           // Turn on Backlight if you are pulling a shot.
                 
-                LCDWriteStringXY(2,4,"Pump Output:");
-                LCDWriteInt(powerOut,3,0,0);
-                LCDWriteCharacter('%');
-                LCDWriteCharacter(' ');
-                LCDWriteCharacter(' ');
+//                LCDWriteStringXY(2,5,"Pump Output:");
+  //              LCDWriteInt(powerOut,3,0,0);
+    //            LCDWriteCharacter('%');
+      //          LCDWriteCharacter(' ');
+        //        LCDWriteCharacter(' ');
                 
                 T2CONbits.TON       =   1;      // Turn Timer2 ON
                 
