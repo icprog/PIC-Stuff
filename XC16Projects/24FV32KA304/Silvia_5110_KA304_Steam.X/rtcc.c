@@ -88,9 +88,9 @@ void RTCC_Initialize(void) {
 
     // set Thursday Oct 24 20:59:50 CST 2016
     RCFGCALbits.RTCPTR = 3;                     // start the sequence
-    RTCVAL = 0x16;                              // YEAR
-    RTCVAL = 0x1024;                            // MONTH-1/DAY-1
-    RTCVAL = 0x121;                             // WEEKDAY/HOURS
+    RTCVAL = 0x17;                              // YEAR
+    RTCVAL = 0x1222;                            // MONTH-1/DAY-1
+    RTCVAL = 0x516;                             // WEEKDAY/HOURS
     RTCVAL = 0x2930;                            // MINUTES/SECONDS
 
 //    RTCPWC = 0x0400;                            // PWCPOL disabled; PWCEN disabled; RTCLK LPRC; PWCPRE disabled; RTCOUT Alarm Pulse; PWSPRE disabled;

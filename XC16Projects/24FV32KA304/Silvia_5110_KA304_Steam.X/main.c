@@ -1,8 +1,4 @@
 // Add Escape keys to user menu's
-// remove steam pump run counter
-// move clock to line 5
-// move pump output, etc to line 1
-
 
 #include    "system.h"
 #include    "menu.h"
@@ -51,7 +47,7 @@
 #define startRamp               (soakTime + 30)//FIX    // StartRamp starts pump and Ramps up to Max Pressure
 #define continuePull            (800 + 1)               // Shot duration, 80 seconds from Start of Cycle(801)
 #define warning                 (850 + 1)               // Turn on Warning Piezo, reminder to turn off switch (851)
-#define steamPumpPower          45                      // DutyCycle to run pump during steam cycle
+#define steamPumpPower          39                      // DutyCycle to run pump during steam cycle
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
@@ -68,8 +64,7 @@
 #define shotDisplayTimer        counter[3]              // Determines how long the Shot Timer Value remains on the Display
 #define backLightCounter        counter[4]              // Used to count time until Backlight turns Off
 #define groupPeriodCounter      counter[5]              // Group PID Period Counter
-#define steamPumpRunCounter     counter[6]              // Counter for how long to run pump after steam switch is turned on
-#define lowWaterReminder        counter[7]              // Remind User level is Low when below 25%
+#define lowWaterReminder        counter[6]              // Remind User level is Low when below 25%
 #define numSamples              3                       // Number of samples to average for temp[] readings 
 #define PIDDuration             200                     // Number of Program cycles (Period) for Group Head PID
     
@@ -139,14 +134,14 @@ int main(void)
     
     int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
     
-    int setRangeL[]         = {1750,2650,1850};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
+    int setRangeL[]         = {1750,2650,1850};         // Set Point Low Limits      FIX Group Setpoint back to Min 180
     
     int setRangeH[]         = {2100,3000,2150};         // Set Point High Limits
     
-    int previousSecond     = 0;                        //Used with time.second to limit some stuff to once a second
+    int previousSecond      = 0;                        //Used with time.second to limit some stuff to once a second
     
-    unsigned int counter[8] = {0,0,0,0,1140,0,0,0};     // Shot progress, Shot timer, Shot Warning timer, Shot display Timer, Back Light, groupPeriodCounter,
-                                                        // Steam Pump run Timer, Low Water Reminder
+    unsigned int counter[7] = {0,0,0,0,1140,0,0};       // Shot progress, Shot timer, Shot Warning timer, Shot display Timer, Back Light, groupPeriodCounter,
+                                                        // Low Water Reminder
     uint16_t level          = 0;
     
     static char ONTimer     = 0;                        // Bit to enable Auto Start of Machine
@@ -407,8 +402,8 @@ int main(void)
                 if(steamSwitch)
                 {
                     steamSolenoid   =   1;
-                    OC3R            +=  7500;
-                    if(steamTemperature>3150)
+                    OC3R            +=  7600;
+                    if(steamTemperature>3000)
                     {
                         OC3R        =   1;
                     }
@@ -448,7 +443,7 @@ int main(void)
                 LCDWriteIntXY(66,0,OC2R,4,0,0);
 
                 steamSolenoid=0;
-                steamPumpRunCounter = 0;        // Reset the Steam Pump run counter, so, if Steam switch is pressed again, pump will run
+//                steamPumpRunCounter = 0;        // Reset the Steam Pump run counter, so, if Steam switch is pressed again, pump will run
 
                 OC3R=0;
                 OC2R=0x1E85-waterPID;           // OC2R must be at least 1, so 0x1E85 instead of 0x1E84!!
@@ -590,6 +585,14 @@ int main(void)
         
 // ******************************************************************************
         testKey = readButton();
+        
+        if(testKey!=None)
+        {
+            groupOutput         = 0;                // Zero Group output, as there will be no more writes, so, if we don't zero, we do not know where it will be
+            OC1CON2bits.OCTRIS  = 1;                // Tri-State the OC1 Pin, if powerSwitch is OFF
+            OC2CON2bits.OCTRIS  = 1;                // Tri-State the OC2 Pin, if powerSwitch is OFF
+            OC3CON2bits.OCTRIS  = 1;                // Tri-State the OC3 Pin, if powerSwitch is OFF
+        }
 
 
         if (testKey == Menu)
@@ -752,17 +755,17 @@ int main(void)
             
             LCDClear();
             LCDBitmap(&menu2[0], 5, 84);              //Draw Menu2
-            LCDWriteStringXY(0,0,"SetPoint = ");
-            eepromPutData(setpoint[choice], setParameter(44,0,setRangeL[choice],setRangeH[choice],eepromGetData(setpoint[choice])));
+            LCDWriteStringXY(0,1,"SetPoint = ");
+            eepromPutData(setpoint[choice], setParameter(44,1,setRangeL[choice],setRangeH[choice],eepromGetData(setpoint[choice])));
             
-            LCDWriteStringXY(0,1,"Gain =");
-            eepromPutData(Kp[choice], setParameter(44,1,0,200,eepromGetData(Kp[choice])));
+            LCDWriteStringXY(0,2,"Gain =");
+            eepromPutData(Kp[choice], setParameter(44,2,0,200,eepromGetData(Kp[choice])));
 
-            LCDWriteStringXY(0,2,"Integral =");
-            eepromPutData(Ki[choice], setParameter(44,2,0,500,eepromGetData(Ki[choice])));
+            LCDWriteStringXY(0,3,"Integral =");
+            eepromPutData(Ki[choice], setParameter(44,3,0,500,eepromGetData(Ki[choice])));
 
-            LCDWriteStringXY(0,3,"Derivative =");
-            eepromPutData(Kd[choice], setParameter(44,3,0,500,eepromGetData(Kd[choice])));
+            LCDWriteStringXY(0,4,"Derivative =");
+            eepromPutData(Kd[choice], setParameter(44,4,0,500,eepromGetData(Kd[choice])));
             
             
             Init_PID(choice,eepromGetData(Kp[choice]),eepromGetData(Ki[choice]),eepromGetData(Kd[choice]));                
@@ -782,10 +785,10 @@ int main(void)
 // ******************************************************************************
         if (testKey == Up)                      // Reset the LCD
         {
-            tuning = 1-tuning;
+//            tuning = 1-tuning;
             
-//            LCDInit();
-  //          __delay_ms(100);
+            LCDInit();
+            __delay_ms(100);
             LCDClear();
             backLightCounter = 0;               // Reset BackLight counter
             LCDBitmap(&menu0[0], 5, 84);        // Draw Menu0
