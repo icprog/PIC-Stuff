@@ -145,13 +145,13 @@ void displayTime(void)
 {
     RTCTime time;                                                               // declare the type of the time object
     time = getRTCTime();                                                        // Read current time from RTCC
-    LCDWriteIntXY(0,0,time.year,2,0,0);
+    LCDWriteIntXY(0,4,time.year,2,0,0);
     LCDWriteCharacter('/');
     LCDWriteString(month[time.month]);
     LCDWriteCharacter('/');
     LCDWriteInt(time.day,2,0,0);
-    LCDWriteStringXY(37,0,WeekDay[time.weekday]);
-    LCDWriteIntXY(50,0,time.hour,2,0,0);
+    LCDWriteStringXY(37,4,WeekDay[time.weekday]);
+    LCDWriteIntXY(50,4,time.hour,2,0,0);
     LCDWriteCharacter(':');
     LCDWriteInt(time.minute,2,0,0);
     LCDWriteCharacter(':');
@@ -199,43 +199,43 @@ void SetTime()
         time.second = timeSetField[6];
                     
         displayTime();
-        LCDWriteStringXY(4,2,"\"Enter\" = next Field");
-        LCDWriteStringXY(4,3,"Up/Dn to change Time");
+        LCDWriteStringXY(4,1,"\"Enter\" = next Field");
+        LCDWriteStringXY(4,2,"Up/Dn to change Time");
         
         
         if(sel == 0)
         {
-            LCDWriteStringXY(0,1,"^^");                                         // Draw Pointer, to show what we are setting
+            LCDWriteStringXY(0,3,"&&");                                         // Draw Pointer, to show what we are setting
         }
         
         if(sel == 1)
         {
-            LCDWriteStringXY(0,1,"   ^^^");                                     // Draw Pointer, to show what we are setting
+            LCDWriteStringXY(0,3,"   &&&");                                     // Draw Pointer, to show what we are setting
         }
         
         if(sel == 2)
         {
-            LCDWriteStringXY(12,1,"    ^^");                                    // Draw Pointer
+            LCDWriteStringXY(12,3,"    &&");                                    // Draw Pointer
         }
         
         if(sel == 3)
         {
-            LCDWriteStringXY(25,1,"   ^^^");                                    // Draw Pointer
+            LCDWriteStringXY(25,3,"   &&&");                                    // Draw Pointer
         }
         
         if(sel== 4)
         {
-            LCDWriteStringXY(37,1,"   ");
-            LCDWriteStringXY(50,1,"^^");
+            LCDWriteStringXY(37,3,"   ");
+            LCDWriteStringXY(50,3,"&&");
         }
         
         if (sel == 5)
         {
-            LCDWriteStringXY(50,1,"   ^^");
+            LCDWriteStringXY(50,3,"   &&");
         }
         if(sel == 6)
         {
-            LCDWriteStringXY(62,1,"   ^^");
+            LCDWriteStringXY(62,3,"   &&");
         }
         
         char key = readButton();

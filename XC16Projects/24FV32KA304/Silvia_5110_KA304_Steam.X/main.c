@@ -45,13 +45,13 @@
 
 #define max                     256                     // Maximun Pump Output (256 = 100%)
 #define min                     26                      // Minimum Pump Output (0 = OFF)
-#define preInfusionDutyCycle    60              //FIX   // This needs to move to EEPROM & have a User Interface set up so user can change it
+#define preInfusionDutyCycle    90              //FIX   // This needs to move to EEPROM & have a User Interface set up so user can change it
 #define preInfusionTime         (25)            //FIX   // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
-#define soakTime                (preInfusionTime + 25)//FIX    // Length of time for wetted puck to soak EEPROM
-#define startRamp               (soakTime + 25)//FIX    // StartRamp starts pump and Ramps up to Max Pressure
+#define soakTime                (preInfusionTime + 30)//FIX    // Length of time for wetted puck to soak EEPROM
+#define startRamp               (soakTime + 30)//FIX    // StartRamp starts pump and Ramps up to Max Pressure
 #define continuePull            (800 + 1)               // Shot duration, 80 seconds from Start of Cycle(801)
 #define warning                 (850 + 1)               // Turn on Warning Piezo, reminder to turn off switch (851)
-#define steamPumpPower          43                      // DutyCycle to run pump during steam cycle
+#define steamPumpPower          45                      // DutyCycle to run pump during steam cycle
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
@@ -70,7 +70,7 @@
 #define groupPeriodCounter      counter[5]              // Group PID Period Counter
 #define steamPumpRunCounter     counter[6]              // Counter for how long to run pump after steam switch is turned on
 #define lowWaterReminder        counter[7]              // Remind User level is Low when below 25%
-#define numSamples              1                       // Number of samples to average for temp[] readings 
+#define numSamples              3                       // Number of samples to average for temp[] readings 
 #define PIDDuration             200                     // Number of Program cycles (Period) for Group Head PID
     
 
@@ -139,9 +139,9 @@ int main(void)
     
     int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
     
-    int setRangeL[]         = {1300,2250,1850};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
+    int setRangeL[]         = {1750,2650,1850};            // Set Point Low Limits      FIX Group Setpoint back to Min 180
     
-    int setRangeH[]         = {2100,2850,2150};         // Set Point High Limits
+    int setRangeH[]         = {2100,3000,2150};         // Set Point High Limits
     
     int previousSecond     = 0;                        //Used with time.second to limit some stuff to once a second
     
@@ -175,7 +175,7 @@ int main(void)
         total[0] = total[0] - samples[0][sampleIndex];  // Subtract the oldest sample data from the total
         samples[0][sampleIndex] = shortTermTemp[0];     // Assign the just read temperature to the location of the current oldest data
         total[0] = total[0] + samples[0][sampleIndex];  // Add that new sample to the total
-        boilerTemperature = total[0] / numSamples;      // Assign the average value of total to the boilerTemperature variable
+        boilerTemperature = total[0]/numSamples+400;    // Assign the average value of total to the boilerTemperature variable
 
 
         shortTermTemp[1] = tempCalc(ADCRead(0));        // Assign the ADC(0) (Steam Temp) to a temporary variable
@@ -279,65 +279,66 @@ int main(void)
                     LCDWriteCharacter(123);         // generate degree symbol in font list
                     LCDWriteCharacter(70);
 
-                    toggle+=1;
-                    
-                    if(toggle>4)
+                    LCDWriteIntXY(0,2,steamPower,1,0,0);
+                    LCDWriteCharacter(' ');
+                    LCDWriteString(desc[1]);
+                    LCDWriteIntXY(52,2,steamTemperature,4,1,0);
+                    LCDWriteCharacter(123);         // generate degree symbol in font list
+                    LCDWriteCharacter(70);
+
+                    if(!shotTimer)
                     {
-                        toggle=5-toggle;
-                        LCDWriteStringXY(0,2,desc[2]);
-                        LCDWriteIntXY(52,2,groupHeadTemp,4,1,0);
-                        LCDWriteCharacter(123);             // generate degree symbol in font list
-                        LCDWriteCharacter(70);
-                        LCDWriteCharacter(' ');
-                    }
+                        toggle+=1;
                     
-                    if(toggle>1)
-                    {
-                        LCDWriteIntXY(0,2,steamPower,1,0,0);
-                        LCDWriteCharacter(' ');
-                        LCDWriteString(desc[1]);
-                        LCDWriteIntXY(52,2,steamTemperature,4,1,0);
-                        LCDWriteCharacter(123);         // generate degree symbol in font list
-                        LCDWriteCharacter(70);
-                    }
-                
-                    if(shotTimer == 0)
-                    {
-                        LCDWriteStringXY(2,3,"Tank Level:");
-                        LCDWriteIntXY(52,3,level,-1,0,0);
-                        LCDWriteCharacter('%');
-                        LCDWriteCharacter(' ');
-                        LCDWriteCharacter(' ');
-                    
-                        if(level < 25)                  // Tank level < 25%
+                        if(toggle>4)
                         {
-                            blink = 1 - blink;          // toggle blink variable
-                            if(blink)
+                            toggle=5-toggle;
+                            LCDWriteStringXY(0,3,desc[2]);
+                            LCDWriteIntXY(52,3,groupHeadTemp,4,1,0);
+                            LCDWriteCharacter(123);             // generate degree symbol in font list
+                            LCDWriteCharacter(70);
+                            LCDWriteCharacter(' ');
+                        }
+                    
+                        if(toggle>1)
+                        {
+                            LCDWriteStringXY(0,3,"Tank Level:");
+                            LCDWriteIntXY(52,3,level,-1,0,0);
+                            LCDWriteCharacter('%');
+                            LCDWriteString("    ");
+                    
+                            if(level < 25)                  // Tank level < 25%
                             {
-                                LCDWriteStringXY(48,3,"LOW");
-                                LCDWriteCharacter(' ');
-                                LCDWriteCharacter(' ');
-
-                                lowWaterReminder+=1;    
-
-                                if(lowWaterReminder>29) // blink toggles every other second, so, 1/2 the delay time - 1.
+                                blink = 1 - blink;          // toggle blink variable
+        
+                                if(blink)
                                 {
-                                    piezoOutput=1;
-                                    if(!brewSwitch)     // Disable delay if we are pulling a shot (will mess with pump timing)
+                                    LCDWriteStringXY(48,3,"LOW");
+                                    LCDWriteString("    ");
+
+                                    lowWaterReminder+=1;    
+
+                                    if(lowWaterReminder>29) // blink toggles every other second, so, 1/2 the delay time - 1.
                                     {
-                                        __delay_ms(30); // Short, but, annoying piezo reminder
+                                        piezoOutput=1;
+                        
+                                        if(!brewSwitch)     // Disable delay if we are pulling a shot (will mess with pump timing)
+                                        {
+                                            __delay_ms(30); // Short, but, annoying piezo reminder
+                                        }
+                                        piezoOutput=0;      
+                                        lowWaterReminder=0;
                                     }
-                                    piezoOutput=0;      
-                                    lowWaterReminder=0;
                                 }
                             }
                         }
                     }
                     else
                     {
-                        LCDWriteStringXY(2,3,"Shot Timer:");
-                        LCDWriteIntXY(48,3,shotTimer,4,1,0);
-                    }
+                        LCDWriteStringXY(0,3,"Shot Timer:  ");
+                        LCDWriteIntXY(48,3,shotTimer,-1,1,0);
+                        LCDWriteString("     ");
+                    }                    
                 }
             }
             else
@@ -406,7 +407,11 @@ int main(void)
                 if(steamSwitch)
                 {
                     steamSolenoid   =   1;
-                    OC3R            +=  6300;
+                    OC3R            +=  7500;
+                    if(steamTemperature>3150)
+                    {
+                        OC3R        =   1;
+                    }
                     pumpOutput      =   steamPumpPower;
                 }
                 else
@@ -418,10 +423,10 @@ int main(void)
                 
                 (waterPID+OC2R>0X1E84)?(OC2RS=0X1E84):(OC2RS=waterPID+OC2R+1); // Water PID takes what it needs from whatever cycle is left
                 
-                LCDWriteIntXY(0,4,waterPID,4,0,0);
-                LCDWriteIntXY(22,4,steamPID,4,0,0);
-                LCDWriteIntXY(44,4,OC2R,4,0,0);
-                LCDWriteIntXY(66,4,OC3RS,4,0,0);
+                LCDWriteIntXY(0,0,waterPID,4,0,0);
+                LCDWriteIntXY(22,0,steamPID,4,0,0);
+                LCDWriteIntXY(44,0,OC2R,4,0,0);
+                LCDWriteIntXY(66,0,OC3RS,4,0,0);
 
 //                steamPumpRunCounter+=1;                 // Water Pump runs at Steam Power Level for 3100 Program cycles FIX (add EEPROM & HMI location to set duration)
                 
@@ -437,10 +442,10 @@ int main(void)
             }
             else                                //Water setpoint takes priority
             {
-                LCDWriteIntXY(0,4,waterPID,4,0,0);
-                LCDWriteIntXY(22,4,steamPID,4,0,0);
-                LCDWriteIntXY(44,4,OC3R,4,0,0);
-                LCDWriteIntXY(66,4,OC2R,4,0,0);
+                LCDWriteIntXY(0,0,waterPID,4,0,0);
+                LCDWriteIntXY(22,0,steamPID,4,0,0);
+                LCDWriteIntXY(44,0,OC3R,4,0,0);
+                LCDWriteIntXY(66,0,OC2R,4,0,0);
 
                 steamSolenoid=0;
                 steamPumpRunCounter = 0;        // Reset the Steam Pump run counter, so, if Steam switch is pressed again, pump will run
