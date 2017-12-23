@@ -10,5 +10,6 @@ adc.h  \
 pid.h  \
 level.h  \
 pwm.h  \
-menu.h  \
+usermenu.h  \
+mainMenu.h  \
 coffee.h 

@@ -1,10 +1,10 @@
 #include    "system.h"
 #include    "buttons.h"
 
-uint16_t    readButtons =   0;
-int8_t      button      =   0;
-int8_t      lastButton  =   0;
-int8_t      j           =   0;
+uint16_t        readButtons     =   0;
+int8_t          button          =   None;
+int8_t          lastButton      =   None;
+int8_t          j               =   0;
 
 char readButton(void)
 {

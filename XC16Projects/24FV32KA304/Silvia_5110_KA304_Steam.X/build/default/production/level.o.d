@@ -9,4 +9,5 @@ rtcc.h  \
 eeprom.h  \
 adc.h  \
 pid.h  \
-pwm.h 
+pwm.h  \
+usermenu.h 

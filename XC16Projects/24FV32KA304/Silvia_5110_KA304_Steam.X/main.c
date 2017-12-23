@@ -1,7 +1,7 @@
 // Add Escape keys to user menu's
 
 #include    "system.h"
-#include    "menu.h"
+#include    "mainMenu.h"
 #include    "coffee.h"
 // *****************************************************************************
 #define piezoOutput             _LATA1          //FIX        // Output to turn on Piezo, if Brew switch left on too long, or water level too low  Add option for user to disable
@@ -134,9 +134,9 @@ int main(void)
     
     int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
     
-    int setRangeL[]         = {1750,2650,1850};         // Set Point Low Limits      FIX Group Setpoint back to Min 180
+//    int setRangeL[]         = {1750,2650,1850};         // Set Point Low Limits      FIX Group Setpoint back to Min 180
     
-    int setRangeH[]         = {2100,3000,2150};         // Set Point High Limits
+  //  int setRangeH[]         = {2100,3000,2150};         // Set Point High Limits
     
     int previousSecond      = 0;                        //Used with time.second to limit some stuff to once a second
     
@@ -160,7 +160,7 @@ int main(void)
         
         waterSwitch =   !_RC9;                          // RC9 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
 
-        static int timer = 0;                           // Used to count up time in a loop, to auto exit if user in a menu too long
+//        static int timer = 0;                           // Used to count up time in a loop, to auto exit if user in a menu too long
         
         time = getRTCTime();                            // get the time
         
@@ -592,52 +592,55 @@ int main(void)
             OC1CON2bits.OCTRIS  = 1;                // Tri-State the OC1 Pin, if powerSwitch is OFF
             OC2CON2bits.OCTRIS  = 1;                // Tri-State the OC2 Pin, if powerSwitch is OFF
             OC3CON2bits.OCTRIS  = 1;                // Tri-State the OC3 Pin, if powerSwitch is OFF
+            backLightOFF        = 0;
+            backLightCounter    = 0;                // Reset BackLight counter
         }
 
 
         if (testKey == Menu)
         {
-            backLightCounter    =   0;               // Reset BackLight counter
+            userMenu();
             
-            if(timer<1)
-            {
-                powerSwitch = 0;
-                timer+=1;
-                goto done2;
-            }
+//            backLightCounter    =   0;               // Reset BackLight counter
             
-            LCDClear();
-            LCDBitmap(&menu2[0], 5,84);         //Draw Menu2
-            LCDWriteStringXY(4,1,"Press \"ENTER\" Key");
-            LCDWriteStringXY(4,2,"to Set the Time");
+  //          if(timer<1)
+    //        {
+      //          powerSwitch = 0;
+        //        timer+=1;
+          //      goto done2;
+            //}
+            
+//            LCDClear();
+  //          LCDBitmap(&menu2[0], 5,84);         //Draw Menu2
+    //        LCDWriteStringXY(4,1,"Press \"ENTER\" Key");
+      //      LCDWriteStringXY(4,2,"to Set the Time");
 
-            while(testKey != Enter)
-            {
-                testKey = readButton();
-                timer +=1;
-                __delay_ms(10);
-                if (timer > 500)
-                {
-                    timer = 0;
-                    LCDClear();
-                    LCDBitmap(&menu2[0], 5, 84);//Draw Menu2
-                    goto done2;
-                }
-            }
-            SetTime();
+        //    while(testKey != Enter)
+          //  {
+            //    testKey = readButton();
+              //  timer +=1;
+                //__delay_ms(10);
+//                if (timer > 500)
+  //              {
+    //                timer = 0;
+      //              LCDClear();
+        //            LCDBitmap(&menu2[0], 5, 84);//Draw Menu2
+          //          goto done2;
+            //    }
+//            }
+  //          SetTime();
             
-            timer = 0;
+    //        timer = 0;
 
-//                LCDBitmap(&menu0[0], 5, 84);                 //Draw Menu0
-            __delay_ms(500);
+      //      __delay_ms(500);
             
-            done2:;
-            LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
+        //    done2:;
+          //  LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
         }
         
 // ******************************************************************************
         
-        if(testKey == Enter)
+/*        if(testKey == Enter)
         {
             backLightCounter = 0;               // Reset BackLight counter
             
@@ -793,7 +796,7 @@ int main(void)
             backLightCounter = 0;               // Reset BackLight counter
             LCDBitmap(&menu0[0], 5, 84);        // Draw Menu0
         }
-        
+*/        
         if(backLightCounter > 1199)             // No Keys Pressed for 20 Minutes
         {
             backLightOFF = 1;                   // so, we might as well shut OFF the LCD BackLight
