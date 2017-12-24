@@ -145,13 +145,13 @@ void displayTime(void)
 {
     RTCTime time;                                                               // declare the type of the time object
     time = getRTCTime();                                                        // Read current time from RTCC
-    LCDWriteIntXY(0,4,time.year,2,0,0);
+    LCDWriteIntXY(2,4,time.year,2,0,0);
     LCDWriteCharacter('/');
     LCDWriteString(month[time.month]);
     LCDWriteCharacter('/');
     LCDWriteInt(time.day,2,0,0);
-    LCDWriteStringXY(37,4,WeekDay[time.weekday]);
-    LCDWriteIntXY(50,4,time.hour,2,0,0);
+    LCDWriteStringXY(39,4,WeekDay[time.weekday]);
+    LCDWriteIntXY(52,4,time.hour,2,0,0);
     LCDWriteCharacter(':');
     LCDWriteInt(time.minute,2,0,0);
     LCDWriteCharacter(':');
@@ -205,37 +205,37 @@ void SetTime()
         
         if(sel == 0)
         {
-            LCDWriteStringXY(0,3,"&&");                                         // Draw Pointer, to show what we are setting
+            LCDWriteStringXY(2,3,"&&");                                         // Draw Pointer, to show what we are setting
         }
         
         if(sel == 1)
         {
-            LCDWriteStringXY(0,3,"   &&&");                                     // Draw Pointer, to show what we are setting
+            LCDWriteStringXY(2,3,"   &&&");                                     // Draw Pointer, to show what we are setting
         }
         
         if(sel == 2)
         {
-            LCDWriteStringXY(12,3,"    &&");                                    // Draw Pointer
+            LCDWriteStringXY(14,3,"    &&");                                    // Draw Pointer
         }
         
         if(sel == 3)
         {
-            LCDWriteStringXY(25,3,"   &&&");                                    // Draw Pointer
+            LCDWriteStringXY(27,3,"   &&&");                                    // Draw Pointer
         }
         
         if(sel== 4)
         {
-            LCDWriteStringXY(37,3,"   ");
-            LCDWriteStringXY(50,3,"&&");
+            LCDWriteStringXY(39,3,"   ");
+            LCDWriteStringXY(52,3,"&&");
         }
         
         if (sel == 5)
         {
-            LCDWriteStringXY(50,3,"   &&");
+            LCDWriteStringXY(52,3,"   &&");
         }
         if(sel == 6)
         {
-            LCDWriteStringXY(62,3,"   &&");
+            LCDWriteStringXY(64,3,"   &&");
         }
         
         char key = readButton();
@@ -303,15 +303,21 @@ void SetTime()
 //***************************************************************************************************************************************************************
 int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
 {
-    if(hour == eepromGetData(startHour[weekday]) && minute == eepromGetData(startMinute[weekday]))
+    if(hour==eepromGetData(startHour[weekday]) && minute==eepromGetData(startMinute[weekday]))
     {
-        run = 1;
+        run=1;
     }
     
-    if(hour == eepromGetData(stopHour[weekday]) && minute == eepromGetData(stopMinute[weekday]))
+    if(hour==eepromGetData(stopHour[weekday]) && minute==eepromGetData(stopMinute[weekday]))
     {
-        run = 0;
+        run=0;
     }
+    
+    if(eepromGetData(startHour[weekday])==-1)
+    {
+        run=0;
+    }
+    
     return run;
 }
 
@@ -322,7 +328,7 @@ void writeStartStopTimes(void)
 {
     int16_t timer = 0;                                                     // Used to return to operation if user does not finish!
     
-    testKey = None;
+//    testKey = None;
     
     while(testKey != Enter)
     {

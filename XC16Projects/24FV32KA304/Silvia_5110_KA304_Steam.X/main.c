@@ -47,7 +47,7 @@
 #define startRamp               (soakTime + 30)//FIX    // StartRamp starts pump and Ramps up to Max Pressure
 #define continuePull            (800 + 1)               // Shot duration, 80 seconds from Start of Cycle(801)
 #define warning                 (850 + 1)               // Turn on Warning Piezo, reminder to turn off switch (851)
-#define steamPumpPower          39                      // DutyCycle to run pump during steam cycle
+#define steamPumpPower          37                      // DutyCycle to run pump during steam cycle
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
@@ -84,14 +84,14 @@ int const Kd[]          =   {18,20,22};
 
 char *desc[]            =   {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int powerFail           =   0;                          //Setting powerFail to 1, instructs the user to set the time
+int powerFail           =   1;                          //Setting powerFail to 1, instructs the user to set the time
 
 extern int run;
 
 char tuning             =   0;
 
 // *************** Main Routine ************************************************
-int main(void)
+void main(void)
 {                       
     InitApp();
     
@@ -128,7 +128,7 @@ int main(void)
     
     unsigned char testKey   = 0;                        // Variable used for Storing Which Menu Key is Pressed
     
-    int bits[9]             = {0,0,0,0,0,0,0,1,0};
+    int bits[9]             = {0,0,0,0,0,0,0,0,0};
  
     //    int internalBGV;
     
@@ -269,14 +269,12 @@ int main(void)
                     
                     displayTime();
 
-                    LCDWriteStringXY(0,1,desc[0]);
+                    LCDWriteStringXY(2,1,desc[0]);
                     LCDWriteIntXY(52,1,boilerTemperature,4,1,0);
                     LCDWriteCharacter(123);         // generate degree symbol in font list
                     LCDWriteCharacter(70);
 
-                    LCDWriteIntXY(0,2,steamPower,1,0,0);
-                    LCDWriteCharacter(' ');
-                    LCDWriteString(desc[1]);
+                    LCDWriteStringXY(2,2,desc[1]);
                     LCDWriteIntXY(52,2,steamTemperature,4,1,0);
                     LCDWriteCharacter(123);         // generate degree symbol in font list
                     LCDWriteCharacter(70);
@@ -288,7 +286,7 @@ int main(void)
                         if(toggle>4)
                         {
                             toggle=5-toggle;
-                            LCDWriteStringXY(0,3,desc[2]);
+                            LCDWriteStringXY(2,3,desc[2]);
                             LCDWriteIntXY(52,3,groupHeadTemp,4,1,0);
                             LCDWriteCharacter(123);             // generate degree symbol in font list
                             LCDWriteCharacter(70);
@@ -297,7 +295,7 @@ int main(void)
                     
                         if(toggle>1)
                         {
-                            LCDWriteStringXY(0,3,"Tank Level:");
+                            LCDWriteStringXY(2,3,"Tank Level:");
                             LCDWriteIntXY(52,3,level,-1,0,0);
                             LCDWriteCharacter('%');
                             LCDWriteString("    ");
@@ -330,7 +328,7 @@ int main(void)
                     }
                     else
                     {
-                        LCDWriteStringXY(0,3,"Shot Timer:  ");
+                        LCDWriteStringXY(2,3,"Shot Timer:  ");
                         LCDWriteIntXY(48,3,shotTimer,-1,1,0);
                         LCDWriteString("     ");
                     }                    
@@ -355,7 +353,7 @@ int main(void)
         there:
         if(tuning)
         {
-            LCDWriteStringXY(0,1,desc[1]);
+            LCDWriteStringXY(2,1,desc[1]);
             LCDWriteIntXY(48,1,steamTemperature,4,1,0);
             LCDWriteCharacter(123);         // generate degree symbol in font list
             LCDWriteCharacter(70);
@@ -418,7 +416,7 @@ int main(void)
                 
                 (waterPID+OC2R>0X1E84)?(OC2RS=0X1E84):(OC2RS=waterPID+OC2R+1); // Water PID takes what it needs from whatever cycle is left
                 
-                LCDWriteIntXY(0,0,waterPID,4,0,0);
+                LCDWriteIntXY(2,0,waterPID,4,0,0);
                 LCDWriteIntXY(22,0,steamPID,4,0,0);
                 LCDWriteIntXY(44,0,OC2R,4,0,0);
                 LCDWriteIntXY(66,0,OC3RS,4,0,0);
@@ -437,7 +435,7 @@ int main(void)
             }
             else                                //Water setpoint takes priority
             {
-                LCDWriteIntXY(0,0,waterPID,4,0,0);
+                LCDWriteIntXY(2,0,waterPID,4,0,0);
                 LCDWriteIntXY(22,0,steamPID,4,0,0);
                 LCDWriteIntXY(44,0,OC3R,4,0,0);
                 LCDWriteIntXY(66,0,OC2R,4,0,0);
@@ -600,7 +598,31 @@ int main(void)
         if (testKey == Menu)
         {
             userMenu();
+        }
+        
+        if (testKey == Enter)                      // Reset the LCD
+        {
+//            tuning = 1-tuning;
             
+            LCDInit();
+            __delay_ms(100);
+            LCDClear();
+            backLightCounter = 0;               // Reset BackLight counter
+            LCDBitmap(&menu0[0], 5, 84);        // Draw Menu0
+        }
+        
+        if(testKey==Down)
+        {
+            steamPower=0;
+            LCDWriteStringXY(68,5,"OFF")
+        }
+        
+        if(testKey==Up)
+        {
+            steamPower=1;
+            LCDWriteStringXY(68,5,"ON ")
+        }
+        
 //            backLightCounter    =   0;               // Reset BackLight counter
             
   //          if(timer<1)
@@ -636,10 +658,8 @@ int main(void)
             
         //    done2:;
           //  LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
-        }
-        
+
 // ******************************************************************************
-        
 /*        if(testKey == Enter)
         {
             backLightCounter = 0;               // Reset BackLight counter
@@ -812,6 +832,6 @@ int main(void)
 // *****************************************************************************
         ClrWdt();                               // Clear (Re-Set) the WatchDog Timer
     }
-    return(1);
+//    return(1);
 }
 //***************************************************************************************************************************************************************

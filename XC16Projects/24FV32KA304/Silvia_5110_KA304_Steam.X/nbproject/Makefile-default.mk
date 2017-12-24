@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=adc.c buttons.c eeprom.c lcd.c pid.c pwm.c system.c user.c rtcc.c level.c main.c usermenu.c
+SOURCEFILES_QUOTED_IF_SPACED=adc.c buttons.c eeprom.c lcd.c pid.c pwm.c system.c user.c rtcc.c level.c usermenu.c main.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/adc.o ${OBJECTDIR}/buttons.o ${OBJECTDIR}/eeprom.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/system.o ${OBJECTDIR}/user.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/level.o ${OBJECTDIR}/main.o ${OBJECTDIR}/usermenu.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/adc.o.d ${OBJECTDIR}/buttons.o.d ${OBJECTDIR}/eeprom.o.d ${OBJECTDIR}/lcd.o.d ${OBJECTDIR}/pid.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/rtcc.o.d ${OBJECTDIR}/level.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/usermenu.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/adc.o ${OBJECTDIR}/buttons.o ${OBJECTDIR}/eeprom.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/system.o ${OBJECTDIR}/user.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/level.o ${OBJECTDIR}/usermenu.o ${OBJECTDIR}/main.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/adc.o.d ${OBJECTDIR}/buttons.o.d ${OBJECTDIR}/eeprom.o.d ${OBJECTDIR}/lcd.o.d ${OBJECTDIR}/pid.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/rtcc.o.d ${OBJECTDIR}/level.o.d ${OBJECTDIR}/usermenu.o.d ${OBJECTDIR}/main.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/adc.o ${OBJECTDIR}/buttons.o ${OBJECTDIR}/eeprom.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/system.o ${OBJECTDIR}/user.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/level.o ${OBJECTDIR}/main.o ${OBJECTDIR}/usermenu.o
+OBJECTFILES=${OBJECTDIR}/adc.o ${OBJECTDIR}/buttons.o ${OBJECTDIR}/eeprom.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/system.o ${OBJECTDIR}/user.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/level.o ${OBJECTDIR}/usermenu.o ${OBJECTDIR}/main.o
 
 # Source Files
-SOURCEFILES=adc.c buttons.c eeprom.c lcd.c pid.c pwm.c system.c user.c rtcc.c level.c main.c usermenu.c
+SOURCEFILES=adc.c buttons.c eeprom.c lcd.c pid.c pwm.c system.c user.c rtcc.c level.c usermenu.c main.c
 
 
 CFLAGS=
@@ -158,19 +158,19 @@ ${OBJECTDIR}/level.o: level.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  level.c  -o ${OBJECTDIR}/level.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/level.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/level.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
 ${OBJECTDIR}/usermenu.o: usermenu.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/usermenu.o.d 
 	@${RM} ${OBJECTDIR}/usermenu.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  usermenu.c  -o ${OBJECTDIR}/usermenu.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/usermenu.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/usermenu.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
 ${OBJECTDIR}/adc.o: adc.c  nbproject/Makefile-${CND_CONF}.mk
@@ -243,19 +243,19 @@ ${OBJECTDIR}/level.o: level.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  level.c  -o ${OBJECTDIR}/level.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/level.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/level.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
 ${OBJECTDIR}/usermenu.o: usermenu.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/usermenu.o.d 
 	@${RM} ${OBJECTDIR}/usermenu.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  usermenu.c  -o ${OBJECTDIR}/usermenu.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/usermenu.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/usermenu.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 
