@@ -1,7 +1,8 @@
 // Add Escape keys to user menu's
 
 #include    "system.h"
-#include    "mainMenu.h"
+//#include    "mainMenu.h"
+#include    "menumain.h"
 #include    "coffee.h"
 // *****************************************************************************
 #define piezoOutput             _LATA1          //FIX        // Output to turn on Piezo, if Brew switch left on too long, or water level too low  Add option for user to disable
@@ -91,7 +92,7 @@ extern int run;
 char tuning             =   0;
 
 // *************** Main Routine ************************************************
-void main(void)
+int main(void)
 {                       
     InitApp();
     
@@ -148,7 +149,7 @@ void main(void)
     
     
 // ******************************************************************************
-    LCDBitmap(&menu0[0], 5, 84);                        //Draw Menu0
+    LCDBitmap(&menumain[0], 5, 63);                        //Draw Menu0
 
     while(1)
     {
@@ -241,11 +242,12 @@ void main(void)
                 if(lastPowerState!=powerSwitch)
                 {
                     LCDClear();
-                    LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
+                    LCDBitmap(&menumain[0], 5, 63);        //Draw Menu0
                     OC1CON2bits.OCTRIS  = 0;
                     OC2CON2bits.OCTRIS  = 0;
                     OC3CON2bits.OCTRIS  = 0;
                     backLightCounter    = 0;
+                    lastPowerState = powerSwitch;
                 }
                 
                 if(powerFail == 1)
@@ -421,6 +423,8 @@ void main(void)
                 LCDWriteIntXY(44,0,OC2R,4,0,0);
                 LCDWriteIntXY(66,0,OC3RS,4,0,0);
 
+                LCDWriteStringXY(68,5,"ON ")
+
 //                steamPumpRunCounter+=1;                 // Water Pump runs at Steam Power Level for 3100 Program cycles FIX (add EEPROM & HMI location to set duration)
                 
   //              if(steamPumpRunCounter<3100)
@@ -439,6 +443,8 @@ void main(void)
                 LCDWriteIntXY(22,0,steamPID,4,0,0);
                 LCDWriteIntXY(44,0,OC3R,4,0,0);
                 LCDWriteIntXY(66,0,OC2R,4,0,0);
+
+                LCDWriteStringXY(68,5,"OFF")
 
                 steamSolenoid=0;
 //                steamPumpRunCounter = 0;        // Reset the Steam Pump run counter, so, if Steam switch is pressed again, pump will run
@@ -592,6 +598,7 @@ void main(void)
             OC3CON2bits.OCTRIS  = 1;                // Tri-State the OC3 Pin, if powerSwitch is OFF
             backLightOFF        = 0;
             backLightCounter    = 0;                // Reset BackLight counter
+            lastPowerState      = 2;                // Set to 2 to force a reset of OCTRIS on menu exit, as well as a write to lastPowerState   
         }
 
 
@@ -608,19 +615,19 @@ void main(void)
             __delay_ms(100);
             LCDClear();
             backLightCounter = 0;               // Reset BackLight counter
-            LCDBitmap(&menu0[0], 5, 84);        // Draw Menu0
+            LCDBitmap(&menumain[0], 5, 63);        // Draw Menu0
         }
         
         if(testKey==Down)
         {
             steamPower=0;
-            LCDWriteStringXY(68,5,"OFF")
+            lastPowerState = 2;
         }
         
         if(testKey==Up)
         {
             steamPower=1;
-            LCDWriteStringXY(68,5,"ON ")
+            lastPowerState = 2;
         }
         
 //            backLightCounter    =   0;               // Reset BackLight counter
@@ -827,11 +834,9 @@ void main(void)
             backLightOFF = 0;
         }
         
-        lastPowerState = powerSwitch;
-        
 // *****************************************************************************
         ClrWdt();                               // Clear (Re-Set) the WatchDog Timer
     }
-//    return(1);
+    return(1);
 }
 //***************************************************************************************************************************************************************
