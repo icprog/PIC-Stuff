@@ -1,7 +1,7 @@
 #ifndef RTCCMENU_H
 #define	RTCCMENU_H
 
-const char rtccMenu [] =                                                        // Blank, Enter, Down, Up
+const unsigned char rtccMenu [] =                                                        // Blank, Enter, Down, Up
 {
 0xFF,
 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81,

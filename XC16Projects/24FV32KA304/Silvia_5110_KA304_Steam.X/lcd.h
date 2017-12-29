@@ -19,7 +19,7 @@
 void gotoXY(char x, char y);
 
 // ***** Display BitMap Image on Display ***************************************
-void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
+void LCDBitmap(const unsigned char my_array[], uint8_t startLine, uint16_t len);
 
 // ***** Write Single Character to Display *************************************
 void LCDWriteCharacter(const char character);
@@ -40,6 +40,6 @@ void LCDInit(void);
 void LCDWrite(uint8_t data_or_command, uint8_t data);
 
 // ***** Draw a simple Box to the Display **************************************
-void LCDDrawBox(void);
+//void LCDDrawBox(void);
 
 #endif

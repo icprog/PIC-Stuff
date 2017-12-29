@@ -1,7 +1,6 @@
 // Add Escape keys to user menu's
 
 #include    "system.h"
-//#include    "mainMenu.h"
 #include    "menumain.h"
 #include    "coffee.h"
 // *****************************************************************************
@@ -34,7 +33,6 @@
 #define blink                   bits[6]                 // blink flashes display when water level low
 #define steamPower              bits[7]                 // set to turn on steam boiler
 #define toggle                  bits[8]                 // toggle display between steam & group Temperatures
-       
 // *****************************************************************************
 
 //**************** Timer2 set in pwm.c (Timer2 Runs the Shot Counter) **********
@@ -91,6 +89,8 @@ extern int run;
 
 char tuning             =   0;
 
+char pull               =   0;                          // pull a 25 second shot with a display key
+
 // *************** Main Routine ************************************************
 int main(void)
 {                       
@@ -117,11 +117,11 @@ int main(void)
 
     uint8_t count2          = 0;                        // count2 ramps pump pressure
     
-    int samples[3][numSamples] ={[0 ... 2] = {0}};      //Used to average temp[] over "numSamples" of samples
+    int samples[3][numSamples]      ={[0 ... 2] = {0}}; //Used to average temp[] over "numSamples" of samples
     
-    static unsigned int temp[3]    = {0,0,0};
+    static unsigned int temp[3]     = {0,0,0};
     
-    unsigned int shortTermTemp[3]= {0,0,0};                                              
+    unsigned int shortTermTemp[3]   = {0,0,0};                                              
     
     uint8_t sampleIndex     = 0;                        // Used to calculate average sample of temp[]
     
@@ -135,10 +135,6 @@ int main(void)
     
     int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
     
-//    int setRangeL[]         = {1750,2650,1850};         // Set Point Low Limits      FIX Group Setpoint back to Min 180
-    
-  //  int setRangeH[]         = {2100,3000,2150};         // Set Point High Limits
-    
     int previousSecond      = 0;                        //Used with time.second to limit some stuff to once a second
     
     unsigned int counter[7] = {0,0,0,0,1140,0,0};       // Shot progress, Shot timer, Shot Warning timer, Shot display Timer, Back Light, groupPeriodCounter,
@@ -149,7 +145,7 @@ int main(void)
     
     
 // ******************************************************************************
-    LCDBitmap(&menumain[0], 5, 63);                        //Draw Menu0
+//    LCDBitmap(&menumain[0], 5, 59);                        //Draw Menu0
 
     while(1)
     {
@@ -161,8 +157,6 @@ int main(void)
         
         waterSwitch =   !_RC9;                          // RC9 is pulled high normally, pulled low by turning ON Water switch, so 0 is ON, 1 is OFF
 
-//        static int timer = 0;                           // Used to count up time in a loop, to auto exit if user in a menu too long
-        
         time = getRTCTime();                            // get the time
         
 
@@ -242,18 +236,18 @@ int main(void)
                 if(lastPowerState!=powerSwitch)
                 {
                     LCDClear();
-                    LCDBitmap(&menumain[0], 5, 63);        //Draw Menu0
+                    LCDBitmap(&menumain[0], 5, 59);        //Draw Menu0
                     OC1CON2bits.OCTRIS  = 0;
                     OC2CON2bits.OCTRIS  = 0;
                     OC3CON2bits.OCTRIS  = 0;
                     backLightCounter    = 0;
-                    lastPowerState = powerSwitch;
+                    backLightOFF        = 0;
                 }
                 
                 if(powerFail == 1)
                 {
-                    LCDWriteStringXY(4,0,"Press \"Time\" to Set");
-                    LCDWriteStringXY(4,1,"the Current Time");
+                    LCDWriteStringXY(4,1,"Press \"SET\" to Set");
+                    LCDWriteStringXY(4,2,"the Current Time");
                 }
                 else
                 {
@@ -297,8 +291,8 @@ int main(void)
                     
                         if(toggle>1)
                         {
-                            LCDWriteStringXY(2,3,"Tank Level:");
-                            LCDWriteIntXY(52,3,level,-1,0,0);
+                            LCDWriteStringXY(2,3,"Tank Level:  ");
+                            LCDWriteInt(level,-1,0,0);
                             LCDWriteCharacter('%');
                             LCDWriteString("    ");
                     
@@ -350,6 +344,7 @@ int main(void)
                 OC3CON2bits.OCTRIS  = 1;                // Tri-State the OC3 Pin, if powerSwitch is OFF
                 shotTimer           = 0;                // Re-Set the ShotTimer
             }
+            lastPowerState          = powerSwitch;
         }
         
         there:
@@ -380,9 +375,6 @@ int main(void)
                 groupPeriodCounter = 0;
             }
         
-//            LCDWriteIntXY(0,4,groupPeriodCounter,4,0,0);
-  //          LCDWriteIntXY(22,4,GroupHeadPID,5,0,0);
-    //        LCDWriteIntXY(44,4,groupOutput,2,0,0);
             if(groupHeadPID > groupPeriodCounter)
             {
                 groupOutput = 1;
@@ -391,13 +383,11 @@ int main(void)
             {
                 groupOutput = 0;
             }
- 
-            if(steamPower)                             //Steam setpoint takes priority
-            { 
-//                steamSolenoid=1;
-                
-                // OC3 is Initialized as edge aligned, OC2 as center-aligned (OC3R is dutycycle for OC3, OC2R is start of cycle for OC2)
-                OC3R=steamPID;                     // Start Steam Boiler Output at beginning of cycle, can use up to 100% of cycle    
+            
+    // OC3 is Initialized as edge aligned, OC2 as center-aligned (OC3R is dutycycle for OC3, OC2R is start of cycle for OC2)
+            if(steamPower)                              //Steam setpoint takes priority
+            {                                     
+                OC3R=steamPID;                          // Start Steam Boiler Output at beginning of cycle, can use up to 100% of cycle    
 
                 if(steamSwitch)
                 {
@@ -420,34 +410,23 @@ int main(void)
                 
                 LCDWriteIntXY(2,0,waterPID,4,0,0);
                 LCDWriteIntXY(22,0,steamPID,4,0,0);
-                LCDWriteIntXY(44,0,OC2R,4,0,0);
-                LCDWriteIntXY(66,0,OC3RS,4,0,0);
+                LCDWriteIntXY(44,0,groupOutput,2,0,0);
+//                LCDWriteIntXY(44,0,OC2R,4,0,0);
+  //              LCDWriteIntXY(66,0,OC3RS,4,0,0);
 
                 LCDWriteStringXY(68,5,"ON ")
-
-//                steamPumpRunCounter+=1;                 // Water Pump runs at Steam Power Level for 3100 Program cycles FIX (add EEPROM & HMI location to set duration)
-                
-  //              if(steamPumpRunCounter<3100)
-    //            {
-//                    OC1R = steamPumpPower;
-      //          }
-        //        else
-          //      {
-            //        OC1R = 0;
-              //      steamPumpRunCounter = 3100;
-                //}
             }
             else                                //Water setpoint takes priority
             {
                 LCDWriteIntXY(2,0,waterPID,4,0,0);
                 LCDWriteIntXY(22,0,steamPID,4,0,0);
-                LCDWriteIntXY(44,0,OC3R,4,0,0);
-                LCDWriteIntXY(66,0,OC2R,4,0,0);
+                LCDWriteIntXY(44,0,groupOutput,2,0,0);
+//                LCDWriteIntXY(44,0,OC3R,4,0,0);
+  //              LCDWriteIntXY(66,0,OC2R,4,0,0);
 
                 LCDWriteStringXY(68,5,"OFF")
 
                 steamSolenoid=0;
-//                steamPumpRunCounter = 0;        // Reset the Steam Pump run counter, so, if Steam switch is pressed again, pump will run
 
                 OC3R=0;
                 OC2R=0x1E85-waterPID;           // OC2R must be at least 1, so 0x1E85 instead of 0x1E84!!
@@ -461,12 +440,6 @@ int main(void)
                 OC2R = 2;
                 backLightCounter = 0;           // Turn on Backlight if you are pulling a shot.
                 
-//                LCDWriteStringXY(2,5,"Pump Output:");
-  //              LCDWriteInt(powerOut,3,0,0);
-    //            LCDWriteCharacter('%');
-      //          LCDWriteCharacter(' ');
-        //        LCDWriteCharacter(' ');
-                
                 T2CONbits.TON       =   1;      // Turn Timer2 ON
                 
                 shotDisplayTimer    =   0;      // Timer to reset Shot Counter    
@@ -475,11 +448,13 @@ int main(void)
                 {
                     brewSolenoid=1;
                     pumpOutput = preInfusionDutyCycle;
+                    pull+=1;
                 }
                 
                 if(shotProgressCounter > preInfusionTime && shotProgressCounter <= soakTime)
                 {
                     pumpOutput = 0;
+                    pull = 0;
                 }
 
                 if (shotProgressCounter > soakTime && shotProgressCounter <= startRamp)               
@@ -515,27 +490,26 @@ int main(void)
                     pumpOutput = min;
                 }
                 
-                if(shotProgressCounter > 600) pumpOutput  = 0;// Turn off the Pump as well
+                if(shotProgressCounter > 600) pumpOutput  = 0;  // Turn off the Pump as well
                 
                 
-                if (shotProgressCounter >= warning)     // 90 Seconds has elapsed without Brew Switch being turned off,
+                if (shotProgressCounter >= warning)             // 90 Seconds has elapsed without Brew Switch being turned off,
                 {                  
-                    piezoOutput = 1;                    // Activate Piezo Buzzer for 1/2 second
-//                    pumpOutput  = 0;                    // Turn off the Pump as well
+                    piezoOutput = 1;                            // Activate Piezo Buzzer for 1/2 second
                 }
 
-                if(shotProgressCounter >= warning + 5)  // Piezo has been on for 1/2 second
+                if(shotProgressCounter >= warning + 5)          // Piezo has been on for 1/2 second
                 { 
-                    piezoOutput = 0;                    // So, Shut it off! (pulsing alarm)
-                    shotProgressCounter = (warning - 25);// set time back 2.5 seconds, so it can go again.(in 2 seconds)
-                    warningTimer+=1;                    // Increment warningTimer every 2.5 seconds, after 10 counts, alarm will go solid
+                    piezoOutput = 0;                            // So, Shut it off! (pulsing alarm)
+                    shotProgressCounter = (warning - 25);       // set time back 2.5 seconds, so it can go again.(in 2 seconds)
+                    warningTimer+=1;                            // Increment warningTimer every 2.5 seconds, after 10 counts, alarm will go solid
                 }
 
-                if(warningTimer >= 10)                  // After 10 counts of pulsing alarm being ignored,
+                if(warningTimer >= 10)                          // After 10 counts of pulsing alarm being ignored,
                 { 
-                    piezoOutput = 1;                        // turn Piezo on constantly,
-                    shotProgressCounter = (warning - 250);  // and set tenCount to below the pulsing alarm time,
-                    warningTimer = 10;                      // so Piezo will not start pulsing alarm again.
+                    piezoOutput = 1;                            // turn Piezo on constantly,
+                    shotProgressCounter = (warning - 250);      // and set tenCount to below the pulsing alarm time,
+                    warningTimer = 10;                          // so Piezo will not start pulsing alarm again.
                 }                                       
                 
                 
@@ -552,6 +526,67 @@ int main(void)
                 }
                 powerOut = pumpOutput*100/256;
             }
+            else if(pull)
+            {
+                OC2R = 2;
+
+                backLightCounter = 0;           // Turn on Backlight if you are pulling a shot.
+                
+                T2CONbits.TON       =   1;      // Turn Timer2 ON
+                
+                if(shotProgressCounter <= preInfusionTime)
+                {
+                    brewSolenoid=1;
+                    pumpOutput = preInfusionDutyCycle;
+                }
+                
+                if(shotProgressCounter > preInfusionTime && shotProgressCounter <= soakTime)
+                {
+                    pumpOutput = 0;
+                }
+
+                if (shotProgressCounter > soakTime && shotProgressCounter <= startRamp)               
+                {
+                    if(pumpOutput <= max)
+                    {
+                        count2+=1;
+                        
+                        if(count2 >5)           // 13 gets us to 100% in 2.5 seconds (the current amount of StartRamp Time)
+                        {
+                            if(pumpOutput<max) pumpOutput +=16;
+                            count2 = 0;
+                        }
+                    }
+                }
+            
+                if(shotProgressCounter > startRamp && shotProgressCounter <= continuePull)
+                {
+                    if(pumpOutput >= min)
+                    {   
+                        count2 +=1;
+                        
+                        if(count2 > 15)
+                        {
+                            pumpOutput -=2;
+                            count2 = 0;
+                        }
+                    }
+                } 
+                    
+                if(shotProgressCounter > 250-preInfusionTime+soakTime)
+                {
+                    pumpOutput  =   0;
+                    pull        =   0;
+                }
+
+                if(IFS0bits.T2IF)
+                {
+                    shotProgressCounter +=1;
+    
+                    IFS0bits.T2IF = 0;
+                }
+                powerOut = pumpOutput*100/256;
+            }
             else
             {
                 brewSolenoid        =   0;
@@ -559,10 +594,9 @@ int main(void)
                 warningTimer        =   0;
                 T2CONbits.TON       =   0;
                 shotProgressCounter =   0;
-//                pumpOutput          =   0;
                 shotDisplayTimer    +=  1;
 
-                if(shotDisplayTimer >=12500)                                    // Approximately 20 seconds (about 625 counts/second)
+                if(shotDisplayTimer >=4000)                                    // Approximately 20 seconds (about 200 counts/second)
                 {
                     shotTimer =         0;
                 }
@@ -582,7 +616,7 @@ int main(void)
         }
         
 // ******************************************************************************
-        if(!brewSwitch && !steamSwitch && !waterSwitch)
+        if(!brewSwitch && !steamSwitch && !waterSwitch && !pull)
         {
             pumpOutput          =   0;
         }
@@ -609,13 +643,14 @@ int main(void)
         
         if (testKey == Enter)                      // Reset the LCD
         {
+//            Pull();
 //            tuning = 1-tuning;
             
             LCDInit();
             __delay_ms(100);
             LCDClear();
             backLightCounter = 0;               // Reset BackLight counter
-            LCDBitmap(&menumain[0], 5, 63);        // Draw Menu0
+            LCDBitmap(&menumain[0], 5, 59);        // Draw Menu0
         }
         
         if(testKey==Down)
@@ -629,201 +664,7 @@ int main(void)
             steamPower=1;
             lastPowerState = 2;
         }
-        
-//            backLightCounter    =   0;               // Reset BackLight counter
-            
-  //          if(timer<1)
-    //        {
-      //          powerSwitch = 0;
-        //        timer+=1;
-          //      goto done2;
-            //}
-            
-//            LCDClear();
-  //          LCDBitmap(&menu2[0], 5,84);         //Draw Menu2
-    //        LCDWriteStringXY(4,1,"Press \"ENTER\" Key");
-      //      LCDWriteStringXY(4,2,"to Set the Time");
-
-        //    while(testKey != Enter)
-          //  {
-            //    testKey = readButton();
-              //  timer +=1;
-                //__delay_ms(10);
-//                if (timer > 500)
-  //              {
-    //                timer = 0;
-      //              LCDClear();
-        //            LCDBitmap(&menu2[0], 5, 84);//Draw Menu2
-          //          goto done2;
-            //    }
-//            }
-  //          SetTime();
-            
-    //        timer = 0;
-
-      //      __delay_ms(500);
-            
-        //    done2:;
-          //  LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
-
 // ******************************************************************************
-/*        if(testKey == Enter)
-        {
-            backLightCounter = 0;               // Reset BackLight counter
-            
-            if(timer<1)
-            {
-                powerSwitch = 0;
-                timer+=1;
-                goto Exit2;
-            }
-
-//            testKey = KEY_NONE;
-            
-            LCDClear();
-            LCDBitmap(&menu2[0], 5, 84);        //Draw Menu2
-            LCDWriteStringXY(0,1,"Press \"ENTER\" to Set Start/Stop Times");
-
-            while(testKey != Enter)
-            {
-                testKey = readButton();
-                 timer +=1;
-                 __delay_ms(10);
-               
-                if(timer > 500)
-                {
-                    timer = 0;
-                    LCDClear();
-                    LCDBitmap(&menu2[0], 5, 84);//Draw Menu2
-                    goto Exit2;                                                 
-                }
-            }
-            
-            timer = 0;
-            writeStartStopTimes();
-            LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
-            __delay_ms(500);
-            
-            Exit2:; 
-        }
-// ******************************************************************************
-
-        if (testKey == Down)
-        {
-            backLightCounter = 0;               // Reset BackLight counter
-            
-            if(timer<1)
-            {
-                powerSwitch = 0;
-                timer+=1;
-                goto Exit;
-            }
-
-            if(timer < 2)
-            {
-                LCDClear();
-                LCDBitmap(&menu2[0], 5, 84);    //Draw Menu2
-                testKey = None;
-                __delay_ms(750);
-            }
-            
-            
-            int8_t choice = 0;
-
-            while(testKey != Enter)
-            {
-                testKey = readButton();
-                __delay_ms(10);
-                
-                if(timer > 500)
-                {
-                    timer = 0;
-                    goto Exit;                  
-                }
-
-                switch(testKey)
-                {
-                    case Down:
-                    {
-                        choice -=1;
-                            
-                        if (choice < 0)
-                        {
-                            choice = 0;
-                        }
-                    }
-                    break;
-
-                        
-                    case Up:
-                    {
-                        choice += 1;
-                            
-                        if(choice > 2)
-                        {
-                            choice = 2;
-                        }
-                    }
-                    break;
-                    
-                    case Menu:
-                    {
-                        goto Exit;
-                    }
-                    break;
-                }
-
-                LCDWriteStringXY(0,0,"PID Settings for");
-                LCDWriteStringXY(0,1,desc[choice]);
-                LCDWriteStringXY(0,3,"Up/Dn Keys to Change");
-                LCDWriteStringXY(0,4,"  \"Enter\" to Accept ")
-
-                timer += 1;
-            }
-            
-            testKey = 0;
-            
-            LCDClear();
-            LCDBitmap(&menu2[0], 5, 84);              //Draw Menu2
-            LCDWriteStringXY(0,1,"SetPoint = ");
-            eepromPutData(setpoint[choice], setParameter(44,1,setRangeL[choice],setRangeH[choice],eepromGetData(setpoint[choice])));
-            
-            LCDWriteStringXY(0,2,"Gain =");
-            eepromPutData(Kp[choice], setParameter(44,2,0,200,eepromGetData(Kp[choice])));
-
-            LCDWriteStringXY(0,3,"Integral =");
-            eepromPutData(Ki[choice], setParameter(44,3,0,500,eepromGetData(Ki[choice])));
-
-            LCDWriteStringXY(0,4,"Derivative =");
-            eepromPutData(Kd[choice], setParameter(44,4,0,500,eepromGetData(Kd[choice])));
-            
-            
-            Init_PID(choice,eepromGetData(Kp[choice]),eepromGetData(Ki[choice]),eepromGetData(Kd[choice]));                
-
-            timer = 0;
-
-            LCDClear();
-            LCDBitmap(&menu0[0], 5, 84);        //Draw Menu0
-            __delay_ms(500);
-
-            Exit:
-            LCDClear();
-            LCDBitmap(&menu0[0], 5, 84);            //Draw Menu0
-        }
- 
-                        
-// ******************************************************************************
-        if (testKey == Up)                      // Reset the LCD
-        {
-//            tuning = 1-tuning;
-            
-            LCDInit();
-            __delay_ms(100);
-            LCDClear();
-            backLightCounter = 0;               // Reset BackLight counter
-            LCDBitmap(&menu0[0], 5, 84);        // Draw Menu0
-        }
-*/        
         if(backLightCounter > 1199)             // No Keys Pressed for 20 Minutes
         {
             backLightOFF = 1;                   // so, we might as well shut OFF the LCD BackLight

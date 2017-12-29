@@ -1,16 +1,13 @@
 #include "rtcc.h"
 #include "rtccMenu.h"
 
-//***************************************************************************************************************************************************************
-//RTCTime time;                                   // declare the type of the time object
-
 extern int powerFail;
-int run = 0;                                    // Run is declared her, so it keeps it's value between calls to OnTimer function
 
+int run                         =   0; // Run is declared her, so it keeps it's value between calls to OnTimer function
 
 char *WeekDay[7]                =   {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-char *month[13]                 =   {"NUL","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
 
+char *month[13]                 =   {"NUL","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
 
 int8_t maxTimes[]               =   {23,55,23,55};
 
@@ -30,10 +27,7 @@ char sel                        =   0;
     
 char done                       =   0;
 
-
-
 //***************************************************************************************************************************************************************
-
 unsigned short bin2bcd(unsigned short binary_value)
 {
   unsigned short temp;
@@ -101,9 +95,9 @@ void RTCC_Initialize(void) {
     RCFGCALbits.CAL7 = 1;                      // Enable RTCC Calibration all zeros but bit 7, too fast by ~1 sec in 24 hrs
     RCFGCALbits.CAL6 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL5 = 1;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL4 = 0;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL3 = 0;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL2 = 0;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL4 = 1;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL3 = 1;                      // Enable RTCC Calibration
+    RCFGCALbits.CAL2 = 1;                      // Enable RTCC Calibration
     RCFGCALbits.CAL1 = 1;                      // Enable RTCC Calibration this and bit 7, at least 2 seconds fast in a day               
     RCFGCALbits.CAL0 = 0;                      // Enable RTCC Calibration this and bit 7, at least 1 seconds slow in a day
     
@@ -206,7 +200,7 @@ void SetTime()
         if(sel == 0)
         {
             LCDWriteStringXY(2,3,"&&");                                         // Draw Pointer, to show what we are setting
-        }
+        }                                                                       // ("&" in Font table redrawn to be a down pointing arrow)    
         
         if(sel == 1)
         {
@@ -303,20 +297,25 @@ void SetTime()
 //***************************************************************************************************************************************************************
 int8_t runTimer(int16_t weekday, int16_t hour, int16_t minute)
 {
-    if(hour==eepromGetData(startHour[weekday]) && minute==eepromGetData(startMinute[weekday]))
+    if(eepromGetData(startHour[weekday])==(-1))
+    {
+        run=0;
+    }
+    else if(hour==eepromGetData(startHour[weekday]) && minute==eepromGetData(startMinute[weekday]))
     {
         run=1;
     }
+    else
+    {
+        ;
+    }
+    
     
     if(hour==eepromGetData(stopHour[weekday]) && minute==eepromGetData(stopMinute[weekday]))
     {
         run=0;
     }
     
-    if(eepromGetData(startHour[weekday])==-1)
-    {
-        run=0;
-    }
     
     return run;
 }
@@ -328,7 +327,7 @@ void writeStartStopTimes(void)
 {
     int16_t timer = 0;                                                     // Used to return to operation if user does not finish!
     
-//    testKey = None;
+    testKey = None;
     
     while(testKey != Enter)
     {

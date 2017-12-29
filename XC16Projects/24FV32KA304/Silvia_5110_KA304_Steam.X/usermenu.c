@@ -1,6 +1,16 @@
 #include    "usermenu.h"
 #include    "menu.h"
 
+extern char pull;
+
+void Pull(void)
+{
+    while(pull<1)
+    {
+        pull+=1;
+    }
+    
+}
 void userMenu(void)
 {
     char testKey2   =   None;
@@ -15,7 +25,7 @@ void userMenu(void)
     extern char *desc[];
 
     LCDClear();
-    LCDBitmap(&menu2[0], 5,84);         //Draw Menu2
+    LCDBitmap(&menu1[0], 5,84);         //Draw Menu1
 
     __delay_ms(1000);
             
@@ -35,7 +45,7 @@ void userMenu(void)
         {
             timer2 = 0;
             LCDClear();
-            LCDBitmap(&menu2[0], 5, 84);//Draw Menu2
+            LCDBitmap(&menu0[0], 5, 59);//Draw Menu0
             goto Exit;
         }
     }
@@ -47,12 +57,12 @@ void userMenu(void)
           
         timer2 = 0;
 
-        LCDBitmap(&menu1[0], 5, 84);                 //Draw Menu1
+        LCDBitmap(&menu2[0], 5, 84);                 //Draw Menu1
         __delay_ms(500);
     }
             
 // ******************************************************************************
-    if(testKey2==Up)
+    if(testKey2==Down)
     {
         writeStartStopTimes();
     }
@@ -65,7 +75,7 @@ void userMenu(void)
     }
             
 // ******************************************************************************
-    if(testKey2==Down)
+    if(testKey2==Up)
     {
         int8_t choice = 0;
            
@@ -146,6 +156,6 @@ void userMenu(void)
 
         Exit:
         LCDClear();
-        LCDBitmap(&menu1[0], 5, 84);            //Draw Menu0
+        LCDBitmap(&menu0[0], 5, 59);            //Draw Menu0
     }
 }

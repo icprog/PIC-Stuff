@@ -3,6 +3,8 @@
 
 #include    "system.h"
 
+void Pull(void);
+
 void userMenu(void);
 
 #endif

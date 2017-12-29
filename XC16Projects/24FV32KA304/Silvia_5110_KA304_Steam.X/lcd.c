@@ -129,7 +129,7 @@ void gotoXY(char x, char y)
 }
 
 
-void LCDBitmap(const char my_array[], uint8_t startPosition, uint16_t len)
+void LCDBitmap(const unsigned char my_array[], uint8_t startPosition, uint16_t len)
 {
     uint16_t index;
     gotoXY(0,startPosition);    
@@ -148,31 +148,16 @@ void LCDWriteCharacter(const char character)
     LCDWrite(LCD_DATA,fonts[base + 2]);         // third vertical line of font character
     LCDWrite(LCD_DATA, 0x00);                   // write a blank line to space the font
 }
-
-/*   uint16_t base,z;
+/*
+   uint16_t base,z;
     base = character - 32;
     base *= 3;                          // 3 bit Font, so location * 3 will pull up correct font
-    z = base;
-    for(x=base;base<(z+3);base++)
+//    z = base;
+    for(z=base;base<(z+3);base++)
     {
     LCDWrite(LCD_DATA,fonts[base]);             // fonts are written 1 vertical line of 8 bits at a time
-    }
-*/  //Test if above works, saves 3 bytes
-
-//void LCD_Write_Character(const char character)
-//{
-
-//    LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
-//    int index;
-  //  for (index = 0 ; index < 3 ; index++)
-    //{
-//    LCDWrite(LCD_DATA, fonts[character - 0x20][index]); //0x20 is the ASCII character for Space (? ?). The font table starts with this character
-  //  }
-    
-    //LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
-    
-//}
-
+    }*/
+  //Test if above works, saves 21 bytes
 
 void LCDWriteString(const char *characters) 
 {
@@ -244,7 +229,6 @@ void LCDWriteInt(int value,signed char fieldLength, signed char numPlaces, signe
     }
 }
 
-
 void LCDInit(void)
 {
     TRISCbits.TRISC5    =   0;
@@ -267,9 +251,9 @@ void LCDInit(void)
 //The acceptable range is between 0x80 (being a contrast value of 0) and 0xFF (being a contrast value of 127)
     
 //    LCDWrite(LCD_COMMAND, 0xBB);                //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
-    LCDWrite(LCD_COMMAND, 0xBB);                //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
+    LCDWrite(LCD_COMMAND, 0xB9);                //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
 
-    LCDWrite(LCD_COMMAND, 0x05);                //Set Temp coefficent (04,05,06,07)
+    LCDWrite(LCD_COMMAND, 0x07);                //Set Temp coefficent (04,05,06,07)
 
     LCDWrite(LCD_COMMAND, 0x15);                //LCD bias mode 1:48: Try 0x13 or 0x14, (or 15, Drop Vop to 0XB7 or so)
 
@@ -315,7 +299,7 @@ void LCDWrite(uint8_t data_or_command, uint8_t data)
     LCD_CE  =   1;                              // Display is no longer accepting Data                                      
 }
 
-
+/*
 void LCDDrawBox(void)
 {
     int j;
@@ -344,3 +328,4 @@ void LCDDrawBox(void)
         LCDWrite(LCD_DATA,0xff);
     }
 }
+*/
