@@ -165,7 +165,7 @@ int main(void)
         total[0] = total[0] - samples[0][sampleIndex];  // Subtract the oldest sample data from the total
         samples[0][sampleIndex] = shortTermTemp[0];     // Assign the just read temperature to the location of the current oldest data
         total[0] = total[0] + samples[0][sampleIndex];  // Add that new sample to the total
-        boilerTemperature = total[0]/numSamples+400;    // Assign the average value of total to the boilerTemperature variable
+        boilerTemperature = total[0]/numSamples+350;    // Assign the average value of total to the boilerTemperature variable
 
 
         shortTermTemp[1] = tempCalc(ADCRead(0));        // Assign the ADC(0) (Steam Temp) to a temporary variable
@@ -336,13 +336,18 @@ int main(void)
                 gotoXY(1,4);
                 LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
                 backLightCounter    +=1200;             // 1200 counts is the number required to turn OFF the Backlight
-                
+                waterSolenoid       = 0;
+                steamSolenoid       = 0;
+                brewSolenoid        = 0;
+                piezoOutput         = 0;
+                airPump             = 0;
                 groupHeadPID        = 0;                // Turn OFF Group Head Heat
                 groupOutput         = 0;                // Zero Group output, as there will be no more writes, so, if we don't zero, we do not know where it will be
                 OC1CON2bits.OCTRIS  = 1;                // Tri-State the OC1 Pin, if powerSwitch is OFF
                 OC2CON2bits.OCTRIS  = 1;                // Tri-State the OC2 Pin, if powerSwitch is OFF
                 OC3CON2bits.OCTRIS  = 1;                // Tri-State the OC3 Pin, if powerSwitch is OFF
                 shotTimer           = 0;                // Re-Set the ShotTimer
+                pull                = 0;
             }
             lastPowerState          = powerSwitch;
         }
