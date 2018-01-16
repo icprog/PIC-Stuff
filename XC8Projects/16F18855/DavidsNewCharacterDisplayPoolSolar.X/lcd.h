@@ -12,13 +12,13 @@
 #define LCD_TYPE_2_LINE	//For 16 or 20 Chars by 2 lines
 //#define LCD_TYPE_4_LINE     //For 16 or 20 Chars by 4 lines
 // ************************************************
-#define RS  RB0             // Define REGISTER SELECT Bit
+#define RS  RA0             // Define REGISTER SELECT Bit
 //      RW  Tied to Vss
-#define EN  RB1             // Define ENABLE Bit
-#define D4  RB2             // Define LCD Data Port D4
-#define D5  RB3             // Define LCD Data Port D5
-#define D6  RB4             // Define LCD Data Port D6
-#define D7  RB5             // Define LCD Data Port D7
+#define EN  RA2             // Define ENABLE Bit
+#define D4  RA7             // Define LCD Data Port D4
+#define D5  RA6             // Define LCD Data Port D5
+#define D6  RC0             // Define LCD Data Port D6
+#define D7  RC1             // Define LCD Data Port D7
 // ***************************************************************************************************************************************************************
 #define NONE     0X00
 #define BLINK    0X01

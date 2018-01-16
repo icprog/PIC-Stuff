@@ -4,6 +4,8 @@
 
 // *************** Defines *****************************************************    
 #define     numSamples  50                                              // Number of Temperature readings to Average
+#define     SOLARIN     ADCRead(9)
+#define     SOLAROUT    ADCRead(11)
 
 // *************** Externally available Variables ******************************    
 uint16_t samples[2][numSamples] = {0};
@@ -23,7 +25,7 @@ void main(void)
 
     char count          = 11;
     
-   __delay_ms(3000);
+   __delay_ms(300);
    
 // *************** Read Temperature ********************************************    
     while (1)
@@ -44,7 +46,7 @@ void main(void)
             count=0;
         }
 
-        solarInTemp = ADCRead(9);                           // Assign the just read temperature to the location of the current oldest data
+        solarInTemp = SOLARIN;                           // Assign the just read temperature to the location of the current oldest data
             
         totals[0] = totals[0] - samples[0][sampleIndex0];   // Subtract the oldest sample data from the total
 
@@ -63,7 +65,7 @@ void main(void)
         
 
 
-        solarOutTemp = ADCRead(11);                                       // Assign the just read temperature to the location of the current oldest data
+        solarOutTemp = SOLAROUT;                                       // Assign the just read temperature to the location of the current oldest data
             
         totals[1] = totals[1] - samples[1][sampleIndex1];                         // Subtract the oldest sample data from the total
 

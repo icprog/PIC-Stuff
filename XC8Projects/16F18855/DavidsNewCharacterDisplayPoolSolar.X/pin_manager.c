@@ -5,8 +5,8 @@
 void PIN_MANAGER_Initialize(void)
 {
     LATA = 0x00;
-    LATB = 0x0;
-    LATC = 0x0;
+    LATB = 0x00;
+    LATC = 0x00;
 
     WPUA = 0x00;
     WPUB = 0x00;
@@ -14,11 +14,11 @@ void PIN_MANAGER_Initialize(void)
     WPUE = 0x8;
 
     TRISA = 0x00;
-    TRISB = 0x00;
+    TRISB = 0x0A;
     TRISC = 0x10;
 
     ANSELA = 0x00;
-    ANSELB = 0x00;
+    ANSELB = 0x0A;
     ANSELC = 0x00;
     
     PIE0bits.IOCIE = 0;                 // interrupts-on-change are globally disabled

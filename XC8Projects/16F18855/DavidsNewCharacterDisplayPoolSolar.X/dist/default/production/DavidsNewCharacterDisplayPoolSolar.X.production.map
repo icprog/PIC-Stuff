@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.38\dat\en_msgs.txt -cs \
   -h+dist/default/production\DavidsNewCharacterDisplayPoolSolar.X.production.sym \
   --cmf=dist/default/production\DavidsNewCharacterDisplayPoolSolar.X.production.cmf \
-  -z -Q16F18855 -oC:\Users\DAVE\AppData\Local\Temp\s6p4.2 \
+  -z -Q16F18855 -oC:\Users\DAVE\AppData\Local\Temp\s45k.2 \
   -Mdist/default/production/DavidsNewCharacterDisplayPoolSolar.X.production.map \
   -E1 -ver=XC8 -ASTACK=02090h-02327h -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
@@ -32,7 +32,7 @@ Linker command line:
   -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 \
   -AEEDATA=00h-0FFh/0F000h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
-  C:\Users\DAVE\AppData\Local\Temp\s6p4.obj \
+  C:\Users\DAVE\AppData\Local\Temp\s45k.obj \
   dist/default/production\DavidsNewCharacterDisplayPoolSolar.X.production.obj 
 
 Object code version is 3.11
@@ -42,7 +42,7 @@ Machine type is 16F18855
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\DAVE\AppData\Local\Temp\s6p4.obj
+C:\Users\DAVE\AppData\Local\Temp\s45k.obj
                 end_init                              2        2        2        0       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5    1000E       0
@@ -512,13 +512,13 @@ _PIE0bits                        (abs)        00716
 _PIN_MANAGER_Initialize          text16       00AB8
 _PPSLOCK                         (abs)        00E8F
 _PPSLOCKbits                     (abs)        00E8F
+_RA0                             (abs)        00060
 _RA1PPS                          (abs)        00F11
-_RB0                             (abs)        00068
-_RB1                             (abs)        00069
-_RB2                             (abs)        0006A
-_RB3                             (abs)        0006B
-_RB4                             (abs)        0006C
-_RB5                             (abs)        0006D
+_RA2                             (abs)        00062
+_RA6                             (abs)        00066
+_RA7                             (abs)        00067
+_RC0                             (abs)        00070
+_RC1                             (abs)        00071
 _SYSTEM_Initialize               text15       00AE7
 _TRISA                           (abs)        00011
 _TRISB                           (abs)        00012
@@ -922,7 +922,7 @@ _eval_poly                       text3        00C63
 _frexp                           text2        00B53
 _log                             text1        00F53
 _main                            maintext     0029C
-_main$797                        cstackBANK1  000AA
+_main$789                        cstackBANK1  000AA
 _samples                         (abs)        02328
 btemp                            (abs)        0007E
 clear_ram0                       clrtext      00982
@@ -1860,10 +1860,10 @@ Total ram usage:        4 bytes
  This function calls:
 		_LCD_Port
  This function is called by:
-		_main
 		_InitCustomChars
 		_LCD_Write_String
 		_LCD_Write_Int
+		_main
  This function uses a non-reentrant model
 
 

@@ -3,18 +3,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _LCD_Cmd `(v ~T0 @X0 0 ef1`uc ]
 "50
 [v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
-"36282 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
-[v _RB2 `Vb ~T0 @X0 0 e@106 ]
-"36296
-[v _RB3 `Vb ~T0 @X0 0 e@107 ]
-"36310
-[v _RB4 `Vb ~T0 @X0 0 e@108 ]
-"36324
-[v _RB5 `Vb ~T0 @X0 0 e@109 ]
-"36254
-[v _RB0 `Vb ~T0 @X0 0 e@104 ]
-"36268
-[v _RB1 `Vb ~T0 @X0 0 e@105 ]
+"36240 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _RA7 `Vb ~T0 @X0 0 e@103 ]
+"36226
+[v _RA6 `Vb ~T0 @X0 0 e@102 ]
+"36366
+[v _RC0 `Vb ~T0 @X0 0 e@112 ]
+"36380
+[v _RC1 `Vb ~T0 @X0 0 e@113 ]
+"36142
+[v _RA0 `Vb ~T0 @X0 0 e@96 ]
+"36170
+[v _RA2 `Vb ~T0 @X0 0 e@98 ]
 [v F13525 `(v ~T0 @X0 1 tf1`ul ]
 "152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
 [v __delay `JF13525 ~T0 @X0 0 e ]
@@ -12738,58 +12738,58 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 43: if(a & 1)
 "43
 [e $ ! != & -> _a `i -> 1 `i -> 0 `i 1524  ]
-[; ;lcd.c: 44: RB2 = 1;
+[; ;lcd.c: 44: RA7 = 1;
 "44
-[e = _RB2 -> -> 1 `i `b ]
+[e = _RA7 -> -> 1 `i `b ]
 [e $U 1525  ]
 "45
 [e :U 1524 ]
 [; ;lcd.c: 45: else
-[; ;lcd.c: 46: RB2 = 0;
+[; ;lcd.c: 46: RA7 = 0;
 "46
-[e = _RB2 -> -> 0 `i `b ]
+[e = _RA7 -> -> 0 `i `b ]
 [e :U 1525 ]
 [; ;lcd.c: 48: if(a & 2)
 "48
 [e $ ! != & -> _a `i -> 2 `i -> 0 `i 1526  ]
-[; ;lcd.c: 49: RB3 = 1;
+[; ;lcd.c: 49: RA6 = 1;
 "49
-[e = _RB3 -> -> 1 `i `b ]
+[e = _RA6 -> -> 1 `i `b ]
 [e $U 1527  ]
 "50
 [e :U 1526 ]
 [; ;lcd.c: 50: else
-[; ;lcd.c: 51: RB3 = 0;
+[; ;lcd.c: 51: RA6 = 0;
 "51
-[e = _RB3 -> -> 0 `i `b ]
+[e = _RA6 -> -> 0 `i `b ]
 [e :U 1527 ]
 [; ;lcd.c: 53: if(a & 4)
 "53
 [e $ ! != & -> _a `i -> 4 `i -> 0 `i 1528  ]
-[; ;lcd.c: 54: RB4 = 1;
+[; ;lcd.c: 54: RC0 = 1;
 "54
-[e = _RB4 -> -> 1 `i `b ]
+[e = _RC0 -> -> 1 `i `b ]
 [e $U 1529  ]
 "55
 [e :U 1528 ]
 [; ;lcd.c: 55: else
-[; ;lcd.c: 56: RB4 = 0;
+[; ;lcd.c: 56: RC0 = 0;
 "56
-[e = _RB4 -> -> 0 `i `b ]
+[e = _RC0 -> -> 0 `i `b ]
 [e :U 1529 ]
 [; ;lcd.c: 58: if(a & 8)
 "58
 [e $ ! != & -> _a `i -> 8 `i -> 0 `i 1530  ]
-[; ;lcd.c: 59: RB5 = 1;
+[; ;lcd.c: 59: RC1 = 1;
 "59
-[e = _RB5 -> -> 1 `i `b ]
+[e = _RC1 -> -> 1 `i `b ]
 [e $U 1531  ]
 "60
 [e :U 1530 ]
 [; ;lcd.c: 60: else
-[; ;lcd.c: 61: RB5 = 0;
+[; ;lcd.c: 61: RC1 = 0;
 "61
-[e = _RB5 -> -> 0 `i `b ]
+[e = _RC1 -> -> 0 `i `b ]
 [e :U 1531 ]
 [; ;lcd.c: 62: }
 "62
@@ -12806,18 +12806,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _a `uc ~T0 @X0 1 r1 ]
 "66
 [f ]
-[; ;lcd.c: 67: RB0 = 0;
+[; ;lcd.c: 67: RA0 = 0;
 "67
-[e = _RB0 -> -> 0 `i `b ]
+[e = _RA0 -> -> 0 `i `b ]
 [; ;lcd.c: 68: LCD_Port(a);
 "68
 [e ( _LCD_Port (1 _a ]
-[; ;lcd.c: 69: RB1 = 1;
+[; ;lcd.c: 69: RA2 = 1;
 "69
-[e = _RB1 -> -> 1 `i `b ]
-[; ;lcd.c: 70: RB1 = 0;
+[e = _RA2 -> -> 1 `i `b ]
+[; ;lcd.c: 70: RA2 = 0;
 "70
-[e = _RB1 -> -> 0 `i `b ]
+[e = _RA2 -> -> 0 `i `b ]
 [; ;lcd.c: 71: _delay((unsigned long)((4)*(1000000/4000.0)));
 "71
 [e ( __delay (1 -> * -> -> 4 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
@@ -13027,30 +13027,30 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 227: y = a&0xF0;
 "227
 [e = _y -> & -> _a `i -> 240 `i `uc ]
-[; ;lcd.c: 228: RB0 = 1;
+[; ;lcd.c: 228: RA0 = 1;
 "228
-[e = _RB0 -> -> 1 `i `b ]
+[e = _RA0 -> -> 1 `i `b ]
 [; ;lcd.c: 229: LCD_Port(y>>4);
 "229
 [e ( _LCD_Port (1 -> >> -> _y `i -> 4 `i `uc ]
-[; ;lcd.c: 230: RB1 = 1;
+[; ;lcd.c: 230: RA2 = 1;
 "230
-[e = _RB1 -> -> 1 `i `b ]
-[; ;lcd.c: 231: RB1 = 0;
+[e = _RA2 -> -> 1 `i `b ]
+[; ;lcd.c: 231: RA2 = 0;
 "231
-[e = _RB1 -> -> 0 `i `b ]
+[e = _RA2 -> -> 0 `i `b ]
 [; ;lcd.c: 232: _delay((unsigned long)((40)*(1000000/4000000.0)));
 "232
 [e ( __delay (1 -> * -> -> 40 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
 [; ;lcd.c: 233: LCD_Port(temp);
 "233
 [e ( _LCD_Port (1 _temp ]
-[; ;lcd.c: 234: RB1 = 1;
+[; ;lcd.c: 234: RA2 = 1;
 "234
-[e = _RB1 -> -> 1 `i `b ]
-[; ;lcd.c: 235: RB1 = 0;
+[e = _RA2 -> -> 1 `i `b ]
+[; ;lcd.c: 235: RA2 = 0;
 "235
-[e = _RB1 -> -> 0 `i `b ]
+[e = _RA2 -> -> 0 `i `b ]
 [; ;lcd.c: 236: _delay((unsigned long)((40)*(1000000/4000000.0)));
 "236
 [e ( __delay (1 -> * -> -> 40 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]

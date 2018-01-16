@@ -16811,33 +16811,33 @@ LCD_Cmd(2);
 void LCD_Port(char a)
 {
 if(a & 1)
-RB2 = 1;
+RA7 = 1;
 else
-RB2 = 0;
+RA7 = 0;
 
 if(a & 2)
-RB3 = 1;
+RA6 = 1;
 else
-RB3 = 0;
+RA6 = 0;
 
 if(a & 4)
-RB4 = 1;
+RC0 = 1;
 else
-RB4 = 0;
+RC0 = 0;
 
 if(a & 8)
-RB5 = 1;
+RC1 = 1;
 else
-RB5 = 0;
+RC1 = 0;
 }
 
 
 void LCD_Cmd(char a)
 {
-RB0 = 0;
+RA0 = 0;
 LCD_Port(a);
-RB1 = 1;
-RB1 = 0;
+RA2 = 1;
+RA2 = 0;
 _delay((unsigned long)((4)*(1000000/4000.0)));
 }
 
@@ -16936,14 +16936,14 @@ void LCD_Write_Char(const char a)
 char temp,y;
 temp = a&0x0F;
 y = a&0xF0;
-RB0 = 1;
+RA0 = 1;
 LCD_Port(y>>4);
-RB1 = 1;
-RB1 = 0;
+RA2 = 1;
+RA2 = 0;
 _delay((unsigned long)((40)*(1000000/4000000.0)));
 LCD_Port(temp);
-RB1 = 1;
-RB1 = 0;
+RA2 = 1;
+RA2 = 0;
 _delay((unsigned long)((40)*(1000000/4000000.0)));
 }
 
