@@ -1,80 +1,21 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"16 pin_manager.h
-[v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
-"19 system.h
-[v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
-"22252 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
-[v _FVRCON `Vuc ~T0 @X0 0 e@2316 ]
-"23 adcc.h
-[v _ADCC_Initialize `(v ~T0 @X0 0 ef ]
-"7 pwm6.h
-[v _PWM6_Initialize `(v ~T0 @X0 0 ef ]
-"262 tmr2.h
-[v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
-"48 lcd.h
-[v _LCD_Init `(v ~T0 @X0 0 ef1`uc ]
-[v F13525 `(v ~T0 @X0 1 tf1`ul ]
-"152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
-[v __delay `JF13525 ~T0 @X0 0 e ]
-[p i __delay ]
-"44 lcd.h
-[v _LCD_Clear `(v ~T0 @X0 0 ef ]
-"38
-[v _InitCustomChars `(v ~T0 @X0 0 ef ]
-"21546 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
-[v _OSCCON1 `Vuc ~T0 @X0 0 e@2189 ]
-"21684
-[v _OSCCON3 `Vuc ~T0 @X0 0 e@2191 ]
-"21779
-[v _OSCEN `Vuc ~T0 @X0 0 e@2193 ]
-"21886
-[v _OSCFRQ `Vuc ~T0 @X0 0 e@2195 ]
-"21829
-[v _OSCTUNE `Vuc ~T0 @X0 0 e@2194 ]
-"3 system.c
-[p x FEXTOSC=OFF ]
-"4
-[p x RSTOSC=HFINT1 ]
-"5
-[p x CLKOUTEN=OFF ]
-"6
-[p x CSWEN=ON ]
-"7
-[p x FCMEN=ON ]
-"10
-[p x MCLRE=ON ]
-"11
-[p x PWRTE=OFF ]
-"12
-[p x LPBOREN=OFF ]
-"13
-[p x BOREN=OFF ]
-"14
-[p x BORV=LO ]
-"15
-[p x ZCD=OFF ]
-"16
-[p x PPS1WAY=ON ]
-"17
-[p x STVREN=ON ]
-"20
-[p x WDTCPS=WDTCPS_31 ]
-"21
-[p x WDTE=OFF ]
-"22
-[p x WDTCWS=WDTCWS_7 ]
-"23
-[p x WDTCCS=SC ]
-"26
-[p x WRT=OFF ]
-"27
-[p x SCANE=available ]
-"28
-[p x LVP=ON ]
-"31
-[p x CP=OFF ]
-"32
-[p x CPD=OFF ]
+"10774 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _PWM6CON `Vuc ~T0 @X0 0 e@910 ]
+"10605
+[v _PWM6DCH `Vuc ~T0 @X0 0 e@909 ]
+"10540
+[v _PWM6DCL `Vuc ~T0 @X0 0 e@908 ]
+"7505
+[s S360 :2 `uc 1 :2 `uc 1 :2 `uc 1 ]
+[n S360 . C5TSEL P6TSEL P7TSEL ]
+"7510
+[s S361 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S361 . C5TSEL0 C5TSEL1 P6TSEL0 P6TSEL1 P7TSEL0 P7TSEL1 ]
+"7504
+[u S359 `S360 1 `S361 1 ]
+[n S359 . . . ]
+"7519
+[v _CCPTMRS1bits `VS359 ~T0 @X0 0 e@543 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12651,8 +12592,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
-[; ;pwm6.h: 7: void PWM6_Initialize(void);
-[; ;pwm6.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;lcd.h: 38: void InitCustomChars();
 [; ;lcd.h: 40: void LCD_Port(char a);
 [; ;lcd.h: 42: void LCD_Cmd(char a);
@@ -12701,78 +12640,50 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;system.h: 17: void SYSTEM_Initialize(void);
 [; ;system.h: 19: void OSCILLATOR_Initialize(void);
-"37 system.c
-[v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
-"38
+[; ;pwm6.h: 7: void PWM6_Initialize(void);
+[; ;pwm6.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
+"3 pwm6.c
+[v _PWM6_Initialize `(v ~T0 @X0 1 ef ]
+"4
 {
-[; ;system.c: 37: void SYSTEM_Initialize(void)
-[; ;system.c: 38: {
-[e :U _SYSTEM_Initialize ]
+[; ;pwm6.c: 3: void PWM6_Initialize(void)
+[; ;pwm6.c: 4: {
+[e :U _PWM6_Initialize ]
 [f ]
-[; ;system.c: 39: PIN_MANAGER_Initialize();
-"39
-[e ( _PIN_MANAGER_Initialize ..  ]
-[; ;system.c: 40: OSCILLATOR_Initialize();
-"40
-[e ( _OSCILLATOR_Initialize ..  ]
-[; ;system.c: 41: FVRCON = 0x00;
-"41
-[e = _FVRCON -> -> 0 `i `uc ]
-[; ;system.c: 42: ADCC_Initialize();
-"42
-[e ( _ADCC_Initialize ..  ]
-[; ;system.c: 43: PWM6_Initialize();
-"43
-[e ( _PWM6_Initialize ..  ]
-[; ;system.c: 45: TMR2_Initialize();
-"45
-[e ( _TMR2_Initialize ..  ]
-[; ;system.c: 46: LCD_Init(0X00);
-"46
-[e ( _LCD_Init (1 -> -> 0 `i `uc ]
-[; ;system.c: 47: _delay((unsigned long)((200)*(1000000/4000.0)));
-"47
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;system.c: 48: LCD_Clear();
-"48
-[e ( _LCD_Clear ..  ]
-[; ;system.c: 49: _delay((unsigned long)((100)*(1000000/4000.0)));
-"49
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;system.c: 50: InitCustomChars();
-"50
-[e ( _InitCustomChars ..  ]
-[; ;system.c: 51: _delay((unsigned long)((200)*(1000000/4000.0)));
-"51
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;system.c: 53: }
-"53
+[; ;pwm6.c: 5: PWM6CON = 0x80;
+"5
+[e = _PWM6CON -> -> 128 `i `uc ]
+[; ;pwm6.c: 7: PWM6DCH = 0x00;
+"7
+[e = _PWM6DCH -> -> 0 `i `uc ]
+[; ;pwm6.c: 9: PWM6DCL = 0x00;
+"9
+[e = _PWM6DCL -> -> 0 `i `uc ]
+[; ;pwm6.c: 11: CCPTMRS1bits.P6TSEL = 0x1;
+"11
+[e = . . _CCPTMRS1bits 0 1 -> -> 1 `i `uc ]
+[; ;pwm6.c: 12: }
+"12
 [e :UE 1519 ]
 }
-"55
-[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
-"56
+"14
+[v _PWM6_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
+"15
 {
-[; ;system.c: 55: void OSCILLATOR_Initialize(void)
-[; ;system.c: 56: {
-[e :U _OSCILLATOR_Initialize ]
+[; ;pwm6.c: 14: void PWM6_LoadDutyValue(uint16_t dutyCycle)
+[; ;pwm6.c: 15: {
+[e :U _PWM6_LoadDutyValue ]
+"14
+[v _dutyCycle `ui ~T0 @X0 1 r1 ]
+"15
 [f ]
-[; ;system.c: 57: OSCCON1 = 0x60;
-"57
-[e = _OSCCON1 -> -> 96 `i `uc ]
-[; ;system.c: 58: OSCCON3 = 0x00;
-"58
-[e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 59: OSCEN = 0x00;
-"59
-[e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 60: OSCFRQ = 0x00;
-"60
-[e = _OSCFRQ -> -> 0 `i `uc ]
-[; ;system.c: 61: OSCTUNE = 0x00;
-"61
-[e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 62: }
-"62
+[; ;pwm6.c: 16: PWM6DCH = (dutyCycle & 0x03FC)>>2;
+"16
+[e = _PWM6DCH -> >> & _dutyCycle -> -> 1020 `i `ui -> 2 `i `uc ]
+[; ;pwm6.c: 18: PWM6DCL = (dutyCycle & 0x0003)<<6;
+"18
+[e = _PWM6DCL -> << & _dutyCycle -> -> 3 `i `ui -> 6 `i `uc ]
+[; ;pwm6.c: 19: }
+"19
 [e :UE 1520 ]
 }

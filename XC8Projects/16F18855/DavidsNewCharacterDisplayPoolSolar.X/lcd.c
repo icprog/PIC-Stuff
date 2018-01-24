@@ -85,18 +85,18 @@ void LCD_Set_Cursor(char x, char y)
 
     char temp,z,w;
     
-	if(x == 0)
+	if(y == 0)
 	{                
-        temp = 0x80 + y;
+        temp = 0x80 + x;
 		z = temp>>4;
 		w = temp & 0x0F;
 		LCD_Cmd(z);
 		LCD_Cmd(w);
 	}
 
-	else if(x == 1)
+	else if(y == 1)
 	{
-		temp = 0xC0 + y;
+		temp = 0xC0 + x;
 		z = temp>>4;
 		w = temp & 0x0F;
 		LCD_Cmd(z);
@@ -108,20 +108,20 @@ void LCD_Set_Cursor(char x, char y)
         
     char temp,z,w;
     
-	if(x == 0)
+	if(y == 0)
 	{                
-        temp = 0x80 + y;
-//        temp = 0x00 + y;
+        temp = 0x80 + x;
+//        temp = 0x00 + x;
 		z = temp>>4;
 		w = temp & 0x0F;
 		LCD_Cmd(z);
 		LCD_Cmd(w);
 	}
 
-	else if(x == 1)
+	else if(y == 1)
 	{
-		temp = 0xC0 + y;
-//		temp = 0x40 + y;
+		temp = 0xC0 + x;
+//		temp = 0x40 + x;
 		z = temp>>4;
 		w = temp & 0x0F;
 		LCD_Cmd(z);
@@ -129,20 +129,20 @@ void LCD_Set_Cursor(char x, char y)
 	}
 
 
-	else if(x == 2)
+	else if(y == 2)
 	{
-        temp = 0x94 + y;
-//        temp = 0x14 + y;
+        temp = 0x94 + x;
+//        temp = 0x14 + x;
 		z = temp>>4;
 		w = temp & 0x0F;
 		LCD_Cmd(z);
 		LCD_Cmd(w);
 	}
 
-    else if(x == 3)
+    else if(y == 3)
 	{
-	    temp = 0xD4 + y;
-//	    temp = 0x54 + y;
+	    temp = 0xD4 + x;
+//	    temp = 0x54 + x;
 		z = temp>>4;
 		w = temp & 0x0F;
 		LCD_Cmd(z);

@@ -3,8 +3,9 @@
 
 #include <xc.h>
 #include "pin_manager.h"
-//#include <stdint.h>
-//#include "pwm6.h"
+#include <stdint.h>
+#include    "tmr2.h"
+#include "pwm6.h"
 //#include "timers.h"
 #include "lcd.h"
 #include "adcc.h"

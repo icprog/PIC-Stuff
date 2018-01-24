@@ -16597,20 +16597,20 @@ typedef unsigned char bool;
 void PIN_MANAGER_Initialize(void)
 {
 LATA = 0x00;
-LATB = 0x0;
-LATC = 0x0;
+LATB = 0x00;
+LATC = 0x00;
 
 WPUA = 0x00;
 WPUB = 0x00;
 WPUC = 0x00;
 WPUE = 0x8;
 
-TRISA = 0x00;
-TRISB = 0x00;
+TRISA = 0x32;
+TRISB = 0x0A;
 TRISC = 0x10;
 
-ANSELA = 0x00;
-ANSELB = 0x00;
+ANSELA = 0x32;
+ANSELB = 0x0A;
 ANSELC = 0x00;
 
 PIE0bits.IOCIE = 0;
@@ -16621,7 +16621,7 @@ PPSLOCK = 0xAA;
 PPSLOCKbits.PPSLOCKED = 0x00;
 
 
-RA1PPS = 0x000E;
+RC2PPS = 0x000E;
 
 
 

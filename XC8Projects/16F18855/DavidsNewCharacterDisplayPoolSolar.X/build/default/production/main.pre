@@ -16680,6 +16680,14 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
+# 262 "tmr2.h"
+void TMR2_Initialize(void);
+
+# 7 "pwm6.h"
+void PWM6_Initialize(void);
+
+void PWM6_LoadDutyValue(uint16_t dutyCycle);
+
 # 38 "lcd.h"
 void InitCustomChars();
 
@@ -16715,6 +16723,7 @@ channel_DAC1 = 0x3E,
 channel_FVR = 0x3F
 } adcc_channel_t;
 
+int readAnalog(int channel);
 
 void ADCC_Initialize(void);
 
@@ -16748,40 +16757,40 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 76
+# 77
 uint16_t ADCC_GetPreviousResult(void);
 
-# 100
+# 101
 void ADCC_DefineSetPoint(uint16_t);
 
-# 125
+# 126
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 150
+# 151
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 173
+# 174
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 195
+# 196
 void ADCC_EnableDoubleSampling(void);
 
-# 217
+# 218
 void ADCC_EnableContinuousConversion(void);
 
-# 239
+# 240
 void ADCC_DisableContinuousConversion(void);
 
-# 261
+# 262
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 283
+# 284
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 305
+# 306
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 16 "system.h"
+# 17 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16814,83 +16823,77 @@ extern double fmod(double, double);
 extern double trunc(double);
 extern double round(double);
 
-# 9 "main.c"
-uint16_t samples[2][50] = {0};
-
-
+# 21 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
 
-uint16_t solarInTemp, solarOutTemp;
+
+
+uint16_t analogs[6] = {0};
 
 float R, steinhart, displayTemp, displayTemp2;
 
-static uint16_t sampleIndex0 = 0, sampleIndex1 = 0;
-
-int32_t totals[2] = {0};
-
+# 35
 char count = 11;
 
-_delay((unsigned long)((3000)*(1000000/4000.0)));
+char x = 0;
+
+uint16_t dutyCycle = 1023;
+
+PWM6_LoadDutyValue(dutyCycle);
+
+_delay((unsigned long)((300)*(1000000/4000.0)));
+
+LCD_Clear();
+
+
+{ LCD_Set_Cursor(2,1); LCD_Write_String("A");};
+_delay((unsigned long)((200)*(1000000/4000.0)));
+{ LCD_Set_Cursor(3,1); LCD_Write_String("L");};
+_delay((unsigned long)((200)*(1000000/4000.0)));
+{ LCD_Set_Cursor(4,1); LCD_Write_String("O");};
+_delay((unsigned long)((200)*(1000000/4000.0)));
+{ LCD_Set_Cursor(5,1); LCD_Write_String("H");};
+_delay((unsigned long)((200)*(1000000/4000.0)));
+{ LCD_Set_Cursor(6,1); LCD_Write_String("A");};
+_delay((unsigned long)((200)*(1000000/4000.0)));
+{ LCD_Set_Cursor(7,1); LCD_Write_String(" ");};
+_delay((unsigned long)((200)*(1000000/4000.0)));
+{ LCD_Set_Cursor(8,1); LCD_Write_String("D");};
+_delay((unsigned long)((200)*(1000000/4000.0)));
+{ LCD_Set_Cursor(9,1); LCD_Write_String("A");};
+_delay((unsigned long)((200)*(1000000/4000.0)));
+{ LCD_Set_Cursor(10,1); LCD_Write_String("V");};
+_delay((unsigned long)((200)*(1000000/4000.0)));
+{ LCD_Set_Cursor(11,1); LCD_Write_String("I");};
+_delay((unsigned long)((200)*(1000000/4000.0)));
+{ LCD_Set_Cursor(12,1); LCD_Write_String("D");};
+_delay((unsigned long)((200)*(1000000/4000.0)));
+{ LCD_Set_Cursor(13,1); LCD_Write_String("!");};
+_delay((unsigned long)((5000)*(1000000/4000.0)));
+LCD_Clear();
 
 
 while (1)
 {
-if(count>10)
-{
-{ LCD_Set_Cursor(0,4); LCD_Write_String("Solar In");};
-{ LCD_Set_Cursor(60,4); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
-LCD_Write_Char(0);
-LCD_Write_Char('F');
-LCD_Write_Char(' ');
+PWM6_LoadDutyValue(dutyCycle);
 
-{ LCD_Set_Cursor(0,5); LCD_Write_String("Pool Return");};
-{ LCD_Set_Cursor(60,5); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
-LCD_Write_Char(0);
-LCD_Write_Char('F');
-LCD_Write_Char(' ');
-count=0;
+for(x=0;x<6;x++)
+{
+analogs[x]=readAnalog(x);
 }
 
-solarInTemp = ADCRead(9);
+# 89
+{ LCD_Set_Cursor(0,0); LCD_Write_Int(ADCRead(1),-1, 0, 0);};
+{ LCD_Set_Cursor(6,0); LCD_Write_Int(ADCRead(3),-1, 0, 0);};
+{ LCD_Set_Cursor(11,0); LCD_Write_Int(ADCRead(4),-1, 0, 0);};
+{ LCD_Set_Cursor(0,1); LCD_Write_Int(ADCRead(5),-1, 0, 0);};
+{ LCD_Set_Cursor(6,1); LCD_Write_Int(ADCRead(9),-1, 0, 0);};
+{ LCD_Set_Cursor(11,1); LCD_Write_Int(ADCRead(11),-1, 0, 0);};
 
-totals[0] = totals[0] - samples[0][sampleIndex0];
-
-samples[0][sampleIndex0] = solarInTemp;
-
-totals[0] = totals[0] + samples[0][sampleIndex0];
-
-sampleIndex0 += 1;
-
-if(sampleIndex0 >= 50)
-{
-sampleIndex0 = 0;
-}
-
-solarInTemp = totals[0] / 50;
-
-
-
-solarOutTemp = ADCRead(11);
-
-totals[1] = totals[1] - samples[1][sampleIndex1];
-
-samples[1][sampleIndex1] = solarOutTemp;
-
-totals[1] = totals[1] + samples[1][sampleIndex1];
-
-sampleIndex1 += 1;
-
-if(sampleIndex1 >= 50)
-{
-sampleIndex1 = 0;
-}
-
-solarOutTemp = totals[1] / 50;
-
-
-R = 10010/(1023/(float)solarInTemp - 1);
+# 161
+R = 10010/(1023/(float)analogs[4] - 1);
 
 steinhart = R /10061;
 steinhart = log(steinhart);
@@ -16905,7 +16908,7 @@ displayTemp = displayTemp*9/5+320;
 
 
 
-R = 9975/(1023/(float)solarOutTemp - 1);
+R = 9975/(1023/(float)analogs[5] - 1);
 
 steinhart = R /10061;
 steinhart = log(steinhart);

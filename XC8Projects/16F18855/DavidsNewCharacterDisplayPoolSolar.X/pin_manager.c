@@ -13,12 +13,12 @@ void PIN_MANAGER_Initialize(void)
     WPUC = 0x00;
     WPUE = 0x8;
 
-    TRISA = 0x00;
-    TRISB = 0x0A;
+    TRISA = 0x32;                       // RA1, 4, & 5 as Inputs
+    TRISB = 0x0A;                       // RB1 & 3 as Inputs
     TRISC = 0x10;
 
-    ANSELA = 0x00;
-    ANSELB = 0x0A;
+    ANSELA = 0x32;                      // RA1, 4 & 5 as Analog ins
+    ANSELB = 0x0A;                      // RB1 & 3 as analogs
     ANSELC = 0x00;
     
     PIE0bits.IOCIE = 0;                 // interrupts-on-change are globally disabled
@@ -29,7 +29,7 @@ void PIN_MANAGER_Initialize(void)
     PPSLOCKbits.PPSLOCKED = 0x00;       // unlock PPS
 
 //    T2AINPPSbits.T2AINPPS = 0x0013;   //RC3->TMR2:T2IN; RC3 as hardware input pin to timer 2???
-    RA1PPS = 0x000E;                    //RA1->PWM6:PWM6OUT;
+    RC2PPS = 0x000E;                    //RA1->PWM6:PWM6OUT;
 //    RA2PPS = 0x000E;   //RA2->PWM6:PWM6OUT;
 //    RA3PPS = 0x000E;                    //RA3->PWM6:PWM6OUT;
 

@@ -40,9 +40,9 @@ void SYSTEM_Initialize(void)
     OSCILLATOR_Initialize();
     FVRCON = 0x00;                  // Set Fixed Voltage reference
     ADCC_Initialize();
-//    PWM6_Initialize();
+    PWM6_Initialize();
   //  TMR0_Initialize();
-    //TMR2_Initialize();
+    TMR2_Initialize();
     LCD_Init(NONE);
     __delay_ms(200);
     LCD_Clear();

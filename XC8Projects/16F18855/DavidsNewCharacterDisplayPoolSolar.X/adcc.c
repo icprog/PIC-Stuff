@@ -2,6 +2,20 @@
 #include <xc.h>
 #include "adcc.h"
 
+#define     numSamples  5                                              // Number of Temperature readings to Average
+//#define     SOLARIN     ADCRead(9)
+//#define     SOLAROUT    ADCRead(11)
+
+
+uint16_t samples[2][numSamples] = {0};
+
+uint16_t sampleIndex            = {0};
+
+int32_t totals[6]               = {500};
+
+static int channels[6]          ={1,3,4,5,9,11};
+
+
 void ADCC_Initialize(void)
 {
     // ADDSEN disabled; ADGPOL digital_low; ADIPEN disabled; ADPPOL VSS; 
@@ -72,7 +86,36 @@ adc_result_t ADCRead(adcc_channel_t channel)
     return ((ADRESH << 8) + ADRESL);
 }
 
+int readAnalog(int channel)
+{
+    int value;
+    
+    int analog_channel  =   channels[channel];
+    
+    value = ADCRead(analog_channel);
+    
+//    temp = value;                           // Assign the just read temperature to the location of the current oldest data
+            
+        totals[channel] = totals[channel] - samples[channel][sampleIndex];   // Subtract the oldest sample data from the total
 
+        samples[channel][sampleIndex] = value;             // Assign the just read temperature to the location of the current oldest data
+
+        totals[channel] = totals[channel] + samples[channel][sampleIndex];   // Add that new sample to the total
+            
+        if(channel==5)
+        {
+            sampleIndex += 1;                                  // and move to the next index location
+            
+            if(sampleIndex >= numSamples)
+            {
+                sampleIndex = 0;
+            }
+        }
+            
+        value = totals[channel] / numSamples;                          // assign the average value of total to the readTemperature variable
+        
+     return value;   
+}
 
 /*void ADCC_StopConversion(void)
 {
