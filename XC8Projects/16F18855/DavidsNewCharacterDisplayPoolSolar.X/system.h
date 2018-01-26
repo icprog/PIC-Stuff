@@ -4,11 +4,11 @@
 #include <xc.h>
 #include "pin_manager.h"
 #include <stdint.h>
-#include    "tmr2.h"
+#include "tmr2.h"
 #include "pwm6.h"
-//#include "timers.h"
 #include "lcd.h"
 #include "adcc.h"
+#include "tempCalc.h"
 
 
 #define _XTAL_FREQ  1000000         // Define clock freq for __delay_ms();

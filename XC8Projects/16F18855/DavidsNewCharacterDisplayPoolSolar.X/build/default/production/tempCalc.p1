@@ -1,27 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[p mainexit ]
-"17 system.h
-[v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
-"9 pwm6.h
-[v _PWM6_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
-[v F13525 `(v ~T0 @X0 1 tf1`ul ]
-"152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
-[v __delay `JF13525 ~T0 @X0 0 e ]
-[p i __delay ]
-"44 lcd.h
-[v _LCD_Clear `(v ~T0 @X0 0 ef ]
-"21 adcc.h
-[v _readAnalog `(i ~T0 @X0 0 ef1`i ]
-"46 lcd.h
-[v _LCD_Set_Cursor `(v ~T0 @X0 0 ef2`uc`uc ]
-"52
-[v _LCD_Write_String `(v ~T0 @X0 0 ef1`*Cuc ]
-"54
-[v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
-"50
-[v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
-"6 tempCalc.h
-[v _tempCalc `(f ~T0 @X0 0 ef1`i ]
+"43 C:\Program Files (x86)\Microchip\xc8\v1.38\include\math.h
+[v _log `(d ~T0 @X0 0 ef1`d ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12646,165 +12625,82 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 262: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adcc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;tempCalc.h: 6: float tempCalc(int analogValue);
 [; ;system.h: 17: void SYSTEM_Initialize(void);
 [; ;system.h: 19: void OSCILLATOR_Initialize(void);
-"11 main.c
-[v _main `(v ~T0 @X0 1 ef ]
-"12
+[; ;tempCalc.h: 6: float tempCalc(int analogValue);
+[; ;math.h: 30: extern double fabs(double);
+[; ;math.h: 31: extern double floor(double);
+[; ;math.h: 32: extern double ceil(double);
+[; ;math.h: 33: extern double modf(double, double *);
+[; ;math.h: 34: extern double sqrt(double);
+[; ;math.h: 35: extern double atof(const char *);
+[; ;math.h: 36: extern double sin(double) ;
+[; ;math.h: 37: extern double cos(double) ;
+[; ;math.h: 38: extern double tan(double) ;
+[; ;math.h: 39: extern double asin(double) ;
+[; ;math.h: 40: extern double acos(double) ;
+[; ;math.h: 41: extern double atan(double);
+[; ;math.h: 42: extern double atan2(double, double) ;
+[; ;math.h: 43: extern double log(double);
+[; ;math.h: 44: extern double log10(double);
+[; ;math.h: 45: extern double pow(double, double) ;
+[; ;math.h: 46: extern double exp(double) ;
+[; ;math.h: 47: extern double sinh(double) ;
+[; ;math.h: 48: extern double cosh(double) ;
+[; ;math.h: 49: extern double tanh(double);
+[; ;math.h: 50: extern double eval_poly(double, const double *, int);
+[; ;math.h: 51: extern double frexp(double, int *);
+[; ;math.h: 52: extern double ldexp(double, int);
+[; ;math.h: 53: extern double fmod(double, double);
+[; ;math.h: 54: extern double trunc(double);
+[; ;math.h: 55: extern double round(double);
+"4 tempCalc.c
+[v _tempCalc `(f ~T0 @X0 1 ef1`i ]
+"5
 {
-[; ;main.c: 11: void main(void)
-[; ;main.c: 12: {
-[e :U _main ]
+[; ;tempCalc.c: 4: float tempCalc(int analogValue)
+[; ;tempCalc.c: 5: {
+[e :U _tempCalc ]
+"4
+[v _analogValue `i ~T0 @X0 1 r1 ]
+"5
 [f ]
-[; ;main.c: 13: SYSTEM_Initialize();
-"13
-[e ( _SYSTEM_Initialize ..  ]
-[v F13657 `ui ~T0 @X0 -> 3 `i s ]
-[i F13657
-:U ..
-"15
--> -> 0 `i `ui
-..
-]
-[v _analogs `ui ~T0 @X0 -> 3 `i a ]
-[; ;main.c: 15: uint16_t analogs[3] = {0};
-[e = _analogs F13657 ]
-"17
+"6
 [v _R `f ~T0 @X0 1 a ]
 [v _steinhart `f ~T0 @X0 1 a ]
-[v _displayTemp `f ~T0 @X0 1 a ]
-[v _displayTemp2 `f ~T0 @X0 1 a ]
+[; ;tempCalc.c: 6: float R, steinhart;
+[; ;tempCalc.c: 8: R = 10020/(1023/(float)analogValue - 1);
+"8
+[e = _R / -> -> 10020 `i `f - / -> -> 1023 `i `f -> _analogValue `f -> -> 1 `i `f ]
+[; ;tempCalc.c: 10: steinhart = R /10061;
+"10
+[e = _steinhart / _R -> -> 10061 `i `f ]
+[; ;tempCalc.c: 11: steinhart = log(steinhart);
+"11
+[e = _steinhart -> ( _log (1 -> _steinhart `d `f ]
+[; ;tempCalc.c: 12: steinhart /= 3995;
+"12
+[e =/ _steinhart -> -> 3995 `us `f ]
+[; ;tempCalc.c: 13: steinhart += 1.0 / (25 + 273.15);
+"13
+[e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]
+[; ;tempCalc.c: 14: steinhart = 1.0 / steinhart;
+"14
+[e = _steinhart -> / .1.0 -> _steinhart `d `f ]
+[; ;tempCalc.c: 15: steinhart -= 273.15;
+"15
+[e =- _steinhart -> .273.15 `f ]
+[; ;tempCalc.c: 17: steinhart*=10;
+"17
+[e =* _steinhart -> -> 10 `i `f ]
+[; ;tempCalc.c: 19: steinhart = steinhart*9/5+320;
 "19
-[v _count `uc ~T0 @X0 1 a ]
-[; ;main.c: 17: float R, steinhart, displayTemp, displayTemp2;
-[; ;main.c: 19: char count = 11;
-[e = _count -> -> 11 `i `uc ]
+[e = _steinhart + / * _steinhart -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
+[; ;tempCalc.c: 21: return steinhart;
 "21
-[v _x `uc ~T0 @X0 1 a ]
-[; ;main.c: 21: char x = 0;
-[e = _x -> -> 0 `i `uc ]
-"23
-[v _dutyCycle `ui ~T0 @X0 1 a ]
-[; ;main.c: 23: uint16_t dutyCycle = 1023;
-[e = _dutyCycle -> -> 1023 `i `ui ]
-[; ;main.c: 25: PWM6_LoadDutyValue(dutyCycle);
-"25
-[e ( _PWM6_LoadDutyValue (1 _dutyCycle ]
-[; ;main.c: 27: _delay((unsigned long)((300)*(1000000/4000.0)));
-"27
-[e ( __delay (1 -> * -> -> 300 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;main.c: 29: LCD_Clear();
-"29
-[e ( _LCD_Clear ..  ]
-[; ;main.c: 56: LCD_Clear();
-"56
-[e ( _LCD_Clear ..  ]
-[; ;main.c: 59: while (1)
-"59
-[e :U 1521 ]
-[; ;main.c: 60: {
-"60
-{
-[; ;main.c: 61: PWM6_LoadDutyValue(dutyCycle);
-"61
-[e ( _PWM6_LoadDutyValue (1 _dutyCycle ]
-[; ;main.c: 63: for(x=0;x<3;x++)
-"63
-{
-[e = _x -> -> 0 `i `uc ]
-[e $ < -> _x `i -> 3 `i 1523  ]
-[e $U 1524  ]
-"64
-[e :U 1523 ]
-[; ;main.c: 64: {
-{
-[; ;main.c: 65: analogs[x]=readAnalog(x);
-"65
-[e = *U + &U _analogs * -> _x `ux -> -> # *U &U _analogs `ui `ux -> ( _readAnalog (1 -> _x `i `ui ]
-"66
-}
-"63
-[e ++ _x -> -> 1 `i `uc ]
-[e $ < -> _x `i -> 3 `i 1523  ]
-[e :U 1524 ]
-"66
-}
-[; ;main.c: 66: }
-[; ;main.c: 68: if(count>10)
-"68
-[e $ ! > -> _count `i -> 10 `i 1526  ]
-[; ;main.c: 69: {
-"69
-{
-[; ;main.c: 70: { LCD_Set_Cursor(0,0); LCD_Write_String("Solar In");};
-"70
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_String (1 :s 1C ]
-}
-[; ;main.c: 71: { LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
-"71
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 9 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
-}
-[; ;main.c: 72: LCD_Write_Char(0);
-"72
-[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
-[; ;main.c: 73: LCD_Write_Char('F');
-"73
-[e ( _LCD_Write_Char (1 -> -> 70 `ui `uc ]
-[; ;main.c: 74: LCD_Write_Char(' ');
-"74
-[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-[; ;main.c: 78: { LCD_Set_Cursor(0,1); LCD_Write_String("Return");};
-"78
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_String (1 :s 2C ]
-}
-[; ;main.c: 79: { LCD_Set_Cursor(10,1); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
-"79
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _displayTemp2 `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
-}
-[; ;main.c: 80: LCD_Write_Char(0);
-"80
-[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
-[; ;main.c: 81: LCD_Write_Char('F');
-"81
-[e ( _LCD_Write_Char (1 -> -> 70 `ui `uc ]
-[; ;main.c: 82: LCD_Write_Char(' ');
-"82
-[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-[; ;main.c: 83: count=0;
-"83
-[e = _count -> -> 0 `i `uc ]
-"84
-}
-[e :U 1526 ]
-[; ;main.c: 84: }
-[; ;main.c: 88: displayTemp = tempCalc(analogs[1]);
-"88
-[e = _displayTemp ( _tempCalc (1 -> *U + &U _analogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _analogs `ui `ux `i ]
-[; ;main.c: 90: displayTemp2 = tempCalc(analogs[2]);
-"90
-[e = _displayTemp2 ( _tempCalc (1 -> *U + &U _analogs * -> -> -> 2 `i `ui `ux -> -> # *U &U _analogs `ui `ux `i ]
-[; ;main.c: 120: count+=1;
-"120
-[e =+ _count -> -> 1 `i `uc ]
-"121
-}
-[e :U 1520 ]
-"59
-[e $U 1521  ]
-[e :U 1522 ]
-[; ;main.c: 121: }
-[; ;main.c: 122: }
-"122
+[e ) _steinhart ]
+[e $UE 1519  ]
+[; ;tempCalc.c: 22: }
+"22
 [e :UE 1519 ]
 }
-[a 2C 82 101 116 117 114 110 0 ]
-[a 1C 83 111 108 97 114 32 73 110 0 ]

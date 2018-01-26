@@ -16790,51 +16790,23 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 306
 uint8_t ADCC_GetConversionStageStatus(void);
 
+# 6 "tempCalc.h"
+float tempCalc(int analogValue);
+
 # 17 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 30 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\math.h"
-extern double fabs(double);
-extern double floor(double);
-extern double ceil(double);
-extern double modf(double, double *);
-extern double sqrt(double);
-extern double atof(const char *);
-extern double sin(double) ;
-extern double cos(double) ;
-extern double tan(double) ;
-extern double asin(double) ;
-extern double acos(double) ;
-extern double atan(double);
-extern double atan2(double, double) ;
-extern double log(double);
-extern double log10(double);
-extern double pow(double, double) ;
-extern double exp(double) ;
-extern double sinh(double) ;
-extern double cosh(double) ;
-extern double tanh(double);
-extern double eval_poly(double, const double *, int);
-extern double frexp(double, int *);
-extern double ldexp(double, int);
-extern double fmod(double, double);
-extern double trunc(double);
-extern double round(double);
-
-# 21 "main.c"
+# 11 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
 
-
-
-uint16_t analogs[6] = {0};
+uint16_t analogs[3] = {0};
 
 float R, steinhart, displayTemp, displayTemp2;
 
-# 35
 char count = 11;
 
 char x = 0;
@@ -16847,31 +16819,7 @@ _delay((unsigned long)((300)*(1000000/4000.0)));
 
 LCD_Clear();
 
-
-{ LCD_Set_Cursor(2,1); LCD_Write_String("A");};
-_delay((unsigned long)((200)*(1000000/4000.0)));
-{ LCD_Set_Cursor(3,1); LCD_Write_String("L");};
-_delay((unsigned long)((200)*(1000000/4000.0)));
-{ LCD_Set_Cursor(4,1); LCD_Write_String("O");};
-_delay((unsigned long)((200)*(1000000/4000.0)));
-{ LCD_Set_Cursor(5,1); LCD_Write_String("H");};
-_delay((unsigned long)((200)*(1000000/4000.0)));
-{ LCD_Set_Cursor(6,1); LCD_Write_String("A");};
-_delay((unsigned long)((200)*(1000000/4000.0)));
-{ LCD_Set_Cursor(7,1); LCD_Write_String(" ");};
-_delay((unsigned long)((200)*(1000000/4000.0)));
-{ LCD_Set_Cursor(8,1); LCD_Write_String("D");};
-_delay((unsigned long)((200)*(1000000/4000.0)));
-{ LCD_Set_Cursor(9,1); LCD_Write_String("A");};
-_delay((unsigned long)((200)*(1000000/4000.0)));
-{ LCD_Set_Cursor(10,1); LCD_Write_String("V");};
-_delay((unsigned long)((200)*(1000000/4000.0)));
-{ LCD_Set_Cursor(11,1); LCD_Write_String("I");};
-_delay((unsigned long)((200)*(1000000/4000.0)));
-{ LCD_Set_Cursor(12,1); LCD_Write_String("D");};
-_delay((unsigned long)((200)*(1000000/4000.0)));
-{ LCD_Set_Cursor(13,1); LCD_Write_String("!");};
-_delay((unsigned long)((5000)*(1000000/4000.0)));
+# 56
 LCD_Clear();
 
 
@@ -16879,51 +16827,36 @@ while (1)
 {
 PWM6_LoadDutyValue(dutyCycle);
 
-for(x=0;x<6;x++)
+for(x=0;x<3;x++)
 {
 analogs[x]=readAnalog(x);
 }
 
-# 89
-{ LCD_Set_Cursor(0,0); LCD_Write_Int(ADCRead(1),-1, 0, 0);};
-{ LCD_Set_Cursor(6,0); LCD_Write_Int(ADCRead(3),-1, 0, 0);};
-{ LCD_Set_Cursor(11,0); LCD_Write_Int(ADCRead(4),-1, 0, 0);};
-{ LCD_Set_Cursor(0,1); LCD_Write_Int(ADCRead(5),-1, 0, 0);};
-{ LCD_Set_Cursor(6,1); LCD_Write_Int(ADCRead(9),-1, 0, 0);};
-{ LCD_Set_Cursor(11,1); LCD_Write_Int(ADCRead(11),-1, 0, 0);};
-
-# 161
-R = 10010/(1023/(float)analogs[4] - 1);
-
-steinhart = R /10061;
-steinhart = log(steinhart);
-steinhart /= 3995;
-steinhart += 1.0 / (25 + 273.15);
-steinhart = 1.0 / steinhart;
-steinhart -= 273.15;
-
-displayTemp = steinhart*10;
-
-displayTemp = displayTemp*9/5+320;
+if(count>10)
+{
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Solar In");};
+{ LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('F');
+LCD_Write_Char(' ');
 
 
 
-R = 9975/(1023/(float)analogs[5] - 1);
-
-steinhart = R /10061;
-steinhart = log(steinhart);
-steinhart /= 3995;
-steinhart += 1.0 / (25 + 273.15);
-steinhart = 1.0 / steinhart;
-steinhart -= 273.15;
-
-
-displayTemp2 = steinhart*10;
-
-displayTemp2 = displayTemp2*9/5+320;
-
-
-count+=1;
+{ LCD_Set_Cursor(0,1); LCD_Write_String("Return");};
+{ LCD_Set_Cursor(10,1); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('F');
+LCD_Write_Char(' ');
+count=0;
 }
 
+
+
+displayTemp = tempCalc(analogs[1]);
+
+displayTemp2 = tempCalc(analogs[2]);
+
+# 120
+count+=1;
+}
 }

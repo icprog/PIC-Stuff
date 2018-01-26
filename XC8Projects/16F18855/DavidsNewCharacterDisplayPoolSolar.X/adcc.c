@@ -2,18 +2,15 @@
 #include <xc.h>
 #include "adcc.h"
 
-#define     numSamples  5                                              // Number of Temperature readings to Average
-//#define     SOLARIN     ADCRead(9)
-//#define     SOLAROUT    ADCRead(11)
+#define     numSamples  4                                              // Number of Temperature readings to Average
 
-
-uint16_t samples[2][numSamples] = {0};
+uint16_t samples[3][numSamples] = {0};
 
 uint16_t sampleIndex            = {0};
 
-int32_t totals[6]               = {500};
+int32_t totals[3]               = {0};
 
-static int channels[6]          ={1,3,4,5,9,11};
+static int channels[3]          ={1,9,11};
 
 
 void ADCC_Initialize(void)
@@ -30,11 +27,12 @@ void ADCC_Initialize(void)
     ADSTAT = 0x00;
     // ADCCS FOSC/2; 
     ADCLK = 0x0F;               //ADC CLK FOSC/32?
+//    ADCLK = 0x00;               //ADC CLK FOSC/2
      
 //    ADREF = 0x03;             // ADNREF VSS; ADPREF FVR;
     ADREF = 0x00;               // ADNREF VSS; ADPREF VDD;
     // ADCAP 0; 
-    ADCAP = 0x00;
+    ADCAP = 0x1F;
     // ADPRE 0; 
     ADPRE = 0x00;
     // ADACQ 0; 
@@ -102,7 +100,7 @@ int readAnalog(int channel)
 
         totals[channel] = totals[channel] + samples[channel][sampleIndex];   // Add that new sample to the total
             
-        if(channel==5)
+        if(channel>1)
         {
             sampleIndex += 1;                                  // and move to the next index location
             

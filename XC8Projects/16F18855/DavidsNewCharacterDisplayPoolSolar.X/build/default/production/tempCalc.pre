@@ -1,5 +1,5 @@
 
-# 1 "adcc.c"
+# 1 "tempCalc.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -16587,6 +16587,9 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
+# 16 "pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdint.h"
 typedef signed char int8_t;
 
@@ -16677,6 +16680,33 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
+# 262 "tmr2.h"
+void TMR2_Initialize(void);
+
+# 7 "pwm6.h"
+void PWM6_Initialize(void);
+
+void PWM6_LoadDutyValue(uint16_t dutyCycle);
+
+# 38 "lcd.h"
+void InitCustomChars();
+
+void LCD_Port(char a);
+
+void LCD_Cmd(char a);
+
+void LCD_Clear();
+
+void LCD_Set_Cursor(char x, char y);
+
+void LCD_Init(char style);
+
+void LCD_Write_Char(const char a);
+
+void LCD_Write_String(const char *a);
+
+void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
 typedef unsigned char bool;
 
@@ -16760,115 +16790,59 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 306
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 7 "adcc.c"
-uint16_t samples[3][4] = {0};
+# 17 "system.h"
+void SYSTEM_Initialize(void);
 
-uint16_t sampleIndex = {0};
+void OSCILLATOR_Initialize(void);
 
-int32_t totals[3] = {0};
+# 6 "tempCalc.h"
+float tempCalc(int analogValue);
 
-static int channels[3] ={1,9,11};
+# 30 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\math.h"
+extern double fabs(double);
+extern double floor(double);
+extern double ceil(double);
+extern double modf(double, double *);
+extern double sqrt(double);
+extern double atof(const char *);
+extern double sin(double) ;
+extern double cos(double) ;
+extern double tan(double) ;
+extern double asin(double) ;
+extern double acos(double) ;
+extern double atan(double);
+extern double atan2(double, double) ;
+extern double log(double);
+extern double log10(double);
+extern double pow(double, double) ;
+extern double exp(double) ;
+extern double sinh(double) ;
+extern double cosh(double) ;
+extern double tanh(double);
+extern double eval_poly(double, const double *, int);
+extern double frexp(double, int *);
+extern double ldexp(double, int);
+extern double fmod(double, double);
+extern double trunc(double);
+extern double round(double);
 
-
-void ADCC_Initialize(void)
+# 4 "tempCalc.c"
+float tempCalc(int analogValue)
 {
+float R, steinhart;
 
-ADCON1 = 0x00;
+R = 10020/(1023/(float)analogValue - 1);
 
-ADCON2 = 0x00;
+steinhart = R /10061;
+steinhart = log(steinhart);
+steinhart /= 3995;
+steinhart += 1.0 / (25 + 273.15);
+steinhart = 1.0 / steinhart;
+steinhart -= 273.15;
 
-ADCON3 = 0x00;
+steinhart*=10;
 
-ADACT = 0x00;
+steinhart = steinhart*9/5+320;
 
-ADSTAT = 0x00;
-
-ADCLK = 0x0F;
-
-
-
-ADREF = 0x00;
-
-ADCAP = 0x1F;
-
-ADPRE = 0x00;
-
-ADACQ = 0x00;
-
-ADPCH = 0x00;
-
-ADRPT = 0x00;
-
-ADLTHL = 0x00;
-
-ADLTHH = 0x00;
-
-ADUTHL = 0x00;
-
-ADUTHH = 0x00;
-
-ADSTPTL = 0x00;
-
-ADSTPTH = 0x00;
-
-
-ADCON0 = 0x84;
-
-
+return steinhart;
 }
-
-
-adc_result_t ADCRead(adcc_channel_t channel)
-{
-
-ADPCH = channel;
-
-
-ADCON0bits.ADON = 1;
-
-
-ADCON0bits.ADCONT = 0;
-
-
-ADCON0bits.ADGO = 1;
-
-
-while (ADCON0bits.ADGO)
-{
-}
-
-
-return ((ADRESH << 8) + ADRESL);
-}
-
-int readAnalog(int channel)
-{
-int value;
-
-int analog_channel = channels[channel];
-
-value = ADCRead(analog_channel);
-
-
-
-totals[channel] = totals[channel] - samples[channel][sampleIndex];
-
-samples[channel][sampleIndex] = value;
-
-totals[channel] = totals[channel] + samples[channel][sampleIndex];
-
-if(channel>1)
-{
-sampleIndex += 1;
-
-if(sampleIndex >= 4)
-{
-sampleIndex = 0;
-}
-}
-
-value = totals[channel] / 4;
-
-return value;
-}
-
