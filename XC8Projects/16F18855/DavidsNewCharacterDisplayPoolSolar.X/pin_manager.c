@@ -13,11 +13,12 @@ void PIN_MANAGER_Initialize(void)
     WPUC = 0x00;
     WPUE = 0x8;
 
-    TRISA = 0x02;                       // RA1, 3, 4, & 5 as Inputs
+    TRISA = 0x02;                       // RA1 as Input
+    TRISA = 0x3A;                       // RA1, 3, 4, & 5 as Inputs
     TRISB = 0x0A;                       // RB1 & 3 as Inputs
     TRISC = 0x10;
 
-    ANSELA = 0x02;                      // RA1, 3, 4 & 5 as Analog inputs
+    ANSELA = 0x3A;                      // RA1, 3, 4 & 5 as Analog inputs
     ANSELB = 0x0A;                      // RB1 & 3 as analogs
     ANSELC = 0x00;
     

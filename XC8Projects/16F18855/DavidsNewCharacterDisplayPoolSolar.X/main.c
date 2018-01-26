@@ -4,17 +4,18 @@
 
 // *************** Defines *****************************************************    
 #define CorF            analogs[0]
-#define solarInTemp     analogs[1]
-#define solarOutTemp    analogs[2]
+
+#define solarInTemp     analogs[4]
+#define solarOutTemp    analogs[5]
 
 // *************** Main Routine ************************************************    
 void main(void)
 {
     SYSTEM_Initialize();
     
-    uint16_t analogs[3]     =   {0};
+    uint16_t analogs[6]     =   {0};
     
-    float R, steinhart, displayTemp, displayTemp2;                                    // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
+    float R, steinhart, displayTemp, displayTemp2;                              // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
 
     char count              =   11;
     
@@ -60,7 +61,7 @@ void main(void)
     {
         PWM6_LoadDutyValue(dutyCycle);
         
-        for(x=0;x<3;x++)
+        for(x=0;x<6;x++)
         {
             analogs[x]=readAnalog(x);
         }
@@ -73,14 +74,21 @@ void main(void)
             LCD_Write_Char('F');
             LCD_Write_Char(' ');
             
+            LCDWriteIntXY(0,1,analogs[0],-1,0,0);
+            LCD_Write_Char(' ');
+            LCDWriteIntXY(6,1,analogs[1],-1,0,0);
+            LCD_Write_Char(' ');
+            LCDWriteIntXY(11,1,analogs[2],-1,0,0);
+            LCD_Write_Char(' ');
             
             
-            LCDWriteStringXY(0,1,"Return");
-            LCDWriteIntXY(10,1,(int)displayTemp2,-1,1,0);
+            
+/*            LCDWriteStringXY(0,1,"Return");
+            LCDWriteIntXY(9,1,(int)displayTemp2,-1,1,0);
             LCD_Write_Char(0);
             LCD_Write_Char('F');
             LCD_Write_Char(' ');
-            count=0;
+  */          count=0;
         }
 
 // *************** Calculate & Display Temp ************************************   

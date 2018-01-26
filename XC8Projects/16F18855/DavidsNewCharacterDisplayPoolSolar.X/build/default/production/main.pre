@@ -16798,12 +16798,12 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 11 "main.c"
+# 12 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
 
-uint16_t analogs[3] = {0};
+uint16_t analogs[6] = {0};
 
 float R, steinhart, displayTemp, displayTemp2;
 
@@ -16819,7 +16819,7 @@ _delay((unsigned long)((300)*(1000000/4000.0)));
 
 LCD_Clear();
 
-# 56
+# 57
 LCD_Clear();
 
 
@@ -16827,7 +16827,7 @@ while (1)
 {
 PWM6_LoadDutyValue(dutyCycle);
 
-for(x=0;x<3;x++)
+for(x=0;x<6;x++)
 {
 analogs[x]=readAnalog(x);
 }
@@ -16840,23 +16840,24 @@ LCD_Write_Char(0);
 LCD_Write_Char('F');
 LCD_Write_Char(' ');
 
-
-
-{ LCD_Set_Cursor(0,1); LCD_Write_String("Return");};
-{ LCD_Set_Cursor(10,1); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
-LCD_Write_Char(0);
-LCD_Write_Char('F');
+{ LCD_Set_Cursor(0,1); LCD_Write_Int(analogs[0],-1, 0, 0);};
 LCD_Write_Char(' ');
+{ LCD_Set_Cursor(6,1); LCD_Write_Int(analogs[1],-1, 0, 0);};
+LCD_Write_Char(' ');
+{ LCD_Set_Cursor(11,1); LCD_Write_Int(analogs[2],-1, 0, 0);};
+LCD_Write_Char(' ');
+
+# 91
 count=0;
 }
 
 
 
-displayTemp = tempCalc(analogs[1]);
+displayTemp = tempCalc(analogs[4]);
 
-displayTemp2 = tempCalc(analogs[2]);
+displayTemp2 = tempCalc(analogs[5]);
 
-# 120
+# 128
 count+=1;
 }
 }

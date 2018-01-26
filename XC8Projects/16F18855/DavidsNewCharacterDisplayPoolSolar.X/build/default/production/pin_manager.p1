@@ -12627,56 +12627,59 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pin_manager.c: 16: TRISA = 0x02;
 "16
 [e = _TRISA -> -> 2 `i `uc ]
-[; ;pin_manager.c: 17: TRISB = 0x0A;
+[; ;pin_manager.c: 17: TRISA = 0x3A;
 "17
-[e = _TRISB -> -> 10 `i `uc ]
-[; ;pin_manager.c: 18: TRISC = 0x10;
+[e = _TRISA -> -> 58 `i `uc ]
+[; ;pin_manager.c: 18: TRISB = 0x0A;
 "18
+[e = _TRISB -> -> 10 `i `uc ]
+[; ;pin_manager.c: 19: TRISC = 0x10;
+"19
 [e = _TRISC -> -> 16 `i `uc ]
-[; ;pin_manager.c: 20: ANSELA = 0x02;
-"20
-[e = _ANSELA -> -> 2 `i `uc ]
-[; ;pin_manager.c: 21: ANSELB = 0x0A;
+[; ;pin_manager.c: 21: ANSELA = 0x3A;
 "21
-[e = _ANSELB -> -> 10 `i `uc ]
-[; ;pin_manager.c: 22: ANSELC = 0x00;
+[e = _ANSELA -> -> 58 `i `uc ]
+[; ;pin_manager.c: 22: ANSELB = 0x0A;
 "22
+[e = _ANSELB -> -> 10 `i `uc ]
+[; ;pin_manager.c: 23: ANSELC = 0x00;
+"23
 [e = _ANSELC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 24: PIE0bits.IOCIE = 0;
-"24
-[e = . . _PIE0bits 0 2 -> -> 0 `i `uc ]
+[; ;pin_manager.c: 25: PIE0bits.IOCIE = 0;
 "25
-[v _state `uc ~T0 @X0 1 a ]
-[; ;pin_manager.c: 25: bool state = GIE;
-[e = _state -> -> _GIE `i `uc ]
-[; ;pin_manager.c: 26: GIE = 0;
+[e = . . _PIE0bits 0 2 -> -> 0 `i `uc ]
 "26
-[e = _GIE -> -> 0 `i `b ]
-[; ;pin_manager.c: 27: PPSLOCK = 0x55;
+[v _state `uc ~T0 @X0 1 a ]
+[; ;pin_manager.c: 26: bool state = GIE;
+[e = _state -> -> _GIE `i `uc ]
+[; ;pin_manager.c: 27: GIE = 0;
 "27
-[e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 28: PPSLOCK = 0xAA;
+[e = _GIE -> -> 0 `i `b ]
+[; ;pin_manager.c: 28: PPSLOCK = 0x55;
 "28
-[e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 29: PPSLOCKbits.PPSLOCKED = 0x00;
-"29
-[e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
-[; ;pin_manager.c: 32: RC2PPS = 0x000E;
-"32
-[e = _RC2PPS -> -> 14 `i `uc ]
-[; ;pin_manager.c: 36: PPSLOCK = 0x55;
-"36
 [e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 37: PPSLOCK = 0xAA;
-"37
+[; ;pin_manager.c: 29: PPSLOCK = 0xAA;
+"29
 [e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 38: PPSLOCKbits.PPSLOCKED = 0x01;
+[; ;pin_manager.c: 30: PPSLOCKbits.PPSLOCKED = 0x00;
+"30
+[e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
+[; ;pin_manager.c: 33: RC2PPS = 0x000E;
+"33
+[e = _RC2PPS -> -> 14 `i `uc ]
+[; ;pin_manager.c: 37: PPSLOCK = 0x55;
+"37
+[e = _PPSLOCK -> -> 85 `i `uc ]
+[; ;pin_manager.c: 38: PPSLOCK = 0xAA;
 "38
-[e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
-[; ;pin_manager.c: 39: GIE = state;
+[e = _PPSLOCK -> -> 170 `i `uc ]
+[; ;pin_manager.c: 39: PPSLOCKbits.PPSLOCKED = 0x01;
 "39
-[e = _GIE -> _state `b ]
-[; ;pin_manager.c: 40: }
+[e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
+[; ;pin_manager.c: 40: GIE = state;
 "40
+[e = _GIE -> _state `b ]
+[; ;pin_manager.c: 41: }
+"41
 [e :UE 1519 ]
 }
