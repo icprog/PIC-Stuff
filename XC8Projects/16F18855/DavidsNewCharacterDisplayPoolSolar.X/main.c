@@ -68,17 +68,24 @@ void main(void)
         
         if(count>10)
         {
-            LCDWriteStringXY(0,0,"Solar In");
+/*            LCDWriteStringXY(0,0,"Solar In");
             LCDWriteIntXY(9,0,(int)displayTemp,-1,1,0);
             LCD_Write_Char(0);
             LCD_Write_Char('F');
             LCD_Write_Char(' ');
-            
-            LCDWriteIntXY(0,1,analogs[0],-1,0,0);
+  */          
+            LCDWriteIntXY(0,0,analogs[0],-1,0,0);
             LCD_Write_Char(' ');
-            LCDWriteIntXY(6,1,analogs[1],-1,0,0);
+            LCDWriteIntXY(6,0,analogs[1],-1,0,0);
             LCD_Write_Char(' ');
-            LCDWriteIntXY(11,1,analogs[2],-1,0,0);
+            LCDWriteIntXY(11,0,analogs[2],-1,0,0);
+            LCD_Write_Char(' ');
+
+            LCDWriteIntXY(0,1,analogs[3],-1,0,0);
+            LCD_Write_Char(' ');
+            LCDWriteIntXY(6,1,analogs[4],-1,0,0);
+            LCD_Write_Char(' ');
+            LCDWriteIntXY(11,1,analogs[5],-1,0,0);
             LCD_Write_Char(' ');
             
             

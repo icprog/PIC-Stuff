@@ -16761,7 +16761,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 7 "adcc.c"
-uint16_t samples[6][3] = {0};
+uint16_t samples[6][20] = {0};
 
 uint16_t sampleIndex = {0};
 
@@ -16783,15 +16783,16 @@ ADACT = 0x00;
 
 ADSTAT = 0x00;
 
-ADCLK = 0x0F;
+ADCLK = 0x3F;
 
 
 
 ADREF = 0x00;
 
-ADCAP = 0x1F;
+ADCAP = 0x00;
 
-ADPRE = 0x00;
+
+ADPRE = 0x07;
 
 ADACQ = 0x00;
 
@@ -16861,13 +16862,13 @@ if(channel>4)
 {
 sampleIndex += 1;
 
-if(sampleIndex >= 3)
+if(sampleIndex >= 20)
 {
 sampleIndex = 0;
 }
 }
 
-value = totals[channel] / 3;
+value = totals[channel] / 20;
 
 return value;
 }
