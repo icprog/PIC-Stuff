@@ -3,7 +3,7 @@
 [d edition pro ]
 [d chip 16F18855 ]
 [d frameptr 6 ]
-"65 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\adcc.c
+"66 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\adcc.c
 [e E13559 . `uc
 channel_VSS 60
 channel_Temp 61
@@ -12,9 +12,9 @@ channel_FVR 63
 ]
 "16
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
-"64
+"65
 [v _ADCRead ADCRead `(ui  1 e 2 0 ]
-"87
+"88
 [v _readAnalog readAnalog `(i  1 e 2 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\aldiv.c
 [v ___aldiv __aldiv `(l  1 e 4 0 ]
@@ -42,14 +42,10 @@ channel_FVR 63
 [v ___ftneg __ftneg `(f  1 e 3 0 ]
 "18 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftsub.c
 [v ___ftsub __ftsub `(f  1 e 3 0 ]
-"44 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fttol.c
-[v ___fttol __fttol `(l  1 e 4 0 ]
 "5 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\log.c
 [v _log log `(d  1 e 3 0 ]
 "15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]
-"4 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul8.c
-[v ___bmul __bmul `(uc  1 e 1 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\pic\eeprom.c
 [v _eecpymem eecpymem `(v  1 e 1 0 ]
 "39
@@ -68,8 +64,6 @@ channel_FVR 63
 [v _LCD_Init LCD_Init `(v  1 e 1 0 ]
 "223
 [v _LCD_Write_Char LCD_Write_Char `(v  1 e 1 0 ]
-"239
-[v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
 "246
 [v _LCD_Write_Int LCD_Write_Int `(v  1 e 1 0 ]
 "12 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\main.c
@@ -80,16 +74,16 @@ channel_FVR 63
 [v _PWM6_Initialize PWM6_Initialize `(v  1 e 1 0 ]
 "14
 [v _PWM6_LoadDutyValue PWM6_LoadDutyValue `(v  1 e 1 0 ]
-"37 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\system.c
+"71 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
-"55
+"89
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
 "4 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\tempCalc.c
 [v _tempCalc tempCalc `(f  1 e 3 0 ]
 "3 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\tmr2.c
 [v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
 "7 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\adcc.c
-[v _samples samples `[6][3]ui  1 e 36 0 ]
+[v _samples samples `[6][20]ui  1 e 240 @8960 ]
 "9
 [v _sampleIndex sampleIndex `ui  1 e 2 0 ]
 "11
@@ -307,10 +301,10 @@ channel_FVR 63
 [v _main main `(v  1 e 1 0 ]
 {
 "16
-[v main@analogs analogs `[6]ui  1 a 12 3 ]
+[v main@analogs analogs `[6]ui  1 a 12 6 ]
 "18
-[v main@displayTemp displayTemp `f  1 a 3 15 ]
-[v main@displayTemp2 displayTemp2 `f  1 a 3 0 ]
+[v main@displayTemp2 displayTemp2 `f  1 a 3 3 ]
+[v main@displayTemp displayTemp `f  1 a 3 0 ]
 "24
 [v main@dutyCycle dutyCycle `ui  1 a 2 19 ]
 "22
@@ -319,7 +313,7 @@ channel_FVR 63
 [v main@count count `uc  1 a 1 18 ]
 "14
 [v main@F13657 F13657 `[6]ui  1 s 12 F13657 ]
-"130
+"137
 } 0
 "4 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\tempCalc.c
 [v _tempCalc tempCalc `(f  1 e 3 0 ]
@@ -359,16 +353,6 @@ channel_FVR 63
 [v eval_poly@d d `*.25DCCd  1 p 2 48 ]
 [v eval_poly@n n `i  1 p 2 50 ]
 "12
-} 0
-"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
-[v ___wmul __wmul `(ui  1 e 2 0 ]
-{
-"17
-[v ___wmul@product product `ui  1 a 2 4 ]
-"15
-[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
-[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
-"53
 } 0
 "62 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftmul.c
 [v ___ftmul __ftmul `(f  1 e 3 0 ]
@@ -441,29 +425,26 @@ channel_FVR 63
 [v ___ftpack@sign sign `uc  1 p 1 4 ]
 "86
 } 0
-"87 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\adcc.c
+"88 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\adcc.c
 [v _readAnalog readAnalog `(i  1 e 2 0 ]
 {
-"89
+"90
 [v readAnalog@value value `i  1 a 2 11 ]
-"91
+"92
 [v readAnalog@analog_channel analog_channel `i  1 a 2 9 ]
-"87
+"88
 [v readAnalog@channel channel `i  1 p 2 6 ]
-"116
+"117
 } 0
-"4 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul8.c
-[v ___bmul __bmul `(uc  1 e 1 0 ]
+"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
 {
-[v ___bmul@multiplier multiplier `uc  1 a 1 wreg ]
-"6
-[v ___bmul@product product `uc  1 a 1 2 ]
-"4
-[v ___bmul@multiplier multiplier `uc  1 a 1 wreg ]
-[v ___bmul@multiplicand multiplicand `uc  1 p 1 0 ]
-"6
-[v ___bmul@multiplier multiplier `uc  1 a 1 3 ]
-"51
+"17
+[v ___wmul@product product `ui  1 a 2 4 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
+"53
 } 0
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\aldiv.c
 [v ___aldiv __aldiv `(l  1 e 4 0 ]
@@ -478,31 +459,19 @@ channel_FVR 63
 [v ___aldiv@dividend dividend `l  1 p 4 4 ]
 "42
 } 0
-"64 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\adcc.c
+"65 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\adcc.c
 [v _ADCRead ADCRead `(ui  1 e 2 0 ]
 {
 [v ADCRead@channel channel `E13559  1 a 1 wreg ]
 [v ADCRead@channel channel `E13559  1 a 1 wreg ]
-"67
+"68
 [v ADCRead@channel channel `E13559  1 a 1 3 ]
-"85
+"86
 } 0
-"44 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fttol.c
-[v ___fttol __fttol `(l  1 e 4 0 ]
-{
-"47
-[v ___fttol@lval lval `ul  1 a 4 9 ]
-"46
-[v ___fttol@exp1 exp1 `uc  1 a 1 13 ]
-[v ___fttol@sign1 sign1 `uc  1 a 1 8 ]
-"44
-[v ___fttol@f1 f1 `f  1 p 3 0 ]
-"73
-} 0
-"37 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\system.c
+"71 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
 {
-"53
+"87
 } 0
 "3 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\tmr2.c
 [v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
@@ -521,10 +490,10 @@ channel_FVR 63
 [v PIN_MANAGER_Initialize@state state `uc  1 a 1 0 ]
 "41
 } 0
-"55 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\system.c
+"89 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\system.c
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
 {
-"62
+"96
 } 0
 "154 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\lcd.c
 [v _LCD_Init LCD_Init `(v  1 e 1 0 ]
@@ -532,7 +501,7 @@ channel_FVR 63
 [v LCD_Init@style style `uc  1 a 1 wreg ]
 [v LCD_Init@style style `uc  1 a 1 wreg ]
 "156
-[v LCD_Init@style style `uc  1 a 1 5 ]
+[v LCD_Init@style style `uc  1 a 1 7 ]
 "221
 } 0
 "75
@@ -550,7 +519,7 @@ channel_FVR 63
 "16 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\adcc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
 {
-"61
+"62
 } 0
 "14 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\pwm6.c
 [v _PWM6_LoadDutyValue PWM6_LoadDutyValue `(v  1 e 1 0 ]
@@ -558,28 +527,19 @@ channel_FVR 63
 [v PWM6_LoadDutyValue@dutyCycle dutyCycle `ui  1 p 2 0 ]
 "19
 } 0
-"239 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\lcd.c
-[v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
-{
-"241
-[v LCD_Write_String@i i `i  1 a 2 8 ]
-"239
-[v LCD_Write_String@a a `*.25DCCuc  1 p 2 5 ]
-"244
-} 0
-"246
+"246 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\lcd.c
 [v _LCD_Write_Int LCD_Write_Int `(v  1 e 1 0 ]
 {
 "248
-[v LCD_Write_Int@str str `[5]uc  1 a 5 10 ]
+[v LCD_Write_Int@str str `[5]uc  1 a 5 5 ]
 "249
-[v LCD_Write_Int@i i `i  1 a 2 17 ]
-[v LCD_Write_Int@j j `i  1 a 2 15 ]
+[v LCD_Write_Int@i i `i  1 a 2 12 ]
+[v LCD_Write_Int@j j `i  1 a 2 10 ]
 "246
-[v LCD_Write_Int@value value `i  1 p 2 0 ]
-[v LCD_Write_Int@fieldLength fieldLength `c  1 p 1 2 ]
-[v LCD_Write_Int@numPlaces numPlaces `c  1 p 1 3 ]
-[v LCD_Write_Int@sign sign `c  1 p 1 4 ]
+[v LCD_Write_Int@value value `i  1 p 2 9 ]
+[v LCD_Write_Int@fieldLength fieldLength `c  1 p 1 11 ]
+[v LCD_Write_Int@numPlaces numPlaces `c  1 p 1 12 ]
+[v LCD_Write_Int@sign sign `c  1 p 1 13 ]
 "247
 [v LCD_Write_Int@F13687 F13687 `[5]uc  1 s 5 F13687 ]
 "300
@@ -626,14 +586,14 @@ channel_FVR 63
 {
 [v LCD_Set_Cursor@x x `uc  1 a 1 wreg ]
 "86
-[v LCD_Set_Cursor@temp temp `uc  1 a 1 9 ]
-[v LCD_Set_Cursor@w w `uc  1 a 1 8 ]
-[v LCD_Set_Cursor@z z `uc  1 a 1 7 ]
+[v LCD_Set_Cursor@temp temp `uc  1 a 1 10 ]
+[v LCD_Set_Cursor@w w `uc  1 a 1 9 ]
+[v LCD_Set_Cursor@z z `uc  1 a 1 8 ]
 "82
 [v LCD_Set_Cursor@x x `uc  1 a 1 wreg ]
-[v LCD_Set_Cursor@y y `uc  1 p 1 3 ]
+[v LCD_Set_Cursor@y y `uc  1 p 1 4 ]
 "88
-[v LCD_Set_Cursor@x x `uc  1 a 1 6 ]
+[v LCD_Set_Cursor@x x `uc  1 a 1 7 ]
 "152
 } 0
 "65
@@ -642,7 +602,7 @@ channel_FVR 63
 [v LCD_Cmd@a a `uc  1 a 1 wreg ]
 [v LCD_Cmd@a a `uc  1 a 1 wreg ]
 "67
-[v LCD_Cmd@a a `uc  1 a 1 2 ]
+[v LCD_Cmd@a a `uc  1 a 1 3 ]
 "72
 } 0
 "41

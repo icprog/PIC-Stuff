@@ -16815,7 +16815,7 @@ uint16_t dutyCycle = 1023;
 
 PWM6_LoadDutyValue(dutyCycle);
 
-_delay((unsigned long)((300)*(1000000/4000.0)));
+_delay((unsigned long)((300)*(32000000/4000.0)));
 
 LCD_Clear();
 
@@ -16834,20 +16834,23 @@ analogs[x]=readAnalog(x);
 
 if(count>10)
 {
-{ LCD_Set_Cursor(0,0); LCD_Write_String("Solar In");};
-{ LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
-LCD_Write_Char(0);
-LCD_Write_Char('F');
+
+# 77
+{ LCD_Set_Cursor(0,0); LCD_Write_Int(analogs[0],-1, 0, 0);};
+LCD_Write_Char(' ');
+{ LCD_Set_Cursor(6,0); LCD_Write_Int(analogs[1],-1, 0, 0);};
+LCD_Write_Char(' ');
+{ LCD_Set_Cursor(11,0); LCD_Write_Int(analogs[2],-1, 0, 0);};
 LCD_Write_Char(' ');
 
-{ LCD_Set_Cursor(0,1); LCD_Write_Int(analogs[0],-1, 0, 0);};
+{ LCD_Set_Cursor(0,1); LCD_Write_Int(analogs[3],-1, 0, 0);};
 LCD_Write_Char(' ');
-{ LCD_Set_Cursor(6,1); LCD_Write_Int(analogs[1],-1, 0, 0);};
+{ LCD_Set_Cursor(6,1); LCD_Write_Int(analogs[4],-1, 0, 0);};
 LCD_Write_Char(' ');
-{ LCD_Set_Cursor(11,1); LCD_Write_Int(analogs[2],-1, 0, 0);};
+{ LCD_Set_Cursor(11,1); LCD_Write_Int(analogs[5],-1, 0, 0);};
 LCD_Write_Char(' ');
 
-# 91
+# 98
 count=0;
 }
 
@@ -16857,7 +16860,7 @@ displayTemp = tempCalc(analogs[4]);
 
 displayTemp2 = tempCalc(analogs[5]);
 
-# 128
+# 135
 count+=1;
 }
 }

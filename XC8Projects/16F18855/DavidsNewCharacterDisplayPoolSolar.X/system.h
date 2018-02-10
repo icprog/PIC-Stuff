@@ -11,7 +11,7 @@
 #include "tempCalc.h"
 
 
-#define _XTAL_FREQ  1000000         // Define clock freq for __delay_ms();
+#define _XTAL_FREQ  32000000         // Define clock freq for __delay_ms();
 
 
 void SYSTEM_Initialize(void);

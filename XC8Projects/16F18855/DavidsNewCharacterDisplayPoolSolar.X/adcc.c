@@ -2,7 +2,7 @@
 #include <xc.h>
 #include "adcc.h"
 
-#define     numSamples  3                                              // Number of Temperature readings to Average
+#define     numSamples  20                                              // Number of Temperature readings to Average
 
 uint16_t samples[6][numSamples] = {0};
 
@@ -26,15 +26,16 @@ void ADCC_Initialize(void)
     // ADAOV ACC or ADERR not Overflowed; 
     ADSTAT = 0x00;
     // ADCCS FOSC/2; 
-    ADCLK = 0x0F;               //ADC CLK FOSC/32?
+    ADCLK = 0x3F;               //ADC CLK FOSC/128
 //    ADCLK = 0x00;               //ADC CLK FOSC/2
      
 //    ADREF = 0x03;             // ADNREF VSS; ADPREF FVR;
     ADREF = 0x00;               // ADNREF VSS; ADPREF VDD;
-    // ADCAP 0; 
-    ADCAP = 0x1F;
+
+    ADCAP = 0x00; 
+//    ADCAP = 0x1F;
     // ADPRE 0; 
-    ADPRE = 0x00;
+    ADPRE = 0x07;
     // ADACQ 0; 
     ADACQ = 0x00;
     // ADPCH ANA0; 

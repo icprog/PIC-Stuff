@@ -16850,7 +16850,7 @@ RA0 = 0;
 LCD_Port(a);
 RA2 = 1;
 RA2 = 0;
-_delay((unsigned long)((4)*(1000000/4000.0)));
+_delay((unsigned long)((4)*(32000000/4000.0)));
 }
 
 
@@ -16892,53 +16892,53 @@ void LCD_Init(char style)
 {
 LCD_Port(0x00);
 
-_delay((unsigned long)((100)*(1000000/4000.0)));
+_delay((unsigned long)((100)*(32000000/4000.0)));
 
 LCD_Cmd(0x03);
 
-_delay((unsigned long)((10)*(1000000/4000.0)));
+_delay((unsigned long)((10)*(32000000/4000.0)));
 
 LCD_Cmd(0x03);
 
-_delay((unsigned long)((120)*(1000000/4000000.0)));
+_delay((unsigned long)((120)*(32000000/4000000.0)));
 
 LCD_Cmd(0x03);
 
-_delay((unsigned long)((120)*(1000000/4000000.0)));
+_delay((unsigned long)((120)*(32000000/4000000.0)));
 
 LCD_Cmd(0x02);
 
-_delay((unsigned long)((120)*(1000000/4000000.0)));
+_delay((unsigned long)((120)*(32000000/4000000.0)));
 
 LCD_Cmd(0x2);
 
 LCD_Cmd(0x8);
 
-_delay((unsigned long)((120)*(1000000/4000000.0)));
+_delay((unsigned long)((120)*(32000000/4000000.0)));
 
 LCD_Cmd(0x0);
 
 LCD_Cmd(0x8);
 
-_delay((unsigned long)((120)*(1000000/4000000.0)));
+_delay((unsigned long)((120)*(32000000/4000000.0)));
 
 LCD_Cmd(0x0);
 
 LCD_Cmd(0x1);
 
-_delay((unsigned long)((5)*(1000000/4000.0)));
+_delay((unsigned long)((5)*(32000000/4000.0)));
 
 LCD_Cmd(0x0);
 
 LCD_Cmd(0x6);
 
-_delay((unsigned long)((120)*(1000000/4000000.0)));
+_delay((unsigned long)((120)*(32000000/4000000.0)));
 
 LCD_Cmd(0x0);
 
 LCD_Cmd(0xc|style);
 
-_delay((unsigned long)((120)*(1000000/4000000.0)));
+_delay((unsigned long)((120)*(32000000/4000000.0)));
 
 # 221
 }
@@ -16952,11 +16952,11 @@ RA0 = 1;
 LCD_Port(y>>4);
 RA2 = 1;
 RA2 = 0;
-_delay((unsigned long)((40)*(1000000/4000000.0)));
+_delay((unsigned long)((40)*(32000000/4000000.0)));
 LCD_Port(temp);
 RA2 = 1;
 RA2 = 0;
-_delay((unsigned long)((40)*(1000000/4000000.0)));
+_delay((unsigned long)((40)*(32000000/4000000.0)));
 }
 
 void LCD_Write_String(const char *a)
