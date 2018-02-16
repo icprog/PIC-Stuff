@@ -3,8 +3,10 @@
 //#include <math.h>
 
 // *************** Defines *****************************************************    
-#define CorF            analogs[0]
-
+#define celcius         analogs[0]
+#define farenheit       analogs[1]
+#define down            analogs[2]
+#define up              analogs[3]
 #define solarInTemp     analogs[4]
 #define solarOutTemp    analogs[5]
 
