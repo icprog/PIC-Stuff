@@ -16,7 +16,7 @@ float tempCalc(int analogValue)
 
     steinhart*=10;                              // multiply by 10 to create displayable decimal point (LCDWriteInt...)
         
-    steinhart = steinhart*9/5+320;              // Display Temperature in DegF
+//    steinhart = steinhart*9/5+320;              // Display Temperature in DegF
         
     return steinhart;    
 }

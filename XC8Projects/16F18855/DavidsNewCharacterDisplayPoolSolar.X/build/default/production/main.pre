@@ -16798,18 +16798,16 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 12 "main.c"
+# 13 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
 
 uint16_t analogs[6] = {0};
 
-float R, steinhart, displayTemp, displayTemp2;
+float displayTemp, displayTemp2;
 
-char count = 11;
-
-char x = 0;
+unsigned char x[6] = {0,64,2,0,0,0};
 
 uint16_t dutyCycle = 1023;
 
@@ -16819,39 +16817,101 @@ _delay((unsigned long)((300)*(32000000/4000.0)));
 
 LCD_Clear();
 
-# 57
+{ LCD_Set_Cursor(2,1); LCD_Write_String("A");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(3,1); LCD_Write_String("L");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(4,1); LCD_Write_String("O");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(5,1); LCD_Write_String("H");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(6,1); LCD_Write_String("A");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(7,1); LCD_Write_String(" ");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(8,1); LCD_Write_String("D");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(9,1); LCD_Write_String("A");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(10,1); LCD_Write_String("V");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(11,1); LCD_Write_String("I");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(12,1); LCD_Write_String("D");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(13,1); LCD_Write_String("!");};
+_delay((unsigned long)((5000)*(32000000/4000.0)));
+
 LCD_Clear();
+
+PWM6_LoadDutyValue(dutyCycle);
 
 
 while (1)
 {
-PWM6_LoadDutyValue(dutyCycle);
+for(x[0]=0;x[0]<6;x[0]++) analogs[x[0]]=readAnalog(x[0]);
 
-for(x=0;x<6;x++)
+if(analogs[0]<1020)x[2]=1;
+
+if(analogs[1]<900)x[2]=0;
+
+if(analogs[0]<1020&&analogs[1]<970)
 {
-analogs[x]=readAnalog(x);
+x[2]=2;
+_delay((unsigned long)((200)*(32000000/4000.0)));
 }
 
-if(count>10)
+
+
+x[5]+=1;
+
+if(x[5]>254)
 {
+x[5]=254;
 
-# 77
-{ LCD_Set_Cursor(0,0); LCD_Write_Int(analogs[0],-1, 0, 0);};
-LCD_Write_Char(' ');
-{ LCD_Set_Cursor(6,0); LCD_Write_Int(analogs[1],-1, 0, 0);};
-LCD_Write_Char(' ');
-{ LCD_Set_Cursor(11,0); LCD_Write_Int(analogs[2],-1, 0, 0);};
-LCD_Write_Char(' ');
+if(analogs[2]<900&&analogs[3]<900)asm("reset");
 
-{ LCD_Set_Cursor(0,1); LCD_Write_Int(analogs[3],-1, 0, 0);};
-LCD_Write_Char(' ');
-{ LCD_Set_Cursor(6,1); LCD_Write_Int(analogs[4],-1, 0, 0);};
-LCD_Write_Char(' ');
-{ LCD_Set_Cursor(11,1); LCD_Write_Int(analogs[5],-1, 0, 0);};
-LCD_Write_Char(' ');
+if(analogs[2]<950)
+{
+while(analogs[2]<950)
+{
+analogs[2]=ADCRead(4);
+x[4]+=1;
+if(x[4]<1)LCD_Clear();
 
-# 98
-count=0;
+if(dutyCycle>0)dutyCycle-=1;
+
+{ LCD_Set_Cursor(0,0); LCD_Write_String("BackLight:");};
+LCD_Write_Int(dutyCycle/10,-1,0,0);
+LCD_Write_Char('%');
+LCD_Write_Char(' ');
+PWM6_LoadDutyValue(dutyCycle);
+}
+x[4]=0;
+_delay((unsigned long)((100)*(32000000/4000.0)));
+LCD_Clear();
+}
+
+if(analogs[3]<950)
+{
+while(analogs[3]<950)
+{
+analogs[3]=ADCRead(5);
+x[4]+=1;
+if(x[4]<1)LCD_Clear();
+
+if(dutyCycle<1009)dutyCycle+=1;
+
+{ LCD_Set_Cursor(0,0); LCD_Write_String("BackLight:");};
+LCD_Write_Int(dutyCycle/10,-1,0,0);
+LCD_Write_Char('%');
+LCD_Write_Char(' ');
+PWM6_LoadDutyValue(dutyCycle);
+}
+x[4]=0;
+_delay((unsigned long)((100)*(32000000/4000.0)));
+LCD_Clear();
+}
 }
 
 
@@ -16860,7 +16920,50 @@ displayTemp = tempCalc(analogs[4]);
 
 displayTemp2 = tempCalc(analogs[5]);
 
-# 135
-count+=1;
+if(x[1]>127)
+{
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Solar In");};
+{ LCD_Set_Cursor(0,1); LCD_Write_String("Return");};
+
+if(x[3]==0)
+{
+{ LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_Char(' ');
+
+{ LCD_Set_Cursor(9,1); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_Char(' ');
+}
+
+if(x[3]==1)
+{
+displayTemp = displayTemp*9/5+320;
+displayTemp2 = displayTemp2*9/5+320;
+
+{ LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('F');
+LCD_Write_Char(' ');
+
+{ LCD_Set_Cursor(9,1); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char('F');
+LCD_Write_Char(' ');
+}
+
+
+if(x[2]==0)x[3]=0;
+
+if(x[2]==1)x[3]=1;
+
+if(x[2]==2)x[3]=1-x[3];
+
+# 189
+x[1]=0;
+}
+x[1]+=1;
 }
 }

@@ -10,7 +10,14 @@ channel_Temp 61
 channel_DAC1 62
 channel_FVR 63
 ]
-"16
+"89 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\main.c
+[e E13587 . `uc
+channel_VSS 60
+channel_Temp 61
+channel_DAC1 62
+channel_FVR 63
+]
+"16 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\adcc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
 "65
 [v _ADCRead ADCRead `(ui  1 e 2 0 ]
@@ -42,8 +49,12 @@ channel_FVR 63
 [v ___ftneg __ftneg `(f  1 e 3 0 ]
 "18 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftsub.c
 [v ___ftsub __ftsub `(f  1 e 3 0 ]
+"44 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fttol.c
+[v ___fttol __fttol `(l  1 e 4 0 ]
 "5 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\log.c
 [v _log log `(d  1 e 3 0 ]
+"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lwdiv.c
+[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
 "15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\pic\eeprom.c
@@ -64,9 +75,11 @@ channel_FVR 63
 [v _LCD_Init LCD_Init `(v  1 e 1 0 ]
 "223
 [v _LCD_Write_Char LCD_Write_Char `(v  1 e 1 0 ]
+"239
+[v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
 "246
 [v _LCD_Write_Int LCD_Write_Int `(v  1 e 1 0 ]
-"12 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\main.c
+"13 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\main.c
 [v _main main `(v  1 e 1 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
@@ -297,23 +310,23 @@ channel_FVR 63
 [v _errno errno `i  1 e 2 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\lcd.c
 [v ___cgram __cgram `[24]uc  1 e 24 0 ]
-"12 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\main.c
+"13 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"16
-[v main@analogs analogs `[6]ui  1 a 12 6 ]
-"18
-[v main@displayTemp2 displayTemp2 `f  1 a 3 3 ]
+"17
+[v main@analogs analogs `[6]ui  1 a 12 3 ]
+"21
+[v main@x x `[6]uc  1 a 6 18 ]
+"19
+[v main@displayTemp2 displayTemp2 `f  1 a 3 15 ]
 [v main@displayTemp displayTemp `f  1 a 3 0 ]
-"24
-[v main@dutyCycle dutyCycle `ui  1 a 2 19 ]
-"22
-[v main@x x `uc  1 a 1 21 ]
-"20
-[v main@count count `uc  1 a 1 18 ]
-"14
+"23
+[v main@dutyCycle dutyCycle `ui  1 a 2 24 ]
+"15
 [v main@F13657 F13657 `[6]ui  1 s 12 F13657 ]
-"137
+"19
+[v main@F13661 F13661 `[6]uc  1 s 6 F13661 ]
+"193
 } 0
 "4 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\tempCalc.c
 [v _tempCalc tempCalc `(f  1 e 3 0 ]
@@ -468,6 +481,30 @@ channel_FVR 63
 [v ADCRead@channel channel `E13559  1 a 1 3 ]
 "86
 } 0
+"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\lwdiv.c
+[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+{
+"11
+[v ___lwdiv@quotient quotient `ui  1 a 2 5 ]
+"12
+[v ___lwdiv@counter counter `uc  1 a 1 7 ]
+"6
+[v ___lwdiv@divisor divisor `ui  1 p 2 0 ]
+[v ___lwdiv@dividend dividend `ui  1 p 2 2 ]
+"31
+} 0
+"44 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fttol.c
+[v ___fttol __fttol `(l  1 e 4 0 ]
+{
+"47
+[v ___fttol@lval lval `ul  1 a 4 9 ]
+"46
+[v ___fttol@exp1 exp1 `uc  1 a 1 13 ]
+[v ___fttol@sign1 sign1 `uc  1 a 1 8 ]
+"44
+[v ___fttol@f1 f1 `f  1 p 3 0 ]
+"73
+} 0
 "71 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
 {
@@ -527,19 +564,28 @@ channel_FVR 63
 [v PWM6_LoadDutyValue@dutyCycle dutyCycle `ui  1 p 2 0 ]
 "19
 } 0
-"246 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\lcd.c
+"239 D:\PIC-Stuff\XC8Projects\16F18855\DavidsNewCharacterDisplayPoolSolar.X\lcd.c
+[v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
+{
+"241
+[v LCD_Write_String@i i `i  1 a 2 8 ]
+"239
+[v LCD_Write_String@a a `*.25DCCuc  1 p 2 5 ]
+"244
+} 0
+"246
 [v _LCD_Write_Int LCD_Write_Int `(v  1 e 1 0 ]
 {
 "248
-[v LCD_Write_Int@str str `[5]uc  1 a 5 5 ]
+[v LCD_Write_Int@str str `[5]uc  1 a 5 10 ]
 "249
-[v LCD_Write_Int@i i `i  1 a 2 12 ]
-[v LCD_Write_Int@j j `i  1 a 2 10 ]
+[v LCD_Write_Int@i i `i  1 a 2 17 ]
+[v LCD_Write_Int@j j `i  1 a 2 15 ]
 "246
-[v LCD_Write_Int@value value `i  1 p 2 9 ]
-[v LCD_Write_Int@fieldLength fieldLength `c  1 p 1 11 ]
-[v LCD_Write_Int@numPlaces numPlaces `c  1 p 1 12 ]
-[v LCD_Write_Int@sign sign `c  1 p 1 13 ]
+[v LCD_Write_Int@value value `i  1 p 2 0 ]
+[v LCD_Write_Int@fieldLength fieldLength `c  1 p 1 2 ]
+[v LCD_Write_Int@numPlaces numPlaces `c  1 p 1 3 ]
+[v LCD_Write_Int@sign sign `c  1 p 1 4 ]
 "247
 [v LCD_Write_Int@F13687 F13687 `[5]uc  1 s 5 F13687 ]
 "300
