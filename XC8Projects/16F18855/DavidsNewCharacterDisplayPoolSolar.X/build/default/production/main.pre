@@ -16798,7 +16798,7 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 13 "main.c"
+# 15 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
@@ -16807,7 +16807,24 @@ uint16_t analogs[6] = {0};
 
 float displayTemp, displayTemp2;
 
-unsigned char x[8] = {0,64,2,0,0,0,0,10};
+
+
+char x = 0;
+
+char loop = 64;
+
+char choice = 2;
+
+char C_or_F = 1;
+
+unsigned int bCount = 0;
+
+unsigned char startDelay= 0;
+
+unsigned char resetDelay= 0;
+
+unsigned char tPadCount = 10;
+
 
 uint16_t dutyCycle = 1023;
 
@@ -16817,29 +16834,57 @@ _delay((unsigned long)((300)*(32000000/4000.0)));
 
 LCD_Clear();
 
-{ LCD_Set_Cursor(2,1); LCD_Write_String("A");};
+{ LCD_Set_Cursor(2,0); LCD_Write_String("A");};
 _delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(3,1); LCD_Write_String("L");};
+LCD_Write_String("L");
 _delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(4,1); LCD_Write_String("O");};
+LCD_Write_String("O");
 _delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(5,1); LCD_Write_String("H");};
+LCD_Write_String("H");
 _delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(6,1); LCD_Write_String("A");};
+LCD_Write_String("A");
 _delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(7,1); LCD_Write_String(" ");};
+LCD_Write_String(" ");
 _delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(8,1); LCD_Write_String("D");};
+LCD_Write_String("D");
 _delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(9,1); LCD_Write_String("A");};
+LCD_Write_String("A");
 _delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(10,1); LCD_Write_String("V");};
+LCD_Write_String("V");
 _delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(11,1); LCD_Write_String("I");};
+LCD_Write_String("I");
 _delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(12,1); LCD_Write_String("D");};
+LCD_Write_String("D");
 _delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(13,1); LCD_Write_String("!");};
+LCD_Write_String(",");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+{ LCD_Set_Cursor(1,1); LCD_Write_String("S");};
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String("O");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String("P");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String("H");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String("I");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String("E");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String(" ");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String("&");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String(" ");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String("K");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String("I");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String("D");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String("S");
+_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Write_String("!");
 _delay((unsigned long)((5000)*(32000000/4000.0)));
 
 LCD_Clear();
@@ -16850,53 +16895,53 @@ PWM6_LoadDutyValue(dutyCycle);
 while (1)
 {
 
-for(x[0]=0;x[0]<6;x[0]++) analogs[x[0]]=readAnalog(x[0]);
+for(x=0;x<6;x++) analogs[x]=readAnalog(x);
 
-if(analogs[0]<1020)x[7]+=1;
+if(analogs[0]<1020)tPadCount+=1;
 
 
-if(analogs[1]<900)x[7]-=1;
+if(analogs[1]<900)tPadCount-=1;
 
-if(x[7]<1)
+if(tPadCount<1)
 {
-x[2]=1;
-x[7]=10;
+choice=1;
+tPadCount=10;
 }
 
-if(x[7]>19)
+if(tPadCount>19)
 {
-x[2]=0;
-x[7]=10;
+choice=0;
+tPadCount=10;
 }
 
 if(analogs[0]<1020&&analogs[1]<970)
 {
-x[2]=2;
+choice=2;
 _delay((unsigned long)((200)*(32000000/4000.0)));
 }
 
 
 
-x[5]+=1;
+startDelay+=1;
 
-if(x[5]>254)
+if(startDelay>254)
 {
-x[5]=254;
+startDelay=254;
 
 if(analogs[2]<900&&analogs[3]<900)asm("reset");
 
 if(analogs[2]<900)
 {
-x[6]+=1;
+resetDelay+=1;
 
-if(x[6]>20)
+if(resetDelay>20)
 {
 while(analogs[2]<975)
 {
 analogs[2]=ADCRead(4);
 
-if(x[4]<1)LCD_Clear();
-x[4]+=1;
+if(bCount<1)LCD_Clear();
+bCount+=1;
 
 if(dutyCycle>0)dutyCycle-=1;
 
@@ -16906,25 +16951,25 @@ LCD_Write_Char('%');
 LCD_Write_Char(' ');
 PWM6_LoadDutyValue(dutyCycle);
 }
-x[4]=0;
+bCount=0;
 _delay((unsigned long)((100)*(32000000/4000.0)));
 LCD_Clear();
-x[6]=0;
+resetDelay=0;
 }
 }
 
 if(analogs[3]<900)
 {
-x[6]+=1;
+resetDelay+=1;
 
-if(x[6]>20)
+if(resetDelay>20)
 {
 while(analogs[3]<975)
 {
 analogs[3]=ADCRead(5);
 
-if(x[4]<1)LCD_Clear();
-x[4]+=1;
+if(bCount<1)LCD_Clear();
+bCount+=1;
 
 if(dutyCycle<1009)dutyCycle+=1;
 
@@ -16934,10 +16979,10 @@ LCD_Write_Char('%');
 LCD_Write_Char(' ');
 PWM6_LoadDutyValue(dutyCycle);
 }
-x[4]=0;
+bCount=0;
 _delay((unsigned long)((100)*(32000000/4000.0)));
 LCD_Clear();
-x[6]=0;
+resetDelay=0;
 }
 }
 }
@@ -16948,12 +16993,12 @@ displayTemp = tempCalc(analogs[4]);
 
 displayTemp2 = tempCalc(analogs[5]);
 
-if(x[1]>127)
+if(loop>127)
 {
-{ LCD_Set_Cursor(0,0); LCD_Write_String("Solar In");};
-{ LCD_Set_Cursor(0,1); LCD_Write_String("Return");};
+{ LCD_Set_Cursor(0,0); LCD_Write_String("In->Solar");};
+{ LCD_Set_Cursor(0,1); LCD_Write_String("Out->Pool");};
 
-if(x[3]==0)
+if(C_or_F==0)
 {
 { LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
 LCD_Write_Char(0);
@@ -16966,7 +17011,7 @@ LCD_Write_Char('C');
 LCD_Write_Char(' ');
 }
 
-if(x[3]==1)
+if(C_or_F==1)
 {
 displayTemp = displayTemp*9/5+320;
 displayTemp2 = displayTemp2*9/5+320;
@@ -16983,15 +17028,15 @@ LCD_Write_Char(' ');
 }
 
 
-if(x[2]==0)x[3]=0;
+if(choice==0)C_or_F=0;
 
-if(x[2]==1)x[3]=1;
+if(choice==1)C_or_F=1;
 
-if(x[2]==2)x[3]=1-x[3];
+if(choice==2)C_or_F=1-C_or_F;
 
-# 217
-x[1]=0;
+# 264
+loop=0;
 }
-x[1]+=1;
+loop+=1;
 }
 }
