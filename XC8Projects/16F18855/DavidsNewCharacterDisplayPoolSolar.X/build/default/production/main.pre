@@ -16807,7 +16807,7 @@ uint16_t analogs[6] = {0};
 
 float displayTemp, displayTemp2;
 
-unsigned char x[6] = {0,64,2,0,0,0};
+unsigned char x[8] = {0,64,2,0,0,0,0,10};
 
 uint16_t dutyCycle = 1023;
 
@@ -16849,11 +16849,25 @@ PWM6_LoadDutyValue(dutyCycle);
 
 while (1)
 {
+
 for(x[0]=0;x[0]<6;x[0]++) analogs[x[0]]=readAnalog(x[0]);
 
-if(analogs[0]<1020)x[2]=1;
+if(analogs[0]<1020)x[7]+=1;
 
-if(analogs[1]<900)x[2]=0;
+
+if(analogs[1]<900)x[7]-=1;
+
+if(x[7]<1)
+{
+x[2]=1;
+x[7]=10;
+}
+
+if(x[7]>19)
+{
+x[2]=0;
+x[7]=10;
+}
 
 if(analogs[0]<1020&&analogs[1]<970)
 {
@@ -16871,13 +16885,18 @@ x[5]=254;
 
 if(analogs[2]<900&&analogs[3]<900)asm("reset");
 
-if(analogs[2]<950)
+if(analogs[2]<900)
 {
-while(analogs[2]<950)
+x[6]+=1;
+
+if(x[6]>20)
+{
+while(analogs[2]<975)
 {
 analogs[2]=ADCRead(4);
-x[4]+=1;
+
 if(x[4]<1)LCD_Clear();
+x[4]+=1;
 
 if(dutyCycle>0)dutyCycle-=1;
 
@@ -16890,15 +16909,22 @@ PWM6_LoadDutyValue(dutyCycle);
 x[4]=0;
 _delay((unsigned long)((100)*(32000000/4000.0)));
 LCD_Clear();
+x[6]=0;
+}
 }
 
-if(analogs[3]<950)
+if(analogs[3]<900)
 {
-while(analogs[3]<950)
+x[6]+=1;
+
+if(x[6]>20)
+{
+while(analogs[3]<975)
 {
 analogs[3]=ADCRead(5);
-x[4]+=1;
+
 if(x[4]<1)LCD_Clear();
+x[4]+=1;
 
 if(dutyCycle<1009)dutyCycle+=1;
 
@@ -16911,6 +16937,8 @@ PWM6_LoadDutyValue(dutyCycle);
 x[4]=0;
 _delay((unsigned long)((100)*(32000000/4000.0)));
 LCD_Clear();
+x[6]=0;
+}
 }
 }
 
@@ -16927,7 +16955,7 @@ if(x[1]>127)
 
 if(x[3]==0)
 {
-{ LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
+{ LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
 LCD_Write_Char(0);
 LCD_Write_Char('C');
 LCD_Write_Char(' ');
@@ -16943,7 +16971,7 @@ if(x[3]==1)
 displayTemp = displayTemp*9/5+320;
 displayTemp2 = displayTemp2*9/5+320;
 
-{ LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
+{ LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
 LCD_Write_Char(0);
 LCD_Write_Char('F');
 LCD_Write_Char(' ');
@@ -16961,7 +16989,7 @@ if(x[2]==1)x[3]=1;
 
 if(x[2]==2)x[3]=1-x[3];
 
-# 189
+# 217
 x[1]=0;
 }
 x[1]+=1;

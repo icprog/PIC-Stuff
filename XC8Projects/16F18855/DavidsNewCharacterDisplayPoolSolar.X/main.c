@@ -18,7 +18,7 @@ void main(void)
     
     float displayTemp, displayTemp2;                    // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
 
-    unsigned char x[6]      =   {0,64,2,0,0,0};        // looping var, cycle counter, tempDisplay, C or F autoDisplay, display intensity loop counter, startup delay
+    unsigned char x[8]      =   {0,64,2,0,0,0,0,10};       // looping var, cycle counter, tempDisplay, C or F autoDisplay, display intensity loop counter, startup delay, Reset delay to allow reset to occur before brightness adjustment occurs
     
     uint16_t dutyCycle      = 1023;                     // display back light brightness
     
@@ -60,11 +60,25 @@ void main(void)
 
     while (1)
     {
+//        LCDWriteIntXY(7,1,x[2],1,0,0);
         for(x[0]=0;x[0]<6;x[0]++) analogs[x[0]]=readAnalog(x[0]);
         
-        if(analogs[0]<1020)x[2]=1;
+        if(analogs[0]<1020)x[7]+=1;
+            
+            
+        if(analogs[1]<900)x[7]-=1;
+            
+        if(x[7]<1)
+        {
+            x[2]=1;
+            x[7]=10;
+        }
         
-        if(analogs[1]<900)x[2]=0;
+        if(x[7]>19)
+        {
+            x[2]=0;
+            x[7]=10;
+        }
         
         if(analogs[0]<1020&&analogs[1]<970)
         {
@@ -82,46 +96,60 @@ void main(void)
             
             if(down<900&&up<900)RESET();
             
-            if(down<950)
+            if(down<900)
             {
-                while(down<950)
-                {
-                    down=ADCRead(4);
-                    x[4]+=1;
-                    if(x[4]<1)LCD_Clear();
-
-                    if(dutyCycle>0)dutyCycle-=1;
+                x[6]+=1;
                 
-                    LCDWriteStringXY(0,0,"BackLight:");
-                    LCD_Write_Int(dutyCycle/10,-1,0,0);
-                    LCD_Write_Char('%');
-                    LCD_Write_Char(' ');
-                    PWM6_LoadDutyValue(dutyCycle);
+                if(x[6]>20)
+                {
+                    while(down<975)
+                    {
+                        down=ADCRead(4);
+                        
+                        if(x[4]<1)LCD_Clear();
+                        x[4]+=1;
+
+                        if(dutyCycle>0)dutyCycle-=1;
+                
+                        LCDWriteStringXY(0,0,"BackLight:");
+                        LCD_Write_Int(dutyCycle/10,-1,0,0);
+                        LCD_Write_Char('%');
+                        LCD_Write_Char(' ');
+                        PWM6_LoadDutyValue(dutyCycle);
+                    }
+                    x[4]=0;
+                    __delay_ms(100);
+                    LCD_Clear();
+                    x[6]=0;
                 }
-                x[4]=0;
-                __delay_ms(100);
-                LCD_Clear();
             }
 
-            if(up<950)
+            if(up<900)
             {
-                while(up<950)
-                {
-                    up=ADCRead(5);
-                    x[4]+=1;
-                    if(x[4]<1)LCD_Clear();
-
-                    if(dutyCycle<1009)dutyCycle+=1;
+                x[6]+=1;
                 
-                    LCDWriteStringXY(0,0,"BackLight:");
-                    LCD_Write_Int(dutyCycle/10,-1,0,0);
-                    LCD_Write_Char('%');
-                    LCD_Write_Char(' ');
-                    PWM6_LoadDutyValue(dutyCycle);
+                if(x[6]>20)
+                {
+                    while(up<975)
+                    {
+                        up=ADCRead(5);
+
+                        if(x[4]<1)LCD_Clear();
+                        x[4]+=1;
+
+                        if(dutyCycle<1009)dutyCycle+=1;
+                
+                        LCDWriteStringXY(0,0,"BackLight:");
+                        LCD_Write_Int(dutyCycle/10,-1,0,0);
+                        LCD_Write_Char('%');
+                        LCD_Write_Char(' ');
+                        PWM6_LoadDutyValue(dutyCycle);
+                    }
+                    x[4]=0;
+                    __delay_ms(100);
+                    LCD_Clear();
+                    x[6]=0;
                 }
-                x[4]=0;
-                __delay_ms(100);
-                LCD_Clear();
             }
         }
 
@@ -138,7 +166,7 @@ void main(void)
   
             if(x[3]==0)
             {
-                LCDWriteIntXY(9,0,(int)displayTemp2,-1,1,0);
+                LCDWriteIntXY(9,0,(int)displayTemp,-1,1,0);
                 LCD_Write_Char(0);
                 LCD_Write_Char('C');
                 LCD_Write_Char(' ');
@@ -154,7 +182,7 @@ void main(void)
                 displayTemp = displayTemp*9/5+320;          // Display Temperature in DegF
                 displayTemp2 = displayTemp2*9/5+320;        // Display Temperature in DegF
 
-                LCDWriteIntXY(9,0,(int)displayTemp2,-1,1,0);
+                LCDWriteIntXY(9,0,(int)displayTemp,-1,1,0);
                 LCD_Write_Char(0);
                 LCD_Write_Char('F');
                 LCD_Write_Char(' ');
