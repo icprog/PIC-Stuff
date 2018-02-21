@@ -208,8 +208,13 @@ void main(void)
 
         if(loop>127)
         {
-            LCDWriteStringXY(0,0,"In->Solar");
-            LCDWriteStringXY(0,1,"Out->Pool");
+            LCDWriteStringXY(0,0,"In");
+            LCD_Write_Char(1);
+            LCD_Write_String("Solar");
+            
+            LCDWriteStringXY(0,1,"Out");
+            LCD_Write_Char(1);
+            LCD_Write_String("Pool");
   
             if(C_or_F==0)
             {

@@ -16995,8 +16995,13 @@ displayTemp2 = tempCalc(analogs[5]);
 
 if(loop>127)
 {
-{ LCD_Set_Cursor(0,0); LCD_Write_String("In->Solar");};
-{ LCD_Set_Cursor(0,1); LCD_Write_String("Out->Pool");};
+{ LCD_Set_Cursor(0,0); LCD_Write_String("In");};
+LCD_Write_Char(1);
+LCD_Write_String("Solar");
+
+{ LCD_Set_Cursor(0,1); LCD_Write_String("Out");};
+LCD_Write_Char(1);
+LCD_Write_String("Pool");
 
 if(C_or_F==0)
 {
@@ -17034,7 +17039,7 @@ if(choice==1)C_or_F=1;
 
 if(choice==2)C_or_F=1-C_or_F;
 
-# 264
+# 269
 loop=0;
 }
 loop+=1;

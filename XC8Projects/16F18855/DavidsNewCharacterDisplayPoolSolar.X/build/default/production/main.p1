@@ -13167,44 +13167,41 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 210: {
 "210
 {
-[; ;main.c: 211: { LCD_Set_Cursor(0,0); LCD_Write_String("In->Solar");};
+[; ;main.c: 211: { LCD_Set_Cursor(0,0); LCD_Write_String("In");};
 "211
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
 [e ( _LCD_Write_String (1 :s 29C ]
 }
-[; ;main.c: 212: { LCD_Set_Cursor(0,1); LCD_Write_String("Out->Pool");};
+[; ;main.c: 212: LCD_Write_Char(1);
 "212
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
+[e ( _LCD_Write_Char (1 -> -> 1 `i `uc ]
+[; ;main.c: 213: LCD_Write_String("Solar");
+"213
 [e ( _LCD_Write_String (1 :s 30C ]
-}
-[; ;main.c: 214: if(C_or_F==0)
-"214
-[e $ ! == -> _C_or_F `i -> 0 `i 1548  ]
-[; ;main.c: 215: {
+[; ;main.c: 215: { LCD_Set_Cursor(0,1); LCD_Write_String("Out");};
 "215
 {
-[; ;main.c: 216: { LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
+[e ( _LCD_Write_String (1 :s 31C ]
+}
+[; ;main.c: 216: LCD_Write_Char(1);
 "216
+[e ( _LCD_Write_Char (1 -> -> 1 `i `uc ]
+[; ;main.c: 217: LCD_Write_String("Pool");
+"217
+[e ( _LCD_Write_String (1 :s 32C ]
+[; ;main.c: 219: if(C_or_F==0)
+"219
+[e $ ! == -> _C_or_F `i -> 0 `i 1548  ]
+[; ;main.c: 220: {
+"220
+{
+[; ;main.c: 221: { LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
+"221
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 9 `i `uc -> -> 0 `i `uc ]
 [e ( _LCD_Write_Int (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
-}
-[; ;main.c: 217: LCD_Write_Char(0);
-"217
-[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
-[; ;main.c: 218: LCD_Write_Char('C');
-"218
-[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
-[; ;main.c: 219: LCD_Write_Char(' ');
-"219
-[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-[; ;main.c: 221: { LCD_Set_Cursor(9,1); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
-"221
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 9 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _displayTemp2 `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
 }
 [; ;main.c: 222: LCD_Write_Char(0);
 "222
@@ -13215,42 +13212,42 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 224: LCD_Write_Char(' ');
 "224
 [e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-"225
-}
-[e :U 1548 ]
-[; ;main.c: 225: }
-[; ;main.c: 227: if(C_or_F==1)
-"227
-[e $ ! == -> _C_or_F `i -> 1 `i 1549  ]
-[; ;main.c: 228: {
-"228
-{
-[; ;main.c: 229: displayTemp = displayTemp*9/5+320;
-"229
-[e = _displayTemp + / * _displayTemp -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
-[; ;main.c: 230: displayTemp2 = displayTemp2*9/5+320;
-"230
-[e = _displayTemp2 + / * _displayTemp2 -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
-[; ;main.c: 232: { LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
-"232
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 9 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
-}
-[; ;main.c: 233: LCD_Write_Char(0);
-"233
-[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
-[; ;main.c: 234: LCD_Write_Char('F');
-"234
-[e ( _LCD_Write_Char (1 -> -> 70 `ui `uc ]
-[; ;main.c: 235: LCD_Write_Char(' ');
-"235
-[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-[; ;main.c: 237: { LCD_Set_Cursor(9,1); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
-"237
+[; ;main.c: 226: { LCD_Set_Cursor(9,1); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
+"226
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 9 `i `uc -> -> 1 `i `uc ]
 [e ( _LCD_Write_Int (4 , , , -> _displayTemp2 `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
+}
+[; ;main.c: 227: LCD_Write_Char(0);
+"227
+[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
+[; ;main.c: 228: LCD_Write_Char('C');
+"228
+[e ( _LCD_Write_Char (1 -> -> 67 `ui `uc ]
+[; ;main.c: 229: LCD_Write_Char(' ');
+"229
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+"230
+}
+[e :U 1548 ]
+[; ;main.c: 230: }
+[; ;main.c: 232: if(C_or_F==1)
+"232
+[e $ ! == -> _C_or_F `i -> 1 `i 1549  ]
+[; ;main.c: 233: {
+"233
+{
+[; ;main.c: 234: displayTemp = displayTemp*9/5+320;
+"234
+[e = _displayTemp + / * _displayTemp -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
+[; ;main.c: 235: displayTemp2 = displayTemp2*9/5+320;
+"235
+[e = _displayTemp2 + / * _displayTemp2 -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
+[; ;main.c: 237: { LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
+"237
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 9 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , -> _displayTemp `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
 }
 [; ;main.c: 238: LCD_Write_Char(0);
 "238
@@ -13261,48 +13258,65 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 240: LCD_Write_Char(' ');
 "240
 [e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-"241
+[; ;main.c: 242: { LCD_Set_Cursor(9,1); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
+"242
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 9 `i `uc -> -> 1 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , -> _displayTemp2 `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
+}
+[; ;main.c: 243: LCD_Write_Char(0);
+"243
+[e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
+[; ;main.c: 244: LCD_Write_Char('F');
+"244
+[e ( _LCD_Write_Char (1 -> -> 70 `ui `uc ]
+[; ;main.c: 245: LCD_Write_Char(' ');
+"245
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+"246
 }
 [e :U 1549 ]
-[; ;main.c: 241: }
-[; ;main.c: 244: if(choice==0)C_or_F=0;
-"244
+[; ;main.c: 246: }
+[; ;main.c: 249: if(choice==0)C_or_F=0;
+"249
 [e $ ! == -> _choice `i -> 0 `i 1550  ]
 [e = _C_or_F -> -> 0 `i `uc ]
 [e :U 1550 ]
-[; ;main.c: 246: if(choice==1)C_or_F=1;
-"246
+[; ;main.c: 251: if(choice==1)C_or_F=1;
+"251
 [e $ ! == -> _choice `i -> 1 `i 1551  ]
 [e = _C_or_F -> -> 1 `i `uc ]
 [e :U 1551 ]
-[; ;main.c: 248: if(choice==2)C_or_F=1-C_or_F;
-"248
+[; ;main.c: 253: if(choice==2)C_or_F=1-C_or_F;
+"253
 [e $ ! == -> _choice `i -> 2 `i 1552  ]
 [e = _C_or_F -> - -> 1 `i -> _C_or_F `i `uc ]
 [e :U 1552 ]
-[; ;main.c: 264: loop=0;
-"264
+[; ;main.c: 269: loop=0;
+"269
 [e = _loop -> -> 0 `i `uc ]
-"265
+"270
 }
 [e :U 1547 ]
-[; ;main.c: 265: }
-[; ;main.c: 266: loop+=1;
-"266
+[; ;main.c: 270: }
+[; ;main.c: 271: loop+=1;
+"271
 [e =+ _loop -> -> 1 `i `uc ]
-"267
+"272
 }
 [e :U 1520 ]
 "108
 [e $U 1521  ]
 [e :U 1522 ]
-[; ;main.c: 267: }
-[; ;main.c: 268: }
-"268
+[; ;main.c: 272: }
+[; ;main.c: 273: }
+"273
 [e :UE 1519 ]
 }
-[a 29C 73 110 45 62 83 111 108 97 114 0 ]
-[a 30C 79 117 116 45 62 80 111 111 108 0 ]
+[a 31C 79 117 116 0 ]
+[a 30C 83 111 108 97 114 0 ]
+[a 29C 73 110 0 ]
+[a 32C 80 111 111 108 0 ]
 [a 9C 86 0 ]
 [a 13C 83 0 ]
 [a 25C 83 0 ]
