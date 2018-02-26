@@ -1033,7 +1033,7 @@ const unsigned char Courier_New_Bold_20[] = {
     0x00, 0x00,         //                 
     0x00, 0x00,         //                 
     0x00, 0x00,         //                 
-
+};/*
     0x00, 0x00,         //                 
     0x00, 0x00,         //                 
     0x00, 0x00,         //                 
@@ -2402,5 +2402,5 @@ const unsigned char Courier_New_Bold_20[] = {
     0x00, 0x00,         //                 
     0x00, 0x00,         //
 };
-
+*/
 #endif

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "spi_pic.h"
 #include "ili9341.h"
-//#include "font.h"
+#include "font.h"
 //#include "bitmap.h"
 
 void main(void)
@@ -18,7 +18,7 @@ void main(void)
 
     TFT_SetDotSize(1);
     TFT_RectangleRound(5, 115, 234, 314, 10, BLACK);
-//    TFT_SetFont(Courier_New_Bold_20, 1);
+    TFT_SetFont(Courier_New_Bold_20, 1);
     TFT_ConstText("TFT 240x320", 20, 10, BLACK, WHITE);
     TFT_ConstText("Driver ILI9341", 20, 34, BLACK, WHITE);
     TFT_ConstText("Interface: SPI", 20, 58, BLACK, WHITE);
