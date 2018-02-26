@@ -143,6 +143,7 @@ void main(void)
         
         if(analogs[0]<1020&&analogs[1]<970)
         {
+            tPadCount=10;
             choice=2;
             LCD_Set_Cursor(0,0);
             LCD_Write_Char(0);
@@ -234,6 +235,7 @@ void main(void)
 
         if(loop>127)
         {
+            tPadCount=10;
             LCDWriteStringXY(0,0,"In");
             LCD_Write_Char(1);
             LCD_Write_String("Solar");

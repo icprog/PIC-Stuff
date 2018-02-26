@@ -16930,6 +16930,7 @@ LCD_Clear();
 
 if(analogs[0]<1020&&analogs[1]<970)
 {
+tPadCount=10;
 choice=2;
 LCD_Set_Cursor(0,0);
 LCD_Write_Char(0);
@@ -17021,6 +17022,7 @@ displayTemp2 = tempCalc(analogs[5]);
 
 if(loop>127)
 {
+tPadCount=10;
 { LCD_Set_Cursor(0,0); LCD_Write_String("In");};
 LCD_Write_Char(1);
 LCD_Write_String("Solar");
@@ -17065,7 +17067,7 @@ if(choice==1)C_or_F=1;
 
 if(choice==2)C_or_F=1-C_or_F;
 
-# 295
+# 297
 loop=0;
 }
 loop+=1;
