@@ -125,17 +125,20 @@ void main(void)
             LCDWriteStringXY(0,1,"for User Display");
             tPadCount=10;
             __delay_ms(1000);
+            LCD_Clear();
         }
         
         if(tPadCount>19)
         {
             choice=0;
+            LCD_Clear();
             LCDWriteStringXY(0,0,"You Chose ");
             LCD_Write_Char(0);
             LCD_Write_Char('C');
             LCDWriteStringXY(0,1,"for User Display");
             tPadCount=10;
             __delay_ms(1000);
+            LCD_Clear();
         }
         
         if(analogs[0]<1020&&analogs[1]<970)
@@ -149,10 +152,11 @@ void main(void)
             LCD_Write_Char(' ');
             LCD_Write_Char(0);
             LCD_Write_Char('C');
-            LCD_Write_String(" Chosen");
+            LCD_Write_String(" Chosen ");
             
             LCDWriteStringXY(0,1,"for User Display");
-            __delay_ms(1000);
+            __delay_ms(10);
+            LCD_Clear();
         }
         
         
