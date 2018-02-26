@@ -16905,19 +16905,41 @@ if(analogs[1]<900)tPadCount-=1;
 if(tPadCount<1)
 {
 choice=1;
+LCD_Clear();
+{ LCD_Set_Cursor(0,0); LCD_Write_String("You Chose ");};
+LCD_Write_Char(0);
+LCD_Write_Char('F');
+{ LCD_Set_Cursor(0,1); LCD_Write_String("for User Display");};
 tPadCount=10;
+_delay((unsigned long)((1000)*(32000000/4000.0)));
 }
 
 if(tPadCount>19)
 {
 choice=0;
+{ LCD_Set_Cursor(0,0); LCD_Write_String("You Chose ");};
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+{ LCD_Set_Cursor(0,1); LCD_Write_String("for User Display");};
 tPadCount=10;
+_delay((unsigned long)((1000)*(32000000/4000.0)));
 }
 
 if(analogs[0]<1020&&analogs[1]<970)
 {
 choice=2;
-_delay((unsigned long)((200)*(32000000/4000.0)));
+LCD_Set_Cursor(0,0);
+LCD_Write_Char(0);
+LCD_Write_Char('F');
+LCD_Write_Char(' ');
+LCD_Write_Char('&');
+LCD_Write_Char(' ');
+LCD_Write_Char(0);
+LCD_Write_Char('C');
+LCD_Write_String(" Chosen");
+
+{ LCD_Set_Cursor(0,1); LCD_Write_String("for User Display");};
+_delay((unsigned long)((1000)*(32000000/4000.0)));
 }
 
 
@@ -16989,7 +17011,7 @@ resetDelay=0;
 
 
 
-displayTemp = tempCalc(analogs[4]);
+displayTemp = (tempCalc(analogs[4]))-3;
 
 displayTemp2 = tempCalc(analogs[5]);
 
@@ -17039,7 +17061,7 @@ if(choice==1)C_or_F=1;
 
 if(choice==2)C_or_F=1-C_or_F;
 
-# 269
+# 291
 loop=0;
 }
 loop+=1;

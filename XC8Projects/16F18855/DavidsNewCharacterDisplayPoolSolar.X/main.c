@@ -118,19 +118,41 @@ void main(void)
         if(tPadCount<1)
         {
             choice=1;
+            LCD_Clear();
+            LCDWriteStringXY(0,0,"You Chose ");
+            LCD_Write_Char(0);
+            LCD_Write_Char('F');
+            LCDWriteStringXY(0,1,"for User Display");
             tPadCount=10;
+            __delay_ms(1000);
         }
         
         if(tPadCount>19)
         {
             choice=0;
+            LCDWriteStringXY(0,0,"You Chose ");
+            LCD_Write_Char(0);
+            LCD_Write_Char('C');
+            LCDWriteStringXY(0,1,"for User Display");
             tPadCount=10;
+            __delay_ms(1000);
         }
         
         if(analogs[0]<1020&&analogs[1]<970)
         {
             choice=2;
-            __delay_ms(200);
+            LCD_Set_Cursor(0,0);
+            LCD_Write_Char(0);
+            LCD_Write_Char('F');
+            LCD_Write_Char(' ');
+            LCD_Write_Char('&');
+            LCD_Write_Char(' ');
+            LCD_Write_Char(0);
+            LCD_Write_Char('C');
+            LCD_Write_String(" Chosen");
+            
+            LCDWriteStringXY(0,1,"for User Display");
+            __delay_ms(1000);
         }
         
         
@@ -202,7 +224,7 @@ void main(void)
 
 // *************** Calculate & Display Temp ************************************   
         
-        displayTemp = tempCalc(solarInTemp);
+        displayTemp = (tempCalc(solarInTemp))-3;
         
         displayTemp2 = tempCalc(solarOutTemp);
 
