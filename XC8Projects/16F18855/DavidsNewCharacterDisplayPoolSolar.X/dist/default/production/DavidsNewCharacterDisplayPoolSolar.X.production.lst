@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.38 build -256452561 
-                                                                                               Mon Feb 26 17:13:15 2018
+                                                                                               Mon Feb 26 17:18:28 2018
 
 Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010351
      1                           	processor	16F18855
@@ -4631,49 +4631,49 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   4625  0070                     ??_OSCILLATOR_Initialize:	
   4626                           ; 1 bytes @ 0x0
   4627                           
-  4628  0070                     ?_PWM6_Initialize:	
+  4628  0070                     ?_TMR2_Initialize:	
   4629                           ; 1 bytes @ 0x0
   4630                           
-  4631  0070                     ??_PWM6_Initialize:	
+  4631  0070                     ??_TMR2_Initialize:	
   4632                           ; 1 bytes @ 0x0
   4633                           
-  4634  0070                     ?_TMR2_Initialize:	
+  4634  0070                     ?_ADCC_Initialize:	
   4635                           ; 1 bytes @ 0x0
   4636                           
-  4637  0070                     ??_TMR2_Initialize:	
+  4637  0070                     ??_ADCC_Initialize:	
   4638                           ; 1 bytes @ 0x0
   4639                           
-  4640  0070                     ?_ADCC_Initialize:	
+  4640  0070                     ?_InitCustomChars:	
   4641                           ; 1 bytes @ 0x0
   4642                           
-  4643  0070                     ??_ADCC_Initialize:	
+  4643  0070                     ?_LCD_Port:	
   4644                           ; 1 bytes @ 0x0
   4645                           
-  4646  0070                     ?_InitCustomChars:	
+  4646  0070                     ??_LCD_Port:	
   4647                           ; 1 bytes @ 0x0
   4648                           
-  4649  0070                     ?_LCD_Port:	
+  4649  0070                     ?_LCD_Clear:	
   4650                           ; 1 bytes @ 0x0
   4651                           
-  4652  0070                     ??_LCD_Port:	
+  4652  0070                     ?_LCD_Init:	
   4653                           ; 1 bytes @ 0x0
   4654                           
-  4655  0070                     ?_LCD_Clear:	
+  4655  0070                     ?_PIN_MANAGER_Initialize:	
   4656                           ; 1 bytes @ 0x0
   4657                           
-  4658  0070                     ?_LCD_Init:	
+  4658  0070                     ??_PIN_MANAGER_Initialize:	
   4659                           ; 1 bytes @ 0x0
   4660                           
-  4661  0070                     ?_PIN_MANAGER_Initialize:	
+  4661  0070                     ?_PWM6_Initialize:	
   4662                           ; 1 bytes @ 0x0
   4663                           
-  4664  0070                     ??_PIN_MANAGER_Initialize:	
+  4664  0070                     ??_PWM6_Initialize:	
   4665                           ; 1 bytes @ 0x0
   4666                           
-  4667  0070                     ?_SYSTEM_Initialize:	
+  4667  0070                     ?_PWM6_LoadDutyValue:	
   4668                           ; 1 bytes @ 0x0
   4669                           
-  4670  0070                     ?_PWM6_LoadDutyValue:	
+  4670  0070                     ?_SYSTEM_Initialize:	
   4671                           ; 1 bytes @ 0x0
   4672                           
   4673  0070                     ?_main:	
@@ -6267,13 +6267,13 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   6256  04B8  00F6               	movwf	LCD_Write_String@a+1
   6257  04B9  3196  2622  3181   	fcall	_LCD_Write_String
   6258                           
-  6259                           ;main.c: 159: _delay((unsigned long)((1000)*(32000000/4000.0)));
-  6260  04BC  3029               	movlw	41
+  6259                           ;main.c: 159: _delay((unsigned long)((100)*(32000000/4000.0)));
+  6260  04BC  3005               	movlw	5
   6261  04BD  0020               	movlb	0	; select bank0
   6262  04BE  00EB               	movwf	??_main+2
-  6263  04BF  3096               	movlw	150
+  6263  04BF  300F               	movlw	15
   6264  04C0  00EA               	movwf	??_main+1
-  6265  04C1  30A6               	movlw	166
+  6265  04C1  30F4               	movlw	244
   6266  04C2  00E9               	movwf	??_main
   6267  04C3                     u3787:	
   6268  04C3  0BE9               	decfsz	??_main,f
@@ -12821,7 +12821,7 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.38 build -256452561 
-Symbol Table                                                                                   Mon Feb 26 17:13:15 2018
+Symbol Table                                                                                   Mon Feb 26 17:18:28 2018
 
                     __CFG_CP$OFF 0000                               l58 15C9                               l94 1610  
                              l96 1616                               l98 161B                     ___awdiv@sign 0076  

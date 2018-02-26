@@ -156,7 +156,7 @@ void main(void)
             LCD_Write_String(" Chosen ");
             
             LCDWriteStringXY(0,1,"for User Display");
-            __delay_ms(1000);
+            __delay_ms(100);
             LCD_Clear();
         }
         
