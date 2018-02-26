@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=DavidsNewCharacterDisplayPoolSolar.X
+PROJECTNAME=DavidsNewCharacterDisplayPoolSolar.X.X
 
 # Active Configuration
 DEFAULTCONF=default
