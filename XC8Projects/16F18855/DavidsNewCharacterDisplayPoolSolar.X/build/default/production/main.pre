@@ -16972,7 +16972,8 @@ bCount+=1;
 
 if(dutyCycle>0)dutyCycle-=1;
 
-{ LCD_Set_Cursor(0,0); LCD_Write_String("BackLight:");};
+{ LCD_Set_Cursor(0,0); LCD_Write_String("   BackLight   ");};
+{ LCD_Set_Cursor(0,1); LCD_Write_String("Intensity: ");};
 LCD_Write_Int(dutyCycle/10,-1,0,0);
 LCD_Write_Char('%');
 LCD_Write_Char(' ');
@@ -17000,7 +17001,8 @@ bCount+=1;
 
 if(dutyCycle<1009)dutyCycle+=1;
 
-{ LCD_Set_Cursor(0,0); LCD_Write_String("BackLight:");};
+{ LCD_Set_Cursor(0,0); LCD_Write_String("   BackLight   ");};
+{ LCD_Set_Cursor(0,1); LCD_Write_String("Intensity: ");};
 LCD_Write_Int(dutyCycle/10,-1,0,0);
 LCD_Write_Char('%');
 LCD_Write_Char(' ');
@@ -17067,7 +17069,7 @@ if(choice==1)C_or_F=1;
 
 if(choice==2)C_or_F=1-C_or_F;
 
-# 297
+# 299
 loop=0;
 }
 loop+=1;

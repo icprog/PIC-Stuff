@@ -185,7 +185,8 @@ void main(void)
 
                         if(dutyCycle>0)dutyCycle-=1;
                 
-                        LCDWriteStringXY(0,0,"BackLight:");
+                        LCDWriteStringXY(0,0,"   BackLight   ");
+                        LCDWriteStringXY(0,1,"Intensity: ");
                         LCD_Write_Int(dutyCycle/10,-1,0,0);
                         LCD_Write_Char('%');
                         LCD_Write_Char(' ');
@@ -213,7 +214,8 @@ void main(void)
 
                         if(dutyCycle<1009)dutyCycle+=1;
                 
-                        LCDWriteStringXY(0,0,"BackLight:");
+                        LCDWriteStringXY(0,0,"   BackLight   ");
+                        LCDWriteStringXY(0,1,"Intensity: ");
                         LCD_Write_Int(dutyCycle/10,-1,0,0);
                         LCD_Write_Char('%');
                         LCD_Write_Char(' ');
