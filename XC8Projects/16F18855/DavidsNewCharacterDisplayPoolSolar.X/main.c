@@ -229,7 +229,7 @@ void main(void)
 
 // *************** Calculate & Display Temp ************************************   
         
-        displayTemp = (tempCalc(solarInTemp))-3;
+        displayTemp = (tempCalc(solarInTemp))-6;
         
         displayTemp2 = tempCalc(solarOutTemp);
 
