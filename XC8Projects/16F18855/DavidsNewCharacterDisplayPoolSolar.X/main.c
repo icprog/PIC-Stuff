@@ -24,7 +24,7 @@ void main(void)
     
     char x                  =   0;                      // Looping Initializer
     
-    char loop               =   64;                     // cycle (loop) counter
+    unsigned char loop      =   64;                     // cycle (loop) counter
     
     char choice             =   2;                      // Display degrees C or degrees F, or cycle through both if choice is "2".
     
@@ -193,7 +193,7 @@ void main(void)
                         PWM6_LoadDutyValue(dutyCycle);
                     }
                     bCount=0;
-                    __delay_ms(100);
+                    __delay_ms(1000);
                     LCD_Clear();
                     resetDelay=0;
                 }
@@ -222,7 +222,7 @@ void main(void)
                         PWM6_LoadDutyValue(dutyCycle);
                     }
                     bCount=0;
-                    __delay_ms(100);
+                    __delay_ms(1000);
                     LCD_Clear();
                     resetDelay=0;
                 }
@@ -235,7 +235,7 @@ void main(void)
         
         displayTemp2 = tempCalc(solarOutTemp);
 
-        if(loop>127)
+        if(loop>254)
         {
             tPadCount=10;
             LCDWriteStringXY(0,0,"In");

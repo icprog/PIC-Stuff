@@ -12685,7 +12685,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _x -> -> 0 `i `uc ]
 "27
 [v _loop `uc ~T0 @X0 1 a ]
-[; ;main.c: 27: char loop = 64;
+[; ;main.c: 27: unsigned char loop = 64;
 [e = _loop -> -> 64 `i `uc ]
 "29
 [v _choice `uc ~T0 @X0 1 a ]
@@ -13150,9 +13150,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 195: bCount=0;
 "195
 [e = _bCount -> -> 0 `i `ui ]
-[; ;main.c: 196: _delay((unsigned long)((100)*(32000000/4000.0)));
+[; ;main.c: 196: _delay((unsigned long)((1000)*(32000000/4000.0)));
 "196
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
 [; ;main.c: 197: LCD_Clear();
 "197
 [e ( _LCD_Clear ..  ]
@@ -13239,9 +13239,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 224: bCount=0;
 "224
 [e = _bCount -> -> 0 `i `ui ]
-[; ;main.c: 225: _delay((unsigned long)((100)*(32000000/4000.0)));
+[; ;main.c: 225: _delay((unsigned long)((1000)*(32000000/4000.0)));
 "225
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
 [; ;main.c: 226: LCD_Clear();
 "226
 [e ( _LCD_Clear ..  ]
@@ -13266,9 +13266,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 236: displayTemp2 = tempCalc(analogs[5]);
 "236
 [e = _displayTemp2 ( _tempCalc (1 -> *U + &U _analogs * -> -> -> 5 `i `ui `ux -> -> # *U &U _analogs `ui `ux `i ]
-[; ;main.c: 238: if(loop>127)
+[; ;main.c: 238: if(loop>254)
 "238
-[e $ ! > -> _loop `i -> 127 `i 1547  ]
+[e $ ! > -> _loop `i -> 254 `i 1547  ]
 [; ;main.c: 239: {
 "239
 {
