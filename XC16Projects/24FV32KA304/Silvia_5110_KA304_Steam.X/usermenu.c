@@ -26,6 +26,8 @@ void userMenu(void)
 
     LCDClear();
     LCDBitmap(&menu1[0], 5,84);         //Draw Menu1
+    gotoXY(1,4);
+    LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
 
     __delay_ms(1000);
             
@@ -46,6 +48,8 @@ void userMenu(void)
             timer2 = 0;
             LCDClear();
             LCDBitmap(&menu0[0], 5, 59);//Draw Menu0
+            gotoXY(1,4);
+            LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
             goto Exit;
         }
     }
@@ -58,6 +62,8 @@ void userMenu(void)
         timer2 = 0;
 
         LCDBitmap(&menu2[0], 5, 84);                 //Draw Menu1
+        gotoXY(1,4);
+        LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
         __delay_ms(500);
     }
             
@@ -83,6 +89,8 @@ void userMenu(void)
 
         LCDClear();
         LCDBitmap(&menu2[0], 5, 84);    //Draw Menu2
+        gotoXY(1,4);
+        LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
 
         while(testKey2 != Enter)
         {
@@ -137,6 +145,8 @@ void userMenu(void)
             
         LCDClear();
         LCDBitmap(&menu2[0], 5, 84);              //Draw Menu2
+        gotoXY(1,4);
+        LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
         LCDWriteStringXY(0,1,"SetPoint = ");
         eepromPutData(setpoint[choice], setParameter(44,1,setRangeL[choice],setRangeH[choice],eepromGetData(setpoint[choice])));
             
@@ -157,5 +167,7 @@ void userMenu(void)
         Exit:
         LCDClear();
         LCDBitmap(&menu0[0], 5, 59);            //Draw Menu0
+        gotoXY(1,4);
+        LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
     }
 }

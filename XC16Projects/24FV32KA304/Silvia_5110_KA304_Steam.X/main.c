@@ -237,11 +237,13 @@ int main(void)
                 {
                     LCDClear();
                     LCDBitmap(&menumain[0], 5, 59);        //Draw Menu0
+                    gotoXY(1,4);
+                    LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
                     OC1CON2bits.OCTRIS  = 0;
                     OC2CON2bits.OCTRIS  = 0;
                     OC3CON2bits.OCTRIS  = 0;
                     backLightCounter    = 0;
-                    backLightOFF        = 0;
+                    backLightOFF        = 1;
                 }
                 
                 if(powerFail == 1)
@@ -413,9 +415,9 @@ int main(void)
                 
                 (waterPID+OC2R>0X1E84)?(OC2RS=0X1E84):(OC2RS=waterPID+OC2R+1); // Water PID takes what it needs from whatever cycle is left
                 
-                LCDWriteIntXY(2,0,waterPID,4,0,0);
-                LCDWriteIntXY(22,0,steamPID,4,0,0);
-                LCDWriteIntXY(44,0,groupOutput,2,0,0);
+//                LCDWriteIntXY(2,0,waterPID,4,0,0);
+  //              LCDWriteIntXY(22,0,steamPID,4,0,0);
+    //            LCDWriteIntXY(44,0,groupOutput,2,0,0);
 //                LCDWriteIntXY(44,0,OC2R,4,0,0);
   //              LCDWriteIntXY(66,0,OC3RS,4,0,0);
 
@@ -423,9 +425,9 @@ int main(void)
             }
             else                                //Water setpoint takes priority
             {
-                LCDWriteIntXY(2,0,waterPID,4,0,0);
-                LCDWriteIntXY(22,0,steamPID,4,0,0);
-                LCDWriteIntXY(44,0,groupOutput,2,0,0);
+//                LCDWriteIntXY(2,0,waterPID,4,0,0);
+  //              LCDWriteIntXY(22,0,steamPID,4,0,0);
+    //            LCDWriteIntXY(44,0,groupOutput,2,0,0);
 //                LCDWriteIntXY(44,0,OC3R,4,0,0);
   //              LCDWriteIntXY(66,0,OC2R,4,0,0);
 
@@ -635,7 +637,7 @@ int main(void)
             OC1CON2bits.OCTRIS  = 1;                // Tri-State the OC1 Pin, if powerSwitch is OFF
             OC2CON2bits.OCTRIS  = 1;                // Tri-State the OC2 Pin, if powerSwitch is OFF
             OC3CON2bits.OCTRIS  = 1;                // Tri-State the OC3 Pin, if powerSwitch is OFF
-            backLightOFF        = 0;
+            backLightOFF        = 1;                // sb 0
             backLightCounter    = 0;                // Reset BackLight counter
             lastPowerState      = 2;                // Set to 2 to force a reset of OCTRIS on menu exit, as well as a write to lastPowerState   
         }
@@ -656,6 +658,9 @@ int main(void)
             LCDClear();
             backLightCounter = 0;               // Reset BackLight counter
             LCDBitmap(&menumain[0], 5, 59);        // Draw Menu0
+            gotoXY(5,79);
+            LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
+            __delay_ms(500);
         }
         
         if(testKey==Down)
@@ -677,7 +682,7 @@ int main(void)
         }
         else
         {
-            backLightOFF = 0;
+            backLightOFF = 1;                   // sb 0
         }
         
 // *****************************************************************************

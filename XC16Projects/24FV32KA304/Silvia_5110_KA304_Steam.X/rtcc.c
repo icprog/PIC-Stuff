@@ -173,6 +173,8 @@ void SetTime()
         {
             LCDClear();
             LCDBitmap(&rtccMenu[0], 5, 84);                                     //Draw rtccMenu
+            gotoXY(1,4);
+            LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
         }
         
         timer += 1;
@@ -373,6 +375,8 @@ void writeStartStopTimes(void)
         {
             LCDClear();
             LCDBitmap(&rtccMenu[0], 5, 84);                                      //Draw rtccMenu
+            gotoXY(1,4);
+            LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
         }
 
         LCDWriteStringXY(0,1,"Start/Stop for ");
@@ -385,6 +389,8 @@ void writeStartStopTimes(void)
     
     LCDClear();
     LCDBitmap(&rtccMenu[0], 5, 84);                                              //Draw rtccMenu
+    gotoXY(1,4);
+    LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
     eepromPutData(startHour[choice], setStartHour(eepromGetData(startHour[choice])));
     eepromPutData(startMinute[choice], setStartMinute(eepromGetData(startMinute[choice])));
     eepromPutData(stopHour[choice], setStopHour(eepromGetData(stopHour[choice])));

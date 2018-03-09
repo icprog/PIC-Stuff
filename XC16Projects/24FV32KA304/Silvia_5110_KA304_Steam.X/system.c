@@ -48,8 +48,8 @@
 
 #include "system.h"          /* variables/params used by system.c */
 /* TODO Add clock switching code if appropriate.  An example stub is below.   */
-void ConfigureOscillator(void)
-{
+//void ConfigureOscillator(void)
+//{
 //    CLKDIVbits.RCDIV = 0x4;                         // Set RCDIV to 100 (Clock Divider bits to 500 KHz)
  //   _FBS = 0x0f;
 //    _FOSCSEL = 0x47;
@@ -57,7 +57,7 @@ void ConfigureOscillator(void)
 //    _RTCCLK1 = 0;       // Set RTCC Clock Source to Internal 32kHz RC
 //    _RTCCLK0 = 0;
 
-#if 0
+//#if 0
 
         /* Disable Watch Dog Timer */
 //        RCONbits.SWDTEN = 0;
@@ -71,9 +71,9 @@ void ConfigureOscillator(void)
         /* Wait for PLL to lock, if PLL is used */
         /* while(OSCCONbits.LOCK != 1); */
 
-#endif
+//#endif
         
-}
+//}
 //***************************************************************************************************************************************************************
 
 void InitApp(void)                  // Setup analog functionality and port direction
@@ -94,10 +94,10 @@ void InitApp(void)                  // Setup analog functionality and port direc
     CNPU2 = 0x0009;                 // Enable Weak Pull-ups on CN16 & 19 (Pin 8 & 5)
     
 
-    ConfigureOscillator();
-    ADCInit();
+//    ConfigureOscillator();
     LCDInit();
-    __delay_ms(100);
+    ADCInit();
+//    __delay_ms(100);
     LCDClear();
     RTCC_Initialize();
 }

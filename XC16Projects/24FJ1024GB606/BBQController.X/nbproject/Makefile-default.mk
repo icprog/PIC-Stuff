@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c adc.c glcd.c interrupt_manager.c pid.c pin_manager.c pwm.c rtcc.c start_stop_timer.c system.c touch.c traps.c user.c
+SOURCEFILES_QUOTED_IF_SPACED=adc.c glcd.c interrupt_manager.c pid.c pin_manager.c pwm.c rtcc.c start_stop_timer.c system.c touch.c traps.c user.c main.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/adc.o ${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/start_stop_timer.o ${OBJECTDIR}/system.o ${OBJECTDIR}/touch.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/adc.o.d ${OBJECTDIR}/glcd.o.d ${OBJECTDIR}/interrupt_manager.o.d ${OBJECTDIR}/pid.o.d ${OBJECTDIR}/pin_manager.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/rtcc.o.d ${OBJECTDIR}/start_stop_timer.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/touch.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/user.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/adc.o ${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/start_stop_timer.o ${OBJECTDIR}/system.o ${OBJECTDIR}/touch.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/main.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/adc.o.d ${OBJECTDIR}/glcd.o.d ${OBJECTDIR}/interrupt_manager.o.d ${OBJECTDIR}/pid.o.d ${OBJECTDIR}/pin_manager.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/rtcc.o.d ${OBJECTDIR}/start_stop_timer.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/touch.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/main.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/adc.o ${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/start_stop_timer.o ${OBJECTDIR}/system.o ${OBJECTDIR}/touch.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o
+OBJECTFILES=${OBJECTDIR}/adc.o ${OBJECTDIR}/glcd.o ${OBJECTDIR}/interrupt_manager.o ${OBJECTDIR}/pid.o ${OBJECTDIR}/pin_manager.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/start_stop_timer.o ${OBJECTDIR}/system.o ${OBJECTDIR}/touch.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/main.o
 
 # Source Files
-SOURCEFILES=main.c adc.c glcd.c interrupt_manager.c pid.c pin_manager.c pwm.c rtcc.c start_stop_timer.c system.c touch.c traps.c user.c
+SOURCEFILES=adc.c glcd.c interrupt_manager.c pid.c pin_manager.c pwm.c rtcc.c start_stop_timer.c system.c touch.c traps.c user.c main.c
 
 
 CFLAGS=
@@ -88,13 +88,6 @@ MP_LINKER_FILE_OPTION=,--script=p24FJ1024GB606.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
 ${OBJECTDIR}/adc.o: adc.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/adc.o.d 
@@ -179,14 +172,14 @@ ${OBJECTDIR}/user.o: user.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  user.c  -o ${OBJECTDIR}/user.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/user.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/user.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-else
 ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/main.o.d 
 	@${RM} ${OBJECTDIR}/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+else
 ${OBJECTDIR}/adc.o: adc.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/adc.o.d 
@@ -270,6 +263,13 @@ ${OBJECTDIR}/user.o: user.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/user.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  user.c  -o ${OBJECTDIR}/user.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/user.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/user.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 
