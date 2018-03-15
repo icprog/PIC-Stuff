@@ -2,10 +2,10 @@
 #include "system.h"
 
 // *************** Defines *****************************************************    
-#define celcius         analogs[0]
-#define farenheit       analogs[1]
-#define down            analogs[2]
-#define up              analogs[3]
+#define celcius         analogs[0]                      // Touch pad to select Degrees C
+#define farenheit       analogs[1]                      // Touch pad to select Degrees F
+#define down            analogs[2]                      // Touch pad to select Backlight Intencity Down
+#define up              analogs[3]                      // Touch pad to select Backlight Intencity Up
 #define solarInTemp     analogs[4]
 #define solarOutTemp    analogs[5]
 
