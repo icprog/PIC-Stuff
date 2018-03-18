@@ -2,63 +2,72 @@
 #include "pid.h"
 
 // **************** Variables available to all Functions in Program ************ 
-float Kp[]              = { 50, 50, 50};    // Controller Gain      (inverse of Proportional Band)
-float Ki[]              = { 15, 15, 15};    // Controller Integral Reset/Unit Time, determined by how often PID is calculated
-float Kd[]              = { 25, 25, 25};    // Controller Derivative (or Rate))
-float pidIntegrated[3]  = {  0,  0,  0};
-float pidPrevError[3]   = {  0,  0,  0};
-float pidPrevInput[3]   = {  0,  0,  0};
-int pidMinOutput[3]     = {  0,  0,  0};     // Minimum output limit of Controller
-int pidMaxOutput[3]= {1023,1023,1023};  // Maximum output limit of Controller
-extern int8_t choice;
+int16_t error, errorValue, derivativeValue = 0, Result;
+char count              = 0;
 
-void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd)
+int Kp                = 1;    // Controller Gain      (inverse of Proportional Band)
+int Ki                = 1;    // Controller Integral Reset/Unit Time, determined by how often PID is calculated
+int Kd                = 1;    // Controller Derivative (or Rate))
+int16_t pidIntegrated     = 0;
+int16_t pidPrevError      = 0;
+//float pidPrevInput      = 0;
+int pidMinOutput        = 0;     // Minimum output limit of Controller
+int pidMaxOutput        = 4095;  // Maximum output limit of Controller
+//extern int8_t choice;
+/*
+void Init_PID(int pidKp, int pidKi, int pidKd)
 {
-    Kp[controller]         = pidKp;
-    Ki[controller]         = pidKi;
-    Kd[controller]         = pidKd;
-    pidIntegrated[controller] = 0;
-    pidPrevInput[controller] = 0;
+    Kp         = pidKp;
+    Ki         = pidKi;
+    Kd         = pidKd;
+    pidIntegrated = 0;
+    pidPrevInput = 0;
 }
+*/
 
 // *************** Calculate PID Runs faster if called more often **************    
-float PID_Calculate(uint8_t controller, uint16_t const setpoint[controller], uint16_t temp[controller])
+float PID_Calculate(int16_t setpoint, int16_t temp)
 {
-    float error, errorValue, derivativeValue = 0, Result;
+    count+=1;
+//    float error, errorValue, derivativeValue = 0, Result;
         
 // **************** Calculate Gain *********************************************    
-    error = setpoint[controller] - temp[controller];                                // error calculation
+    error = setpoint - temp;                                // error calculation
 
-    errorValue  = error * Kp[controller];                           // Calculate proportional value
+    errorValue  = error * Kp;                           // Calculate proportional value
 
-// **************** Calculate Integral *****************************************    
-    pidIntegrated[controller] = pidIntegrated[controller] + (error * Ki[controller]);       // Calculate integral value
-
-    if (pidIntegrated[controller]< pidMinOutput[controller])                        // limit output minimum value
+// **************** Calculate Integral *****************************************  
+    if(count>59)
     {
-        pidIntegrated[controller]= pidMinOutput[controller];
-    }
+        pidIntegrated = pidIntegrated + (error * Ki);       // Calculate integral value
+
+        if (pidIntegrated< pidMinOutput)                        // limit output minimum value
+        {
+            pidIntegrated= pidMinOutput;
+        }
     
-    if (pidIntegrated[controller]> pidMaxOutput[controller])                        // limit output maximum value 
-    {
-        pidIntegrated[controller]= pidMaxOutput[controller];
+        if (pidIntegrated> pidMaxOutput)                        // limit output maximum value 
+        {
+            pidIntegrated= pidMaxOutput;
+        }
+        count = 0;
     }
 
 // *************** Calculate Derivative ****************************************    
-        derivativeValue=(error-pidPrevError[controller])*Kd[controller];
-        pidPrevError[controller] = error;
+        derivativeValue=(error-pidPrevError)*Kd;
+        pidPrevError = error;
   
 // *************** Calculate Final Output **************************************    
-    Result = errorValue + pidIntegrated[controller]+ derivativeValue;   // Calculate total to send to Output
+    Result = errorValue + pidIntegrated+ derivativeValue;   // Calculate total to send to Output
     
-    if (Result < pidMinOutput[controller])                              // limit output minimum value
+    if (Result < pidMinOutput)                              // limit output minimum value
     {
-        Result = pidMinOutput[controller];
+        Result = pidMinOutput;
     }
     
-    if (Result > pidMaxOutput[controller])                              // limit output maximum value 
+    if (Result > pidMaxOutput)                              // limit output maximum value 
     {
-        Result = pidMaxOutput[controller];
+        Result = pidMaxOutput;
     }
  
     return (Result);

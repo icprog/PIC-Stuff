@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.38 build -256452561 
-                                                                                               Thu Mar 15 13:38:30 2018
+                                                                                               Sat Mar 17 08:22:10 2018
 
 Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010351
      1                           	processor	16F18855
@@ -4649,49 +4649,49 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   4643  0070                     ??_OSCILLATOR_Initialize:	
   4644                           ; 1 bytes @ 0x0
   4645                           
-  4646  0070                     ?_TMR2_Initialize:	
+  4646  0070                     ?_PWM6_Initialize:	
   4647                           ; 1 bytes @ 0x0
   4648                           
-  4649  0070                     ??_TMR2_Initialize:	
+  4649  0070                     ??_PWM6_Initialize:	
   4650                           ; 1 bytes @ 0x0
   4651                           
-  4652  0070                     ?_ADCC_Initialize:	
+  4652  0070                     ?_TMR2_Initialize:	
   4653                           ; 1 bytes @ 0x0
   4654                           
-  4655  0070                     ??_ADCC_Initialize:	
+  4655  0070                     ??_TMR2_Initialize:	
   4656                           ; 1 bytes @ 0x0
   4657                           
-  4658  0070                     ?_InitCustomChars:	
+  4658  0070                     ?_ADCC_Initialize:	
   4659                           ; 1 bytes @ 0x0
   4660                           
-  4661  0070                     ?_LCD_Port:	
+  4661  0070                     ??_ADCC_Initialize:	
   4662                           ; 1 bytes @ 0x0
   4663                           
-  4664  0070                     ??_LCD_Port:	
+  4664  0070                     ?_InitCustomChars:	
   4665                           ; 1 bytes @ 0x0
   4666                           
-  4667  0070                     ?_LCD_Clear:	
+  4667  0070                     ?_LCD_Port:	
   4668                           ; 1 bytes @ 0x0
   4669                           
-  4670  0070                     ?_LCD_Init:	
+  4670  0070                     ??_LCD_Port:	
   4671                           ; 1 bytes @ 0x0
   4672                           
-  4673  0070                     ?_PIN_MANAGER_Initialize:	
+  4673  0070                     ?_LCD_Clear:	
   4674                           ; 1 bytes @ 0x0
   4675                           
-  4676  0070                     ??_PIN_MANAGER_Initialize:	
+  4676  0070                     ?_LCD_Init:	
   4677                           ; 1 bytes @ 0x0
   4678                           
-  4679  0070                     ?_PWM6_Initialize:	
+  4679  0070                     ?_PIN_MANAGER_Initialize:	
   4680                           ; 1 bytes @ 0x0
   4681                           
-  4682  0070                     ??_PWM6_Initialize:	
+  4682  0070                     ??_PIN_MANAGER_Initialize:	
   4683                           ; 1 bytes @ 0x0
   4684                           
-  4685  0070                     ?_PWM6_LoadDutyValue:	
+  4685  0070                     ?_SYSTEM_Initialize:	
   4686                           ; 1 bytes @ 0x0
   4687                           
-  4688  0070                     ?_SYSTEM_Initialize:	
+  4688  0070                     ?_PWM6_LoadDutyValue:	
   4689                           ; 1 bytes @ 0x0
   4690                           
   4691  0070                     ?_main:	
@@ -9090,7 +9090,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9024  0ED0                     __ptext12:	
   9025 ;; *************** function _readAnalog *****************
   9026 ;; Defined at:
-  9027 ;;		line 88 in file "adcc.c"
+  9027 ;;		line 89 in file "adcc.c"
   9028 ;; Parameters:    Size  Location     Type
   9029 ;;  channel         2    6[BANK0 ] int 
   9030 ;; Auto vars:     Size  Location     Type
@@ -9130,8 +9130,8 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9059                           ;psect for function _readAnalog
   9060  0ED0                     _readAnalog:	
   9061                           
-  9062                           ;adcc.c: 90: int value;
-  9063                           ;adcc.c: 92: int analog_channel = channels[channel];
+  9062                           ;adcc.c: 91: int value;
+  9063                           ;adcc.c: 93: int analog_channel = channels[channel];
   9064                           
   9065                           ;incstack = 0
   9066                           ; Regs used in _readAnalog: [wreg-fsr1h+status,2+status,0+pclath+cstack]
@@ -9145,7 +9145,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9074  0ED7  3F41               	moviw [1]fsr1
   9075  0ED8  00FA               	movwf	readAnalog@analog_channel+1
   9076                           
-  9077                           ;adcc.c: 94: value = ADCRead(analog_channel);
+  9077                           ;adcc.c: 95: value = ADCRead(analog_channel);
   9078  0ED9  0879               	movf	readAnalog@analog_channel,w
   9079  0EDA  3195  25AC  318E   	fcall	_ADCRead
   9080  0EDD  0871               	movf	?_ADCRead+1,w
@@ -9153,7 +9153,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9082  0EDF  0870               	movf	?_ADCRead,w
   9083  0EE0  00FB               	movwf	readAnalog@value
   9084                           
-  9085                           ;adcc.c: 98: totals[channel] = totals[channel] - samples[channel][sampleIndex];
+  9085                           ;adcc.c: 99: totals[channel] = totals[channel] - samples[channel][sampleIndex];
   9086  0EE1  0020               	movlb	0	; select bank0
   9087  0EE2  0826               	movf	readAnalog@channel,w
   9088  0EE3  00A8               	movwf	??_readAnalog
@@ -9253,7 +9253,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9182  0F41  082C               	movf	??_readAnalog+4,w
   9183  0F42  3FC3               	movwi [3]fsr1
   9184                           
-  9185                           ;adcc.c: 100: samples[channel][sampleIndex] = value;
+  9185                           ;adcc.c: 101: samples[channel][sampleIndex] = value;
   9186  0F43  086F               	movf	_sampleIndex+1,w
   9187  0F44  00A9               	movwf	??_readAnalog+1
   9188  0F45  086E               	movf	_sampleIndex,w
@@ -9291,7 +9291,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9220  0F67  087C               	movf	readAnalog@value+1,w
   9221  0F68  3FC1               	movwi [1]fsr1
   9222                           
-  9223                           ;adcc.c: 102: totals[channel] = totals[channel] + samples[channel][sampleIndex];
+  9223                           ;adcc.c: 103: totals[channel] = totals[channel] + samples[channel][sampleIndex];
   9224  0F69  0826               	movf	readAnalog@channel,w
   9225  0F6A  00A8               	movwf	??_readAnalog
   9226  0F6B  3001               	movlw	1
@@ -9379,7 +9379,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9308  0FBD  082C               	movf	??_readAnalog+4,w
   9309  0FBE  3FC3               	movwi [3]fsr1
   9310                           
-  9311                           ;adcc.c: 104: if(channel>4)
+  9311                           ;adcc.c: 105: if(channel>4)
   9312  0FBF  0827               	movf	readAnalog@channel+1,w
   9313  0FC0  3A80               	xorlw	128
   9314  0FC1  00A8               	movwf	??_readAnalog
@@ -9393,15 +9393,15 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9322  0FC8  1C03               	skipc
   9323  0FC9  2FD8               	goto	l2687
   9324                           
-  9325                           ;adcc.c: 105: {
-  9326                           ;adcc.c: 106: sampleIndex += 1;
+  9325                           ;adcc.c: 106: {
+  9326                           ;adcc.c: 107: sampleIndex += 1;
   9327  0FCA  3001               	movlw	1
   9328  0FCB  0020               	movlb	0	; select bank0
   9329  0FCC  07EE               	addwf	_sampleIndex,f
   9330  0FCD  3000               	movlw	0
   9331  0FCE  3DEF               	addwfc	_sampleIndex+1,f
   9332                           
-  9333                           ;adcc.c: 108: if(sampleIndex >= 20)
+  9333                           ;adcc.c: 109: if(sampleIndex >= 20)
   9334  0FCF  3000               	movlw	0
   9335  0FD0  026F               	subwf	_sampleIndex+1,w
   9336  0FD1  3014               	movlw	20
@@ -9410,15 +9410,15 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9339  0FD4  1C03               	skipc
   9340  0FD5  2FD8               	goto	l2687
   9341                           
-  9342                           ;adcc.c: 109: {
-  9343                           ;adcc.c: 110: sampleIndex = 0;
+  9342                           ;adcc.c: 110: {
+  9343                           ;adcc.c: 111: sampleIndex = 0;
   9344  0FD6  01EE               	clrf	_sampleIndex
   9345  0FD7  01EF               	clrf	_sampleIndex+1
   9346  0FD8                     l2687:	
   9347                           
-  9348                           ;adcc.c: 111: }
-  9349                           ;adcc.c: 112: }
-  9350                           ;adcc.c: 114: value = totals[channel] / 20;
+  9348                           ;adcc.c: 112: }
+  9349                           ;adcc.c: 113: }
+  9350                           ;adcc.c: 115: value = totals[channel] / 20;
   9351  0FD8  3000               	movlw	0
   9352  0FD9  00F3               	movwf	___aldiv@divisor+3
   9353  0FDA  3000               	movlw	0
@@ -9454,7 +9454,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9383  0FF8  0870               	movf	?___aldiv,w
   9384  0FF9  00FB               	movwf	readAnalog@value
   9385                           
-  9386                           ;adcc.c: 116: return value;
+  9386                           ;adcc.c: 117: return value;
   9387  0FFA  087C               	movf	readAnalog@value+1,w
   9388  0FFB  0020               	movlb	0	; select bank0
   9389  0FFC  00A7               	movwf	?_readAnalog+1
@@ -9732,7 +9732,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9651  15AC                     __ptext15:	
   9652 ;; *************** function _ADCRead *****************
   9653 ;; Defined at:
-  9654 ;;		line 65 in file "adcc.c"
+  9654 ;;		line 66 in file "adcc.c"
   9655 ;; Parameters:    Size  Location     Type
   9656 ;;  channel         1    wreg     enum E13559
   9657 ;; Auto vars:     Size  Location     Type
@@ -9774,29 +9774,29 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9688                           ;ADCRead@channel stored from wreg
   9689  15AC  00F3               	movwf	ADCRead@channel
   9690                           
-  9691                           ;adcc.c: 68: ADPCH = channel;
+  9691                           ;adcc.c: 69: ADPCH = channel;
   9692  15AD  0873               	movf	ADCRead@channel,w
   9693  15AE  0021               	movlb	1	; select bank1
   9694  15AF  009E               	movwf	30	;volatile
   9695                           
-  9696                           ;adcc.c: 71: ADCON0bits.ADON = 1;
+  9696                           ;adcc.c: 72: ADCON0bits.ADON = 1;
   9697  15B0  1793               	bsf	19,7	;volatile
   9698                           
-  9699                           ;adcc.c: 74: ADCON0bits.ADCONT = 0;
+  9699                           ;adcc.c: 75: ADCON0bits.ADCONT = 0;
   9700  15B1  1313               	bcf	19,6	;volatile
   9701                           
-  9702                           ;adcc.c: 77: ADCON0bits.ADGO = 1;
+  9702                           ;adcc.c: 78: ADCON0bits.ADGO = 1;
   9703  15B2  1413               	bsf	19,0	;volatile
   9704  15B3                     l58:	
-  9705                           ;adcc.c: 81: {
+  9705                           ;adcc.c: 82: {
   9706                           
-  9707                           ;adcc.c: 80: while (ADCON0bits.ADGO)
+  9707                           ;adcc.c: 81: while (ADCON0bits.ADGO)
   9708                           
   9709  15B3  1813               	btfsc	19,0	;volatile
   9710  15B4  2DB3               	goto	l58
   9711                           
-  9712                           ;adcc.c: 82: }
-  9713                           ;adcc.c: 85: return ((ADRESH << 8) + ADRESL);
+  9712                           ;adcc.c: 83: }
+  9713                           ;adcc.c: 86: return ((ADRESH << 8) + ADRESL);
   9714  15B5  080D               	movf	13,w	;volatile
   9715  15B6  00F1               	movwf	?_ADCRead+1
   9716  15B7  080C               	movf	12,w	;volatile
@@ -10939,7 +10939,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10803  1626                     __ptext26:	
  10804 ;; *************** function _ADCC_Initialize *****************
  10805 ;; Defined at:
- 10806 ;;		line 16 in file "adcc.c"
+ 10806 ;;		line 17 in file "adcc.c"
  10807 ;; Parameters:    Size  Location     Type
  10808 ;;		None
  10809 ;; Auto vars:     Size  Location     Type
@@ -10975,68 +10975,68 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10834                           ;psect for function _ADCC_Initialize
  10835  1626                     _ADCC_Initialize:	
  10836                           
- 10837                           ;adcc.c: 19: ADCON1 = 0x00;
+ 10837                           ;adcc.c: 20: ADCON1 = 0x00;
  10838                           
  10839                           ;incstack = 0
  10840                           ; Regs used in _ADCC_Initialize: [wreg+status,2]
  10841  1626  0021               	movlb	1	; select bank1
  10842  1627  0194               	clrf	20	;volatile
  10843                           
- 10844                           ;adcc.c: 21: ADCON2 = 0x00;
+ 10844                           ;adcc.c: 22: ADCON2 = 0x00;
  10845  1628  0195               	clrf	21	;volatile
  10846                           
- 10847                           ;adcc.c: 23: ADCON3 = 0x00;
+ 10847                           ;adcc.c: 24: ADCON3 = 0x00;
  10848  1629  0196               	clrf	22	;volatile
  10849                           
- 10850                           ;adcc.c: 25: ADACT = 0x00;
+ 10850                           ;adcc.c: 26: ADACT = 0x00;
  10851  162A  0199               	clrf	25	;volatile
  10852                           
- 10853                           ;adcc.c: 27: ADSTAT = 0x00;
+ 10853                           ;adcc.c: 28: ADSTAT = 0x00;
  10854  162B  0197               	clrf	23	;volatile
  10855                           
- 10856                           ;adcc.c: 29: ADCLK = 0x3F;
+ 10856                           ;adcc.c: 30: ADCLK = 0x3F;
  10857  162C  303F               	movlw	63
  10858  162D  0098               	movwf	24	;volatile
  10859                           
- 10860                           ;adcc.c: 33: ADREF = 0x00;
+ 10860                           ;adcc.c: 34: ADREF = 0x00;
  10861  162E  019A               	clrf	26	;volatile
  10862                           
- 10863                           ;adcc.c: 35: ADCAP = 0x00;
+ 10863                           ;adcc.c: 36: ADCAP = 0x00;
  10864  162F  019B               	clrf	27	;volatile
  10865                           
- 10866                           ;adcc.c: 38: ADPRE = 0x07;
+ 10866                           ;adcc.c: 39: ADPRE = 0x07;
  10867  1630  3007               	movlw	7
  10868  1631  009C               	movwf	28	;volatile
  10869                           
- 10870                           ;adcc.c: 40: ADACQ = 0x00;
+ 10870                           ;adcc.c: 41: ADACQ = 0x00;
  10871  1632  019D               	clrf	29	;volatile
  10872                           
- 10873                           ;adcc.c: 42: ADPCH = 0x00;
+ 10873                           ;adcc.c: 43: ADPCH = 0x00;
  10874  1633  019E               	clrf	30	;volatile
  10875                           
- 10876                           ;adcc.c: 44: ADRPT = 0x00;
+ 10876                           ;adcc.c: 45: ADRPT = 0x00;
  10877  1634  0022               	movlb	2	; select bank2
  10878  1635  018D               	clrf	13	;volatile
  10879                           
- 10880                           ;adcc.c: 46: ADLTHL = 0x00;
+ 10880                           ;adcc.c: 47: ADLTHL = 0x00;
  10881  1636  018E               	clrf	14	;volatile
  10882                           
- 10883                           ;adcc.c: 48: ADLTHH = 0x00;
+ 10883                           ;adcc.c: 49: ADLTHH = 0x00;
  10884  1637  018F               	clrf	15	;volatile
  10885                           
- 10886                           ;adcc.c: 50: ADUTHL = 0x00;
+ 10886                           ;adcc.c: 51: ADUTHL = 0x00;
  10887  1638  0190               	clrf	16	;volatile
  10888                           
- 10889                           ;adcc.c: 52: ADUTHH = 0x00;
+ 10889                           ;adcc.c: 53: ADUTHH = 0x00;
  10890  1639  0191               	clrf	17	;volatile
  10891                           
- 10892                           ;adcc.c: 54: ADSTPTL = 0x00;
+ 10892                           ;adcc.c: 55: ADSTPTL = 0x00;
  10893  163A  0192               	clrf	18	;volatile
  10894                           
- 10895                           ;adcc.c: 56: ADSTPTH = 0x00;
+ 10895                           ;adcc.c: 57: ADSTPTH = 0x00;
  10896  163B  0193               	clrf	19	;volatile
  10897                           
- 10898                           ;adcc.c: 59: ADCON0 = 0x84;
+ 10898                           ;adcc.c: 60: ADCON0 = 0x84;
  10899  163C  3084               	movlw	132
  10900  163D  0021               	movlb	1	; select bank1
  10901  163E  0093               	movwf	19	;volatile
@@ -12860,7 +12860,7 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.38 build -256452561 
-Symbol Table                                                                                   Thu Mar 15 13:38:30 2018
+Symbol Table                                                                                   Sat Mar 17 08:22:10 2018
 
                     __CFG_CP$OFF 0000                               l58 15B3                               l94 15FA  
                              l96 1600                               l98 1605                     ___awdiv@sign 0076  

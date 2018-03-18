@@ -95,13 +95,13 @@ void writeStartStopTimes(void)
 
 //        loadimg(&menu4[0], 1024,0);                  //Draw Menu4
         
-        LCDWriteStringXY(1,3,"Start/Stop fo");
-        LCDWriteStringXY(1,16,"r ");
+        LCDWriteStringXY(3,1,"Start/Stop fo");
+        LCDWriteStringXY(16,1,"r ");
         LCDWriteString(WeekDay[choice]);
-        LCDWriteStringXY(2,3,"Up/Dn Keys to");
-        LCDWriteStringXY(2,17,"change.");
+        LCDWriteStringXY(3,2,"Up/Dn Keys to");
+        LCDWriteStringXY(17,2,"change.");
         LCDWriteStringXY(3,3,"Enter Key for");
-        LCDWriteStringXY(3,17,"Yes");
+        LCDWriteStringXY(17,3,"Yes");
                                                                                 // but, also increments mainTimer every second
         timer += 1;
     }
@@ -146,8 +146,8 @@ char setStartHour(char b)
         }
         
         
-        LCDWriteStringXY(1,2,"Start Hour =");
-        LCDWriteIntXY(1,16,result,2,0);
+        LCDWriteStringXY(1,1,"Start Hour =");
+        LCDWriteIntXY(16,1,result,2,0);
 
         switch(TestKey)
         {
@@ -212,7 +212,7 @@ char setStartMinute(char b)
         
         
         LCDWriteStringXY(2,2,"Start Minute =");
-        LCDWriteIntXY(2,16,result,2,0);
+        LCDWriteIntXY(16,2,result,2,0);
 
 
         switch(TestKey)
@@ -276,8 +276,8 @@ char setStopHour(char b)
         }
         
         
-        LCDWriteStringXY(3,2,"Stop Hour =");
-        LCDWriteIntXY(3,16,result,2,0);
+        LCDWriteStringXY(2,3,"Stop Hour =");
+        LCDWriteIntXY(16,3,result,2,0);
 
 //        heartBeat();
         
@@ -344,8 +344,8 @@ char setStopMinute(char b)
         }
         
         
-        LCDWriteStringXY(4,2,"Stop Minute =");
-        LCDWriteIntXY(4,16,result,2,0);
+        LCDWriteStringXY(2,4,"Stop Minute =");
+        LCDWriteIntXY(16,4,result,2,0);
 
 //        heartBeat();
         

@@ -122,6 +122,9 @@ void SYSTEM_Initialize(void)
     init_lcd();
     __delay_ms(100);
     cls();
+    InitializeTimers();
+    Initialize_PWM();
+    
 }
 
 void OSCILLATOR_Initialize(void)

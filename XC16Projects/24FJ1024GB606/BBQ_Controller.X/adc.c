@@ -1,15 +1,14 @@
 #include "adc.h"
 
+#define     numSamples  60                                              // Number of Temperature readings to Average
 
-#define     numSamples  20                                              // Number of Temperature readings to Average
-
-uint16_t samples[6][numSamples];
+uint16_t samples[7][numSamples] = {{0},{0}};
 
 uint16_t sampleIndex            = {0};
 
-int32_t totals[6]               = {0};
+int32_t totals[7]               = {0};
 
-static int channels[6]          ={1,3,4,5,9,11};
+static int channels[7]          = {6,7,8,9,10,11,12};
 
 // ***************************************************************************************************************************************************************
 void ADCInit(void)
@@ -47,9 +46,9 @@ int ADCRead(ADC_CHANNEL channel)
 {
     uint16_t result;
     AD1CHS = channel;
-    if(AD1CHS == 0x1A)                                                          //If reading Internal Band Gap Voltage
+    if(AD1CHS == 0x1A)                                                  //If reading Internal Band Gap Voltage
     {
-        _BGREQ = 1;                                                             //Enable Band Gap Reference
+        _BGREQ = 1;                                                     //Enable Band Gap Reference
         __delay_us(20);                                                 
     }
     AD1CON1bits.SAMP = 1;
@@ -59,7 +58,7 @@ int ADCRead(ADC_CHANNEL channel)
     {
          IFS0bits.AD1IF = 0;
     }
-    _BGREQ = 0;                                                                 // Turn off Band Gap Reference
+    _BGREQ = 0;                                                         // Turn off Band Gap Reference
     result = ADC1BUF0;
     return result;
 }
@@ -71,27 +70,25 @@ int readAnalog(int channel)
     
     int analog_channel  =   channels[channel];
     
-    value = ADCRead(analog_channel);
-    
-//    temp = value;                           // Assign the just read temperature to the location of the current oldest data
+    value = ADCRead(analog_channel);                                    // Read the channel info to a Temp Value
             
-        totals[channel] = totals[channel] - samples[channel][sampleIndex];   // Subtract the oldest sample data from the total
+    totals[channel] = totals[channel] - samples[channel][sampleIndex];  // Subtract the oldest sample data from the total
 
-        samples[channel][sampleIndex] = value;             // Assign the just read temperature to the location of the current oldest data
+    samples[channel][sampleIndex] = value;                              // Assign the just read temperature to the location of the current oldest data
 
-        totals[channel] = totals[channel] + samples[channel][sampleIndex];   // Add that new sample to the total
+    totals[channel] = totals[channel] + samples[channel][sampleIndex];  // Add that new sample to the total
             
-        if(channel>4)
+    if(channel>5)                                                       // >5 is 6 or more, we have 7 channels, 0-6, so >5 is equal to channel 6
+    {
+        sampleIndex += 1;                                               // and move to the next index location
+            
+        if(sampleIndex >= numSamples)                                   // We have reached the end of our allotted storage
         {
-            sampleIndex += 1;                                  // and move to the next index location
-            
-            if(sampleIndex >= numSamples)
-            {
-                sampleIndex = 0;
-            }
+            sampleIndex = 0;                                            // So, go back to the beginning
         }
+    }
             
-        value = totals[channel] / numSamples;                          // assign the average value of total to the readTemperature variable
+    value = totals[channel] / numSamples;                               // assign the average value of total to the readTemperature variable
         
      return value;   
 }

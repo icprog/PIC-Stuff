@@ -23,9 +23,9 @@ void Initialize_PWM(void)
 {
     OC3R =                  0x0000;                 // Set On time (Duty Clcle))
 //    OC3RS =                 0x0000;                 // Set Period for Edge aligned PWM
-    OC3CON2bits.SYNCSEL =   0X1F;                   // Set Timer 1 as Sync source
+    OC3CON2bits.SYNCSEL =   0X0B;                   // Set Timer 1 as Sync source
     OC3CON2bits.OCTRIG =    0;                      // Set OC3 as Sync source
-    OC3CON1bits.OCTSEL =    0X7;                    // Set Timer 1 as clock source
+    OC3CON1bits.OCTSEL =    0X4;                    // Set Timer 1 as clock source
     OC3TMR =                0x0000;                 // Set OC3 timer to zero
     OC3CON1bits.OCM =       0x6;                    // Set OC3 Mode to Edge aligned PWM (Center aligned works as well, except it is on until OCxR, turns off until OCxRS, so, 
 }                                                   // dutyCycle of zero turns ON OC, until it hits OCxRS (works fine down to dC of 1, then goes to pulsing mode)

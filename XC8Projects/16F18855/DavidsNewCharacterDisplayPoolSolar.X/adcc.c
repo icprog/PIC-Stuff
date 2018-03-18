@@ -4,7 +4,8 @@
 
 #define     numSamples  20                                              // Number of Temperature readings to Average
 
-uint16_t samples[6][numSamples] = {0};
+uint16_t samples[6][numSamples] = {0};                                  // Was left initialized like this, but following is correct?
+//uint16_t samples[6][numSamples] = {{0},{0}};
 
 uint16_t sampleIndex            = {0};
 

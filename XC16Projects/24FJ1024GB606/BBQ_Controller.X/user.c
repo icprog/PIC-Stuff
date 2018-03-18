@@ -1,7 +1,5 @@
 #include    "user.h"
 
-//uint8_t  halfSec, lastState, toggle = 2;
-
 extern uint8_t call;
 
 int timer = 0;              // level = 0;

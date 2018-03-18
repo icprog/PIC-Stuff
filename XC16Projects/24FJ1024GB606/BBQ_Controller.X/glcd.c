@@ -210,21 +210,21 @@ const unsigned char font [] =
 void GoToXY(uint8_t X, uint8_t Y)
 {
     uint8_t page, position;             // page 0 - 7 are 8 bit tall pages on either side of display (X location of page)
-    if((Y * 4) > 0x3F)                  // if we reached 80 thats last pixel 7 + 1 goto                     (0X3F = Dec 63)
+    if((X * 4) > 0x3F)                  // if we reached 80 thats last pixel 7 + 1 goto                     (0X3F = Dec 63)
     {                        
-        CS1 = 0;                        //Right Side on
-        CS2 = 1;                        //left side off
-        Y -= 0X10;                      // 0X10 = Dec 32
+        CS1 = 0;                        // Right Side on
+        CS2 = 1;                        // left side off
+        X -= 0X10;                      // 0X10 = Dec 32
     }
     else
     {
-        CS1 = 1;                        //Select Left Side On    
+        CS1 = 1;                        // Select Left Side On    
         CS2 = 0;                        // Right side Off
     }
 
-    page = 0xB8 + X;                    // Set X position of page (0 = 0XB8) (+X, +1, +2,... for other pages) (0XB8 = Dec 184)
+    page = 0xB8 + Y;                    // Set Y position of page (0 = 0XB8) (+Y, +1, +2,... for other pages) (0XB8 = Dec 184)
     cmd_write(page);                    // Go to selected page
-    position = 0x40 + (Y*4);            // Set Y position on page (0 - 63, 0X40 = 0 position) (0X40 = Dec 64)
+    position = 0x40 + (X*4);            // Set X position on page (0 - 63, 0X40 = 0 position) (0X40 = Dec 64)
     cmd_write(position);                // and Go there
 }
 
@@ -233,9 +233,9 @@ void LCDWriteChar(const uint8_t c)
     uint16_t base;
     base = c - 32;
     base *= 3;                          // 3 bit Font, so location * 3 will pull up correct font
-    data_write(font[base]);             // fonts are written 1 verrtical line of 8 bits at a time
+    data_write(font[base]);             // fonts are written 1 vertical line of 8 bits at a time
     data_write(font[base + 1]);         // so, this is the second vertical line
-    data_write(font[base + 2]);         // third vertical line of font charachter
+    data_write(font[base + 2]);         // third vertical line of font character
     data_write(0);                      // write a blank line to space the font
 }
 

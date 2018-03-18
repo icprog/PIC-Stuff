@@ -1,5 +1,5 @@
-build/default/production/system.o:  \
-system.c  \
+build/default/production/main.o:  \
+main.c  \
 system.h  \
 rtcc.h  \
 pin_manager.h  \
@@ -11,4 +11,5 @@ adc.h  \
 touch.h  \
 pwm.h  \
  start_stop_timer.h  \
-user.h 
+user.h  \
+menu.h 
