@@ -3,7 +3,7 @@
 // *************** Outputs ***************************************************************************************************************************************
 //#define fanOutput             _LATD6                                          // Pit Viper Fan PWM Output
 #define piezoOutput             _LATF1                                          // Piezo Alarm Output G
-#define backLightOn             _LATD4                                          // Backlight On/Off G
+//#define backLightOn             _LATD4                                          // Backlight On/Off G
 
 
 // *************** Inputs ****************************************************************************************************************************************
