@@ -56,6 +56,8 @@ int main(void)
     SYSTEM_Initialize();
 // ******************************************************************************
     int x                                       =   0;                      // Looping Initializer, to read all Analogs
+    
+    uint16_t count2                             =   0;
 
     uint16_t analogs[6]                         =   {0};                    // array of analog readings (button presses and temperatures)
     
@@ -145,7 +147,7 @@ int main(void)
                 LCDWriteChar(' ');
                 LCDWriteInt((error * Ki),5,0);
                 LCDWriteChar(' ');
-                LCDWriteIntXY(1,4,pidPrevError,5,0);
+                LCDWriteIntXY(1,4,OC5R,5,0);
                 LCDWriteChar(' ');
                 
                 
@@ -189,7 +191,7 @@ int main(void)
 // ******************************************************************************
         TestKey = menuRead();                                                   // Check Status of TouchScreen Inputs
 // ******************************************************************************
-
+/*
         if (TestKey == KEY_1)
         {
             if(timer<1)
@@ -227,12 +229,14 @@ int main(void)
             
             done2:;
         }
-        
+  */      
 // ******************************************************************************
         
         if(TestKey == KEY_2)
         {
-            if(timer<1)
+            if(OC5R>20)OC5R-=20;
+            
+/*            if(timer<1)
             {
                 powerSwitch = 0;
                 timer+=1;
@@ -262,33 +266,24 @@ int main(void)
             }
             
             timer = 0;
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+             
             writeStartStopTimes();
-
-
-
-
 
 
             loadimg(&menu3[0], 1024,0);                          //Draw Menu2
             __delay_ms(500);
             
             Exit2:; 
+*/ 
         }
 // ******************************************************************************
 
         if (TestKey == KEY_3)
         {
-            if(timer<1)
+            if(OC5R<2027)OC5R+=20;
+
+
+/*            if(timer<1)
             {
                 powerSwitch = 0;
                 timer+=1;
@@ -363,7 +358,7 @@ int main(void)
             
             cls();
             loadimg(&menu2[0], 1024,0);              //Draw Menu2
-/*            LCDWriteStringXY(1,1,"SetPoint = ");
+*//*            LCDWriteStringXY(1,1,"SetPoint = ");
             setpoint[choice] = setParameter(16,1,1750,2950,setpoint[choice]);
 */            
 /*            LCDWriteStringXY(1,2,"DeadBand =");
@@ -380,21 +375,29 @@ int main(void)
             
   */          
 
-            timer = 0;
+/*            timer = 0;
 
             cls();
             loadimg(&menu3[0], 1024,0);                  //Draw Menu2
             __delay_ms(500);
+*/
         }
  
         Exit:
                         
 // ******************************************************************************
-        if (TestKey == KEY_4)
+        if (TestKey == KEY_1)
         {
-            init_lcd();
-            cls();
-            loadimg(&menu3[0], 1024,0);                         //Draw Menu3
+            count2+=1;
+            
+            if(count2>10)
+            {
+                init_lcd();
+                cls();
+                loadimg(&menu3[0], 1024,0);                         //Draw Menu3
+                count2 = 0;
+            }
+            __delay_ms(250);
         }
         
 // ******************************************************************************

@@ -20,9 +20,12 @@ void Initialize_PWM(void)
     OC4RS                   = 0X1000;               // Set Period for Edge aligned PWM
     OC4CON2bits.SYNCSEL     = 0X1F;                 // Set OC4RS as Sync source, so, the OC4 is it's own sync source
     OC4CON1bits.OCM         = 6;                    // Set OC4 Mode to Edge aligned PWM
- }
 
-void setDutyCycle(unsigned int dutyCycle)
-{
-    OC4R = dutyCycle;                              
+    OC5CON1                 = 0;
+    OC5CON2                 = 0;
+    OC5CON1bits.OCTSEL      = 0X07;                 // Set Peripheral Clock as clock source
+    OC5R                    = 0X00C8;               // Set On time (Duty Cycle)
+    OC5RS                   = 0X1000;               // Set Period for Edge aligned PWM
+    OC5CON2bits.SYNCSEL     = 0X1F;                 // Set OC5RS as Sync source, so, the OC5 is it's own sync source
+    OC5CON1bits.OCM         = 6;                    // Set OC5 Mode to Edge aligned PWM
 }
