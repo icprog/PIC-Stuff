@@ -1,24 +1,16 @@
 Typically headers contain one or more of the following:
-
-    Function declaration (except statics)
-    Variable declaration (typically global)
-    User defined type declaration (read struct, union etc.)
-    Macro definition
+    
+	Function declaration (except statics)
+    	Variable declaration (typically global)
+    	User defined type declaration (read struct, union etc.)
+    	Macro definition
 
 Source files on the other hand have:
-
-    Function/variable definition
-    Static function declaration and definition (you don't want to expose these to your clients)
-    Variable definition
-    Some prefer to define inline functions (C99) in a header
-
-    How do I implement this separation?
-
-The One Definition Rule is your friend.
-
-
-
-
+    	
+	Function/variable definition
+    	Static function declaration and definition (you don't want to expose these 	to your clients)
+    	Variable definition
+    	Some prefer to define inline functions (C99) in a header
 
 There is little fundamental difference between .c and .h files (though some compilers may refuse to compile a raw .h file). The difference is more by convention.
 
@@ -31,11 +23,6 @@ In-line functions are also often included in .h files but some coding guidelines
 All other function implementations, the definition and initialisation of variables and declarations of local (static) variables and functions would be in the .c file.
 
 
-
-
-
-
-	
 
 There is no technical difference. The compiler will happily let you include a .c file, or compile a .h file directly, if you want to.
 

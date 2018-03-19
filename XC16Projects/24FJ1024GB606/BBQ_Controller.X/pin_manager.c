@@ -51,7 +51,7 @@ void PIN_MANAGER_Initialize(void)
     // *************************************************************************
     // * Setting the Analog/Digital Configuration SFR(s)
     // *************************************************************************
-    ANSB = 0x1FC0;                          // AN 6,7,8,9,10,11,12
+    ANSB = 0xDFC0;                          // AN 6,7,8,9,10,11,12,14,15 14 & 15 for Touch Interface
     ANSC = 0x0000;
     ANSD = 0x0000;
     ANSE = 0x0000;

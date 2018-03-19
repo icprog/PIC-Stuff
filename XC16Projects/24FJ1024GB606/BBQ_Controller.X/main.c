@@ -3,8 +3,6 @@
 // *************** Outputs ***************************************************************************************************************************************
 //#define fanOutput             _LATD6                                          // Pit Viper Fan PWM Output
 #define piezoOutput             _LATF1                                          // Piezo Alarm Output G
-//#define backLightOn             _LATD4                                          // Backlight On/Off G
-
 
 // *************** Inputs ****************************************************************************************************************************************
 #define power                   !_RG9                                           // Power Switch Input G             
@@ -13,6 +11,15 @@
 //**************** Timer2 set in pwm.c, determines Period (along with OC4RS) *************************************************************************************
 
 #define pitSetpoint             setpoint[0]
+
+#define pitTemperature          analogs[0]                                      // Analog Chanell 6,  Pin 
+#define Temperature1            analogs[1]                                      // Analog Chanell 7,  Pin
+#define Temperature2            analogs[2]                                      // Analog Chanell 8,  Pin
+#define Temperature3            analogs[3]                                      // Analog Chanell 9,  Pin
+#define Temperature4            analogs[4]                                      // Analog Chanell 10, Pin
+#define Temperature5            analogs[5]                                      // Analog Chanell 11, Pin
+#define Temperature6            analogs[6]                                      // Analog Chanell 12, Pin
+
 //#define steamSetpoint           setpoint[1]
 //#define groupHeadSetpoint       setpoint[2]
 
@@ -27,22 +34,11 @@
 #define solarInTemp     analogs[4]
 #define solarOutTemp    analogs[5]
 */
-
-#define pitTemperature          analogs[0]
-#define Temperature1            analogs[1]
-#define Temperature2            analogs[2]
-#define Temperature3            analogs[3]
-#define Temperature4            analogs[4]
-#define Temperature5            analogs[5]
-#define Temperature6            analogs[6]
-
 // ***************************************************************************************************************************************************************
 
 extern struct tm currentTime;
 
 uint16_t setpoint[]    =   {2250, 2050, 2050, 2050, 2050, 2050, 2050};          //setpoint values
-
-//uint16_t deadband[]    =   {  50,   10,   50};                                     //dead band values
 
 char *desc[] = {"Pit:   ","Food 1:","Food 2:","Food 3:","Food 4:","Food 5:","Food 6:"};
 
@@ -62,27 +58,16 @@ int main(void)
     uint16_t analogs[6]                         =   {0};                    // array of analog readings (button presses and temperatures)
     
     uint8_t errorCount                          = 0;                        // errorCount disables power, if level remains low too long, count2 ramps pump pressure
-    
-//    uint16_t dutyCycle                          = 0;                            // Pit Blower Fan Duty Cycle
 
     char TestKey;                                                               // Variable used for Storing Which Menu Key is Pressed
 
     int internalBGV;
     
-//    int PIDValue[] = {0,0,0};                                                   // PID calculated values
-    
     int previous_time = 0;                                                      //Used with time.second to limit some stuff to once a second
             
     char ONTimer = 0, powerSwitch = 0;
     
-    extern int16_t error, errorValue, derivativeValue, Result;
-    extern int16_t pidIntegrated;
-    extern int16_t pidPrevError;
-    extern int Ki;
-
-    
 // ******************************************************************************
-//    setDutyCycle(dutyCycle);
 
     loadimg(&menu3[0], 1024,0);                 //Draw Menu3
 
@@ -137,8 +122,7 @@ int main(void)
                 LCDWriteInt(pitSetpoint,4,1);
                 LCDWriteChar(129);                                              // generate degree symbol in font list
                 LCDWriteChar(70);
-                
-                LCDWriteStringXY(1,3,"O");
+/*                LCDWriteStringXY(1,3,"O");
                 LCDWriteInt(OC4R,5,0);
                 LCDWriteChar(' ');
                 LCDWriteInt(error,5,0);
@@ -149,16 +133,13 @@ int main(void)
                 LCDWriteChar(' ');
                 LCDWriteIntXY(1,4,OC5R,5,0);
                 LCDWriteChar(' ');
-                
-                
+*/                
 /*                    LCDWriteString(desc[0]);
                     LCDWriteString("/Set");
                     GoToXY(25,2);
                     LCDWriteChar('/');
                     LCDWriteInt(setpoint[0],4,1);
 */
-                    
-
 /*                GoToXY(1,3);                                                //LCD Line 3 Display
                 LCDWriteString(desc[2]);
                 LCDWriteString("/Set");
@@ -176,11 +157,6 @@ int main(void)
 //        if(powerSwitch == 1)
   //      {
             for(x=0;x<7;x++) analogs[x]=readAnalog(x);                          // Read all 7 analog Temperatures
-        
-        
-        
-            
-
     //    }
       //  else
         //{
@@ -281,8 +257,6 @@ int main(void)
         if (TestKey == KEY_3)
         {
             if(OC5R<2027)OC5R+=20;
-
-
 /*            if(timer<1)
             {
                 powerSwitch = 0;
@@ -374,7 +348,6 @@ int main(void)
             Kd[choice] = setParameter(16,5,0,100,Kd[choice]);
             
   */          
-
 /*            timer = 0;
 
             cls();
@@ -382,8 +355,7 @@ int main(void)
             __delay_ms(500);
 */
         }
- 
-        Exit:
+//        Exit:
                         
 // ******************************************************************************
         if (TestKey == KEY_4)
