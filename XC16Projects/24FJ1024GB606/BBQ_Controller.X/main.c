@@ -12,13 +12,13 @@
 
 #define pitSetpoint             setpoint[0]
 
-#define pitTemperature          analogs[0]                                      // Analog Chanell 6,  Pin 
-#define Temperature1            analogs[1]                                      // Analog Chanell 7,  Pin
-#define Temperature2            analogs[2]                                      // Analog Chanell 8,  Pin
-#define Temperature3            analogs[3]                                      // Analog Chanell 9,  Pin
-#define Temperature4            analogs[4]                                      // Analog Chanell 10, Pin
-#define Temperature5            analogs[5]                                      // Analog Chanell 11, Pin
-#define Temperature6            analogs[6]                                      // Analog Chanell 12, Pin
+#define pitTemperature          analogs[0]                                      // Analog Chanell 6,  Pin 17
+#define Temperature1            analogs[1]                                      // Analog Chanell 7,  Pin 18
+#define Temperature2            analogs[2]                                      // Analog Chanell 8,  Pin 21
+#define Temperature3            analogs[3]                                      // Analog Chanell 9,  Pin 22
+#define Temperature4            analogs[4]                                      // Analog Chanell 10, Pin 23
+#define Temperature5            analogs[5]                                      // Analog Chanell 11, Pin 24
+#define Temperature6            analogs[6]                                      // Analog Chanell 12, Pin 27
 
 //#define steamSetpoint           setpoint[1]
 //#define groupHeadSetpoint       setpoint[2]
