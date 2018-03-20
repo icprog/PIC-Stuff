@@ -51,7 +51,7 @@ int main(void)
 {
     SYSTEM_Initialize();
 // ******************************************************************************
-    int x                                       =   0;                      // Looping Initializer, to read all Analogs
+    int j                                       =   0;                      // Looping Initializer, to read all Analogs
     
     uint16_t count2                             =   0;
 
@@ -66,6 +66,13 @@ int main(void)
     int previous_time = 0;                                                      //Used with time.second to limit some stuff to once a second
             
     char ONTimer = 0, powerSwitch = 0;
+    
+    extern int16_t pidIntegrated;
+    
+    extern int16_t derivativeValue;
+    
+    extern     uint16_t x,y;                                               
+
     
 // ******************************************************************************
 
@@ -122,18 +129,22 @@ int main(void)
                 LCDWriteInt(pitSetpoint,4,1);
                 LCDWriteChar(129);                                              // generate degree symbol in font list
                 LCDWriteChar(70);
-/*                LCDWriteStringXY(1,3,"O");
-                LCDWriteInt(OC4R,5,0);
+//                LCDWriteStringXY(1,3,"O");
+                LCDWriteIntXY(1,3,OC4R,5,0);
                 LCDWriteChar(' ');
-                LCDWriteInt(error,5,0);
+//                LCDWriteInt(error,5,0);
+  //              LCDWriteChar(' ');
+                LCDWriteIntXY(1,5,x,5,0);
                 LCDWriteChar(' ');
-                LCDWriteIntXY(17,3,pidIntegrated,5,0);
+                LCDWriteInt(y,5,0);
                 LCDWriteChar(' ');
-                LCDWriteInt((error * Ki),5,0);
-                LCDWriteChar(' ');
+//                LCDWriteIntXY(1,5,derivativeValue,5,0);
+  //              LCDWriteChar(' ');
+    //            LCDWriteInt((pidIntegrated),5,0);
+      //          LCDWriteChar(' ');
                 LCDWriteIntXY(1,4,OC5R,5,0);
                 LCDWriteChar(' ');
-*/                
+                
 /*                    LCDWriteString(desc[0]);
                     LCDWriteString("/Set");
                     GoToXY(25,2);
@@ -156,7 +167,7 @@ int main(void)
 // ******************************************************************************
 //        if(powerSwitch == 1)
   //      {
-            for(x=0;x<7;x++) analogs[x]=readAnalog(x);                          // Read all 7 analog Temperatures
+            for(j=0;j<7;j++) analogs[j]=readAnalog(j);                          // Read all 7 analog Temperatures
     //    }
       //  else
         //{
@@ -358,20 +369,20 @@ int main(void)
 //        Exit:
                         
 // ******************************************************************************
-        if (TestKey == KEY_4)
+/*        if (TestKey == KEY_4)
         {
-            count2+=10;
+            count2+=5;
             
-            if(count2>98)
+            if(count2>32)
             {
                 init_lcd();
                 cls();
                 loadimg(&menu3[0], 1024,0);                         //Draw Menu3
                 count2 = 0;
+            __delay_ms(500);
             }
-            __delay_ms(250);
         }
-        if(count2>0)count2-=1;
+        if(count2>0)count2-=1;    */
 // ******************************************************************************
         ClrWdt();                                                               //Clear (Re-Set) the WatchDog Timer
     }

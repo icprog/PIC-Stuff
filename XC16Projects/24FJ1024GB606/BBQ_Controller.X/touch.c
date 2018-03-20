@@ -21,27 +21,17 @@
 #define row_2_min           1600                    //minimum value (read on ADC) to define row 2 boundary
 #define row_2_max           2500                    //maximum value (read on ADC) to define row 2 boundary
 #define row_3_min           2600                    //minimum value (read on ADC) to define row 3 boundary
-#define row_3_max           3300                    //maximum value (read on ADC) to define row 3 boundary
+#define row_3_max           3600                    //maximum value (read on ADC) to define row 3 boundary
 
 // ***************************************************************************************************************************************************************
 extern uint8_t call;
+    uint16_t x,y;                                               
 
 uint8_t menuRead()
 {
     static uint8_t lastKeyState = KEY_NONE, key = KEY_NONE, j, k, L;
     uint8_t col = 0;    //, row = 0;                            
-    uint16_t x,y;                                               
-
-    xPos_TRIS           = 1;    //Set x+ to an Input, we are going to read y coordinates
-    xNeg_TRIS           = 1;    //Set x- to an Input
-    IOCPDFbits.IOCPDF4  = 1;    //Enable Weak-Pull-Downs on Analog port pin, as Pull downs can't be enabled when pin is switched to a OP
-    yPos_TRIS           = 0;    //Set y+ to an Output
-    yNeg_TRIS           = 0;    //Set y_ to an Output
-    yPos_Out = 0;               //Set y+ to 0V
-    yNeg_Out = 1;               //Set y_ to +3.3V (changing whether Neg or Pos is higher voltage, changes orientation of touch screen)
-    y = ADCRead(15);            //Read ADC value of x+
-    yPos_Out = 0;               //Set y+ to 0V
-    IOCPDFbits.IOCPDF4  = 0;    //Disable Weak-Pull-Downs on Analog port pin
+//    uint16_t x,y;                                               
 
     yPos_TRIS           = 1;    //Set y+ to an Input
     yNeg_TRIS           = 1;    //Set y- to an Input
@@ -53,6 +43,17 @@ uint8_t menuRead()
     x = ADCRead(14);            //Read ADC value of y+
     xPos_Out            = 0;    //Set x+ to 0V
     IOCPDFbits.IOCPDF5  = 0;    //Disable Weak-Pull-Downs on Analog port pin, as Pull downs can't be enabled when pin is switched to a OP
+
+    xPos_TRIS           = 1;    //Set x+ to an Input, we are going to read y coordinates
+    xNeg_TRIS           = 1;    //Set x- to an Input
+    IOCPDFbits.IOCPDF4  = 1;    //Enable Weak-Pull-Downs on Analog port pin, as Pull downs can't be enabled when pin is switched to a OP
+    yPos_TRIS           = 0;    //Set y+ to an Output
+    yNeg_TRIS           = 0;    //Set y_ to an Output
+    yPos_Out = 0;               //Set y+ to 0V
+    yNeg_Out = 1;               //Set y_ to +3.3V (changing whether Neg or Pos is higher voltage, changes orientation of touch screen)
+    y = ADCRead(15);            //Read ADC value of x+
+    yPos_Out = 0;               //Set y+ to 0V
+    IOCPDFbits.IOCPDF4  = 0;    //Disable Weak-Pull-Downs on Analog port pin
 
     // ***************************************************************************************************************************************************************
        
