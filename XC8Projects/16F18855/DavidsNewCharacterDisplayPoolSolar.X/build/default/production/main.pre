@@ -16587,7 +16587,7 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 16 "pin_manager.h"
+# 4 "pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdint.h"
@@ -16798,7 +16798,7 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 15 "main.c"
+# 19 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
@@ -16832,246 +16832,25 @@ PWM6_LoadDutyValue(dutyCycle);
 
 _delay((unsigned long)((300)*(32000000/4000.0)));
 
+# 107
 LCD_Clear();
 
-{ LCD_Set_Cursor(2,0); LCD_Write_String("A");};
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("L");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("O");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("H");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("A");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String(" ");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("D");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("A");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("V");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("I");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("D");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String(",");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-{ LCD_Set_Cursor(1,1); LCD_Write_String("S");};
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("O");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("P");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("H");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("I");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("E");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String(" ");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("&");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String(" ");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("K");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("I");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("D");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("S");
-_delay((unsigned long)((200)*(32000000/4000.0)));
-LCD_Write_String("!");
-_delay((unsigned long)((5000)*(32000000/4000.0)));
 
-LCD_Clear();
-
-PWM6_LoadDutyValue(dutyCycle);
 
 
 while (1)
 {
-
-for(x=0;x<6;x++) analogs[x]=readAnalog(x);
-
-if(analogs[0]<1020)tPadCount+=1;
+analogs[0]+=1;
 
 
-if(analogs[1]<900)tPadCount-=1;
 
-if(tPadCount<1)
-{
-choice=1;
-LCD_Clear();
-{ LCD_Set_Cursor(0,0); LCD_Write_String("You Chose ");};
+
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Pit:");};
+{ LCD_Set_Cursor(5,0); LCD_Write_Int(analogs[0],4, 0, 0);};
 LCD_Write_Char(0);
-LCD_Write_Char('F');
-{ LCD_Set_Cursor(0,1); LCD_Write_String("for User Display");};
-tPadCount=10;
+LCD_Write_Char(70);
 _delay((unsigned long)((1000)*(32000000/4000.0)));
-LCD_Clear();
-}
 
-if(tPadCount>19)
-{
-choice=0;
-LCD_Clear();
-{ LCD_Set_Cursor(0,0); LCD_Write_String("You Chose ");};
-LCD_Write_Char(0);
-LCD_Write_Char('C');
-{ LCD_Set_Cursor(0,1); LCD_Write_String("for User Display");};
-tPadCount=10;
-_delay((unsigned long)((1000)*(32000000/4000.0)));
-LCD_Clear();
-}
-
-if(analogs[0]<1020&&analogs[1]<970)
-{
-tPadCount=10;
-choice=2;
-LCD_Set_Cursor(0,0);
-LCD_Write_Char(0);
-LCD_Write_Char('F');
-LCD_Write_Char(' ');
-LCD_Write_Char('&');
-LCD_Write_Char(' ');
-LCD_Write_Char(0);
-LCD_Write_Char('C');
-LCD_Write_String(" Chosen ");
-
-{ LCD_Set_Cursor(0,1); LCD_Write_String("for User Display");};
-_delay((unsigned long)((100)*(32000000/4000.0)));
-LCD_Clear();
-}
-
-
-
-startDelay+=1;
-
-if(startDelay>254)
-{
-startDelay=254;
-
-if(analogs[2]<900&&analogs[3]<900)asm("reset");
-
-if(analogs[2]<900)
-{
-resetDelay+=1;
-
-if(resetDelay>20)
-{
-while(analogs[2]<975)
-{
-analogs[2]=ADCRead(4);
-
-if(bCount<1)LCD_Clear();
-bCount+=1;
-
-if(dutyCycle>0)dutyCycle-=1;
-
-{ LCD_Set_Cursor(0,0); LCD_Write_String("   BackLight   ");};
-{ LCD_Set_Cursor(0,1); LCD_Write_String("Intensity: ");};
-LCD_Write_Int(dutyCycle/10,-1,0,0);
-LCD_Write_Char('%');
-LCD_Write_Char(' ');
-PWM6_LoadDutyValue(dutyCycle);
-}
-bCount=0;
-_delay((unsigned long)((1000)*(32000000/4000.0)));
-LCD_Clear();
-resetDelay=0;
-}
-}
-
-if(analogs[3]<900)
-{
-resetDelay+=1;
-
-if(resetDelay>20)
-{
-while(analogs[3]<975)
-{
-analogs[3]=ADCRead(5);
-
-if(bCount<1)LCD_Clear();
-bCount+=1;
-
-if(dutyCycle<1009)dutyCycle+=1;
-
-{ LCD_Set_Cursor(0,0); LCD_Write_String("   BackLight   ");};
-{ LCD_Set_Cursor(0,1); LCD_Write_String("Intensity: ");};
-LCD_Write_Int(dutyCycle/10,-1,0,0);
-LCD_Write_Char('%');
-LCD_Write_Char(' ');
-PWM6_LoadDutyValue(dutyCycle);
-}
-bCount=0;
-_delay((unsigned long)((1000)*(32000000/4000.0)));
-LCD_Clear();
-resetDelay=0;
-}
-}
-}
-
-
-
-displayTemp = (tempCalc(analogs[4]))-6;
-
-displayTemp2 = tempCalc(analogs[5]);
-
-if(loop>254)
-{
-tPadCount=10;
-{ LCD_Set_Cursor(0,0); LCD_Write_String("In");};
-LCD_Write_Char(1);
-LCD_Write_String("Solar");
-
-{ LCD_Set_Cursor(0,1); LCD_Write_String("Out");};
-LCD_Write_Char(1);
-LCD_Write_String("Pool");
-
-if(C_or_F==0)
-{
-{ LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
-LCD_Write_Char(0);
-LCD_Write_Char('C');
-LCD_Write_Char(' ');
-
-{ LCD_Set_Cursor(9,1); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
-LCD_Write_Char(0);
-LCD_Write_Char('C');
-LCD_Write_Char(' ');
-}
-
-if(C_or_F==1)
-{
-displayTemp = displayTemp*9/5+320;
-displayTemp2 = displayTemp2*9/5+320;
-
-{ LCD_Set_Cursor(9,0); LCD_Write_Int((int)displayTemp,-1, 1, 0);};
-LCD_Write_Char(0);
-LCD_Write_Char('F');
-LCD_Write_Char(' ');
-
-{ LCD_Set_Cursor(9,1); LCD_Write_Int((int)displayTemp2,-1, 1, 0);};
-LCD_Write_Char(0);
-LCD_Write_Char('F');
-LCD_Write_Char(' ');
-}
-
-
-if(choice==0)C_or_F=0;
-
-if(choice==1)C_or_F=1;
-
-if(choice==2)C_or_F=1-C_or_F;
-
-# 299
-loop=0;
-}
-loop+=1;
+# 323
 }
 }
