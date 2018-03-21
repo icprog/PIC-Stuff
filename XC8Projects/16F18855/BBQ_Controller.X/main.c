@@ -2,7 +2,11 @@
 #include "system.h"
 
 // *************** Defines *****************************************************    
-#define celcius         analogs[0]                      // Touch pad to select Degrees C
+#define pitSetpoint             setpoint[0]
+#define pitTemperature          analogs[0]                                      // Analog Chanell 6,  Pin 17
+
+
+//#define celcius         analogs[0]                      // Touch pad to select Degrees C
 #define farenheit       analogs[1]                      // Touch pad to select Degrees F
 #define down            analogs[2]                      // Touch pad to select Backlight Intencity Down
 #define up              analogs[3]                      // Touch pad to select Backlight Intencity Up
@@ -19,8 +23,6 @@ void main(void)
     uint16_t analogs[6]     =   {0};                    // array of analog readings (button presses and temperatures)
     
     float displayTemp, displayTemp2;                    // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
-
-//    unsigned char x[8]      =   {0,64,2,0,0,0,0,10};       // looping var, cycle counter, tempDisplay, C or F autoDisplay, display intensity loop counter, startup delay, Reset delay to allow reset to occur before brightness adjustment occurs
     
     char x                  =   0;                      // Looping Initializer
     
@@ -44,71 +46,30 @@ void main(void)
     PWM6_LoadDutyValue(dutyCycle);
 
     __delay_ms(300);
-   
-    LCD_Clear();
-    
-    LCDWriteStringXY(2,0,"A");
-    __delay_ms(200);
-    LCD_Write_String("L");
-    __delay_ms(200);
-    LCD_Write_String("O");
-    __delay_ms(200);
-    LCD_Write_String("H");
-    __delay_ms(200);
-    LCD_Write_String("A");
-    __delay_ms(200);
-    LCD_Write_String(" ");
-    __delay_ms(200);
-    LCD_Write_String("D");
-    __delay_ms(200);
-    LCD_Write_String("A");
-    __delay_ms(200);
-    LCD_Write_String("V");
-    __delay_ms(200);
-    LCD_Write_String("I");
-    __delay_ms(200);
-    LCD_Write_String("D");
-    __delay_ms(200);
-    LCD_Write_String(",");
-    __delay_ms(200);
-    LCDWriteStringXY(1,1,"S");
-    __delay_ms(200);
-    LCD_Write_String("O");
-    __delay_ms(200);
-    LCD_Write_String("P");
-    __delay_ms(200);
-    LCD_Write_String("H");
-    __delay_ms(200);
-    LCD_Write_String("I");
-    __delay_ms(200);
-    LCD_Write_String("E");
-    __delay_ms(200);
-    LCD_Write_String(" ");
-    __delay_ms(200);
-    LCD_Write_String("&");
-    __delay_ms(200);
-    LCD_Write_String(" ");
-    __delay_ms(200);
-    LCD_Write_String("K");
-    __delay_ms(200);
-    LCD_Write_String("I");
-    __delay_ms(200);
-    LCD_Write_String("D");
-    __delay_ms(200);
-    LCD_Write_String("S");
-    __delay_ms(200);
-    LCD_Write_String("!");
-    __delay_ms(5000);
-    
+
     LCD_Clear();
 
-    PWM6_LoadDutyValue(dutyCycle);
-        
 
     while (1)
     {
+        pitTemperature+=1;
+        
+        
+//        OC4R=PID_Calculate(pitSetpoint,pitTemperature);
+
+        LCDWriteStringXY(0,0,"Pit:");
+        LCDWriteIntXY(5,0,pitTemperature,4,0,0);
+        LCD_Write_Char(0);                                              // generate degree symbol in font list
+        LCD_Write_Char(70);
+        __delay_ms(1000);
+        
+//                LCDWriteStringXY(17,2,"Set: ");
+  //              LCDWriteInt(pitSetpoint,4,1);
+    //            LCDWriteChar(129);                                              // generate degree symbol in font list
+      //          LCDWriteChar(70);
+        
 //        LCDWriteIntXY(7,1,choice,1,0,0);
-        for(x=0;x<6;x++) analogs[x]=readAnalog(x);
+/*        for(x=0;x<6;x++) analogs[x]=readAnalog(x);
         
         if(analogs[0]<1020)tPadCount+=1;
             
@@ -280,7 +241,8 @@ void main(void)
 
             if(choice==1)C_or_F=1;
 
-            if(choice==2)C_or_F=1-C_or_F;
+*/            
+        //if(choice==2)C_or_F=1-C_or_F;
 /*            LCDWriteIntXY(0,0,analogs[0],-1,0,0);
             LCD_Write_Char(' ');
             LCDWriteIntXY(6,0,analogs[1],-1,0,0);
@@ -296,8 +258,8 @@ void main(void)
             LCD_Write_Char(' ');
             
   */          
-            loop=0;
-        }
-        loop+=1;
+//            loop=0;
+  //      }
+    //    loop+=1;
     }
 }

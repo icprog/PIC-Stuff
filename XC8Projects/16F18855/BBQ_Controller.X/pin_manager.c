@@ -8,18 +8,18 @@ void PIN_MANAGER_Initialize(void)
     LATB = 0x00;
     LATC = 0x00;
 
-    WPUA = 0x02;
+    WPUA = 0x00;
     WPUB = 0x00;
     WPUC = 0x00;
     WPUE = 0x8;
 
-    TRISA = 0x02;                       // RA1 as Input
-    TRISA = 0x3A;                       // RA1, 3, 4, & 5 as Inputs
-    TRISB = 0x0A;                       // RB1 & 3 as Inputs
-    TRISC = 0x10;
+    TRISA = 0x00;                       // RA1 as Input
+    TRISA = 0x00;                       // RA1, 3, 4, & 5 as Inputs
+    TRISB = 0x00;                       // RB1 & 3 as Inputs
+    TRISC = 0x00;
 
-    ANSELA = 0x3A;                      // RA1, 3, 4 & 5 as Analog inputs
-    ANSELB = 0x0A;                      // RB1 & 3 as analogs
+    ANSELA = 0x00;                      // RA1, 3, 4 & 5 as Analog inputs
+    ANSELB = 0x00;                      // RB1 & 3 as analogs
     ANSELC = 0x00;
     
     PIE0bits.IOCIE = 0;                 // interrupts-on-change are globally disabled

@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.38 build -256452561 
-                                                                                               Wed Mar 21 08:32:45 2018
+                                                                                               Wed Mar 21 16:20:58 2018
 
 Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010351
      1                           	processor	16F18855
@@ -4761,55 +4761,55 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   4750  0615  2E12               	goto	u1080
   4751                           
   4752                           ;main.c: 25: float displayTemp, displayTemp2;
-  4753                           ;main.c: 29: char x = 0;
+  4753                           ;main.c: 27: char x = 0;
   4754  0616  01BF               	clrf	main@x
   4755                           
-  4756                           ;main.c: 31: unsigned char loop = 64;
+  4756                           ;main.c: 29: unsigned char loop = 64;
   4757  0617  3040               	movlw	64
   4758  0618  00AE               	movwf	??_main
   4759  0619  082E               	movf	??_main,w
   4760  061A  00C0               	movwf	main@loop
   4761                           
-  4762                           ;main.c: 33: char choice = 2;
+  4762                           ;main.c: 31: char choice = 2;
   4763  061B  3002               	movlw	2
   4764  061C  00AE               	movwf	??_main
   4765  061D  082E               	movf	??_main,w
   4766  061E  00C1               	movwf	main@choice
   4767                           
-  4768                           ;main.c: 35: char C_or_F = 1;
+  4768                           ;main.c: 33: char C_or_F = 1;
   4769  061F  01C2               	clrf	main@C_or_F
   4770  0620  0AC2               	incf	main@C_or_F,f
   4771                           
-  4772                           ;main.c: 37: unsigned int bCount = 0;
+  4772                           ;main.c: 35: unsigned int bCount = 0;
   4773  0621  01BD               	clrf	main@bCount
   4774  0622  01BE               	clrf	main@bCount+1
   4775                           
-  4776                           ;main.c: 39: unsigned char startDelay= 0;
+  4776                           ;main.c: 37: unsigned char startDelay= 0;
   4777  0623  01C3               	clrf	main@startDelay
   4778                           
-  4779                           ;main.c: 41: unsigned char resetDelay= 0;
+  4779                           ;main.c: 39: unsigned char resetDelay= 0;
   4780  0624  01C4               	clrf	main@resetDelay
   4781                           
-  4782                           ;main.c: 43: unsigned char tPadCount = 10;
+  4782                           ;main.c: 41: unsigned char tPadCount = 10;
   4783  0625  300A               	movlw	10
   4784  0626  00AE               	movwf	??_main
   4785  0627  082E               	movf	??_main,w
   4786  0628  00C5               	movwf	main@tPadCount
   4787                           
-  4788                           ;main.c: 46: uint16_t dutyCycle = 1023;
+  4788                           ;main.c: 44: uint16_t dutyCycle = 1023;
   4789  0629  30FF               	movlw	255
   4790  062A  00C6               	movwf	main@dutyCycle
   4791  062B  3003               	movlw	3
   4792  062C  00C7               	movwf	main@dutyCycle+1
   4793                           
-  4794                           ;main.c: 48: PWM6_LoadDutyValue(dutyCycle);
+  4794                           ;main.c: 46: PWM6_LoadDutyValue(dutyCycle);
   4795  062D  0847               	movf	main@dutyCycle+1,w
   4796  062E  00F1               	movwf	PWM6_LoadDutyValue@dutyCycle+1
   4797  062F  0846               	movf	main@dutyCycle,w
   4798  0630  00F0               	movwf	PWM6_LoadDutyValue@dutyCycle
   4799  0631  3183  23EF  3186   	fcall	_PWM6_LoadDutyValue
   4800                           
-  4801                           ;main.c: 50: _delay((unsigned long)((300)*(32000000/4000.0)));
+  4801                           ;main.c: 48: _delay((unsigned long)((300)*(32000000/4000.0)));
   4802  0634  300D               	movlw	13
   4803  0635  0020               	movlb	0	; select bank0
   4804  0636  00B0               	movwf	??_main+2
@@ -4826,21 +4826,21 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   4815  0640  2E3B               	goto	u1197
   4816  0641  3200               	nop2
   4817                           
-  4818                           ;main.c: 107: LCD_Clear();
+  4818                           ;main.c: 50: LCD_Clear();
   4819  0642  3183  2399  3186   	fcall	_LCD_Clear
   4820  0645                     l1670:	
-  4821                           ;main.c: 112: while (1)
+  4821                           ;main.c: 53: while (1)
   4822                           
   4823                           
-  4824                           ;main.c: 113: {
-  4825                           ;main.c: 114: analogs[0]+=1;
+  4824                           ;main.c: 54: {
+  4825                           ;main.c: 55: analogs[0]+=1;
   4826  0645  3001               	movlw	1
   4827  0646  0020               	movlb	0	; select bank0
   4828  0647  07B1               	addwf	main@analogs,f
   4829  0648  3000               	movlw	0
   4830  0649  3DB2               	addwfc	main@analogs+1,f
   4831                           
-  4832                           ;main.c: 119: { LCD_Set_Cursor(0,0); LCD_Write_String("Pit:");};
+  4832                           ;main.c: 60: { LCD_Set_Cursor(0,0); LCD_Write_String("Pit:");};
   4833  064A  01F4               	clrf	LCD_Set_Cursor@y
   4834  064B  3000               	movlw	0
   4835  064C  3184  24ED  3186   	fcall	_LCD_Set_Cursor
@@ -4850,7 +4850,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   4839  0652  00F6               	movwf	LCD_Write_String@a+1
   4840  0653  3184  241D  3186   	fcall	_LCD_Write_String
   4841                           
-  4842                           ;main.c: 120: { LCD_Set_Cursor(5,0); LCD_Write_Int(analogs[0],4, 0, 0);};
+  4842                           ;main.c: 61: { LCD_Set_Cursor(5,0); LCD_Write_Int(analogs[0],4, 0, 0);};
   4843  0656  01F4               	clrf	LCD_Set_Cursor@y
   4844  0657  3005               	movlw	5
   4845  0658  3184  24ED  3186   	fcall	_LCD_Set_Cursor
@@ -4867,15 +4867,15 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   4856  0665  01FD               	clrf	LCD_Write_Int@sign
   4857  0666  3187  2706  3186   	fcall	_LCD_Write_Int
   4858                           
-  4859                           ;main.c: 121: LCD_Write_Char(0);
+  4859                           ;main.c: 62: LCD_Write_Char(0);
   4860  0669  3000               	movlw	0
   4861  066A  3184  2492  3186   	fcall	_LCD_Write_Char
   4862                           
-  4863                           ;main.c: 122: LCD_Write_Char(70);
+  4863                           ;main.c: 63: LCD_Write_Char(70);
   4864  066D  3046               	movlw	70
   4865  066E  3184  2492  3186   	fcall	_LCD_Write_Char
   4866                           
-  4867                           ;main.c: 123: _delay((unsigned long)((1000)*(32000000/4000.0)));
+  4867                           ;main.c: 64: _delay((unsigned long)((1000)*(32000000/4000.0)));
   4868  0671  3029               	movlw	41
   4869  0672  0020               	movlb	0	; select bank0
   4870  0673  00B0               	movwf	??_main+2
@@ -7344,7 +7344,7 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.38 build -256452561 
-Symbol Table                                                                                   Wed Mar 21 08:32:45 2018
+Symbol Table                                                                                   Wed Mar 21 16:20:58 2018
 
                     __CFG_CP$OFF 0000                               l94 040B                               l96 0411  
                              l98 0416                     ___awdiv@sign 0076      __size_of_PWM6_LoadDutyValue 0016  
