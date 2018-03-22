@@ -1,6 +1,27 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"43 C:\Program Files (x86)\Microchip\xc8\v1.38\include\math.h
-[v _log `(d ~T0 @X0 0 ef1`d ]
+"10774 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _PWM6CON `Vuc ~T0 @X0 0 e@910 ]
+"10605
+[v _PWM6DCH `Vuc ~T0 @X0 0 e@909 ]
+"10540
+[v _PWM6DCL `Vuc ~T0 @X0 0 e@908 ]
+"7505
+[s S360 :2 `uc 1 :2 `uc 1 :2 `uc 1 ]
+[n S360 . C5TSEL P6TSEL P7TSEL ]
+"7510
+[s S361 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S361 . C5TSEL0 C5TSEL1 P6TSEL0 P6TSEL1 P7TSEL0 P7TSEL1 ]
+"7504
+[u S359 `S360 1 `S361 1 ]
+[n S359 . . . ]
+"7519
+[v _CCPTMRS1bits `VS359 ~T0 @X0 0 e@543 ]
+"11073
+[v _PWM7CON `Vuc ~T0 @X0 0 e@914 ]
+"10904
+[v _PWM7DCH `Vuc ~T0 @X0 0 e@913 ]
+"10839
+[v _PWM7DCL `Vuc ~T0 @X0 0 e@912 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12577,9 +12598,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
-[; ;pwm.h: 7: void PWM_Initialize(void);
-[; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
-[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
 [; ;pid.h: 14: float PID_Calculate(int16_t setpoint, int16_t temp);
 [; ;lcd.h: 38: void InitCustomChars();
 [; ;lcd.h: 40: void LCD_Port(char a);
@@ -12627,79 +12645,87 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 262: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adcc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;tempCalc.h: 6: float tempCalc(int analogValue);
 [; ;system.h: 18: void SYSTEM_Initialize(void);
 [; ;system.h: 20: void OSCILLATOR_Initialize(void);
-[; ;tempCalc.h: 6: float tempCalc(int analogValue);
-[; ;math.h: 30: extern double fabs(double);
-[; ;math.h: 31: extern double floor(double);
-[; ;math.h: 32: extern double ceil(double);
-[; ;math.h: 33: extern double modf(double, double *);
-[; ;math.h: 34: extern double sqrt(double);
-[; ;math.h: 35: extern double atof(const char *);
-[; ;math.h: 36: extern double sin(double) ;
-[; ;math.h: 37: extern double cos(double) ;
-[; ;math.h: 38: extern double tan(double) ;
-[; ;math.h: 39: extern double asin(double) ;
-[; ;math.h: 40: extern double acos(double) ;
-[; ;math.h: 41: extern double atan(double);
-[; ;math.h: 42: extern double atan2(double, double) ;
-[; ;math.h: 43: extern double log(double);
-[; ;math.h: 44: extern double log10(double);
-[; ;math.h: 45: extern double pow(double, double) ;
-[; ;math.h: 46: extern double exp(double) ;
-[; ;math.h: 47: extern double sinh(double) ;
-[; ;math.h: 48: extern double cosh(double) ;
-[; ;math.h: 49: extern double tanh(double);
-[; ;math.h: 50: extern double eval_poly(double, const double *, int);
-[; ;math.h: 51: extern double frexp(double, int *);
-[; ;math.h: 52: extern double ldexp(double, int);
-[; ;math.h: 53: extern double fmod(double, double);
-[; ;math.h: 54: extern double trunc(double);
-[; ;math.h: 55: extern double round(double);
-"4 tempCalc.c
-[v _tempCalc `(f ~T0 @X0 1 ef1`i ]
-"5
-{
-[; ;tempCalc.c: 4: float tempCalc(int analogValue)
-[; ;tempCalc.c: 5: {
-[e :U _tempCalc ]
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
+"3 pwm.c
+[v _PWM_Initialize `(v ~T0 @X0 1 ef ]
 "4
-[v _analogValue `i ~T0 @X0 1 r1 ]
-"5
+{
+[; ;pwm.c: 3: void PWM_Initialize(void)
+[; ;pwm.c: 4: {
+[e :U _PWM_Initialize ]
 [f ]
-"6
-[v _R `f ~T0 @X0 1 a ]
-[v _steinhart `f ~T0 @X0 1 a ]
-[; ;tempCalc.c: 6: float R, steinhart;
-[; ;tempCalc.c: 8: R = 10020/(1023/(float)analogValue - 1);
-"8
-[e = _R / -> -> 10020 `i `f - / -> -> 1023 `i `f -> _analogValue `f -> -> 1 `i `f ]
-[; ;tempCalc.c: 10: steinhart = R /10061;
-"10
-[e = _steinhart / _R -> -> 10061 `i `f ]
-[; ;tempCalc.c: 11: steinhart = log(steinhart);
+[; ;pwm.c: 5: PWM6CON = 0x80;
+"5
+[e = _PWM6CON -> -> 128 `i `uc ]
+[; ;pwm.c: 7: PWM6DCH = 0x00;
+"7
+[e = _PWM6DCH -> -> 0 `i `uc ]
+[; ;pwm.c: 9: PWM6DCL = 0x00;
+"9
+[e = _PWM6DCL -> -> 0 `i `uc ]
+[; ;pwm.c: 11: CCPTMRS1bits.P6TSEL = 0x1;
 "11
-[e = _steinhart -> ( _log (1 -> _steinhart `d `f ]
-[; ;tempCalc.c: 12: steinhart /= 3995;
-"12
-[e =/ _steinhart -> -> 3995 `us `f ]
-[; ;tempCalc.c: 13: steinhart += 1.0 / (25 + 273.15);
-"13
-[e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]
-[; ;tempCalc.c: 14: steinhart = 1.0 / steinhart;
+[e = . . _CCPTMRS1bits 0 1 -> -> 1 `i `uc ]
+[; ;pwm.c: 14: PWM7CON = 0x80;
 "14
-[e = _steinhart -> / .1.0 -> _steinhart `d `f ]
-[; ;tempCalc.c: 15: steinhart -= 273.15;
-"15
-[e =- _steinhart -> .273.15 `f ]
-[; ;tempCalc.c: 17: steinhart*=10;
-"17
-[e =* _steinhart -> -> 10 `i `f ]
-[; ;tempCalc.c: 21: return steinhart;
-"21
-[e ) _steinhart ]
-[e $UE 1519  ]
-[; ;tempCalc.c: 22: }
+[e = _PWM7CON -> -> 128 `i `uc ]
+[; ;pwm.c: 16: PWM7DCH = 0x00;
+"16
+[e = _PWM7DCH -> -> 0 `i `uc ]
+[; ;pwm.c: 18: PWM7DCL = 0x00;
+"18
+[e = _PWM7DCL -> -> 0 `i `uc ]
+[; ;pwm.c: 20: CCPTMRS1bits.P6TSEL = 0x1;
+"20
+[e = . . _CCPTMRS1bits 0 1 -> -> 1 `i `uc ]
+[; ;pwm.c: 22: }
 "22
 [e :UE 1519 ]
+}
+"25
+[v _PWM6_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
+"26
+{
+[; ;pwm.c: 25: void PWM6_LoadDutyValue(uint16_t dutyCycle6)
+[; ;pwm.c: 26: {
+[e :U _PWM6_LoadDutyValue ]
+"25
+[v _dutyCycle6 `ui ~T0 @X0 1 r1 ]
+"26
+[f ]
+[; ;pwm.c: 27: PWM6DCH = (dutyCycle6 & 0x03FC)>>2;
+"27
+[e = _PWM6DCH -> >> & _dutyCycle6 -> -> 1020 `i `ui -> 2 `i `uc ]
+[; ;pwm.c: 29: PWM6DCL = (dutyCycle6 & 0x0003)<<6;
+"29
+[e = _PWM6DCL -> << & _dutyCycle6 -> -> 3 `i `ui -> 6 `i `uc ]
+[; ;pwm.c: 30: }
+"30
+[e :UE 1520 ]
+}
+"32
+[v _PWM7_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
+"33
+{
+[; ;pwm.c: 32: void PWM7_LoadDutyValue(uint16_t dutyCycle7)
+[; ;pwm.c: 33: {
+[e :U _PWM7_LoadDutyValue ]
+"32
+[v _dutyCycle7 `ui ~T0 @X0 1 r1 ]
+"33
+[f ]
+[; ;pwm.c: 34: PWM7DCH = (dutyCycle7 & 0x03FC)>>2;
+"34
+[e = _PWM7DCH -> >> & _dutyCycle7 -> -> 1020 `i `ui -> 2 `i `uc ]
+[; ;pwm.c: 36: PWM7DCL = (dutyCycle7 & 0x0003)<<6;
+"36
+[e = _PWM7DCL -> << & _dutyCycle7 -> -> 3 `i `ui -> 6 `i `uc ]
+[; ;pwm.c: 37: }
+"37
+[e :UE 1521 ]
 }

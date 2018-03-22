@@ -1,16 +1,25 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
-"17 system.h
+"18 system.h
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
-"9 pwm6.h
+"9 pwm.h
 [v _PWM6_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
+"11
+[v _PWM7_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
 [v F13525 `(v ~T0 @X0 1 tf1`ul ]
 "152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
 [v __delay `JF13525 ~T0 @X0 0 e ]
 [p i __delay ]
 "44 lcd.h
 [v _LCD_Clear `(v ~T0 @X0 0 ef ]
-"46
+"59 main.c
+[c E13592 60 61 62 63 .. ]
+[n E13592 . channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
+"31 adcc.h
+[v _ADCRead `(ui ~T0 @X0 0 ef1`E13592 ]
+"6 tempCalc.h
+[v _tempCalc `(f ~T0 @X0 0 ef1`i ]
+"46 lcd.h
 [v _LCD_Set_Cursor `(v ~T0 @X0 0 ef2`uc`uc ]
 "52
 [v _LCD_Write_String `(v ~T0 @X0 0 ef1`*Cuc ]
@@ -12594,8 +12603,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
-[; ;pwm6.h: 7: void PWM6_Initialize(void);
-[; ;pwm6.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
+[; ;pid.h: 14: float PID_Calculate(int16_t setpoint, int16_t temp);
 [; ;lcd.h: 38: void InitCustomChars();
 [; ;lcd.h: 40: void LCD_Port(char a);
 [; ;lcd.h: 42: void LCD_Cmd(char a);
@@ -12643,8 +12654,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;tempCalc.h: 6: float tempCalc(int analogValue);
-[; ;system.h: 17: void SYSTEM_Initialize(void);
-[; ;system.h: 19: void OSCILLATOR_Initialize(void);
+[; ;system.h: 18: void SYSTEM_Initialize(void);
+[; ;system.h: 20: void OSCILLATOR_Initialize(void);
 "19 main.c
 [v _main `(v ~T0 @X0 1 ef ]
 "20
@@ -12656,8 +12667,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 21: SYSTEM_Initialize();
 "21
 [e ( _SYSTEM_Initialize ..  ]
-[v F13657 `ui ~T0 @X0 -> 6 `i s ]
-[i F13657
+[v F13662 `ui ~T0 @X0 -> 6 `i s ]
+[i F13662
 :U ..
 "23
 -> -> 0 `i `ui
@@ -12665,7 +12676,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _analogs `ui ~T0 @X0 -> 6 `i a ]
 [; ;main.c: 23: uint16_t analogs[6] = {0};
-[e = _analogs F13657 ]
+[e = _analogs F13662 ]
 "25
 [v _displayTemp `f ~T0 @X0 1 a ]
 [v _displayTemp2 `f ~T0 @X0 1 a ]
@@ -12692,69 +12703,100 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _bCount -> -> 0 `i `ui ]
 "37
 [v _startDelay `uc ~T0 @X0 1 a ]
-[; ;main.c: 37: unsigned char startDelay= 0;
+[; ;main.c: 37: unsigned char startDelay = 0;
 [e = _startDelay -> -> 0 `i `uc ]
 "39
 [v _resetDelay `uc ~T0 @X0 1 a ]
-[; ;main.c: 39: unsigned char resetDelay= 0;
+[; ;main.c: 39: unsigned char resetDelay = 0;
 [e = _resetDelay -> -> 0 `i `uc ]
 "41
 [v _tPadCount `uc ~T0 @X0 1 a ]
 [; ;main.c: 41: unsigned char tPadCount = 10;
 [e = _tPadCount -> -> 10 `i `uc ]
 "44
-[v _dutyCycle `ui ~T0 @X0 1 a ]
-[; ;main.c: 44: uint16_t dutyCycle = 1023;
-[e = _dutyCycle -> -> 1023 `i `ui ]
-[; ;main.c: 46: PWM6_LoadDutyValue(dutyCycle);
+[v _dutyCycle6 `ui ~T0 @X0 1 a ]
+[; ;main.c: 44: uint16_t dutyCycle6 = 523;
+[e = _dutyCycle6 -> -> 523 `i `ui ]
 "46
-[e ( _PWM6_LoadDutyValue (1 _dutyCycle ]
-[; ;main.c: 48: _delay((unsigned long)((300)*(32000000/4000.0)));
+[v _dutyCycle7 `ui ~T0 @X0 1 a ]
+[; ;main.c: 46: uint16_t dutyCycle7 = 523;
+[e = _dutyCycle7 -> -> 523 `i `ui ]
+[; ;main.c: 48: PWM6_LoadDutyValue(dutyCycle6);
 "48
-[e ( __delay (1 -> * -> -> 300 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;main.c: 50: LCD_Clear();
+[e ( _PWM6_LoadDutyValue (1 _dutyCycle6 ]
+[; ;main.c: 50: PWM7_LoadDutyValue(dutyCycle7);
 "50
-[e ( _LCD_Clear ..  ]
-[; ;main.c: 53: while (1)
-"53
-[e :U 1521 ]
-[; ;main.c: 54: {
+[e ( _PWM7_LoadDutyValue (1 _dutyCycle7 ]
+[; ;main.c: 52: _delay((unsigned long)((300)*(32000000/4000.0)));
+"52
+[e ( __delay (1 -> * -> -> 300 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[; ;main.c: 54: LCD_Clear();
 "54
+[e ( _LCD_Clear ..  ]
+[; ;main.c: 57: while (1)
+"57
+[e :U 1521 ]
+[; ;main.c: 58: {
+"58
 {
-[; ;main.c: 55: analogs[0]+=1;
-"55
-[e =+ *U + &U _analogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 1 `i `ui ]
-[; ;main.c: 60: { LCD_Set_Cursor(0,0); LCD_Write_String("Pit:");};
-"60
+[; ;main.c: 59: analogs[0] = ADCRead(3);
+"59
+[e = *U + &U _analogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _analogs `ui `ux ( _ADCRead (1 -> -> 3 `i `E13592 ]
+[; ;main.c: 61: analogs[0]=tempCalc(analogs[0]);
+"61
+[e = *U + &U _analogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> ( _tempCalc (1 -> *U + &U _analogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _analogs `ui `ux `i `ui ]
+[; ;main.c: 63: dutyCycle7=502;
+"63
+[e = _dutyCycle7 -> -> 502 `i `ui ]
+[; ;main.c: 65: PWM7_LoadDutyValue(dutyCycle7);
+"65
+[e ( _PWM7_LoadDutyValue (1 _dutyCycle7 ]
+[; ;main.c: 67: { LCD_Set_Cursor(0,0); LCD_Write_String("Pit:");};
+"67
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
 [e ( _LCD_Write_String (1 :s 1C ]
 }
-[; ;main.c: 61: { LCD_Set_Cursor(5,0); LCD_Write_Int(analogs[0],4, 0, 0);};
-"61
+[; ;main.c: 68: { LCD_Set_Cursor(5,0); LCD_Write_Int(analogs[0],5, 0, 0);};
+"68
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 5 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> *U + &U _analogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _analogs `ui `ux `i -> -> 4 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> *U + &U _analogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _analogs `ui `ux `i -> -> 5 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
 }
-[; ;main.c: 62: LCD_Write_Char(0);
-"62
+[; ;main.c: 69: LCD_Write_Char(0);
+"69
 [e ( _LCD_Write_Char (1 -> -> 0 `i `uc ]
-[; ;main.c: 63: LCD_Write_Char(70);
-"63
+[; ;main.c: 70: LCD_Write_Char(70);
+"70
 [e ( _LCD_Write_Char (1 -> -> 70 `i `uc ]
-[; ;main.c: 64: _delay((unsigned long)((1000)*(32000000/4000.0)));
-"64
+[; ;main.c: 71: { LCD_Set_Cursor(0,1); LCD_Write_String("Duty Cycle");};
+"71
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
+[e ( _LCD_Write_String (1 :s 2C ]
+}
+[; ;main.c: 72: LCD_Write_Char(' ');
+"72
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;main.c: 73: LCD_Write_Int(dutyCycle7,4,0,0);
+"73
+[e ( _LCD_Write_Int (4 , , , -> _dutyCycle7 `i -> -> 4 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[; ;main.c: 74: LCD_Write_Char(' ');
+"74
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;main.c: 76: _delay((unsigned long)((1000)*(32000000/4000.0)));
+"76
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-"264
+"276
 }
 [e :U 1520 ]
-"53
+"57
 [e $U 1521  ]
 [e :U 1522 ]
-[; ;main.c: 264: }
-[; ;main.c: 265: }
-"265
+[; ;main.c: 276: }
+[; ;main.c: 277: }
+"277
 [e :UE 1519 ]
 }
+[a 2C 68 117 116 121 32 67 121 99 108 101 0 ]
 [a 1C 80 105 116 58 0 ]
-

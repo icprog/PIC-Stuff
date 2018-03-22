@@ -1,14 +1,14 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "4 pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
-"19 system.h
+"20 system.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
 "22252 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _FVRCON `Vuc ~T0 @X0 0 e@2316 ]
 "23 adcc.h
 [v _ADCC_Initialize `(v ~T0 @X0 0 ef ]
-"7 pwm6.h
-[v _PWM6_Initialize `(v ~T0 @X0 0 ef ]
+"7 pwm.h
+[v _PWM_Initialize `(v ~T0 @X0 0 ef ]
 "262 tmr2.h
 [v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
 "48 lcd.h
@@ -12651,8 +12651,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
-[; ;pwm6.h: 7: void PWM6_Initialize(void);
-[; ;pwm6.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
+[; ;pid.h: 14: float PID_Calculate(int16_t setpoint, int16_t temp);
 [; ;lcd.h: 38: void InitCustomChars();
 [; ;lcd.h: 40: void LCD_Port(char a);
 [; ;lcd.h: 42: void LCD_Cmd(char a);
@@ -12700,8 +12702,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;tempCalc.h: 6: float tempCalc(int analogValue);
-[; ;system.h: 17: void SYSTEM_Initialize(void);
-[; ;system.h: 19: void OSCILLATOR_Initialize(void);
+[; ;system.h: 18: void SYSTEM_Initialize(void);
+[; ;system.h: 20: void OSCILLATOR_Initialize(void);
 "71 system.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
 "72
@@ -12722,9 +12724,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 76: ADCC_Initialize();
 "76
 [e ( _ADCC_Initialize ..  ]
-[; ;system.c: 77: PWM6_Initialize();
+[; ;system.c: 77: PWM_Initialize();
 "77
-[e ( _PWM6_Initialize ..  ]
+[e ( _PWM_Initialize ..  ]
 [; ;system.c: 79: TMR2_Initialize();
 "79
 [e ( _TMR2_Initialize ..  ]

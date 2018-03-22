@@ -16715,10 +16715,15 @@ typedef uint16_t uintptr_t;
 # 262 "tmr2.h"
 void TMR2_Initialize(void);
 
-# 7 "pwm6.h"
-void PWM6_Initialize(void);
+# 7 "pwm.h"
+void PWM_Initialize(void);
 
 void PWM6_LoadDutyValue(uint16_t dutyCycle);
+
+void PWM7_LoadDutyValue(uint16_t dutyCycle);
+
+# 14 "pid.h"
+float PID_Calculate(int16_t setpoint, int16_t temp);
 
 # 38 "lcd.h"
 void InitCustomChars();
@@ -16825,7 +16830,7 @@ uint8_t ADCC_GetConversionStageStatus(void);
 # 6 "tempCalc.h"
 float tempCalc(int analogValue);
 
-# 17 "system.h"
+# 18 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16837,7 +16842,7 @@ PIN_MANAGER_Initialize();
 OSCILLATOR_Initialize();
 FVRCON = 0x00;
 ADCC_Initialize();
-PWM6_Initialize();
+PWM_Initialize();
 
 TMR2_Initialize();
 LCD_Init(0X00);

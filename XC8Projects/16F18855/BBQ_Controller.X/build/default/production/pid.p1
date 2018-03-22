@@ -1,21 +1,4 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"10774 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
-[v _PWM6CON `Vuc ~T0 @X0 0 e@910 ]
-"10605
-[v _PWM6DCH `Vuc ~T0 @X0 0 e@909 ]
-"10540
-[v _PWM6DCL `Vuc ~T0 @X0 0 e@908 ]
-"7505
-[s S360 :2 `uc 1 :2 `uc 1 :2 `uc 1 ]
-[n S360 . C5TSEL P6TSEL P7TSEL ]
-"7510
-[s S361 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S361 . C5TSEL0 C5TSEL1 P6TSEL0 P6TSEL1 P7TSEL0 P7TSEL1 ]
-"7504
-[u S359 `S360 1 `S361 1 ]
-[n S359 . . . ]
-"7519
-[v _CCPTMRS1bits `VS359 ~T0 @X0 0 e@543 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12592,6 +12575,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
 [; ;lcd.h: 38: void InitCustomChars();
 [; ;lcd.h: 40: void LCD_Port(char a);
 [; ;lcd.h: 42: void LCD_Cmd(char a);
@@ -12639,52 +12625,162 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adcc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;tempCalc.h: 6: float tempCalc(int analogValue);
-[; ;system.h: 17: void SYSTEM_Initialize(void);
-[; ;system.h: 19: void OSCILLATOR_Initialize(void);
-[; ;pwm6.h: 7: void PWM6_Initialize(void);
-[; ;pwm6.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
-"3 pwm6.c
-[v _PWM6_Initialize `(v ~T0 @X0 1 ef ]
-"4
-{
-[; ;pwm6.c: 3: void PWM6_Initialize(void)
-[; ;pwm6.c: 4: {
-[e :U _PWM6_Initialize ]
-[f ]
-[; ;pwm6.c: 5: PWM6CON = 0x80;
-"5
-[e = _PWM6CON -> -> 128 `i `uc ]
-[; ;pwm6.c: 7: PWM6DCH = 0x00;
+[; ;system.h: 18: void SYSTEM_Initialize(void);
+[; ;system.h: 20: void OSCILLATOR_Initialize(void);
+[; ;pid.h: 14: float PID_Calculate(int16_t setpoint, int16_t temp);
+"5 pid.c
+[v _error `i ~T0 @X0 1 e ]
+[i _error
+-> 0 `i
+]
+[; ;pid.c: 5: int16_t error = 0;
+"6
+[v _errorValue `i ~T0 @X0 1 e ]
+[i _errorValue
+-> 0 `i
+]
+[; ;pid.c: 6: int16_t errorValue = 0;
 "7
-[e = _PWM6DCH -> -> 0 `i `uc ]
-[; ;pwm6.c: 9: PWM6DCL = 0x00;
+[v _derivativeValue `i ~T0 @X0 1 e ]
+[i _derivativeValue
+-> 0 `i
+]
+[; ;pid.c: 7: int16_t derivativeValue = 0;
+"8
+[v _Result `i ~T0 @X0 1 e ]
+[i _Result
+-> 0 `i
+]
+[; ;pid.c: 8: int16_t Result = 0;
 "9
-[e = _PWM6DCL -> -> 0 `i `uc ]
-[; ;pwm6.c: 11: CCPTMRS1bits.P6TSEL = 0x1;
+[v _Kp `i ~T0 @X0 1 e ]
+[i _Kp
+-> 4 `i
+]
+[; ;pid.c: 9: int Kp = 4;
+"10
+[v _Ki `i ~T0 @X0 1 e ]
+[i _Ki
+-> 1 `i
+]
+[; ;pid.c: 10: int Ki = 1;
 "11
-[e = . . _CCPTMRS1bits 0 1 -> -> 1 `i `uc ]
-[; ;pwm6.c: 12: }
+[v _Kd `i ~T0 @X0 1 e ]
+[i _Kd
+-> 8 `i
+]
+[; ;pid.c: 11: int Kd = 8;
 "12
-[e :UE 1519 ]
-}
+[v _pidIntegrated `i ~T0 @X0 1 e ]
+[i _pidIntegrated
+-> 0 `i
+]
+[; ;pid.c: 12: int16_t pidIntegrated = 0;
+"13
+[v _pidPrevError `i ~T0 @X0 1 e ]
+[i _pidPrevError
+-> 0 `i
+]
+[; ;pid.c: 13: int16_t pidPrevError = 0;
 "14
-[v _PWM6_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
+[v _pidMinOutput `i ~T0 @X0 1 e ]
+[i _pidMinOutput
+-> 0 `i
+]
+[; ;pid.c: 14: int pidMinOutput = 0;
 "15
-{
-[; ;pwm6.c: 14: void PWM6_LoadDutyValue(uint16_t dutyCycle)
-[; ;pwm6.c: 15: {
-[e :U _PWM6_LoadDutyValue ]
-"14
-[v _dutyCycle `ui ~T0 @X0 1 r1 ]
-"15
-[f ]
-[; ;pwm6.c: 16: PWM6DCH = (dutyCycle & 0x03FC)>>2;
-"16
-[e = _PWM6DCH -> >> & _dutyCycle -> -> 1020 `i `ui -> 2 `i `uc ]
-[; ;pwm6.c: 18: PWM6DCL = (dutyCycle & 0x0003)<<6;
+[v _pidMaxOutput `i ~T0 @X0 1 e ]
+[i _pidMaxOutput
+-> 1023 `i
+]
+[; ;pid.c: 15: int pidMaxOutput = 1023;
 "18
-[e = _PWM6DCL -> << & _dutyCycle -> -> 3 `i `ui -> 6 `i `uc ]
-[; ;pwm6.c: 19: }
+[v _PID_Calculate `(f ~T0 @X0 1 ef2`i`i ]
 "19
-[e :UE 1520 ]
+{
+[; ;pid.c: 18: float PID_Calculate(int16_t setpoint, int16_t temp)
+[; ;pid.c: 19: {
+[e :U _PID_Calculate ]
+"18
+[v _setpoint `i ~T0 @X0 1 r1 ]
+[v _temp `i ~T0 @X0 1 r2 ]
+"19
+[f ]
+[; ;pid.c: 21: error = setpoint - temp;
+"21
+[e = _error - _setpoint _temp ]
+[; ;pid.c: 23: errorValue = error * Kp;
+"23
+[e = _errorValue * _error _Kp ]
+[; ;pid.c: 26: derivativeValue=(error-pidPrevError)*Kd;
+"26
+[e = _derivativeValue * - _error _pidPrevError _Kd ]
+[; ;pid.c: 27: pidPrevError = error;
+"27
+[e = _pidPrevError _error ]
+[; ;pid.c: 31: pidIntegrated = pidIntegrated + (error * Ki)+derivativeValue;
+"31
+[e = _pidIntegrated + + _pidIntegrated * _error _Ki _derivativeValue ]
+[; ;pid.c: 33: if (pidIntegrated< pidMinOutput)
+"33
+[e $ ! < _pidIntegrated _pidMinOutput 1520  ]
+[; ;pid.c: 34: {
+"34
+{
+[; ;pid.c: 35: pidIntegrated= pidMinOutput;
+"35
+[e = _pidIntegrated _pidMinOutput ]
+"36
+}
+[e :U 1520 ]
+[; ;pid.c: 36: }
+[; ;pid.c: 38: if (pidIntegrated> pidMaxOutput)
+"38
+[e $ ! > _pidIntegrated _pidMaxOutput 1521  ]
+[; ;pid.c: 39: {
+"39
+{
+[; ;pid.c: 40: pidIntegrated= pidMaxOutput;
+"40
+[e = _pidIntegrated _pidMaxOutput ]
+"41
+}
+[e :U 1521 ]
+[; ;pid.c: 41: }
+[; ;pid.c: 44: Result = errorValue + pidIntegrated+ derivativeValue;
+"44
+[e = _Result + + _errorValue _pidIntegrated _derivativeValue ]
+[; ;pid.c: 46: if (Result < pidMinOutput)
+"46
+[e $ ! < _Result _pidMinOutput 1522  ]
+[; ;pid.c: 47: {
+"47
+{
+[; ;pid.c: 48: Result = pidMinOutput;
+"48
+[e = _Result _pidMinOutput ]
+"49
+}
+[e :U 1522 ]
+[; ;pid.c: 49: }
+[; ;pid.c: 51: if (Result > pidMaxOutput)
+"51
+[e $ ! > _Result _pidMaxOutput 1523  ]
+[; ;pid.c: 52: {
+"52
+{
+[; ;pid.c: 53: Result = pidMaxOutput;
+"53
+[e = _Result _pidMaxOutput ]
+"54
+}
+[e :U 1523 ]
+[; ;pid.c: 54: }
+[; ;pid.c: 56: return (Result);
+"56
+[e ) -> _Result `f ]
+[e $UE 1519  ]
+[; ;pid.c: 57: }
+"57
+[e :UE 1519 ]
 }

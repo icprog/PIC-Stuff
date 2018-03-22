@@ -1,5 +1,5 @@
 
-# 1 "pwm6.c"
+# 1 "pwm.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -16683,6 +16683,9 @@ typedef uint16_t uintptr_t;
 # 262 "tmr2.h"
 void TMR2_Initialize(void);
 
+# 14 "pid.h"
+float PID_Calculate(int16_t setpoint, int16_t temp);
+
 # 38 "lcd.h"
 void InitCustomChars();
 
@@ -16788,18 +16791,20 @@ uint8_t ADCC_GetConversionStageStatus(void);
 # 6 "tempCalc.h"
 float tempCalc(int analogValue);
 
-# 17 "system.h"
+# 18 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 7 "pwm6.h"
-void PWM6_Initialize(void);
+# 7 "pwm.h"
+void PWM_Initialize(void);
 
 void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
-# 3 "pwm6.c"
-void PWM6_Initialize(void)
+void PWM7_LoadDutyValue(uint16_t dutyCycle);
+
+# 3 "pwm.c"
+void PWM_Initialize(void)
 {
 PWM6CON = 0x80;
 
@@ -16808,11 +16813,29 @@ PWM6DCH = 0x00;
 PWM6DCL = 0x00;
 
 CCPTMRS1bits.P6TSEL = 0x1;
+
+
+PWM7CON = 0x80;
+
+PWM7DCH = 0x00;
+
+PWM7DCL = 0x00;
+
+CCPTMRS1bits.P6TSEL = 0x1;
+
 }
 
-void PWM6_LoadDutyValue(uint16_t dutyCycle)
-{
-PWM6DCH = (dutyCycle & 0x03FC)>>2;
 
-PWM6DCL = (dutyCycle & 0x0003)<<6;
+void PWM6_LoadDutyValue(uint16_t dutyCycle6)
+{
+PWM6DCH = (dutyCycle6 & 0x03FC)>>2;
+
+PWM6DCL = (dutyCycle6 & 0x0003)<<6;
+}
+
+void PWM7_LoadDutyValue(uint16_t dutyCycle7)
+{
+PWM7DCH = (dutyCycle7 & 0x03FC)>>2;
+
+PWM7DCL = (dutyCycle7 & 0x0003)<<6;
 }

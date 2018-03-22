@@ -47,6 +47,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PPSLOCKbits `VS1261 ~T0 @X0 0 e@3727 ]
 "30793
 [v _RC2PPS `Vuc ~T0 @X0 0 e@3874 ]
+"30842
+[v _RC3PPS `Vuc ~T0 @X0 0 e@3875 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12624,21 +12626,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pin_manager.c: 14: WPUE = 0x8;
 "14
 [e = _WPUE -> -> 8 `i `uc ]
-[; ;pin_manager.c: 16: TRISA = 0x00;
+[; ;pin_manager.c: 16: TRISA = 0x08;
 "16
-[e = _TRISA -> -> 0 `i `uc ]
-[; ;pin_manager.c: 17: TRISA = 0x00;
-"17
-[e = _TRISA -> -> 0 `i `uc ]
+[e = _TRISA -> -> 8 `i `uc ]
 [; ;pin_manager.c: 18: TRISB = 0x00;
 "18
 [e = _TRISB -> -> 0 `i `uc ]
 [; ;pin_manager.c: 19: TRISC = 0x00;
 "19
 [e = _TRISC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 21: ANSELA = 0x00;
+[; ;pin_manager.c: 21: ANSELA = 0x08;
 "21
-[e = _ANSELA -> -> 0 `i `uc ]
+[e = _ANSELA -> -> 8 `i `uc ]
 [; ;pin_manager.c: 22: ANSELB = 0x00;
 "22
 [e = _ANSELB -> -> 0 `i `uc ]
@@ -12664,22 +12663,25 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pin_manager.c: 30: PPSLOCKbits.PPSLOCKED = 0x00;
 "30
 [e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
-[; ;pin_manager.c: 33: RC2PPS = 0x000E;
+[; ;pin_manager.c: 33: RC2PPS = 0x0E;
 "33
 [e = _RC2PPS -> -> 14 `i `uc ]
-[; ;pin_manager.c: 37: PPSLOCK = 0x55;
-"37
-[e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 38: PPSLOCK = 0xAA;
+[; ;pin_manager.c: 34: RC3PPS = 0X0F;
+"34
+[e = _RC3PPS -> -> 15 `i `uc ]
+[; ;pin_manager.c: 38: PPSLOCK = 0x55;
 "38
-[e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 39: PPSLOCKbits.PPSLOCKED = 0x01;
+[e = _PPSLOCK -> -> 85 `i `uc ]
+[; ;pin_manager.c: 39: PPSLOCK = 0xAA;
 "39
-[e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
-[; ;pin_manager.c: 40: GIE = state;
+[e = _PPSLOCK -> -> 170 `i `uc ]
+[; ;pin_manager.c: 40: PPSLOCKbits.PPSLOCKED = 0x01;
 "40
-[e = _GIE -> _state `b ]
-[; ;pin_manager.c: 41: }
+[e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
+[; ;pin_manager.c: 41: GIE = state;
 "41
+[e = _GIE -> _state `b ]
+[; ;pin_manager.c: 42: }
+"42
 [e :UE 1519 ]
 }

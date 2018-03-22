@@ -16683,10 +16683,15 @@ typedef uint16_t uintptr_t;
 # 262 "tmr2.h"
 void TMR2_Initialize(void);
 
-# 7 "pwm6.h"
-void PWM6_Initialize(void);
+# 7 "pwm.h"
+void PWM_Initialize(void);
 
 void PWM6_LoadDutyValue(uint16_t dutyCycle);
+
+void PWM7_LoadDutyValue(uint16_t dutyCycle);
+
+# 14 "pid.h"
+float PID_Calculate(int16_t setpoint, int16_t temp);
 
 # 38 "lcd.h"
 void InitCustomChars();
@@ -16793,7 +16798,7 @@ uint8_t ADCC_GetConversionStageStatus(void);
 # 6 "tempCalc.h"
 float tempCalc(int analogValue);
 
-# 17 "system.h"
+# 18 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16817,16 +16822,20 @@ char C_or_F = 1;
 
 unsigned int bCount = 0;
 
-unsigned char startDelay= 0;
+unsigned char startDelay = 0;
 
-unsigned char resetDelay= 0;
+unsigned char resetDelay = 0;
 
 unsigned char tPadCount = 10;
 
 
-uint16_t dutyCycle = 1023;
+uint16_t dutyCycle6 = 523;
 
-PWM6_LoadDutyValue(dutyCycle);
+uint16_t dutyCycle7 = 523;
+
+PWM6_LoadDutyValue(dutyCycle6);
+
+PWM7_LoadDutyValue(dutyCycle7);
 
 _delay((unsigned long)((300)*(32000000/4000.0)));
 
@@ -16835,17 +16844,25 @@ LCD_Clear();
 
 while (1)
 {
-analogs[0]+=1;
+analogs[0] = ADCRead(3);
 
+analogs[0]=tempCalc(analogs[0]);
 
+dutyCycle7=502;
 
+PWM7_LoadDutyValue(dutyCycle7);
 
 { LCD_Set_Cursor(0,0); LCD_Write_String("Pit:");};
-{ LCD_Set_Cursor(5,0); LCD_Write_Int(analogs[0],4, 0, 0);};
+{ LCD_Set_Cursor(5,0); LCD_Write_Int(analogs[0],5, 0, 0);};
 LCD_Write_Char(0);
 LCD_Write_Char(70);
+{ LCD_Set_Cursor(0,1); LCD_Write_String("Duty Cycle");};
+LCD_Write_Char(' ');
+LCD_Write_Int(dutyCycle7,4,0,0);
+LCD_Write_Char(' ');
+
 _delay((unsigned long)((1000)*(32000000/4000.0)));
 
-# 264
+# 276
 }
 }

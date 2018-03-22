@@ -4,14 +4,14 @@
 
 #define     numSamples  20                                              // Number of Temperature readings to Average
 
-uint16_t samples[6][numSamples] = {0};                                  // Was left initialized like this, but following is correct?
+uint16_t samples[1][numSamples] = {0};                                  // Was left initialized like this, but following is correct?
 //uint16_t samples[6][numSamples] = {{0},{0}};
 
 uint16_t sampleIndex            = {0};
 
-int32_t totals[6]               = {0};
+int32_t totals[1]               = {0};
 
-static int channels[6]          ={1,3,4,5,9,11};
+static int channels[1]          ={1};
 
 
 void ADCC_Initialize(void)

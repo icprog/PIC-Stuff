@@ -1,6 +1,6 @@
- build/default/production/main.d  \
- build/default/production/main.p1:  \
- main.c  \
+ build/default/production/pwm.d  \
+ build/default/production/pwm.p1:  \
+ pwm.c  \
 pwm.h  \
 adcc.h  \
 pin_manager.h  \

@@ -5,7 +5,8 @@
 #include "pin_manager.h"
 #include <stdint.h>
 #include "tmr2.h"
-#include "pwm6.h"
+#include "pwm.h"
+#include "pid.h"
 #include "lcd.h"
 #include "adcc.h"
 #include "tempCalc.h"

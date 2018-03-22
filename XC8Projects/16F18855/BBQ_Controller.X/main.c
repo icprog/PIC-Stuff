@@ -6,12 +6,12 @@
 #define pitTemperature          analogs[0]                                      // Analog Chanell 6,  Pin 17
 
 
-//#define celcius         analogs[0]                      // Touch pad to select Degrees C
-#define farenheit       analogs[1]                      // Touch pad to select Degrees F
-#define down            analogs[2]                      // Touch pad to select Backlight Intencity Down
-#define up              analogs[3]                      // Touch pad to select Backlight Intencity Up
-#define solarInTemp     analogs[4]
-#define solarOutTemp    analogs[5]
+//#define celcius                 analogs[0]                      // Touch pad to select Degrees C
+#define farenheit               analogs[1]                      // Touch pad to select Degrees F
+#define down                    analogs[2]                      // Touch pad to select Backlight Intencity Down
+#define up                      analogs[3]                      // Touch pad to select Backlight Intencity Up
+#define solarInTemp             analogs[4]
+#define solarOutTemp            analogs[5]
 
 
 
@@ -20,30 +20,34 @@ void main(void)
 {
     SYSTEM_Initialize();
     
-    uint16_t analogs[6]     =   {0};                    // array of analog readings (button presses and temperatures)
+    uint16_t analogs[6]         =   {0};                    // array of analog readings (button presses and temperatures)
     
     float displayTemp, displayTemp2;                    // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
     
-    char x                  =   0;                      // Looping Initializer
+    char x                      =   0;                      // Looping Initializer
     
-    unsigned char loop      =   64;                     // cycle (loop) counter
+    unsigned char loop          =   64;                     // cycle (loop) counter
     
-    char choice             =   2;                      // Display degrees C or degrees F, or cycle through both if choice is "2".
+    char choice                 =   2;                      // Display degrees C or degrees F, or cycle through both if choice is "2".
     
-    char C_or_F             =   1;                      // Default Temperature Display is degrees F
+    char C_or_F                 =   1;                      // Default Temperature Display is degrees F
     
-    unsigned int bCount     =   0;                      // Loop counter for Backlight setting delay (to allow selection of both pads touched)
+    unsigned int bCount         =   0;                      // Loop counter for Backlight setting delay (to allow selection of both pads touched)
     
-    unsigned char startDelay=   0;                      // Loop counter to delay touchpad input until ADC stable
+    unsigned char startDelay    =   0;                      // Loop counter to delay touchpad input until ADC stable
     
-    unsigned char resetDelay=   0;                      // Loop counter to delay backlight touchpad input until determined if two pads are touched for Reset
+    unsigned char resetDelay    =   0;                      // Loop counter to delay backlight touchpad input until determined if two pads are touched for Reset
     
-    unsigned char tPadCount =   10;                     // Touch pad counter (counts up or down from 10, to determine is one or both pads touched) (for C_or_F choice))
+    unsigned char tPadCount     =   10;                     // Touch pad counter (counts up or down from 10, to determine is one or both pads touched) (for C_or_F choice))
     
     
-    uint16_t dutyCycle      = 1023;                     // display back light brightness
+    uint16_t dutyCycle6         =   523;                    // Pit Viper Fan Output
     
-    PWM6_LoadDutyValue(dutyCycle);
+    uint16_t dutyCycle7         =   523;                    // display back light brightness
+
+    PWM6_LoadDutyValue(dutyCycle6);
+
+    PWM7_LoadDutyValue(dutyCycle7);
 
     __delay_ms(300);
 
@@ -52,15 +56,23 @@ void main(void)
 
     while (1)
     {
-        pitTemperature+=1;
+        analogs[0] = ADCRead(3);
         
+        pitTemperature=tempCalc(analogs[0]);
         
-//        OC4R=PID_Calculate(pitSetpoint,pitTemperature);
-
+        dutyCycle7=502;
+        
+        PWM7_LoadDutyValue(dutyCycle7);
+        
         LCDWriteStringXY(0,0,"Pit:");
-        LCDWriteIntXY(5,0,pitTemperature,4,0,0);
+        LCDWriteIntXY(5,0,pitTemperature,5,0,0);
         LCD_Write_Char(0);                                              // generate degree symbol in font list
         LCD_Write_Char(70);
+        LCDWriteStringXY(0,1,"Duty Cycle");
+        LCD_Write_Char(' ');                                              // generate degree symbol in font list
+        LCD_Write_Int(dutyCycle7,4,0,0);
+        LCD_Write_Char(' ');                                              // generate degree symbol in font list
+        
         __delay_ms(1000);
         
 //                LCDWriteStringXY(17,2,"Set: ");
