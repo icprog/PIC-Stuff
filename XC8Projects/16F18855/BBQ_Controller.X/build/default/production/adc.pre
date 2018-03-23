@@ -1,5 +1,5 @@
 
-# 1 "adcc.c"
+# 1 "adc.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -16680,7 +16680,7 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
 typedef unsigned char bool;
 
-# 9 "adcc.h"
+# 9 "adc.h"
 typedef uint16_t adc_result_t;
 
 
@@ -16760,7 +16760,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 306
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 7 "adcc.c"
+# 7 "adc.c"
 uint16_t samples[1][20] = {0};
 
 
@@ -16771,9 +16771,53 @@ int32_t totals[1] = {0};
 static int channels[1] ={1};
 
 
+
+adc_result_t ADCRead(adcc_channel_t channel)
+{
+ADPCH = channel;
+
+ADCON0bits.ADON = 1;
+
+ADCON0bits.ADCONT = 0;
+
+ADCON0bits.ADGO = 1;
+
+while(ADCON0bits.ADGO)
+{
+}
+
+return ((ADRESH<<8)+ADRESL);
+}
+
+
+int readAnalog(int channel)
+{
+int value;
+
+int analog_channel = channels[channel];
+
+value = ADCRead(analog_channel);
+
+totals[channel] = totals[channel]-samples[channel][sampleIndex];
+
+samples[channel][sampleIndex] = value;
+
+totals[channel] = totals[channel]+samples[channel][sampleIndex];
+
+if(channel>4)
+{
+sampleIndex+=1;
+if(sampleIndex >= 20)sampleIndex = 0;
+}
+
+value = totals[channel]/20;
+
+return value;
+}
+
+
 void ADCC_Initialize(void)
 {
-
 ADCON1 = 0x00;
 
 ADCON2 = 0x00;
@@ -16813,64 +16857,5 @@ ADSTPTL = 0x00;
 
 ADSTPTH = 0x00;
 
-
 ADCON0 = 0x84;
-
-
 }
-
-
-adc_result_t ADCRead(adcc_channel_t channel)
-{
-
-ADPCH = channel;
-
-
-ADCON0bits.ADON = 1;
-
-
-ADCON0bits.ADCONT = 0;
-
-
-ADCON0bits.ADGO = 1;
-
-
-while (ADCON0bits.ADGO)
-{
-}
-
-
-return ((ADRESH << 8) + ADRESL);
-}
-
-int readAnalog(int channel)
-{
-int value;
-
-int analog_channel = channels[channel];
-
-value = ADCRead(analog_channel);
-
-
-
-totals[channel] = totals[channel] - samples[channel][sampleIndex];
-
-samples[channel][sampleIndex] = value;
-
-totals[channel] = totals[channel] + samples[channel][sampleIndex];
-
-if(channel>4)
-{
-sampleIndex += 1;
-
-if(sampleIndex >= 20)
-{
-sampleIndex = 0;
-}
-}
-
-value = totals[channel] / 20;
-
-return value;
-}
-

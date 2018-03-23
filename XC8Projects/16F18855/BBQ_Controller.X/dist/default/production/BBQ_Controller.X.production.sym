@@ -176,7 +176,7 @@ _RC2PPS F22 0 ABS 0
 _RC3PPS F23 0 ABS 0
 __Hsfr4 0 0 ABS 0
 __Lsfr4 0 0 ABS 0
-_pidPrevError BF 0 BANK1 1
+_pidPrevError BD 0 BANK1 1
 __Hsfr5 0 0 ABS 0
 ___ftmul@f3_as_product 2B 0 BANK0 1
 __Lsfr5 0 0 ABS 0
@@ -184,6 +184,7 @@ __Hsfr6 0 0 ABS 0
 __Lsfr6 0 0 ABS 0
 __Hsfr7 0 0 ABS 0
 __Lsfr7 0 0 ABS 0
+_tempCalc$980 53 0 BANK0 1
 __Hsfr8 0 0 ABS 0
 __Lsfr8 0 0 ABS 0
 __Hsfr9 0 0 ABS 0
@@ -223,7 +224,6 @@ __end_of_main 5FB 0 CODE 0
 _Result B5 0 BANK1 1
 __Htext 0 0 ABS 0
 __Ltext 0 0 ABS 0
-_tempCalc$981 53 0 BANK0 1
 ___wmul@multiplier 70 0 COMMON 1
 __CFG_WDTCWS$WDTCWS_7 0 0 ABS 0
 __CFG_LVP$ON 0 0 ABS 0
@@ -352,7 +352,7 @@ main@analogs C1 0 BANK1 1
 _eval_poly 75 0 CODE 0
 tempCalc@analogValue 4D 0 BANK0 1
 __size_of_LCD_Write_String 0 0 ABS 0
-_sampleIndex 6E 0 BANK0 1
+_sampleIndex BF 0 BANK1 1
 __size_of_LCD_Set_Cursor 0 0 ABS 0
 __size_of_LCD_Write_Int 0 0 ABS 0
 _PPSLOCKbits E8F 0 ABS 0
@@ -530,7 +530,7 @@ ___ftpack@exp 73 0 COMMON 1
 ___awdiv@divisor 70 0 COMMON 1
 LCD_Write_Int@value 79 0 COMMON 1
 _PWM_Initialize D7A 0 CODE 0
-_pidMinOutput BD 0 BANK1 1
+_pidMinOutput 6E 0 BANK0 1
 __end_of___ftmul 454 0 CODE 0
 _pidMaxOutput E2 0 BANK1 1
 _OSCILLATOR_Initialize D27 0 CODE 0
@@ -652,7 +652,7 @@ inittext 1A32 1A3D CODE 1A32 0
 clrtext 1A26 1A31 CODE 1A26 0
 %locals
 dist/default/production\BBQ_Controller.X.production.obj
-C:\Users\DAVE\AppData\Local\Temp\s3po.
+C:\Users\DAVE\AppData\Local\Temp\s128.
 9671 7D0 0 CODE 0
 9674 7D0 0 CODE 0
 9778 7D0 0 CODE 0
@@ -1068,28 +1068,28 @@ lcd.c
 36 E5E 0 CODE 0
 37 E62 0 CODE 0
 38 E65 0 CODE 0
-adcc.c
-17 DED 0 CODE 0
-20 DED 0 CODE 0
-22 DEF 0 CODE 0
-24 DF0 0 CODE 0
-26 DF1 0 CODE 0
-28 DF2 0 CODE 0
-30 DF3 0 CODE 0
-34 DF5 0 CODE 0
-36 DF6 0 CODE 0
-39 DF7 0 CODE 0
-41 DF9 0 CODE 0
-43 DFA 0 CODE 0
-45 DFB 0 CODE 0
-47 DFD 0 CODE 0
-49 DFE 0 CODE 0
-51 DFF 0 CODE 0
-53 E00 0 CODE 0
-55 E01 0 CODE 0
-57 E02 0 CODE 0
-60 E03 0 CODE 0
-63 E06 0 CODE 0
+adc.c
+62 DED 0 CODE 0
+64 DED 0 CODE 0
+66 DEF 0 CODE 0
+68 DF0 0 CODE 0
+70 DF1 0 CODE 0
+72 DF2 0 CODE 0
+74 DF3 0 CODE 0
+78 DF5 0 CODE 0
+80 DF6 0 CODE 0
+83 DF7 0 CODE 0
+85 DF9 0 CODE 0
+87 DFA 0 CODE 0
+89 DFB 0 CODE 0
+91 DFD 0 CODE 0
+93 DFE 0 CODE 0
+95 DFF 0 CODE 0
+97 E00 0 CODE 0
+99 E01 0 CODE 0
+101 E02 0 CODE 0
+103 E03 0 CODE 0
+104 E06 0 CODE 0
 pwm.c
 32 DA5 0 CODE 0
 34 DA5 0 CODE 0
@@ -1231,12 +1231,12 @@ lcd.c
 59 DCF 0 CODE 0
 60 DD1 0 CODE 0
 61 DD1 0 CODE 0
-adcc.c
-66 D3A 0 CODE 0
-69 D3B 0 CODE 0
-72 D3E 0 CODE 0
-75 D3F 0 CODE 0
-78 D40 0 CODE 0
-83 D41 0 CODE 0
-81 D41 0 CODE 0
-86 D43 0 CODE 0
+adc.c
+18 D3A 0 CODE 0
+20 D3B 0 CODE 0
+22 D3E 0 CODE 0
+24 D3F 0 CODE 0
+26 D40 0 CODE 0
+30 D41 0 CODE 0
+28 D41 0 CODE 0
+32 D43 0 CODE 0

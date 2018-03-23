@@ -2,10 +2,10 @@
  build/default/production/lcd.p1:  \
  lcd.c  \
 pwm.h  \
-adcc.h  \
 lcd.h  \
 pin_manager.h  \
 tempCalc.h  \
 system.h  \
+adc.h  \
 pid.h  \
 tmr2.h 

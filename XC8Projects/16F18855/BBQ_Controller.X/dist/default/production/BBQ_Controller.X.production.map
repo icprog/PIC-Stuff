@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.38\dat\en_msgs.txt -cs \
   -h+dist/default/production\BBQ_Controller.X.production.sym \
   --cmf=dist/default/production\BBQ_Controller.X.production.cmf -z \
-  -Q16F18855 -oC:\Users\DAVE\AppData\Local\Temp\s3po.2 \
+  -Q16F18855 -oC:\Users\DAVE\AppData\Local\Temp\s128.2 \
   -Mdist/default/production/BBQ_Controller.X.production.map -E1 -ver=XC8 \
   -ASTACK=020D8h-023efh -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
@@ -32,7 +32,7 @@ Linker command line:
   -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 \
   -AEEDATA=00h-0FFh/0F000h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
-  C:\Users\DAVE\AppData\Local\Temp\s3po.obj \
+  C:\Users\DAVE\AppData\Local\Temp\s128.obj \
   dist/default/production\BBQ_Controller.X.production.obj 
 
 Object code version is 3.11
@@ -42,7 +42,7 @@ Machine type is 16F18855
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\DAVE\AppData\Local\Temp\s3po.obj
+C:\Users\DAVE\AppData\Local\Temp\s128.obj
                 end_init                              2        2        2        0       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5    1000E       0
@@ -971,12 +971,12 @@ _log                             text2        002F0
 _main                            maintext     0051D
 _pidIntegrated                   bssBANK0     0006C
 _pidMaxOutput                    dataBANK1    000E2
-_pidMinOutput                    bssBANK1     000BD
-_pidPrevError                    bssBANK1     000BF
-_sampleIndex                     bssBANK0     0006E
+_pidMinOutput                    bssBANK0     0006E
+_pidPrevError                    bssBANK1     000BD
+_sampleIndex                     bssBANK1     000BF
 _samples                         bssBANK2     00120
 _tempCalc                        text1        005FB
-_tempCalc$981                    cstackBANK0  00053
+_tempCalc$980                    cstackBANK0  00053
 _totals                          bssBANK1     000B1
 btemp                            (abs)        0007E
 clear_ram0                       clrtext      00D13
@@ -1771,7 +1771,7 @@ Total ram usage:        2 bytes
 
  *************** function _ADCC_Initialize *****************
  Defined at:
-		line 17 in file "adcc.c"
+		line 62 in file "adc.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -2122,7 +2122,7 @@ Total ram usage:        1 bytes
 
  *************** function _ADCRead *****************
  Defined at:
-		line 66 in file "adcc.c"
+		line 18 in file "adc.c"
  Parameters:    Size  Location     Type
   channel         1    wreg     enum E13559
  Auto vars:     Size  Location     Type
@@ -2201,16 +2201,16 @@ pwm.c
 
 pwm.c estimated size: 68
 
-adcc.c
-		_ADCC_Initialize		CODE           	0DED	0000	27
-		_ADCRead       		CODE           	0D3A	0000	15
-
-adcc.c estimated size: 42
-
 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awdiv.c
 		___awdiv       		CODE           	0024	0000	82
 
 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awdiv.c estimated size: 82
+
+adc.c
+		_ADCC_Initialize		CODE           	0DED	0000	27
+		_ADCRead       		CODE           	0D3A	0000	15
+
+adc.c estimated size: 42
 
 tmr2.c
 		_TMR2_Initialize		CODE           	0D48	0000	15

@@ -8,7 +8,7 @@
 #include "pwm.h"
 #include "pid.h"
 #include "lcd.h"
-#include "adcc.h"
+#include "adc.h"
 #include "tempCalc.h"
 
 
