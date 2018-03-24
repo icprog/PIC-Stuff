@@ -4,7 +4,7 @@
 #include    "menumain.h"
 #include    "coffee.h"
 // *****************************************************************************
-#define piezoOutput             _LATA1          //FIX        // Output to turn on Piezo, if Brew switch left on too long, or water level too low  Add option for user to disable
+#define piezoOutput             _LATA1         //FIX        // Output to turn on Piezo, if Brew switch left on too long, or water level too low  Add option for user to disable
 #define backLightOFF            _LATA9                  // Backlight is active LOW, so "0" is "ON", "1" is "OFF" Pin 35
 #define airPump                 _LATA11                 // Run air pump for bubbler for Water Tank Level
 #define pumpOutput              OC1R                    // OC1 will drive water pump
