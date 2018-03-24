@@ -243,7 +243,7 @@ int main(void)
                     OC2CON2bits.OCTRIS  = 0;
                     OC3CON2bits.OCTRIS  = 0;
                     backLightCounter    = 0;
-                    backLightOFF        = 1;
+                    backLightOFF        = 0;
                 }
                 
                 if(powerFail == 1)
@@ -637,7 +637,7 @@ int main(void)
             OC1CON2bits.OCTRIS  = 1;                // Tri-State the OC1 Pin, if powerSwitch is OFF
             OC2CON2bits.OCTRIS  = 1;                // Tri-State the OC2 Pin, if powerSwitch is OFF
             OC3CON2bits.OCTRIS  = 1;                // Tri-State the OC3 Pin, if powerSwitch is OFF
-            backLightOFF        = 1;                // sb 0
+            backLightOFF        = 0;                // sb 0
             backLightCounter    = 0;                // Reset BackLight counter
             lastPowerState      = 2;                // Set to 2 to force a reset of OCTRIS on menu exit, as well as a write to lastPowerState   
         }
@@ -682,7 +682,7 @@ int main(void)
         }
         else
         {
-            backLightOFF = 1;                   // sb 0
+            backLightOFF = 0;                   // sb 0
         }
         
 // *****************************************************************************
