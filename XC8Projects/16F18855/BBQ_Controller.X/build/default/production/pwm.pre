@@ -16799,22 +16799,15 @@ void OSCILLATOR_Initialize(void);
 # 7 "pwm.h"
 void PWM_Initialize(void);
 
-void PWM6_LoadDutyValue(uint16_t dutyCycle);
+
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
 # 3 "pwm.c"
 void PWM_Initialize(void)
 {
-PWM6CON = 0x80;
 
-PWM6DCH = 0x00;
-
-PWM6DCL = 0x00;
-
-CCPTMRS1bits.P6TSEL = 0x1;
-
-
+# 14
 PWM7CON = 0x80;
 
 PWM7DCH = 0x00;
@@ -16825,14 +16818,7 @@ CCPTMRS1bits.P6TSEL = 0x1;
 
 }
 
-
-void PWM6_LoadDutyValue(uint16_t dutyCycle6)
-{
-PWM6DCH = (dutyCycle6 & 0x03FC)>>2;
-
-PWM6DCL = (dutyCycle6 & 0x0003)<<6;
-}
-
+# 32
 void PWM7_LoadDutyValue(uint16_t dutyCycle7)
 {
 PWM7DCH = (dutyCycle7 & 0x03FC)>>2;

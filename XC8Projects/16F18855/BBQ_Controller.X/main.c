@@ -2,9 +2,10 @@
 #include "system.h"
 
 // *************** Defines *****************************************************    
-#define pitSetpoint             setpoint[0]
-#define pitTemperature          analogs[0]                                      // Analog Chanell 6,  Pin 17
-
+#define pitSetpoint             750
+#define ambientTemperature      analogs[0]                                      // Analog Chanell 1,  Pin 3
+#define pitTemperature          analogs[1]                                      // Analog Chanell 3,  Pin 5
+#define pitViperOutput          LATC2
 
 //#define celcius                 analogs[0]                      // Touch pad to select Degrees C
 #define farenheit               analogs[1]                      // Touch pad to select Degrees F
@@ -20,11 +21,17 @@ void main(void)
 {
     SYSTEM_Initialize();
     
-    uint16_t analogs[6]         =   {0};                    // array of analog readings (button presses and temperatures)
+    uint16_t analogs[2]         =   {0};                    // array of analog readings (button presses and temperatures)
     
     float displayTemp, displayTemp2;                    // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
     
+    char j                      =   0;                      // Variable to loop readAnalog function
+    
     char x                      =   0;                      // Looping Initializer
+    
+    int pidPeriodCounter        =   0;
+    
+    extern int pidMaxOutput;
     
     unsigned char loop          =   64;                     // cycle (loop) counter
     
@@ -45,7 +52,7 @@ void main(void)
     
     uint16_t dutyCycle7         =   523;                    // display back light brightness
 
-    PWM6_LoadDutyValue(dutyCycle6);
+//    PWM6_LoadDutyValue(dutyCycle6);
 
     PWM7_LoadDutyValue(dutyCycle7);
 
@@ -56,25 +63,54 @@ void main(void)
 
     while (1)
     {
-        analogs[0] = ADCRead(3);
+        pidPeriodCounter+=1;
         
-        pitTemperature=tempCalc(analogs[0]);
+        if(pidPeriodCounter>pidMaxOutput)pidPeriodCounter=0;
+        
+        if(dutyCycle6>pidPeriodCounter)pitViperOutput=1;
+        else pitViperOutput=0;
+        
+        for(j=0;j<2;j++) analogs[j]=readAnalog(j);                          // Read all 7 analog Temperatures
+//        analogs[0] = ADCRead(3);
+        
+        ambientTemperature=tempCalc(analogs[0]);
+
+        pitTemperature=tempCalc(analogs[1]);
         
         dutyCycle7=502;
+
+        if(loop>253)
+        {
+//        PWM6_LoadDutyValue(dutyCycle6);
         
         PWM7_LoadDutyValue(dutyCycle7);
         
         LCDWriteStringXY(0,0,"Pit:");
-        LCDWriteIntXY(5,0,pitTemperature,5,0,0);
+        LCDWriteIntXY(5,0,pitTemperature,-1,1,0);
         LCD_Write_Char(0);                                              // generate degree symbol in font list
         LCD_Write_Char(70);
-        LCDWriteStringXY(0,1,"Duty Cycle");
         LCD_Write_Char(' ');                                              // generate degree symbol in font list
-        LCD_Write_Int(dutyCycle7,4,0,0);
+
+        LCDWriteStringXY(0,1,"Ambient:");
         LCD_Write_Char(' ');                                              // generate degree symbol in font list
+        LCD_Write_Int(dutyCycle6,5,1,0);
+//        LCD_Write_Int(ambientTemperature,-1,1,0);
+//        LCD_Write_Char(0);                                              // generate degree symbol in font list
+  //      LCD_Write_Char(70);
+        LCD_Write_Char(' ');                                              // generate degree symbol in font list
+
+//        LCDWriteStringXY(0,1,"Duty Cycle");
+  //      LCD_Write_Char(' ');                                              // generate degree symbol in font list
+    //    LCD_Write_Int(dutyCycle7,4,0,0);
+      //  LCD_Write_Char(' ');                                              // generate degree symbol in font list
         
-        __delay_ms(1000);
+ //       __delay_ms(1000);
         
+        dutyCycle6 = PID_Calculate(pitSetpoint,pitTemperature);
+        
+//        if(dutyCycle6<50)dutyCycle6=0;
+        loop=0;
+        }
 //                LCDWriteStringXY(17,2,"Set: ");
   //              LCDWriteInt(pitSetpoint,4,1);
     //            LCDWriteChar(129);                                              // generate degree symbol in font list
@@ -272,6 +308,6 @@ void main(void)
   */          
 //            loop=0;
   //      }
-    //    loop+=1;
+        loop+=1;
     }
 }

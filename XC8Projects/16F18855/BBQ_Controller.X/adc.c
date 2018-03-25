@@ -2,28 +2,30 @@
 #include <xc.h>
 #include "adc.h"
 
-#define     numSamples  20                                              // Number of Temperature readings to Average
+#define     numSamples                      20                                              // Number of Temperature readings to Average
+#define     numChannels                     2                                               // Number of Analog channels to read
 
-uint16_t samples[1][numSamples] = {0};                                  // Was left initialized like this, but following is correct?
+uint16_t samples[numChannels][numSamples]   =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
+
 //uint16_t samples[6][numSamples] = {{0},{0}};
 
-uint16_t sampleIndex            = {0};
+uint16_t sampleIndex                        =   {0};
 
-int32_t totals[1]               = {0};
+int32_t totals[numChannels]                 =   {0};
 
-static int channels[1]          ={1};
+static int channels[numChannels]            =   {1,3};                                      // List all the Analog channel numbers here, must be same number listed as numChannels
 
 
 // *************** ADC Read Individual Channel ****************************************************************************************************
 adc_result_t ADCRead(adcc_channel_t channel)
 {
-    ADPCH               = channel;                                      // select the A/D channel
+    ADPCH                                   =   channel;                                      // select the A/D channel
 
-    ADCON0bits.ADON     = 1;                                            // Turn on the ADC module
+    ADCON0bits.ADON                         =   1;                                            // Turn on the ADC module
 
-    ADCON0bits.ADCONT   = 0;                                            //Disable the continuous mode.
+    ADCON0bits.ADCONT                       =   0;                                            //Disable the continuous mode.
 
-    ADCON0bits.ADGO     = 1;                                            // Start the conversion
+    ADCON0bits.ADGO                         =   1;                                            // Start the conversion
 
     while(ADCON0bits.ADGO)                                              // Wait for the conversion to finish
     {
@@ -47,7 +49,7 @@ int readAnalog(int channel)
 
     totals[channel] = totals[channel]+samples[channel][sampleIndex];    // Add that new sample to the total
             
-    if(channel>4)
+    if(channel>=(numChannels-1))
     {
         sampleIndex+=1;                                                 // and move to the next index location
         if(sampleIndex >= numSamples)sampleIndex = 0;
@@ -71,9 +73,14 @@ void ADCC_Initialize(void)
 
     ADSTAT = 0x00;  // ADAOV ACC or ADERR not Overflowed; 
 
+//    FVRCON = 0b11000001;
     ADCLK = 0x3F;   //ADC CLK FOSC/128
 //    ADCLK = 0x00;   //ADC CLK FOSC/2
-     
+    
+//    FVREN = 1;
+    
+  //  ADFVR = 0x01;
+    
 //    ADREF = 0x03;   // ADNREF VSS; ADPREF FVR;
     ADREF = 0x00;   // ADNREF VSS; ADPREF VDD;
 

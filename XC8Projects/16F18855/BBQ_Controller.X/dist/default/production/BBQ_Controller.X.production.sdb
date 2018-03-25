@@ -3,23 +3,18 @@
 [d edition pro ]
 [d chip 16F18855 ]
 [d frameptr 6 ]
-"59 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\main.c
-[e E13592 . `uc
-channel_VSS 60
-channel_Temp 61
-channel_DAC1 62
-channel_FVR 63
-]
-"19 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\adc.c
+"21 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\adc.c
 [e E13559 . `uc
 channel_VSS 60
 channel_Temp 61
 channel_DAC1 62
 channel_FVR 63
 ]
-"18
+"20
 [v _ADCRead ADCRead `(ui  1 e 2 0 ]
-"62
+"38
+[v _readAnalog readAnalog `(i  1 e 2 0 ]
+"64
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\aldiv.c
 [v ___aldiv __aldiv `(l  1 e 4 0 ]
@@ -77,14 +72,14 @@ channel_FVR 63
 [v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
 "246
 [v _LCD_Write_Int LCD_Write_Int `(v  1 e 1 0 ]
-"19 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\main.c
+"20 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\main.c
 [v _main main `(v  1 e 1 0 ]
+"21 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\pid.c
+[v _PID_Calculate PID_Calculate `(f  1 e 3 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
 "3 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\pwm.c
 [v _PWM_Initialize PWM_Initialize `(v  1 e 1 0 ]
-"25
-[v _PWM6_LoadDutyValue PWM6_LoadDutyValue `(v  1 e 1 0 ]
 "32
 [v _PWM7_LoadDutyValue PWM7_LoadDutyValue `(v  1 e 1 0 ]
 "71 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\system.c
@@ -95,14 +90,14 @@ channel_FVR 63
 [v _tempCalc tempCalc `(f  1 e 3 0 ]
 "3 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\tmr2.c
 [v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
-"7 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\adc.c
-[v _samples samples `[1][20]ui  1 e 40 0 ]
-"10
-[v _sampleIndex sampleIndex `ui  1 e 2 0 ]
+"8 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\adc.c
+[v _samples samples `[2][20]ui  1 e 80 0 ]
 "12
-[v _totals totals `[1]l  1 e 4 0 ]
+[v _sampleIndex sampleIndex `ui  1 e 2 0 ]
 "14
-[v _channels channels `[1]i  1 s 2 channels ]
+[v _totals totals `[2]l  1 e 8 0 ]
+"16
+[v _channels channels `[2]i  1 s 4 channels ]
 "572 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
 "633
@@ -121,7 +116,7 @@ channel_FVR 63
 [v _ADRESH ADRESH `VEuc  1 e 1 @141 ]
 "1821
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @147 ]
-[s S360 . 1 `uc 1 ADGO 1 0 :1:0 
+[s S105 . 1 `uc 1 ADGO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM 1 0 :2:2 
 `uc 1 ADCS 1 0 :1:4 
@@ -130,19 +125,19 @@ channel_FVR 63
 `uc 1 ADON 1 0 :1:7 
 ]
 "1852
-[s S368 . 1 `uc 1 DONE 1 0 :1:0 
+[s S113 . 1 `uc 1 DONE 1 0 :1:0 
 ]
-[s S370 . 1 `uc 1 nDONE 1 0 :1:0 
+[s S115 . 1 `uc 1 nDONE 1 0 :1:0 
 ]
-[s S372 . 1 `uc 1 GO 1 0 :1:0 
+[s S117 . 1 `uc 1 GO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM0 1 0 :1:2 
 `uc 1 ADFM1 1 0 :1:3 
 ]
-[s S377 . 1 `uc 1 GO_nDONE 1 0 :1:0 
+[s S122 . 1 `uc 1 GO_nDONE 1 0 :1:0 
 ]
-[u S379 . 1 `S360 1 . 1 0 `S368 1 . 1 0 `S370 1 . 1 0 `S372 1 . 1 0 `S377 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES379  1 e 1 @147 ]
+[u S124 . 1 `S105 1 . 1 0 `S113 1 . 1 0 `S115 1 . 1 0 `S117 1 . 1 0 `S122 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES124  1 e 1 @147 ]
 "1911
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @148 ]
 "1949
@@ -179,36 +174,36 @@ channel_FVR 63
 [v _ADSTPTL ADSTPTL `VEuc  1 e 1 @274 ]
 "3059
 [v _ADSTPTH ADSTPTH `VEuc  1 e 1 @275 ]
-[s S258 . 1 `uc 1 C5TSEL 1 0 :2:0 
+[s S300 . 1 `uc 1 C5TSEL 1 0 :2:0 
 `uc 1 P6TSEL 1 0 :2:2 
 `uc 1 P7TSEL 1 0 :2:4 
 ]
 "7519
-[s S262 . 1 `uc 1 C5TSEL0 1 0 :1:0 
+[s S304 . 1 `uc 1 C5TSEL0 1 0 :1:0 
 `uc 1 C5TSEL1 1 0 :1:1 
 `uc 1 P6TSEL0 1 0 :1:2 
 `uc 1 P6TSEL1 1 0 :1:3 
 `uc 1 P7TSEL0 1 0 :1:4 
 `uc 1 P7TSEL1 1 0 :1:5 
 ]
-[u S269 . 1 `S258 1 . 1 0 `S262 1 . 1 0 ]
-[v _CCPTMRS1bits CCPTMRS1bits `VES269  1 e 1 @543 ]
+[u S311 . 1 `S300 1 . 1 0 `S304 1 . 1 0 ]
+[v _CCPTMRS1bits CCPTMRS1bits `VES311  1 e 1 @543 ]
 "7568
 [v _T2TMR T2TMR `VEuc  1 e 1 @652 ]
 "7605
 [v _T2PR T2PR `VEuc  1 e 1 @653 ]
 "7642
 [v _T2CON T2CON `VEuc  1 e 1 @654 ]
-[s S184 . 1 `uc 1 OUTPS 1 0 :4:0 
+[s S393 . 1 `uc 1 OUTPS 1 0 :4:0 
 `uc 1 CKPS 1 0 :3:4 
 `uc 1 ON 1 0 :1:7 
 ]
 "7678
-[s S188 . 1 `uc 1 T2OUTPS 1 0 :4:0 
+[s S397 . 1 `uc 1 T2OUTPS 1 0 :4:0 
 `uc 1 T2CKPS 1 0 :3:4 
 `uc 1 T2ON 1 0 :1:7 
 ]
-[s S192 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
+[s S401 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
 `uc 1 T2OUTPS1 1 0 :1:1 
 `uc 1 T2OUTPS2 1 0 :1:2 
 `uc 1 T2OUTPS3 1 0 :1:3 
@@ -216,7 +211,7 @@ channel_FVR 63
 `uc 1 T2CKPS1 1 0 :1:5 
 `uc 1 T2CKPS2 1 0 :1:6 
 ]
-[s S200 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S409 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -225,27 +220,21 @@ channel_FVR 63
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR2ON 1 0 :1:7 
 ]
-[u S209 . 1 `S184 1 . 1 0 `S188 1 . 1 0 `S192 1 . 1 0 `S200 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES209  1 e 1 @654 ]
+[u S418 . 1 `S393 1 . 1 0 `S397 1 . 1 0 `S401 1 . 1 0 `S409 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES418  1 e 1 @654 ]
 "7787
 [v _T2HLT T2HLT `VEuc  1 e 1 @655 ]
 "7919
 [v _T2CLKCON T2CLKCON `VEuc  1 e 1 @656 ]
 "8071
 [v _T2RST T2RST `VEuc  1 e 1 @657 ]
-"10540
-[v _PWM6DCL PWM6DCL `VEuc  1 e 1 @908 ]
-"10605
-[v _PWM6DCH PWM6DCH `VEuc  1 e 1 @909 ]
-"10774
-[v _PWM6CON PWM6CON `VEuc  1 e 1 @910 ]
 "10839
 [v _PWM7DCL PWM7DCL `VEuc  1 e 1 @912 ]
 "10904
 [v _PWM7DCH PWM7DCH `VEuc  1 e 1 @913 ]
 "11073
 [v _PWM7CON PWM7CON `VEuc  1 e 1 @914 ]
-[s S167 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[s S376 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 TMR3IF 1 0 :1:2 
 `uc 1 TMR4IF 1 0 :1:3 
@@ -253,16 +242,16 @@ channel_FVR 63
 `uc 1 TMR6IF 1 0 :1:5 
 ]
 "19557
-[u S174 . 1 `S167 1 . 1 0 ]
-[v _PIR4bits PIR4bits `VES174  1 e 1 @1808 ]
-[s S87 . 1 `uc 1 INTE 1 0 :1:0 
+[u S383 . 1 `S376 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES383  1 e 1 @1808 ]
+[s S267 . 1 `uc 1 INTE 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIE 1 0 :1:4 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
 "19817
-[u S92 . 1 `S87 1 . 1 0 ]
-[v _PIE0bits PIE0bits `VES92  1 e 1 @1814 ]
+[u S272 . 1 `S267 1 . 1 0 ]
+[v _PIE0bits PIE0bits `VES272  1 e 1 @1814 ]
 "21546
 [v _OSCCON1 OSCCON1 `VEuc  1 e 1 @2189 ]
 "21684
@@ -277,13 +266,11 @@ channel_FVR 63
 [v _FVRCON FVRCON `VEuc  1 e 1 @2316 ]
 "27917
 [v _PPSLOCK PPSLOCK `VEuc  1 e 1 @3727 ]
-[s S102 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
+[s S282 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
 ]
 "27927
-[u S104 . 1 `S102 1 . 1 0 ]
-[v _PPSLOCKbits PPSLOCKbits `VES104  1 e 1 @3727 ]
-"30793
-[v _RC2PPS RC2PPS `VEuc  1 e 1 @3874 ]
+[u S284 . 1 `S282 1 . 1 0 ]
+[v _PPSLOCKbits PPSLOCKbits `VES284  1 e 1 @3727 ]
 "30842
 [v _RC3PPS RC3PPS `VEuc  1 e 1 @3875 ]
 "31087
@@ -302,6 +289,8 @@ channel_FVR 63
 [v _WPUE WPUE `VEuc  1 e 1 @3941 ]
 "34694
 [v _GIE GIE `VEb  1 e 0 @95 ]
+"35046
+[v _LATC2 LATC2 `VEb  1 e 0 @194 ]
 "36142
 [v _RA0 RA0 `VEb  1 e 0 @96 ]
 "36170
@@ -333,59 +322,69 @@ channel_FVR 63
 "11
 [v _Kd Kd `i  1 e 2 0 ]
 "12
-[v _pidIntegrated pidIntegrated `i  1 e 2 0 ]
+[v _pidIntegrated pidIntegrated `i  1 s 2 pidIntegrated ]
 "13
 [v _pidPrevError pidPrevError `i  1 e 2 0 ]
 "14
 [v _pidMinOutput pidMinOutput `i  1 e 2 0 ]
 "15
 [v _pidMaxOutput pidMaxOutput `i  1 e 2 0 ]
-"19 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\main.c
+"16
+[v _pidCount pidCount `i  1 e 2 0 ]
+"17
+[v _signPositive signPositive `i  1 e 2 0 ]
+"18
+[v _lastSign lastSign `i  1 e 2 0 ]
+"20 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"23
-[v main@analogs analogs `[6]ui  1 a 12 0 ]
+"24
+[v main@analogs analogs `[2]ui  1 a 4 25 ]
+"51
+[v main@dutyCycle6 dutyCycle6 `ui  1 a 2 23 ]
+"32
+[v main@pidPeriodCounter pidPeriodCounter `i  1 a 2 21 ]
+"53
+[v main@dutyCycle7 dutyCycle7 `ui  1 a 2 19 ]
+"42
+[v main@bCount bCount `ui  1 a 2 10 ]
+"28
+[v main@j j `uc  1 a 1 29 ]
+"36
+[v main@loop loop `uc  1 a 1 18 ]
+"48
+[v main@tPadCount tPadCount `uc  1 a 1 17 ]
 "46
-[v main@dutyCycle7 dutyCycle7 `ui  1 a 2 23 ]
+[v main@resetDelay resetDelay `uc  1 a 1 16 ]
 "44
-[v main@dutyCycle6 dutyCycle6 `ui  1 a 2 21 ]
-"35
-[v main@bCount bCount `ui  1 a 2 12 ]
-"41
-[v main@tPadCount tPadCount `uc  1 a 1 20 ]
-"39
-[v main@resetDelay resetDelay `uc  1 a 1 19 ]
-"37
-[v main@startDelay startDelay `uc  1 a 1 18 ]
-"33
-[v main@C_or_F C_or_F `uc  1 a 1 17 ]
-"31
-[v main@choice choice `uc  1 a 1 16 ]
-"29
-[v main@loop loop `uc  1 a 1 15 ]
-"27
-[v main@x x `uc  1 a 1 14 ]
-"21
-[v main@F13662 F13662 `[6]ui  1 s 12 F13662 ]
-"277
+[v main@startDelay startDelay `uc  1 a 1 15 ]
+"40
+[v main@C_or_F C_or_F `uc  1 a 1 14 ]
+"38
+[v main@choice choice `uc  1 a 1 13 ]
+"30
+[v main@x x `uc  1 a 1 12 ]
+"22
+[v main@F13660 F13660 `[2]ui  1 s 4 F13660 ]
+"313
 } 0
 "4 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\tempCalc.c
 [v _tempCalc tempCalc `(f  1 e 3 0 ]
 {
 "6
-[v tempCalc@steinhart steinhart `f  1 a 3 54 ]
-[v tempCalc@R R `f  1 a 3 48 ]
+[v tempCalc@steinhart steinhart `f  1 a 3 70 ]
+[v tempCalc@R R `f  1 a 3 64 ]
 "4
-[v tempCalc@analogValue analogValue `i  1 p 2 45 ]
-"22
+[v tempCalc@analogValue analogValue `i  1 p 2 61 ]
+"23
 } 0
 "5 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\log.c
 [v _log log `(d  1 e 3 0 ]
 {
 "7
-[v log@exponent exponent `i  1 a 2 43 ]
+[v log@exponent exponent `i  1 a 2 59 ]
 "5
-[v log@x x `d  1 p 3 39 ]
+[v log@x x `d  1 p 3 55 ]
 "9
 [v log@coeff coeff `DCC[9]d  1 s 27 coeff ]
 "36
@@ -401,22 +400,12 @@ channel_FVR 63
 [v _eval_poly eval_poly `(d  1 e 3 0 ]
 {
 "6
-[v eval_poly@res res `d  1 a 3 36 ]
+[v eval_poly@res res `d  1 a 3 52 ]
 "4
-[v eval_poly@x x `d  1 p 3 29 ]
-[v eval_poly@d d `*.25DCCd  1 p 2 32 ]
-[v eval_poly@n n `i  1 p 2 34 ]
+[v eval_poly@x x `d  1 p 3 45 ]
+[v eval_poly@d d `*.25DCCd  1 p 2 48 ]
+[v eval_poly@n n `i  1 p 2 50 ]
 "12
-} 0
-"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
-[v ___wmul __wmul `(ui  1 e 2 0 ]
-{
-"17
-[v ___wmul@product product `ui  1 a 2 4 ]
-"15
-[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
-[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
-"53
 } 0
 "62 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftmul.c
 [v ___ftmul __ftmul `(f  1 e 3 0 ]
@@ -439,66 +428,95 @@ channel_FVR 63
 [v ___ftge@ff2 ff2 `f  1 p 3 3 ]
 "13
 } 0
-"32 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awtoft.c
-[v ___awtoft __awtoft `(f  1 e 3 0 ]
-{
-"34
-[v ___awtoft@sign sign `uc  1 a 1 13 ]
-"32
-[v ___awtoft@c c `i  1 p 2 8 ]
-"42
-} 0
 "18 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftsub.c
 [v ___ftsub __ftsub `(f  1 e 3 0 ]
 {
-[v ___ftsub@f2 f2 `f  1 p 3 29 ]
-[v ___ftsub@f1 f1 `f  1 p 3 32 ]
+[v ___ftsub@f2 f2 `f  1 p 3 45 ]
+[v ___ftsub@f1 f1 `f  1 p 3 48 ]
 "27
 } 0
 "86 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftadd.c
 [v ___ftadd __ftadd `(f  1 e 3 0 ]
 {
 "88
-[v ___ftadd@exp1 exp1 `uc  1 a 1 28 ]
-[v ___ftadd@exp2 exp2 `uc  1 a 1 27 ]
-[v ___ftadd@sign sign `uc  1 a 1 26 ]
+[v ___ftadd@exp1 exp1 `uc  1 a 1 44 ]
+[v ___ftadd@exp2 exp2 `uc  1 a 1 43 ]
+[v ___ftadd@sign sign `uc  1 a 1 42 ]
 "86
-[v ___ftadd@f1 f1 `f  1 p 3 16 ]
-[v ___ftadd@f2 f2 `f  1 p 3 19 ]
+[v ___ftadd@f1 f1 `f  1 p 3 32 ]
+[v ___ftadd@f2 f2 `f  1 p 3 35 ]
 "148
 } 0
 "56 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\ftdiv.c
 [v ___ftdiv __ftdiv `(f  1 e 3 0 ]
 {
 "60
-[v ___ftdiv@f3 f3 `f  1 a 3 11 ]
+[v ___ftdiv@f3 f3 `f  1 a 3 27 ]
 "59
-[v ___ftdiv@sign sign `uc  1 a 1 15 ]
-[v ___ftdiv@exp exp `uc  1 a 1 14 ]
-[v ___ftdiv@cntr cntr `uc  1 a 1 10 ]
+[v ___ftdiv@sign sign `uc  1 a 1 31 ]
+[v ___ftdiv@exp exp `uc  1 a 1 30 ]
+[v ___ftdiv@cntr cntr `uc  1 a 1 26 ]
 "56
-[v ___ftdiv@f2 f2 `f  1 p 3 0 ]
-[v ___ftdiv@f1 f1 `f  1 p 3 3 ]
+[v ___ftdiv@f2 f2 `f  1 p 3 16 ]
+[v ___ftdiv@f1 f1 `f  1 p 3 19 ]
 "86
 } 0
-"62 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\float.c
-[v ___ftpack __ftpack `(f  1 e 3 0 ]
+"38 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\adc.c
+[v _readAnalog readAnalog `(i  1 e 2 0 ]
 {
-[v ___ftpack@arg arg `um  1 p 3 0 ]
-[v ___ftpack@exp exp `uc  1 p 1 3 ]
-[v ___ftpack@sign sign `uc  1 p 1 4 ]
-"86
+"40
+[v readAnalog@value value `i  1 a 2 11 ]
+"42
+[v readAnalog@analog_channel analog_channel `i  1 a 2 9 ]
+"38
+[v readAnalog@channel channel `i  1 p 2 6 ]
+"61
+} 0
+"4 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul8.c
+[v ___bmul __bmul `(uc  1 e 1 0 ]
+{
+[v ___bmul@multiplier multiplier `uc  1 a 1 wreg ]
+"6
+[v ___bmul@product product `uc  1 a 1 2 ]
+"4
+[v ___bmul@multiplier multiplier `uc  1 a 1 wreg ]
+[v ___bmul@multiplicand multiplicand `uc  1 p 1 0 ]
+"6
+[v ___bmul@multiplier multiplier `uc  1 a 1 3 ]
+"51
+} 0
+"6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\aldiv.c
+[v ___aldiv __aldiv `(l  1 e 4 0 ]
+{
+"11
+[v ___aldiv@quotient quotient `l  1 a 4 2 ]
+"12
+[v ___aldiv@sign sign `uc  1 a 1 1 ]
+[v ___aldiv@counter counter `uc  1 a 1 0 ]
+"6
+[v ___aldiv@divisor divisor `l  1 p 4 0 ]
+[v ___aldiv@dividend dividend `l  1 p 4 4 ]
+"42
+} 0
+"20 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\adc.c
+[v _ADCRead ADCRead `(ui  1 e 2 0 ]
+{
+[v ADCRead@channel channel `E13559  1 a 1 wreg ]
+[v ADCRead@channel channel `E13559  1 a 1 wreg ]
+"22
+[v ADCRead@channel channel `E13559  1 a 1 3 ]
+"35
 } 0
 "44 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\fttol.c
 [v ___fttol __fttol `(l  1 e 4 0 ]
 {
 "47
-[v ___fttol@lval lval `ul  1 a 4 66 ]
+[v ___fttol@lval lval `ul  1 a 4 5 ]
 "46
-[v ___fttol@exp1 exp1 `uc  1 a 1 70 ]
-[v ___fttol@sign1 sign1 `uc  1 a 1 65 ]
+[v ___fttol@exp1 exp1 `uc  1 a 1 9 ]
+[v ___fttol@sign1 sign1 `uc  1 a 1 4 ]
 "44
-[v ___fttol@f1 f1 `f  1 p 3 57 ]
+[v ___fttol@f1 f1 `f  1 p 3 73 ]
 "73
 } 0
 "71 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\system.c
@@ -519,9 +537,9 @@ channel_FVR 63
 "5 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
 {
-"26
+"25
 [v PIN_MANAGER_Initialize@state state `uc  1 a 1 0 ]
-"42
+"41
 } 0
 "89 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\system.c
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
@@ -549,10 +567,10 @@ channel_FVR 63
 [v InitCustomChars@i i `uc  1 a 1 6 ]
 "38
 } 0
-"62 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\adc.c
+"64 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\adc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
 {
-"104
+"111
 } 0
 "32 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\pwm.c
 [v _PWM7_LoadDutyValue PWM7_LoadDutyValue `(v  1 e 1 0 ]
@@ -560,11 +578,39 @@ channel_FVR 63
 [v PWM7_LoadDutyValue@dutyCycle7 dutyCycle7 `ui  1 p 2 0 ]
 "37
 } 0
-"25
-[v _PWM6_LoadDutyValue PWM6_LoadDutyValue `(v  1 e 1 0 ]
+"21 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\pid.c
+[v _PID_Calculate PID_Calculate `(f  1 e 3 0 ]
 {
-[v PWM6_LoadDutyValue@dutyCycle6 dutyCycle6 `ui  1 p 2 0 ]
-"30
+[v PID_Calculate@setpoint setpoint `i  1 p 2 0 ]
+[v PID_Calculate@temp temp `i  1 p 2 2 ]
+"75
+} 0
+"15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 4 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
+"53
+} 0
+"32 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awtoft.c
+[v ___awtoft __awtoft `(f  1 e 3 0 ]
+{
+"34
+[v ___awtoft@sign sign `uc  1 a 1 13 ]
+"32
+[v ___awtoft@c c `i  1 p 2 8 ]
+"42
+} 0
+"62 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+{
+[v ___ftpack@arg arg `um  1 p 3 0 ]
+[v ___ftpack@exp exp `uc  1 p 1 3 ]
+[v ___ftpack@sign sign `uc  1 p 1 4 ]
+"86
 } 0
 "239 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\lcd.c
 [v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
@@ -589,7 +635,7 @@ channel_FVR 63
 [v LCD_Write_Int@numPlaces numPlaces `c  1 p 1 12 ]
 [v LCD_Write_Int@sign sign `c  1 p 1 13 ]
 "247
-[v LCD_Write_Int@F13692 F13692 `[5]uc  1 s 5 F13692 ]
+[v LCD_Write_Int@F13690 F13690 `[5]uc  1 s 5 F13690 ]
 "300
 } 0
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awmod.c
@@ -661,13 +707,4 @@ channel_FVR 63
 "43
 [v LCD_Port@a a `uc  1 a 1 0 ]
 "62
-} 0
-"18 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\adc.c
-[v _ADCRead ADCRead `(ui  1 e 2 0 ]
-{
-[v ADCRead@channel channel `E13559  1 a 1 wreg ]
-[v ADCRead@channel channel `E13559  1 a 1 wreg ]
-"20
-[v ADCRead@channel channel `E13559  1 a 1 3 ]
-"33
 } 0

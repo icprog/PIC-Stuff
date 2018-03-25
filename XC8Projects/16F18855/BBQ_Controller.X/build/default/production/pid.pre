@@ -16686,7 +16686,7 @@ void TMR2_Initialize(void);
 # 7 "pwm.h"
 void PWM_Initialize(void);
 
-void PWM6_LoadDutyValue(uint16_t dutyCycle);
+
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
@@ -16810,27 +16810,43 @@ int16_t derivativeValue = 0;
 int16_t Result = 0;
 int Kp = 4;
 int Ki = 1;
-int Kd = 8;
-int16_t pidIntegrated = 0;
-int16_t pidPrevError = 0;
+int Kd = 0;
+static int pidIntegrated = 0;
+int pidPrevError = 0;
 int pidMinOutput = 0;
-int pidMaxOutput = 1023;
+int pidMaxOutput = 2047;
+int pidCount = 0;
+int signPositive = 0;
+int lastSign = 0;
 
 
 float PID_Calculate(int16_t setpoint, int16_t temp)
 {
+pidCount+=1;
+
 
 error = setpoint - temp;
 
 errorValue = error * Kp;
 
 
+if(error>0)signPositive=1;
+
+else signPositive=0;
+
+if(signPositive!=lastSign)pidIntegrated=0;
+
+lastSign=signPositive;
+
+
+
 derivativeValue=(error-pidPrevError)*Kd;
 pidPrevError = error;
 
 
-
-pidIntegrated = pidIntegrated + (error * Ki)+derivativeValue;
+if(pidCount>20)
+{
+pidIntegrated = pidIntegrated + (error * Ki);
 
 if (pidIntegrated< pidMinOutput)
 {
@@ -16841,9 +16857,11 @@ if (pidIntegrated> pidMaxOutput)
 {
 pidIntegrated= pidMaxOutput;
 }
+pidCount=0;
+}
 
 
-Result = errorValue + pidIntegrated+ derivativeValue;
+Result = errorValue+pidIntegrated+derivativeValue;
 
 if (Result < pidMinOutput)
 {

@@ -12578,7 +12578,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
-[; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
 [; ;pid.h: 14: float PID_Calculate(int16_t setpoint, int16_t temp);
 [; ;lcd.h: 38: void InitCustomChars();
@@ -12674,32 +12673,35 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tempCalc.c: 8: R = 10020/(1023/(float)analogValue - 1);
 "8
 [e = _R / -> -> 10020 `i `f - / -> -> 1023 `i `f -> _analogValue `f -> -> 1 `i `f ]
-[; ;tempCalc.c: 10: steinhart = R /10061;
+[; ;tempCalc.c: 10: steinhart = R /9880;
 "10
-[e = _steinhart / _R -> -> 10061 `i `f ]
+[e = _steinhart / _R -> -> 9880 `i `f ]
 [; ;tempCalc.c: 11: steinhart = log(steinhart);
 "11
 [e = _steinhart -> ( _log (1 -> _steinhart `d `f ]
-[; ;tempCalc.c: 12: steinhart /= 3995;
+[; ;tempCalc.c: 12: steinhart /= 3940;
 "12
-[e =/ _steinhart -> -> 3995 `us `f ]
-[; ;tempCalc.c: 13: steinhart += 1.0 / (25 + 273.15);
-"13
-[e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]
-[; ;tempCalc.c: 14: steinhart = 1.0 / steinhart;
+[e =/ _steinhart -> -> 3940 `us `f ]
+[; ;tempCalc.c: 14: steinhart += 1.0 / (25 + 273.15);
 "14
-[e = _steinhart -> / .1.0 -> _steinhart `d `f ]
-[; ;tempCalc.c: 15: steinhart -= 273.15;
+[e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]
+[; ;tempCalc.c: 15: steinhart = 1.0 / steinhart;
 "15
+[e = _steinhart -> / .1.0 -> _steinhart `d `f ]
+[; ;tempCalc.c: 16: steinhart -= 273.15;
+"16
 [e =- _steinhart -> .273.15 `f ]
-[; ;tempCalc.c: 17: steinhart*=10;
-"17
+[; ;tempCalc.c: 18: steinhart*=10;
+"18
 [e =* _steinhart -> -> 10 `i `f ]
-[; ;tempCalc.c: 21: return steinhart;
-"21
+[; ;tempCalc.c: 20: steinhart = steinhart*9/5+320;
+"20
+[e = _steinhart + / * _steinhart -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
+[; ;tempCalc.c: 22: return steinhart;
+"22
 [e ) _steinhart ]
 [e $UE 1519  ]
-[; ;tempCalc.c: 22: }
-"22
+[; ;tempCalc.c: 23: }
+"23
 [e :UE 1519 ]
 }

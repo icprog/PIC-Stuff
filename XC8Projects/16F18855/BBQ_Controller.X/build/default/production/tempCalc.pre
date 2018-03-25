@@ -16686,7 +16686,7 @@ void TMR2_Initialize(void);
 # 7 "pwm.h"
 void PWM_Initialize(void);
 
-void PWM6_LoadDutyValue(uint16_t dutyCycle);
+
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
@@ -16838,16 +16838,17 @@ float R, steinhart;
 
 R = 10020/(1023/(float)analogValue - 1);
 
-steinhart = R /10061;
+steinhart = R /9880;
 steinhart = log(steinhart);
-steinhart /= 3995;
+steinhart /= 3940;
+
 steinhart += 1.0 / (25 + 273.15);
 steinhart = 1.0 / steinhart;
 steinhart -= 273.15;
 
 steinhart*=10;
 
-
+steinhart = steinhart*9/5+320;
 
 return steinhart;
 }

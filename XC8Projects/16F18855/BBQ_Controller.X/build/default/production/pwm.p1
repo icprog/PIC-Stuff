@@ -1,10 +1,10 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"10774 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
-[v _PWM6CON `Vuc ~T0 @X0 0 e@910 ]
-"10605
-[v _PWM6DCH `Vuc ~T0 @X0 0 e@909 ]
-"10540
-[v _PWM6DCL `Vuc ~T0 @X0 0 e@908 ]
+"11073 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _PWM7CON `Vuc ~T0 @X0 0 e@914 ]
+"10904
+[v _PWM7DCH `Vuc ~T0 @X0 0 e@913 ]
+"10839
+[v _PWM7DCL `Vuc ~T0 @X0 0 e@912 ]
 "7505
 [s S360 :2 `uc 1 :2 `uc 1 :2 `uc 1 ]
 [n S360 . C5TSEL P6TSEL P7TSEL ]
@@ -16,12 +16,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S359 . . . ]
 "7519
 [v _CCPTMRS1bits `VS359 ~T0 @X0 0 e@543 ]
-"11073
-[v _PWM7CON `Vuc ~T0 @X0 0 e@914 ]
-"10904
-[v _PWM7DCH `Vuc ~T0 @X0 0 e@913 ]
-"10839
-[v _PWM7DCL `Vuc ~T0 @X0 0 e@912 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12649,7 +12643,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.h: 18: void SYSTEM_Initialize(void);
 [; ;system.h: 20: void OSCILLATOR_Initialize(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
-[; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
 "3 pwm.c
 [v _PWM_Initialize `(v ~T0 @X0 1 ef ]
@@ -12659,18 +12652,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.c: 4: {
 [e :U _PWM_Initialize ]
 [f ]
-[; ;pwm.c: 5: PWM6CON = 0x80;
-"5
-[e = _PWM6CON -> -> 128 `i `uc ]
-[; ;pwm.c: 7: PWM6DCH = 0x00;
-"7
-[e = _PWM6DCH -> -> 0 `i `uc ]
-[; ;pwm.c: 9: PWM6DCL = 0x00;
-"9
-[e = _PWM6DCL -> -> 0 `i `uc ]
-[; ;pwm.c: 11: CCPTMRS1bits.P6TSEL = 0x1;
-"11
-[e = . . _CCPTMRS1bits 0 1 -> -> 1 `i `uc ]
 [; ;pwm.c: 14: PWM7CON = 0x80;
 "14
 [e = _PWM7CON -> -> 128 `i `uc ]
@@ -12686,27 +12667,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.c: 22: }
 "22
 [e :UE 1519 ]
-}
-"25
-[v _PWM6_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
-"26
-{
-[; ;pwm.c: 25: void PWM6_LoadDutyValue(uint16_t dutyCycle6)
-[; ;pwm.c: 26: {
-[e :U _PWM6_LoadDutyValue ]
-"25
-[v _dutyCycle6 `ui ~T0 @X0 1 r1 ]
-"26
-[f ]
-[; ;pwm.c: 27: PWM6DCH = (dutyCycle6 & 0x03FC)>>2;
-"27
-[e = _PWM6DCH -> >> & _dutyCycle6 -> -> 1020 `i `ui -> 2 `i `uc ]
-[; ;pwm.c: 29: PWM6DCL = (dutyCycle6 & 0x0003)<<6;
-"29
-[e = _PWM6DCL -> << & _dutyCycle6 -> -> 3 `i `ui -> 6 `i `uc ]
-[; ;pwm.c: 30: }
-"30
-[e :UE 1520 ]
 }
 "32
 [v _PWM7_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
@@ -12727,5 +12687,5 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _PWM7DCL -> << & _dutyCycle7 -> -> 3 `i `ui -> 6 `i `uc ]
 [; ;pwm.c: 37: }
 "37
-[e :UE 1521 ]
+[e :UE 1520 ]
 }
