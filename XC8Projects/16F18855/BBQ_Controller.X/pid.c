@@ -8,7 +8,7 @@ int16_t derivativeValue     = 0;
 int16_t Result              = 0;
 int Kp                      = 4;    // Controller Gain      (inverse of Proportional Band)
 int Ki                      = 1;    // Controller Integral Reset/Unit Time, determined by how often PID is calculated
-int Kd                      = 0;    // Controller Derivative (or Rate))
+int Kd                      = 2;    // Controller Derivative (or Rate))
 static int pidIntegrated    = 0;
 int pidPrevError            = 0;
 int pidMinOutput            = 0;     // Minimum output limit of Controller
@@ -42,7 +42,7 @@ float PID_Calculate(int16_t setpoint, int16_t temp)
     pidPrevError = error;
   
 // **************** Calculate Integral *****************************************  
-    if(pidCount>20)
+    if(pidCount>60)
     {
         pidIntegrated = pidIntegrated + (error * Ki);//+derivativeValue;       // Calculate integral value
 

@@ -14,7 +14,7 @@ void PIN_MANAGER_Initialize(void)
     WPUE = 0x8;
 
     TRISA = 0x0A;                       // RA1 & 3 as Input
-    TRISB = 0x00;                       
+    TRISB = 0x07;                       // RB0,1,& 2 as Input                    
     TRISC = 0x00;
 
     ANSELA = 0x0A;                      // RA1 & 3 as Analog inputs

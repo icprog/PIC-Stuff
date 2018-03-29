@@ -16836,11 +16836,11 @@ float tempCalc(int analogValue)
 {
 float R, steinhart;
 
-R = 10020/(1023/(float)analogValue - 1);
+R = 9880/(1023/(float)analogValue - 1);
 
-steinhart = R /9880;
+steinhart = R /10000;
 steinhart = log(steinhart);
-steinhart /= 3940;
+steinhart /= 3930;
 
 steinhart += 1.0 / (25 + 273.15);
 steinhart = 1.0 / steinhart;

@@ -12670,18 +12670,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _R `f ~T0 @X0 1 a ]
 [v _steinhart `f ~T0 @X0 1 a ]
 [; ;tempCalc.c: 6: float R, steinhart;
-[; ;tempCalc.c: 8: R = 10020/(1023/(float)analogValue - 1);
+[; ;tempCalc.c: 8: R = 9880/(1023/(float)analogValue - 1);
 "8
-[e = _R / -> -> 10020 `i `f - / -> -> 1023 `i `f -> _analogValue `f -> -> 1 `i `f ]
-[; ;tempCalc.c: 10: steinhart = R /9880;
+[e = _R / -> -> 9880 `i `f - / -> -> 1023 `i `f -> _analogValue `f -> -> 1 `i `f ]
+[; ;tempCalc.c: 10: steinhart = R /10000;
 "10
-[e = _steinhart / _R -> -> 9880 `i `f ]
+[e = _steinhart / _R -> -> 10000 `i `f ]
 [; ;tempCalc.c: 11: steinhart = log(steinhart);
 "11
 [e = _steinhart -> ( _log (1 -> _steinhart `d `f ]
-[; ;tempCalc.c: 12: steinhart /= 3940;
+[; ;tempCalc.c: 12: steinhart /= 3930;
 "12
-[e =/ _steinhart -> -> 3940 `us `f ]
+[e =/ _steinhart -> -> 3930 `us `f ]
 [; ;tempCalc.c: 14: steinhart += 1.0 / (25 + 273.15);
 "14
 [e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]

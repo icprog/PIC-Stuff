@@ -16803,12 +16803,18 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 20 "main.c"
+# 24 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
 
 uint16_t analogs[2] = {0};
+
+int set = 2250;
+
+char menuDelay = 0;
+
+char delayCount = 0;
 
 float displayTemp, displayTemp2;
 
@@ -16866,6 +16872,59 @@ analogs[1]=tempCalc(analogs[1]);
 
 dutyCycle7=502;
 
+if(RB0==1)
+{
+delayCount+=2;
+set+=1;
+if(set>2750)set=2750;
+{ LCD_Set_Cursor(5,0); LCD_Write_Int(set,-1, 1, 0);};
+menuDelay=1;
+if(delayCount<30)
+{
+_delay((unsigned long)((200)*(32000000/4000.0)));
+}
+else
+{
+_delay((unsigned long)((10)*(32000000/4000.0)));
+}
+
+if(delayCount>(30+10))delayCount=(30+10);
+}
+
+if(RB1==1)
+{
+delayCount+=2;
+set-=1;
+if(set<1000)set=1000;
+{ LCD_Set_Cursor(5,0); LCD_Write_Int(set,-1, 1, 0);};
+menuDelay=1;
+
+if(delayCount<30)
+{
+_delay((unsigned long)((200)*(32000000/4000.0)));
+}
+else
+{
+_delay((unsigned long)((10)*(32000000/4000.0)));
+}
+
+if(delayCount>(30+10))delayCount=(30+10);
+}
+
+if(delayCount>0)delayCount-=1;
+
+
+
+if(!(RB1 || RB0))
+{
+if(menuDelay==1)
+{
+_delay((unsigned long)((1000)*(32000000/4000.0)));
+menuDelay=0;
+}
+}
+
+
 if(loop>253)
 {
 
@@ -16877,23 +16936,20 @@ PWM7_LoadDutyValue(dutyCycle7);
 LCD_Write_Char(0);
 LCD_Write_Char(70);
 LCD_Write_Char(' ');
-
-{ LCD_Set_Cursor(0,1); LCD_Write_String("Ambient:");};
-LCD_Write_Char(' ');
-LCD_Write_Int(dutyCycle6,5,1,0);
-
-
-
 LCD_Write_Char(' ');
 
-# 109
-dutyCycle6 = PID_Calculate(750,analogs[1]);
+{ LCD_Set_Cursor(0,1); LCD_Write_String("Output:");};
+LCD_Write_Char(' ');
+LCD_Write_Int(dutyCycle6,5,0,0);
 
-if(dutyCycle6<50)dutyCycle6=0;
+# 172
+dutyCycle6 = PID_Calculate(set,analogs[1]);
+
+
 loop=0;
 }
 
-# 311
+# 374
 loop+=1;
 }
 }

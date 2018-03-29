@@ -2,10 +2,14 @@
 #include "system.h"
 
 // *************** Defines *****************************************************    
-#define pitSetpoint             750
+#define pitSetpoint             set
 #define ambientTemperature      analogs[0]                                      // Analog Chanell 1,  Pin 3
 #define pitTemperature          analogs[1]                                      // Analog Chanell 3,  Pin 5
 #define pitViperOutput          LATC2
+#define upKey                   RB0
+#define downKey                 RB1
+#define enterKey                RB2
+#define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay
 
 //#define celcius                 analogs[0]                      // Touch pad to select Degrees C
 #define farenheit               analogs[1]                      // Touch pad to select Degrees F
@@ -22,6 +26,12 @@ void main(void)
     SYSTEM_Initialize();
     
     uint16_t analogs[2]         =   {0};                    // array of analog readings (button presses and temperatures)
+    
+    int set                     =   2250;
+    
+    char menuDelay              =   0;
+    
+    char delayCount             =   0;
     
     float displayTemp, displayTemp2;                    // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
     
@@ -78,7 +88,60 @@ void main(void)
         pitTemperature=tempCalc(analogs[1]);
         
         dutyCycle7=502;
+        
+        if(upKey==1)
+        {
+            delayCount+=2;
+            pitSetpoint+=1;
+            if(pitSetpoint>2750)pitSetpoint=2750;
+            LCDWriteIntXY(5,0,pitSetpoint,-1,1,0);
+            menuDelay=1;
+            if(delayCount<delayNumber)
+            {
+                __delay_ms(200);
+            }
+            else
+            {
+                __delay_ms(10);
+            }
+            
+            if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
+        }
+        
+        if(downKey==1)
+        {
+            delayCount+=2;
+            pitSetpoint-=1;
+            if(pitSetpoint<1000)pitSetpoint=1000;
+            LCDWriteIntXY(5,0,pitSetpoint,-1,1,0);
+            menuDelay=1;
 
+            if(delayCount<delayNumber)
+            {
+                __delay_ms(200);
+            }
+            else
+            {
+                __delay_ms(10);
+            }
+            
+            if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
+        }
+        
+        if(delayCount>0)delayCount-=1;
+        
+        //        __delay_us(5);
+
+        if(!(downKey || upKey))
+        {
+            if(menuDelay==1)
+            {
+                __delay_ms(1000);
+                menuDelay=0;
+            }
+        }
+        
+        
         if(loop>253)
         {
 //        PWM6_LoadDutyValue(dutyCycle6);
@@ -90,14 +153,14 @@ void main(void)
         LCD_Write_Char(0);                                              // generate degree symbol in font list
         LCD_Write_Char(70);
         LCD_Write_Char(' ');                                              // generate degree symbol in font list
-
-        LCDWriteStringXY(0,1,"Ambient:");
         LCD_Write_Char(' ');                                              // generate degree symbol in font list
-        LCD_Write_Int(dutyCycle6,5,1,0);
+
+        LCDWriteStringXY(0,1,"Output:");
+        LCD_Write_Char(' ');                                              // generate degree symbol in font list
+        LCD_Write_Int(dutyCycle6,5,0,0);
 //        LCD_Write_Int(ambientTemperature,-1,1,0);
 //        LCD_Write_Char(0);                                              // generate degree symbol in font list
   //      LCD_Write_Char(70);
-        LCD_Write_Char(' ');                                              // generate degree symbol in font list
 
 //        LCDWriteStringXY(0,1,"Duty Cycle");
   //      LCD_Write_Char(' ');                                              // generate degree symbol in font list
