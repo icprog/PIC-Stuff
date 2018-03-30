@@ -99,7 +99,7 @@ void RTCC_Initialize(void) {
     RCFGCALbits.CAL3 = 1;                      // Enable RTCC Calibration
     RCFGCALbits.CAL2 = 1;                      // Enable RTCC Calibration
     RCFGCALbits.CAL1 = 1;                      // Enable RTCC Calibration this and bit 7, at least 2 seconds fast in a day               
-    RCFGCALbits.CAL0 = 0;                      // Enable RTCC Calibration this and bit 7, at least 1 seconds slow in a day
+    RCFGCALbits.CAL0 = 1;                      // Enable RTCC Calibration this and bit 7, at least 1 seconds slow in a day
     
     RCFGCALbits.RTCEN = 1;                      // Enable RTCC
 
