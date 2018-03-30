@@ -10,4 +10,5 @@ adc.h  \
 pid.h  \
 level.h  \
 pwm.h  \
+tempcalc.h  \
 usermenu.h 

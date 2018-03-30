@@ -18,7 +18,9 @@
 #include "pid.h"
 #include "level.h"
 #include "pwm.h"
+#include "tempcalc.h"
 #include "usermenu.h"
+
 
 //********** Add the following to solve __delay_ms() issues in XC16 ************
 #include <libpic30.h>   

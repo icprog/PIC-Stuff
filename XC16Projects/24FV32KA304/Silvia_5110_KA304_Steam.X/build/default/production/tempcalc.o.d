@@ -1,14 +1,14 @@
-build/default/production/user.o:  \
-user.c  \
+build/default/production/tempcalc.o:  \
+tempcalc.c  \
+tempcalc.h  \
 system.h  \
 lcd.h  \
-user.h  \
+ user.h  \
 buttons.h  \
- rtcc.h  \
+rtcc.h  \
 eeprom.h  \
 adc.h  \
 pid.h  \
 level.h  \
 pwm.h  \
-tempcalc.h  \
 usermenu.h 

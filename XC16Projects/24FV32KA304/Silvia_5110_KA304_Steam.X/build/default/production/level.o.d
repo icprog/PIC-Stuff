@@ -10,4 +10,5 @@ eeprom.h  \
 adc.h  \
 pid.h  \
 pwm.h  \
+tempcalc.h  \
 usermenu.h 

@@ -64,7 +64,7 @@
 #define backLightCounter        counter[4]              // Used to count time until Backlight turns Off
 #define groupPeriodCounter      counter[5]              // Group PID Period Counter
 #define lowWaterReminder        counter[6]              // Remind User level is Low when below 25%
-#define numSamples              3                       // Number of samples to average for temp[] readings 
+#define numSamples              4                       // Number of samples to average for temp[] readings 
 #define PIDDuration             200                     // Number of Program cycles (Period) for Group Head PID
     
 
@@ -161,12 +161,13 @@ int main(void)
         
 
 // *************** Calculate Temperature Averages ******************************
-        shortTermTemp[0] = tempCalc(ADCRead(9));        //Assign the ADC(9) Boiler Temp to a temporary variable
+        shortTermTemp[0] = aTempCalc(ADCRead(9));       //Assign the ADC(9) Boiler Temp to a temporary variable
         total[0] = total[0] - samples[0][sampleIndex];  // Subtract the oldest sample data from the total
         samples[0][sampleIndex] = shortTermTemp[0];     // Assign the just read temperature to the location of the current oldest data
         total[0] = total[0] + samples[0][sampleIndex];  // Add that new sample to the total
-        boilerTemperature = total[0]/numSamples+350;    // Assign the average value of total to the boilerTemperature variable
+        boilerTemperature = total[0]/numSamples;        // Assign the average value of total to the boilerTemperature variable
 
+ //       boilerTemperature = aTempCalc(ADCRead(9));        // Assign the average value of total to the boilerTemperature variable
 
         shortTermTemp[1] = tempCalc(ADCRead(0));        // Assign the ADC(0) (Steam Temp) to a temporary variable
         total[1] = total[1] - samples[1][sampleIndex];  // Subtract the oldest sample data from the total
