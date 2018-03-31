@@ -16803,9 +16803,11 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 24 "main.c"
+# 27 "main.c"
 void main(void)
 {
+
+
 SYSTEM_Initialize();
 
 uint16_t analogs[2] = {0};
@@ -16815,6 +16817,22 @@ int set = 2250;
 char menuDelay = 0;
 
 char delayCount = 0;
+
+int output = 0;
+
+int32_t outputTotal = 0;
+
+char outputIndex = 0;
+
+int16_t outputSamples[40]= {0};
+
+char holdOutput = 0;
+
+int currentTemperature = 750;
+
+int lastTemperature = 750;
+
+char lidOpenCount = 0;
 
 float displayTemp, displayTemp2;
 
@@ -16841,7 +16859,7 @@ unsigned char resetDelay = 0;
 unsigned char tPadCount = 10;
 
 
-uint16_t dutyCycle6 = 523;
+uint16_t dutyCycle6 = 0;
 
 uint16_t dutyCycle7 = 523;
 
@@ -16854,8 +16872,66 @@ _delay((unsigned long)((300)*(32000000/4000.0)));
 LCD_Clear();
 
 
+
 while (1)
 {
+if(loop>253)
+{
+PWM7_LoadDutyValue(dutyCycle7);
+
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Pit:");};
+{ LCD_Set_Cursor(5,0); LCD_Write_Int(analogs[1],-1, 1, 0);};
+LCD_Write_Char(0);
+LCD_Write_Char(70);
+LCD_Write_Char(' ');
+LCD_Write_Char(' ');
+
+{ LCD_Set_Cursor(0,1); LCD_Write_String("Output:");};
+LCD_Write_Char(' ');
+LCD_Write_Int(dutyCycle6,5,0,0);
+
+# 121
+if(holdOutput==0)
+{
+output = PID_Calculate(set,analogs[1]);
+outputTotal = outputTotal - outputSamples[outputIndex];
+outputSamples[outputIndex] = output;
+outputTotal = outputTotal + outputSamples[outputIndex];
+dutyCycle6 = outputTotal/40;
+
+outputIndex+=1;
+if(outputIndex >= 40)outputIndex = 0;
+}
+else
+{
+dutyCycle6=0;
+holdOutput-=1;
+}
+
+currentTemperature=analogs[1];
+
+if(lidOpenCount<10)
+{
+lidOpenCount+=1;
+}
+else
+{
+lastTemperature=currentTemperature;
+lidOpenCount=0;
+}
+
+if(lastTemperature-currentTemperature>10 || lastTemperature-currentTemperature<-10)
+{
+dutyCycle6=0;
+holdOutput=60;
+}
+
+if(dutyCycle6<50)dutyCycle6=0;
+
+# 164
+loop=0;
+}
+
 pidPeriodCounter+=1;
 
 if(pidPeriodCounter>pidMaxOutput)pidPeriodCounter=0;
@@ -16870,7 +16946,7 @@ analogs[0]=tempCalc(analogs[0]);
 
 analogs[1]=tempCalc(analogs[1]);
 
-dutyCycle7=502;
+
 
 if(RB0==1)
 {
@@ -16878,16 +16954,13 @@ delayCount+=2;
 set+=1;
 if(set>2750)set=2750;
 { LCD_Set_Cursor(5,0); LCD_Write_Int(set,-1, 1, 0);};
-menuDelay=1;
+menuDelay=255;
 if(delayCount<30)
 {
-_delay((unsigned long)((200)*(32000000/4000.0)));
-}
-else
-{
-_delay((unsigned long)((10)*(32000000/4000.0)));
+_delay((unsigned long)((150)*(32000000/4000.0)));
 }
 
+# 199
 if(delayCount>(30+10))delayCount=(30+10);
 }
 
@@ -16895,61 +16968,31 @@ if(RB1==1)
 {
 delayCount+=2;
 set-=1;
-if(set<1000)set=1000;
+if(set<750)set=750;
 { LCD_Set_Cursor(5,0); LCD_Write_Int(set,-1, 1, 0);};
-menuDelay=1;
+menuDelay=255;
 
 if(delayCount<30)
 {
-_delay((unsigned long)((200)*(32000000/4000.0)));
-}
-else
-{
-_delay((unsigned long)((10)*(32000000/4000.0)));
+_delay((unsigned long)((150)*(32000000/4000.0)));
 }
 
+# 219
 if(delayCount>(30+10))delayCount=(30+10);
 }
 
 if(delayCount>0)delayCount-=1;
 
-
-
 if(!(RB1 || RB0))
 {
-if(menuDelay==1)
+if(menuDelay>0)
 {
-_delay((unsigned long)((1000)*(32000000/4000.0)));
-menuDelay=0;
-}
-}
-
-
-if(loop>253)
-{
-
-
-PWM7_LoadDutyValue(dutyCycle7);
-
-{ LCD_Set_Cursor(0,0); LCD_Write_String("Pit:");};
-{ LCD_Set_Cursor(5,0); LCD_Write_Int(analogs[1],-1, 1, 0);};
-LCD_Write_Char(0);
-LCD_Write_Char(70);
-LCD_Write_Char(' ');
-LCD_Write_Char(' ');
-
-{ LCD_Set_Cursor(0,1); LCD_Write_String("Output:");};
-LCD_Write_Char(' ');
-LCD_Write_Int(dutyCycle6,5,0,0);
-
-# 172
-dutyCycle6 = PID_Calculate(set,analogs[1]);
-
-
 loop=0;
+menuDelay-=1;
+}
 }
 
-# 374
+# 431
 loop+=1;
 }
 }

@@ -16810,7 +16810,7 @@ int16_t derivativeValue = 0;
 int16_t Result = 0;
 int Kp = 4;
 int Ki = 1;
-int Kd = 2;
+int Kd = 1;
 static int pidIntegrated = 0;
 int pidPrevError = 0;
 int pidMinOutput = 0;
@@ -16844,7 +16844,7 @@ derivativeValue=(error-pidPrevError)*Kd;
 pidPrevError = error;
 
 
-if(pidCount>60)
+if(pidCount>20)
 {
 pidIntegrated = pidIntegrated + (error * Ki);
 

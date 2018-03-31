@@ -1,7 +1,8 @@
 // *************** Includes ****************************************************    
 #include "system.h"
 
-// *************** Defines *****************************************************    
+// <editor-fold defaultstate="collapsed" desc="Defines">
+    // *************** Defines *****************************************************    
 #define pitSetpoint             set
 #define ambientTemperature      analogs[0]                                      // Analog Chanell 1,  Pin 3
 #define pitTemperature          analogs[1]                                      // Analog Chanell 3,  Pin 5
@@ -10,6 +11,7 @@
 #define downKey                 RB1
 #define enterKey                RB2
 #define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay
+#define numOutSamples           40                              // Number of Output samples to be Averaged into Output
 
 //#define celcius                 analogs[0]                      // Touch pad to select Degrees C
 #define farenheit               analogs[1]                      // Touch pad to select Degrees F
@@ -17,21 +19,40 @@
 #define up                      analogs[3]                      // Touch pad to select Backlight Intencity Up
 #define solarInTemp             analogs[4]
 #define solarOutTemp            analogs[5]
+// </editor-fold>
 
 
 
 // *************** Main Routine ************************************************    
 void main(void)
 {
+// <editor-fold defaultstate="collapsed" desc="Variables">
+    
     SYSTEM_Initialize();
     
-    uint16_t analogs[2]         =   {0};                    // array of analog readings (button presses and temperatures)
+    uint16_t analogs[2]                 =   {0};                    // array of analog readings 
     
-    int set                     =   2250;
+    int set                             =   2250;
     
-    char menuDelay              =   0;
+    char menuDelay                      =   0;
     
-    char delayCount             =   0;
+    char delayCount                     =   0;
+    
+    int output                          =   0;
+    
+    int32_t outputTotal                 =   0;
+    
+    char outputIndex                    =   0;
+    
+    int16_t outputSamples[numOutSamples]= {0};
+    
+    char holdOutput                     =   0;
+    
+    int currentTemperature              =   750;
+    
+    int lastTemperature                 =   750;
+    
+    char lidOpenCount                   =   0;
     
     float displayTemp, displayTemp2;                    // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
     
@@ -58,7 +79,7 @@ void main(void)
     unsigned char tPadCount     =   10;                     // Touch pad counter (counts up or down from 10, to determine is one or both pads touched) (for C_or_F choice))
     
     
-    uint16_t dutyCycle6         =   523;                    // Pit Viper Fan Output
+    uint16_t dutyCycle6         =   0;                    // Pit Viper Fan Output
     
     uint16_t dutyCycle7         =   523;                    // display back light brightness
 
@@ -69,10 +90,80 @@ void main(void)
     __delay_ms(300);
 
     LCD_Clear();
+    // </editor-fold>
 
 
     while (1)
     {
+        if(loop>253)
+        {
+            PWM7_LoadDutyValue(dutyCycle7);
+        
+            LCDWriteStringXY(0,0,"Pit:");
+            LCDWriteIntXY(5,0,pitTemperature,-1,1,0);
+            LCD_Write_Char(0);                                              // generate degree symbol in font list
+            LCD_Write_Char(70);
+            LCD_Write_Char(' ');                                              // generate degree symbol in font list
+            LCD_Write_Char(' ');                                              // generate degree symbol in font list
+
+            LCDWriteStringXY(0,1,"Output:");
+            LCD_Write_Char(' ');                                              // generate degree symbol in font list
+            LCD_Write_Int(dutyCycle6,5,0,0);
+//        LCD_Write_Int(ambientTemperature,-1,1,0);
+//        LCD_Write_Char(0);                                              // generate degree symbol in font list
+  //      LCD_Write_Char(70);
+
+//        LCDWriteStringXY(0,1,"Duty Cycle");
+  //      LCD_Write_Char(' ');                                              // generate degree symbol in font list
+    //    LCD_Write_Int(dutyCycle7,4,0,0);
+      //  LCD_Write_Char(' ');                                              // generate degree symbol in font list
+            
+            if(holdOutput==0)
+            {
+                output = PID_Calculate(pitSetpoint,pitTemperature);       //Assign the ADC(9) Boiler Temp to a temporary variable
+                outputTotal = outputTotal - outputSamples[outputIndex];  // Subtract the oldest sample data from the total
+                outputSamples[outputIndex] = output;     // Assign the just read temperature to the location of the current oldest data
+                outputTotal = outputTotal + outputSamples[outputIndex];  // Add that new sample to the total
+                dutyCycle6 = outputTotal/numOutSamples;        // Assign the average value of total to the boilerTemperature variable
+
+                outputIndex+=1;                                                 // and move to the next index location
+                if(outputIndex >= numOutSamples)outputIndex = 0;
+            }
+            else
+            {
+                dutyCycle6=0;
+                holdOutput-=1;
+            }
+
+            currentTemperature=pitTemperature; 
+            
+            if(lidOpenCount<10)
+            {
+                lidOpenCount+=1;
+            }
+            else
+            {
+                lastTemperature=currentTemperature;
+                lidOpenCount=0;
+            }
+            
+            if(lastTemperature-currentTemperature>10 || lastTemperature-currentTemperature<-10)
+            {
+                dutyCycle6=0;
+                holdOutput=60;
+            }
+
+            if(dutyCycle6<50)dutyCycle6=0;
+            
+//            if(holdOutput>0)
+  //          {
+    //            dutyCycle6=0;
+      //          holdOutput-=1;
+        //    }
+   
+            loop=0;
+        }
+
         pidPeriodCounter+=1;
         
         if(pidPeriodCounter>pidMaxOutput)pidPeriodCounter=0;
@@ -87,7 +178,7 @@ void main(void)
 
         pitTemperature=tempCalc(analogs[1]);
         
-        dutyCycle7=502;
+//        dutyCycle7=502;
         
         if(upKey==1)
         {
@@ -95,15 +186,15 @@ void main(void)
             pitSetpoint+=1;
             if(pitSetpoint>2750)pitSetpoint=2750;
             LCDWriteIntXY(5,0,pitSetpoint,-1,1,0);
-            menuDelay=1;
+            menuDelay=255;
             if(delayCount<delayNumber)
             {
-                __delay_ms(200);
+                __delay_ms(150);
             }
-            else
-            {
-                __delay_ms(10);
-            }
+//            else
+  //          {
+    //            __delay_ms(10);
+      //      }
             
             if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
         }
@@ -112,68 +203,34 @@ void main(void)
         {
             delayCount+=2;
             pitSetpoint-=1;
-            if(pitSetpoint<1000)pitSetpoint=1000;
+            if(pitSetpoint<750)pitSetpoint=750;
             LCDWriteIntXY(5,0,pitSetpoint,-1,1,0);
-            menuDelay=1;
+            menuDelay=255;
 
             if(delayCount<delayNumber)
             {
-                __delay_ms(200);
+                __delay_ms(150);
             }
-            else
-            {
-                __delay_ms(10);
-            }
+//            else
+  //          {
+    //            __delay_ms(10);
+      //      }
             
             if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
         }
         
         if(delayCount>0)delayCount-=1;
         
-        //        __delay_us(5);
-
         if(!(downKey || upKey))
         {
-            if(menuDelay==1)
+            if(menuDelay>0)
             {
-                __delay_ms(1000);
-                menuDelay=0;
+                loop=0;
+                menuDelay-=1;
             }
         }
         
         
-        if(loop>253)
-        {
-//        PWM6_LoadDutyValue(dutyCycle6);
-        
-        PWM7_LoadDutyValue(dutyCycle7);
-        
-        LCDWriteStringXY(0,0,"Pit:");
-        LCDWriteIntXY(5,0,pitTemperature,-1,1,0);
-        LCD_Write_Char(0);                                              // generate degree symbol in font list
-        LCD_Write_Char(70);
-        LCD_Write_Char(' ');                                              // generate degree symbol in font list
-        LCD_Write_Char(' ');                                              // generate degree symbol in font list
-
-        LCDWriteStringXY(0,1,"Output:");
-        LCD_Write_Char(' ');                                              // generate degree symbol in font list
-        LCD_Write_Int(dutyCycle6,5,0,0);
-//        LCD_Write_Int(ambientTemperature,-1,1,0);
-//        LCD_Write_Char(0);                                              // generate degree symbol in font list
-  //      LCD_Write_Char(70);
-
-//        LCDWriteStringXY(0,1,"Duty Cycle");
-  //      LCD_Write_Char(' ');                                              // generate degree symbol in font list
-    //    LCD_Write_Int(dutyCycle7,4,0,0);
-      //  LCD_Write_Char(' ');                                              // generate degree symbol in font list
-        
- //       __delay_ms(1000);
-        
-        dutyCycle6 = PID_Calculate(pitSetpoint,pitTemperature);
-        
-//        if(dutyCycle6<50)dutyCycle6=0;
-        loop=0;
-        }
 //                LCDWriteStringXY(17,2,"Set: ");
   //              LCDWriteInt(pitSetpoint,4,1);
     //            LCDWriteChar(129);                                              // generate degree symbol in font list
