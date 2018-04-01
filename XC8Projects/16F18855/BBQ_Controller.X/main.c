@@ -139,7 +139,7 @@ void main(void)
                 lidOpenCount=0;
             }
             
-            if(lastTemperature-currentTemperature>10 || lastTemperature-currentTemperature<-10)
+            if(lastTemperature-currentTemperature>100 || lastTemperature-currentTemperature<-100)
             {
                 dutyCycle6=0;
                 holdOutput=60;
