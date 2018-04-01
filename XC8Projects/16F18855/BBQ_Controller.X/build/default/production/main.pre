@@ -16691,7 +16691,7 @@ void PWM_Initialize(void);
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
 # 14 "pid.h"
-float PID_Calculate(int16_t setpoint, int16_t temp);
+int16_t PID_Calculate(int16_t setpoint, int16_t temp);
 
 # 38 "lcd.h"
 void InitCustomChars();
@@ -16806,8 +16806,6 @@ void OSCILLATOR_Initialize(void);
 # 27 "main.c"
 void main(void)
 {
-
-
 SYSTEM_Initialize();
 
 uint16_t analogs[2] = {0};
@@ -16872,7 +16870,6 @@ _delay((unsigned long)((300)*(32000000/4000.0)));
 LCD_Clear();
 
 
-
 while (1)
 {
 if(loop>253)
@@ -16890,7 +16887,9 @@ LCD_Write_Char(' ');
 LCD_Write_Char(' ');
 LCD_Write_Int(dutyCycle6,5,0,0);
 
-# 121
+
+
+
 if(holdOutput==0)
 {
 output = PID_Calculate(set,analogs[1]);
@@ -16928,7 +16927,6 @@ holdOutput=60;
 
 if(dutyCycle6<50)dutyCycle6=0;
 
-# 164
 loop=0;
 }
 
@@ -16941,13 +16939,11 @@ else LATC2=0;
 
 for(j=0;j<2;j++) analogs[j]=readAnalog(j);
 
-
 analogs[0]=tempCalc(analogs[0]);
 
 analogs[1]=tempCalc(analogs[1]);
 
-
-
+# 171
 if(RB0==1)
 {
 delayCount+=2;
@@ -16960,7 +16956,6 @@ if(delayCount<30)
 _delay((unsigned long)((150)*(32000000/4000.0)));
 }
 
-# 199
 if(delayCount>(30+10))delayCount=(30+10);
 }
 
@@ -16977,7 +16972,6 @@ if(delayCount<30)
 _delay((unsigned long)((150)*(32000000/4000.0)));
 }
 
-# 219
 if(delayCount>(30+10))delayCount=(30+10);
 }
 
@@ -16992,7 +16986,7 @@ menuDelay-=1;
 }
 }
 
-# 431
+# 406
 loop+=1;
 }
 }

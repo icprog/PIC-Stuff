@@ -16801,7 +16801,7 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 
 # 14 "pid.h"
-float PID_Calculate(int16_t setpoint, int16_t temp);
+int16_t PID_Calculate(int16_t setpoint, int16_t temp);
 
 # 5 "pid.c"
 int16_t error = 0;
@@ -16820,7 +16820,7 @@ int signPositive = 0;
 int lastSign = 0;
 
 
-float PID_Calculate(int16_t setpoint, int16_t temp)
+int16_t PID_Calculate(int16_t setpoint, int16_t temp)
 {
 pidCount+=1;
 

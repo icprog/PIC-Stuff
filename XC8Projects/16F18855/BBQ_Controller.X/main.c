@@ -1,7 +1,8 @@
+// <editor-fold defaultstate="collapsed" desc="Includes & Defines">
+
 // *************** Includes ****************************************************    
 #include "system.h"
 
-// <editor-fold defaultstate="collapsed" desc="Defines">
     // *************** Defines *****************************************************    
 #define pitSetpoint             set
 #define ambientTemperature      analogs[0]                                      // Analog Chanell 1,  Pin 3
@@ -21,13 +22,10 @@
 #define solarOutTemp            analogs[5]
 // </editor-fold>
 
-
-
+// <editor-fold defaultstate="collapsed" desc="Variables">
 // *************** Main Routine ************************************************    
 void main(void)
 {
-// <editor-fold defaultstate="collapsed" desc="Variables">
-    
     SYSTEM_Initialize();
     
     uint16_t analogs[2]                 =   {0};                    // array of analog readings 
@@ -92,7 +90,6 @@ void main(void)
     LCD_Clear();
     // </editor-fold>
 
-
     while (1)
     {
         if(loop>253)
@@ -103,21 +100,16 @@ void main(void)
             LCDWriteIntXY(5,0,pitTemperature,-1,1,0);
             LCD_Write_Char(0);                                              // generate degree symbol in font list
             LCD_Write_Char(70);
-            LCD_Write_Char(' ');                                              // generate degree symbol in font list
-            LCD_Write_Char(' ');                                              // generate degree symbol in font list
+            LCD_Write_Char(' ');                                              
+            LCD_Write_Char(' ');                                              
 
             LCDWriteStringXY(0,1,"Output:");
-            LCD_Write_Char(' ');                                              // generate degree symbol in font list
+            LCD_Write_Char(' ');                                              
             LCD_Write_Int(dutyCycle6,5,0,0);
 //        LCD_Write_Int(ambientTemperature,-1,1,0);
 //        LCD_Write_Char(0);                                              // generate degree symbol in font list
   //      LCD_Write_Char(70);
 
-//        LCDWriteStringXY(0,1,"Duty Cycle");
-  //      LCD_Write_Char(' ');                                              // generate degree symbol in font list
-    //    LCD_Write_Int(dutyCycle7,4,0,0);
-      //  LCD_Write_Char(' ');                                              // generate degree symbol in font list
-            
             if(holdOutput==0)
             {
                 output = PID_Calculate(pitSetpoint,pitTemperature);       //Assign the ADC(9) Boiler Temp to a temporary variable
@@ -154,12 +146,6 @@ void main(void)
             }
 
             if(dutyCycle6<50)dutyCycle6=0;
-            
-//            if(holdOutput>0)
-  //          {
-    //            dutyCycle6=0;
-      //          holdOutput-=1;
-        //    }
    
             loop=0;
         }
@@ -171,15 +157,17 @@ void main(void)
         if(dutyCycle6>pidPeriodCounter)pitViperOutput=1;
         else pitViperOutput=0;
         
-        for(j=0;j<2;j++) analogs[j]=readAnalog(j);                          // Read all 7 analog Temperatures
-//        analogs[0] = ADCRead(3);
+        for(j=0;j<2;j++) analogs[j]=readAnalog(j);                          // Read analog Temperatures
         
         ambientTemperature=tempCalc(analogs[0]);
 
         pitTemperature=tempCalc(analogs[1]);
-        
-//        dutyCycle7=502;
-        
+
+// <editor-fold defaultstate="collapsed" desc="KeyPad Menu">
+//        if(enterKey==1)
+  //      {
+            
+    //    }
         if(upKey==1)
         {
             delayCount+=2;
@@ -191,10 +179,6 @@ void main(void)
             {
                 __delay_ms(150);
             }
-//            else
-  //          {
-    //            __delay_ms(10);
-      //      }
             
             if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
         }
@@ -211,10 +195,6 @@ void main(void)
             {
                 __delay_ms(150);
             }
-//            else
-  //          {
-    //            __delay_ms(10);
-      //      }
             
             if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
         }
@@ -229,14 +209,9 @@ void main(void)
                 menuDelay-=1;
             }
         }
+// </editor-fold>
         
         
-//                LCDWriteStringXY(17,2,"Set: ");
-  //              LCDWriteInt(pitSetpoint,4,1);
-    //            LCDWriteChar(129);                                              // generate degree symbol in font list
-      //          LCDWriteChar(70);
-        
-//        LCDWriteIntXY(7,1,choice,1,0,0);
 /*        for(x=0;x<6;x++) analogs[x]=readAnalog(x);
         
         if(analogs[0]<1020)tPadCount+=1;

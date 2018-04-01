@@ -11,6 +11,6 @@
 // ******* So, Temperature, poll less often, Flow or pressure more often. ******
 // ** This algorithm is a non-interactive PID as opposed to Classic PID, so, ***
 // ****** Tuning is handled differently, specifically, Gain is Stanalone. ******
-float PID_Calculate(int16_t setpoint, int16_t temp);
+int16_t PID_Calculate(int16_t setpoint, int16_t temp);
 
 #endif

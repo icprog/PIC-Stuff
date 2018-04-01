@@ -12626,7 +12626,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tempCalc.h: 6: float tempCalc(int analogValue);
 [; ;system.h: 18: void SYSTEM_Initialize(void);
 [; ;system.h: 20: void OSCILLATOR_Initialize(void);
-[; ;pid.h: 14: float PID_Calculate(int16_t setpoint, int16_t temp);
+[; ;pid.h: 14: int16_t PID_Calculate(int16_t setpoint, int16_t temp);
 "5 pid.c
 [v _error `i ~T0 @X0 1 e ]
 [i _error
@@ -12712,10 +12712,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [; ;pid.c: 18: int lastSign = 0;
 "21
-[v _PID_Calculate `(f ~T0 @X0 1 ef2`i`i ]
+[v _PID_Calculate `(i ~T0 @X0 1 ef2`i`i ]
 "22
 {
-[; ;pid.c: 21: float PID_Calculate(int16_t setpoint, int16_t temp)
+[; ;pid.c: 21: int16_t PID_Calculate(int16_t setpoint, int16_t temp)
 [; ;pid.c: 22: {
 [e :U _PID_Calculate ]
 "21
@@ -12829,7 +12829,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pid.c: 72: }
 [; ;pid.c: 74: return (Result);
 "74
-[e ) -> _Result `f ]
+[e ) _Result ]
 [e $UE 1519  ]
 [; ;pid.c: 75: }
 "75

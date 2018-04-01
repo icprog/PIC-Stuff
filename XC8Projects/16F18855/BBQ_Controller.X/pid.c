@@ -18,7 +18,7 @@ int signPositive            = 0;
 int lastSign                = 0;  
 
 // *************** Calculate PID Runs faster if called more often **************    
-float PID_Calculate(int16_t setpoint, int16_t temp)
+int16_t PID_Calculate(int16_t setpoint, int16_t temp)
 {
     pidCount+=1;
     

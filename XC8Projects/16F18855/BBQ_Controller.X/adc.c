@@ -2,19 +2,16 @@
 #include <xc.h>
 #include "adc.h"
 
-#define     numSamples                      20                                              // Number of Temperature readings to Average
+#define     numSamples                      40                                              // Number of Temperature readings to Average
 #define     numChannels                     2                                               // Number of Analog channels to read
 
 uint16_t samples[numChannels][numSamples]   =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
-
-//uint16_t samples[6][numSamples] = {{0},{0}};
 
 uint16_t sampleIndex                        =   {0};
 
 int32_t totals[numChannels]                 =   {0};
 
 static int channels[numChannels]            =   {1,3};                                      // List all the Analog channel numbers here, must be same number listed as numChannels
-
 
 // *************** ADC Read Individual Channel ****************************************************************************************************
 adc_result_t ADCRead(adcc_channel_t channel)
