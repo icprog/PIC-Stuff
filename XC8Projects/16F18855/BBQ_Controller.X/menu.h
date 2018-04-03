@@ -1,6 +1,10 @@
 #ifndef MENU_H
 #define	MENU_H
 
-void checkKeys(void);
+char menuChoice(void);
+
+char readKey();
+
+char checkKeys(void);
 
 #endif

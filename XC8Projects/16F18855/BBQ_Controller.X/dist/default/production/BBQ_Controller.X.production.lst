@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.38 build -256452561 
-                                                                                               Sun Apr 01 15:29:01 2018
+                                                                                               Tue Apr 03 13:39:19 2018
 
 Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010351
      1                           	processor	16F18855
@@ -5153,49 +5153,49 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   5147  0070                     ??_OSCILLATOR_Initialize:	
   5148                           ; 1 bytes @ 0x0
   5149                           
-  5150  0070                     ?_TMR2_Initialize:	
+  5150  0070                     ?_ADCC_Initialize:	
   5151                           ; 1 bytes @ 0x0
   5152                           
-  5153  0070                     ??_TMR2_Initialize:	
+  5153  0070                     ??_ADCC_Initialize:	
   5154                           ; 1 bytes @ 0x0
   5155                           
-  5156  0070                     ?_ADCC_Initialize:	
+  5156  0070                     ?_PWM_Initialize:	
   5157                           ; 1 bytes @ 0x0
   5158                           
-  5159  0070                     ??_ADCC_Initialize:	
+  5159  0070                     ??_PWM_Initialize:	
   5160                           ; 1 bytes @ 0x0
   5161                           
-  5162  0070                     ?_InitCustomChars:	
+  5162  0070                     ?_TMR2_Initialize:	
   5163                           ; 1 bytes @ 0x0
   5164                           
-  5165  0070                     ?_LCD_Port:	
+  5165  0070                     ??_TMR2_Initialize:	
   5166                           ; 1 bytes @ 0x0
   5167                           
-  5168  0070                     ??_LCD_Port:	
+  5168  0070                     ?_InitCustomChars:	
   5169                           ; 1 bytes @ 0x0
   5170                           
-  5171  0070                     ?_LCD_Clear:	
+  5171  0070                     ?_LCD_Port:	
   5172                           ; 1 bytes @ 0x0
   5173                           
-  5174  0070                     ?_LCD_Init:	
+  5174  0070                     ??_LCD_Port:	
   5175                           ; 1 bytes @ 0x0
   5176                           
-  5177  0070                     ?_PIN_MANAGER_Initialize:	
+  5177  0070                     ?_LCD_Clear:	
   5178                           ; 1 bytes @ 0x0
   5179                           
-  5180  0070                     ??_PIN_MANAGER_Initialize:	
+  5180  0070                     ?_LCD_Init:	
   5181                           ; 1 bytes @ 0x0
   5182                           
-  5183  0070                     ?_PWM_Initialize:	
+  5183  0070                     ?_PIN_MANAGER_Initialize:	
   5184                           ; 1 bytes @ 0x0
   5185                           
-  5186  0070                     ??_PWM_Initialize:	
+  5186  0070                     ??_PIN_MANAGER_Initialize:	
   5187                           ; 1 bytes @ 0x0
   5188                           
-  5189  0070                     ?_PWM7_LoadDutyValue:	
+  5189  0070                     ?_SYSTEM_Initialize:	
   5190                           ; 1 bytes @ 0x0
   5191                           
-  5192  0070                     ?_SYSTEM_Initialize:	
+  5192  0070                     ?_PWM7_LoadDutyValue:	
   5193                           ; 1 bytes @ 0x0
   5194                           
   5195  0070                     ?_main:	
@@ -5279,13 +5279,13 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   5273                           ; 2 bytes @ 0x2
   5274  0072                     	ds	1
   5275  0073                     ??_ADCRead:	
-  5276  0073                     ADCRead@channel:	
+  5276  0073                     LCD_Cmd@a:	
   5277                           ; 1 bytes @ 0x3
   5278                           
-  5279  0073                     LCD_Cmd@a:	
+  5279  0073                     LCD_Write_Char@y:	
   5280                           ; 1 bytes @ 0x3
   5281                           
-  5282  0073                     LCD_Write_Char@y:	
+  5282  0073                     ADCRead@channel:	
   5283                           ; 1 bytes @ 0x3
   5284                           
   5285  0073                     ___ftpack@exp:	
@@ -5417,10 +5417,10 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   5411  0079                     LCD_Set_Cursor@w:	
   5412                           ; 1 bytes @ 0x9
   5413                           
-  5414  0079                     readAnalog@analog_channel:	
+  5414  0079                     LCD_Write_Int@value:	
   5415                           ; 1 bytes @ 0x9
   5416                           
-  5417  0079                     LCD_Write_Int@value:	
+  5417  0079                     readAnalog@analog_channel:	
   5418                           ; 2 bytes @ 0x9
   5419                           
   5420                           
@@ -7153,7 +7153,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   7131  0DDF  00F5               	movwf	___ftge@ff2+2
   7132  0DE0  3189  2170  318D   	fcall	___ftge
   7133  0DE3  1803               	btfsc	3,0
-  7134  0DE4  2DF2               	goto	l2355
+  7134  0DE4  2DF2               	goto	l2343
   7135  0DE5  3021               	movlw	33
   7136  0DE6  0021               	movlb	1	; select bank1
   7137  0DE7  00D4               	movwf	_errno^(0+128)
@@ -7167,13 +7167,13 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   7145  0DEF  3000               	movlw	0
   7146  0DF0  00D9               	movwf	?_log+2
   7147  0DF1  0008               	return
-  7148  0DF2                     l2355:	
+  7148  0DF2                     l2343:	
   7149  0DF2  0020               	movlb	0	; select bank0
   7150  0DF3  0859               	movf	log@x+2,w
   7151  0DF4  0458               	iorwf	log@x+1,w
   7152  0DF5  0457               	iorwf	log@x,w
   7153  0DF6  1D03               	skipz
-  7154  0DF7  2E05               	goto	l2361
+  7154  0DF7  2E05               	goto	l2349
   7155  0DF8  3022               	movlw	34
   7156  0DF9  0021               	movlb	1	; select bank1
   7157  0DFA  00D4               	movwf	_errno^(0+128)
@@ -7187,7 +7187,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   7165  0E02  3000               	movlw	0
   7166  0E03  00D9               	movwf	?_log+2
   7167  0E04  0008               	return
-  7168  0E05                     l2361:	
+  7168  0E05                     l2349:	
   7169  0E05  3000               	movlw	0
   7170  0E06  00C0               	movwf	___ftadd@f1
   7171  0E07  3080               	movlw	128
@@ -8757,7 +8757,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   8690  0344                     __ptext12:	
   8691 ;; *************** function _readAnalog *****************
   8692 ;; Defined at:
-  8693 ;;		line 35 in file "adc.c"
+  8693 ;;		line 34 in file "adc.c"
   8694 ;; Parameters:    Size  Location     Type
   8695 ;;  channel         2    6[BANK0 ] int 
   8696 ;; Auto vars:     Size  Location     Type
@@ -8797,8 +8797,8 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   8725                           ;psect for function _readAnalog
   8726  0344                     _readAnalog:	
   8727                           
-  8728                           ;adc.c: 37: int value;
-  8729                           ;adc.c: 39: int analog_channel = channels[channel];
+  8728                           ;adc.c: 36: int value;
+  8729                           ;adc.c: 38: int analog_channel = channels[channel];
   8730                           
   8731                           ;incstack = 0
   8732                           ; Regs used in _readAnalog: [wreg-fsr1h+status,2+status,0+pclath+cstack]
@@ -8813,7 +8813,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   8741  034C  3F41               	moviw [1]fsr1
   8742  034D  00FA               	movwf	readAnalog@analog_channel+1
   8743                           
-  8744                           ;adc.c: 41: value = ADCRead(analog_channel);
+  8744                           ;adc.c: 40: value = ADCRead(analog_channel);
   8745  034E  0879               	movf	readAnalog@analog_channel,w
   8746  034F  3197  27F2  3183   	fcall	_ADCRead
   8747  0352  0871               	movf	?_ADCRead+1,w
@@ -8821,16 +8821,16 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   8749  0354  0870               	movf	?_ADCRead,w
   8750  0355  00FB               	movwf	readAnalog@value
   8751                           
-  8752                           ;adc.c: 43: totals[channel] = totals[channel]-samples[channel][sampleIndex];
+  8752                           ;adc.c: 42: totals[channel] = totals[channel]-samples[channel][sampleIndex];
   8753  0356  0020               	movlb	0	; select bank0
   8754  0357  0826               	movf	readAnalog@channel,w
   8755  0358  00A8               	movwf	??_readAnalog
   8756  0359  3001               	movlw	1
-  8757  035A                     u2785:	
+  8757  035A                     u3005:	
   8758  035A  35A8               	lslf	??_readAnalog,f
   8759  035B  3EFF               	addlw	-1
   8760  035C  1D03               	skipz
-  8761  035D  2B5A               	goto	u2785
+  8761  035D  2B5A               	goto	u3005
   8762  035E  3528               	lslf	??_readAnalog,w
   8763  035F  3EC8               	addlw	(low (_totals| 0))& (0+255)
   8764  0360  0086               	movwf	6
@@ -8907,11 +8907,11 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   8835  03A9  0826               	movf	readAnalog@channel,w
   8836  03AA  00B7               	movwf	??_readAnalog+15
   8837  03AB  3001               	movlw	1
-  8838  03AC                     u2795:	
+  8838  03AC                     u3015:	
   8839  03AC  35B7               	lslf	??_readAnalog+15,f
   8840  03AD  3EFF               	addlw	-1
   8841  03AE  1D03               	skipz
-  8842  03AF  2BAC               	goto	u2795
+  8842  03AF  2BAC               	goto	u3015
   8843  03B0  3537               	lslf	??_readAnalog+15,w
   8844  03B1  3EC8               	addlw	(low (_totals| 0))& (0+255)
   8845  03B2  0086               	movwf	6
@@ -8925,7 +8925,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   8853  03BA  082C               	movf	??_readAnalog+4,w
   8854  03BB  3FC3               	movwi [3]fsr1
   8855                           
-  8856                           ;adc.c: 45: samples[channel][sampleIndex] = value;
+  8856                           ;adc.c: 44: samples[channel][sampleIndex] = value;
   8857  03BC  0021               	movlb	1	; select bank1
   8858  03BD  0865               	movf	(_sampleIndex+1)^(0+128),w
   8859  03BE  0020               	movlb	0	; select bank0
@@ -8967,15 +8967,15 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   8895  03E4  087C               	movf	readAnalog@value+1,w
   8896  03E5  3FC1               	movwi [1]fsr1
   8897                           
-  8898                           ;adc.c: 47: totals[channel] = totals[channel]+samples[channel][sampleIndex];
+  8898                           ;adc.c: 46: totals[channel] = totals[channel]+samples[channel][sampleIndex];
   8899  03E6  0826               	movf	readAnalog@channel,w
   8900  03E7  00A8               	movwf	??_readAnalog
   8901  03E8  3001               	movlw	1
-  8902  03E9                     u2805:	
+  8902  03E9                     u3025:	
   8903  03E9  35A8               	lslf	??_readAnalog,f
   8904  03EA  3EFF               	addlw	-1
   8905  03EB  1D03               	skipz
-  8906  03EC  2BE9               	goto	u2805
+  8906  03EC  2BE9               	goto	u3025
   8907  03ED  3528               	lslf	??_readAnalog,w
   8908  03EE  3EC8               	addlw	(low (_totals| 0))& (0+255)
   8909  03EF  0086               	movwf	6
@@ -9041,11 +9041,11 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   8969  042D  0826               	movf	readAnalog@channel,w
   8970  042E  00B7               	movwf	??_readAnalog+15
   8971  042F  3001               	movlw	1
-  8972  0430                     u2815:	
+  8972  0430                     u3035:	
   8973  0430  35B7               	lslf	??_readAnalog+15,f
   8974  0431  3EFF               	addlw	-1
   8975  0432  1D03               	skipz
-  8976  0433  2C30               	goto	u2815
+  8976  0433  2C30               	goto	u3035
   8977  0434  3537               	lslf	??_readAnalog+15,w
   8978  0435  3EC8               	addlw	(low (_totals| 0))& (0+255)
   8979  0436  0086               	movwf	6
@@ -9059,42 +9059,42 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   8987  043E  082C               	movf	??_readAnalog+4,w
   8988  043F  3FC3               	movwi [3]fsr1
   8989                           
-  8990                           ;adc.c: 49: if(channel>=(2-1))
+  8990                           ;adc.c: 48: if(channel>=(2-1))
   8991  0440  0827               	movf	readAnalog@channel+1,w
   8992  0441  3A80               	xorlw	128
   8993  0442  00A8               	movwf	??_readAnalog
   8994  0443  3080               	movlw	128
   8995  0444  0228               	subwf	??_readAnalog,w
   8996  0445  1D03               	skipz
-  8997  0446  2C49               	goto	u2825
+  8997  0446  2C49               	goto	u3045
   8998  0447  3001               	movlw	1
   8999  0448  0226               	subwf	readAnalog@channel,w
-  9000  0449                     u2825:	
+  9000  0449                     u3045:	
   9001  0449  1C03               	skipc
-  9002  044A  2C59               	goto	l2557
+  9002  044A  2C59               	goto	l2723
   9003                           
-  9004                           ;adc.c: 50: {
-  9005                           ;adc.c: 51: sampleIndex+=1;
+  9004                           ;adc.c: 49: {
+  9005                           ;adc.c: 50: sampleIndex+=1;
   9006  044B  3001               	movlw	1
   9007  044C  0021               	movlb	1	; select bank1
   9008  044D  07E4               	addwf	_sampleIndex^(0+128),f
   9009  044E  3000               	movlw	0
   9010  044F  3DE5               	addwfc	(_sampleIndex+1)^(0+128),f
   9011                           
-  9012                           ;adc.c: 52: if(sampleIndex >= 40)sampleIndex = 0;
+  9012                           ;adc.c: 51: if(sampleIndex >= 40)sampleIndex = 0;
   9013  0450  3000               	movlw	0
   9014  0451  0265               	subwf	(_sampleIndex+1)^(0+128),w
   9015  0452  3028               	movlw	40
   9016  0453  1903               	skipnz
   9017  0454  0264               	subwf	_sampleIndex^(0+128),w
   9018  0455  1C03               	skipc
-  9019  0456  2C59               	goto	l2557
+  9019  0456  2C59               	goto	l2723
   9020  0457  01E4               	clrf	_sampleIndex^(0+128)
   9021  0458  01E5               	clrf	(_sampleIndex+1)^(0+128)
-  9022  0459                     l2557:	
+  9022  0459                     l2723:	
   9023                           
-  9024                           ;adc.c: 53: }
-  9025                           ;adc.c: 55: value = totals[channel]/40;
+  9024                           ;adc.c: 52: }
+  9025                           ;adc.c: 54: value = totals[channel]/40;
   9026  0459  3000               	movlw	0
   9027  045A  00F3               	movwf	___aldiv@divisor+3
   9028  045B  3000               	movlw	0
@@ -9107,11 +9107,11 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9035  0462  0826               	movf	readAnalog@channel,w
   9036  0463  00A8               	movwf	??_readAnalog
   9037  0464  3001               	movlw	1
-  9038  0465                     u2845:	
+  9038  0465                     u3065:	
   9039  0465  35A8               	lslf	??_readAnalog,f
   9040  0466  3EFF               	addlw	-1
   9041  0467  1D03               	skipz
-  9042  0468  2C65               	goto	u2845
+  9042  0468  2C65               	goto	u3065
   9043  0469  3528               	lslf	??_readAnalog,w
   9044  046A  3EC8               	addlw	(low (_totals| 0))& (0+255)
   9045  046B  0086               	movwf	6
@@ -9130,7 +9130,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9058  0479  0870               	movf	?___aldiv,w
   9059  047A  00FB               	movwf	readAnalog@value
   9060                           
-  9061                           ;adc.c: 57: return value;
+  9061                           ;adc.c: 56: return value;
   9062  047B  087C               	movf	readAnalog@value+1,w
   9063  047C  0020               	movlb	0	; select bank0
   9064  047D  00A7               	movwf	?_readAnalog+1
@@ -9332,7 +9332,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9255  17F2                     __ptext14:	
   9256 ;; *************** function _ADCRead *****************
   9257 ;; Defined at:
-  9258 ;;		line 17 in file "adc.c"
+  9258 ;;		line 16 in file "adc.c"
   9259 ;; Parameters:    Size  Location     Type
   9260 ;;  channel         1    wreg     enum E13559
   9261 ;; Auto vars:     Size  Location     Type
@@ -9373,29 +9373,29 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9291                           ;ADCRead@channel stored from wreg
   9292  17F2  00F3               	movwf	ADCRead@channel
   9293                           
-  9294                           ;adc.c: 19: ADPCH = channel;
+  9294                           ;adc.c: 18: ADPCH = channel;
   9295  17F3  0873               	movf	ADCRead@channel,w
   9296  17F4  0021               	movlb	1	; select bank1
   9297  17F5  009E               	movwf	30	;volatile
   9298                           
-  9299                           ;adc.c: 21: ADCON0bits.ADON = 1;
+  9299                           ;adc.c: 20: ADCON0bits.ADON = 1;
   9300  17F6  1793               	bsf	19,7	;volatile
   9301                           
-  9302                           ;adc.c: 23: ADCON0bits.ADCONT = 0;
+  9302                           ;adc.c: 22: ADCON0bits.ADCONT = 0;
   9303  17F7  1313               	bcf	19,6	;volatile
   9304                           
-  9305                           ;adc.c: 25: ADCON0bits.ADGO = 1;
+  9305                           ;adc.c: 24: ADCON0bits.ADGO = 1;
   9306  17F8  1413               	bsf	19,0	;volatile
-  9307  17F9                     l55:	
-  9308                           ;adc.c: 28: {
+  9307  17F9                     l288:	
+  9308                           ;adc.c: 27: {
   9309                           
-  9310                           ;adc.c: 27: while(ADCON0bits.ADGO)
+  9310                           ;adc.c: 26: while(ADCON0bits.ADGO)
   9311                           
   9312  17F9  1813               	btfsc	19,0	;volatile
-  9313  17FA  2FF9               	goto	l55
+  9313  17FA  2FF9               	goto	l288
   9314                           
-  9315                           ;adc.c: 29: }
-  9316                           ;adc.c: 31: return ((ADRESH<<8)+ADRESL);
+  9315                           ;adc.c: 28: }
+  9316                           ;adc.c: 30: return ((ADRESH<<8)+ADRESL);
   9317  17FB  080D               	movf	13,w	;volatile
   9318  17FC  00F1               	movwf	?_ADCRead+1
   9319  17FD  080C               	movf	12,w	;volatile
@@ -10024,10 +10024,10 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
   9917                           
   9918                           ;pin_manager.c: 40: GIE = state;
   9919  096A  1C70               	btfss	PIN_MANAGER_Initialize@state,0
-  9920  096B  296E               	goto	u2360
+  9920  096B  296E               	goto	u2350
   9921  096C  178B               	bsf	11,7	;volatile
   9922  096D  0008               	return
-  9923  096E                     u2360:	
+  9923  096E                     u2350:	
   9924  096E  138B               	bcf	11,7	;volatile
   9925  096F  0008               	return
   9926  0970                     __end_of_PIN_MANAGER_Initialize:	
@@ -10421,8 +10421,8 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10294  08F6  3010               	movlw	16
  10295  08F7  0276               	subwf	InitCustomChars@i,w
  10296  08F8  1803               	btfsc	3,0
- 10297  08F9  290B               	goto	l2245
- 10298  08FA                     l2239:	
+ 10297  08F9  290B               	goto	l2221
+ 10298  08FA                     l2215:	
  10299                           
  10300                           ;lcd.c: 35: LCD_Write_Char(__cgram[i]);
  10301  08FA  0876               	movf	InitCustomChars@i,w
@@ -10439,8 +10439,8 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10312  0907  3010               	movlw	16
  10313  0908  0276               	subwf	InitCustomChars@i,w
  10314  0909  1C03               	skipc
- 10315  090A  28FA               	goto	l2239
- 10316  090B                     l2245:	
+ 10315  090A  28FA               	goto	l2215
+ 10316  090B                     l2221:	
  10317                           
  10318                           ;lcd.c: 36: LCD_Cmd(0);
  10319  090B  3000               	movlw	0
@@ -10456,7 +10456,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10329  087A                     __ptext24:	
  10330 ;; *************** function _ADCC_Initialize *****************
  10331 ;; Defined at:
- 10332 ;;		line 61 in file "adc.c"
+ 10332 ;;		line 60 in file "adc.c"
  10333 ;; Parameters:    Size  Location     Type
  10334 ;;		None
  10335 ;; Auto vars:     Size  Location     Type
@@ -10492,68 +10492,68 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10360                           ;psect for function _ADCC_Initialize
  10361  087A                     _ADCC_Initialize:	
  10362                           
- 10363                           ;adc.c: 63: ADCON1 = 0x00;
+ 10363                           ;adc.c: 62: ADCON1 = 0x00;
  10364                           
  10365                           ;incstack = 0
  10366                           ; Regs used in _ADCC_Initialize: [wreg+status,2]
  10367  087A  0021               	movlb	1	; select bank1
  10368  087B  0194               	clrf	20	;volatile
  10369                           
- 10370                           ;adc.c: 65: ADCON2 = 0x00;
+ 10370                           ;adc.c: 64: ADCON2 = 0x00;
  10371  087C  0195               	clrf	21	;volatile
  10372                           
- 10373                           ;adc.c: 67: ADCON3 = 0x00;
+ 10373                           ;adc.c: 66: ADCON3 = 0x00;
  10374  087D  0196               	clrf	22	;volatile
  10375                           
- 10376                           ;adc.c: 69: ADACT = 0x00;
+ 10376                           ;adc.c: 68: ADACT = 0x00;
  10377  087E  0199               	clrf	25	;volatile
  10378                           
- 10379                           ;adc.c: 71: ADSTAT = 0x00;
+ 10379                           ;adc.c: 70: ADSTAT = 0x00;
  10380  087F  0197               	clrf	23	;volatile
  10381                           
- 10382                           ;adc.c: 74: ADCLK = 0x3F;
+ 10382                           ;adc.c: 73: ADCLK = 0x3F;
  10383  0880  303F               	movlw	63
  10384  0881  0098               	movwf	24	;volatile
  10385                           
- 10386                           ;adc.c: 82: ADREF = 0x00;
+ 10386                           ;adc.c: 81: ADREF = 0x00;
  10387  0882  019A               	clrf	26	;volatile
  10388                           
- 10389                           ;adc.c: 84: ADCAP = 0x00;
+ 10389                           ;adc.c: 83: ADCAP = 0x00;
  10390  0883  019B               	clrf	27	;volatile
  10391                           
- 10392                           ;adc.c: 87: ADPRE = 0x07;
+ 10392                           ;adc.c: 86: ADPRE = 0x07;
  10393  0884  3007               	movlw	7
  10394  0885  009C               	movwf	28	;volatile
  10395                           
- 10396                           ;adc.c: 89: ADACQ = 0x00;
+ 10396                           ;adc.c: 88: ADACQ = 0x00;
  10397  0886  019D               	clrf	29	;volatile
  10398                           
- 10399                           ;adc.c: 91: ADPCH = 0x00;
+ 10399                           ;adc.c: 90: ADPCH = 0x00;
  10400  0887  019E               	clrf	30	;volatile
  10401                           
- 10402                           ;adc.c: 93: ADRPT = 0x00;
+ 10402                           ;adc.c: 92: ADRPT = 0x00;
  10403  0888  0022               	movlb	2	; select bank2
  10404  0889  018D               	clrf	13	;volatile
  10405                           
- 10406                           ;adc.c: 95: ADLTHL = 0x00;
+ 10406                           ;adc.c: 94: ADLTHL = 0x00;
  10407  088A  018E               	clrf	14	;volatile
  10408                           
- 10409                           ;adc.c: 97: ADLTHH = 0x00;
+ 10409                           ;adc.c: 96: ADLTHH = 0x00;
  10410  088B  018F               	clrf	15	;volatile
  10411                           
- 10412                           ;adc.c: 99: ADUTHL = 0x00;
+ 10412                           ;adc.c: 98: ADUTHL = 0x00;
  10413  088C  0190               	clrf	16	;volatile
  10414                           
- 10415                           ;adc.c: 101: ADUTHH = 0x00;
+ 10415                           ;adc.c: 100: ADUTHH = 0x00;
  10416  088D  0191               	clrf	17	;volatile
  10417                           
- 10418                           ;adc.c: 103: ADSTPTL = 0x00;
+ 10418                           ;adc.c: 102: ADSTPTL = 0x00;
  10419  088E  0192               	clrf	18	;volatile
  10420                           
- 10421                           ;adc.c: 105: ADSTPTH = 0x00;
+ 10421                           ;adc.c: 104: ADSTPTH = 0x00;
  10422  088F  0193               	clrf	19	;volatile
  10423                           
- 10424                           ;adc.c: 107: ADCON0 = 0x84;
+ 10424                           ;adc.c: 106: ADCON0 = 0x84;
  10425  0890  3084               	movlw	132
  10426  0891  0021               	movlb	1	; select bank1
  10427  0892  0093               	movwf	19	;volatile
@@ -10621,11 +10621,11 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10484  0828  3903               	andlw	3
  10485  0829  00F2               	movwf	??_PWM7_LoadDutyValue
  10486  082A  3005               	movlw	5
- 10487  082B                     u3065:	
+ 10487  082B                     u2925:	
  10488  082B  35F2               	lslf	??_PWM7_LoadDutyValue,f
  10489  082C  3EFF               	addlw	-1
  10490  082D  1D03               	skipz
- 10491  082E  282B               	goto	u3065
+ 10491  082E  282B               	goto	u2925
  10492  082F  3572               	lslf	??_PWM7_LoadDutyValue,w
  10493  0830  0090               	movwf	16	;volatile
  10494  0831  0008               	return
@@ -10721,39 +10721,39 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10579  0079  3080               	movlw	128
  10580  007A  027A               	subwf	??_PID_Calculate,w
  10581  007B  1D03               	skipz
- 10582  007C  287F               	goto	u2995
+ 10582  007C  287F               	goto	u2935
  10583  007D  3001               	movlw	1
  10584  007E  0256               	subwf	_error^(0+128),w
- 10585  007F                     u2995:	
+ 10585  007F                     u2935:	
  10586  007F  1C03               	skipc
- 10587  0080  2887               	goto	l2651
+ 10587  0080  2887               	goto	l2675
  10588  0081  3001               	movlw	1
  10589  0082  0021               	movlb	1	; select bank1
  10590  0083  00E6               	movwf	_signPositive^(0+128)
  10591  0084  3000               	movlw	0
  10592  0085  00E7               	movwf	(_signPositive^(0+128)+1)
- 10593  0086  288A               	goto	l2653
- 10594  0087                     l2651:	
+ 10593  0086  288A               	goto	l2677
+ 10594  0087                     l2675:	
  10595                           
  10596                           ;pid.c: 33: else signPositive=0;
  10597  0087  0021               	movlb	1	; select bank1
  10598  0088  01E6               	clrf	_signPositive^(0+128)
  10599  0089  01E7               	clrf	(_signPositive+1)^(0+128)
- 10600  008A                     l2653:	
+ 10600  008A                     l2677:	
  10601                           
  10602                           ;pid.c: 35: if(signPositive!=lastSign)pidIntegrated=0;
  10603  008A  085B               	movf	(_lastSign+1)^(0+128),w
  10604  008B  0667               	xorwf	(_signPositive+1)^(0+128),w
  10605  008C  1D03               	skipz
- 10606  008D  2890               	goto	u3005
+ 10606  008D  2890               	goto	u2945
  10607  008E  085A               	movf	_lastSign^(0+128),w
  10608  008F  0666               	xorwf	_signPositive^(0+128),w
- 10609  0090                     u3005:	
+ 10609  0090                     u2945:	
  10610  0090  1903               	skipnz
- 10611  0091  2894               	goto	l2657
+ 10611  0091  2894               	goto	l2681
  10612  0092  01DE               	clrf	_pidIntegrated^(0+128)
  10613  0093  01DF               	clrf	(_pidIntegrated+1)^(0+128)
- 10614  0094                     l2657:	
+ 10614  0094                     l2681:	
  10615                           
  10616                           ;pid.c: 37: lastSign=signPositive;
  10617  0094  0867               	movf	(_signPositive+1)^(0+128),w
@@ -10799,12 +10799,12 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10657  00B8  3080               	movlw	128
  10658  00B9  027A               	subwf	??_PID_Calculate,w
  10659  00BA  1D03               	skipz
- 10660  00BB  28BE               	goto	u3015
+ 10660  00BB  28BE               	goto	u2955
  10661  00BC  3015               	movlw	21
  10662  00BD  025C               	subwf	_pidCount^(0+128),w
- 10663  00BE                     u3015:	
+ 10663  00BE                     u2955:	
  10664  00BE  1C03               	skipc
- 10665  00BF  28FE               	goto	l2675
+ 10665  00BF  28FE               	goto	l2699
  10666                           
  10667                           ;pid.c: 46: {
  10668                           ;pid.c: 47: pidIntegrated = pidIntegrated + (error * Ki);
@@ -10834,12 +10834,12 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10692  00D7  3A80               	xorlw	128
  10693  00D8  027A               	subwf	??_PID_Calculate,w
  10694  00D9  1D03               	skipz
- 10695  00DA  28DD               	goto	u3025
+ 10695  00DA  28DD               	goto	u2965
  10696  00DB  0860               	movf	_pidMinOutput^(0+128),w
  10697  00DC  025E               	subwf	_pidIntegrated^(0+128),w
- 10698  00DD                     u3025:	
+ 10698  00DD                     u2965:	
  10699  00DD  1803               	skipnc
- 10700  00DE  28E4               	goto	l182
+ 10700  00DE  28E4               	goto	l229
  10701                           
  10702                           ;pid.c: 50: {
  10703                           ;pid.c: 51: pidIntegrated= pidMinOutput;
@@ -10848,7 +10848,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10706  00E1  00DF               	movwf	(_pidIntegrated+1)^(0+128)
  10707  00E2  0860               	movf	_pidMinOutput^(0+128),w
  10708  00E3  00DE               	movwf	_pidIntegrated^(0+128)
- 10709  00E4                     l182:	
+ 10709  00E4                     l229:	
  10710                           
  10711                           ;pid.c: 52: }
  10712                           ;pid.c: 54: if (pidIntegrated> pidMaxOutput)
@@ -10861,13 +10861,13 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10719  00EA  3A80               	xorlw	128
  10720  00EB  027A               	subwf	??_PID_Calculate,w
  10721  00EC  1D03               	skipz
- 10722  00ED  28F1               	goto	u3035
+ 10722  00ED  28F1               	goto	u2975
  10723  00EE  085E               	movf	_pidIntegrated^(0+128),w
  10724  00EF  0023               	movlb	3	; select bank3
  10725  00F0  0234               	subwf	_pidMaxOutput^(0+384),w
- 10726  00F1                     u3035:	
+ 10726  00F1                     u2975:	
  10727  00F1  1803               	skipnc
- 10728  00F2  28FB               	goto	l2673
+ 10728  00F2  28FB               	goto	l2697
  10729                           
  10730                           ;pid.c: 55: {
  10731                           ;pid.c: 56: pidIntegrated= pidMaxOutput;
@@ -10879,14 +10879,14 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10737  00F8  0834               	movf	_pidMaxOutput^(0+384),w
  10738  00F9  0021               	movlb	1	; select bank1
  10739  00FA  00DE               	movwf	_pidIntegrated^(0+128)
- 10740  00FB                     l2673:	
+ 10740  00FB                     l2697:	
  10741                           
  10742                           ;pid.c: 57: }
  10743                           ;pid.c: 58: pidCount=0;
  10744  00FB  0021               	movlb	1	; select bank1
  10745  00FC  01DC               	clrf	_pidCount^(0+128)
  10746  00FD  01DD               	clrf	(_pidCount+1)^(0+128)
- 10747  00FE                     l2675:	
+ 10747  00FE                     l2699:	
  10748                           
  10749                           ;pid.c: 59: }
  10750                           ;pid.c: 62: Result = errorValue+pidIntegrated+derivativeValue;
@@ -10912,12 +10912,12 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10770  010F  3A80               	xorlw	128
  10771  0110  027A               	subwf	??_PID_Calculate,w
  10772  0111  1D03               	skipz
- 10773  0112  2915               	goto	u3045
+ 10773  0112  2915               	goto	u2985
  10774  0113  0860               	movf	_pidMinOutput^(0+128),w
  10775  0114  0250               	subwf	_Result^(0+128),w
- 10776  0115                     u3045:	
+ 10776  0115                     u2985:	
  10777  0115  1803               	skipnc
- 10778  0116  291C               	goto	l184
+ 10778  0116  291C               	goto	l231
  10779                           
  10780                           ;pid.c: 65: {
  10781                           ;pid.c: 66: Result = pidMinOutput;
@@ -10926,7 +10926,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10784  0119  00D1               	movwf	(_Result+1)^(0+128)
  10785  011A  0860               	movf	_pidMinOutput^(0+128),w
  10786  011B  00D0               	movwf	_Result^(0+128)
- 10787  011C                     l184:	
+ 10787  011C                     l231:	
  10788                           
  10789                           ;pid.c: 67: }
  10790                           ;pid.c: 69: if (Result > pidMaxOutput)
@@ -10939,13 +10939,13 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10797  0122  3A80               	xorlw	128
  10798  0123  027A               	subwf	??_PID_Calculate,w
  10799  0124  1D03               	skipz
- 10800  0125  2929               	goto	u3055
+ 10800  0125  2929               	goto	u2995
  10801  0126  0850               	movf	_Result^(0+128),w
  10802  0127  0023               	movlb	3	; select bank3
  10803  0128  0234               	subwf	_pidMaxOutput^(0+384),w
- 10804  0129                     u3055:	
+ 10804  0129                     u2995:	
  10805  0129  1803               	skipnc
- 10806  012A  2933               	goto	l185
+ 10806  012A  2933               	goto	l232
  10807                           
  10808                           ;pid.c: 70: {
  10809                           ;pid.c: 71: Result = pidMaxOutput;
@@ -10957,7 +10957,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10815  0130  0834               	movf	_pidMaxOutput^(0+384),w
  10816  0131  0021               	movlb	1	; select bank1
  10817  0132  00D0               	movwf	_Result^(0+128)
- 10818  0133                     l185:	
+ 10818  0133                     l232:	
  10819                           
  10820                           ;pid.c: 72: }
  10821                           ;pid.c: 74: return (Result);
@@ -11002,8 +11002,8 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10855 ;; This function calls:
  10856 ;;		Nothing
  10857 ;; This function is called by:
- 10858 ;;		_readAnalog
- 10859 ;;		_PID_Calculate
+ 10858 ;;		_PID_Calculate
+ 10859 ;;		_readAnalog
  10860 ;;		_eval_poly
  10861 ;; This function uses a non-reentrant model
  10862 ;;
@@ -11096,7 +11096,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10944                           ; Regs used in _LCD_Write_String: [wreg-fsr0h+status,2+status,0+pclath+cstack]
  10945  0860  01F8               	clrf	LCD_Write_String@i
  10946  0861  01F9               	clrf	LCD_Write_String@i+1
- 10947  0862                     l2589:	
+ 10947  0862                     l2569:	
  10948  0862  0875               	movf	LCD_Write_String@a,w
  10949  0863  0778               	addwf	LCD_Write_String@i,w
  10950  0864  0084               	movwf	4
@@ -11120,7 +11120,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  10968  0876  07F8               	addwf	LCD_Write_String@i,f
  10969  0877  3000               	movlw	0
  10970  0878  3DF9               	addwfc	LCD_Write_String@i+1,f
- 10971  0879  2862               	goto	l2589
+ 10971  0879  2862               	goto	l2569
  10972  087A                     __end_of_LCD_Write_String:	
  10973                           
  10974                           	psect	text29
@@ -11186,11 +11186,11 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11029  0F3F  3005               	movlw	5
  11030  0F40  0020               	movlb	0	; select bank0
  11031  0F41  00A0               	movwf	??_LCD_Write_Int
- 11032  0F42                     u2900:	
+ 11032  0F42                     u2830:	
  11033  0F42  0016               	moviw fsr1++
  11034  0F43  001A               	movwi fsr0++
  11035  0F44  0BA0               	decfsz	??_LCD_Write_Int,f
- 11036  0F45  2F42               	goto	u2900
+ 11036  0F45  2F42               	goto	u2830
  11037                           
  11038                           ;lcd.c: 249: int i=4,j=0;
  11039  0F46  3004               	movlw	4
@@ -11202,7 +11202,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11045                           
  11046                           ;lcd.c: 251: if(value<0)
  11047  0F4C  1FFA               	btfss	LCD_Write_Int@value+1,7
- 11048  0F4D  2F58               	goto	l2603
+ 11048  0F4D  2F58               	goto	l2583
  11049                           
  11050                           ;lcd.c: 252: {
  11051                           ;lcd.c: 253: LCD_Write_Char('-');
@@ -11217,21 +11217,21 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11060  0F56  0AFA               	incf	LCD_Write_Int@value+1,f
  11061                           
  11062                           ;lcd.c: 255: }
- 11063  0F57  2F5F               	goto	l2613
- 11064  0F58                     l2603:	
+ 11063  0F57  2F5F               	goto	l2593
+ 11064  0F58                     l2583:	
  11065                           
  11066                           ;lcd.c: 257: else
  11067                           ;lcd.c: 258: {
  11068                           ;lcd.c: 259: if(sign == 1)
  11069  0F58  037D               	decf	LCD_Write_Int@sign,w
  11070  0F59  1D03               	btfss	3,2
- 11071  0F5A  2F5F               	goto	l2613
+ 11071  0F5A  2F5F               	goto	l2593
  11072                           
  11073                           ;lcd.c: 260: {
  11074                           ;lcd.c: 261: LCD_Write_Char('+');
  11075  0F5B  302B               	movlw	43
  11076  0F5C  3189  2113  318F   	fcall	_LCD_Write_Char
- 11077  0F5F                     l2613:	
+ 11077  0F5F                     l2593:	
  11078                           ;lcd.c: 262: }
  11079                           ;lcd.c: 263: }
  11080                           ;lcd.c: 265: while(value)
@@ -11239,7 +11239,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11082  0F5F  0879               	movf	LCD_Write_Int@value,w
  11083  0F60  047A               	iorwf	LCD_Write_Int@value+1,w
  11084  0F61  1903               	btfsc	3,2
- 11085  0F62  2F8C               	goto	l2615
+ 11085  0F62  2F8C               	goto	l2595
  11086                           
  11087                           ;lcd.c: 266: {
  11088                           ;lcd.c: 267: str[i]=value%10;
@@ -11283,16 +11283,16 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11126  0F88  07AC               	addwf	LCD_Write_Int@i,f
  11127  0F89  30FF               	movlw	255
  11128  0F8A  3DAD               	addwfc	LCD_Write_Int@i+1,f
- 11129  0F8B  2F5F               	goto	l2613
- 11130  0F8C                     l2615:	
+ 11129  0F8B  2F5F               	goto	l2593
+ 11130  0F8C                     l2595:	
  11131                           
  11132                           ;lcd.c: 270: }
  11133                           ;lcd.c: 271: if(fieldLength==-1)
  11134  0F8C  0A7B               	incf	LCD_Write_Int@fieldLength,w
  11135  0F8D  1903               	btfsc	3,2
- 11136  0F8E  2F95               	goto	l2621
- 11137  0F8F  2F9E               	goto	l2623
- 11138  0F90                     l2619:	
+ 11136  0F8E  2F95               	goto	l2601
+ 11137  0F8F  2F9E               	goto	l2603
+ 11138  0F90                     l2599:	
  11139                           ;lcd.c: 272: {
  11140                           ;lcd.c: 273: while(str[j]==0)
  11141                           
@@ -11304,7 +11304,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11147  0F92  07AA               	addwf	LCD_Write_Int@j,f
  11148  0F93  3000               	movlw	0
  11149  0F94  3DAB               	addwfc	LCD_Write_Int@j+1,f
- 11150  0F95                     l2621:	
+ 11150  0F95                     l2601:	
  11151  0F95  0020               	movlb	0	; select bank0
  11152  0F96  082A               	movf	LCD_Write_Int@j,w
  11153  0F97  3E25               	addlw	(low (LCD_Write_Int@str| 0))& (0+255)
@@ -11312,9 +11312,9 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11155  0F99  0187               	clrf	7
  11156  0F9A  0801               	movf	1,w
  11157  0F9B  1D03               	btfss	3,2
- 11158  0F9C  2FAF               	goto	l2625
- 11159  0F9D  2F90               	goto	l2619
- 11160  0F9E                     l2623:	
+ 11158  0F9C  2FAF               	goto	l2605
+ 11159  0F9D  2F90               	goto	l2599
+ 11160  0F9E                     l2603:	
  11161                           ;lcd.c: 276: }
  11162                           ;lcd.c: 277: }
  11163                           
@@ -11339,7 +11339,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11182  0FAC  3000               	movlw	0
  11183  0FAD  3D21               	addwfc	??_LCD_Write_Int+1,w
  11184  0FAE  00AB               	movwf	LCD_Write_Int@j+1
- 11185  0FAF                     l2625:	
+ 11185  0FAF                     l2605:	
  11186                           
  11187                           ;lcd.c: 281: }
  11188                           ;lcd.c: 283: for(i=j;i<(5-numPlaces);i++)
@@ -11347,7 +11347,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11190  0FB0  00AD               	movwf	LCD_Write_Int@i+1
  11191  0FB1  082A               	movf	LCD_Write_Int@j,w
  11192  0FB2  00AC               	movwf	LCD_Write_Int@i
- 11193  0FB3                     l2631:	
+ 11193  0FB3                     l2611:	
  11194  0FB3  087C               	movf	LCD_Write_Int@numPlaces,w
  11195  0FB4  00A0               	movwf	??_LCD_Write_Int
  11196  0FB5  01A1               	clrf	??_LCD_Write_Int+1
@@ -11371,12 +11371,12 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11214  0FC7  3A80               	xorlw	128
  11215  0FC8  0224               	subwf	??_LCD_Write_Int+4,w
  11216  0FC9  1D03               	skipz
- 11217  0FCA  2FCD               	goto	u2965
+ 11217  0FCA  2FCD               	goto	u2895
  11218  0FCB  0822               	movf	??_LCD_Write_Int+2,w
  11219  0FCC  022C               	subwf	LCD_Write_Int@i,w
- 11220  0FCD                     u2965:	
+ 11220  0FCD                     u2895:	
  11221  0FCD  1803               	btfsc	3,0
- 11222  0FCE  2FDF               	goto	l2633
+ 11222  0FCE  2FDF               	goto	l2613
  11223                           
  11224                           ;lcd.c: 284: {
  11225                           ;lcd.c: 285: LCD_Write_Char(48+str[i]);
@@ -11393,14 +11393,14 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11236  0FDB  07AC               	addwf	LCD_Write_Int@i,f
  11237  0FDC  3000               	movlw	0
  11238  0FDD  3DAD               	addwfc	LCD_Write_Int@i+1,f
- 11239  0FDE  2FB3               	goto	l2631
- 11240  0FDF                     l2633:	
+ 11239  0FDE  2FB3               	goto	l2611
+ 11240  0FDF                     l2613:	
  11241                           
  11242                           ;lcd.c: 286: }
  11243                           ;lcd.c: 288: if(numPlaces == 1)
  11244  0FDF  037C               	decf	LCD_Write_Int@numPlaces,w
  11245  0FE0  1D03               	btfss	3,2
- 11246  0FE1  2FEC               	goto	l2637
+ 11246  0FE1  2FEC               	goto	l2617
  11247                           
  11248                           ;lcd.c: 289: {
  11249                           ;lcd.c: 290: LCD_Write_Char(46);
@@ -11412,7 +11412,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11255  0FE7  0829               	movf	LCD_Write_Int@str+4,w
  11256  0FE8  3E30               	addlw	48
  11257  0FE9  3189  2113  318F   	fcall	_LCD_Write_Char
- 11258  0FEC                     l2637:	
+ 11258  0FEC                     l2617:	
  11259                           
  11260                           ;lcd.c: 292: }
  11261                           ;lcd.c: 294: if(numPlaces == 2)
@@ -11875,7 +11875,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11698                           ;lcd.c: 88: if(y == 0)
  11699  09E7  0874               	movf	LCD_Set_Cursor@y,w
  11700  09E8  1D03               	btfss	3,2
- 11701  09E9  2A06               	goto	l2573
+ 11701  09E9  2A06               	goto	l2553
  11702                           
  11703                           ;lcd.c: 89: {
  11704                           ;lcd.c: 90: temp = 0x80 + x;
@@ -11889,10 +11889,10 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11712  09EF  087A               	movf	LCD_Set_Cursor@temp,w
  11713  09F0  00F5               	movwf	??_LCD_Set_Cursor
  11714  09F1  3004               	movlw	4
- 11715  09F2                     u2865:	
+ 11715  09F2                     u2795:	
  11716  09F2  36F5               	lsrf	??_LCD_Set_Cursor,f
  11717  09F3  0B89               	decfsz	9,f
- 11718  09F4  29F2               	goto	u2865
+ 11718  09F4  29F2               	goto	u2795
  11719  09F5  0875               	movf	??_LCD_Set_Cursor,w
  11720  09F6  00F6               	movwf	??_LCD_Set_Cursor+1
  11721  09F7  0876               	movf	??_LCD_Set_Cursor+1,w
@@ -11915,7 +11915,7 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11738                           
  11739                           ;lcd.c: 95: }
  11740  0A05  0008               	return
- 11741  0A06                     l2573:	
+ 11741  0A06                     l2553:	
  11742                           
  11743                           ;lcd.c: 97: else if(y == 1)
  11744  0A06  0374               	decf	LCD_Set_Cursor@y,w
@@ -11934,10 +11934,10 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11757  0A0E  087A               	movf	LCD_Set_Cursor@temp,w
  11758  0A0F  00F5               	movwf	??_LCD_Set_Cursor
  11759  0A10  3004               	movlw	4
- 11760  0A11                     u2885:	
+ 11760  0A11                     u2815:	
  11761  0A11  36F5               	lsrf	??_LCD_Set_Cursor,f
  11762  0A12  0B89               	decfsz	9,f
- 11763  0A13  2A11               	goto	u2885
+ 11763  0A13  2A11               	goto	u2815
  11764  0A14  0875               	movf	??_LCD_Set_Cursor,w
  11765  0A15  00F6               	movwf	??_LCD_Set_Cursor+1
  11766  0A16  0876               	movf	??_LCD_Set_Cursor+1,w
@@ -12087,13 +12087,13 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11900                           
  11901                           ;lcd.c: 43: if(a & 1)
  11902  0849  1C70               	btfss	LCD_Port@a,0
- 11903  084A  284E               	goto	l94
+ 11903  084A  284E               	goto	l28
  11904                           
  11905                           ;lcd.c: 44: RA7 = 1;
  11906  084B  0020               	movlb	0	; select bank0
  11907  084C  178C               	bsf	12,7	;volatile
  11908  084D  2850               	goto	l1969
- 11909  084E                     l94:	
+ 11909  084E                     l28:	
  11910                           
  11911                           ;lcd.c: 45: else
  11912                           ;lcd.c: 46: RA7 = 0;
@@ -12103,12 +12103,12 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11916                           
  11917                           ;lcd.c: 48: if(a & 2)
  11918  0850  1CF0               	btfss	LCD_Port@a,1
- 11919  0851  2854               	goto	l96
+ 11919  0851  2854               	goto	l30
  11920                           
  11921                           ;lcd.c: 49: RA6 = 1;
  11922  0852  170C               	bsf	12,6	;volatile
  11923  0853  2855               	goto	l1973
- 11924  0854                     l96:	
+ 11924  0854                     l30:	
  11925                           
  11926                           ;lcd.c: 50: else
  11927                           ;lcd.c: 51: RA6 = 0;
@@ -12117,12 +12117,12 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11930                           
  11931                           ;lcd.c: 53: if(a & 4)
  11932  0855  1D70               	btfss	LCD_Port@a,2
- 11933  0856  2859               	goto	l98
+ 11933  0856  2859               	goto	l32
  11934                           
  11935                           ;lcd.c: 54: RC0 = 1;
  11936  0857  140E               	bsf	14,0	;volatile
  11937  0858  285A               	goto	l1977
- 11938  0859                     l98:	
+ 11938  0859                     l32:	
  11939                           
  11940                           ;lcd.c: 55: else
  11941                           ;lcd.c: 56: RC0 = 0;
@@ -12131,12 +12131,12 @@ Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010
  11944                           
  11945                           ;lcd.c: 58: if(a & 8)
  11946  085A  1DF0               	btfss	LCD_Port@a,3
- 11947  085B  285E               	goto	l100
+ 11947  085B  285E               	goto	l34
  11948                           
  11949                           ;lcd.c: 59: RC1 = 1;
  11950  085C  148E               	bsf	14,1	;volatile
  11951  085D  0008               	return
- 11952  085E                     l100:	
+ 11952  085E                     l34:	
  11953                           
  11954                           ;lcd.c: 60: else
  11955                           ;lcd.c: 61: RC1 = 0;
@@ -12859,17 +12859,17 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.38 build -256452561 
-Symbol Table                                                                                   Sun Apr 01 15:29:01 2018
+Symbol Table                                                                                   Tue Apr 03 13:39:19 2018
 
-        __size_of_PWM_Initialize 000B                      __CFG_CP$OFF 0000                               l55 17F9  
-                             l94 084E                               l96 0854                               l98 0859  
+        __size_of_PWM_Initialize 000B                      __CFG_CP$OFF 0000                               l30 0854  
+                             l32 0859                               l34 085E                               l28 084E  
                              _Kd 00E8                               _Ki 00EA                               _Kp 00EC  
                    ___awdiv@sign 0076              ___wmul@multiplicand 0072                     ___ftadd@exp1 004C  
                    ___ftadd@exp2 004B                      __CFG_LVP$ON 0000                     ___ftadd@sign 004A  
-                            l100 085E                              l182 00E4                              l502 0B8D  
-                            l184 011C                              l185 0133                              l354 0741  
-                            l346 066E                              l348 0695                              l358 0795  
-                            l447 089C                              l615 0B5D                              l616 0B65  
+                            l231 011C                              l232 0133                              l229 00E4  
+                            l502 0B8D                              l354 0741                              l346 066E  
+                            l348 0695                              l358 0795                              l447 089C  
+                            l615 0B5D                              l288 17F9                              l616 0B65  
                             l608 0B4A                              l639 01D8                              l699 0D08  
                             _GIE 005F                              _RA0 0060                              _RB0 0068  
                             _RA2 0062                              _RB1 0069                              _RC0 0070  
@@ -12882,67 +12882,67 @@ Symbol Table                                                                    
                            l2005 0168                             l2101 0F07                             l2031 01AE  
                            l2023 0191                             l2041 01CA                             l2033 01B3  
                            l2105 0F0F                             l2051 01FC                             l2043 01D4  
-                           l2035 01B7                             l2203 0B11                             l2061 0217  
-                           l2029 01A4                             l2047 01EA                             l2071 0E9A  
-                           l2153 08D7                             l2161 0986                             l2403 0BE7  
-                           l2245 090B                             l2165 099C                             l2093 0EF3  
-                           l2077 0EB0                             l2239 08FA                             l2407 0BF5  
-                           l2425 0A7C                             l2505 0D57                             l2089 0EEB  
-                           l2185 09BD                             l2361 0E05                             l2451 0AB3  
-                           l2443 0AA2                             l2435 0A84                             l2419 0A71  
-                           l2603 0F58                             l2355 0DF2                             l2437 0A90  
-                           l2621 0F95                             l2613 0F5F                             l2381 0B9E  
-                           l2447 0AAB                             l2463 0019                             l2631 0FB3  
-                           l2623 0F9E                             l2615 0F8C                             l2391 0BBC  
-                           l2527 0DB1                             l2519 0D98                             l2481 003E  
-                           l2633 0FDF                             l2625 0FAF                             l2475 0026  
-                           l2467 0020                             l2619 0F90                             l2651 0087  
-                           l2539 08B7                             l2573 0A06                             l2477 0032  
-                           l2485 0047                             l2637 0FEC                             l2653 008A  
-                           l2389 0BAE                             l2557 0459                             l1941 0B27  
-                           l2901 0686                             l2735 0CA4                             l2399 0BDC  
-                           l1951 0B4F                             l1943 0B31                             l2911 069D  
-                           l2489 004F                             l2673 00FB                             l2657 0094  
-                           l2761 0CFE                             l2753 0CE1                             l1953 0B57  
-                           l1945 0B36                             l1937 0B20                             l2905 0697  
-                           l2675 00FE                             l2763 0D0C                             l2755 0CF0  
+                           l2035 01B7                             l2203 0B11                             l2221 090B  
+                           l2061 0217                             l2029 01A4                             l2215 08FA  
+                           l2047 01EA                             l2071 0E9A                             l2153 08D7  
+                           l2161 0986                             l2403 0BE7                             l2165 099C  
+                           l2093 0EF3                             l2077 0EB0                             l2407 0BF5  
+                           l2343 0DF2                             l2425 0A7C                             l2601 0F95  
+                           l2505 0D57                             l2089 0EEB                             l2185 09BD  
+                           l2451 0AB3                             l2443 0AA2                             l2435 0A84  
+                           l2419 0A71                             l2611 0FB3                             l2603 0F9E  
+                           l2437 0A90                             l2613 0FDF                             l2605 0FAF  
+                           l2381 0B9E                             l2349 0E05                             l2447 0AAB  
+                           l2463 0019                             l2391 0BBC                             l2527 0DB1  
+                           l2519 0D98                             l2553 0A06                             l2481 003E  
+                           l2617 0FEC                             l2475 0026                             l2467 0020  
+                           l2723 0459                             l2539 08B7                             l2477 0032  
+                           l2485 0047                             l2389 0BAE                             l1941 0B27  
+                           l2901 0686                             l2583 0F58                             l2735 0CA4  
+                           l2399 0BDC                             l1951 0B4F                             l1943 0B31  
+                           l2911 069D                             l2489 004F                             l2593 0F5F  
+                           l2569 0862                             l2681 0094                             l2761 0CFE  
+                           l2753 0CE1                             l1953 0B57                             l1945 0B36  
+                           l1937 0B20                             l2905 0697                             l2595 0F8C  
+                           l2675 0087                             l2763 0D0C                             l2755 0CF0  
                            l2499 0D41                             l2827 04F6                             l1973 0855  
-                           l2589 0862                             l2941 074C                             l2917 06C0  
-                           l1983 0896                             l2767 0D1A                             l2951 076B  
-                           l1977 085A                             l1969 0850                             l2929 0717  
-                           l2873 0615                             l2963 07A0                             l2891 0664  
+                           l2677 008A                             l2941 074C                             l2917 06C0  
+                           l2599 0F90                             l1983 0896                             l2767 0D1A  
+                           l2951 076B                             l1977 085A                             l1969 0850  
+                           l2697 00FB                             l2929 0717                             l2873 0615  
+                           l2699 00FE                             l2963 07A0                             l2891 0664  
                            l2883 062B                             l2869 060F                             l2967 07A6  
                            l2887 065C                             l2879 0626                             l2895 0670  
                            l2977 07B1                             ?_log 0057                             STR_1 1023  
                            STR_2 101B                             u2005 0192                             u2035 01A5  
-                           u3005 0090                             u2205 0EFA                             _LATA 0016  
-                           _LATB 0017                             u3015 00BE                             _LATC 0018  
-                           u3025 00DD                             u2065 01B8                             u3035 00F1  
-                           u3115 0CE2                             u2235 0F10                             u3045 0115  
-                           u2245 0F16                             u2165 0EBC                             u3055 0129  
-                           u2095 01CB                             u2175 0ECC                             u2360 096E  
-                           u2265 0923                             u3065 082B                             u3145 0CFF  
-                           u3305 0710                             u3225 0641                             u3170 04AD  
-                           _T2PR 028D                             u2435 0BB1                             u2195 0EF4  
-                           u3235 065A                             u3085 0CB1                             u2535 0A87  
-                           u2455 0BBD                             u1815 0B6C                             u1735 0B2C  
-                           u3255 0681                             u2465 0BD1                             u3345 0764  
-                           u3265 0690                             u3417 04EC                             u2555 0A91  
-                           u2635 0029                             u3507 0C2C                             u2475 0BDD  
-                           u1755 0B45                             u2715 0D69                             u3427 073A  
-                           u2900 0F42                             u2565 0A9B                             u3517 0C36  
-                           u2805 03E9                             u2725 0D79                             u3437 078E  
-                           u2575 0AA3                             u2655 0038                             u3527 0C44  
-                           u3447 0A40                             u2815 0430                             u1775 0B52  
-                           u2735 0D99                             u2665 003F                             u3537 0C52  
-                           u3457 0A50                             u2825 0449                             u2745 0DA8  
+                           u3005 035A                             u2205 0EFA                             _LATA 0016  
+                           _LATB 0017                             u3015 03AC                             _LATC 0018  
+                           u3025 03E9                             u2065 01B8                             u3115 0CE2  
+                           u3035 0430                             u2235 0F10                             u3045 0449  
+                           u2245 0F16                             u2165 0EBC                             u2350 096E  
+                           u2095 01CB                             u2175 0ECC                             u2265 0923  
+                           u3145 0CFF                             u3065 0465                             u3305 0710  
+                           u3225 0641                             u3170 04AD                             _T2PR 028D  
+                           u2435 0BB1                             u2195 0EF4                             u3235 065A  
+                           u3085 0CB1                             u2535 0A87                             u2455 0BBD  
+                           u1815 0B6C                             u1735 0B2C                             u3255 0681  
+                           u2465 0BD1                             u3345 0764                             u3265 0690  
+                           u3417 04EC                             u2555 0A91                             u2635 0029  
+                           u3507 0C2C                             u2475 0BDD                             u1755 0B45  
+                           u2715 0D69                             u3427 073A                             u2565 0A9B  
+                           u3517 0C36                             u2725 0D79                             u3437 078E  
+                           u2830 0F42                             u2815 0A11                             u2575 0AA3  
+                           u2655 0038                             u3527 0C44                             u3447 0A40  
+                           u1775 0B52                             u2735 0D99                             u2665 003F  
+                           u3537 0C52                             u3457 0A50                             u2745 0DA8  
                            u3547 0C62                             u3467 0A5F                             u2755 0DB2  
-                           u1885 089D                             u3557 0C71                             u3477 0C09  
-                           u2845 0465                             u1895 08A2                             u3567 0C80  
-                           u3487 0C17                             u2865 09F2                             u3577 092F  
-                           u3497 0C22                             u2785 035A                             u3587 093B  
-                           u2795 03AC                             u3597 0816                             u2885 0A11  
-                           u2965 0FCD                             u2995 007F              tempCalc@analogValue 005D  
+                           u1885 089D                             u2925 082B                             u3557 0C71  
+                           u3477 0C09                             u1895 08A2                             u2935 007F  
+                           u3567 0C80                             u3487 0C17                             u3577 092F  
+                           u2945 0090                             u3497 0C22                             u2795 09F2  
+                           u3587 093B                             u2955 00BE                             u3597 0816  
+                           u2965 00DD                             u2895 0FCD                             u2975 00F1  
+                           u2985 0115                             u2995 0129              tempCalc@analogValue 005D  
                            _WPUA 0F39                             _WPUB 0F44                             _WPUC 0F4F  
                            _WPUE 0F65                     __CFG_WRT$OFF 0000                    __CFG_FCMEN$ON 0000  
               ?_LCD_Write_String 0075                             _main 0481                     ___ftpack@arg 0070  

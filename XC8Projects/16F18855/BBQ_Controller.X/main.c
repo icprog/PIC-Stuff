@@ -4,7 +4,6 @@
 #include "system.h"
 
     // *************** Defines *****************************************************    
-#define pitSetpoint             set
 #define ambientTemperature      analogs[0]                                      // Analog Chanell 1,  Pin 3
 #define pitTemperature          analogs[1]                                      // Analog Chanell 3,  Pin 5
 #define pitViperOutput          LATC2
@@ -30,7 +29,9 @@ void main(void)
     
     uint16_t analogs[2]                 =   {0};                    // array of analog readings 
     
-    int set                             =   2250;
+    int pitSetpoint                     =   2250;
+    
+    char set                            =   0;                      // Variable (Pit Setpoint, Backlight Intensity)) to be set.
     
     char menuDelay                      =   0;
     
@@ -168,7 +169,22 @@ void main(void)
   //      {
             
     //    }
-        if(upKey==1)
+
+        if(enterKey==1)
+        {
+/*            if(menuDelay==0)menuDelay=1023;
+            if(menuDelay==1023)LCD_Clear();
+            if(menuDelay>0)menuDelay-=1;
+  */          
+            LCDWriteStringXY(0,0,"Up/Down to Set:");
+            LCDWriteStringXY(0,1,"  Pit Setpoint  ");
+            set = 0;
+            
+        }
+
+
+
+/*        if(upKey==1)
         {
             delayCount+=2;
             pitSetpoint+=1;
@@ -208,7 +224,7 @@ void main(void)
                 loop=0;
                 menuDelay-=1;
             }
-        }
+        }*/
 // </editor-fold>
         
         
