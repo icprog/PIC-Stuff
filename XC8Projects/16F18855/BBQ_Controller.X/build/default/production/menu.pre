@@ -1,5 +1,10 @@
 
-# 1 "pid.c"
+# 1 "menu.c"
+
+# 4 "menu.h"
+char menuChoice(char);
+
+char readKey(void);
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -16683,11 +16688,6 @@ typedef uint16_t uintptr_t;
 # 262 "tmr2.h"
 void TMR2_Initialize(void);
 
-# 4 "menu.h"
-char menuChoice(char);
-
-char readKey(void);
-
 # 7 "pwm.h"
 void PWM_Initialize(void);
 
@@ -16695,24 +16695,8 @@ void PWM_Initialize(void);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
-# 38 "lcd.h"
-void InitCustomChars();
-
-void LCD_Port(char a);
-
-void LCD_Cmd(char a);
-
-void LCD_Clear();
-
-void LCD_Set_Cursor(char x, char y);
-
-void LCD_Init(char style);
-
-void LCD_Write_Char(const char a);
-
-void LCD_Write_String(const char *a);
-
-void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+# 14 "pid.h"
+int16_t PID_Calculate(int16_t setpoint, int16_t temp);
 
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
 typedef unsigned char bool;
@@ -16805,78 +16789,96 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 14 "pid.h"
-int16_t PID_Calculate(int16_t setpoint, int16_t temp);
+# 38 "lcd.h"
+void InitCustomChars();
 
-# 5 "pid.c"
-int16_t error = 0;
-int16_t errorValue = 0;
-int16_t derivativeValue = 0;
-int16_t Result = 0;
-int Kp = 4;
-int Ki = 1;
-int Kd = 1;
-static int pidIntegrated = 0;
-int pidPrevError = 0;
-int pidMinOutput = 0;
-int pidMaxOutput = 2047;
-int pidCount = 0;
-int signPositive = 0;
-int lastSign = 0;
+void LCD_Port(char a);
+
+void LCD_Cmd(char a);
+
+void LCD_Clear();
+
+void LCD_Set_Cursor(char x, char y);
+
+void LCD_Init(char style);
+
+void LCD_Write_Char(const char a);
+
+void LCD_Write_String(const char *a);
+
+void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+
+# 10 "menu.c"
+unsigned int rangeSet[2][2] = {{75,275},{0,1023}};
+
+extern int pitSetpoint;
+
+extern int set;
+
+extern unsigned char loop;
+
+char menuDelay = 0;
+
+char delayCount = 0;
+
+char key = 0;
+
+char testKey = 0;
+
+int timer = 0;
 
 
-int16_t PID_Calculate(int16_t setpoint, int16_t temp)
+char readKey(void)
 {
-pidCount+=1;
-
-
-error = setpoint - temp;
-
-errorValue = error * Kp;
-
-
-if(error>0)signPositive=1;
-
-else signPositive=0;
-
-if(signPositive!=lastSign)pidIntegrated=0;
-
-lastSign=signPositive;
-
-
-
-derivativeValue=(error-pidPrevError)*Kd;
-pidPrevError = error;
-
-
-if(pidCount>20)
+if(RB1==1)
 {
-pidIntegrated = pidIntegrated + (error * Ki);
-
-if (pidIntegrated< pidMinOutput)
-{
-pidIntegrated= pidMinOutput;
+if(key>0)key-=1;
 }
 
-if (pidIntegrated> pidMaxOutput)
+if(RB0==1)
 {
-pidIntegrated= pidMaxOutput;
-}
-pidCount=0;
+if(key<1)key+=1;
 }
 
+return key;
+}
 
-Result = errorValue+pidIntegrated+derivativeValue;
-
-if (Result < pidMinOutput)
+char menuChoice(char)
 {
-Result = pidMinOutput;
-}
-
-if (Result > pidMaxOutput)
+while(RB2 != 1)
 {
-Result = pidMaxOutput;
+testKey = readKey();
+
+if(timer > 1000)
+{
+timer = 0;
+goto Exit;
 }
 
-return (Result);
+
+
+if(RB0==1)
+{
+delayCount+=2;
+
+set+=1;
+
+
+
+if(delayCount<30)
+{
+_delay((unsigned long)((150)*(32000000/4000.0)));
 }
+if(delayCount>(30+10))delayCount=(30+10);
+}
+
+# 117
+}
+
+
+return testKey;
+
+Exit:
+return 0;
+}
+

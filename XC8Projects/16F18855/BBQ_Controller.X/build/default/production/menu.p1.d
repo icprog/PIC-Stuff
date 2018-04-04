@@ -1,6 +1,6 @@
- build/default/production/lcd.d  \
- build/default/production/lcd.p1:  \
- lcd.c  \
+ build/default/production/menu.d  \
+ build/default/production/menu.p1:  \
+ menu.c  \
 pwm.h  \
 lcd.h  \
 pin_manager.h  \

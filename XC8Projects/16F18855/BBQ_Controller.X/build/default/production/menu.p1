@@ -1,21 +1,18 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"11073 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
-[v _PWM7CON `Vuc ~T0 @X0 0 e@914 ]
-"10904
-[v _PWM7DCH `Vuc ~T0 @X0 0 e@913 ]
-"10839
-[v _PWM7DCL `Vuc ~T0 @X0 0 e@912 ]
-"7505
-[s S360 :2 `uc 1 :2 `uc 1 :2 `uc 1 ]
-[n S360 . C5TSEL P6TSEL P7TSEL ]
-"7510
-[s S361 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S361 . C5TSEL0 C5TSEL1 P6TSEL0 P6TSEL1 P7TSEL0 P7TSEL1 ]
-"7504
-[u S359 `S360 1 `S361 1 ]
-[n S359 . . . ]
-"7519
-[v _CCPTMRS1bits `VS359 ~T0 @X0 0 e@543 ]
+"36268 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _RB1 `Vb ~T0 @X0 0 e@105 ]
+"36254
+[v _RB0 `Vb ~T0 @X0 0 e@104 ]
+"14 menu.c
+[v _set `i ~T0 @X0 0 e ]
+[v F13529 `(v ~T0 @X0 1 tf1`ul ]
+"152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
+[v __delay `JF13529 ~T0 @X0 0 e ]
+[p i __delay ]
+"36282 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _RB2 `Vb ~T0 @X0 0 e@106 ]
+[; ;menu.h: 4: char menuChoice(char);
+[; ;menu.h: 6: char readKey(void);
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12592,18 +12589,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
-[; ;menu.h: 4: char menuChoice(char);
-[; ;menu.h: 6: char readKey(void);
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
 [; ;pid.h: 14: int16_t PID_Calculate(int16_t setpoint, int16_t temp);
-[; ;lcd.h: 38: void InitCustomChars();
-[; ;lcd.h: 40: void LCD_Port(char a);
-[; ;lcd.h: 42: void LCD_Cmd(char a);
-[; ;lcd.h: 44: void LCD_Clear();
-[; ;lcd.h: 46: void LCD_Set_Cursor(char x, char y);
-[; ;lcd.h: 48: void LCD_Init(char style);
-[; ;lcd.h: 50: void LCD_Write_Char(const char a);
-[; ;lcd.h: 52: void LCD_Write_String(const char *a);
-[; ;lcd.h: 54: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 [; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;adc.h: 9: typedef uint16_t adc_result_t;
 [; ;adc.h: 12: typedef enum
@@ -12644,50 +12632,198 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tempCalc.h: 6: float tempCalc(int analogValue);
 [; ;system.h: 19: void SYSTEM_Initialize(void);
 [; ;system.h: 21: void OSCILLATOR_Initialize(void);
-[; ;pwm.h: 7: void PWM_Initialize(void);
-[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
-"3 pwm.c
-[v _PWM_Initialize `(v ~T0 @X0 1 ef ]
-"4
-{
-[; ;pwm.c: 3: void PWM_Initialize(void)
-[; ;pwm.c: 4: {
-[e :U _PWM_Initialize ]
-[f ]
-[; ;pwm.c: 14: PWM7CON = 0x80;
-"14
-[e = _PWM7CON -> -> 128 `i `uc ]
-[; ;pwm.c: 16: PWM7DCH = 0x00;
-"16
-[e = _PWM7DCH -> -> 0 `i `uc ]
-[; ;pwm.c: 18: PWM7DCL = 0x00;
+[; ;lcd.h: 38: void InitCustomChars();
+[; ;lcd.h: 40: void LCD_Port(char a);
+[; ;lcd.h: 42: void LCD_Cmd(char a);
+[; ;lcd.h: 44: void LCD_Clear();
+[; ;lcd.h: 46: void LCD_Set_Cursor(char x, char y);
+[; ;lcd.h: 48: void LCD_Init(char style);
+[; ;lcd.h: 50: void LCD_Write_Char(const char a);
+[; ;lcd.h: 52: void LCD_Write_String(const char *a);
+[; ;lcd.h: 54: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+[v F13662 `ui ~T0 @X0 -> 2 `i t ]
+"10 menu.c
+[v _rangeSet `F13662 ~T0 @X0 -> 2 `i e ]
+[i _rangeSet
+:U ..
+:U ..
+-> -> 75 `i `ui
+-> -> 275 `i `ui
+..
+:U ..
+-> -> 0 `i `ui
+-> -> 1023 `i `ui
+..
+..
+]
+[; ;menu.c: 10: unsigned int rangeSet[2][2] = {{75,275},{0,1023}};
+[; ;menu.c: 12: extern int pitSetpoint;
+[; ;menu.c: 14: extern int set;
+[; ;menu.c: 16: extern unsigned char loop;
 "18
-[e = _PWM7DCL -> -> 0 `i `uc ]
-[; ;pwm.c: 20: CCPTMRS1bits.P6TSEL = 0x1;
+[v _menuDelay `uc ~T0 @X0 1 e ]
+[i _menuDelay
+-> -> 0 `i `uc
+]
+[; ;menu.c: 18: char menuDelay = 0;
 "20
-[e = . . _CCPTMRS1bits 0 1 -> -> 1 `i `uc ]
-[; ;pwm.c: 22: }
+[v _delayCount `uc ~T0 @X0 1 e ]
+[i _delayCount
+-> -> 0 `i `uc
+]
+[; ;menu.c: 20: char delayCount = 0;
 "22
+[v _key `uc ~T0 @X0 1 e ]
+[i _key
+-> -> 0 `i `uc
+]
+[; ;menu.c: 22: char key = 0;
+"24
+[v _testKey `uc ~T0 @X0 1 e ]
+[i _testKey
+-> -> 0 `i `uc
+]
+[; ;menu.c: 24: char testKey = 0;
+"26
+[v _timer `i ~T0 @X0 1 e ]
+[i _timer
+-> 0 `i
+]
+[; ;menu.c: 26: int timer = 0;
+"29
+[v _readKey `(uc ~T0 @X0 1 ef ]
+"30
+{
+[; ;menu.c: 29: char readKey(void)
+[; ;menu.c: 30: {
+[e :U _readKey ]
+[f ]
+[; ;menu.c: 31: if(RB1==1)
+"31
+[e $ ! == -> _RB1 `i -> 1 `i 1520  ]
+[; ;menu.c: 32: {
+"32
+{
+[; ;menu.c: 33: if(key>0)key-=1;
+"33
+[e $ ! > -> _key `i -> 0 `i 1521  ]
+[e =- _key -> -> 1 `i `uc ]
+[e :U 1521 ]
+"34
+}
+[e :U 1520 ]
+[; ;menu.c: 34: }
+[; ;menu.c: 36: if(RB0==1)
+"36
+[e $ ! == -> _RB0 `i -> 1 `i 1522  ]
+[; ;menu.c: 37: {
+"37
+{
+[; ;menu.c: 38: if(key<1)key+=1;
+"38
+[e $ ! < -> _key `i -> 1 `i 1523  ]
+[e =+ _key -> -> 1 `i `uc ]
+[e :U 1523 ]
+"39
+}
+[e :U 1522 ]
+[; ;menu.c: 39: }
+[; ;menu.c: 41: return key;
+"41
+[e ) _key ]
+[e $UE 1519  ]
+[; ;menu.c: 42: }
+"42
 [e :UE 1519 ]
 }
-"32
-[v _PWM7_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
-"33
+"44
+[v _menuChoice `(uc ~T0 @X0 1 ef1`uc ]
+"45
 {
-[; ;pwm.c: 32: void PWM7_LoadDutyValue(uint16_t dutyCycle7)
-[; ;pwm.c: 33: {
-[e :U _PWM7_LoadDutyValue ]
-"32
-[v _dutyCycle7 `ui ~T0 @X0 1 r1 ]
-"33
+[; ;menu.c: 44: char menuChoice(char)
+[; ;menu.c: 45: {
+[e :U _menuChoice ]
+[v F13672 `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;pwm.c: 34: PWM7DCH = (dutyCycle7 & 0x03FC)>>2;
-"34
-[e = _PWM7DCH -> >> & _dutyCycle7 -> -> 1020 `i `ui -> 2 `i `uc ]
-[; ;pwm.c: 36: PWM7DCL = (dutyCycle7 & 0x0003)<<6;
-"36
-[e = _PWM7DCL -> << & _dutyCycle7 -> -> 3 `i `ui -> 6 `i `uc ]
-[; ;pwm.c: 37: }
-"37
-[e :UE 1520 ]
+[; ;menu.c: 46: while(RB2 != 1)
+"46
+[e $U 1525  ]
+[e :U 1526 ]
+[; ;menu.c: 47: {
+"47
+{
+[; ;menu.c: 48: testKey = readKey();
+"48
+[e = _testKey ( _readKey ..  ]
+[; ;menu.c: 50: if(timer > 1000)
+"50
+[e $ ! > _timer -> 1000 `i 1528  ]
+[; ;menu.c: 51: {
+"51
+{
+[; ;menu.c: 52: timer = 0;
+"52
+[e = _timer -> 0 `i ]
+[; ;menu.c: 53: goto Exit;
+"53
+[e $U 1529  ]
+"54
+}
+[e :U 1528 ]
+[; ;menu.c: 54: }
+[; ;menu.c: 58: if(RB0==1)
+"58
+[e $ ! == -> _RB0 `i -> 1 `i 1530  ]
+[; ;menu.c: 59: {
+"59
+{
+[; ;menu.c: 60: delayCount+=2;
+"60
+[e =+ _delayCount -> -> 2 `i `uc ]
+[; ;menu.c: 62: set+=1;
+"62
+[e =+ _set -> 1 `i ]
+[; ;menu.c: 66: if(delayCount<30)
+"66
+[e $ ! < -> _delayCount `i -> 30 `i 1531  ]
+[; ;menu.c: 67: {
+"67
+{
+[; ;menu.c: 68: _delay((unsigned long)((150)*(32000000/4000.0)));
+"68
+[e ( __delay (1 -> * -> -> 150 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+"69
+}
+[e :U 1531 ]
+[; ;menu.c: 69: }
+[; ;menu.c: 70: if(delayCount>(30+10))delayCount=(30+10);
+"70
+[e $ ! > -> _delayCount `i + -> 30 `i -> 10 `i 1532  ]
+[e = _delayCount -> + -> 30 `i -> 10 `i `uc ]
+[e :U 1532 ]
+"71
+}
+[e :U 1530 ]
+"117
+}
+[e :U 1525 ]
+"46
+[e $ != -> _RB2 `i -> 1 `i 1526  ]
+[e :U 1527 ]
+[; ;menu.c: 71: }
+[; ;menu.c: 117: }
+[; ;menu.c: 120: return testKey;
+"120
+[e ) _testKey ]
+[e $UE 1524  ]
+[; ;menu.c: 122: Exit:
+"122
+[e :U 1529 ]
+[; ;menu.c: 123: return 0;
+"123
+[e ) -> -> 0 `i `uc ]
+[e $UE 1524  ]
+[; ;menu.c: 124: }
+"124
+[e :UE 1524 ]
 }

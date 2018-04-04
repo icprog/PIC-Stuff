@@ -12595,6 +12595,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;menu.h: 4: char menuChoice(char);
+[; ;menu.h: 6: char readKey(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
 [; ;pid.h: 14: int16_t PID_Calculate(int16_t setpoint, int16_t temp);
@@ -12636,8 +12638,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;tempCalc.h: 6: float tempCalc(int analogValue);
-[; ;system.h: 18: void SYSTEM_Initialize(void);
-[; ;system.h: 20: void OSCILLATOR_Initialize(void);
+[; ;system.h: 19: void SYSTEM_Initialize(void);
+[; ;system.h: 21: void OSCILLATOR_Initialize(void);
 [; ;lcd.h: 38: void InitCustomChars();
 [; ;lcd.h: 40: void LCD_Port(char a);
 [; ;lcd.h: 42: void LCD_Cmd(char a);
@@ -13102,8 +13104,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `c ~T0 @X0 1 r4 ]
 "247
 [f ]
-[v F13690 `uc ~T0 @X0 -> 5 `i s ]
-[i F13690
+[v F13694 `uc ~T0 @X0 -> 5 `i s ]
+[i F13694
 :U ..
 "248
 -> -> 0 `i `uc
@@ -13115,7 +13117,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _str `uc ~T0 @X0 -> 5 `i a ]
 [; ;lcd.c: 248: char str[5]={0,0,0,0,0};
-[e = _str F13690 ]
+[e = _str F13694 ]
 "249
 [v _i `i ~T0 @X0 1 a ]
 [; ;lcd.c: 249: int i=4,j=0;

@@ -10,7 +10,7 @@
 #define upKey                   RB0
 #define downKey                 RB1
 #define enterKey                RB2
-#define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay
+//#define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay
 #define numOutSamples           40                              // Number of Output samples to be Averaged into Output
 
 //#define celcius                 analogs[0]                      // Touch pad to select Degrees C
@@ -33,9 +33,9 @@ void main(void)
     
     char set                            =   0;                      // Variable (Pit Setpoint, Backlight Intensity)) to be set.
     
-    char menuDelay                      =   0;
+    //char menuDelay                      =   0;
     
-    char delayCount                     =   0;
+    //char delayCount                     =   0;
     
     int output                          =   0;
     

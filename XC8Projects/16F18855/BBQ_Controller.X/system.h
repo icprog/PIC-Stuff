@@ -5,6 +5,7 @@
 #include "pin_manager.h"
 #include <stdint.h>
 #include "tmr2.h"
+#include "menu.h"
 #include "pwm.h"
 #include "pid.h"
 #include "lcd.h"

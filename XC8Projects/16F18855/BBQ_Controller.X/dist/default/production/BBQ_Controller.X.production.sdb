@@ -70,8 +70,10 @@ channel_FVR 63
 [v _LCD_Write_String LCD_Write_String `(v  1 e 1 0 ]
 "246
 [v _LCD_Write_Int LCD_Write_Int `(v  1 e 1 0 ]
-"27 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\main.c
+"26 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\main.c
 [v _main main `(v  1 e 1 0 ]
+"29 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\menu.c
+[v _readKey readKey `(uc  1 e 1 0 ]
 "21 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\pid.c
 [v _PID_Calculate PID_Calculate `(i  1 e 2 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\pin_manager.c
@@ -301,6 +303,8 @@ channel_FVR 63
 [v _RB0 RB0 `VEb  1 e 0 @104 ]
 "36268
 [v _RB1 RB1 `VEb  1 e 0 @105 ]
+"36282
+[v _RB2 RB2 `VEb  1 e 0 @106 ]
 "36366
 [v _RC0 RC0 `VEb  1 e 0 @112 ]
 "36380
@@ -309,6 +313,16 @@ channel_FVR 63
 [v _errno errno `i  1 e 2 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\lcd.c
 [v ___cgram __cgram `[16]uc  1 e 16 0 ]
+"14 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\menu.c
+[v _set set `i  1 e 2 0 ]
+"20
+[v _delayCount delayCount `uc  1 e 1 0 ]
+"22
+[v _key key `uc  1 e 1 0 ]
+"24
+[v _testKey testKey `uc  1 e 1 0 ]
+"26
+[v _timer timer `i  1 e 2 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\pid.c
 [v _error error `i  1 e 2 0 ]
 "6
@@ -337,62 +351,60 @@ channel_FVR 63
 [v _signPositive signPositive `i  1 e 2 0 ]
 "18
 [v _lastSign lastSign `i  1 e 2 0 ]
-"27 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\main.c
+"26 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"45
+"46
 [v main@outputSamples outputSamples `[40]i  1 a 80 0 ]
-"31
+"30
 [v main@analogs analogs `[2]ui  1 a 4 6 ]
-"41
+"42
 [v main@outputTotal outputTotal `l  1 a 4 0 ]
-"33
-[v main@set set `i  1 a 2 11 ]
-"80
+"81
 [v main@dutyCycle6 dutyCycle6 `ui  1 a 2 4 ]
-"49
-[v main@currentTemperature currentTemperature `i  1 a 2 37 ]
-"61
-[v main@pidPeriodCounter pidPeriodCounter `i  1 a 2 35 ]
-"51
-[v main@lastTemperature lastTemperature `i  1 a 2 33 ]
-"82
-[v main@dutyCycle7 dutyCycle7 `ui  1 a 2 29 ]
-"39
-[v main@output output `i  1 a 2 25 ]
-"71
+"50
+[v main@currentTemperature currentTemperature `i  1 a 2 39 ]
+"62
+[v main@pidPeriodCounter pidPeriodCounter `i  1 a 2 37 ]
+"52
+[v main@lastTemperature lastTemperature `i  1 a 2 35 ]
+"83
+[v main@dutyCycle7 dutyCycle7 `ui  1 a 2 33 ]
+"40
+[v main@output output `i  1 a 2 28 ]
+"32
+[v main@pitSetpoint pitSetpoint `i  1 a 2 26 ]
+"72
 [v main@bCount bCount `ui  1 a 2 77 ]
-"37
-[v main@delayCount delayCount `uc  1 a 1 13 ]
-"57
-[v main@j j `uc  1 a 1 10 ]
-"43
-[v main@outputIndex outputIndex `uc  1 a 1 39 ]
-"65
+"58
+[v main@j j `uc  1 a 1 11 ]
+"44
+[v main@outputIndex outputIndex `uc  1 a 1 10 ]
+"66
 [v main@loop loop `uc  1 a 1 32 ]
-"35
-[v main@menuDelay menuDelay `uc  1 a 1 31 ]
-"53
-[v main@lidOpenCount lidOpenCount `uc  1 a 1 28 ]
-"47
-[v main@holdOutput holdOutput `uc  1 a 1 27 ]
-"77
+"54
+[v main@lidOpenCount lidOpenCount `uc  1 a 1 31 ]
+"48
+[v main@holdOutput holdOutput `uc  1 a 1 30 ]
+"34
+[v main@set set `uc  1 a 1 25 ]
+"78
 [v main@tPadCount tPadCount `uc  1 a 1 24 ]
-"75
+"76
 [v main@resetDelay resetDelay `uc  1 a 1 23 ]
-"73
+"74
 [v main@startDelay startDelay `uc  1 a 1 22 ]
-"69
+"70
 [v main@C_or_F C_or_F `uc  1 a 1 21 ]
-"67
+"68
 [v main@choice choice `uc  1 a 1 20 ]
-"59
+"60
 [v main@x x `uc  1 a 1 79 ]
-"29
-[v main@F13660 F13660 `[2]ui  1 s 4 F13660 ]
-"43
-[v main@F13668 F13668 `[40]i  1 s 80 F13668 ]
-"408
+"28
+[v main@F13664 F13664 `[2]ui  1 s 4 F13664 ]
+"44
+[v main@F13671 F13671 `[40]i  1 s 80 F13671 ]
+"424
 } 0
 "4 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\tempCalc.c
 [v _tempCalc tempCalc `(f  1 e 3 0 ]
@@ -648,7 +660,7 @@ channel_FVR 63
 [v LCD_Write_Int@numPlaces numPlaces `c  1 p 1 12 ]
 [v LCD_Write_Int@sign sign `c  1 p 1 13 ]
 "247
-[v LCD_Write_Int@F13690 F13690 `[5]uc  1 s 5 F13690 ]
+[v LCD_Write_Int@F13694 F13694 `[5]uc  1 s 5 F13694 ]
 "300
 } 0
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\awmod.c

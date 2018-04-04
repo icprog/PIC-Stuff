@@ -16683,6 +16683,11 @@ typedef uint16_t uintptr_t;
 # 262 "tmr2.h"
 void TMR2_Initialize(void);
 
+# 4 "menu.h"
+char menuChoice(char);
+
+char readKey(void);
+
 # 7 "pwm.h"
 void PWM_Initialize(void);
 
@@ -16798,24 +16803,23 @@ uint8_t ADCC_GetConversionStageStatus(void);
 # 6 "tempCalc.h"
 float tempCalc(int analogValue);
 
-# 18 "system.h"
+# 19 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 27 "main.c"
+# 26 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
 
 uint16_t analogs[2] = {0};
 
-int set = 2250;
+int pitSetpoint = 2250;
 
-char menuDelay = 0;
+char set = 0;
 
-char delayCount = 0;
-
+# 40
 int output = 0;
 
 int32_t outputTotal = 0;
@@ -16892,7 +16896,7 @@ LCD_Write_Int(dutyCycle6,5,0,0);
 
 if(holdOutput==0)
 {
-output = PID_Calculate(set,analogs[1]);
+output = PID_Calculate(pitSetpoint,analogs[1]);
 outputTotal = outputTotal - outputSamples[outputIndex];
 outputSamples[outputIndex] = output;
 outputTotal = outputTotal + outputSamples[outputIndex];
@@ -16943,50 +16947,18 @@ analogs[0]=tempCalc(analogs[0]);
 
 analogs[1]=tempCalc(analogs[1]);
 
-# 171
-if(RB0==1)
+# 173
+if(RB2==1)
 {
-delayCount+=2;
-set+=1;
-if(set>2750)set=2750;
-{ LCD_Set_Cursor(5,0); LCD_Write_Int(set,-1, 1, 0);};
-menuDelay=255;
-if(delayCount<30)
-{
-_delay((unsigned long)((150)*(32000000/4000.0)));
+
+# 179
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Up/Down to Set:");};
+{ LCD_Set_Cursor(0,1); LCD_Write_String("  Pit Setpoint  ");};
+set = 0;
+
 }
 
-if(delayCount>(30+10))delayCount=(30+10);
-}
-
-if(RB1==1)
-{
-delayCount+=2;
-set-=1;
-if(set<750)set=750;
-{ LCD_Set_Cursor(5,0); LCD_Write_Int(set,-1, 1, 0);};
-menuDelay=255;
-
-if(delayCount<30)
-{
-_delay((unsigned long)((150)*(32000000/4000.0)));
-}
-
-if(delayCount>(30+10))delayCount=(30+10);
-}
-
-if(delayCount>0)delayCount-=1;
-
-if(!(RB1 || RB0))
-{
-if(menuDelay>0)
-{
-loop=0;
-menuDelay-=1;
-}
-}
-
-# 406
+# 422
 loop+=1;
 }
 }
