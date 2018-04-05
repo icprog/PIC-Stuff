@@ -1,7 +1,7 @@
 #include    "tempCalc.h"
 #include    <math.h>
 
-float tempCalc(int analogValue)
+int tempCalc(int analogValue)
 {
     float R, steinhart;                         // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
 
@@ -19,5 +19,5 @@ float tempCalc(int analogValue)
         
     steinhart = steinhart*9/5+320;              // Display Temperature in DegF
         
-    return steinhart;    
+    return (int)steinhart;    
 }

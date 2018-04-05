@@ -16684,7 +16684,7 @@ typedef uint16_t uintptr_t;
 void TMR2_Initialize(void);
 
 # 4 "menu.h"
-char menuChoice(char);
+void menuChoice(void);
 
 char readKey(void);
 
@@ -16806,7 +16806,7 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 
 # 6 "tempCalc.h"
-float tempCalc(int analogValue);
+int tempCalc(int analogValue);
 
 # 30 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\math.h"
 extern double fabs(double);
@@ -16837,7 +16837,7 @@ extern double trunc(double);
 extern double round(double);
 
 # 4 "tempCalc.c"
-float tempCalc(int analogValue)
+int tempCalc(int analogValue)
 {
 float R, steinhart;
 
@@ -16855,5 +16855,5 @@ steinhart*=10;
 
 steinhart = steinhart*9/5+320;
 
-return steinhart;
+return (int)steinhart;
 }

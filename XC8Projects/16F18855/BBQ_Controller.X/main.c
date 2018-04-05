@@ -4,32 +4,35 @@
 #include "system.h"
 
     // *************** Defines *****************************************************    
+#define pitSetpoint             setpoint[0]
+#define backlightIntensity      setpoint[1]
 #define ambientTemperature      analogs[0]                                      // Analog Chanell 1,  Pin 3
 #define pitTemperature          analogs[1]                                      // Analog Chanell 3,  Pin 5
 #define pitViperOutput          LATC2
 #define upKey                   RB0
 #define downKey                 RB1
 #define enterKey                RB2
-//#define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay
+#define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay, also defined in menu.c
 #define numOutSamples           40                              // Number of Output samples to be Averaged into Output
 
 //#define celcius                 analogs[0]                      // Touch pad to select Degrees C
-#define farenheit               analogs[1]                      // Touch pad to select Degrees F
-#define down                    analogs[2]                      // Touch pad to select Backlight Intencity Down
-#define up                      analogs[3]                      // Touch pad to select Backlight Intencity Up
-#define solarInTemp             analogs[4]
-#define solarOutTemp            analogs[5]
+//#define farenheit               analogs[1]                      // Touch pad to select Degrees F
+//#define down                    analogs[2]                      // Touch pad to select Backlight Intencity Down
+//#define up                      analogs[3]                      // Touch pad to select Backlight Intencity Up
+//#define solarInTemp             analogs[4]
+//#define solarOutTemp            analogs[5]
 // </editor-fold>
-
 // <editor-fold defaultstate="collapsed" desc="Variables">
 // *************** Main Routine ************************************************    
+
+
 void main(void)
 {
     SYSTEM_Initialize();
     
     uint16_t analogs[2]                 =   {0};                    // array of analog readings 
     
-    int pitSetpoint                     =   2250;
+    extern volatile int16_t setpoint[2];                                         // defined in menu.c
     
     char set                            =   0;                      // Variable (Pit Setpoint, Backlight Intensity)) to be set.
     
@@ -63,7 +66,7 @@ void main(void)
     
     extern int pidMaxOutput;
     
-    unsigned char loop          =   64;                     // cycle (loop) counter
+    extern unsigned char loop;                              // cycle (loop) counter
     
     char choice                 =   2;                      // Display degrees C or degrees F, or cycle through both if choice is "2".
     
@@ -78,24 +81,23 @@ void main(void)
     unsigned char tPadCount     =   10;                     // Touch pad counter (counts up or down from 10, to determine is one or both pads touched) (for C_or_F choice))
     
     
-    uint16_t dutyCycle6         =   0;                    // Pit Viper Fan Output
+    uint16_t dutyCycle6         =   0;                      // Pit Viper Fan Output
     
-    uint16_t dutyCycle7         =   523;                    // display back light brightness
+//    uint16_t dutyCycle7         =   523;                    // display back light brightness
 
 //    PWM6_LoadDutyValue(dutyCycle6);
 
-    PWM7_LoadDutyValue(dutyCycle7);
+    PWM7_LoadDutyValue(backlightIntensity);
 
     __delay_ms(300);
 
     LCD_Clear();
     // </editor-fold>
-
     while (1)
     {
         if(loop>253)
         {
-            PWM7_LoadDutyValue(dutyCycle7);
+            PWM7_LoadDutyValue(backlightIntensity);
         
             LCDWriteStringXY(0,0,"Pit:");
             LCDWriteIntXY(5,0,pitTemperature,-1,1,0);
@@ -164,25 +166,15 @@ void main(void)
 
         pitTemperature=tempCalc(analogs[1]);
 
-// <editor-fold defaultstate="collapsed" desc="KeyPad Menu">
-//        if(enterKey==1)
-  //      {
-            
-    //    }
 
         if(enterKey==1)
         {
-/*            if(menuDelay==0)menuDelay=1023;
-            if(menuDelay==1023)LCD_Clear();
-            if(menuDelay>0)menuDelay-=1;
-  */          
-            LCDWriteStringXY(0,0,"Up/Down to Set:");
-            LCDWriteStringXY(0,1,"  Pit Setpoint  ");
-            set = 0;
-            
+            LCD_Clear();
+            LCDWriteStringXY(0,0,"Alter with Up/Dn");
+            LCDWriteStringXY(1,0,"Enter Key to Set");
+            __delay_ms(1500);
+            menuChoice();
         }
-
-
 
 /*        if(upKey==1)
         {
@@ -225,7 +217,6 @@ void main(void)
                 menuDelay-=1;
             }
         }*/
-// </editor-fold>
         
         
 /*        for(x=0;x<6;x++) analogs[x]=readAnalog(x);

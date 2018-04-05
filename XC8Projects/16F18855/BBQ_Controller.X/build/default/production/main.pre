@@ -16684,7 +16684,7 @@ typedef uint16_t uintptr_t;
 void TMR2_Initialize(void);
 
 # 4 "menu.h"
-char menuChoice(char);
+void menuChoice(void);
 
 char readKey(void);
 
@@ -16801,25 +16801,25 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 6 "tempCalc.h"
-float tempCalc(int analogValue);
+int tempCalc(int analogValue);
 
 # 19 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 26 "main.c"
+# 29 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
 
 uint16_t analogs[2] = {0};
 
-int pitSetpoint = 2250;
+extern volatile int16_t setpoint[2];
 
 char set = 0;
 
-# 40
+# 43
 int output = 0;
 
 int32_t outputTotal = 0;
@@ -16846,7 +16846,7 @@ int pidPeriodCounter = 0;
 
 extern int pidMaxOutput;
 
-unsigned char loop = 64;
+extern unsigned char loop;
 
 char choice = 2;
 
@@ -16863,22 +16863,18 @@ unsigned char tPadCount = 10;
 
 uint16_t dutyCycle6 = 0;
 
-uint16_t dutyCycle7 = 523;
-
-
-
-PWM7_LoadDutyValue(dutyCycle7);
+# 90
+PWM7_LoadDutyValue(setpoint[1]);
 
 _delay((unsigned long)((300)*(32000000/4000.0)));
 
 LCD_Clear();
 
-
 while (1)
 {
 if(loop>253)
 {
-PWM7_LoadDutyValue(dutyCycle7);
+PWM7_LoadDutyValue(setpoint[1]);
 
 { LCD_Set_Cursor(0,0); LCD_Write_String("Pit:");};
 { LCD_Set_Cursor(5,0); LCD_Write_Int(analogs[1],-1, 1, 0);};
@@ -16896,7 +16892,7 @@ LCD_Write_Int(dutyCycle6,5,0,0);
 
 if(holdOutput==0)
 {
-output = PID_Calculate(pitSetpoint,analogs[1]);
+output = PID_Calculate(setpoint[0],analogs[1]);
 outputTotal = outputTotal - outputSamples[outputIndex];
 outputSamples[outputIndex] = output;
 outputTotal = outputTotal + outputSamples[outputIndex];
@@ -16947,18 +16943,17 @@ analogs[0]=tempCalc(analogs[0]);
 
 analogs[1]=tempCalc(analogs[1]);
 
-# 173
+
 if(RB2==1)
 {
-
-# 179
-{ LCD_Set_Cursor(0,0); LCD_Write_String("Up/Down to Set:");};
-{ LCD_Set_Cursor(0,1); LCD_Write_String("  Pit Setpoint  ");};
-set = 0;
-
+LCD_Clear();
+{ LCD_Set_Cursor(0,0); LCD_Write_String("Alter with Up/Dn");};
+{ LCD_Set_Cursor(1,0); LCD_Write_String("Enter Key to Set");};
+_delay((unsigned long)((1500)*(32000000/4000.0)));
+menuChoice();
 }
 
-# 422
+# 413
 loop+=1;
 }
 }

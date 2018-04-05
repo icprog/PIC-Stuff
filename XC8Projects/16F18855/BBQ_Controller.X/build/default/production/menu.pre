@@ -2,7 +2,7 @@
 # 1 "menu.c"
 
 # 4 "menu.h"
-char menuChoice(char);
+void menuChoice(void);
 
 char readKey(void);
 
@@ -16782,7 +16782,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 6 "tempCalc.h"
-float tempCalc(int analogValue);
+int tempCalc(int analogValue);
 
 # 19 "system.h"
 void SYSTEM_Initialize(void);
@@ -16808,14 +16808,18 @@ void LCD_Write_String(const char *a);
 
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
-# 10 "menu.c"
-unsigned int rangeSet[2][2] = {{75,275},{0,1023}};
+# 11 "menu.c"
+unsigned int lowRangeSet[2] = {750,0};
 
-extern int pitSetpoint;
+unsigned int highRangeSet[2] = {2750,1023};
 
-extern int set;
+int16_t setpoint[2] = {2250,523};
 
-extern unsigned char loop;
+char const *desc[] = {" Pit Temp:","BackLight:"};
+
+
+
+unsigned char loop = 64;
 
 char menuDelay = 0;
 
@@ -16823,9 +16827,14 @@ char delayCount = 0;
 
 char key = 0;
 
+char choice = 0;
+
 char testKey = 0;
 
 int timer = 0;
+
+char timer2 = 0;
+
 
 
 char readKey(void)
@@ -16843,11 +16852,11 @@ if(key<1)key+=1;
 return key;
 }
 
-char menuChoice(char)
+void menuChoice(void)
 {
 while(RB2 != 1)
 {
-testKey = readKey();
+choice = readKey();
 
 if(timer > 1000)
 {
@@ -16855,30 +16864,75 @@ timer = 0;
 goto Exit;
 }
 
+if(timer2>25){ LCD_Set_Cursor(0,0); LCD_Write_String("Up/Down to Alter");}else { LCD_Set_Cursor(0,0); LCD_Write_String("Enter to Select ");};
 
+{ LCD_Set_Cursor(1,0); LCD_Write_String(desc[choice]);};
+
+if(timer2>49)timer2=0;
+
+timer+=1;
+timer2+=1;
+}
+timer=0;
+timer2=0;
+
+while(RB2 != 1)
+{
+if(timer > 1000)
+{
+timer = 0;
+goto Exit;
+}
+
+timer+=1;
 
 if(RB0==1)
 {
 delayCount+=2;
 
-set+=1;
-
-
-
+setpoint[choice]+=1;
+if(setpoint[choice]>highRangeSet[choice])setpoint[choice]=highRangeSet[choice];
+{ LCD_Set_Cursor(5,0); LCD_Write_Int(setpoint[choice],-1, 1, 0);};
+menuDelay=255;
 if(delayCount<30)
 {
 _delay((unsigned long)((150)*(32000000/4000.0)));
 }
 if(delayCount>(30+10))delayCount=(30+10);
+
+timer=0;
 }
 
-# 117
+
+if(RB1==1)
+{
+delayCount+=2;
+setpoint[choice]-=1;
+if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
+{ LCD_Set_Cursor(5,0); LCD_Write_Int(setpoint[choice],-1, 1, 0);};
+menuDelay=255;
+
+if(delayCount<30)
+{
+_delay((unsigned long)((150)*(32000000/4000.0)));
 }
 
+if(delayCount>(30+10))delayCount=(30+10);
 
-return testKey;
+timer=0;
+}
 
+if(delayCount>0)delayCount-=1;
+
+if(!(RB1 || RB0))
+{
+if(menuDelay>0)
+{
+loop=0;
+menuDelay-=1;
+}
+}
+}
 Exit:
-return 0;
+timer=0;
 }
-

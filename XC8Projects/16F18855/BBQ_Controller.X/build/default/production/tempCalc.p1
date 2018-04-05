@@ -12577,7 +12577,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
-[; ;menu.h: 4: char menuChoice(char);
+[; ;menu.h: 4: void menuChoice(void);
 [; ;menu.h: 6: char readKey(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
@@ -12630,7 +12630,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;system.h: 19: void SYSTEM_Initialize(void);
 [; ;system.h: 21: void OSCILLATOR_Initialize(void);
-[; ;tempCalc.h: 6: float tempCalc(int analogValue);
+[; ;tempCalc.h: 6: int tempCalc(int analogValue);
 [; ;math.h: 30: extern double fabs(double);
 [; ;math.h: 31: extern double floor(double);
 [; ;math.h: 32: extern double ceil(double);
@@ -12658,10 +12658,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;math.h: 54: extern double trunc(double);
 [; ;math.h: 55: extern double round(double);
 "4 tempCalc.c
-[v _tempCalc `(f ~T0 @X0 1 ef1`i ]
+[v _tempCalc `(i ~T0 @X0 1 ef1`i ]
 "5
 {
-[; ;tempCalc.c: 4: float tempCalc(int analogValue)
+[; ;tempCalc.c: 4: int tempCalc(int analogValue)
 [; ;tempCalc.c: 5: {
 [e :U _tempCalc ]
 "4
@@ -12699,9 +12699,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tempCalc.c: 20: steinhart = steinhart*9/5+320;
 "20
 [e = _steinhart + / * _steinhart -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
-[; ;tempCalc.c: 22: return steinhart;
+[; ;tempCalc.c: 22: return (int)steinhart;
 "22
-[e ) _steinhart ]
+[e ) -> _steinhart `i ]
 [e $UE 1519  ]
 [; ;tempCalc.c: 23: }
 "23

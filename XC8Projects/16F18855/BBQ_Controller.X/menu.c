@@ -1,19 +1,24 @@
 #include    "menu.h"
 #include    "lcd.h"
 
-//#define pitSetpoint             set
-#define upKey2                   RB0
-#define downKey2                 RB1
-#define enterKey2                RB2
-#define delayNumber              30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay
+#define pitSetpoint             setpoint[0]
+#define backLightSetpoint       setpoint[1]
+#define upKey                   RB0
+#define downKey                 RB1
+#define enterKey                RB2
+#define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay
 
-unsigned int rangeSet[2][2]         =   {{75,275},{0,1023}}; 
+unsigned int lowRangeSet[2]     =   {750,0};               // lowrangeSet[0] is Pit Temp setpoint lower limit, lowrangeSet[1] is backlight intensity
 
-extern int pitSetpoint;
+unsigned int highRangeSet[2]    =   {2750,1023};           // highRangeSet[0] is Pit Temp setpoint upper limit, highRangeSet[1] is backlight intensity
 
-extern int set;
+int16_t setpoint[2]             =   {2250,523};            // default startup setpoints for Pit temp & backlight
 
-extern unsigned char loop;
+char const *desc[]              =   {" Pit Temp:","BackLight:"};
+
+//extern int set;
+
+unsigned char loop                  =   64;
 
 char menuDelay                      =   0;
     
@@ -21,19 +26,24 @@ char delayCount                     =   0;
 
 char key                            =   0;
 
+char choice                         =   0;
+
 char testKey                        =   0;
 
 int timer                           =   0;
 
+char timer2                         =   0;
+
+
 
 char readKey(void)
 {
-    if(downKey2==1)
+    if(downKey==1)
     {
         if(key>0)key-=1;
     }
     
-    if(upKey2==1)
+    if(upKey==1)
     {
         if(key<1)key+=1;
     }
@@ -41,11 +51,11 @@ char readKey(void)
     return key;
 }
 
-char menuChoice(char)
+void menuChoice(void)
 {
-    while(enterKey2 != 1)
+    while(enterKey != 1)
     {
-        testKey = readKey();
+        choice = readKey();
                 
         if(timer > 1000)
         {
@@ -53,120 +63,52 @@ char menuChoice(char)
             goto Exit;                                             
         }
         
-//        if(testKey==0)
+        if(timer2>25)LCDWriteStringXY(0,0,"Up/Down to Alter")else LCDWriteStringXY(0,0,"Enter to Select ");
         
-        if(upKey2==1)
-        {
-            delayCount+=2;
-  //          if(delayCount==2)
-            pitSetpoint+=1;
-   //         if(pitSetpoint>2750)pitSetpoint=2750;
-     //       LCDWriteIntXY(5,0,pitSetpoint,-1,1,0);
- //           menuDelay=255;
-            if(delayCount<delayNumber)
-            {
-                __delay_ms(150);
-            }
-            if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
-        }
+        LCDWriteStringXY(1,0,desc[choice]);
+        
+        if(timer2>49)timer2=0;
+        
+        timer+=1;
+        timer2+=1;
+    }
+    timer=0;
+    timer2=0;
 
-/*         
-        
-        if(upKey2==1)
+    while(enterKey != 1)
+    {
+        if(timer > 1000)
         {
-            delayCount+=2;
-            pitSetpoint+=1;
-            if(pitSetpoint>2750)pitSetpoint=2750;
-            LCDWriteIntXY(5,0,pitSetpoint,-1,1,0);
-            menuDelay=255;
-            if(delayCount<delayNumber)
-            {
-                __delay_ms(150);
-            }
-            
-            if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
+            timer = 0;
+            goto Exit;                                             
         }
         
-        if(downKey2==1)
-        {
-            delayCount+=2;
-            pitSetpoint-=1;
-            if(pitSetpoint<750)pitSetpoint=750;
-            LCDWriteIntXY(5,0,pitSetpoint,-1,1,0);
-            menuDelay=255;
-
-            if(delayCount<delayNumber)
-            {
-                __delay_ms(150);
-            }
-            
-            if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
-        }
-        
-        if(delayCount>0)delayCount-=1;
-        
-        if(!(downKey2 || upKey2))
-        {
-            if(menuDelay>0)
-            {
-                loop=0;
-                menuDelay-=1;
-            }
-        }
-            
-*/    }
-    
-    
-    return testKey;
-    
-    Exit:
-    return 0;
-}
-
-/*                
-char checkKeys()
-{
+        timer+=1;
         
         if(upKey==1)
         {
             delayCount+=2;
-            if(delayCount==2)
-            pitSetpoint+=1;
-            if(pitSetpoint>2750)pitSetpoint=2750;
-            LCDWriteIntXY(5,0,pitSetpoint,-1,1,0);
+//            if(delayCount==2)setpoint[choice]+=1;
+            setpoint[choice]+=1;
+            if(setpoint[choice]>highRangeSet[choice])setpoint[choice]=highRangeSet[choice];
+            LCDWriteIntXY(5,0,setpoint[choice],-1,1,0);
             menuDelay=255;
             if(delayCount<delayNumber)
             {
                 __delay_ms(150);
             }
             if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
-        }
-
-        if()
-        LCDWriteStringXY(0,1,"   BackLight    ");
-        
-        
-        if(upKey==1)
-        {
-            delayCount+=2;
-            pitSetpoint+=1;
-            if(pitSetpoint>2750)pitSetpoint=2750;
-            LCDWriteIntXY(5,0,pitSetpoint,-1,1,0);
-            menuDelay=255;
-            if(delayCount<delayNumber)
-            {
-                __delay_ms(150);
-            }
             
-            if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
+            timer=0;
         }
+        
         
         if(downKey==1)
         {
             delayCount+=2;
-            pitSetpoint-=1;
-            if(pitSetpoint<750)pitSetpoint=750;
-            LCDWriteIntXY(5,0,pitSetpoint,-1,1,0);
+            setpoint[choice]-=1;
+            if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
+            LCDWriteIntXY(5,0,setpoint[choice],-1,1,0);
             menuDelay=255;
 
             if(delayCount<delayNumber)
@@ -175,6 +117,8 @@ char checkKeys()
             }
             
             if(delayCount>(delayNumber+10))delayCount=(delayNumber+10);
+            
+            timer=0;
         }
         
         if(delayCount>0)delayCount-=1;
@@ -187,7 +131,7 @@ char checkKeys()
                 menuDelay-=1;
             }
         }
-
-        return 0;
+    }        
+    Exit:
+    timer=0;
 }
-*/
