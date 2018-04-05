@@ -32,7 +32,7 @@ void main(void)
     
     uint16_t analogs[2]                 =   {0};                    // array of analog readings 
     
-    extern volatile int16_t setpoint[2];                            // defined in menu.c
+    extern int16_t setpoint[2];                            // defined in menu.c
     
 //    char set                            =   0;                      // Variable (Pit Setpoint, Backlight Intensity)) to be set.
     
@@ -171,9 +171,11 @@ void main(void)
         {
             LCD_Clear();
             LCDWriteStringXY(0,0,"Alter with Up/Dn");
-            LCDWriteStringXY(1,0,"Enter Key to Set");
+            LCDWriteStringXY(0,1,"Enter Key to Set");
             __delay_ms(1500);
+            LCD_Clear();
             menuChoice();
+            __delay_ms(500);
         }
 
 /*        if(upKey==1)

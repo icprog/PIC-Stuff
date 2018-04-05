@@ -16815,7 +16815,7 @@ SYSTEM_Initialize();
 
 uint16_t analogs[2] = {0};
 
-extern volatile int16_t setpoint[2];
+extern int16_t setpoint[2];
 
 # 43
 int output = 0;
@@ -16934,12 +16934,14 @@ if(RB2==1)
 {
 LCD_Clear();
 { LCD_Set_Cursor(0,0); LCD_Write_String("Alter with Up/Dn");};
-{ LCD_Set_Cursor(1,0); LCD_Write_String("Enter Key to Set");};
+{ LCD_Set_Cursor(0,1); LCD_Write_String("Enter Key to Set");};
 _delay((unsigned long)((1500)*(32000000/4000.0)));
+LCD_Clear();
 menuChoice();
+_delay((unsigned long)((500)*(32000000/4000.0)));
 }
 
-# 413
+# 415
 loop+=1;
 }
 }

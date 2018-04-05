@@ -53,7 +53,7 @@ int readAnalog(int channel)
             
     value = totals[channel]/numSamples;                                 // assign the average value of total to the readTemperature variable
         
-     return value;   
+    return value;   
 }
 
 // *************** ADC Initialization Routine *****************************************************************************************************

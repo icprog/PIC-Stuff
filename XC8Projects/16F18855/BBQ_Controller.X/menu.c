@@ -8,9 +8,9 @@
 #define enterKey                RB2
 #define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay
 
-unsigned int lowRangeSet[2]     =   {750,0};               // lowrangeSet[0] is Pit Temp setpoint lower limit, lowrangeSet[1] is backlight intensity
+int lowRangeSet[2]              =   {750,0};               // lowrangeSet[0] is Pit Temp setpoint lower limit, lowrangeSet[1] is backlight intensity
 
-unsigned int highRangeSet[2]    =   {2750,1023};           // highRangeSet[0] is Pit Temp setpoint upper limit, highRangeSet[1] is backlight intensity
+int highRangeSet[2]             =   {2750,1023};           // highRangeSet[0] is Pit Temp setpoint upper limit, highRangeSet[1] is backlight intensity
 
 int16_t setpoint[2]             =   {2250,523};            // default startup setpoints for Pit temp & backlight
 
@@ -18,7 +18,7 @@ char const *desc[]              =   {" Pit Temp:","BackLight:"};
 
 unsigned char loop                  =   64;
 
-char menuDelay                      =   0;
+int menuDelay                       =   0;
     
 char delayCount                     =   0;
 
@@ -55,42 +55,50 @@ void menuChoice(void)
     {
         choice = readKey();
                 
-        if(timer > 1000)
+        if(timer > 4000)
         {
             timer = 0;
             goto Exit;                                             
         }
         
-        if(timer2>25)LCDWriteStringXY(0,0,"Up/Down to Alter")else LCDWriteStringXY(0,0,"Enter to Select ");
+        if(timer2>125)LCDWriteStringXY(0,0,"Up/Down to Alter")else LCDWriteStringXY(0,0,"Enter to Select ");
         
-        LCDWriteStringXY(1,0,desc[choice]);
+        LCDWriteStringXY(0,1,desc[choice]);
         
-        if(timer2>49)timer2=0;
+        if(timer2>249)timer2=0;
         
         timer+=1;
         timer2+=1;
     }
     timer=0;
     timer2=0;
-
+    
+    __delay_ms(1000);
+    
+    LCDWriteIntXY(10,1,setpoint[choice],-1,1,0);
+    
+    __delay_ms(2000);
+        
     while(enterKey != 1)
     {
-        if(timer > 1000)
+        if(timer > 4000)
         {
             timer = 0;
+            LCDWriteStringXY(0,0,"   Good-Bye!!   ");
+            __delay_ms(2000);
             goto Exit;                                             
         }
-        
+        __delay_ms(2);
         timer+=1;
-        
+                    
         if(upKey==1)
         {
             delayCount+=2;
 //            if(delayCount==2)setpoint[choice]+=1;
             setpoint[choice]+=1;
             if(setpoint[choice]>highRangeSet[choice])setpoint[choice]=highRangeSet[choice];
-            LCDWriteIntXY(5,0,setpoint[choice],-1,1,0);
-            menuDelay=255;
+            if(choice==0)LCDWriteIntXY(10,1,setpoint[choice],-1,1,0)else LCDWriteIntXY(10,1,setpoint[choice],-1,0,0);
+            menuDelay=1255;
             if(delayCount<delayNumber)
             {
                 __delay_ms(150);
@@ -106,8 +114,8 @@ void menuChoice(void)
             delayCount+=2;
             setpoint[choice]-=1;
             if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
-            LCDWriteIntXY(5,0,setpoint[choice],-1,1,0);
-            menuDelay=255;
+            if(choice==0)LCDWriteIntXY(10,1,setpoint[choice],-1,1,0)else LCDWriteIntXY(10,1,setpoint[choice],-1,0,0);
+            menuDelay=1255;
 
             if(delayCount<delayNumber)
             {
@@ -119,17 +127,21 @@ void menuChoice(void)
             timer=0;
         }
         
+        PWM7_LoadDutyValue(backLightSetpoint);
+
+        
         if(delayCount>0)delayCount-=1;
         
         if(!(downKey || upKey))
         {
             if(menuDelay>0)
             {
-                loop=0;
                 menuDelay-=1;
             }
         }
     }        
     Exit:
     timer=0;
+    loop=254;
+    LCD_Clear();
 }

@@ -12682,10 +12682,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 33: uint16_t analogs[2] = {0};
 [e = _analogs F13664 ]
 "35
-[v _setpoint `Vi ~T0 @X0 -> 0 `x e ]
+[v _setpoint `i ~T0 @X0 -> 0 `x e ]
 "43
 [v _output `i ~T0 @X0 1 a ]
-[; ;main.c: 35: extern volatile int16_t setpoint[2];
+[; ;main.c: 35: extern int16_t setpoint[2];
 [; ;main.c: 43: int output = 0;
 [e = _output -> 0 `i ]
 "45
@@ -12964,34 +12964,40 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
 [e ( _LCD_Write_String (1 :s 3C ]
 }
-[; ;main.c: 174: { LCD_Set_Cursor(1,0); LCD_Write_String("Enter Key to Set");};
+[; ;main.c: 174: { LCD_Set_Cursor(0,1); LCD_Write_String("Enter Key to Set");};
 "174
 {
-[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
 [e ( _LCD_Write_String (1 :s 4C ]
 }
 [; ;main.c: 175: _delay((unsigned long)((1500)*(32000000/4000.0)));
 "175
 [e ( __delay (1 -> * -> -> 1500 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;main.c: 176: menuChoice();
+[; ;main.c: 176: LCD_Clear();
 "176
-[e ( _menuChoice ..  ]
+[e ( _LCD_Clear ..  ]
+[; ;main.c: 177: menuChoice();
 "177
+[e ( _menuChoice ..  ]
+[; ;main.c: 178: _delay((unsigned long)((500)*(32000000/4000.0)));
+"178
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+"179
 }
 [e :U 1537 ]
-[; ;main.c: 177: }
-[; ;main.c: 413: loop+=1;
-"413
+[; ;main.c: 179: }
+[; ;main.c: 415: loop+=1;
+"415
 [e =+ _loop -> -> 1 `i `uc ]
-"414
+"416
 }
 [e :U 1520 ]
 "96
 [e $U 1521  ]
 [e :U 1522 ]
-[; ;main.c: 414: }
-[; ;main.c: 415: }
-"415
+[; ;main.c: 416: }
+[; ;main.c: 417: }
+"417
 [e :UE 1519 ]
 }
 [a 4C 69 110 116 101 114 32 75 101 121 32 116 111 32 83 101 116 0 ]

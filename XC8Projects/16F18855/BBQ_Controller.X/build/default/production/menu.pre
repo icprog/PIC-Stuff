@@ -16809,9 +16809,9 @@ void LCD_Write_String(const char *a);
 void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
 
 # 11 "menu.c"
-unsigned int lowRangeSet[2] = {750,0};
+int lowRangeSet[2] = {750,0};
 
-unsigned int highRangeSet[2] = {2750,1023};
+int highRangeSet[2] = {2750,1023};
 
 int16_t setpoint[2] = {2250,523};
 
@@ -16819,7 +16819,7 @@ char const *desc[] = {" Pit Temp:","BackLight:"};
 
 unsigned char loop = 64;
 
-char menuDelay = 0;
+int menuDelay = 0;
 
 char delayCount = 0;
 
@@ -16856,17 +16856,17 @@ while(RB2 != 1)
 {
 choice = readKey();
 
-if(timer > 1000)
+if(timer > 4000)
 {
 timer = 0;
 goto Exit;
 }
 
-if(timer2>25){ LCD_Set_Cursor(0,0); LCD_Write_String("Up/Down to Alter");}else { LCD_Set_Cursor(0,0); LCD_Write_String("Enter to Select ");};
+if(timer2>125){ LCD_Set_Cursor(0,0); LCD_Write_String("Up/Down to Alter");}else { LCD_Set_Cursor(0,0); LCD_Write_String("Enter to Select ");};
 
-{ LCD_Set_Cursor(1,0); LCD_Write_String(desc[choice]);};
+{ LCD_Set_Cursor(0,1); LCD_Write_String(desc[choice]);};
 
-if(timer2>49)timer2=0;
+if(timer2>249)timer2=0;
 
 timer+=1;
 timer2+=1;
@@ -16874,14 +16874,22 @@ timer2+=1;
 timer=0;
 timer2=0;
 
+_delay((unsigned long)((1000)*(32000000/4000.0)));
+
+{ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);};
+
+_delay((unsigned long)((2000)*(32000000/4000.0)));
+
 while(RB2 != 1)
 {
-if(timer > 1000)
+if(timer > 4000)
 {
 timer = 0;
+{ LCD_Set_Cursor(0,0); LCD_Write_String("   Good-Bye!!   ");};
+_delay((unsigned long)((2000)*(32000000/4000.0)));
 goto Exit;
 }
-
+_delay((unsigned long)((2)*(32000000/4000.0)));
 timer+=1;
 
 if(RB0==1)
@@ -16890,8 +16898,8 @@ delayCount+=2;
 
 setpoint[choice]+=1;
 if(setpoint[choice]>highRangeSet[choice])setpoint[choice]=highRangeSet[choice];
-{ LCD_Set_Cursor(5,0); LCD_Write_Int(setpoint[choice],-1, 1, 0);};
-menuDelay=255;
+if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
+menuDelay=1255;
 if(delayCount<30)
 {
 _delay((unsigned long)((150)*(32000000/4000.0)));
@@ -16907,8 +16915,8 @@ if(RB1==1)
 delayCount+=2;
 setpoint[choice]-=1;
 if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
-{ LCD_Set_Cursor(5,0); LCD_Write_Int(setpoint[choice],-1, 1, 0);};
-menuDelay=255;
+if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
+menuDelay=1255;
 
 if(delayCount<30)
 {
@@ -16920,17 +16928,21 @@ if(delayCount>(30+10))delayCount=(30+10);
 timer=0;
 }
 
+PWM7_LoadDutyValue(setpoint[1]);
+
+
 if(delayCount>0)delayCount-=1;
 
 if(!(RB1 || RB0))
 {
 if(menuDelay>0)
 {
-loop=0;
 menuDelay-=1;
 }
 }
 }
 Exit:
 timer=0;
+loop=254;
+LCD_Clear();
 }

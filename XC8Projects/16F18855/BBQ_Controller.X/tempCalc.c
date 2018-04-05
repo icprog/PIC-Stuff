@@ -5,11 +5,12 @@ int tempCalc(int analogValue)
 {
     float R, steinhart;                         // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
 
-    R = 9880/(1023/(float)analogValue - 1);     // Resistance of Thermistor (R Reference/1023/readTemp -1)
+    R = 9890/(1023/(float)analogValue - 1);     // Resistance of Thermistor (R Reference/1023/readTemp -1)
         
-    steinhart = R /10000;                       // (R/Ro) R/R Standard (resistance of Thermistor at 25C)
+    steinhart = R /9990;                        // (R/Ro) R/R Standard (resistance of Thermistor at 25C)
     steinhart = log(steinhart);                 // ln(R/Ro)
-    steinhart /= 3930;                          // 1/Beta * ln(R/Ro)
+    steinhart /= 4030;                          // 1/Beta * ln(R/Ro)
+//    steinhart /= 3933.5;                        // 1/Beta * ln(R/Ro)
 //    steinhart /= 3995;                          // 1/Beta * ln(R/Ro)
     steinhart += 1.0 / (25 + 273.15);           // + (1/To, Temperature in degK @ 25C)
     steinhart = 1.0 / steinhart;                // Invert
