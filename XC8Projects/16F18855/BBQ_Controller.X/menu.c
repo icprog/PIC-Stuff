@@ -16,8 +16,6 @@ int16_t setpoint[2]             =   {2250,523};            // default startup se
 
 char const *desc[]              =   {" Pit Temp:","BackLight:"};
 
-//extern int set;
-
 unsigned char loop                  =   64;
 
 char menuDelay                      =   0;

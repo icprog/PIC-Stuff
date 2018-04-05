@@ -9,10 +9,10 @@
 #define ambientTemperature      analogs[0]                                      // Analog Chanell 1,  Pin 3
 #define pitTemperature          analogs[1]                                      // Analog Chanell 3,  Pin 5
 #define pitViperOutput          LATC2
-#define upKey                   RB0
-#define downKey                 RB1
+//#define upKey                   RB0
+//#define downKey                 RB1
 #define enterKey                RB2
-#define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay, also defined in menu.c
+//#define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay, also defined in menu.c
 #define numOutSamples           40                              // Number of Output samples to be Averaged into Output
 
 //#define celcius                 analogs[0]                      // Touch pad to select Degrees C
@@ -32,9 +32,9 @@ void main(void)
     
     uint16_t analogs[2]                 =   {0};                    // array of analog readings 
     
-    extern volatile int16_t setpoint[2];                                         // defined in menu.c
+    extern volatile int16_t setpoint[2];                            // defined in menu.c
     
-    char set                            =   0;                      // Variable (Pit Setpoint, Backlight Intensity)) to be set.
+//    char set                            =   0;                      // Variable (Pit Setpoint, Backlight Intensity)) to be set.
     
     //char menuDelay                      =   0;
     
@@ -56,7 +56,7 @@ void main(void)
     
     char lidOpenCount                   =   0;
     
-    float displayTemp, displayTemp2;                    // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
+//    float displayTemp, displayTemp2;                    // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
     
     char j                      =   0;                      // Variable to loop readAnalog function
     
@@ -68,17 +68,17 @@ void main(void)
     
     extern unsigned char loop;                              // cycle (loop) counter
     
-    char choice                 =   2;                      // Display degrees C or degrees F, or cycle through both if choice is "2".
+  //  char choice                 =   2;                      // Display degrees C or degrees F, or cycle through both if choice is "2".
     
-    char C_or_F                 =   1;                      // Default Temperature Display is degrees F
+    //char C_or_F                 =   1;                      // Default Temperature Display is degrees F
     
-    unsigned int bCount         =   0;                      // Loop counter for Backlight setting delay (to allow selection of both pads touched)
+//    unsigned int bCount         =   0;                      // Loop counter for Backlight setting delay (to allow selection of both pads touched)
     
-    unsigned char startDelay    =   0;                      // Loop counter to delay touchpad input until ADC stable
+  //  unsigned char startDelay    =   0;                      // Loop counter to delay touchpad input until ADC stable
     
-    unsigned char resetDelay    =   0;                      // Loop counter to delay backlight touchpad input until determined if two pads are touched for Reset
+    //unsigned char resetDelay    =   0;                      // Loop counter to delay backlight touchpad input until determined if two pads are touched for Reset
     
-    unsigned char tPadCount     =   10;                     // Touch pad counter (counts up or down from 10, to determine is one or both pads touched) (for C_or_F choice))
+//    unsigned char tPadCount     =   10;                     // Touch pad counter (counts up or down from 10, to determine is one or both pads touched) (for C_or_F choice))
     
     
     uint16_t dutyCycle6         =   0;                      // Pit Viper Fan Output

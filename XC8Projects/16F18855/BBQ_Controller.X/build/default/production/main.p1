@@ -12683,13 +12683,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _analogs F13664 ]
 "35
 [v _setpoint `Vi ~T0 @X0 -> 0 `x e ]
-"37
-[v _set `uc ~T0 @X0 1 a ]
-[; ;main.c: 35: extern volatile int16_t setpoint[2];
-[; ;main.c: 37: char set = 0;
-[e = _set -> -> 0 `i `uc ]
 "43
 [v _output `i ~T0 @X0 1 a ]
+[; ;main.c: 35: extern volatile int16_t setpoint[2];
 [; ;main.c: 43: int output = 0;
 [e = _output -> 0 `i ]
 "45
@@ -12700,8 +12696,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _outputIndex `uc ~T0 @X0 1 a ]
 [; ;main.c: 47: char outputIndex = 0;
 [e = _outputIndex -> -> 0 `i `uc ]
-[v F13671 `i ~T0 @X0 -> 40 `i s ]
-[i F13671
+[v F13670 `i ~T0 @X0 -> 40 `i s ]
+[i F13670
 :U ..
 "49
 -> 0 `i
@@ -12709,7 +12705,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _outputSamples `i ~T0 @X0 -> 40 `i a ]
 [; ;main.c: 49: int16_t outputSamples[40]= {0};
-[e = _outputSamples F13671 ]
+[e = _outputSamples F13670 ]
 "51
 [v _holdOutput `uc ~T0 @X0 1 a ]
 [; ;main.c: 51: char holdOutput = 0;
@@ -12726,12 +12722,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _lidOpenCount `uc ~T0 @X0 1 a ]
 [; ;main.c: 57: char lidOpenCount = 0;
 [e = _lidOpenCount -> -> 0 `i `uc ]
-"59
-[v _displayTemp `f ~T0 @X0 1 a ]
-[v _displayTemp2 `f ~T0 @X0 1 a ]
 "61
 [v _j `uc ~T0 @X0 1 a ]
-[; ;main.c: 59: float displayTemp, displayTemp2;
 [; ;main.c: 61: char j = 0;
 [e = _j -> -> 0 `i `uc ]
 "63
@@ -12746,34 +12738,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pidMaxOutput `i ~T0 @X0 0 e ]
 "69
 [v _loop `uc ~T0 @X0 0 e ]
-"71
-[v _choice `uc ~T0 @X0 1 a ]
-[; ;main.c: 67: extern int pidMaxOutput;
-[; ;main.c: 69: extern unsigned char loop;
-[; ;main.c: 71: char choice = 2;
-[e = _choice -> -> 2 `i `uc ]
-"73
-[v _C_or_F `uc ~T0 @X0 1 a ]
-[; ;main.c: 73: char C_or_F = 1;
-[e = _C_or_F -> -> 1 `i `uc ]
-"75
-[v _bCount `ui ~T0 @X0 1 a ]
-[; ;main.c: 75: unsigned int bCount = 0;
-[e = _bCount -> -> 0 `i `ui ]
-"77
-[v _startDelay `uc ~T0 @X0 1 a ]
-[; ;main.c: 77: unsigned char startDelay = 0;
-[e = _startDelay -> -> 0 `i `uc ]
-"79
-[v _resetDelay `uc ~T0 @X0 1 a ]
-[; ;main.c: 79: unsigned char resetDelay = 0;
-[e = _resetDelay -> -> 0 `i `uc ]
-"81
-[v _tPadCount `uc ~T0 @X0 1 a ]
-[; ;main.c: 81: unsigned char tPadCount = 10;
-[e = _tPadCount -> -> 10 `i `uc ]
 "84
 [v _dutyCycle6 `ui ~T0 @X0 1 a ]
+[; ;main.c: 67: extern int pidMaxOutput;
+[; ;main.c: 69: extern unsigned char loop;
 [; ;main.c: 84: uint16_t dutyCycle6 = 0;
 [e = _dutyCycle6 -> -> 0 `i `ui ]
 [; ;main.c: 90: PWM7_LoadDutyValue(setpoint[1]);
