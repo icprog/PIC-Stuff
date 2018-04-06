@@ -75,7 +75,7 @@ void menuChoice(void)
     
     __delay_ms(1000);
     
-    LCDWriteIntXY(10,1,setpoint[choice],-1,1,0);
+    if(choice==0)LCDWriteIntXY(10,1,setpoint[choice],-1,1,0)else LCDWriteIntXY(10,1,setpoint[choice],-1,0,0);
     
     __delay_ms(2000);
         
@@ -98,6 +98,7 @@ void menuChoice(void)
             setpoint[choice]+=1;
             if(setpoint[choice]>highRangeSet[choice])setpoint[choice]=highRangeSet[choice];
             if(choice==0)LCDWriteIntXY(10,1,setpoint[choice],-1,1,0)else LCDWriteIntXY(10,1,setpoint[choice],-1,0,0);
+            LCD_Write_Char(' ');
             menuDelay=1255;
             if(delayCount<delayNumber)
             {
@@ -115,6 +116,7 @@ void menuChoice(void)
             setpoint[choice]-=1;
             if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
             if(choice==0)LCDWriteIntXY(10,1,setpoint[choice],-1,1,0)else LCDWriteIntXY(10,1,setpoint[choice],-1,0,0);
+            LCD_Write_Char(' ');
             menuDelay=1255;
 
             if(delayCount<delayNumber)

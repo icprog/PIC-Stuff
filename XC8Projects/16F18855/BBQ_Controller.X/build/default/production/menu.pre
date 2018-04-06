@@ -16876,7 +16876,7 @@ timer2=0;
 
 _delay((unsigned long)((1000)*(32000000/4000.0)));
 
-{ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);};
+if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
 
 _delay((unsigned long)((2000)*(32000000/4000.0)));
 
@@ -16899,6 +16899,7 @@ delayCount+=2;
 setpoint[choice]+=1;
 if(setpoint[choice]>highRangeSet[choice])setpoint[choice]=highRangeSet[choice];
 if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
+LCD_Write_Char(' ');
 menuDelay=1255;
 if(delayCount<30)
 {
@@ -16916,6 +16917,7 @@ delayCount+=2;
 setpoint[choice]-=1;
 if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
 if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
+LCD_Write_Char(' ');
 menuDelay=1255;
 
 if(delayCount<30)

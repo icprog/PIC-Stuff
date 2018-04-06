@@ -15,6 +15,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p i __delay ]
 "54 lcd.h
 [v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
+"50
+[v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
 "11 pwm.h
 [v _PWM7_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
 "44 lcd.h
@@ -12860,25 +12862,33 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;menu.c: 76: _delay((unsigned long)((1000)*(32000000/4000.0)));
 "76
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;menu.c: 78: { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);};
+[; ;menu.c: 78: if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
 "78
+[e $ ! == -> _choice `i -> 0 `i 1533  ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
 [e ( _LCD_Write_Int (4 , , , *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
 }
+[e $U 1534  ]
+[e :U 1533 ]
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+[e :U 1534 ]
 [; ;menu.c: 80: _delay((unsigned long)((2000)*(32000000/4000.0)));
 "80
 [e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
 [; ;menu.c: 82: while(RB2 != 1)
 "82
-[e $U 1533  ]
-[e :U 1534 ]
+[e $U 1535  ]
+[e :U 1536 ]
 [; ;menu.c: 83: {
 "83
 {
 [; ;menu.c: 84: if(timer > 4000)
 "84
-[e $ ! > _timer -> 4000 `i 1536  ]
+[e $ ! > _timer -> 4000 `i 1538  ]
 [; ;menu.c: 85: {
 "85
 {
@@ -12899,7 +12909,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 1529  ]
 "90
 }
-[e :U 1536 ]
+[e :U 1538 ]
 [; ;menu.c: 90: }
 [; ;menu.c: 91: _delay((unsigned long)((2)*(32000000/4000.0)));
 "91
@@ -12909,7 +12919,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e =+ _timer -> 1 `i ]
 [; ;menu.c: 94: if(RB0==1)
 "94
-[e $ ! == -> _RB0 `i -> 1 `i 1537  ]
+[e $ ! == -> _RB0 `i -> 1 `i 1539  ]
 [; ;menu.c: 95: {
 "95
 {
@@ -12921,162 +12931,168 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e =+ *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> 1 `i ]
 [; ;menu.c: 99: if(setpoint[choice]>highRangeSet[choice])setpoint[choice]=highRangeSet[choice];
 "99
-[e $ ! > *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _highRangeSet * -> _choice `ux -> -> # *U &U _highRangeSet `ui `ux 1538  ]
+[e $ ! > *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _highRangeSet * -> _choice `ux -> -> # *U &U _highRangeSet `ui `ux 1540  ]
 [e = *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _highRangeSet * -> _choice `ux -> -> # *U &U _highRangeSet `ui `ux ]
-[e :U 1538 ]
+[e :U 1540 ]
 [; ;menu.c: 100: if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
 "100
-[e $ ! == -> _choice `i -> 0 `i 1539  ]
+[e $ ! == -> _choice `i -> 0 `i 1541  ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
 [e ( _LCD_Write_Int (4 , , , *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
 }
-[e $U 1540  ]
-[e :U 1539 ]
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
-}
-[e :U 1540 ]
-[; ;menu.c: 101: menuDelay=1255;
-"101
-[e = _menuDelay -> 1255 `i ]
-[; ;menu.c: 102: if(delayCount<30)
-"102
-[e $ ! < -> _delayCount `i -> 30 `i 1541  ]
-[; ;menu.c: 103: {
-"103
-{
-[; ;menu.c: 104: _delay((unsigned long)((150)*(32000000/4000.0)));
-"104
-[e ( __delay (1 -> * -> -> 150 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-"105
-}
+[e $U 1542  ]
 [e :U 1541 ]
-[; ;menu.c: 105: }
-[; ;menu.c: 106: if(delayCount>(30+10))delayCount=(30+10);
-"106
-[e $ ! > -> _delayCount `i + -> 30 `i -> 10 `i 1542  ]
-[e = _delayCount -> + -> 30 `i -> 10 `i `uc ]
-[e :U 1542 ]
-[; ;menu.c: 108: timer=0;
-"108
-[e = _timer -> 0 `i ]
-"109
-}
-[e :U 1537 ]
-[; ;menu.c: 109: }
-[; ;menu.c: 112: if(RB1==1)
-"112
-[e $ ! == -> _RB1 `i -> 1 `i 1543  ]
-[; ;menu.c: 113: {
-"113
-{
-[; ;menu.c: 114: delayCount+=2;
-"114
-[e =+ _delayCount -> -> 2 `i `uc ]
-[; ;menu.c: 115: setpoint[choice]-=1;
-"115
-[e =- *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> 1 `i ]
-[; ;menu.c: 116: if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
-"116
-[e $ ! < *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _lowRangeSet * -> _choice `ux -> -> # *U &U _lowRangeSet `ui `ux 1544  ]
-[e = *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _lowRangeSet * -> _choice `ux -> -> # *U &U _lowRangeSet `ui `ux ]
-[e :U 1544 ]
-[; ;menu.c: 117: if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
-"117
-[e $ ! == -> _choice `i -> 0 `i 1545  ]
-{
-[e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
-}
-[e $U 1546  ]
-[e :U 1545 ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
 [e ( _LCD_Write_Int (4 , , , *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
 }
-[e :U 1546 ]
-[; ;menu.c: 118: menuDelay=1255;
-"118
+[e :U 1542 ]
+[; ;menu.c: 101: LCD_Write_Char(' ');
+"101
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;menu.c: 102: menuDelay=1255;
+"102
 [e = _menuDelay -> 1255 `i ]
-[; ;menu.c: 120: if(delayCount<30)
-"120
-[e $ ! < -> _delayCount `i -> 30 `i 1547  ]
-[; ;menu.c: 121: {
-"121
+[; ;menu.c: 103: if(delayCount<30)
+"103
+[e $ ! < -> _delayCount `i -> 30 `i 1543  ]
+[; ;menu.c: 104: {
+"104
 {
-[; ;menu.c: 122: _delay((unsigned long)((150)*(32000000/4000.0)));
-"122
+[; ;menu.c: 105: _delay((unsigned long)((150)*(32000000/4000.0)));
+"105
 [e ( __delay (1 -> * -> -> 150 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-"123
-}
-[e :U 1547 ]
-[; ;menu.c: 123: }
-[; ;menu.c: 125: if(delayCount>(30+10))delayCount=(30+10);
-"125
-[e $ ! > -> _delayCount `i + -> 30 `i -> 10 `i 1548  ]
-[e = _delayCount -> + -> 30 `i -> 10 `i `uc ]
-[e :U 1548 ]
-[; ;menu.c: 127: timer=0;
-"127
-[e = _timer -> 0 `i ]
-"128
+"106
 }
 [e :U 1543 ]
-[; ;menu.c: 128: }
-[; ;menu.c: 130: PWM7_LoadDutyValue(setpoint[1]);
-"130
-[e ( _PWM7_LoadDutyValue (1 -> *U + &U _setpoint * -> -> -> 1 `i `ui `ux -> -> # *U &U _setpoint `ui `ux `ui ]
-[; ;menu.c: 133: if(delayCount>0)delayCount-=1;
-"133
-[e $ ! > -> _delayCount `i -> 0 `i 1549  ]
-[e =- _delayCount -> -> 1 `i `uc ]
-[e :U 1549 ]
-[; ;menu.c: 135: if(!(RB1 || RB0))
-"135
-[e $ ! ! || _RB1 _RB0 1550  ]
-[; ;menu.c: 136: {
-"136
+[; ;menu.c: 106: }
+[; ;menu.c: 107: if(delayCount>(30+10))delayCount=(30+10);
+"107
+[e $ ! > -> _delayCount `i + -> 30 `i -> 10 `i 1544  ]
+[e = _delayCount -> + -> 30 `i -> 10 `i `uc ]
+[e :U 1544 ]
+[; ;menu.c: 109: timer=0;
+"109
+[e = _timer -> 0 `i ]
+"110
+}
+[e :U 1539 ]
+[; ;menu.c: 110: }
+[; ;menu.c: 113: if(RB1==1)
+"113
+[e $ ! == -> _RB1 `i -> 1 `i 1545  ]
+[; ;menu.c: 114: {
+"114
 {
-[; ;menu.c: 137: if(menuDelay>0)
+[; ;menu.c: 115: delayCount+=2;
+"115
+[e =+ _delayCount -> -> 2 `i `uc ]
+[; ;menu.c: 116: setpoint[choice]-=1;
+"116
+[e =- *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> 1 `i ]
+[; ;menu.c: 117: if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
+"117
+[e $ ! < *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _lowRangeSet * -> _choice `ux -> -> # *U &U _lowRangeSet `ui `ux 1546  ]
+[e = *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _lowRangeSet * -> _choice `ux -> -> # *U &U _lowRangeSet `ui `ux ]
+[e :U 1546 ]
+[; ;menu.c: 118: if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
+"118
+[e $ ! == -> _choice `i -> 0 `i 1547  ]
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
+}
+[e $U 1548  ]
+[e :U 1547 ]
+{
+[e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
+[e ( _LCD_Write_Int (4 , , , *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+[e :U 1548 ]
+[; ;menu.c: 119: LCD_Write_Char(' ');
+"119
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;menu.c: 120: menuDelay=1255;
+"120
+[e = _menuDelay -> 1255 `i ]
+[; ;menu.c: 122: if(delayCount<30)
+"122
+[e $ ! < -> _delayCount `i -> 30 `i 1549  ]
+[; ;menu.c: 123: {
+"123
+{
+[; ;menu.c: 124: _delay((unsigned long)((150)*(32000000/4000.0)));
+"124
+[e ( __delay (1 -> * -> -> 150 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+"125
+}
+[e :U 1549 ]
+[; ;menu.c: 125: }
+[; ;menu.c: 127: if(delayCount>(30+10))delayCount=(30+10);
+"127
+[e $ ! > -> _delayCount `i + -> 30 `i -> 10 `i 1550  ]
+[e = _delayCount -> + -> 30 `i -> 10 `i `uc ]
+[e :U 1550 ]
+[; ;menu.c: 129: timer=0;
+"129
+[e = _timer -> 0 `i ]
+"130
+}
+[e :U 1545 ]
+[; ;menu.c: 130: }
+[; ;menu.c: 132: PWM7_LoadDutyValue(setpoint[1]);
+"132
+[e ( _PWM7_LoadDutyValue (1 -> *U + &U _setpoint * -> -> -> 1 `i `ui `ux -> -> # *U &U _setpoint `ui `ux `ui ]
+[; ;menu.c: 135: if(delayCount>0)delayCount-=1;
+"135
+[e $ ! > -> _delayCount `i -> 0 `i 1551  ]
+[e =- _delayCount -> -> 1 `i `uc ]
+[e :U 1551 ]
+[; ;menu.c: 137: if(!(RB1 || RB0))
 "137
-[e $ ! > _menuDelay -> 0 `i 1551  ]
+[e $ ! ! || _RB1 _RB0 1552  ]
 [; ;menu.c: 138: {
 "138
 {
-[; ;menu.c: 139: menuDelay-=1;
+[; ;menu.c: 139: if(menuDelay>0)
 "139
-[e =- _menuDelay -> 1 `i ]
+[e $ ! > _menuDelay -> 0 `i 1553  ]
+[; ;menu.c: 140: {
 "140
-}
-[e :U 1551 ]
+{
+[; ;menu.c: 141: menuDelay-=1;
 "141
-}
-[e :U 1550 ]
+[e =- _menuDelay -> 1 `i ]
 "142
 }
-[e :U 1533 ]
-"82
-[e $ != -> _RB2 `i -> 1 `i 1534  ]
-[e :U 1535 ]
-[; ;menu.c: 140: }
-[; ;menu.c: 141: }
-[; ;menu.c: 142: }
-[; ;menu.c: 143: Exit:
+[e :U 1553 ]
 "143
-[e :U 1529 ]
-[; ;menu.c: 144: timer=0;
+}
+[e :U 1552 ]
 "144
-[e = _timer -> 0 `i ]
-[; ;menu.c: 145: loop=254;
+}
+[e :U 1535 ]
+"82
+[e $ != -> _RB2 `i -> 1 `i 1536  ]
+[e :U 1537 ]
+[; ;menu.c: 142: }
+[; ;menu.c: 143: }
+[; ;menu.c: 144: }
+[; ;menu.c: 145: Exit:
 "145
-[e = _loop -> -> 254 `i `uc ]
-[; ;menu.c: 146: LCD_Clear();
+[e :U 1529 ]
+[; ;menu.c: 146: timer=0;
 "146
-[e ( _LCD_Clear ..  ]
-[; ;menu.c: 147: }
+[e = _timer -> 0 `i ]
+[; ;menu.c: 147: loop=254;
 "147
+[e = _loop -> -> 254 `i `uc ]
+[; ;menu.c: 148: LCD_Clear();
+"148
+[e ( _LCD_Clear ..  ]
+[; ;menu.c: 149: }
+"149
 [e :UE 1524 ]
 }
 [a 3C 85 112 47 68 111 119 110 32 116 111 32 65 108 116 101 114 0 ]
