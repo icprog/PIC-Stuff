@@ -2,12 +2,8 @@
 #include    "menu.h"
 // *************** Outputs ***************************************************************************************************************************************
 //#define fanOutput             _LATD6                                          // Pit Viper Fan PWM Output
-#define piezoOutput             _LATF1                                          // Piezo Alarm Output G
 
 // *************** Inputs ****************************************************************************************************************************************
-#define power                   !_RG9                                           // Power Switch Input G             
-// ***************************************************************************************************************************************************************
-
 //**************** Timer2 set in pwm.c, determines Period (along with OC4RS) *************************************************************************************
 
 #define pitSetpoint             setpoint[0]
@@ -19,21 +15,6 @@
 #define Temperature4            analogs[4]                                      // Analog Chanell 10, Pin 23
 #define Temperature5            analogs[5]                                      // Analog Chanell 11, Pin 24
 #define Temperature6            analogs[6]                                      // Analog Chanell 12, Pin 27
-
-//#define steamSetpoint           setpoint[1]
-//#define groupHeadSetpoint       setpoint[2]
-
-//#define waterDeadband           deadband[0]
-//#define steamDeadband           deadband[1]
-//#define GroupHeadDeadband       deadband[2]
-
-/*#define celcius         analogs[0]                      // Touch pad to select Degrees C
-#define farenheit       analogs[1]                      // Touch pad to select Degrees F
-#define down            analogs[2]                      // Touch pad to select Backlight Intencity Down
-#define up              analogs[3]                      // Touch pad to select Backlight Intencity Up
-#define solarInTemp     analogs[4]
-#define solarOutTemp    analogs[5]
-*/
 // ***************************************************************************************************************************************************************
 
 extern struct tm currentTime;

@@ -20,13 +20,13 @@ Command:
   build/default/production/interrupt_manager.o \
   build/default/production/pid.o \
   build/default/production/pin_manager.o \
+  build/default/production/pwm.o \
   build/default/production/rtcc.o \
   build/default/production/start_stop_timer.o \
   build/default/production/system.o \
-  build/default/production/touch.o \
   build/default/production/traps.o \
   build/default/production/user.o \
-  build/default/production/pwm.o \
+  build/default/production/touch.o \
   build/default/production/main.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
@@ -403,13 +403,13 @@ LOAD build/default/production/glcd.o
 LOAD build/default/production/interrupt_manager.o
 LOAD build/default/production/pid.o
 LOAD build/default/production/pin_manager.o
+LOAD build/default/production/pwm.o
 LOAD build/default/production/rtcc.o
 LOAD build/default/production/start_stop_timer.o
 LOAD build/default/production/system.o
-LOAD build/default/production/touch.o
 LOAD build/default/production/traps.o
 LOAD build/default/production/user.o
-LOAD build/default/production/pwm.o
+LOAD build/default/production/touch.o
 LOAD build/default/production/main.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
@@ -554,13 +554,13 @@ __FDEVOPT1
  .debug_info      0x001022         0xdb build/default/production/interrupt_manager.o
  .debug_info      0x0010fd        0x2eb build/default/production/pid.o
  .debug_info      0x0013e8        0x532 build/default/production/pin_manager.o
- .debug_info      0x00191a        0x7f5 build/default/production/rtcc.o
- .debug_info      0x00210f        0x4f1 build/default/production/start_stop_timer.o
- .debug_info      0x002600        0x2b1 build/default/production/system.o
- .debug_info      0x0028b1        0x7b2 build/default/production/touch.o
- .debug_info      0x003063        0x429 build/default/production/traps.o
- .debug_info      0x00348c        0x253 build/default/production/user.o
- .debug_info      0x0036df        0xd13 build/default/production/pwm.o
+ .debug_info      0x00191a        0xd13 build/default/production/pwm.o
+ .debug_info      0x00262d        0x7f5 build/default/production/rtcc.o
+ .debug_info      0x002e22        0x4f1 build/default/production/start_stop_timer.o
+ .debug_info      0x003313        0x2b1 build/default/production/system.o
+ .debug_info      0x0035c4        0x429 build/default/production/traps.o
+ .debug_info      0x0039ed        0x253 build/default/production/user.o
+ .debug_info      0x003c40        0x7b2 build/default/production/touch.o
  .debug_info      0x0043f2        0x588 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
@@ -571,13 +571,13 @@ __FDEVOPT1
  .debug_abbrev    0x0002de         0x34 build/default/production/interrupt_manager.o
  .debug_abbrev    0x000312         0x98 build/default/production/pid.o
  .debug_abbrev    0x0003aa         0x4c build/default/production/pin_manager.o
- .debug_abbrev    0x0003f6        0x211 build/default/production/rtcc.o
- .debug_abbrev    0x000607        0x13c build/default/production/start_stop_timer.o
- .debug_abbrev    0x000743         0x6a build/default/production/system.o
- .debug_abbrev    0x0007ad         0xbf build/default/production/touch.o
- .debug_abbrev    0x00086c        0x100 build/default/production/traps.o
- .debug_abbrev    0x00096c         0x85 build/default/production/user.o
- .debug_abbrev    0x0009f1         0xcd build/default/production/pwm.o
+ .debug_abbrev    0x0003f6         0xcd build/default/production/pwm.o
+ .debug_abbrev    0x0004c3        0x211 build/default/production/rtcc.o
+ .debug_abbrev    0x0006d4        0x13c build/default/production/start_stop_timer.o
+ .debug_abbrev    0x000810         0x6a build/default/production/system.o
+ .debug_abbrev    0x00087a        0x100 build/default/production/traps.o
+ .debug_abbrev    0x00097a         0x85 build/default/production/user.o
+ .debug_abbrev    0x0009ff         0xbf build/default/production/touch.o
  .debug_abbrev    0x000abe        0x151 build/default/production/main.o
 
 .debug_line       0x000000        0xd8c
@@ -587,13 +587,13 @@ __FDEVOPT1
  .debug_line      0x0002ba         0x3f build/default/production/interrupt_manager.o
  .debug_line      0x0002f9         0x99 build/default/production/pid.o
  .debug_line      0x000392         0xbb build/default/production/pin_manager.o
- .debug_line      0x00044d        0x1d3 build/default/production/rtcc.o
- .debug_line      0x000620        0x17d build/default/production/start_stop_timer.o
- .debug_line      0x00079d        0x101 build/default/production/system.o
- .debug_line      0x00089e        0x129 build/default/production/touch.o
- .debug_line      0x0009c7        0x119 build/default/production/traps.o
- .debug_line      0x000ae0         0xb4 build/default/production/user.o
- .debug_line      0x000b94         0xa6 build/default/production/pwm.o
+ .debug_line      0x00044d         0xa6 build/default/production/pwm.o
+ .debug_line      0x0004f3        0x1d3 build/default/production/rtcc.o
+ .debug_line      0x0006c6        0x17d build/default/production/start_stop_timer.o
+ .debug_line      0x000843        0x101 build/default/production/system.o
+ .debug_line      0x000944        0x119 build/default/production/traps.o
+ .debug_line      0x000a5d         0xb4 build/default/production/user.o
+ .debug_line      0x000b11        0x129 build/default/production/touch.o
  .debug_line      0x000c3a        0x152 build/default/production/main.o
 
 .debug_frame      0x000000        0x608
@@ -603,13 +603,13 @@ __FDEVOPT1
  .debug_frame     0x0001cc         0x30 build/default/production/interrupt_manager.o
  .debug_frame     0x0001fc         0x30 build/default/production/pid.o
  .debug_frame     0x00022c         0x30 build/default/production/pin_manager.o
- .debug_frame     0x00025c        0x116 build/default/production/rtcc.o
- .debug_frame     0x000372         0xc2 build/default/production/start_stop_timer.o
- .debug_frame     0x000434         0x4c build/default/production/system.o
- .debug_frame     0x000480         0x30 build/default/production/touch.o
- .debug_frame     0x0004b0         0x90 build/default/production/traps.o
- .debug_frame     0x000540         0x4c build/default/production/user.o
- .debug_frame     0x00058c         0x4c build/default/production/pwm.o
+ .debug_frame     0x00025c         0x4c build/default/production/pwm.o
+ .debug_frame     0x0002a8        0x116 build/default/production/rtcc.o
+ .debug_frame     0x0003be         0xc2 build/default/production/start_stop_timer.o
+ .debug_frame     0x000480         0x4c build/default/production/system.o
+ .debug_frame     0x0004cc         0x90 build/default/production/traps.o
+ .debug_frame     0x00055c         0x4c build/default/production/user.o
+ .debug_frame     0x0005a8         0x30 build/default/production/touch.o
  .debug_frame     0x0005d8         0x30 build/default/production/main.o
 
 .debug_str        0x000000        0x256
@@ -617,12 +617,12 @@ __FDEVOPT1
  .debug_str       0x000000         0x36 build/default/production/adc.o
  .debug_str       0x000036         0x12 build/default/production/glcd.o
  .debug_str       0x000048         0x50 build/default/production/pid.o
- .debug_str       0x000098         0x6f build/default/production/rtcc.o
- .debug_str       0x000107         0x3f build/default/production/start_stop_timer.o
- .debug_str       0x000146         0x1c build/default/production/system.o
- .debug_str       0x000162         0x31 build/default/production/touch.o
- .debug_str       0x000193         0x18 build/default/production/traps.o
- .debug_str       0x0001ab         0x82 build/default/production/pwm.o
+ .debug_str       0x000098         0x82 build/default/production/pwm.o
+ .debug_str       0x00011a         0x6f build/default/production/rtcc.o
+ .debug_str       0x000189         0x3f build/default/production/start_stop_timer.o
+ .debug_str       0x0001c8         0x1c build/default/production/system.o
+ .debug_str       0x0001e4         0x18 build/default/production/traps.o
+ .debug_str       0x0001fc         0x31 build/default/production/touch.o
  .debug_str       0x00022d         0x29 build/default/production/main.o
 
 .debug_loc
@@ -645,19 +645,19 @@ __FDEVOPT1
  .debug_pubnames
                   0x0001fb         0x2d build/default/production/pin_manager.o
  .debug_pubnames
-                  0x000228         0x9e build/default/production/rtcc.o
+                  0x000228         0x3a build/default/production/pwm.o
  .debug_pubnames
-                  0x0002c6         0xd8 build/default/production/start_stop_timer.o
+                  0x000262         0x9e build/default/production/rtcc.o
  .debug_pubnames
-                  0x00039e         0x42 build/default/production/system.o
+                  0x000300         0xd8 build/default/production/start_stop_timer.o
  .debug_pubnames
-                  0x0003e0         0x2b build/default/production/touch.o
+                  0x0003d8         0x42 build/default/production/system.o
  .debug_pubnames
-                  0x00040b         0x7d build/default/production/traps.o
+                  0x00041a         0x7d build/default/production/traps.o
  .debug_pubnames
-                  0x000488         0x3a build/default/production/user.o
+                  0x000497         0x3a build/default/production/user.o
  .debug_pubnames
-                  0x0004c2         0x3a build/default/production/pwm.o
+                  0x0004d1         0x2b build/default/production/touch.o
  .debug_pubnames
                   0x0004fc         0x5c build/default/production/main.o
 
@@ -677,19 +677,19 @@ __FDEVOPT1
  .debug_aranges
                   0x000060         0x18 build/default/production/pin_manager.o
  .debug_aranges
-                  0x000078         0x18 build/default/production/rtcc.o
+                  0x000078         0x18 build/default/production/pwm.o
  .debug_aranges
-                  0x000090         0x18 build/default/production/start_stop_timer.o
+                  0x000090         0x18 build/default/production/rtcc.o
  .debug_aranges
-                  0x0000a8         0x18 build/default/production/system.o
+                  0x0000a8         0x18 build/default/production/start_stop_timer.o
  .debug_aranges
-                  0x0000c0         0x18 build/default/production/touch.o
+                  0x0000c0         0x18 build/default/production/system.o
  .debug_aranges
                   0x0000d8         0x18 build/default/production/traps.o
  .debug_aranges
                   0x0000f0         0x18 build/default/production/user.o
  .debug_aranges
-                  0x000108         0x18 build/default/production/pwm.o
+                  0x000108         0x18 build/default/production/touch.o
  .debug_aranges
                   0x000120         0x18 build/default/production/main.o
                     0x0000                  WREG0 = 0x0
@@ -2727,19 +2727,19 @@ LOAD data_init
  .debug_pubtypes
                   0x00026b         0x12 build/default/production/pin_manager.o
  .debug_pubtypes
-                  0x00027d         0x87 build/default/production/rtcc.o
+                  0x00027d         0xbd build/default/production/pwm.o
  .debug_pubtypes
-                  0x000304         0x35 build/default/production/start_stop_timer.o
+                  0x00033a         0x87 build/default/production/rtcc.o
  .debug_pubtypes
-                  0x000339         0x1e build/default/production/system.o
+                  0x0003c1         0x35 build/default/production/start_stop_timer.o
  .debug_pubtypes
-                  0x000357         0xc4 build/default/production/touch.o
+                  0x0003f6         0x1e build/default/production/system.o
  .debug_pubtypes
-                  0x00041b         0x71 build/default/production/traps.o
+                  0x000414         0x71 build/default/production/traps.o
  .debug_pubtypes
-                  0x00048c         0x35 build/default/production/user.o
+                  0x000485         0x35 build/default/production/user.o
  .debug_pubtypes
-                  0x0004c1         0xbd build/default/production/pwm.o
+                  0x0004ba         0xc4 build/default/production/touch.o
  .debug_pubtypes
                   0x00057e         0x5d build/default/production/main.o
 
@@ -2756,19 +2756,19 @@ __c30_signature
  __c30_signature
                   0x0005f3          0x6 build/default/production/pin_manager.o
  __c30_signature
-                  0x0005f9          0x6 build/default/production/rtcc.o
+                  0x0005f9          0x6 build/default/production/pwm.o
  __c30_signature
-                  0x0005ff          0x6 build/default/production/start_stop_timer.o
+                  0x0005ff          0x6 build/default/production/rtcc.o
  __c30_signature
-                  0x000605          0x6 build/default/production/system.o
+                  0x000605          0x6 build/default/production/start_stop_timer.o
  __c30_signature
-                  0x00060b          0x6 build/default/production/touch.o
+                  0x00060b          0x6 build/default/production/system.o
  __c30_signature
                   0x000611          0x6 build/default/production/traps.o
  __c30_signature
                   0x000617          0x6 build/default/production/user.o
  __c30_signature
-                  0x00061d          0x6 build/default/production/pwm.o
+                  0x00061d          0x6 build/default/production/touch.o
  __c30_signature
                   0x000623          0x6 build/default/production/main.o
  __c30_signature
