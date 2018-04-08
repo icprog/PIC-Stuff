@@ -1,3 +1,5 @@
+#include "system.h"
+
 const unsigned char menumain [] =                                                        // Set, Pull, Steam, Blank  59
 {
     0xFF, 0x81, 0xDD, 0xD5, 0xF5, 0x81, 0xFD, 0xD5, 0xC5, 0x81, 0x85, 0xFD, 0x85, 0x81, 0xFF,                                           //SET 15
