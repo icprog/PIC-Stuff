@@ -16677,7 +16677,100 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 11 "system.h"
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
+typedef unsigned char bool;
+
+# 9 "adc.h"
+typedef uint16_t adc_result_t;
+
+
+typedef enum
+{
+POT = 0x4,
+channel_VSS = 0x3C,
+channel_Temp = 0x3D,
+channel_DAC1 = 0x3E,
+channel_FVR = 0x3F
+} adcc_channel_t;
+
+int readAnalog(int channel);
+
+void ADC_Initialize(void);
+
+void ADCC_StartConversion(adcc_channel_t channel);
+
+bool ADCC_IsConversionDone();
+
+adc_result_t ADCC_GetConversionResult(void);
+
+adc_result_t ADCRead(adcc_channel_t channel);
+
+void ADCC_StopConversion(void);
+
+void ADCC_SetStopOnInterrupt(void);
+
+void ADCC_DischargeSampleCapacitor(void);
+
+void ADCC_LoadAcquisitionRegister(uint8_t);
+
+void ADCC_SetPrechargeTime(uint8_t);
+
+void ADCC_SetRepeatCount(uint8_t);
+
+uint8_t ADCC_GetCurrentCountofConversions(void);
+
+void ADCC_ClearAccumulator(void);
+
+uint16_t ADCC_GetAccumulatorValue(void);
+
+bool ADCC_HasAccumulatorOverflowed(void);
+
+uint16_t ADCC_GetFilterValue(void);
+
+# 77
+uint16_t ADCC_GetPreviousResult(void);
+
+# 101
+void ADCC_DefineSetPoint(uint16_t);
+
+# 126
+void ADCC_SetUpperThreshold(uint16_t);
+
+# 151
+void ADCC_SetLowerThreshold(uint16_t);
+
+# 174
+uint16_t ADCC_GetErrorCalculation(void);
+
+# 196
+void ADCC_EnableDoubleSampling(void);
+
+# 218
+void ADCC_EnableContinuousConversion(void);
+
+# 240
+void ADCC_DisableContinuousConversion(void);
+
+# 262
+bool ADCC_HasErrorCrossedUpperThreshold(void);
+
+# 284
+bool ADCC_HasErrorCrossedLowerThreshold(void);
+
+# 306
+uint8_t ADCC_GetConversionStageStatus(void);
+
+# 262 "tmr2.h"
+void TMR2_Initialize(void);
+
+# 7 "pwm.h"
+void PWM_Initialize(void);
+
+
+
+void PWM7_LoadDutyValue(uint16_t dutyCycle);
+
+# 14 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16944,7 +17037,7 @@ LCDWrite(0, 0xBE);
 
 LCDWrite(0, 0x04);
 
-LCDWrite(0, 0x14);
+LCDWrite(0, 0x13);
 
 LCDWrite(0, 0x20);
 

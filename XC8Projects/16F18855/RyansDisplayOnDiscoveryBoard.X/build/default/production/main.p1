@@ -1,6 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
-"11 system.h
+"14 system.h
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
 "22 lcd.h
 [v _LCDBitmap `(v ~T0 @X0 0 ef3`*Cuc`uc`ui ]
@@ -8,16 +8,24 @@ Version 3.2 HI-TECH Software Intermediate Code
 "152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
 [v __delay `JF13525 ~T0 @X0 0 e ]
 [p i __delay ]
+"21 adc.h
+[v _readAnalog `(i ~T0 @X0 0 ef1`i ]
+"694 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _TRISC `Vuc ~T0 @X0 0 e@19 ]
+"11 pwm.h
+[v _PWM7_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
 "31 lcd.h
 [v _LCDClear `(v ~T0 @X0 0 ef ]
 "19
 [v _gotoXY `(v ~T0 @X0 0 ef2`uc`uc ]
 "28
 [v _LCDWriteString `(v ~T0 @X0 0 ef1`*Cuc ]
-"43
-[v _LCDDrawBox `(v ~T0 @X0 0 ef ]
 "34
 [v _LCDWriteInt `(v ~T0 @X0 0 ef4`i`c`c`c ]
+"25
+[v _LCDWriteCharacter `(v ~T0 @X0 0 ef1`Cuc ]
+"43
+[v _LCDDrawBox `(v ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -12601,8 +12609,49 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 37: void LCDInit(void);
 [; ;lcd.h: 40: void LCDWrite(uint8_t data_or_command, uint8_t data);
 [; ;lcd.h: 43: void LCDDrawBox(void);
-[; ;system.h: 11: void SYSTEM_Initialize(void);
-[; ;system.h: 13: void OSCILLATOR_Initialize(void);
+[; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;adc.h: 9: typedef uint16_t adc_result_t;
+[; ;adc.h: 12: typedef enum
+[; ;adc.h: 13: {
+[; ;adc.h: 14: POT = 0x4,
+[; ;adc.h: 15: channel_VSS = 0x3C,
+[; ;adc.h: 16: channel_Temp = 0x3D,
+[; ;adc.h: 17: channel_DAC1 = 0x3E,
+[; ;adc.h: 18: channel_FVR = 0x3F
+[; ;adc.h: 19: } adcc_channel_t;
+[; ;adc.h: 21: int readAnalog(int channel);
+[; ;adc.h: 23: void ADC_Initialize(void);
+[; ;adc.h: 25: void ADCC_StartConversion(adcc_channel_t channel);
+[; ;adc.h: 27: bool ADCC_IsConversionDone();
+[; ;adc.h: 29: adc_result_t ADCC_GetConversionResult(void);
+[; ;adc.h: 31: adc_result_t ADCRead(adcc_channel_t channel);
+[; ;adc.h: 33: void ADCC_StopConversion(void);
+[; ;adc.h: 35: void ADCC_SetStopOnInterrupt(void);
+[; ;adc.h: 37: void ADCC_DischargeSampleCapacitor(void);
+[; ;adc.h: 39: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adc.h: 41: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adc.h: 43: void ADCC_SetRepeatCount(uint8_t);
+[; ;adc.h: 45: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adc.h: 47: void ADCC_ClearAccumulator(void);
+[; ;adc.h: 49: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adc.h: 51: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adc.h: 53: uint16_t ADCC_GetFilterValue(void);
+[; ;adc.h: 77: uint16_t ADCC_GetPreviousResult(void);
+[; ;adc.h: 101: void ADCC_DefineSetPoint(uint16_t);
+[; ;adc.h: 126: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adc.h: 151: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adc.h: 174: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adc.h: 196: void ADCC_EnableDoubleSampling(void);
+[; ;adc.h: 218: void ADCC_EnableContinuousConversion(void);
+[; ;adc.h: 240: void ADCC_DisableContinuousConversion(void);
+[; ;adc.h: 262: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
+[; ;system.h: 14: void SYSTEM_Initialize(void);
+[; ;system.h: 16: void OSCILLATOR_Initialize(void);
 [; ;math.h: 30: extern double fabs(double);
 [; ;math.h: 31: extern double floor(double);
 [; ;math.h: 32: extern double ceil(double);
@@ -13189,189 +13238,269 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;coffee.h: 32: 0x83, 0x83, 0x83, 0x83, 0x83, 0x83, 0x83, 0x83, 0x83, 0x83, 0x83, 0x81, 0x81, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80,
 [; ;coffee.h: 33: 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80,0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0xFF,
 [; ;coffee.h: 34: };
-"7 main.c
+"9 main.c
 [v _main `(v ~T0 @X0 1 ef ]
-"8
+"10
 {
-[; ;main.c: 7: void main(void)
-[; ;main.c: 8: {
+[; ;main.c: 9: void main(void)
+[; ;main.c: 10: {
 [e :U _main ]
 [f ]
-"9
-[v _count `i ~T0 @X0 1 a ]
-[; ;main.c: 9: int count = 0;
-[e = _count -> 0 `i ]
-[; ;main.c: 11: SYSTEM_Initialize();
 "11
-[e ( _SYSTEM_Initialize ..  ]
-[; ;main.c: 13: LCDBitmap(&coffee[0], 0,504);
+[v _count `i ~T0 @X0 1 a ]
+[; ;main.c: 11: int count = 0;
+[e = _count -> 0 `i ]
 "13
-[e ( _LCDBitmap (3 , , &U *U + &U _coffee * -> -> -> 0 `i `ui `ux -> -> # *U &U _coffee `ui `ux -> -> 0 `i `uc -> -> 504 `i `ui ]
-[; ;main.c: 17: _delay((unsigned long)((2500)*(1000000/4000.0)));
+[v _dutyCycle7 `i ~T0 @X0 1 a ]
+[; ;main.c: 13: int dutyCycle7 = 800;
+[e = _dutyCycle7 -> 800 `i ]
+"15
+[v _potValue `i ~T0 @X0 1 a ]
+[; ;main.c: 15: int potValue = 1023;
+[e = _potValue -> 1023 `i ]
 "17
-[e ( __delay (1 -> * -> -> 2500 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;main.c: 19: while (1)
+[v _x `uc ~T0 @X0 1 a ]
+[; ;main.c: 17: char x = 0;
+[e = _x -> -> 0 `i `uc ]
+[; ;main.c: 19: SYSTEM_Initialize();
 "19
-[e :U 1521 ]
-[; ;main.c: 20: {
-"20
-{
-[; ;main.c: 21: if(count<1)LCDClear();
+[e ( _SYSTEM_Initialize ..  ]
+[; ;main.c: 21: LCDBitmap(&coffee[0], 0,504);
 "21
-[e $ ! < _count -> 1 `i 1523  ]
-[e ( _LCDClear ..  ]
-[e :U 1523 ]
-[; ;main.c: 23: if(count==1){ gotoXY(0,0); LCDWriteString(" Nokia 5110 Display  ");};
-"23
-[e $ ! == _count -> 1 `i 1524  ]
-{
-[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[e ( _LCDWriteString (1 :s 1C ]
-}
-[e :U 1524 ]
-[; ;main.c: 25: if(count==35){ gotoXY(0,1); LCDWriteString("Some Minor Bug Fixes and all will be Good!");};
+[e ( _LCDBitmap (3 , , &U *U + &U _coffee * -> -> -> 0 `i `ui `ux -> -> # *U &U _coffee `ui `ux -> -> 0 `i `uc -> -> 504 `i `ui ]
+[; ;main.c: 25: _delay((unsigned long)((2500)*(1000000/4000.0)));
 "25
-[e $ ! == _count -> 35 `i 1525  ]
-{
-[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
-[e ( _LCDWriteString (1 :s 2C ]
-}
-[e :U 1525 ]
-[; ;main.c: 27: if(count==70){ gotoXY(35,4); LCDWriteString("5... ");};
-"27
-[e $ ! == _count -> 70 `i 1526  ]
-{
-[e ( _gotoXY (2 , -> -> 35 `i `uc -> -> 4 `i `uc ]
-[e ( _LCDWriteString (1 :s 3C ]
-}
-[e :U 1526 ]
-[; ;main.c: 29: if(count==95){ gotoXY(35,4); LCDWriteString("4... ");};
+[e ( __delay (1 -> * -> -> 2500 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;main.c: 28: while (1)
+"28
+[e :U 1521 ]
+[; ;main.c: 29: {
 "29
-[e $ ! == _count -> 95 `i 1527  ]
 {
-[e ( _gotoXY (2 , -> -> 35 `i `uc -> -> 4 `i `uc ]
-[e ( _LCDWriteString (1 :s 4C ]
-}
-[e :U 1527 ]
-[; ;main.c: 31: if(count==120){ gotoXY(35,4); LCDWriteString("3... ");};
-"31
-[e $ ! == _count -> 120 `i 1528  ]
-{
-[e ( _gotoXY (2 , -> -> 35 `i `uc -> -> 4 `i `uc ]
-[e ( _LCDWriteString (1 :s 5C ]
-}
-[e :U 1528 ]
-[; ;main.c: 33: if(count==145){ gotoXY(35,4); LCDWriteString("2... ");};
-"33
-[e $ ! == _count -> 145 `i 1529  ]
-{
-[e ( _gotoXY (2 , -> -> 35 `i `uc -> -> 4 `i `uc ]
-[e ( _LCDWriteString (1 :s 6C ]
-}
-[e :U 1529 ]
-[; ;main.c: 35: if(count==170){ gotoXY(35,4); LCDWriteString("1... ");};
-"35
-[e $ ! == _count -> 170 `i 1530  ]
-{
-[e ( _gotoXY (2 , -> -> 35 `i `uc -> -> 4 `i `uc ]
-[e ( _LCDWriteString (1 :s 7C ]
-}
-[e :U 1530 ]
-[; ;main.c: 37: if(count==195)LCDClear();
-"37
-[e $ ! == _count -> 195 `i 1531  ]
-[e ( _LCDClear ..  ]
-[e :U 1531 ]
-[; ;main.c: 39: if(count==196)
+[; ;main.c: 30: potValue = readAnalog(0);
+"30
+[e = _potValue ( _readAnalog (1 -> 0 `i ]
+[; ;main.c: 32: potValue=1023-potValue;
+"32
+[e = _potValue - -> 1023 `i _potValue ]
+[; ;main.c: 36: dutyCycle7 = potValue;
+"36
+[e = _dutyCycle7 _potValue ]
+[; ;main.c: 38: while(x<1)
+"38
+[e $U 1523  ]
+[e :U 1524 ]
+[; ;main.c: 39: {
 "39
-[e $ ! == _count -> 196 `i 1532  ]
-[; ;main.c: 40: {
-"40
 {
-[; ;main.c: 41: LCDDrawBox();
+[; ;main.c: 40: TRISC = 0x00;
+"40
+[e = _TRISC -> -> 0 `i `uc ]
+[; ;main.c: 41: x+=1;
 "41
-[e ( _LCDDrawBox ..  ]
+[e =+ _x -> -> 1 `i `uc ]
 "42
 }
-[e :U 1532 ]
+[e :U 1523 ]
+"38
+[e $ < -> _x `i -> 1 `i 1524  ]
+[e :U 1525 ]
 [; ;main.c: 42: }
-[; ;main.c: 44: if(count>196&&count<227)
+[; ;main.c: 44: PWM7_LoadDutyValue(dutyCycle7);
 "44
-[e $ ! && > _count -> 196 `i < _count -> 227 `i 1533  ]
-[; ;main.c: 45: {
-"45
-{
-[; ;main.c: 47: { gotoXY(8,1); LCDWriteString("LAYNE SUCKS COCK!!");};
-"47
-{
-[e ( _gotoXY (2 , -> -> 8 `i `uc -> -> 1 `i `uc ]
-[e ( _LCDWriteString (1 :s 8C ]
-}
-[; ;main.c: 48: { gotoXY(8,2); LCDWriteString("A LOT!! of COCK");};
+[e ( _PWM7_LoadDutyValue (1 -> _dutyCycle7 `ui ]
+[; ;main.c: 46: if(count<1)LCDClear();
+"46
+[e $ ! < _count -> 1 `i 1526  ]
+[e ( _LCDClear ..  ]
+[e :U 1526 ]
+[; ;main.c: 48: if (count<120)
 "48
+[e $ ! < _count -> 120 `i 1527  ]
+[; ;main.c: 49: {
+"49
 {
-[e ( _gotoXY (2 , -> -> 8 `i `uc -> -> 2 `i `uc ]
-[e ( _LCDWriteString (1 :s 9C ]
-}
-[; ;main.c: 50: { gotoXY(4,4); LCDWriteString("Number Sucked:");};
+[; ;main.c: 50: { gotoXY(0,3); LCDWriteString("Brightness:");};
 "50
 {
-[e ( _gotoXY (2 , -> -> 4 `i `uc -> -> 4 `i `uc ]
-[e ( _LCDWriteString (1 :s 10C ]
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 3 `i `uc ]
+[e ( _LCDWriteString (1 :s 1C ]
 }
-[; ;main.c: 52: { gotoXY(64,4); LCDWriteInt(count-196,-1, 0, 0);};
+[; ;main.c: 52: { gotoXY(46,3); LCDWriteInt((1023-potValue)/10,-1, 0, 0);};
 "52
 {
-[e ( _gotoXY (2 , -> -> 64 `i `uc -> -> 4 `i `uc ]
-[e ( _LCDWriteInt (4 , , , - _count -> 196 `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _gotoXY (2 , -> -> 46 `i `uc -> -> 3 `i `uc ]
+[e ( _LCDWriteInt (4 , , , / - -> 1023 `i _potValue -> 10 `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
 }
-[; ;main.c: 54: _delay((unsigned long)((500)*(1000000/4000.0)));
+[; ;main.c: 54: LCDWriteCharacter('%');
 "54
-[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[e ( _LCDWriteCharacter (1 -> -> 37 `ui `uc ]
+[; ;main.c: 55: LCDWriteCharacter(' ');
 "55
+[e ( _LCDWriteCharacter (1 -> -> 32 `ui `uc ]
+"56
+}
+[e :U 1527 ]
+[; ;main.c: 56: }
+[; ;main.c: 60: if(count==1){ gotoXY(0,0); LCDWriteString(" Nokia 5110 Display  ");};
+"60
+[e $ ! == _count -> 1 `i 1528  ]
+{
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCDWriteString (1 :s 2C ]
+}
+[e :U 1528 ]
+[; ;main.c: 62: if(count==35){ gotoXY(0,1); LCDWriteString("Some Minor Bug Fixes and all will be Good!");};
+"62
+[e $ ! == _count -> 35 `i 1529  ]
+{
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
+[e ( _LCDWriteString (1 :s 3C ]
+}
+[e :U 1529 ]
+[; ;main.c: 66: if(count==70){ gotoXY(35,5); LCDWriteString("5... ");};
+"66
+[e $ ! == _count -> 70 `i 1530  ]
+{
+[e ( _gotoXY (2 , -> -> 35 `i `uc -> -> 5 `i `uc ]
+[e ( _LCDWriteString (1 :s 4C ]
+}
+[e :U 1530 ]
+[; ;main.c: 68: if(count==80){ gotoXY(35,5); LCDWriteString("4... ");};
+"68
+[e $ ! == _count -> 80 `i 1531  ]
+{
+[e ( _gotoXY (2 , -> -> 35 `i `uc -> -> 5 `i `uc ]
+[e ( _LCDWriteString (1 :s 5C ]
+}
+[e :U 1531 ]
+[; ;main.c: 70: if(count==90){ gotoXY(35,5); LCDWriteString("3... ");};
+"70
+[e $ ! == _count -> 90 `i 1532  ]
+{
+[e ( _gotoXY (2 , -> -> 35 `i `uc -> -> 5 `i `uc ]
+[e ( _LCDWriteString (1 :s 6C ]
+}
+[e :U 1532 ]
+[; ;main.c: 72: if(count==100){ gotoXY(35,5); LCDWriteString("2... ");};
+"72
+[e $ ! == _count -> 100 `i 1533  ]
+{
+[e ( _gotoXY (2 , -> -> 35 `i `uc -> -> 5 `i `uc ]
+[e ( _LCDWriteString (1 :s 7C ]
 }
 [e :U 1533 ]
-[; ;main.c: 55: }
-[; ;main.c: 57: _delay((unsigned long)((50)*(1000000/4000.0)));
-"57
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;main.c: 59: if(count>=227)
-"59
-[e $ ! >= _count -> 227 `i 1534  ]
-[; ;main.c: 60: {
-"60
+[; ;main.c: 74: if(count==110){ gotoXY(35,5); LCDWriteString("1... ");};
+"74
+[e $ ! == _count -> 110 `i 1534  ]
 {
-[; ;main.c: 61: count=0;
-"61
-[e = _count -> 0 `i ]
-[; ;main.c: 62: LCDClear();
-"62
-[e ( _LCDClear ..  ]
-"63
+[e ( _gotoXY (2 , -> -> 35 `i `uc -> -> 5 `i `uc ]
+[e ( _LCDWriteString (1 :s 8C ]
 }
 [e :U 1534 ]
-[; ;main.c: 63: }
-[; ;main.c: 65: count+=1;
-"65
+[; ;main.c: 76: if(count==120)LCDClear();
+"76
+[e $ ! == _count -> 120 `i 1535  ]
+[e ( _LCDClear ..  ]
+[e :U 1535 ]
+[; ;main.c: 78: if(count==121)
+"78
+[e $ ! == _count -> 121 `i 1536  ]
+[; ;main.c: 79: {
+"79
+{
+[; ;main.c: 80: LCDDrawBox();
+"80
+[e ( _LCDDrawBox ..  ]
+"81
+}
+[e :U 1536 ]
+[; ;main.c: 81: }
+[; ;main.c: 83: if(count>121&&count<133)
+"83
+[e $ ! && > _count -> 121 `i < _count -> 133 `i 1537  ]
+[; ;main.c: 84: {
+"84
+{
+[; ;main.c: 86: { gotoXY(8,1); LCDWriteString("LAYNE SUCKS COCK!!");};
+"86
+{
+[e ( _gotoXY (2 , -> -> 8 `i `uc -> -> 1 `i `uc ]
+[e ( _LCDWriteString (1 :s 9C ]
+}
+[; ;main.c: 87: { gotoXY(8,2); LCDWriteString("A LOT!! of COCK");};
+"87
+{
+[e ( _gotoXY (2 , -> -> 8 `i `uc -> -> 2 `i `uc ]
+[e ( _LCDWriteString (1 :s 10C ]
+}
+[; ;main.c: 89: { gotoXY(4,3); LCDWriteString("Number of Cocks");};
+"89
+{
+[e ( _gotoXY (2 , -> -> 4 `i `uc -> -> 3 `i `uc ]
+[e ( _LCDWriteString (1 :s 11C ]
+}
+[; ;main.c: 91: { gotoXY(4,4); LCDWriteString("Sucked:");}
+"91
+{
+[e ( _gotoXY (2 , -> -> 4 `i `uc -> -> 4 `i `uc ]
+[e ( _LCDWriteString (1 :s 12C ]
+}
+[; ;main.c: 93: { gotoXY(34,4); LCDWriteInt(count-122,-1, 0, 0);};
+"93
+{
+[e ( _gotoXY (2 , -> -> 34 `i `uc -> -> 4 `i `uc ]
+[e ( _LCDWriteInt (4 , , , - _count -> 122 `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+}
+[; ;main.c: 95: _delay((unsigned long)((500)*(1000000/4000.0)));
+"95
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+"96
+}
+[e :U 1537 ]
+[; ;main.c: 96: }
+[; ;main.c: 98: _delay((unsigned long)((50)*(1000000/4000.0)));
+"98
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;main.c: 100: if(count>=133)
+"100
+[e $ ! >= _count -> 133 `i 1538  ]
+[; ;main.c: 101: {
+"101
+{
+[; ;main.c: 102: count=0;
+"102
+[e = _count -> 0 `i ]
+[; ;main.c: 103: LCDClear();
+"103
+[e ( _LCDClear ..  ]
+"104
+}
+[e :U 1538 ]
+[; ;main.c: 104: }
+[; ;main.c: 106: count+=1;
+"106
 [e =+ _count -> 1 `i ]
-"66
+"107
 }
 [e :U 1520 ]
-"19
+"28
 [e $U 1521  ]
 [e :U 1522 ]
-[; ;main.c: 66: }
-[; ;main.c: 67: }
-"67
+[; ;main.c: 107: }
+[; ;main.c: 108: }
+"108
 [e :UE 1519 ]
 }
-[a 9C 65 32 76 79 84 33 33 32 111 102 32 67 79 67 75 0 ]
-[a 10C 78 117 109 98 101 114 32 83 117 99 107 101 100 58 0 ]
-[a 2C 83 111 109 101 32 77 105 110 111 114 32 66 117 103 32 70 105 120 101 115 32 97 110 100 32 97 108 108 32 119 105 108 108 32 98 101 32 71 111 111 100 33 0 ]
-[a 8C 76 65 89 78 69 32 83 85 67 75 83 32 67 79 67 75 33 33 0 ]
-[a 3C 53 46 46 46 32 0 ]
-[a 4C 52 46 46 46 32 0 ]
-[a 5C 51 46 46 46 32 0 ]
-[a 6C 50 46 46 46 32 0 ]
-[a 7C 49 46 46 46 32 0 ]
-[a 1C 32 78 111 107 105 97 32 53 49 49 48 32 68 105 115 112 108 97 121 32 32 0 ]
+[a 11C 78 117 109 98 101 114 32 111 102 32 67 111 99 107 115 0 ]
+[a 10C 65 32 76 79 84 33 33 32 111 102 32 67 79 67 75 0 ]
+[a 1C 66 114 105 103 104 116 110 101 115 115 58 0 ]
+[a 12C 83 117 99 107 101 100 58 0 ]
+[a 3C 83 111 109 101 32 77 105 110 111 114 32 66 117 103 32 70 105 120 101 115 32 97 110 100 32 97 108 108 32 119 105 108 108 32 98 101 32 71 111 111 100 33 0 ]
+[a 9C 76 65 89 78 69 32 83 85 67 75 83 32 67 79 67 75 33 33 0 ]
+[a 4C 53 46 46 46 32 0 ]
+[a 5C 52 46 46 46 32 0 ]
+[a 6C 51 46 46 46 32 0 ]
+[a 7C 50 46 46 46 32 0 ]
+[a 8C 49 46 46 46 32 0 ]
+[a 2C 32 78 111 107 105 97 32 53 49 49 48 32 68 105 115 112 108 97 121 32 32 0 ]

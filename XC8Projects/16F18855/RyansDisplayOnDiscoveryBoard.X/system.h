@@ -4,6 +4,9 @@
 #include <xc.h>
 #include <stdint.h>
 #include "lcd.h"
+#include "adc.h"
+#include "tmr2.h"
+#include "pwm.h"
 
 #define _XTAL_FREQ  1000000         // Define clock freq for __delay_ms();
 

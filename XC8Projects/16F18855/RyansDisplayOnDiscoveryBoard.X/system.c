@@ -36,17 +36,17 @@
 
 void SYSTEM_Initialize(void)
 {
-    TRISA = 0x00;                   // All PortA set to Outputs
+    TRISA = 0x10;                   // All PortA set to Outputs, except RA4
     TRISB = 0x00;                   // All PortB set to Outputs
-    TRISC = 0x40;                   // All PortC set to Outputs
+    TRISC = 0x08;                   // All PortC set to Outputs
 
-    ANSELA = 0x00;                  // All PortA set to Digital
+    ANSELA = 0x10;                  // All PortA set to Digital
     ANSELB = 0x00;                  // All PortB set to Digital
     ANSELC = 0x00;                  // All PortC set to Digital
 
     LATA = 0x00;                    // LATA all set to low Output
     LATB = 0x20;                    // LATB5 needs to be 1 (high), to provide + Supply V for LCD Power    
-    LATC = 0x00;                    // LATC all set to low Output
+    LATC = 0x00;                    // LATC all set to low Output, except LATC3 set high
 
     WPUA = 0x00;
     WPUB = 0x00;
@@ -55,12 +55,33 @@ void SYSTEM_Initialize(void)
 
     OSCILLATOR_Initialize();
     FVRCON = 0x00;                  // Set Fixed Voltage reference
+    TMR2_Initialize();
+    PWM_Initialize();
+    ADC_Initialize();
     LCDInit();
     __delay_ms(200);
     LCDClear();
     __delay_ms(100);
-}
+    
+    PIE0bits.IOCIE = 0;                 // interrupts-on-change are globally disabled
+    char state = GIE;
+    GIE = 0;
+    PPSLOCK = 0x55;
+    PPSLOCK = 0xAA;
+    PPSLOCKbits.PPSLOCKED = 0x00;       // unlock PPS
 
+//    T2AINPPSbits.T2AINPPS = 0x0013;   //RC3->TMR2:T2IN; RC3 as hardware input pin to timer 2???
+//    RC2PPS = 0x0E;                      //RC2->PWM6:PWM6OUT;
+    RC3PPS = 0X0F;                      // PWM7Out Re-mapped to RC3
+//    RA2PPS = 0x000E;   //RA2->PWM6:PWM6OUT;
+//    RA3PPS = 0x000E;                    //RA3->PWM6:PWM6OUT;
+
+    PPSLOCK = 0x55;
+    PPSLOCK = 0xAA;
+    PPSLOCKbits.PPSLOCKED = 0x01; // lock PPS
+    GIE = state;
+}
+    
 void OSCILLATOR_Initialize(void)
 {
     OSCCON1 = 0x60;                 // NOSC HFINTOSC; NDIV 1; 

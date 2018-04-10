@@ -259,7 +259,7 @@ void LCDInit(void)
 
     LCDWrite(LCD_COMMAND, 0x04);                //Set Temp coefficent
 
-    LCDWrite(LCD_COMMAND, 0x14);                //LCD bias mode 1:48: Try 0x13 or 0x14
+    LCDWrite(LCD_COMMAND, 0x13);                //LCD bias mode 1:48: Try 0x13 or 0x14
 
     LCDWrite(LCD_COMMAND, 0x20);                //We must send 0x20 to tell the display to use standard commands
 

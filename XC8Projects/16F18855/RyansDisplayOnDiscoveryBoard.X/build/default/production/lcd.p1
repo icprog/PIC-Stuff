@@ -12591,8 +12591,49 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
-[; ;system.h: 11: void SYSTEM_Initialize(void);
-[; ;system.h: 13: void OSCILLATOR_Initialize(void);
+[; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;adc.h: 9: typedef uint16_t adc_result_t;
+[; ;adc.h: 12: typedef enum
+[; ;adc.h: 13: {
+[; ;adc.h: 14: POT = 0x4,
+[; ;adc.h: 15: channel_VSS = 0x3C,
+[; ;adc.h: 16: channel_Temp = 0x3D,
+[; ;adc.h: 17: channel_DAC1 = 0x3E,
+[; ;adc.h: 18: channel_FVR = 0x3F
+[; ;adc.h: 19: } adcc_channel_t;
+[; ;adc.h: 21: int readAnalog(int channel);
+[; ;adc.h: 23: void ADC_Initialize(void);
+[; ;adc.h: 25: void ADCC_StartConversion(adcc_channel_t channel);
+[; ;adc.h: 27: bool ADCC_IsConversionDone();
+[; ;adc.h: 29: adc_result_t ADCC_GetConversionResult(void);
+[; ;adc.h: 31: adc_result_t ADCRead(adcc_channel_t channel);
+[; ;adc.h: 33: void ADCC_StopConversion(void);
+[; ;adc.h: 35: void ADCC_SetStopOnInterrupt(void);
+[; ;adc.h: 37: void ADCC_DischargeSampleCapacitor(void);
+[; ;adc.h: 39: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adc.h: 41: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adc.h: 43: void ADCC_SetRepeatCount(uint8_t);
+[; ;adc.h: 45: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adc.h: 47: void ADCC_ClearAccumulator(void);
+[; ;adc.h: 49: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adc.h: 51: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adc.h: 53: uint16_t ADCC_GetFilterValue(void);
+[; ;adc.h: 77: uint16_t ADCC_GetPreviousResult(void);
+[; ;adc.h: 101: void ADCC_DefineSetPoint(uint16_t);
+[; ;adc.h: 126: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adc.h: 151: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adc.h: 174: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adc.h: 196: void ADCC_EnableDoubleSampling(void);
+[; ;adc.h: 218: void ADCC_EnableContinuousConversion(void);
+[; ;adc.h: 240: void ADCC_DisableContinuousConversion(void);
+[; ;adc.h: 262: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
+[; ;system.h: 14: void SYSTEM_Initialize(void);
+[; ;system.h: 16: void OSCILLATOR_Initialize(void);
 [; ;lcd.h: 19: void gotoXY(char x, char y);
 [; ;lcd.h: 22: void LCDBitmap(const char bmp_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13310,8 +13351,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `c ~T0 @X0 1 r4 ]
 "181
 [f ]
-[v F13605 `uc ~T0 @X0 -> 5 `i s ]
-[i F13605
+[v F13675 `uc ~T0 @X0 -> 5 `i s ]
+[i F13675
 :U ..
 "182
 -> -> 0 `i `uc
@@ -13323,7 +13364,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _str `uc ~T0 @X0 -> 5 `i a ]
 [; ;lcd.c: 182: char str[5]={0,0,0,0,0};
-[e = _str F13605 ]
+[e = _str F13675 ]
 "183
 [v _i `i ~T0 @X0 1 a ]
 [; ;lcd.c: 183: int i=4,j=0;
@@ -13540,9 +13581,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 260: LCDWrite(0, 0x04);
 "260
 [e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 4 `i `uc ]
-[; ;lcd.c: 262: LCDWrite(0, 0x14);
+[; ;lcd.c: 262: LCDWrite(0, 0x13);
 "262
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 20 `i `uc ]
+[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 19 `i `uc ]
 [; ;lcd.c: 264: LCDWrite(0, 0x20);
 "264
 [e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 32 `i `uc ]
