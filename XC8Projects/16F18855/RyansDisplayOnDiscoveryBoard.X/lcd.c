@@ -128,49 +128,39 @@ void gotoXY(char x, char y)
 }
 
 
-void LCDBitmap(const char my_array[], uint8_t startPosition, uint16_t len)
+void LCDBitmap(const char bmp_array[], uint8_t startLine, uint16_t len)   // len is 84 x number of lines to display
 {
     uint16_t index;
-    gotoXY(0,startPosition);    
-    for (index = 0 ; index < len ; index++)
-    LCDWrite(LCD_DATA, my_array[index]);
+    gotoXY(0,startLine);                        // X is always 0, Y is line number tostart on
+    for (index = 0 ; index < len ; index++)     // loop through the bmp_array,
+    {
+        LCDWrite(LCD_DATA, bmp_array[index]);   // & write it byte by byte.     
+    } 
 }
 
 
 void LCDWriteCharacter(const char character)
 {
-    uint16_t base;
+/*    uint16_t base;
     base = character - 32;
     base *= 3;                                  // 3 bit Font, so location * 3 will pull up correct font
     LCDWrite(LCD_DATA,fonts[base]);             // fonts are written 1 vertical line of 8 bits at a time
     LCDWrite(LCD_DATA,fonts[base + 1]);         // so, this is the second vertical line
     LCDWrite(LCD_DATA,fonts[base + 2]);         // third vertical line of font character
     LCDWrite(LCD_DATA, 0x00);                   // write a blank line to space the font
-}
+}*/
 
-/*   uint16_t base,z;
+    uint16_t base,x,z;                          // somehow, adding the z variable (instead of using just x) saves 6 bytes)
     base = character - 32;
-    base *= 3;                          // 3 bit Font, so location * 3 will pull up correct font
+    base *= 3;                                  // 3 bit Font, so location * 3 will pull up correct font
     z = base;
     for(x=base;base<(z+3);base++)
     {
-    LCDWrite(LCD_DATA,fonts[base]);             // fonts are written 1 vertical line of 8 bits at a time
+        LCDWrite(LCD_DATA,fonts[base]);         // fonts are written 1 vertical line of 8 bits at a time
     }
-*/  //Test if above works, saves 3 bytes
-
-//void LCD_Write_Character(const char character)
-//{
-
-//    LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
-//    int index;
-  //  for (index = 0 ; index < 3 ; index++)
-    //{
-//    LCDWrite(LCD_DATA, fonts[character - 0x20][index]); //0x20 is the ASCII character for Space (? ?). The font table starts with this character
-  //  }
-    
-    //LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
-    
-//}
+    LCDWrite(LCD_DATA, 0x00);                   // write a blank line to space the font
+}
+  // above saves 10 bytes vs previous code
 
 
 void LCDWriteString(const char *characters) 
@@ -279,9 +269,9 @@ void LCDInit(void)
 
 void LCDWrite(uint8_t data_or_command, uint8_t data)
 {
-    uint8_t i,d;
+    uint8_t i; //,d;                            // Save 4 bytes by eliminating the d variable
     
-    d=data;
+//    d=data;
     
     if(data_or_command == 0)
     {
@@ -298,14 +288,14 @@ void LCDWrite(uint8_t data_or_command, uint8_t data)
     {
         LCD_DIN = 0;
 
-        if(d&0x80)                              // If the Bit is a "1"
+        if(data&0x80)                           // If the Bit is a "1"
         {
             LCD_DIN =   1;                      // Turn On the Bit at this Display Position
         }
         
         LCD_CLK =   1;                          // Set Clock to "1" and Clock in the Bit
         
-        d<<=1;                                  // Grab the next Bit
+        data<<=1;                               // Grab the next Bit
         
         LCD_CLK=0;                              // Set Clock to "0"
     }
@@ -330,15 +320,15 @@ void LCDDrawBox(void)
         LCDWrite(LCD_DATA,0x80);
     }
     
-    for(j = 0; j < 6; j++)                      // Right
-    {
-        gotoXY(83, j);
-        LCDWrite(LCD_DATA,0xff);
-    }
-    
     for(j = 0; j < 6; j++)                      // Left
     {
         gotoXY(0, j);
+        LCDWrite(LCD_DATA,0xff);
+    }
+    
+    for(j = 0; j < 6; j++)                      // Right
+    {
+        gotoXY(83, j);
         LCDWrite(LCD_DATA,0xff);
     }
 }

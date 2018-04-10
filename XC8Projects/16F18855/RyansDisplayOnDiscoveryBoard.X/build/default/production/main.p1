@@ -4,16 +4,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
 "22 lcd.h
 [v _LCDBitmap `(v ~T0 @X0 0 ef3`*Cuc`uc`ui ]
-"19
-[v _gotoXY `(v ~T0 @X0 0 ef2`uc`uc ]
-"25
-[v _LCDWriteCharacter `(v ~T0 @X0 0 ef1`Cuc ]
 [v F13525 `(v ~T0 @X0 1 tf1`ul ]
 "152 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic.h
 [v __delay `JF13525 ~T0 @X0 0 e ]
 [p i __delay ]
 "31 lcd.h
 [v _LCDClear `(v ~T0 @X0 0 ef ]
+"19
+[v _gotoXY `(v ~T0 @X0 0 ef2`uc`uc ]
 "28
 [v _LCDWriteString `(v ~T0 @X0 0 ef1`*Cuc ]
 "43
@@ -12595,7 +12593,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;lcd.h: 19: void gotoXY(char x, char y);
-[; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
+[; ;lcd.h: 22: void LCDBitmap(const char bmp_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
 [; ;lcd.h: 28: void LCDWriteString(const char *characters);
 [; ;lcd.h: 31: void LCDClear(void);
@@ -13209,12 +13207,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 13: LCDBitmap(&coffee[0], 0,504);
 "13
 [e ( _LCDBitmap (3 , , &U *U + &U _coffee * -> -> -> 0 `i `ui `ux -> -> # *U &U _coffee `ui `ux -> -> 0 `i `uc -> -> 504 `i `ui ]
-[; ;main.c: 14: gotoXY(1,4);
-"14
-[e ( _gotoXY (2 , -> -> 1 `i `uc -> -> 4 `i `uc ]
-[; ;main.c: 15: LCDWriteCharacter(' ');
-"15
-[e ( _LCDWriteCharacter (1 -> -> 32 `ui `uc ]
 [; ;main.c: 17: _delay((unsigned long)((2500)*(1000000/4000.0)));
 "17
 [e ( __delay (1 -> * -> -> 2500 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]

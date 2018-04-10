@@ -16681,7 +16681,7 @@ typedef uint16_t uintptr_t;
 void gotoXY(char x, char y);
 
 
-void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
+void LCDBitmap(const char bmp_array[], uint8_t startLine, uint16_t len);
 
 
 void LCDWriteCharacter(const char character);
@@ -16778,8 +16778,8 @@ int count = 0;
 SYSTEM_Initialize();
 
 LCDBitmap(&coffee[0], 0,504);
-gotoXY(1,4);
-LCDWriteCharacter(' ');
+
+
 
 _delay((unsigned long)((2500)*(1000000/4000.0)));
 

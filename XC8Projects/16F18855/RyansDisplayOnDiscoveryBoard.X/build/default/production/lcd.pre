@@ -16686,7 +16686,7 @@ void OSCILLATOR_Initialize(void);
 void gotoXY(char x, char y);
 
 
-void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
+void LCDBitmap(const char bmp_array[], uint8_t startLine, uint16_t len);
 
 
 void LCDWriteCharacter(const char character);
@@ -16824,27 +16824,34 @@ LCDWrite(0, 0x40 | y);
 }
 
 
-void LCDBitmap(const char my_array[], uint8_t startPosition, uint16_t len)
+void LCDBitmap(const char bmp_array[], uint8_t startLine, uint16_t len)
 {
 uint16_t index;
-gotoXY(0,startPosition);
+gotoXY(0,startLine);
 for (index = 0 ; index < len ; index++)
-LCDWrite(1, my_array[index]);
+{
+LCDWrite(1, bmp_array[index]);
+}
 }
 
 
 void LCDWriteCharacter(const char character)
 {
-uint16_t base;
+
+# 153
+uint16_t base,x,z;
 base = character - 32;
 base *= 3;
+z = base;
+for(x=base;base<(z+3);base++)
+{
 LCDWrite(1,fonts[base]);
-LCDWrite(1,fonts[base + 1]);
-LCDWrite(1,fonts[base + 2]);
+}
 LCDWrite(1, 0x00);
 }
 
-# 176
+
+
 void LCDWriteString(const char *characters)
 {
 while (*characters)
@@ -16932,7 +16939,7 @@ LATBbits.LATB0 = 1;
 
 LCDWrite(0, 0x21);
 
-# 268
+# 258
 LCDWrite(0, 0xBE);
 
 LCDWrite(0, 0x04);
@@ -16947,9 +16954,9 @@ LCDWrite(0, 0x0C);
 
 void LCDWrite(uint8_t data_or_command, uint8_t data)
 {
-uint8_t i,d;
+uint8_t i;
 
-d=data;
+
 
 if(data_or_command == 0)
 {
@@ -16966,14 +16973,14 @@ for(i=0;i<8;i++)
 {
 LATBbits.LATB3 = 0;
 
-if(d&0x80)
+if(data&0x80)
 {
 LATBbits.LATB3 = 1;
 }
 
 LATBbits.LATB4 = 1;
 
-d<<=1;
+data<<=1;
 
 LATBbits.LATB4=0;
 }
@@ -17000,13 +17007,13 @@ LCDWrite(1,0x80);
 
 for(j = 0; j < 6; j++)
 {
-gotoXY(83, j);
+gotoXY(0, j);
 LCDWrite(1,0xff);
 }
 
 for(j = 0; j < 6; j++)
 {
-gotoXY(0, j);
+gotoXY(83, j);
 LCDWrite(1,0xff);
 }
 }

@@ -11,8 +11,8 @@ void main(void)
     SYSTEM_Initialize();
    
     LCDBitmap(&coffee[0], 0,504);           //Draw Splash Screen
-    gotoXY(1,4);
-    LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
+//    gotoXY(1,4);
+  //  LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
    
    __delay_ms(2500);
 
