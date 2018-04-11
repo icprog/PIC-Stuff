@@ -16868,9 +16868,11 @@ void main(void)
 {
 int count = 0;
 
-int dutyCycle7 = 800;
+int dutyCycle7 = 1023;
 
 int potValue = 1023;
+
+int previousPotValue = 1023;
 
 char x = 0;
 
@@ -16889,8 +16891,6 @@ potValue = readAnalog(0);
 
 potValue=1023-potValue;
 
-
-
 dutyCycle7 = potValue;
 
 while(x<1)
@@ -16903,7 +16903,9 @@ PWM7_LoadDutyValue(dutyCycle7);
 
 if(count<1)LCDClear();
 
-if (count<120)
+if(count<120)
+{
+if (potValue>previousPotValue+5 || potValue<previousPotValue-5)
 {
 { gotoXY(0,3); LCDWriteString("Brightness:");};
 
@@ -16911,9 +16913,11 @@ if (count<120)
 
 LCDWriteCharacter('%');
 LCDWriteCharacter(' ');
+previousPotValue=potValue;
+}
 }
 
-
+if(!RA5) asm("reset");
 
 if(count==1){ gotoXY(0,0); LCDWriteString(" Nokia 5110 Display  ");};
 

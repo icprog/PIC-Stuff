@@ -36,17 +36,17 @@
 
 void SYSTEM_Initialize(void)
 {
-    TRISA = 0x10;                   // All PortA set to Outputs, except RA4
+    TRISA = 0x30;                   // All PortA set to Outputs, except RA4 & RA5
     TRISB = 0x00;                   // All PortB set to Outputs
-    TRISC = 0x08;                   // All PortC set to Outputs
+    TRISC = 0x08;                   // All PortC set to Outputs Except RC7
 
-    ANSELA = 0x10;                  // All PortA set to Digital
+    ANSELA = 0x10;                  // All PortA set to Digital Except RA4
     ANSELB = 0x00;                  // All PortB set to Digital
     ANSELC = 0x00;                  // All PortC set to Digital
 
     LATA = 0x00;                    // LATA all set to low Output
     LATB = 0x20;                    // LATB5 needs to be 1 (high), to provide + Supply V for LCD Power    
-    LATC = 0x00;                    // LATC all set to low Output, except LATC3 set high
+    LATC = 0x00;                    // LATC all set to low Output
 
     WPUA = 0x00;
     WPUB = 0x00;

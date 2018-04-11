@@ -10,9 +10,11 @@ void main(void)
 {
     int count               =   0;
     
-    int dutyCycle7          =   800;
+    int dutyCycle7          =   1023;
     
     int potValue            =   1023;
+    
+    int previousPotValue    =   1023;
     
     char x                  =   0;
     
@@ -31,8 +33,6 @@ void main(void)
         
         potValue=1023-potValue;
         
-//        if(potValue<200)potValue=200;
-        
         backlightIntensity = potValue;
 
         while(x<1)
@@ -45,17 +45,21 @@ void main(void)
 
         if(count<1)LCDClear();
         
-        if (count<120)
+        if(count<120)
         {
-            LCDWriteStringXY(0,3,"Brightness:");
-        
-            LCDWriteIntXY(46,3,(1023-potValue)/10,-1,0,0);
+            if (potValue>previousPotValue+5 || potValue<previousPotValue-5)
+            {
+                LCDWriteStringXY(0,3,"Brightness:");
             
-            LCDWriteCharacter('%');
-            LCDWriteCharacter(' ');
+                LCDWriteIntXY(46,3,(1023-potValue)/10,-1,0,0);
+            
+                LCDWriteCharacter('%');
+                LCDWriteCharacter(' ');
+                previousPotValue=potValue;
+            }
         }
         
-        
+        if(!RA5) RESET();
         
         if(count==1)LCDWriteStringXY(0,0," Nokia 5110 Display  ");
        
