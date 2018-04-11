@@ -1,37 +1,5 @@
 
-# 1 "system.c"
-
-
-#pragma config FEXTOSC = OFF
-#pragma config RSTOSC = HFINT1
-#pragma config CLKOUTEN = OFF
-#pragma config CSWEN = ON
-#pragma config FCMEN = ON
-
-
-#pragma config MCLRE = ON
-#pragma config PWRTE = OFF
-#pragma config LPBOREN = OFF
-#pragma config BOREN = OFF
-#pragma config BORV = LO
-#pragma config ZCD = OFF
-#pragma config PPS1WAY = ON
-#pragma config STVREN = ON
-
-
-#pragma config WDTCPS = WDTCPS_31
-#pragma config WDTE = OFF
-#pragma config WDTCWS = WDTCWS_7
-#pragma config WDTCCS = SC
-
-
-#pragma config WRT = OFF
-#pragma config SCANE = available
-#pragma config LVP = ON
-
-
-#pragma config CP = OFF
-#pragma config CPD = OFF
+# 1 "spi.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -16829,71 +16797,52 @@ void PWM_Initialize(void);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
-# 6 "spi.h"
-void SPI_Init(void);
-
-char (SPI_TRANSFER)(char byte_to_send);
-
 # 15 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 37 "system.c"
-void SYSTEM_Initialize(void)
+# 6 "spi.h"
+void SPI_Init(void);
+
+char (SPI_TRANSFER)(char byte_to_send);
+
+# 4 "spi.c"
+void SPI_Init(void)
 {
-TRISA = 0x30;
-TRISB = 0x00;
-TRISC = 0x08;
 
-ANSELA = 0x10;
-ANSELB = 0x00;
-ANSELC = 0x00;
+# 13
+SSP1CON1 = 0x22;
+SSP1DATPPS = 0x14;
+RC5PPS = 0x15;
+RC3PPS = 0x14;
+SSP1STATbits.CKE = 1;
 
-LATA = 0x00;
-LATB = 0x20;
-LATC = 0x00;
-
-WPUA = 0x00;
-WPUB = 0x00;
-WPUC = 0x00;
-WPUE = 0x8;
-
-OSCILLATOR_Initialize();
-FVRCON = 0x00;
-TMR2_Initialize();
-PWM_Initialize();
-ADC_Initialize();
-SPI_Init();
-LCDInit();
-_delay((unsigned long)((200)*(1000000/4000.0)));
-LCDClear();
-_delay((unsigned long)((100)*(1000000/4000.0)));
-
-PIE0bits.IOCIE = 0;
-char state = GIE;
-GIE = 0;
-PPSLOCK = 0x55;
-PPSLOCK = 0xAA;
-PPSLOCKbits.PPSLOCKED = 0x00;
-
-
-
-RC3PPS = 0X0F;
-
-
-
-PPSLOCK = 0x55;
-PPSLOCK = 0xAA;
-PPSLOCKbits.PPSLOCKED = 0x01;
-GIE = state;
 }
 
-void OSCILLATOR_Initialize(void)
+
+char (SPI_TRANSFER)(char byte_to_send)
 {
-OSCCON1 = 0x60;
-OSCCON3 = 0x00;
-OSCEN = 0x00;
-OSCFRQ = 0x00;
-OSCTUNE = 0x00;
+char byte_recieved;
+
+byte_recieved = SSP1BUF;
+
+SSP1BUF = byte_to_send;
+
+
+_delay((unsigned long)((5)*(1000000/4000000.0)));
+
+while (SSP1CON1bits.WCOL == 1)
+{
+SSP1CON1bits.WCOL = 0;
+_delay((unsigned long)((5)*(1000000/4000000.0)));
+SSP1BUF = byte_to_send;
+_delay((unsigned long)((5)*(1000000/4000000.0)));
+}
+
+byte_recieved = SSP1BUF;
+
+SSP1STATbits.BF = 0;
+
+return byte_recieved;
 }

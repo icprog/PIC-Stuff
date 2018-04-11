@@ -2,6 +2,7 @@
  build/default/production/system.p1:  \
  system.c  \
 pwm.h  \
+spi.h  \
 lcd.h  \
 system.h  \
 adc.h  \

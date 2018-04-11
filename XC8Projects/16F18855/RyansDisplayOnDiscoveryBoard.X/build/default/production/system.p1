@@ -25,7 +25,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _WPUC `Vuc ~T0 @X0 0 e@3919 ]
 "32917
 [v _WPUE `Vuc ~T0 @X0 0 e@3941 ]
-"16 system.h
+"17 system.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
 "22252 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
 [v _FVRCON `Vuc ~T0 @X0 0 e@2316 ]
@@ -35,6 +35,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PWM_Initialize `(v ~T0 @X0 0 ef ]
 "23 adc.h
 [v _ADC_Initialize `(v ~T0 @X0 0 ef ]
+"6 spi.h
+[v _SPI_Init `(v ~T0 @X0 0 ef ]
 "37 lcd.h
 [v _LCDInit `(v ~T0 @X0 0 ef ]
 [v F13525 `(v ~T0 @X0 1 tf1`ul ]
@@ -12743,8 +12745,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
-[; ;system.h: 14: void SYSTEM_Initialize(void);
-[; ;system.h: 16: void OSCILLATOR_Initialize(void);
+[; ;spi.h: 6: void SPI_Init(void);
+[; ;spi.h: 8: char (SPI_TRANSFER)(char byte_to_send);
+[; ;system.h: 15: void SYSTEM_Initialize(void);
+[; ;system.h: 17: void OSCILLATOR_Initialize(void);
 "37 system.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
 "38
@@ -12807,80 +12811,83 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 60: ADC_Initialize();
 "60
 [e ( _ADC_Initialize ..  ]
-[; ;system.c: 61: LCDInit();
+[; ;system.c: 61: SPI_Init();
 "61
-[e ( _LCDInit ..  ]
-[; ;system.c: 62: _delay((unsigned long)((200)*(1000000/4000.0)));
+[e ( _SPI_Init ..  ]
+[; ;system.c: 62: LCDInit();
 "62
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;system.c: 63: LCDClear();
+[e ( _LCDInit ..  ]
+[; ;system.c: 63: _delay((unsigned long)((200)*(1000000/4000.0)));
 "63
-[e ( _LCDClear ..  ]
-[; ;system.c: 64: _delay((unsigned long)((100)*(1000000/4000.0)));
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;system.c: 64: LCDClear();
 "64
+[e ( _LCDClear ..  ]
+[; ;system.c: 65: _delay((unsigned long)((100)*(1000000/4000.0)));
+"65
 [e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;system.c: 66: PIE0bits.IOCIE = 0;
-"66
-[e = . . _PIE0bits 0 2 -> -> 0 `i `uc ]
+[; ;system.c: 67: PIE0bits.IOCIE = 0;
 "67
-[v _state `uc ~T0 @X0 1 a ]
-[; ;system.c: 67: char state = GIE;
-[e = _state -> -> _GIE `i `uc ]
-[; ;system.c: 68: GIE = 0;
+[e = . . _PIE0bits 0 2 -> -> 0 `i `uc ]
 "68
-[e = _GIE -> -> 0 `i `b ]
-[; ;system.c: 69: PPSLOCK = 0x55;
+[v _state `uc ~T0 @X0 1 a ]
+[; ;system.c: 68: char state = GIE;
+[e = _state -> -> _GIE `i `uc ]
+[; ;system.c: 69: GIE = 0;
 "69
-[e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;system.c: 70: PPSLOCK = 0xAA;
+[e = _GIE -> -> 0 `i `b ]
+[; ;system.c: 70: PPSLOCK = 0x55;
 "70
-[e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;system.c: 71: PPSLOCKbits.PPSLOCKED = 0x00;
-"71
-[e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
-[; ;system.c: 75: RC3PPS = 0X0F;
-"75
-[e = _RC3PPS -> -> 15 `i `uc ]
-[; ;system.c: 79: PPSLOCK = 0x55;
-"79
 [e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;system.c: 80: PPSLOCK = 0xAA;
-"80
+[; ;system.c: 71: PPSLOCK = 0xAA;
+"71
 [e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;system.c: 81: PPSLOCKbits.PPSLOCKED = 0x01;
+[; ;system.c: 72: PPSLOCKbits.PPSLOCKED = 0x00;
+"72
+[e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
+[; ;system.c: 76: RC3PPS = 0X0F;
+"76
+[e = _RC3PPS -> -> 15 `i `uc ]
+[; ;system.c: 80: PPSLOCK = 0x55;
+"80
+[e = _PPSLOCK -> -> 85 `i `uc ]
+[; ;system.c: 81: PPSLOCK = 0xAA;
 "81
-[e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
-[; ;system.c: 82: GIE = state;
+[e = _PPSLOCK -> -> 170 `i `uc ]
+[; ;system.c: 82: PPSLOCKbits.PPSLOCKED = 0x01;
 "82
-[e = _GIE -> _state `b ]
-[; ;system.c: 83: }
+[e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
+[; ;system.c: 83: GIE = state;
 "83
+[e = _GIE -> _state `b ]
+[; ;system.c: 84: }
+"84
 [e :UE 1519 ]
 }
-"85
-[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
 "86
+[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
+"87
 {
-[; ;system.c: 85: void OSCILLATOR_Initialize(void)
-[; ;system.c: 86: {
+[; ;system.c: 86: void OSCILLATOR_Initialize(void)
+[; ;system.c: 87: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;system.c: 87: OSCCON1 = 0x60;
-"87
-[e = _OSCCON1 -> -> 96 `i `uc ]
-[; ;system.c: 88: OSCCON3 = 0x00;
+[; ;system.c: 88: OSCCON1 = 0x60;
 "88
-[e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 89: OSCEN = 0x00;
+[e = _OSCCON1 -> -> 96 `i `uc ]
+[; ;system.c: 89: OSCCON3 = 0x00;
 "89
-[e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 90: OSCFRQ = 0x00;
+[e = _OSCCON3 -> -> 0 `i `uc ]
+[; ;system.c: 90: OSCEN = 0x00;
 "90
-[e = _OSCFRQ -> -> 0 `i `uc ]
-[; ;system.c: 91: OSCTUNE = 0x00;
+[e = _OSCEN -> -> 0 `i `uc ]
+[; ;system.c: 91: OSCFRQ = 0x00;
 "91
-[e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 92: }
+[e = _OSCFRQ -> -> 0 `i `uc ]
+[; ;system.c: 92: OSCTUNE = 0x00;
 "92
+[e = _OSCTUNE -> -> 0 `i `uc ]
+[; ;system.c: 93: }
+"93
 [e :UE 1520 ]
 }

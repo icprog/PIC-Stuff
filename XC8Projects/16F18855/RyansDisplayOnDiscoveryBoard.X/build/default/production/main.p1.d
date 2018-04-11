@@ -2,6 +2,7 @@
  build/default/production/main.p1:  \
  main.c  \
 pwm.h  \
+spi.h  \
 coffee.h  \
 lcd.h  \
 system.h  \

@@ -16790,7 +16790,12 @@ uint8_t ADCC_GetConversionStageStatus(void);
 # 262 "tmr2.h"
 void TMR2_Initialize(void);
 
-# 14 "system.h"
+# 6 "spi.h"
+void SPI_Init(void);
+
+char (SPI_TRANSFER)(char byte_to_send);
+
+# 15 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);

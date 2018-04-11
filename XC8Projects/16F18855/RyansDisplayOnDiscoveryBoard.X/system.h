@@ -7,6 +7,7 @@
 #include "adc.h"
 #include "tmr2.h"
 #include "pwm.h"
+#include "spi.h"
 
 #define _XTAL_FREQ  1000000         // Define clock freq for __delay_ms();
 

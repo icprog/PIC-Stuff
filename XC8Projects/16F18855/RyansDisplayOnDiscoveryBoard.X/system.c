@@ -58,6 +58,7 @@ void SYSTEM_Initialize(void)
     TMR2_Initialize();
     PWM_Initialize();
     ADC_Initialize();
+    SPI_Init();
     LCDInit();
     __delay_ms(200);
     LCDClear();
