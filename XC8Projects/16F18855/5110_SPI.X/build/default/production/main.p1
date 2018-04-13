@@ -8,8 +8,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 "153 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic.h
 [v __delay `JF14219 ~T0 @X0 0 e ]
 [p i __delay ]
-"28 lcd_5110_spi.h
-[v _LCDWriteCharacter `(v ~T0 @X0 0 ef1`uc ]
+"19 lcd_5110_spi.h
+[v _gotoXY `(v ~T0 @X0 0 ef2`uc`uc ]
+"43
+[v _SPIWrite `(v ~T0 @X0 0 ef2`uc`uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -13717,40 +13719,43 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;coffee.h: 33: 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80,0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0xFF,
 [; ;coffee.h: 34: };
 [v $root$_main `(v ~T0 @X0 0 e ]
-"9 main.c
+"13 main.c
 [v _main `(v ~T0 @X0 1 ef ]
-"10
+"14
 {
-[; ;main.c: 9: void main(void)
-[; ;main.c: 10: {
+[; ;main.c: 13: void main(void)
+[; ;main.c: 14: {
 [e :U _main ]
 [f ]
-[; ;main.c: 21: SYSTEM_Initialize();
-"21
+[; ;main.c: 25: SYSTEM_Initialize();
+"25
 [e ( _SYSTEM_Initialize ..  ]
-[; ;main.c: 23: LCDBitmap(&coffee[0], 0,504);
-"23
-[e ( _LCDBitmap (3 , , &U *U + &U _coffee * -> -> -> 0 `i `ui `ux -> -> # *U &U _coffee `ui `ux -> -> 0 `i `uc -> 504 `i ]
-[; ;main.c: 27: _delay((unsigned long)((2500)*(1000000/4000.0)));
+[; ;main.c: 27: LCDBitmap(&coffee[0], 0,504);
 "27
-[e ( __delay (1 -> * -> -> 2500 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;main.c: 30: while (1)
-"30
-[e :U 1565 ]
-[; ;main.c: 31: {
+[e ( _LCDBitmap (3 , , &U *U + &U _coffee * -> -> -> 0 `i `ui `ux -> -> # *U &U _coffee `ui `ux -> -> 0 `i `uc -> 504 `i ]
+[; ;main.c: 31: _delay((unsigned long)((2500)*(1000000/4000.0)));
 "31
+[e ( __delay (1 -> * -> -> 2500 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;main.c: 34: while (1)
+"34
+[e :U 1565 ]
+[; ;main.c: 35: {
+"35
 {
-[; ;main.c: 32: LCDWriteCharacter('W');
-"32
-[e ( _LCDWriteCharacter (1 -> -> 87 `ui `uc ]
-"33
+[; ;main.c: 36: gotoXY(0,0);
+"36
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[; ;main.c: 37: SPIWrite(1,0xff);
+"37
+[e ( _SPIWrite (2 , -> -> 1 `i `uc -> -> 255 `i `uc ]
+"39
 }
 [e :U 1564 ]
-"30
+"34
 [e $U 1565  ]
 [e :U 1566 ]
-[; ;main.c: 33: }
-[; ;main.c: 114: }
-"114
+[; ;main.c: 39: }
+[; ;main.c: 120: }
+"120
 [e :UE 1563 ]
 }

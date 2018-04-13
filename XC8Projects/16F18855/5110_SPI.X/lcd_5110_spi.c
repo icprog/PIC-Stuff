@@ -1,7 +1,7 @@
 #include "lcd_5110_spi.h"
 
-#define LCD_CLK     RC2PPS            //LATCbits.LATC2                                   // Clock Pin
-#define LCD_DIN     RC5PPS  //LATCbits.LATC5              //                    // Data Pin
+#define LCD_CLK     LATCbits.LATC2                                   // Clock PinRC2PPS 
+#define LCD_DIN     LATCbits.LATC5              //                    // Data PinRC5PPS 
 #define LCD_DC      LATBbits.LATB2              // Register Select Pin
 #define LCD_CE      LATBbits.LATB1              // Chip Enable Pin
 #define LCD_RST     LATBbits.LATB0              // Display Reset Pin
@@ -261,12 +261,14 @@ void LCDInit(void)
     TRISBbits.TRISB2    =   0;
     TRISCbits.TRISC2    =   0;
     TRISCbits.TRISC5    =   0;
+//    LCD_CE  =   0;                              // Set Chip enable Low
     LCD_DIN = 0;
     LCD_CLK = 0;
     LCD_DC  = 0;
     LCD_RST = 0;
 
     LCD_RST = 1;
+    LCD_CE  =   0;                              // Set Chip enable Low
 
     SPIWrite(LCD_COMMAND, 0x21);                //Tell LCD that extended commands follow
 
@@ -284,6 +286,8 @@ void LCDInit(void)
     SPIWrite(LCD_COMMAND, 0x20);                //We must send 0x20 to tell the display to use standard commands
 
     SPIWrite(LCD_COMMAND, 0x0C);                //Set display control, normal mode. 0x0D for inverse
+
+    LCD_CE  =   1;                              // Set Chip enable Low
 }
 
 void SPIWrite( char data_or_command, char data)
@@ -293,6 +297,7 @@ void SPIWrite( char data_or_command, char data)
     char receivedCharacter  =   0;  
     
 //    d=data;
+    LCD_CE  =   0;                              // Set Chip enable Low
     
     if(data_or_command == 0)
     {
@@ -303,11 +308,11 @@ void SPIWrite( char data_or_command, char data)
         LCD_DC  =   1;                          // Set Register Select High
     }   
 
-    LCD_CE  =   0;                              // Set Chip enable Low
 
     receivedCharacter       = SSP1BUF;                // dummy read in case unread value might be in register from start up or something 
 
-    LCD_DIN = 1;
+//    LCD_DIN = 1;
+    LCD_CE  =   0;                              // Set Chip enable Low
     
     SSP1BUF = data;
     __delay_us(5);

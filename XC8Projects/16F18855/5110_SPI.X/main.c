@@ -5,6 +5,10 @@
 
 #define backlightIntensity      dutyCycle7
 
+#define LCD_COMMAND         0                           
+#define LCD_DATA            1
+
+
 // *************** Main Routine ************************************************    
 void main(void)
 {
@@ -29,7 +33,9 @@ void main(void)
 
     while (1)
     {
-        LCDWriteCharacter('W');
+        gotoXY(0,0);
+        SPIWrite(LCD_DATA,0xff);
+//        LCDWriteCharacter('W');
     }
 /*        potValue = readAnalog(0);
         

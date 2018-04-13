@@ -19,10 +19,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S39 . . ]
 "730
 [v _TRISCbits `VS39 ~T0 @X0 0 e@19 ]
-"32841
-[v _RC5PPS `Vuc ~T0 @X0 0 e@3877 ]
-"32691
-[v _RC2PPS `Vuc ~T0 @X0 0 e@3874 ]
+"905
+[s S46 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S46 . LATC0 LATC1 LATC2 LATC3 LATC4 LATC5 LATC6 LATC7 ]
+"904
+[u S45 `S46 1 ]
+[n S45 . . ]
+"916
+[v _LATCbits `VS45 ~T0 @X0 0 e@24 ]
 "843
 [s S44 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S44 . LATB0 LATB1 LATB2 LATB3 LATB4 LATB5 LATB6 LATB7 ]
@@ -14135,355 +14139,361 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd_5110_spi.c: 263: TRISCbits.TRISC5 = 0;
 "263
 [e = . . _TRISCbits 0 5 -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 264: RC5PPS = 0;
-"264
-[e = _RC5PPS -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 265: RC2PPS = 0;
+[; ;lcd_5110_spi.c: 265: LATCbits.LATC5 = 0;
 "265
-[e = _RC2PPS -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 266: LATBbits.LATB2 = 0;
+[e = . . _LATCbits 0 5 -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 266: LATCbits.LATC2 = 0;
 "266
-[e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 267: LATBbits.LATB0 = 0;
+[e = . . _LATCbits 0 2 -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 267: LATBbits.LATB2 = 0;
 "267
+[e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 268: LATBbits.LATB0 = 0;
+"268
 [e = . . _LATBbits 0 0 -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 269: LATBbits.LATB0 = 1;
-"269
+[; ;lcd_5110_spi.c: 270: LATBbits.LATB0 = 1;
+"270
 [e = . . _LATBbits 0 0 -> -> 1 `i `uc ]
-[; ;lcd_5110_spi.c: 271: SPIWrite(0, 0x21);
+[; ;lcd_5110_spi.c: 271: LATBbits.LATB1 = 0;
 "271
+[e = . . _LATBbits 0 1 -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 273: SPIWrite(0, 0x21);
+"273
 [e ( _SPIWrite (2 , -> -> 0 `i `uc -> -> 33 `i `uc ]
-[; ;lcd_5110_spi.c: 278: SPIWrite(0, 0xBE);
-"278
-[e ( _SPIWrite (2 , -> -> 0 `i `uc -> -> 190 `i `uc ]
-[; ;lcd_5110_spi.c: 280: SPIWrite(0, 0x04);
+[; ;lcd_5110_spi.c: 280: SPIWrite(0, 0xBE);
 "280
-[e ( _SPIWrite (2 , -> -> 0 `i `uc -> -> 4 `i `uc ]
-[; ;lcd_5110_spi.c: 282: SPIWrite(0, 0x13);
+[e ( _SPIWrite (2 , -> -> 0 `i `uc -> -> 190 `i `uc ]
+[; ;lcd_5110_spi.c: 282: SPIWrite(0, 0x04);
 "282
-[e ( _SPIWrite (2 , -> -> 0 `i `uc -> -> 19 `i `uc ]
-[; ;lcd_5110_spi.c: 284: SPIWrite(0, 0x20);
+[e ( _SPIWrite (2 , -> -> 0 `i `uc -> -> 4 `i `uc ]
+[; ;lcd_5110_spi.c: 284: SPIWrite(0, 0x13);
 "284
-[e ( _SPIWrite (2 , -> -> 0 `i `uc -> -> 32 `i `uc ]
-[; ;lcd_5110_spi.c: 286: SPIWrite(0, 0x0C);
+[e ( _SPIWrite (2 , -> -> 0 `i `uc -> -> 19 `i `uc ]
+[; ;lcd_5110_spi.c: 286: SPIWrite(0, 0x20);
 "286
+[e ( _SPIWrite (2 , -> -> 0 `i `uc -> -> 32 `i `uc ]
+[; ;lcd_5110_spi.c: 288: SPIWrite(0, 0x0C);
+"288
 [e ( _SPIWrite (2 , -> -> 0 `i `uc -> -> 12 `i `uc ]
-[; ;lcd_5110_spi.c: 287: }
-"287
+[; ;lcd_5110_spi.c: 290: LATBbits.LATB1 = 1;
+"290
+[e = . . _LATBbits 0 1 -> -> 1 `i `uc ]
+[; ;lcd_5110_spi.c: 291: }
+"291
 [e :UE 1600 ]
 }
-"289
+"293
 [v _SPIWrite `(v ~T0 @X0 1 ef2`uc`uc ]
-"290
+"294
 {
-[; ;lcd_5110_spi.c: 289: void SPIWrite( char data_or_command, char data)
-[; ;lcd_5110_spi.c: 290: {
+[; ;lcd_5110_spi.c: 293: void SPIWrite( char data_or_command, char data)
+[; ;lcd_5110_spi.c: 294: {
 [e :U _SPIWrite ]
-"289
+"293
 [v _data_or_command `uc ~T0 @X0 1 r1 ]
 [v _data `uc ~T0 @X0 1 r2 ]
-"290
+"294
 [f ]
-"291
+"295
 [v _i `uc ~T0 @X0 1 a ]
-"293
-[v _receivedCharacter `uc ~T0 @X0 1 a ]
-[; ;lcd_5110_spi.c: 291: char i;
-[; ;lcd_5110_spi.c: 293: char receivedCharacter = 0;
-[e = _receivedCharacter -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 297: if(data_or_command == 0)
 "297
-[e $ ! == -> _data_or_command `i -> 0 `i 1602  ]
-[; ;lcd_5110_spi.c: 298: {
-"298
-{
-[; ;lcd_5110_spi.c: 299: LATBbits.LATB2 = 0;
-"299
-[e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
+[v _receivedCharacter `uc ~T0 @X0 1 a ]
+[; ;lcd_5110_spi.c: 295: char i;
+[; ;lcd_5110_spi.c: 297: char receivedCharacter = 0;
+[e = _receivedCharacter -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 300: LATBbits.LATB1 = 0;
 "300
-}
-[; ;lcd_5110_spi.c: 300: }
-[e $U 1603  ]
-"301
-[e :U 1602 ]
-[; ;lcd_5110_spi.c: 301: else
-[; ;lcd_5110_spi.c: 302: {
+[e = . . _LATBbits 0 1 -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 302: if(data_or_command == 0)
 "302
-{
-[; ;lcd_5110_spi.c: 303: LATBbits.LATB2 = 1;
+[e $ ! == -> _data_or_command `i -> 0 `i 1602  ]
+[; ;lcd_5110_spi.c: 303: {
 "303
-[e = . . _LATBbits 0 2 -> -> 1 `i `uc ]
+{
+[; ;lcd_5110_spi.c: 304: LATBbits.LATB2 = 0;
 "304
+[e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
+"305
+}
+[; ;lcd_5110_spi.c: 305: }
+[e $U 1603  ]
+"306
+[e :U 1602 ]
+[; ;lcd_5110_spi.c: 306: else
+[; ;lcd_5110_spi.c: 307: {
+"307
+{
+[; ;lcd_5110_spi.c: 308: LATBbits.LATB2 = 1;
+"308
+[e = . . _LATBbits 0 2 -> -> 1 `i `uc ]
+"309
 }
 [e :U 1603 ]
-[; ;lcd_5110_spi.c: 304: }
-[; ;lcd_5110_spi.c: 306: LATBbits.LATB1 = 0;
-"306
-[e = . . _LATBbits 0 1 -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 308: receivedCharacter = SSP1BUF;
-"308
-[e = _receivedCharacter _SSP1BUF ]
-[; ;lcd_5110_spi.c: 310: RC5PPS = 1;
-"310
-[e = _RC5PPS -> -> 1 `i `uc ]
-[; ;lcd_5110_spi.c: 312: SSP1BUF = data;
+[; ;lcd_5110_spi.c: 309: }
+[; ;lcd_5110_spi.c: 312: receivedCharacter = SSP1BUF;
 "312
-[e = _SSP1BUF _data ]
-[; ;lcd_5110_spi.c: 313: _delay((unsigned long)((5)*(1000000/4000000.0)));
-"313
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
-[; ;lcd_5110_spi.c: 315: while (SSP1CON1bits.WCOL)
+[e = _receivedCharacter _SSP1BUF ]
+[; ;lcd_5110_spi.c: 315: LATBbits.LATB1 = 0;
 "315
-[e $U 1604  ]
-[e :U 1605 ]
-[; ;lcd_5110_spi.c: 316: {
-"316
-{
-[; ;lcd_5110_spi.c: 317: SSP1CON1bits.WCOL = 0;
+[e = . . _LATBbits 0 1 -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 317: SSP1BUF = data;
 "317
-[e = . . _SSP1CON1bits 0 4 -> -> 0 `i `uc ]
+[e = _SSP1BUF _data ]
 [; ;lcd_5110_spi.c: 318: _delay((unsigned long)((5)*(1000000/4000000.0)));
 "318
 [e ( __delay (1 -> * -> -> 5 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
-[; ;lcd_5110_spi.c: 319: SSP1BUF = receivedCharacter;
-"319
-[e = _SSP1BUF _receivedCharacter ]
-[; ;lcd_5110_spi.c: 320: _delay((unsigned long)((5)*(1000000/4000000.0)));
+[; ;lcd_5110_spi.c: 320: while (SSP1CON1bits.WCOL)
 "320
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
+[e $U 1604  ]
+[e :U 1605 ]
+[; ;lcd_5110_spi.c: 321: {
 "321
+{
+[; ;lcd_5110_spi.c: 322: SSP1CON1bits.WCOL = 0;
+"322
+[e = . . _SSP1CON1bits 0 4 -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 323: _delay((unsigned long)((5)*(1000000/4000000.0)));
+"323
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
+[; ;lcd_5110_spi.c: 324: SSP1BUF = receivedCharacter;
+"324
+[e = _SSP1BUF _receivedCharacter ]
+[; ;lcd_5110_spi.c: 325: _delay((unsigned long)((5)*(1000000/4000000.0)));
+"325
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
+"326
 }
 [e :U 1604 ]
-"315
+"320
 [e $ != -> . . _SSP1CON1bits 0 4 `i -> -> -> 0 `i `Vuc `i 1605  ]
 [e :U 1606 ]
-[; ;lcd_5110_spi.c: 321: }
-[; ;lcd_5110_spi.c: 323: RC2PPS = 1;
-"323
-[e = _RC2PPS -> -> 1 `i `uc ]
-[; ;lcd_5110_spi.c: 325: _delay((unsigned long)((2)*(1000000/4000000.0)));
-"325
+[; ;lcd_5110_spi.c: 326: }
+[; ;lcd_5110_spi.c: 328: LATCbits.LATC2 = 1;
+"328
+[e = . . _LATCbits 0 2 -> -> 1 `i `uc ]
+[; ;lcd_5110_spi.c: 330: _delay((unsigned long)((2)*(1000000/4000000.0)));
+"330
 [e ( __delay (1 -> * -> -> 2 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
-[; ;lcd_5110_spi.c: 327: RC2PPS = 0;
-"327
-[e = _RC2PPS -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 329: SSP1STATbits.BF = 0;
-"329
-[e = . . _SSP1STATbits 0 0 -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 331: LATBbits.LATB1 = 1;
-"331
-[e = . . _LATBbits 0 1 -> -> 1 `i `uc ]
-[; ;lcd_5110_spi.c: 332: }
+[; ;lcd_5110_spi.c: 332: LATCbits.LATC2 = 0;
 "332
+[e = . . _LATCbits 0 2 -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 334: SSP1STATbits.BF = 0;
+"334
+[e = . . _SSP1STATbits 0 0 -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 336: LATBbits.LATB1 = 1;
+"336
+[e = . . _LATBbits 0 1 -> -> 1 `i `uc ]
+[; ;lcd_5110_spi.c: 337: }
+"337
 [e :UE 1601 ]
 }
-"335
+"340
 [v _LCDWrite `(v ~T0 @X0 1 ef2`uc`uc ]
-"336
+"341
 {
-[; ;lcd_5110_spi.c: 335: void LCDWrite( char data_or_command, char data)
-[; ;lcd_5110_spi.c: 336: {
+[; ;lcd_5110_spi.c: 340: void LCDWrite( char data_or_command, char data)
+[; ;lcd_5110_spi.c: 341: {
 [e :U _LCDWrite ]
-"335
+"340
 [v _data_or_command `uc ~T0 @X0 1 r1 ]
 [v _data `uc ~T0 @X0 1 r2 ]
-"336
-[f ]
-"337
-[v _i `uc ~T0 @X0 1 a ]
-[; ;lcd_5110_spi.c: 337: char i;
-[; ;lcd_5110_spi.c: 341: if(data_or_command == 0)
 "341
-[e $ ! == -> _data_or_command `i -> 0 `i 1608  ]
-[; ;lcd_5110_spi.c: 342: {
+[f ]
 "342
-{
-[; ;lcd_5110_spi.c: 343: LATBbits.LATB2 = 0;
-"343
-[e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
-"344
-}
-[; ;lcd_5110_spi.c: 344: }
-[e $U 1609  ]
-"345
-[e :U 1608 ]
-[; ;lcd_5110_spi.c: 345: else
-[; ;lcd_5110_spi.c: 346: {
+[v _i `uc ~T0 @X0 1 a ]
+[; ;lcd_5110_spi.c: 342: char i;
+[; ;lcd_5110_spi.c: 346: if(data_or_command == 0)
 "346
-{
-[; ;lcd_5110_spi.c: 347: LATBbits.LATB2 = 1;
+[e $ ! == -> _data_or_command `i -> 0 `i 1608  ]
+[; ;lcd_5110_spi.c: 347: {
 "347
-[e = . . _LATBbits 0 2 -> -> 1 `i `uc ]
+{
+[; ;lcd_5110_spi.c: 348: LATBbits.LATB2 = 0;
 "348
+[e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
+"349
+}
+[; ;lcd_5110_spi.c: 349: }
+[e $U 1609  ]
+"350
+[e :U 1608 ]
+[; ;lcd_5110_spi.c: 350: else
+[; ;lcd_5110_spi.c: 351: {
+"351
+{
+[; ;lcd_5110_spi.c: 352: LATBbits.LATB2 = 1;
+"352
+[e = . . _LATBbits 0 2 -> -> 1 `i `uc ]
+"353
 }
 [e :U 1609 ]
-[; ;lcd_5110_spi.c: 348: }
-[; ;lcd_5110_spi.c: 350: LATBbits.LATB1 = 0;
-"350
+[; ;lcd_5110_spi.c: 353: }
+[; ;lcd_5110_spi.c: 355: LATBbits.LATB1 = 0;
+"355
 [e = . . _LATBbits 0 1 -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 352: for(i=0;i<8;i++)
-"352
+[; ;lcd_5110_spi.c: 357: for(i=0;i<8;i++)
+"357
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 8 `i 1610  ]
 [e $U 1611  ]
-"353
-[e :U 1610 ]
-[; ;lcd_5110_spi.c: 353: {
-{
-[; ;lcd_5110_spi.c: 354: RC5PPS = 0;
-"354
-[e = _RC5PPS -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 356: if(data&0x80)
-"356
-[e $ ! != & -> _data `i -> 128 `i -> 0 `i 1613  ]
-[; ;lcd_5110_spi.c: 357: {
-"357
-{
-[; ;lcd_5110_spi.c: 358: RC5PPS = 1;
 "358
-[e = _RC5PPS -> -> 1 `i `uc ]
+[e :U 1610 ]
+[; ;lcd_5110_spi.c: 358: {
+{
+[; ;lcd_5110_spi.c: 359: LATCbits.LATC5 = 0;
 "359
+[e = . . _LATCbits 0 5 -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 361: if(data&0x80)
+"361
+[e $ ! != & -> _data `i -> 128 `i -> 0 `i 1613  ]
+[; ;lcd_5110_spi.c: 362: {
+"362
+{
+[; ;lcd_5110_spi.c: 363: LATCbits.LATC5 = 1;
+"363
+[e = . . _LATCbits 0 5 -> -> 1 `i `uc ]
+"364
 }
 [e :U 1613 ]
-[; ;lcd_5110_spi.c: 359: }
-[; ;lcd_5110_spi.c: 361: RC2PPS = 1;
-"361
-[e = _RC2PPS -> -> 1 `i `uc ]
-[; ;lcd_5110_spi.c: 363: data<<=1;
-"363
-[e =<< _data -> 1 `i ]
-[; ;lcd_5110_spi.c: 365: RC2PPS=0;
-"365
-[e = _RC2PPS -> -> 0 `i `uc ]
+[; ;lcd_5110_spi.c: 364: }
+[; ;lcd_5110_spi.c: 366: LATCbits.LATC2 = 1;
 "366
+[e = . . _LATCbits 0 2 -> -> 1 `i `uc ]
+[; ;lcd_5110_spi.c: 368: data<<=1;
+"368
+[e =<< _data -> 1 `i ]
+[; ;lcd_5110_spi.c: 370: LATCbits.LATC2=0;
+"370
+[e = . . _LATCbits 0 2 -> -> 0 `i `uc ]
+"371
 }
-"352
+"357
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 8 `i 1610  ]
 [e :U 1611 ]
-"366
+"371
 }
-[; ;lcd_5110_spi.c: 366: }
-[; ;lcd_5110_spi.c: 368: LATBbits.LATB1 = 1;
-"368
+[; ;lcd_5110_spi.c: 371: }
+[; ;lcd_5110_spi.c: 373: LATBbits.LATB1 = 1;
+"373
 [e = . . _LATBbits 0 1 -> -> 1 `i `uc ]
-[; ;lcd_5110_spi.c: 369: }
-"369
+[; ;lcd_5110_spi.c: 374: }
+"374
 [e :UE 1607 ]
 }
-"372
+"377
 [v _LCDDrawBox `(v ~T0 @X0 1 ef ]
-"373
+"378
 {
-[; ;lcd_5110_spi.c: 372: void LCDDrawBox(void)
-[; ;lcd_5110_spi.c: 373: {
+[; ;lcd_5110_spi.c: 377: void LCDDrawBox(void)
+[; ;lcd_5110_spi.c: 378: {
 [e :U _LCDDrawBox ]
 [f ]
-"374
+"379
 [v _j `uc ~T0 @X0 1 a ]
-[; ;lcd_5110_spi.c: 374: char j;
-[; ;lcd_5110_spi.c: 376: for(j = 0; j < 84; j++)
-"376
+[; ;lcd_5110_spi.c: 379: char j;
+[; ;lcd_5110_spi.c: 381: for(j = 0; j < 84; j++)
+"381
 {
 [e = _j -> -> 0 `i `uc ]
 [e $ < -> _j `i -> 84 `i 1615  ]
 [e $U 1616  ]
-"377
+"382
 [e :U 1615 ]
-[; ;lcd_5110_spi.c: 377: {
+[; ;lcd_5110_spi.c: 382: {
 {
-[; ;lcd_5110_spi.c: 378: gotoXY(j, 0);
-"378
+[; ;lcd_5110_spi.c: 383: gotoXY(j, 0);
+"383
 [e ( _gotoXY (2 , _j -> -> 0 `i `uc ]
-[; ;lcd_5110_spi.c: 379: SPIWrite(1,0x01);
-"379
+[; ;lcd_5110_spi.c: 384: SPIWrite(1,0x01);
+"384
 [e ( _SPIWrite (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-"380
+"385
 }
-"376
+"381
 [e ++ _j -> -> 1 `i `uc ]
 [e $ < -> _j `i -> 84 `i 1615  ]
 [e :U 1616 ]
-"380
+"385
 }
-[; ;lcd_5110_spi.c: 380: }
-[; ;lcd_5110_spi.c: 382: for(j = 0; j < 84; j++)
-"382
+[; ;lcd_5110_spi.c: 385: }
+[; ;lcd_5110_spi.c: 387: for(j = 0; j < 84; j++)
+"387
 {
 [e = _j -> -> 0 `i `uc ]
 [e $ < -> _j `i -> 84 `i 1618  ]
 [e $U 1619  ]
-"383
+"388
 [e :U 1618 ]
-[; ;lcd_5110_spi.c: 383: {
+[; ;lcd_5110_spi.c: 388: {
 {
-[; ;lcd_5110_spi.c: 384: gotoXY(j, 5);
-"384
+[; ;lcd_5110_spi.c: 389: gotoXY(j, 5);
+"389
 [e ( _gotoXY (2 , _j -> -> 5 `i `uc ]
-[; ;lcd_5110_spi.c: 385: SPIWrite(1,0x80);
-"385
+[; ;lcd_5110_spi.c: 390: SPIWrite(1,0x80);
+"390
 [e ( _SPIWrite (2 , -> -> 1 `i `uc -> -> 128 `i `uc ]
-"386
+"391
 }
-"382
+"387
 [e ++ _j -> -> 1 `i `uc ]
 [e $ < -> _j `i -> 84 `i 1618  ]
 [e :U 1619 ]
-"386
+"391
 }
-[; ;lcd_5110_spi.c: 386: }
-[; ;lcd_5110_spi.c: 388: for(j = 0; j < 6; j++)
-"388
+[; ;lcd_5110_spi.c: 391: }
+[; ;lcd_5110_spi.c: 393: for(j = 0; j < 6; j++)
+"393
 {
 [e = _j -> -> 0 `i `uc ]
 [e $ < -> _j `i -> 6 `i 1621  ]
 [e $U 1622  ]
-"389
+"394
 [e :U 1621 ]
-[; ;lcd_5110_spi.c: 389: {
+[; ;lcd_5110_spi.c: 394: {
 {
-[; ;lcd_5110_spi.c: 390: gotoXY(0, j);
-"390
+[; ;lcd_5110_spi.c: 395: gotoXY(0, j);
+"395
 [e ( _gotoXY (2 , -> -> 0 `i `uc _j ]
-[; ;lcd_5110_spi.c: 391: SPIWrite(1,0xff);
-"391
+[; ;lcd_5110_spi.c: 396: SPIWrite(1,0xff);
+"396
 [e ( _SPIWrite (2 , -> -> 1 `i `uc -> -> 255 `i `uc ]
-"392
+"397
 }
-"388
+"393
 [e ++ _j -> -> 1 `i `uc ]
 [e $ < -> _j `i -> 6 `i 1621  ]
 [e :U 1622 ]
-"392
+"397
 }
-[; ;lcd_5110_spi.c: 392: }
-[; ;lcd_5110_spi.c: 394: for(j = 0; j < 6; j++)
-"394
+[; ;lcd_5110_spi.c: 397: }
+[; ;lcd_5110_spi.c: 399: for(j = 0; j < 6; j++)
+"399
 {
 [e = _j -> -> 0 `i `uc ]
 [e $ < -> _j `i -> 6 `i 1624  ]
 [e $U 1625  ]
-"395
+"400
 [e :U 1624 ]
-[; ;lcd_5110_spi.c: 395: {
+[; ;lcd_5110_spi.c: 400: {
 {
-[; ;lcd_5110_spi.c: 396: gotoXY(83, j);
-"396
+[; ;lcd_5110_spi.c: 401: gotoXY(83, j);
+"401
 [e ( _gotoXY (2 , -> -> 83 `i `uc _j ]
-[; ;lcd_5110_spi.c: 397: SPIWrite(1,0xff);
-"397
+[; ;lcd_5110_spi.c: 402: SPIWrite(1,0xff);
+"402
 [e ( _SPIWrite (2 , -> -> 1 `i `uc -> -> 255 `i `uc ]
-"398
+"403
 }
-"394
+"399
 [e ++ _j -> -> 1 `i `uc ]
 [e $ < -> _j `i -> 6 `i 1624  ]
 [e :U 1625 ]
-"398
+"403
 }
-[; ;lcd_5110_spi.c: 398: }
-[; ;lcd_5110_spi.c: 399: }
-"399
+[; ;lcd_5110_spi.c: 403: }
+[; ;lcd_5110_spi.c: 404: }
+"404
 [e :UE 1614 ]
 }

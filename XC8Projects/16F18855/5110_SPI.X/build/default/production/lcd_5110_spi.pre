@@ -17686,16 +17686,18 @@ TRISBbits.TRISB1 = 0;
 TRISBbits.TRISB2 = 0;
 TRISCbits.TRISC2 = 0;
 TRISCbits.TRISC5 = 0;
-RC5PPS = 0;
-RC2PPS = 0;
+
+LATCbits.LATC5 = 0;
+LATCbits.LATC2 = 0;
 LATBbits.LATB2 = 0;
 LATBbits.LATB0 = 0;
 
 LATBbits.LATB0 = 1;
+LATBbits.LATB1 = 0;
 
 SPIWrite(0, 0x21);
 
-# 278
+# 280
 SPIWrite(0, 0xBE);
 
 SPIWrite(0, 0x04);
@@ -17705,6 +17707,8 @@ SPIWrite(0, 0x13);
 SPIWrite(0, 0x20);
 
 SPIWrite(0, 0x0C);
+
+LATBbits.LATB1 = 1;
 }
 
 void SPIWrite( char data_or_command, char data)
@@ -17714,6 +17718,7 @@ char i;
 char receivedCharacter = 0;
 
 
+LATBbits.LATB1 = 0;
 
 if(data_or_command == 0)
 {
@@ -17724,11 +17729,11 @@ else
 LATBbits.LATB2 = 1;
 }
 
-LATBbits.LATB1 = 0;
 
 receivedCharacter = SSP1BUF;
 
-RC5PPS = 1;
+
+LATBbits.LATB1 = 0;
 
 SSP1BUF = data;
 _delay((unsigned long)((5)*(1000000/4000000.0)));
@@ -17741,11 +17746,11 @@ SSP1BUF = receivedCharacter;
 _delay((unsigned long)((5)*(1000000/4000000.0)));
 }
 
-RC2PPS = 1;
+LATCbits.LATC2 = 1;
 
 _delay((unsigned long)((2)*(1000000/4000000.0)));
 
-RC2PPS = 0;
+LATCbits.LATC2 = 0;
 
 SSP1STATbits.BF = 0;
 
@@ -17772,18 +17777,18 @@ LATBbits.LATB1 = 0;
 
 for(i=0;i<8;i++)
 {
-RC5PPS = 0;
+LATCbits.LATC5 = 0;
 
 if(data&0x80)
 {
-RC5PPS = 1;
+LATCbits.LATC5 = 1;
 }
 
-RC2PPS = 1;
+LATCbits.LATC2 = 1;
 
 data<<=1;
 
-RC2PPS=0;
+LATCbits.LATC2=0;
 }
 
 LATBbits.LATB1 = 1;

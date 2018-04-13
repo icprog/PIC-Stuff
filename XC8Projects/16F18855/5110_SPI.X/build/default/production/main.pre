@@ -17525,11 +17525,11 @@ const char coffee [] = {
 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80,0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0xFF,
 };
 
-# 9 "main.c"
+# 13 "main.c"
 void main(void)
 {
 
-# 21
+# 25
 SYSTEM_Initialize();
 
 LCDBitmap(&coffee[0], 0,504);
@@ -17541,8 +17541,10 @@ _delay((unsigned long)((2500)*(1000000/4000.0)));
 
 while (1)
 {
-LCDWriteCharacter('W');
+gotoXY(0,0);
+SPIWrite(1,0xff);
+
 }
 
-# 114
+# 120
 }
