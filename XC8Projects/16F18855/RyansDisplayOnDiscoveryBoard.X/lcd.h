@@ -31,7 +31,7 @@ void LCDWriteString(const char *characters);
 void LCDClear(void);
 
 // ***** Write an Integer value to the Display *********************************
-void LCDWriteInt(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+void LCDWriteInt(int value,signed char fieldLength, char numPlaces, char sign);
 
 // ***** Initialize the LCD Display ********************************************
 void LCDInit(void);

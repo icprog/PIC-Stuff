@@ -16760,9 +16760,6 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 306
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 262 "tmr2.h"
-void TMR2_Initialize(void);
-
 # 7 "pwm.h"
 void PWM_Initialize(void);
 
@@ -16775,7 +16772,10 @@ void SPI_Init(void);
 
 char (SPI_TRANSFER)(char byte_to_send);
 
-# 15 "system.h"
+# 262 "tmr2.h"
+void TMR2_Initialize(void);
+
+# 16 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16796,7 +16796,7 @@ void LCDWriteString(const char *characters);
 void LCDClear(void);
 
 
-void LCDWriteInt(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+void LCDWriteInt(int value,signed char fieldLength, char numPlaces, char sign);
 
 
 void LCDInit(void);
@@ -16964,7 +16964,7 @@ LCDWrite(1, 0x00);
 gotoXY(0, 0);
 }
 
-void LCDWriteInt(int value,signed char fieldLength, signed char numPlaces, signed char sign)
+void LCDWriteInt(int value, signed char fieldLength, char numPlaces, char sign)
 {
 char str[5]={0,0,0,0,0};
 int i=4,j=0;

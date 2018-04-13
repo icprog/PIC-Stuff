@@ -13,7 +13,7 @@ void SPI_Init(void)
     SSP1CON1 = 0x22;
     SSP1DATPPS = 0x14;                      //PPS for RC4 to be SDI
     RC5PPS = 0x15;                          //PPS for RC5 points at SDO1
-    RC3PPS = 0x14;                          //PPS for RC3 points at SCK
+    RC2PPS = 0x14;                          //PPS for RC2 points at SCK
     SSP1STATbits.CKE =  1;
 //    CKE1 = 1;
 }

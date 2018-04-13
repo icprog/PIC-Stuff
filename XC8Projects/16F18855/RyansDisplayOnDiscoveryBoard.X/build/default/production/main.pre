@@ -16677,33 +16677,6 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 19 "lcd.h"
-void gotoXY(char x, char y);
-
-
-void LCDBitmap(const char bmp_array[], uint8_t startLine, uint16_t len);
-
-
-void LCDWriteCharacter(const char character);
-
-
-void LCDWriteString(const char *characters);
-
-
-void LCDClear(void);
-
-
-void LCDWriteInt(int value,signed char fieldLength, signed char numPlaces, signed char sign);
-
-
-void LCDInit(void);
-
-
-void LCDWrite(uint8_t data_or_command, uint8_t data);
-
-
-void LCDDrawBox(void);
-
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdbool.h"
 typedef unsigned char bool;
 
@@ -16787,8 +16760,32 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 306
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 262 "tmr2.h"
-void TMR2_Initialize(void);
+# 19 "lcd.h"
+void gotoXY(char x, char y);
+
+
+void LCDBitmap(const char bmp_array[], uint8_t startLine, uint16_t len);
+
+
+void LCDWriteCharacter(const char character);
+
+
+void LCDWriteString(const char *characters);
+
+
+void LCDClear(void);
+
+
+void LCDWriteInt(int value,signed char fieldLength, char numPlaces, char sign);
+
+
+void LCDInit(void);
+
+
+void LCDWrite(uint8_t data_or_command, uint8_t data);
+
+
+void LCDDrawBox(void);
 
 # 7 "pwm.h"
 void PWM_Initialize(void);
@@ -16802,7 +16799,10 @@ void SPI_Init(void);
 
 char (SPI_TRANSFER)(char byte_to_send);
 
-# 15 "system.h"
+# 262 "tmr2.h"
+void TMR2_Initialize(void);
+
+# 16 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -16884,8 +16884,8 @@ char x = 0;
 SYSTEM_Initialize();
 
 LCDBitmap(&coffee[0], 0,504);
-
-
+gotoXY(1,4);
+LCDWriteCharacter(' ');
 
 _delay((unsigned long)((2500)*(1000000/4000.0)));
 
@@ -16893,6 +16893,21 @@ _delay((unsigned long)((2500)*(1000000/4000.0)));
 while (1)
 {
 potValue = readAnalog(0);
+
+if(count<120)
+{
+if (potValue>previousPotValue+5 || potValue<previousPotValue-5)
+{
+{ gotoXY(0,3); LCDWriteString("Brightness:");};
+
+{ gotoXY(46,3); LCDWriteInt((potValue)/10,-1, 0, 0);};
+
+LCDWriteCharacter('%');
+LCDWriteCharacter(' ');
+previousPotValue=potValue;
+}
+}
+
 
 potValue=1023-potValue;
 
@@ -16908,19 +16923,6 @@ PWM7_LoadDutyValue(dutyCycle7);
 
 if(count<1)LCDClear();
 
-if(count<120)
-{
-if (potValue>previousPotValue+5 || potValue<previousPotValue-5)
-{
-{ gotoXY(0,3); LCDWriteString("Brightness:");};
-
-{ gotoXY(46,3); LCDWriteInt((1023-potValue)/10,-1, 0, 0);};
-
-LCDWriteCharacter('%');
-LCDWriteCharacter(' ');
-previousPotValue=potValue;
-}
-}
 
 if(!RA5) asm("reset");
 

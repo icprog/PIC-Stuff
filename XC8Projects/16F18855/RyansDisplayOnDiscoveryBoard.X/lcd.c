@@ -177,7 +177,7 @@ void LCDClear(void)                             //Clears the LCD by writing zero
     gotoXY(0, 0);                               //After we clear the display, return to the home position
 }
 
-void LCDWriteInt(int value,signed char fieldLength, signed char numPlaces, signed char sign)
+void LCDWriteInt(int value, signed char fieldLength, char numPlaces, char sign)
 {
 	char str[5]={0,0,0,0,0};                    // Integer can be up to 5 characters long
 	int i=4,j=0;

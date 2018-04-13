@@ -21,8 +21,8 @@ void main(void)
     SYSTEM_Initialize();
    
     LCDBitmap(&coffee[0], 0,504);           //Draw Splash Screen
-//    gotoXY(1,4);
-  //  LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
+    gotoXY(1,4);
+    LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
    
    __delay_ms(2500);
    
@@ -30,6 +30,21 @@ void main(void)
     while (1)
     {
         potValue = readAnalog(0);
+        
+        if(count<120)
+        {
+            if (potValue>previousPotValue+5 || potValue<previousPotValue-5)
+            {
+                LCDWriteStringXY(0,3,"Brightness:");
+            
+                LCDWriteIntXY(46,3,(potValue)/10,-1,0,0);
+            
+                LCDWriteCharacter('%');
+                LCDWriteCharacter(' ');
+                previousPotValue=potValue;
+            }
+        }
+        
         
         potValue=1023-potValue;
         
@@ -45,19 +60,6 @@ void main(void)
 
         if(count<1)LCDClear();
         
-        if(count<120)
-        {
-            if (potValue>previousPotValue+5 || potValue<previousPotValue-5)
-            {
-                LCDWriteStringXY(0,3,"Brightness:");
-            
-                LCDWriteIntXY(46,3,(1023-potValue)/10,-1,0,0);
-            
-                LCDWriteCharacter('%');
-                LCDWriteCharacter(' ');
-                previousPotValue=potValue;
-            }
-        }
         
         if(!RA5) RESET();
         
