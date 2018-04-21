@@ -145,7 +145,9 @@ int main(void)
     
     
 // ******************************************************************************
-//    LCDBitmap(&menumain[0], 5, 59);                        //Draw Menu0
+    LCDBitmap(&menumain[0], 5, 59);                        //Draw Menu0
+    gotoXY(2,4);
+    LCDWriteCharacter(' ');
 
     while(1)
     {

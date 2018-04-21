@@ -11,13 +11,13 @@ char *month[13]                 =   {"NUL","JAN","FEB","MAR","APR","MAY","JUN","
 
 int8_t maxTimes[]               =   {23,55,23,55};
 
-int const startHour[]           =   {40,42,44,46,48,50,52};
+int const startHour[]           =   {40,42,44,46,48,50,52};                     // EEPROM Offset values
 
-int const startMinute[]         =   {54,56,58,60,62,64,66};
+int const startMinute[]         =   {54,56,58,60,62,64,66};                     // EEPROM Offset values
 
-int const stopHour[]            =   {68,70,72,74,76,78,80};
+int const stopHour[]            =   {68,70,72,74,76,78,80};                     // EEPROM Offset values
 
-int const stopMinute[]          =   {82,84,86,88,90,92,94};
+int const stopMinute[]          =   {82,84,86,88,90,92,94};                     // EEPROM Offset values
 
 signed char choice              =   0;
 
