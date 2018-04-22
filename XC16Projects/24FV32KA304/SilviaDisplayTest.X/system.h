@@ -1,9 +1,8 @@
 #ifndef SYSTEM_H
 #define	SYSTEM_H
 
-#define SYS_FREQ        8000000L    // Not sure why, actual clock is 2MHz    
+#define SYS_FREQ        32000000L        
 #define FCY             SYS_FREQ/2  // Microcontroller MIPs (FCY)
-//#define _XTAL_FREQ      8000000   // Only required with XC8 Compilers
 
 #include <xc.h>
 #include <stdint.h>          

@@ -8,10 +8,13 @@ int internalKd[]                = {   25,   25,  25}; // Controller Derivative (
 long pidIntegrated[3]           = {    0,    0,   0};
 long pidPrevError[3]            = {    0,    0,   0};
 long pidPrevInput[3]            = {    0,    0,   0};
-int integralMinOutput[3]        = { -100, -100,   0};
-int integralMaxOutput[3]        = {  100,  100,  20};   
+int integralMinOutput[3]        = { -400, -400,   0};
+int integralMaxOutput[3]        = {  400,  400,  20};   
+//int integralMinOutput[3]        = { -100, -100,   0};
+//int integralMaxOutput[3]        = {  100,  100,  20};   
 int pidMinOutput[3]             = {    0,    0,   0}; // Minimum output limit of Controller
-int pidMaxOutput[3]             = { 7811, 7812, 200}; // Maximum output limit of Controller
+int pidMaxOutput[3]             = { 31247, 31248, 200}; // Maximum output limit of Controller
+//int pidMaxOutput[3]             = { 7811, 7812, 200}; // Maximum output limit of Controller
 extern char tuning;                                   // Set to a 1 when tuning    
 
 void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd)

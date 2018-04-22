@@ -64,7 +64,7 @@
 #define backLightCounter        counter[4]              // Used to count time until Backlight turns Off
 #define groupPeriodCounter      counter[5]              // Group PID Period Counter
 #define lowWaterReminder        counter[6]              // Remind User level is Low when below 25%
-#define numSamples              4                       // Number of samples to average for temp[] readings 
+#define numSamples              9                       // Number of samples to average for temp[] readings 
 #define PIDDuration             200                     // Number of Program cycles (Period) for Group Head PID
     
 
@@ -125,7 +125,7 @@ int main(void)
     
     uint8_t sampleIndex     = 0;                        // Used to calculate average sample of temp[]
     
-    float total[3]          = {0,0,0};                  // Running total of temp[] samples 
+    long total[3]           = {0,0,0};                  // Running total of temp[] samples 
     
     unsigned char testKey   = 0;                        // Variable used for Storing Which Menu Key is Pressed
     
@@ -146,7 +146,7 @@ int main(void)
     
 // ******************************************************************************
     LCDBitmap(&menumain[0], 5, 59);                        //Draw Menu0
-    gotoXY(2,4);
+    gotoXY(0,0);
     LCDWriteCharacter(' ');
 
     while(1)
@@ -191,7 +191,7 @@ int main(void)
         groupHeadTemp = total[2] / numSamples;          // Assign the average value of total to the GroupHeadTemp variable
 
 // *************** Auto Turn ON Machine at User selected Dates & Times *********
-        if(previousSecond != time.second)                // Only execute the following code once a second
+        if(previousSecond != time.second)               // Only execute the following code once a second
         {
             previousSecond = time.second;
 
@@ -208,27 +208,27 @@ int main(void)
             }
             
 // *************** Check for and re-act to Low Water Level *********************
-            errorCount>9?powerSwitch=0:powerSwitch;    // If errorCount (water Level Low) > 9 seconds, turn OFF Power
+//            errorCount>9?powerSwitch=0:powerSwitch;    // If errorCount (water Level Low) > 9 seconds, turn OFF Power
             
 //            level = waterTankLevel();
-            level = 30;
+  //          level = 30;
             
-            if(level < 15)
-            {
-                errorCount +=1;                         // Increment the Error Counter
-                piezoOutput = 1-piezoOutput;            // Turn On the Piezo Alarm
-                errorCount>10?(errorCount=10,piezoOutput=0):errorCount; // Limit Error Counter to 10, and turn piezo OFF
-            }
-            else
-            {
-                errorCount -= 1;
-                errorCount<0?errorCount=0:errorCount;
-            }
+    //        if(level < 15)
+      //      {
+        //        errorCount +=1;                         // Increment the Error Counter
+          //      piezoOutput = 1-piezoOutput;            // Turn On the Piezo Alarm
+            //    errorCount>10?(errorCount=10,piezoOutput=0):errorCount; // Limit Error Counter to 10, and turn piezo OFF
+//            }
+  //          else
+    //        {
+      //          errorCount -= 1;
+        //        errorCount<0?errorCount=0:errorCount;
+          //  }
             
-            if(errorCount > 1)
-            {
-                errorSustained>8?airPump=0:(airPump=1,errorSustained+=1);
-            }
+//            if(errorCount > 1)
+  //          {
+    //            errorSustained>8?airPump=0:(airPump=1,errorSustained+=1);
+      //      }
             
 // *************** Increment counter to Auto turn OFF BackLight ****************
             backLightCounter +=1;                       // Increment the "Seconds" counter to turn OFF Backlight
@@ -256,13 +256,13 @@ int main(void)
                 }
                 else
                 {
-                    if(tuning)
-                    {
+//                    if(tuning)
+  //                  {
       //                  waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
-                        steamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
+    //                    steamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
         //                groupHeadPID    = PID_Calculate(2, groupHeadSetpoint, groupHeadTemp);// Calculate Group PID Value
-                        goto there;
-                    }
+      //                  goto there;
+        //            }
 
                     waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
                     steamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
@@ -282,57 +282,57 @@ int main(void)
 
                     if(!shotTimer)
                     {
-                        toggle+=1;
+//                        toggle+=1;
                     
-                        if(toggle>4)
-                        {
-                            toggle=5-toggle;
+  //                      if(toggle>4)
+    //                    {
+      //                      toggle=5-toggle;
                             LCDWriteStringXY(2,3,desc[2]);
                             LCDWriteIntXY(52,3,groupHeadTemp,4,1,0);
                             LCDWriteCharacter(123);             // generate degree symbol in font list
                             LCDWriteCharacter(70);
                             LCDWriteCharacter(' ');
-                        }
+        //                }
                     
-                        if(toggle>1)
-                        {
-                            LCDWriteStringXY(2,3,"Tank Level:  ");
-                            LCDWriteInt(level,-1,0,0);
-                            LCDWriteCharacter('%');
-                            LCDWriteString("    ");
+          //              if(toggle>1)
+            //            {
+              //              LCDWriteStringXY(2,3,"Tank Level:  ");
+                //            LCDWriteInt(level,-1,0,0);
+                  //          LCDWriteCharacter('%');
+                    //        LCDWriteString("    ");
                     
-                            if(level < 25)                  // Tank level < 25%
-                            {
-                                blink = 1 - blink;          // toggle blink variable
+                      //      if(level < 25)                  // Tank level < 25%
+                        //    {
+                          //      blink = 1 - blink;          // toggle blink variable
         
-                                if(blink)
-                                {
-                                    LCDWriteStringXY(48,3,"LOW");
-                                    LCDWriteString("    ");
+                            //    if(blink)
+                              //  {
+                                //    LCDWriteStringXY(48,3,"LOW");
+                                  //  LCDWriteString("    ");
 
-                                    lowWaterReminder+=1;    
+                                    //lowWaterReminder+=1;    
 
-                                    if(lowWaterReminder>29) // blink toggles every other second, so, 1/2 the delay time - 1.
-                                    {
-                                        piezoOutput=1;
+//                                    if(lowWaterReminder>29) // blink toggles every other second, so, 1/2 the delay time - 1.
+  //                                  {
+    //                                    piezoOutput=1;
                         
-                                        if(!brewSwitch)     // Disable delay if we are pulling a shot (will mess with pump timing)
-                                        {
-                                            __delay_ms(30); // Short, but, annoying piezo reminder
-                                        }
-                                        piezoOutput=0;      
-                                        lowWaterReminder=0;
-                                    }
-                                }
-                            }
-                        }
+      //                                  if(!brewSwitch)     // Disable delay if we are pulling a shot (will mess with pump timing)
+        //                                {
+          //                                  __delay_ms(30); // Short, but, annoying piezo reminder
+            //                            }
+              //                          piezoOutput=0;      
+                //                        lowWaterReminder=0;
+                  //                  }
+                    //            }
+                      //      }
+                        //}
                     }
                     else
                     {
                         LCDWriteStringXY(2,3,"Shot Timer:  ");
                         LCDWriteIntXY(48,3,shotTimer,-1,1,0);
                         LCDWriteString("     ");
-                    }                    
+                    }
                 }
             }
             else
@@ -357,25 +357,25 @@ int main(void)
             lastPowerState          = powerSwitch;
         }
         
-        there:
-        if(tuning)
-        {
-            LCDWriteStringXY(2,1,desc[1]);
-            LCDWriteIntXY(48,1,steamTemperature,4,1,0);
-            LCDWriteCharacter(123);         // generate degree symbol in font list
-            LCDWriteCharacter(70);
-        }            
+//        there:
+  //      if(tuning)
+    //    {
+      //      LCDWriteStringXY(2,1,desc[1]);
+        //    LCDWriteIntXY(48,1,steamTemperature,4,1,0);
+          //  LCDWriteCharacter(123);         // generate degree symbol in font list
+            //LCDWriteCharacter(70);
+//        }            
 // *************** Run Air Pump once an hour for Level transmitter *************
         if(powerSwitch)
         {
-            if(time.minute == 0 && time.second < 5)
-            {
-                airPump = 1;
-            }
-            else
-            {
-                airPump = 0;
-            }
+      //      if(time.minute == 0 && time.second < 5)
+        //    {
+          //      airPump = 1;
+            //}
+//            else
+  //          {
+    //            airPump = 0;
+      //      }
 
 // *************** Drive PID Outputs *******************************************
             groupPeriodCounter+=1;
@@ -403,7 +403,7 @@ int main(void)
                 {
                     steamSolenoid   =   1;
                     OC3R            +=  7600;
-                    if(steamTemperature>3000)
+                    if(steamTemperature>2950)
                     {
                         OC3R        =   1;
                     }
@@ -414,9 +414,11 @@ int main(void)
                     steamSolenoid   =   0;
                 }
 
-                OC2R=0X1E85-waterPID+OC3R;
+                OC2R=0X7A11-waterPID+OC3R;
+//                OC2R=0X1E85-waterPID+OC3R;
                 
-                (waterPID+OC2R>0X1E84)?(OC2RS=0X1E84):(OC2RS=waterPID+OC2R+1); // Water PID takes what it needs from whatever cycle is left
+                (waterPID+OC2R>0X7A10)?(OC2RS=0X7A10):(OC2RS=waterPID+OC2R+1); // Water PID takes what it needs from whatever cycle is left
+//                (waterPID+OC2R>0X1E84)?(OC2RS=0X1E84):(OC2RS=waterPID+OC2R+1); // Water PID takes what it needs from whatever cycle is left
                 
 //                LCDWriteIntXY(2,0,waterPID,4,0,0);
   //              LCDWriteIntXY(22,0,steamPID,4,0,0);
@@ -439,7 +441,8 @@ int main(void)
                 steamSolenoid=0;
 
                 OC3R=0;
-                OC2R=0x1E85-waterPID;           // OC2R must be at least 1, so 0x1E85 instead of 0x1E84!!
+                OC2R=0x7A11-waterPID;           // OC2R must be at least 1, so 0x7A11 instead of 0x7A10!!
+//                OC2R=0x1E85-waterPID;           // OC2R must be at least 1, so 0x1E85 instead of 0x1E84!!
             }
             
 
@@ -447,7 +450,7 @@ int main(void)
             
             if(brewSwitch)
             {
-                OC2R = 2;
+//                OC2R = 2;
                 backLightCounter = 0;           // Turn on Backlight if you are pulling a shot.
                 
                 T2CONbits.TON       =   1;      // Turn Timer2 ON
@@ -456,6 +459,7 @@ int main(void)
                 
                 if(shotProgressCounter <= preInfusionTime)
                 {
+                    OC2R = 2;
                     brewSolenoid=1;
                     pumpOutput = preInfusionDutyCycle;
                     pull+=1;
@@ -463,6 +467,7 @@ int main(void)
                 
                 if(shotProgressCounter > preInfusionTime && shotProgressCounter <= soakTime)
                 {
+                    OC2R = 2;
                     pumpOutput = 0;
                     pull = 0;
                 }
@@ -471,9 +476,10 @@ int main(void)
                 {
                     if(pumpOutput <= max)
                     {
+                        OC2R = 2;
                         count2+=1;
                         
-                        if(count2 >5)           // 13 gets us to !00% in 2.5 seconds (the current amount of StartRamp Time)
+                        if(count2 >5)           // 13 gets us to 100% in 2.5 seconds (the current amount of StartRamp Time)
                         {
                             if(pumpOutput<max) pumpOutput +=16;
                             count2 = 0;
