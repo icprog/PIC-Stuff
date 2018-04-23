@@ -256,17 +256,17 @@ void LCDWriteInt(int value,signed char fieldLength, signed char numPlaces, signe
 
 void LCDInit(void)
 {
-    TRISBbits.TRISB0    =   0;
-    TRISBbits.TRISB1    =   0;
-    TRISBbits.TRISB2    =   0;
-    TRISBbits.TRISB3    =   0;
-    TRISBbits.TRISB4    =   0;
-    LCD_DIN = 0;
-    LCD_CLK = 0;
-    LCD_DC  = 0;
-    LCD_RST = 0;
+    LCD_RST = 0;                                // Reset is Active Low
+    __delay_ms(100);                            // delay needed on Reset    
+    LCD_RST = 1;                                // Clear Reset Bit
 
-    LCD_RST = 1;
+//    TRISBbits.TRISB0    =   0;
+  //  TRISBbits.TRISB1    =   0;
+    //TRISBbits.TRISB2    =   0;
+
+//    LCD_DIN = 0;
+  //  LCD_CLK = 0;
+    //LCD_DC  = 0;
 
     LCDWrite(LCD_COMMAND, 0x21);                //Tell LCD that extended commands follow
 
