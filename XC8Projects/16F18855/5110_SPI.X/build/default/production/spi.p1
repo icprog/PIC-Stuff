@@ -7,56 +7,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _RC5PPS `Vuc ~T0 @X0 0 e@3877 ]
 "32741
 [v _RC3PPS `Vuc ~T0 @X0 0 e@3875 ]
-"4562
-[s S217 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S217 . BF UA R_nW S P D_nA CKE SMP ]
-"4572
-[s S218 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S218 . . R_W . D_A ]
-"4578
-[s S219 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S219 . . nW . nA ]
-"4584
-[s S220 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S220 . . nWRITE . nADDRESS ]
-"4590
-[s S221 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S221 . . READ_WRITE . DATA_ADDRESS ]
-"4596
-[s S222 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S222 . . I2C_READ I2C_START I2C_STOP I2C_DAT ]
-"4603
-[s S223 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S223 . BF1 UA1 R START STOP D CKE1 SMP1 ]
-"4613
-[s S224 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S224 . . RW START1 STOP1 DA ]
-"4620
-[s S225 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S225 . . RW1 I2C_START1 I2C_STOP2 DA1 ]
-"4627
-[s S226 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S226 . . I2C_READ1 S2 P2 DATA_ADDRESS1 ]
-"4634
-[s S227 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S227 . . READ_WRITE1 . D_A1 ]
-"4640
-[s S228 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S228 . . R_W1 . D_nA1 ]
-"4646
-[s S229 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S229 . . R_nW1 . I2C_DAT1 ]
-"4652
-[s S230 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S230 . . nW2 . nA2 ]
-"4658
-[s S231 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S231 . . nWRITE1 . nADDRESS1 ]
-"4561
-[u S216 `S217 1 `S218 1 `S219 1 `S220 1 `S221 1 `S222 1 `S223 1 `S224 1 `S225 1 `S226 1 `S227 1 `S228 1 `S229 1 `S230 1 `S231 1 ]
-[n S216 . . . . . . . . . . . . . . . . ]
-"4665
-[v _SSP1STATbits `VS216 ~T0 @X0 0 e@399 ]
+"36211
+[v _CKE1 `Vb ~T0 @X0 0 e@3198 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -13197,9 +13149,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spi.c: 16: RC3PPS = 0x14;
 "16
 [e = _RC3PPS -> -> 20 `i `uc ]
-[; ;spi.c: 17: SSP1STATbits.CKE = 1;
-"17
-[e = . . _SSP1STATbits 0 6 -> -> 1 `i `uc ]
+[; ;spi.c: 18: CKE1 = 1;
+"18
+[e = _CKE1 -> -> 1 `i `b ]
 [; ;spi.c: 19: }
 "19
 [e :UE 1563 ]
