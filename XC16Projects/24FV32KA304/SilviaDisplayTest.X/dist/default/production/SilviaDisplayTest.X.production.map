@@ -16,6 +16,7 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../support/dsPIC33C/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../support/dsPIC33F/gld \
+  build/default/production/main.o \
   build/default/production/adc.o \
   build/default/production/buttons.o \
   build/default/production/eeprom.o \
@@ -28,7 +29,6 @@ Command:
   build/default/production/tempcalc.o \
   build/default/production/user.o \
   build/default/production/usermenu.o \
-  build/default/production/main.o \
   --defsym=__MPLAB_BUILD=1 \
   -Tp24FV32KA304.gld.00 \
   --stack=16 \
@@ -63,7 +63,7 @@ c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\liblega-pic30-elf.
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
                               (__crt_start_mode_normal)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
-                              build/default/production/adc.o (___delay32)
+                              build/default/production/main.o (___delay32)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(addsf3.eo)
                               build/default/production/tempcalc.o (___subsf3)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(divsf3.eo)
@@ -73,7 +73,7 @@ c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(divsi3.
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(fixsfsi.eo)
                               build/default/production/level.o (_(float, int, long long, short, float, short, int))
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(fixunssfsi.eo)
-                              build/default/production/tempcalc.o (___fixunssfsi)
+                              build/default/production/main.o (___fixunssfsi)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(floatsisf.eo)
                               build/default/production/level.o (___floatsisf)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(floatunsisf.eo)
@@ -445,6 +445,7 @@ FDS              0xf80010           0x000002
 
 Linker script and memory map
 
+LOAD build/default/production/main.o
 LOAD build/default/production/adc.o
 LOAD build/default/production/buttons.o
 LOAD build/default/production/eeprom.o
@@ -457,7 +458,6 @@ LOAD build/default/production/system.o
 LOAD build/default/production/tempcalc.o
 LOAD build/default/production/user.o
 LOAD build/default/production/usermenu.o
-LOAD build/default/production/main.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libfx-elf.a
@@ -596,81 +596,81 @@ __FDS
 
 .debug_info       0x000000       0x51f3
  *(.debug_info)
- .debug_info      0x000000        0x7f1 build/default/production/adc.o
- .debug_info      0x0007f1        0x1f3 build/default/production/buttons.o
- .debug_info      0x0009e4        0x39e build/default/production/eeprom.o
- .debug_info      0x000d82        0x625 build/default/production/lcd.o
- .debug_info      0x0013a7        0x15e build/default/production/level.o
- .debug_info      0x001505        0x3aa build/default/production/pid.o
- .debug_info      0x0018af       0x10ae build/default/production/pwm.o
- .debug_info      0x00295d        0xb07 build/default/production/rtcc.o
- .debug_info      0x003464        0x2a4 build/default/production/system.o
- .debug_info      0x003708        0x1c0 build/default/production/tempcalc.o
- .debug_info      0x0038c8        0x1e6 build/default/production/user.o
- .debug_info      0x003aae        0x372 build/default/production/usermenu.o
- .debug_info      0x003e20       0x13d3 build/default/production/main.o
+ .debug_info      0x000000       0x13d3 build/default/production/main.o
+ .debug_info      0x0013d3        0x7f1 build/default/production/adc.o
+ .debug_info      0x001bc4        0x1f3 build/default/production/buttons.o
+ .debug_info      0x001db7        0x39e build/default/production/eeprom.o
+ .debug_info      0x002155        0x625 build/default/production/lcd.o
+ .debug_info      0x00277a        0x15e build/default/production/level.o
+ .debug_info      0x0028d8        0x3aa build/default/production/pid.o
+ .debug_info      0x002c82       0x10ae build/default/production/pwm.o
+ .debug_info      0x003d30        0xb07 build/default/production/rtcc.o
+ .debug_info      0x004837        0x2a4 build/default/production/system.o
+ .debug_info      0x004adb        0x1c0 build/default/production/tempcalc.o
+ .debug_info      0x004c9b        0x1e6 build/default/production/user.o
+ .debug_info      0x004e81        0x372 build/default/production/usermenu.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0xbe7
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x112 build/default/production/adc.o
- .debug_abbrev    0x000112         0x96 build/default/production/buttons.o
- .debug_abbrev    0x0001a8        0x123 build/default/production/eeprom.o
- .debug_abbrev    0x0002cb        0x141 build/default/production/lcd.o
- .debug_abbrev    0x00040c         0x47 build/default/production/level.o
- .debug_abbrev    0x000453         0xce build/default/production/pid.o
- .debug_abbrev    0x000521         0xda build/default/production/pwm.o
- .debug_abbrev    0x0005fb        0x221 build/default/production/rtcc.o
- .debug_abbrev    0x00081c         0x6a build/default/production/system.o
- .debug_abbrev    0x000886         0x8b build/default/production/tempcalc.o
- .debug_abbrev    0x000911         0x85 build/default/production/user.o
- .debug_abbrev    0x000996         0xd7 build/default/production/usermenu.o
- .debug_abbrev    0x000a6d        0x17a build/default/production/main.o
+ .debug_abbrev    0x000000        0x17a build/default/production/main.o
+ .debug_abbrev    0x00017a        0x112 build/default/production/adc.o
+ .debug_abbrev    0x00028c         0x96 build/default/production/buttons.o
+ .debug_abbrev    0x000322        0x123 build/default/production/eeprom.o
+ .debug_abbrev    0x000445        0x141 build/default/production/lcd.o
+ .debug_abbrev    0x000586         0x47 build/default/production/level.o
+ .debug_abbrev    0x0005cd         0xce build/default/production/pid.o
+ .debug_abbrev    0x00069b         0xda build/default/production/pwm.o
+ .debug_abbrev    0x000775        0x221 build/default/production/rtcc.o
+ .debug_abbrev    0x000996         0x6a build/default/production/system.o
+ .debug_abbrev    0x000a00         0x8b build/default/production/tempcalc.o
+ .debug_abbrev    0x000a8b         0x85 build/default/production/user.o
+ .debug_abbrev    0x000b10         0xd7 build/default/production/usermenu.o
 
 .debug_line       0x000000        0xd8d
  *(.debug_line)
- .debug_line      0x000000        0x101 build/default/production/adc.o
- .debug_line      0x000101         0xa9 build/default/production/buttons.o
- .debug_line      0x0001aa         0xf2 build/default/production/eeprom.o
- .debug_line      0x00029c        0x14d build/default/production/lcd.o
- .debug_line      0x0003e9         0x3b build/default/production/level.o
- .debug_line      0x000424         0xc9 build/default/production/pid.o
- .debug_line      0x0004ed        0x106 build/default/production/pwm.o
- .debug_line      0x0005f3        0x281 build/default/production/rtcc.o
- .debug_line      0x000874         0xf8 build/default/production/system.o
- .debug_line      0x00096c         0x49 build/default/production/tempcalc.o
- .debug_line      0x0009b5         0xa9 build/default/production/user.o
- .debug_line      0x000a5e        0x10f build/default/production/usermenu.o
- .debug_line      0x000b6d        0x220 build/default/production/main.o
+ .debug_line      0x000000        0x220 build/default/production/main.o
+ .debug_line      0x000220        0x101 build/default/production/adc.o
+ .debug_line      0x000321         0xa9 build/default/production/buttons.o
+ .debug_line      0x0003ca         0xf2 build/default/production/eeprom.o
+ .debug_line      0x0004bc        0x14d build/default/production/lcd.o
+ .debug_line      0x000609         0x3b build/default/production/level.o
+ .debug_line      0x000644         0xc9 build/default/production/pid.o
+ .debug_line      0x00070d        0x106 build/default/production/pwm.o
+ .debug_line      0x000813        0x281 build/default/production/rtcc.o
+ .debug_line      0x000a94         0xf8 build/default/production/system.o
+ .debug_line      0x000b8c         0x49 build/default/production/tempcalc.o
+ .debug_line      0x000bd5         0xa9 build/default/production/user.o
+ .debug_line      0x000c7e        0x10f build/default/production/usermenu.o
 
 .debug_frame      0x000000        0x52e
  *(.debug_frame)
- .debug_frame     0x000000         0x4c build/default/production/adc.o
- .debug_frame     0x00004c         0x30 build/default/production/buttons.o
- .debug_frame     0x00007c         0x4c build/default/production/eeprom.o
- .debug_frame     0x0000c8         0xf4 build/default/production/lcd.o
- .debug_frame     0x0001bc         0x30 build/default/production/level.o
- .debug_frame     0x0001ec         0x52 build/default/production/pid.o
- .debug_frame     0x00023e         0x4c build/default/production/pwm.o
- .debug_frame     0x00028a        0x170 build/default/production/rtcc.o
- .debug_frame     0x0003fa         0x30 build/default/production/system.o
- .debug_frame     0x00042a         0x4c build/default/production/tempcalc.o
- .debug_frame     0x000476         0x30 build/default/production/user.o
- .debug_frame     0x0004a6         0x52 build/default/production/usermenu.o
- .debug_frame     0x0004f8         0x36 build/default/production/main.o
+ .debug_frame     0x000000         0x36 build/default/production/main.o
+ .debug_frame     0x000036         0x4c build/default/production/adc.o
+ .debug_frame     0x000082         0x30 build/default/production/buttons.o
+ .debug_frame     0x0000b2         0x4c build/default/production/eeprom.o
+ .debug_frame     0x0000fe         0xf4 build/default/production/lcd.o
+ .debug_frame     0x0001f2         0x30 build/default/production/level.o
+ .debug_frame     0x000222         0x52 build/default/production/pid.o
+ .debug_frame     0x000274         0x4c build/default/production/pwm.o
+ .debug_frame     0x0002c0        0x170 build/default/production/rtcc.o
+ .debug_frame     0x000430         0x30 build/default/production/system.o
+ .debug_frame     0x000460         0x4c build/default/production/tempcalc.o
+ .debug_frame     0x0004ac         0x30 build/default/production/user.o
+ .debug_frame     0x0004dc         0x52 build/default/production/usermenu.o
 
 .debug_str        0x000000        0x38c
  *(.debug_str)
- .debug_str       0x000000         0x2a build/default/production/adc.o
- .debug_str       0x00002a         0x17 build/default/production/buttons.o
- .debug_str       0x000041         0x14 build/default/production/eeprom.o
- .debug_str       0x000055         0x13 build/default/production/lcd.o
- .debug_str       0x000068         0x92 build/default/production/pid.o
- .debug_str       0x0000fa        0x131 build/default/production/pwm.o
- .debug_str       0x00022b         0x67 build/default/production/rtcc.o
- .debug_str       0x000292          0xa build/default/production/tempcalc.o
- .debug_str       0x00029c          0x9 build/default/production/usermenu.o
- .debug_str       0x0002a5         0xe7 build/default/production/main.o
+ .debug_str       0x000000         0xe7 build/default/production/main.o
+ .debug_str       0x0000e7         0x2a build/default/production/adc.o
+ .debug_str       0x000111         0x17 build/default/production/buttons.o
+ .debug_str       0x000128         0x14 build/default/production/eeprom.o
+ .debug_str       0x00013c         0x13 build/default/production/lcd.o
+ .debug_str       0x00014f         0x92 build/default/production/pid.o
+ .debug_str       0x0001e1        0x131 build/default/production/pwm.o
+ .debug_str       0x000312         0x67 build/default/production/rtcc.o
+ .debug_str       0x000379          0xa build/default/production/tempcalc.o
+ .debug_str       0x000383          0x9 build/default/production/usermenu.o
 
 .debug_loc
  *(.debug_loc)
@@ -682,31 +682,31 @@ __FDS
                   0x000000        0x559
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x2a build/default/production/adc.o
+                  0x000000         0x96 build/default/production/main.o
  .debug_pubnames
-                  0x00002a         0x51 build/default/production/buttons.o
+                  0x000096         0x2a build/default/production/adc.o
  .debug_pubnames
-                  0x00007b         0x36 build/default/production/eeprom.o
+                  0x0000c0         0x51 build/default/production/buttons.o
  .debug_pubnames
-                  0x0000b1         0x94 build/default/production/lcd.o
+                  0x000111         0x36 build/default/production/eeprom.o
  .debug_pubnames
-                  0x000145         0x25 build/default/production/level.o
+                  0x000147         0x94 build/default/production/lcd.o
  .debug_pubnames
-                  0x00016a         0xe0 build/default/production/pid.o
+                  0x0001db         0x25 build/default/production/level.o
  .debug_pubnames
-                  0x00024a         0x39 build/default/production/pwm.o
+                  0x000200         0xe0 build/default/production/pid.o
  .debug_pubnames
-                  0x000283        0x16e build/default/production/rtcc.o
+                  0x0002e0         0x39 build/default/production/pwm.o
  .debug_pubnames
-                  0x0003f1         0x1e build/default/production/system.o
+                  0x000319        0x16e build/default/production/rtcc.o
  .debug_pubnames
-                  0x00040f         0x41 build/default/production/tempcalc.o
+                  0x000487         0x1e build/default/production/system.o
  .debug_pubnames
-                  0x000450         0x2d build/default/production/user.o
+                  0x0004a5         0x41 build/default/production/tempcalc.o
  .debug_pubnames
-                  0x00047d         0x46 build/default/production/usermenu.o
+                  0x0004e6         0x2d build/default/production/user.o
  .debug_pubnames
-                  0x0004c3         0x96 build/default/production/main.o
+                  0x000513         0x46 build/default/production/usermenu.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -714,31 +714,31 @@ __FDS
 .debug_aranges    0x000000        0x138
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/adc.o
+                  0x000000         0x18 build/default/production/main.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/buttons.o
+                  0x000018         0x18 build/default/production/adc.o
  .debug_aranges
-                  0x000030         0x18 build/default/production/eeprom.o
+                  0x000030         0x18 build/default/production/buttons.o
  .debug_aranges
-                  0x000048         0x18 build/default/production/lcd.o
+                  0x000048         0x18 build/default/production/eeprom.o
  .debug_aranges
-                  0x000060         0x18 build/default/production/level.o
+                  0x000060         0x18 build/default/production/lcd.o
  .debug_aranges
-                  0x000078         0x18 build/default/production/pid.o
+                  0x000078         0x18 build/default/production/level.o
  .debug_aranges
-                  0x000090         0x18 build/default/production/pwm.o
+                  0x000090         0x18 build/default/production/pid.o
  .debug_aranges
-                  0x0000a8         0x18 build/default/production/rtcc.o
+                  0x0000a8         0x18 build/default/production/pwm.o
  .debug_aranges
-                  0x0000c0         0x18 build/default/production/system.o
+                  0x0000c0         0x18 build/default/production/rtcc.o
  .debug_aranges
-                  0x0000d8         0x18 build/default/production/tempcalc.o
+                  0x0000d8         0x18 build/default/production/system.o
  .debug_aranges
-                  0x0000f0         0x18 build/default/production/user.o
+                  0x0000f0         0x18 build/default/production/tempcalc.o
  .debug_aranges
-                  0x000108         0x18 build/default/production/usermenu.o
+                  0x000108         0x18 build/default/production/user.o
  .debug_aranges
-                  0x000120         0x18 build/default/production/main.o
+                  0x000120         0x18 build/default/production/usermenu.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -1383,60 +1383,60 @@ LOAD data_init
 .debug_pubtypes
                   0x000138        0x572
  .debug_pubtypes
-                  0x000138         0x92 build/default/production/adc.o
+                  0x000138        0x180 build/default/production/main.o
  .debug_pubtypes
-                  0x0001ca         0x2a build/default/production/buttons.o
+                  0x0002b8         0x92 build/default/production/adc.o
  .debug_pubtypes
-                  0x0001f4         0x4c build/default/production/eeprom.o
+                  0x00034a         0x2a build/default/production/buttons.o
  .debug_pubtypes
-                  0x000240         0x67 build/default/production/lcd.o
+                  0x000374         0x4c build/default/production/eeprom.o
  .debug_pubtypes
-                  0x0002a7         0x12 build/default/production/level.o
+                  0x0003c0         0x67 build/default/production/lcd.o
  .debug_pubtypes
-                  0x0002b9         0x1d build/default/production/pid.o
+                  0x000427         0x12 build/default/production/level.o
  .debug_pubtypes
-                  0x0002d6        0x14e build/default/production/pwm.o
+                  0x000439         0x1d build/default/production/pid.o
  .debug_pubtypes
-                  0x000424         0x8f build/default/production/rtcc.o
+                  0x000456        0x14e build/default/production/pwm.o
  .debug_pubtypes
-                  0x0004b3         0x1f build/default/production/system.o
+                  0x0005a4         0x8f build/default/production/rtcc.o
  .debug_pubtypes
-                  0x0004d2         0x12 build/default/production/tempcalc.o
+                  0x000633         0x1f build/default/production/system.o
  .debug_pubtypes
-                  0x0004e4         0x29 build/default/production/user.o
+                  0x000652         0x12 build/default/production/tempcalc.o
  .debug_pubtypes
-                  0x00050d         0x1d build/default/production/usermenu.o
+                  0x000664         0x29 build/default/production/user.o
  .debug_pubtypes
-                  0x00052a        0x180 build/default/production/main.o
+                  0x00068d         0x1d build/default/production/usermenu.o
 
 __c30_signature
                   0x0006aa         0xd8
  __c30_signature
-                  0x0006aa          0x6 build/default/production/adc.o
+                  0x0006aa          0x6 build/default/production/main.o
  __c30_signature
-                  0x0006b0          0x6 build/default/production/buttons.o
+                  0x0006b0          0x6 build/default/production/adc.o
  __c30_signature
-                  0x0006b6          0x6 build/default/production/eeprom.o
+                  0x0006b6          0x6 build/default/production/buttons.o
  __c30_signature
-                  0x0006bc          0x6 build/default/production/lcd.o
+                  0x0006bc          0x6 build/default/production/eeprom.o
  __c30_signature
-                  0x0006c2          0x6 build/default/production/level.o
+                  0x0006c2          0x6 build/default/production/lcd.o
  __c30_signature
-                  0x0006c8          0x6 build/default/production/pid.o
+                  0x0006c8          0x6 build/default/production/level.o
  __c30_signature
-                  0x0006ce          0x6 build/default/production/pwm.o
+                  0x0006ce          0x6 build/default/production/pid.o
  __c30_signature
-                  0x0006d4          0x6 build/default/production/rtcc.o
+                  0x0006d4          0x6 build/default/production/pwm.o
  __c30_signature
-                  0x0006da          0x6 build/default/production/system.o
+                  0x0006da          0x6 build/default/production/rtcc.o
  __c30_signature
-                  0x0006e0          0x6 build/default/production/tempcalc.o
+                  0x0006e0          0x6 build/default/production/system.o
  __c30_signature
-                  0x0006e6          0x6 build/default/production/user.o
+                  0x0006e6          0x6 build/default/production/tempcalc.o
  __c30_signature
-                  0x0006ec          0x6 build/default/production/usermenu.o
+                  0x0006ec          0x6 build/default/production/user.o
  __c30_signature
-                  0x0006f2          0x6 build/default/production/main.o
+                  0x0006f2          0x6 build/default/production/usermenu.o
  __c30_signature
                   0x0006f8          0x6 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
  __c30_signature

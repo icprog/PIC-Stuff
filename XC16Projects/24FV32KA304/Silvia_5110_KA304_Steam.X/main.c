@@ -41,12 +41,12 @@
 #define max                     256                     // Maximun Pump Output (256 = 100%)
 #define min                     26                      // Minimum Pump Output (0 = OFF)
 #define preInfusionDutyCycle    90              //FIX   // This needs to move to EEPROM & have a User Interface set up so user can change it
-#define preInfusionTime         (25)            //FIX   // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
+#define preInfusionTime         25              //FIX   // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
 #define soakTime                (preInfusionTime + 30)//FIX    // Length of time for wetted puck to soak EEPROM
 #define startRamp               (soakTime + 30)//FIX    // StartRamp starts pump and Ramps up to Max Pressure
 #define continuePull            (800 + 1)               // Shot duration, 80 seconds from Start of Cycle(801)
 #define warning                 (850 + 1)               // Turn on Warning Piezo, reminder to turn off switch (851)
-#define steamPumpPower          37                      // DutyCycle to run pump during steam cycle
+#define steamPumpPower          38                      // DutyCycle to run pump during steam cycle
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
@@ -64,7 +64,7 @@
 #define backLightCounter        counter[4]              // Used to count time until Backlight turns Off
 #define groupPeriodCounter      counter[5]              // Group PID Period Counter
 #define lowWaterReminder        counter[6]              // Remind User level is Low when below 25%
-#define numSamples              4                       // Number of samples to average for temp[] readings 
+#define numSamples              20                      // Number of samples to average for temp[] readings 
 #define PIDDuration             200                     // Number of Program cycles (Period) for Group Head PID
     
 
@@ -125,7 +125,7 @@ int main(void)
     
     uint8_t sampleIndex     = 0;                        // Used to calculate average sample of temp[]
     
-    float total[3]          = {0,0,0};                  // Running total of temp[] samples 
+    uint32_t total[3]       = {0,0,0};                  // Running total of temp[] samples 
     
     unsigned char testKey   = 0;                        // Variable used for Storing Which Menu Key is Pressed
     
@@ -142,6 +142,8 @@ int main(void)
     uint16_t level          = 0;
     
     static char ONTimer     = 0;                        // Bit to enable Auto Start of Machine
+    
+    int waterSet            = waterSetpoint;  
     
     
 // ******************************************************************************
@@ -261,8 +263,10 @@ int main(void)
         //                groupHeadPID    = PID_Calculate(2, groupHeadSetpoint, groupHeadTemp);// Calculate Group PID Value
                         goto there;
                     }
+                    
+                    if(steamPower) waterSet=waterSetpoint+450; else waterSet=waterSetpoint;
 
-                    waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
+                    waterPID        = PID_Calculate(0, waterSet, boilerTemperature);// Calculate Water PID Value
                     steamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
                     groupHeadPID    = PID_Calculate(2, groupHeadSetpoint, groupHeadTemp);// Calculate Group PID Value
                     
@@ -396,15 +400,20 @@ int main(void)
             if(steamPower)                              //Steam setpoint takes priority
             {                                     
                 OC3R=steamPID;                          // Start Steam Boiler Output at beginning of cycle, can use up to 100% of cycle    
+                    
+                if(steamTemperature>3000)
+                {
+                    OC3R        =   1;
+                }
 
                 if(steamSwitch)
                 {
                     steamSolenoid   =   1;
                     OC3R            +=  7600;
-                    if(steamTemperature>3000)
-                    {
-                        OC3R        =   1;
-                    }
+//                    if(steamTemperature>3000)
+  //                  {
+    //                    OC3R        =   1;
+      //              }
                     pumpOutput      =   steamPumpPower;
                 }
                 else

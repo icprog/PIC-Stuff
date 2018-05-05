@@ -3,33 +3,21 @@
 // ***************************************************************************************************************************************************************
 void ADCInit(void)
 {
-    // ADSIDL disabled; ASAM disabled; FORM Absolute decimal result, unsigned, right-justified; MODE12 enabled; ADON enabled; DONE disabled; SAMP disabled; SSRC Clearing sample bit ends sampling and starts conversion; 
+    AD1CON1 = 0x8400;    // ADSIDL disabled; ASAM disabled; FORM Absolute decimal result, unsigned, right-justified; MODE12 enabled; ADON enabled; DONE disabled; SAMP disabled; SSRC Clearing sample bit ends sampling and starts conversion; 
 
-    AD1CON1 = 0x8400;
+//    AD1CON2 = 0x8000;    // OFFCAL disabled; ALTS disabled; PVCFG VRH1; BUFM disabled; BUFREGEN disabled; NVCFG0 AVSS; SMPI 1; CSCNA disabled; 
 
-    // OFFCAL disabled; ALTS disabled; PVCFG AVDD; BUFM disabled; BUFREGEN disabled; NVCFG0 AVSS; SMPI 1; CSCNA disabled; 
+    AD1CON2 = 0x0000;    // OFFCAL disabled; ALTS disabled; PVCFG AVDD; BUFM disabled; BUFREGEN disabled; NVCFG0 AVSS; SMPI 1; CSCNA disabled; 
 
-    AD1CON2 = 0x0000;
+    AD1CON3 = 0x0005;    // ADRC FOSC/2; SAMC 0; EXTSAM disabled; ADCS 5; 
 
-    // ADRC FOSC/2; SAMC 0; EXTSAM disabled; ADCS 5; 
+    AD1CHS = 0x0000;    // CH0SA AN0; CH0SB AN0; CH0NB AVSS; CH0NA AVSS; 
 
-    AD1CON3 = 0x0005;
+    AD1CSSL = 0x0000;    // CSS3 disabled; CSS4 disabled; CSS5 disabled; CSS6 disabled; CSS7 disabled; CSS8 disabled; CSS9 disabled; CSS10 disabled; CSS11 disabled; CSS0 disabled; CSS12 disabled; CSS13 disabled; CSS2 disabled; CSS14 disabled; CSS1 disabled; CSS15 disabled; 
 
-    // CH0SA AN0; CH0SB AN0; CH0NB AVSS; CH0NA AVSS; 
-
-    AD1CHS = 0x0000;
-
-    // CSS3 disabled; CSS4 disabled; CSS5 disabled; CSS6 disabled; CSS7 disabled; CSS8 disabled; CSS9 disabled; CSS10 disabled; CSS11 disabled; CSS0 disabled; CSS12 disabled; CSS13 disabled; CSS2 disabled; CSS14 disabled; CSS1 disabled; CSS15 disabled; 
-
-    AD1CSSL = 0x0000;
-
-    // CSS16 disabled; CSS29 disabled; CSS17 disabled; CSS18 disabled; CSS27 disabled; CSS19 disabled; CSS28 disabled; CSS30 disabled; CSS21 disabled; CSS22 enabled; CSS20 disabled; CSS26 disabled; CSS23 disabled; 
-
-    AD1CSSH = 0x0040;
-
+    AD1CSSH = 0x0040;    // CSS16 disabled; CSS29 disabled; CSS17 disabled; CSS18 disabled; CSS27 disabled; CSS19 disabled; CSS28 disabled; CSS30 disabled; CSS21 disabled; CSS22 enabled; CSS20 disabled; CSS26 disabled; CSS23 disabled; 
 
 //    adc_obj.intSample = AD1CON2bits.SMPI;
-
 }
 //***************************************************************************************************************************************************************
 int ADCRead(ADC_CHANNEL channel)
