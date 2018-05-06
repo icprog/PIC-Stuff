@@ -2,17 +2,18 @@
 #include "pid.h"
 
 // **************** Variables available to all Functions in Program ************ 
-int internalKp[]                = {   50,   50,  50}; // Controller Gain      (inverse of Proportional Band)
-int internalKi[]                = {   15,   15,  15}; // Controller Integral Reset/Unit Time, determined by how often PID is calculated
-int internalKd[]                = {   25,   25,  25}; // Controller Derivative (or Rate))
+int internalKp[]                = {   50,   50,  50};   // Controller Gain      (inverse of Proportional Band)
+int internalKi[]                = {   15,   15,  15};   // Controller Integral Reset/Unit Time, determined by how often PID is calculated
+int internalKd[]                = {   25,   25,  25};   // Controller Derivative (or Rate))
 long pidIntegrated[3]           = {    0,    0,   0};
 long pidPrevError[3]            = {    0,    0,   0};
 long pidPrevInput[3]            = {    0,    0,   0};
 int integralMinOutput[3]        = { -100, -100,   0};
 int integralMaxOutput[3]        = {  100,  100,  20};   
-int pidMinOutput[3]             = {    0,    0,   0}; // Minimum output limit of Controller
-int pidMaxOutput[3]             = { 7811, 7812, 200}; // Maximum output limit of Controller
-extern char tuning;                                   // Set to a 1 when tuning    
+int pidMinOutput[3]             = {    0,    0,   0};   // Minimum output limit of Controller
+int pidMaxOutput[3]             = { 7811, 1312, 200};   // Maximum output limit of Controller
+extern char tuning;                                     // Set to a 1 when tuning    
+//extern int bits[7];                                     // steamPower Bit
 
 void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd)
 {
@@ -26,12 +27,13 @@ void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd)
 // *************** PID_Calculate Runs faster if called more often **************    
 int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int temp)
 {
+//    if(!bits[7]) pidMaxOutput[1]=500;                   // Limit steam PID Output until steam is at minimum setpoint(limit overshoot))
     int result;
     long  error, errorValue;
     long derivativeValue;
         
 // **************** Calculate Gain *********************************************    
-    error = (long)setpoint - temp;                                // error calculation
+    error = (long)setpoint - temp;                                              // error calculation
  
     errorValue  = (long)error * internalKp[controller];                           // Calculate proportional value
     

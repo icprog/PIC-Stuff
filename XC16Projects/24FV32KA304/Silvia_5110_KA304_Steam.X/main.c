@@ -93,7 +93,7 @@ char pull               =   0;                          // pull a 25 second shot
 
 // *************** Main Routine ************************************************
 int main(void)
-{                       
+{
     InitApp();
     
     InitializeTimers();
@@ -142,9 +142,6 @@ int main(void)
     uint16_t level          = 0;
     
     static char ONTimer     = 0;                        // Bit to enable Auto Start of Machine
-    
-    int waterSet            = waterSetpoint;  
-    
     
 // ******************************************************************************
 //    LCDBitmap(&menumain[0], 5, 59);                        //Draw Menu0
@@ -263,10 +260,8 @@ int main(void)
         //                groupHeadPID    = PID_Calculate(2, groupHeadSetpoint, groupHeadTemp);// Calculate Group PID Value
                         goto there;
                     }
-                    
-                    if(steamPower) waterSet=waterSetpoint+450; else waterSet=waterSetpoint;
 
-                    waterPID        = PID_Calculate(0, waterSet, boilerTemperature);// Calculate Water PID Value
+                    waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
                     steamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
                     groupHeadPID    = PID_Calculate(2, groupHeadSetpoint, groupHeadTemp);// Calculate Group PID Value
                     
@@ -409,7 +404,7 @@ int main(void)
                 if(steamSwitch)
                 {
                     steamSolenoid   =   1;
-                    OC3R            +=  7600;
+                    OC3R            +=  6500;
 //                    if(steamTemperature>3000)
   //                  {
     //                    OC3R        =   1;
@@ -685,14 +680,22 @@ int main(void)
             lastPowerState = 2;
         }
 // ******************************************************************************
-        if(backLightCounter > 1199)             // No Keys Pressed for 20 Minutes
+        if(backLightCounter>1200)               // Keep backLight on for short period after Power is switched OFF
+        {
+            if(backLightCounter>16000)
+            {
+                backLightOFF = 1;               // so, we might as well shut OFF the LCD BackLight
+                backLightCounter=16001;
+            }
+        }
+        else if(backLightCounter > 1199)        // No Keys Pressed for 20 Minutes
         {
             backLightOFF = 1;                   // so, we might as well shut OFF the LCD BackLight
-            backLightCounter = 1200;            // and, reset the count, so it will turn on with the next Key Press
+            backLightCounter = 0;               // and, reset the count, so it will turn on with the next Key Press
         }
         else
         {
-            backLightOFF = 0;                   // sb 0
+            backLightOFF = 0;                   
         }
         
 // *****************************************************************************

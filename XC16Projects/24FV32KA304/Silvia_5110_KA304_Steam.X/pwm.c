@@ -34,12 +34,12 @@ void InitializePWM(void)
     OC3CON2bits.SYNCSEL =   0X1F;                   // Set Self Sync as source
     OC3CON2bits.OCTRIG =    0;                      // Set OC3 as Sync source
     OC3CON1bits.OCTSEL =    0X1;                    // Set Timer 3 as clock source
-    OC3CON1bits.OCM =       0x6;                    // Set OC3 Mode to Edge aligned PWM  FIX(Change to Center aligned)
+    OC3CON1bits.OCM =       0x6;                    // Set OC3 Mode to Edge aligned PWM
     
     OC2R =                  0x0000;                 // set Water Boiler DutyCycle to 0
     OC2RS =                 0x1E84;                 // Set Period = 1 second (2MHz/256 = 7812 = 1E84 Hex)
     OC2CON2bits.SYNCSEL =   0X02;                   // Set OC3 as Sync source
     OC2CON2bits.OCTRIG =    0;                      // Set OC3 as Sync source(rather than trigger source)
     OC2CON1bits.OCTSEL =    0X1;                    // Set Timer 3 as clock source
-    OC2CON1bits.OCM =       0x7;                    // Set OC2 Mode to Edge aligned PWM  FIX(Change to CenterAligned)
+    OC2CON1bits.OCM =       0x7;                    // Set OC2 Mode to Center aligned PWM  
 }
