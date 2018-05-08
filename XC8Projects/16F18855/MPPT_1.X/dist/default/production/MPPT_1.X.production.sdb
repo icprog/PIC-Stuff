@@ -1,0 +1,265 @@
+[p LITE_MODE AUTOSTATIC PIC14 PIC14E ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 16F18855 ]
+[d frameptr 6 ]
+"17 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\adc.c
+[e E14288 . `uc
+channel_VSS 60
+channel_Temp 61
+channel_DAC1 62
+channel_FVR 63
+]
+"16
+[v _ADCRead ADCRead `(ui  1 e 2 0 ]
+"60
+[v _ADC_Initialize ADC_Initialize `(v  1 e 1 0 ]
+"6 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+"62 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+"86 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 3 0 ]
+"6 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lldiv.c
+[v ___lldiv __lldiv `(ul  1 e 4 0 ]
+"6 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+[v ___lwmod __lwmod `(ui  1 e 2 0 ]
+"15 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+"6 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\pic\eeprom.c
+[v _eecpymem eecpymem `(v  1 e 1 0 ]
+"39
+[v _memcpyee memcpyee `(v  1 e 1 0 ]
+"124 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\lcd.c
+[v _gotoXY gotoXY `(v  1 e 1 0 ]
+"140
+[v _LCDWriteCharacter LCDWriteCharacter `(v  1 e 1 0 ]
+"182
+[v _LCDClear LCDClear `(v  1 e 1 0 ]
+"247
+[v _LCDInit LCDInit `(v  1 e 1 0 ]
+"280
+[v _LCDWrite LCDWrite `(v  1 e 1 0 ]
+"10 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\main.c
+[v _main main `(v  1 e 1 0 ]
+"37 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\system.c
+[v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
+"65
+[v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
+"7 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\adc.c
+[v _samples samples `[4][50]ui  1 e 400 @8800 ]
+"9
+[v _sampleIndex sampleIndex `ui  1 e 2 0 ]
+"11
+[v _totals totals `[4]ul  1 e 16 0 ]
+"13
+[v _channels channels `[4]uc  1 s 4 channels ]
+"589 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
+[v _TRISA TRISA `VEuc  1 e 1 @17 ]
+[s S163 . 1 `uc 1 TRISA0 1 0 :1:0 
+`uc 1 TRISA1 1 0 :1:1 
+`uc 1 TRISA2 1 0 :1:2 
+`uc 1 TRISA3 1 0 :1:3 
+`uc 1 TRISA4 1 0 :1:4 
+`uc 1 TRISA5 1 0 :1:5 
+`uc 1 TRISA6 1 0 :1:6 
+`uc 1 TRISA7 1 0 :1:7 
+]
+"606
+[u S172 . 1 `S163 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES172  1 e 1 @17 ]
+"651
+[v _TRISB TRISB `VEuc  1 e 1 @18 ]
+"713
+[v _TRISC TRISC `VEuc  1 e 1 @19 ]
+"775
+[v _LATA LATA `VEuc  1 e 1 @22 ]
+[s S184 . 1 `uc 1 LATA0 1 0 :1:0 
+`uc 1 LATA1 1 0 :1:1 
+`uc 1 LATA2 1 0 :1:2 
+`uc 1 LATA3 1 0 :1:3 
+`uc 1 LATA4 1 0 :1:4 
+`uc 1 LATA5 1 0 :1:5 
+`uc 1 LATA6 1 0 :1:6 
+`uc 1 LATA7 1 0 :1:7 
+]
+"792
+[u S193 . 1 `S184 1 . 1 0 ]
+[v _LATAbits LATAbits `VES193  1 e 1 @22 ]
+"837
+[v _LATB LATB `VEuc  1 e 1 @23 ]
+"899
+[v _LATC LATC `VEuc  1 e 1 @24 ]
+"1536
+[v _ADRESL ADRESL `VEuc  1 e 1 @140 ]
+"1556
+[v _ADRESH ADRESH `VEuc  1 e 1 @141 ]
+"1857
+[v _ADCON0 ADCON0 `VEuc  1 e 1 @147 ]
+[s S55 . 1 `uc 1 ADGO 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 ADFM 1 0 :2:2 
+`uc 1 ADCS 1 0 :1:4 
+`uc 1 . 1 0 :1:5 
+`uc 1 ADCONT 1 0 :1:6 
+`uc 1 ADON 1 0 :1:7 
+]
+"1893
+[s S63 . 1 `uc 1 DONE 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 ADFRM 1 0 :2:2 
+]
+[s S67 . 1 `uc 1 nDONE 1 0 :1:0 
+]
+[s S69 . 1 `uc 1 GO 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 ADFM0 1 0 :1:2 
+`uc 1 ADFM1 1 0 :1:3 
+]
+[s S74 . 1 `uc 1 GO_nDONE 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 ADFRM0 1 0 :1:2 
+`uc 1 ADFRM1 1 0 :1:3 
+]
+[u S79 . 1 `S55 1 . 1 0 `S63 1 . 1 0 `S67 1 . 1 0 `S69 1 . 1 0 `S74 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES79  1 e 1 @147 ]
+"1968
+[v _ADCON1 ADCON1 `VEuc  1 e 1 @148 ]
+"2007
+[v _ADCON2 ADCON2 `VEuc  1 e 1 @149 ]
+"2084
+[v _ADCON3 ADCON3 `VEuc  1 e 1 @150 ]
+"2155
+[v _ADSTAT ADSTAT `VEuc  1 e 1 @151 ]
+"2225
+[v _ADCLK ADCLK `VEuc  1 e 1 @152 ]
+"2283
+[v _ADACT ADACT `VEuc  1 e 1 @153 ]
+"2335
+[v _ADREF ADREF `VEuc  1 e 1 @154 ]
+"2376
+[v _ADCAP ADCAP `VEuc  1 e 1 @155 ]
+"2428
+[v _ADPRE ADPRE `VEuc  1 e 1 @156 ]
+"2498
+[v _ADACQ ADACQ `VEuc  1 e 1 @157 ]
+"2568
+[v _ADPCH ADPCH `VEuc  1 e 1 @158 ]
+"2696
+[v _ADRPT ADRPT `VEuc  1 e 1 @269 ]
+"2773
+[v _ADLTHL ADLTHL `VEuc  1 e 1 @270 ]
+"2843
+[v _ADLTHH ADLTHH `VEuc  1 e 1 @271 ]
+"2920
+[v _ADUTHL ADUTHL `VEuc  1 e 1 @272 ]
+"2990
+[v _ADUTHH ADUTHH `VEuc  1 e 1 @273 ]
+"3067
+[v _ADSTPTL ADSTPTL `VEuc  1 e 1 @274 ]
+"3137
+[v _ADSTPTH ADSTPTH `VEuc  1 e 1 @275 ]
+[s S269 . 1 `uc 1 INTE 1 0 :1:0 
+`uc 1 . 1 0 :3:1 
+`uc 1 IOCIE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+]
+"21564
+[u S274 . 1 `S269 1 . 1 0 ]
+[v _PIE0bits PIE0bits `VES274  1 e 1 @1814 ]
+"23324
+[v _OSCCON1 OSCCON1 `VEuc  1 e 1 @2189 ]
+"23464
+[v _OSCCON3 OSCCON3 `VEuc  1 e 1 @2191 ]
+"23561
+[v _OSCEN OSCEN `VEuc  1 e 1 @2193 ]
+"23612
+[v _OSCTUNE OSCTUNE `VEuc  1 e 1 @2194 ]
+"23670
+[v _OSCFRQ OSCFRQ `VEuc  1 e 1 @2195 ]
+"24044
+[v _FVRCON FVRCON `VEuc  1 e 1 @2316 ]
+"29763
+[v _PPSLOCK PPSLOCK `VEuc  1 e 1 @3727 ]
+[s S284 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
+]
+"29773
+[u S286 . 1 `S284 1 . 1 0 ]
+[v _PPSLOCKbits PPSLOCKbits `VES286  1 e 1 @3727 ]
+"31841
+[v _RA1PPS RA1PPS `VEuc  1 e 1 @3857 ]
+"32991
+[v _ANSELA ANSELA `VEuc  1 e 1 @3896 ]
+"33053
+[v _WPUA WPUA `VEuc  1 e 1 @3897 ]
+"33611
+[v _ANSELB ANSELB `VEuc  1 e 1 @3907 ]
+"33673
+[v _WPUB WPUB `VEuc  1 e 1 @3908 ]
+"34231
+[v _ANSELC ANSELC `VEuc  1 e 1 @3918 ]
+"34293
+[v _WPUC WPUC `VEuc  1 e 1 @3919 ]
+"34851
+[v _WPUE WPUE `VEuc  1 e 1 @3941 ]
+"36757
+"36757
+[v _GIE GIE `VEb  1 e 0 @95 ]
+"17 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\lcd.c
+[v _fonts fonts `DC[303]uc  1 e 303 0 ]
+"10 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\main.c
+[v _main main `(v  1 e 1 0 ]
+{
+"19
+} 0
+"37 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\system.c
+[v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
+{
+"63
+} 0
+"65
+[v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
+{
+"72
+} 0
+"247 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\lcd.c
+[v _LCDInit LCDInit `(v  1 e 1 0 ]
+{
+"277
+} 0
+"182
+[v _LCDClear LCDClear `(v  1 e 1 0 ]
+{
+"184
+[v LCDClear@index index `i  1 a 2 9 ]
+"188
+} 0
+"124
+[v _gotoXY gotoXY `(v  1 e 1 0 ]
+{
+[v gotoXY@x x `c  1 a 1 wreg ]
+[v gotoXY@x x `c  1 a 1 wreg ]
+[v gotoXY@y y `c  1 p 1 5 ]
+"126
+[v gotoXY@x x `c  1 a 1 7 ]
+"128
+} 0
+"280
+[v _LCDWrite LCDWrite `(v  1 e 1 0 ]
+{
+[v LCDWrite@data_or_command data_or_command `uc  1 a 1 wreg ]
+"282
+[v LCDWrite@i i `uc  1 a 1 4 ]
+[v LCDWrite@d d `uc  1 a 1 3 ]
+"280
+[v LCDWrite@data_or_command data_or_command `uc  1 a 1 wreg ]
+[v LCDWrite@data data `uc  1 p 1 0 ]
+"284
+[v LCDWrite@data_or_command data_or_command `uc  1 a 1 2 ]
+"314
+} 0
+"60 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\adc.c
+[v _ADC_Initialize ADC_Initialize `(v  1 e 1 0 ]
+{
+"107
+} 0
