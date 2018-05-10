@@ -13125,6 +13125,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
+[; ;tmr2.h: 262: void TMR2_Initialize(void);
 [; ;adc.h: 9: typedef uint16_t adc_result_t;
 [; ;adc.h: 12: typedef enum
 [; ;adc.h: 13: {
@@ -13161,9 +13165,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 262: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;system.h: 14: void SYSTEM_Initialize(void);
-[; ;system.h: 16: void OSCILLATOR_Initialize(void);
-[; ;lcd.h: 19: void gotoXY(int8_t x, int8_t y);
+[; ;system.h: 17: void SYSTEM_Initialize(void);
+[; ;system.h: 19: void OSCILLATOR_Initialize(void);
+[; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
 [; ;lcd.h: 29: void LCDWriteString(const char *characters);
@@ -13686,23 +13690,23 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 119: 0xFF, 0xFF, 0xFF,
 [; ;lcd.c: 120: };
 "124
-[v _gotoXY `(v ~T0 @X0 1 ef2`c`c ]
+[v _gotoXY `(v ~T0 @X0 1 ef2`uc`uc ]
 "125
 {
-[; ;lcd.c: 124: void gotoXY(int8_t x, int8_t y)
+[; ;lcd.c: 124: void gotoXY(uint8_t x, uint8_t y)
 [; ;lcd.c: 125: {
 [e :U _gotoXY ]
 "124
-[v _x `c ~T0 @X0 1 r1 ]
-[v _y `c ~T0 @X0 1 r2 ]
+[v _x `uc ~T0 @X0 1 r1 ]
+[v _y `uc ~T0 @X0 1 r2 ]
 "125
 [f ]
-[; ;lcd.c: 126: LCDWrite(0, 0x80 | x);
+[; ;lcd.c: 126: LCDWrite(0,(uint8_t)(0x80 | x));
 "126
 [e ( _LCDWrite (2 , -> -> 0 `i `uc -> | -> 128 `i -> _x `i `uc ]
-[; ;lcd.c: 127: LCDWrite(0, (int8_t)0x40 | y);
+[; ;lcd.c: 127: LCDWrite(0,(uint8_t)(0x40 | y));
 "127
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> | -> -> -> 64 `i `c `i -> _y `i `uc ]
+[e ( _LCDWrite (2 , -> -> 0 `i `uc -> | -> 64 `i -> _y `i `uc ]
 [; ;lcd.c: 128: }
 "128
 [e :UE 1563 ]
@@ -13725,7 +13729,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 133: uint16_t index;
 [; ;lcd.c: 134: gotoXY(0,startPosition);
 "134
-[e ( _gotoXY (2 , -> -> 0 `i `c -> _startPosition `c ]
+[e ( _gotoXY (2 , -> -> 0 `i `uc _startPosition ]
 [; ;lcd.c: 135: for (index = 0 ; index < len ; index++)
 "135
 {
@@ -13837,7 +13841,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [; ;lcd.c: 187: gotoXY(0, 0);
 "187
-[e ( _gotoXY (2 , -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
 [; ;lcd.c: 188: }
 "188
 [e :UE 1574 ]
@@ -13856,8 +13860,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `uc ~T0 @X0 1 r4 ]
 "191
 [f ]
-[v F14367 `uc ~T0 @X0 -> 5 `i s ]
-[i F14367
+[v F14376 `uc ~T0 @X0 -> 5 `i s ]
+[i F14376
 :U ..
 "192
 -> -> 0 `i `uc
@@ -13869,7 +13873,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _str `uc ~T0 @X0 -> 5 `i a ]
 [; ;lcd.c: 192: uint8_t str[5]={0,0,0,0,0};
-[e = _str F14367 ]
+[e = _str F14376 ]
 "193
 [v _i `uc ~T0 @X0 1 a ]
 [; ;lcd.c: 193: uint8_t i=4,j=0;
@@ -13987,7 +13991,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 1590 ]
 [; ;lcd.c: 228: {
 {
-[; ;lcd.c: 229: LCDWriteCharacter(48+str[i]);
+[; ;lcd.c: 229: LCDWriteCharacter((uint8_t)(48+str[i]));
 "229
 [e ( _LCDWriteCharacter (1 -> + -> 48 `i -> *U + &U _str * -> _i `ux -> -> # *U &U _str `ui `ux `i `uc ]
 "230
@@ -14009,7 +14013,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 234: LCDWriteCharacter(46);
 "234
 [e ( _LCDWriteCharacter (1 -> -> 46 `i `uc ]
-[; ;lcd.c: 235: LCDWriteCharacter (48+str[4]);
+[; ;lcd.c: 235: LCDWriteCharacter ((uint8_t)(48+str[4]));
 "235
 [e ( _LCDWriteCharacter (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
 "236
@@ -14025,10 +14029,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 240: LCDWriteCharacter(46);
 "240
 [e ( _LCDWriteCharacter (1 -> -> 46 `i `uc ]
-[; ;lcd.c: 241: LCDWriteCharacter(48+str[3]);
+[; ;lcd.c: 241: LCDWriteCharacter((uint8_t)(48+str[3]));
 "241
 [e ( _LCDWriteCharacter (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 3 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
-[; ;lcd.c: 242: LCDWriteCharacter(48+str[4]);
+[; ;lcd.c: 242: LCDWriteCharacter((uint8_t)(48+str[4]));
 "242
 [e ( _LCDWriteCharacter (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
 "243
@@ -14207,13 +14211,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U _LCDDrawBox ]
 [f ]
 "319
-[v _j `i ~T0 @X0 1 a ]
-[; ;lcd.c: 319: int j;
+[v _j `uc ~T0 @X0 1 a ]
+[; ;lcd.c: 319: uint8_t j;
 [; ;lcd.c: 321: for(j = 0; j < 84; j++)
 "321
 {
-[e = _j -> 0 `i ]
-[e $ < _j -> 84 `i 1605  ]
+[e = _j -> -> 0 `i `uc ]
+[e $ < -> _j `i -> 84 `i 1605  ]
 [e $U 1606  ]
 "322
 [e :U 1605 ]
@@ -14221,15 +14225,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;lcd.c: 323: gotoXY(j, 0);
 "323
-[e ( _gotoXY (2 , -> _j `c -> -> 0 `i `c ]
+[e ( _gotoXY (2 , _j -> -> 0 `i `uc ]
 [; ;lcd.c: 324: LCDWrite(1,0x01);
 "324
 [e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
 "325
 }
 "321
-[e ++ _j -> 1 `i ]
-[e $ < _j -> 84 `i 1605  ]
+[e ++ _j -> -> 1 `i `uc ]
+[e $ < -> _j `i -> 84 `i 1605  ]
 [e :U 1606 ]
 "325
 }
@@ -14237,8 +14241,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 327: for(j = 0; j < 84; j++)
 "327
 {
-[e = _j -> 0 `i ]
-[e $ < _j -> 84 `i 1608  ]
+[e = _j -> -> 0 `i `uc ]
+[e $ < -> _j `i -> 84 `i 1608  ]
 [e $U 1609  ]
 "328
 [e :U 1608 ]
@@ -14246,15 +14250,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;lcd.c: 329: gotoXY(j, 5);
 "329
-[e ( _gotoXY (2 , -> _j `c -> -> 5 `i `c ]
+[e ( _gotoXY (2 , _j -> -> 5 `i `uc ]
 [; ;lcd.c: 330: LCDWrite(1,0x80);
 "330
 [e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 128 `i `uc ]
 "331
 }
 "327
-[e ++ _j -> 1 `i ]
-[e $ < _j -> 84 `i 1608  ]
+[e ++ _j -> -> 1 `i `uc ]
+[e $ < -> _j `i -> 84 `i 1608  ]
 [e :U 1609 ]
 "331
 }
@@ -14262,8 +14266,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 333: for(j = 0; j < 6; j++)
 "333
 {
-[e = _j -> 0 `i ]
-[e $ < _j -> 6 `i 1611  ]
+[e = _j -> -> 0 `i `uc ]
+[e $ < -> _j `i -> 6 `i 1611  ]
 [e $U 1612  ]
 "334
 [e :U 1611 ]
@@ -14271,15 +14275,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;lcd.c: 335: gotoXY(83, j);
 "335
-[e ( _gotoXY (2 , -> -> 83 `i `c -> _j `c ]
+[e ( _gotoXY (2 , -> -> 83 `i `uc _j ]
 [; ;lcd.c: 336: LCDWrite(1,0xff);
 "336
 [e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 255 `i `uc ]
 "337
 }
 "333
-[e ++ _j -> 1 `i ]
-[e $ < _j -> 6 `i 1611  ]
+[e ++ _j -> -> 1 `i `uc ]
+[e $ < -> _j `i -> 6 `i 1611  ]
 [e :U 1612 ]
 "337
 }
@@ -14287,8 +14291,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 339: for(j = 0; j < 6; j++)
 "339
 {
-[e = _j -> 0 `i ]
-[e $ < _j -> 6 `i 1614  ]
+[e = _j -> -> 0 `i `uc ]
+[e $ < -> _j `i -> 6 `i 1614  ]
 [e $U 1615  ]
 "340
 [e :U 1614 ]
@@ -14296,15 +14300,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;lcd.c: 341: gotoXY(0, j);
 "341
-[e ( _gotoXY (2 , -> -> 0 `i `c -> _j `c ]
+[e ( _gotoXY (2 , -> -> 0 `i `uc _j ]
 [; ;lcd.c: 342: LCDWrite(1,0xff);
 "342
 [e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 255 `i `uc ]
 "343
 }
 "339
-[e ++ _j -> 1 `i ]
-[e $ < _j -> 6 `i 1614  ]
+[e ++ _j -> -> 1 `i `uc ]
+[e $ < -> _j `i -> 6 `i 1614  ]
 [e :U 1615 ]
 "343
 }

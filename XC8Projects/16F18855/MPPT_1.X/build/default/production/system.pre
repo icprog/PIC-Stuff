@@ -17461,8 +17461,21 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
 
+# 16 "pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+
+# 7 "pwm.h"
+void PWM_Initialize(void);
+
+
+
+void PWM7_LoadDutyValue(uint16_t dutyCycle);
+
+# 262 "tmr2.h"
+void TMR2_Initialize(void);
+
 # 19 "lcd.h"
-void gotoXY(int8_t x, int8_t y);
+void gotoXY(uint8_t x, uint8_t y);
 
 
 void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
@@ -17569,7 +17582,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 306
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 14 "system.h"
+# 17 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -17580,6 +17593,9 @@ void SYSTEM_Initialize(void)
 
 # 56
 OSCILLATOR_Initialize();
+PIN_MANAGER_Initialize();
+TMR2_Initialize();
+PWM_Initialize();
 FVRCON = 0x00;
 ADC_Initialize();
 LCDInit();

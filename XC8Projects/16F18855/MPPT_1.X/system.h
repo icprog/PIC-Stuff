@@ -4,6 +4,9 @@
 #include <xc.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include "pin_manager.h"
+#include "pwm.h"
+#include "tmr2.h"
 #include "lcd.h"
 #include "adc.h"
 

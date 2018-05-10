@@ -1,52 +1,41 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"775 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
-[v _LATA `Vuc ~T0 @X0 0 e@22 ]
-"837
-[v _LATB `Vuc ~T0 @X0 0 e@23 ]
-"899
-[v _LATC `Vuc ~T0 @X0 0 e@24 ]
-"33053
-[v _WPUA `Vuc ~T0 @X0 0 e@3897 ]
-"33673
-[v _WPUB `Vuc ~T0 @X0 0 e@3908 ]
-"34293
-[v _WPUC `Vuc ~T0 @X0 0 e@3919 ]
-"34851
-[v _WPUE `Vuc ~T0 @X0 0 e@3941 ]
-"589
-[v _TRISA `Vuc ~T0 @X0 0 e@17 ]
-"651
-[v _TRISB `Vuc ~T0 @X0 0 e@18 ]
-"713
-[v _TRISC `Vuc ~T0 @X0 0 e@19 ]
-"32991
-[v _ANSELA `Vuc ~T0 @X0 0 e@3896 ]
-"33611
-[v _ANSELB `Vuc ~T0 @X0 0 e@3907 ]
-"34231
-[v _ANSELC `Vuc ~T0 @X0 0 e@3918 ]
-"21557
-[s S975 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S975 . INTE . IOCIE TMR0IE ]
-"21556
-[u S974 `S975 1 ]
-[n S974 . . ]
-"21564
-[v _PIE0bits `VS974 ~T0 @X0 0 e@1814 ]
-"36757
-[v _GIE `Vb ~T0 @X0 0 e@95 ]
-"29763
-[v _PPSLOCK `Vuc ~T0 @X0 0 e@3727 ]
-"29769
-[s S1306 :1 `uc 1 ]
-[n S1306 . PPSLOCKED ]
-"29768
-[u S1305 `S1306 1 ]
-[n S1305 . . ]
-"29773
-[v _PPSLOCKbits `VS1305 ~T0 @X0 0 e@3727 ]
-"32791
-[v _RC4PPS `Vuc ~T0 @X0 0 e@3876 ]
+"9157 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
+[v _T2CON `Vuc ~T0 @X0 0 e@654 ]
+"9431
+[v _T2CLKCON `Vuc ~T0 @X0 0 e@656 ]
+"9303
+[v _T2HLT `Vuc ~T0 @X0 0 e@655 ]
+"9589
+[v _T2RST `Vuc ~T0 @X0 0 e@657 ]
+"9119
+[v _T2PR `Vuc ~T0 @X0 0 e@653 ]
+"9081
+[v _T2TMR `Vuc ~T0 @X0 0 e@652 ]
+"21290
+[s S964 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S964 . TMR1IF TMR2IF TMR3IF TMR4IF TMR5IF TMR6IF ]
+"21289
+[u S963 `S964 1 ]
+[n S963 . . ]
+"21299
+[v _PIR4bits `VS963 ~T0 @X0 0 e@1808 ]
+"9163
+[s S410 :4 `uc 1 :3 `uc 1 :1 `uc 1 ]
+[n S410 . OUTPS CKPS ON ]
+"9168
+[s S411 :4 `uc 1 :3 `uc 1 :1 `uc 1 ]
+[n S411 . T2OUTPS T2CKPS T2ON ]
+"9173
+[s S412 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S412 . T2OUTPS0 T2OUTPS1 T2OUTPS2 T2OUTPS3 T2CKPS0 T2CKPS1 T2CKPS2 ]
+"9182
+[s S413 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S413 . OUTPS0 OUTPS1 OUTPS2 OUTPS3 CKPS0 CKPS1 CKPS2 TMR2ON ]
+"9162
+[u S409 `S410 1 `S411 1 `S412 1 `S413 1 ]
+[n S409 . . . . . ]
+"9193
+[v _T2CONbits `VS409 ~T0 @X0 0 e@654 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -13158,7 +13147,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
-[; ;tmr2.h: 262: void TMR2_Initialize(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13206,88 +13194,40 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;system.h: 17: void SYSTEM_Initialize(void);
 [; ;system.h: 19: void OSCILLATOR_Initialize(void);
-"5 pin_manager.c
-[v _PIN_MANAGER_Initialize `(v ~T0 @X0 1 ef ]
-"6
+[; ;tmr2.h: 262: void TMR2_Initialize(void);
+"3 tmr2.c
+[v _TMR2_Initialize `(v ~T0 @X0 1 ef ]
+"4
 {
-[; ;pin_manager.c: 5: void PIN_MANAGER_Initialize(void)
-[; ;pin_manager.c: 6: {
-[e :U _PIN_MANAGER_Initialize ]
+[; ;tmr2.c: 3: void TMR2_Initialize(void)
+[; ;tmr2.c: 4: {
+[e :U _TMR2_Initialize ]
 [f ]
-[; ;pin_manager.c: 7: LATA = 0x20;
+[; ;tmr2.c: 5: T2CON = 0x00;
+"5
+[e = _T2CON -> -> 0 `i `uc ]
+[; ;tmr2.c: 7: T2CLKCON = 0x01;
 "7
-[e = _LATA -> -> 32 `i `uc ]
-[; ;pin_manager.c: 8: LATB = 0x04;
-"8
-[e = _LATB -> -> 4 `i `uc ]
-[; ;pin_manager.c: 9: LATC = 0x80;
+[e = _T2CLKCON -> -> 1 `i `uc ]
+[; ;tmr2.c: 9: T2HLT = 0x00;
 "9
-[e = _LATC -> -> 128 `i `uc ]
-[; ;pin_manager.c: 11: WPUA = 0x00;
+[e = _T2HLT -> -> 0 `i `uc ]
+[; ;tmr2.c: 11: T2RST = 0x00;
 "11
-[e = _WPUA -> -> 0 `i `uc ]
-[; ;pin_manager.c: 12: WPUB = 0x00;
-"12
-[e = _WPUB -> -> 0 `i `uc ]
-[; ;pin_manager.c: 13: WPUC = 0x00;
+[e = _T2RST -> -> 0 `i `uc ]
+[; ;tmr2.c: 13: T2PR = 0xFF;
 "13
-[e = _WPUC -> -> 0 `i `uc ]
-[; ;pin_manager.c: 14: WPUE = 0x8;
-"14
-[e = _WPUE -> -> 8 `i `uc ]
-[; ;pin_manager.c: 16: TRISA = 0x00;
-"16
-[e = _TRISA -> -> 0 `i `uc ]
-[; ;pin_manager.c: 17: TRISB = 0x02;
+[e = _T2PR -> -> 255 `i `uc ]
+[; ;tmr2.c: 15: T2TMR = 0x00;
+"15
+[e = _T2TMR -> -> 0 `i `uc ]
+[; ;tmr2.c: 17: PIR4bits.TMR2IF = 0;
 "17
-[e = _TRISB -> -> 2 `i `uc ]
-[; ;pin_manager.c: 18: TRISC = 0x40;
-"18
-[e = _TRISC -> -> 64 `i `uc ]
-[; ;pin_manager.c: 20: ANSELA = 0x00;
+[e = . . _PIR4bits 0 1 -> -> 0 `i `uc ]
+[; ;tmr2.c: 19: T2CONbits.TMR2ON = 1;
+"19
+[e = . . _T2CONbits 3 7 -> -> 1 `i `uc ]
+[; ;tmr2.c: 20: }
 "20
-[e = _ANSELA -> -> 0 `i `uc ]
-[; ;pin_manager.c: 21: ANSELB = 0x02;
-"21
-[e = _ANSELB -> -> 2 `i `uc ]
-[; ;pin_manager.c: 22: ANSELC = 0x40;
-"22
-[e = _ANSELC -> -> 64 `i `uc ]
-[; ;pin_manager.c: 42: PIE0bits.IOCIE = 0;
-"42
-[e = . . _PIE0bits 0 2 -> -> 0 `i `uc ]
-"43
-[v _state `c ~T0 @X0 1 a ]
-[; ;pin_manager.c: 43: signed char state = GIE;
-[e = _state -> -> _GIE `i `c ]
-[; ;pin_manager.c: 44: GIE = 0;
-"44
-[e = _GIE -> -> 0 `i `b ]
-[; ;pin_manager.c: 45: PPSLOCK = 0x55;
-"45
-[e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 46: PPSLOCK = 0xAA;
-"46
-[e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 47: PPSLOCKbits.PPSLOCKED = 0x00;
-"47
-[e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
-[; ;pin_manager.c: 50: RC4PPS = 0x000F;
-"50
-[e = _RC4PPS -> -> 15 `i `uc ]
-[; ;pin_manager.c: 54: PPSLOCK = 0x55;
-"54
-[e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 55: PPSLOCK = 0xAA;
-"55
-[e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 56: PPSLOCKbits.PPSLOCKED = 0x01;
-"56
-[e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
-[; ;pin_manager.c: 57: GIE = state;
-"57
-[e = _GIE -> _state `b ]
-[; ;pin_manager.c: 58: }
-"58
 [e :UE 1563 ]
 }

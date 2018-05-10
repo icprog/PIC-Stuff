@@ -54,6 +54,9 @@ void SYSTEM_Initialize(void)
     ANSELC = 0x40;                  // RC6 as Analog Input(AN22))
 */
     OSCILLATOR_Initialize();
+    PIN_MANAGER_Initialize();
+    TMR2_Initialize();    
+    PWM_Initialize();
     FVRCON = 0x00;                  // Set Fixed Voltage reference
     ADC_Initialize();
     LCDInit();

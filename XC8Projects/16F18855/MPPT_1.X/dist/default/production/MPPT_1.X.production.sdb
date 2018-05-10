@@ -4,14 +4,12 @@
 [d chip 16F18855 ]
 [d frameptr 6 ]
 "17 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\adc.c
-[e E14288 . `uc
+[e E14296 . `uc
 channel_VSS 60
 channel_Temp 61
 channel_DAC1 62
 channel_FVR 63
 ]
-"16
-[v _ADCRead ADCRead `(ui  1 e 2 0 ]
 "60
 [v _ADC_Initialize ADC_Initialize `(v  1 e 1 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
@@ -20,8 +18,6 @@ channel_FVR 63
 [v ___ftpack __ftpack `(f  1 e 3 0 ]
 "86 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\ftadd.c
 [v ___ftadd __ftadd `(f  1 e 3 0 ]
-"6 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lldiv.c
-[v ___lldiv __lldiv `(ul  1 e 4 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
 "15 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
@@ -40,23 +36,23 @@ channel_FVR 63
 [v _LCDInit LCDInit `(v  1 e 1 0 ]
 "280
 [v _LCDWrite LCDWrite `(v  1 e 1 0 ]
-"10 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\main.c
+"22 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\main.c
 [v _main main `(v  1 e 1 0 ]
+"5 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\pin_manager.c
+[v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
+"3 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\pwm.c
+[v _PWM_Initialize PWM_Initialize `(v  1 e 1 0 ]
+"32
+[v _PWM7_LoadDutyValue PWM7_LoadDutyValue `(v  1 e 1 0 ]
 "37 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
-"65
+"68
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
-"7 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\adc.c
-[v _samples samples `[4][50]ui  1 e 400 @8800 ]
-"9
-[v _sampleIndex sampleIndex `ui  1 e 2 0 ]
-"11
-[v _totals totals `[4]ul  1 e 16 0 ]
-"13
-[v _channels channels `[4]uc  1 s 4 channels ]
+"3 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\tmr2.c
+[v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
 "589 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
-[s S163 . 1 `uc 1 TRISA0 1 0 :1:0 
+[s S158 . 1 `uc 1 TRISA0 1 0 :1:0 
 `uc 1 TRISA1 1 0 :1:1 
 `uc 1 TRISA2 1 0 :1:2 
 `uc 1 TRISA3 1 0 :1:3 
@@ -66,15 +62,15 @@ channel_FVR 63
 `uc 1 TRISA7 1 0 :1:7 
 ]
 "606
-[u S172 . 1 `S163 1 . 1 0 ]
-[v _TRISAbits TRISAbits `VES172  1 e 1 @17 ]
+[u S167 . 1 `S158 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES167  1 e 1 @17 ]
 "651
 [v _TRISB TRISB `VEuc  1 e 1 @18 ]
 "713
 [v _TRISC TRISC `VEuc  1 e 1 @19 ]
 "775
 [v _LATA LATA `VEuc  1 e 1 @22 ]
-[s S184 . 1 `uc 1 LATA0 1 0 :1:0 
+[s S179 . 1 `uc 1 LATA0 1 0 :1:0 
 `uc 1 LATA1 1 0 :1:1 
 `uc 1 LATA2 1 0 :1:2 
 `uc 1 LATA3 1 0 :1:3 
@@ -84,8 +80,8 @@ channel_FVR 63
 `uc 1 LATA7 1 0 :1:7 
 ]
 "792
-[u S193 . 1 `S184 1 . 1 0 ]
-[v _LATAbits LATAbits `VES193  1 e 1 @22 ]
+[u S188 . 1 `S179 1 . 1 0 ]
+[v _LATAbits LATAbits `VES188  1 e 1 @22 ]
 "837
 [v _LATB LATB `VEuc  1 e 1 @23 ]
 "899
@@ -96,7 +92,7 @@ channel_FVR 63
 [v _ADRESH ADRESH `VEuc  1 e 1 @141 ]
 "1857
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @147 ]
-[s S55 . 1 `uc 1 ADGO 1 0 :1:0 
+[s S67 . 1 `uc 1 ADGO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM 1 0 :2:2 
 `uc 1 ADCS 1 0 :1:4 
@@ -105,24 +101,24 @@ channel_FVR 63
 `uc 1 ADON 1 0 :1:7 
 ]
 "1893
-[s S63 . 1 `uc 1 DONE 1 0 :1:0 
+[s S75 . 1 `uc 1 DONE 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFRM 1 0 :2:2 
 ]
-[s S67 . 1 `uc 1 nDONE 1 0 :1:0 
+[s S79 . 1 `uc 1 nDONE 1 0 :1:0 
 ]
-[s S69 . 1 `uc 1 GO 1 0 :1:0 
+[s S81 . 1 `uc 1 GO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM0 1 0 :1:2 
 `uc 1 ADFM1 1 0 :1:3 
 ]
-[s S74 . 1 `uc 1 GO_nDONE 1 0 :1:0 
+[s S86 . 1 `uc 1 GO_nDONE 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFRM0 1 0 :1:2 
 `uc 1 ADFRM1 1 0 :1:3 
 ]
-[u S79 . 1 `S55 1 . 1 0 `S63 1 . 1 0 `S67 1 . 1 0 `S69 1 . 1 0 `S74 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES79  1 e 1 @147 ]
+[u S91 . 1 `S67 1 . 1 0 `S75 1 . 1 0 `S79 1 . 1 0 `S81 1 . 1 0 `S86 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES91  1 e 1 @147 ]
 "1968
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @148 ]
 "2007
@@ -159,14 +155,84 @@ channel_FVR 63
 [v _ADSTPTL ADSTPTL `VEuc  1 e 1 @274 ]
 "3137
 [v _ADSTPTH ADSTPTH `VEuc  1 e 1 @275 ]
-[s S269 . 1 `uc 1 INTE 1 0 :1:0 
+[s S318 . 1 `uc 1 C5TSEL 1 0 :2:0 
+`uc 1 P6TSEL 1 0 :2:2 
+`uc 1 P7TSEL 1 0 :2:4 
+]
+"9031
+[s S322 . 1 `uc 1 C5TSEL0 1 0 :1:0 
+`uc 1 C5TSEL1 1 0 :1:1 
+`uc 1 P6TSEL0 1 0 :1:2 
+`uc 1 P6TSEL1 1 0 :1:3 
+`uc 1 P7TSEL0 1 0 :1:4 
+`uc 1 P7TSEL1 1 0 :1:5 
+]
+[u S329 . 1 `S318 1 . 1 0 `S322 1 . 1 0 ]
+[v _CCPTMRS1bits CCPTMRS1bits `VES329  1 e 1 @543 ]
+"9081
+[v _T2TMR T2TMR `VEuc  1 e 1 @652 ]
+"9119
+[v _T2PR T2PR `VEuc  1 e 1 @653 ]
+"9157
+[v _T2CON T2CON `VEuc  1 e 1 @654 ]
+[s S373 . 1 `uc 1 OUTPS 1 0 :4:0 
+`uc 1 CKPS 1 0 :3:4 
+`uc 1 ON 1 0 :1:7 
+]
+"9193
+[s S377 . 1 `uc 1 T2OUTPS 1 0 :4:0 
+`uc 1 T2CKPS 1 0 :3:4 
+`uc 1 T2ON 1 0 :1:7 
+]
+[s S381 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
+`uc 1 T2OUTPS1 1 0 :1:1 
+`uc 1 T2OUTPS2 1 0 :1:2 
+`uc 1 T2OUTPS3 1 0 :1:3 
+`uc 1 T2CKPS0 1 0 :1:4 
+`uc 1 T2CKPS1 1 0 :1:5 
+`uc 1 T2CKPS2 1 0 :1:6 
+]
+[s S389 . 1 `uc 1 OUTPS0 1 0 :1:0 
+`uc 1 OUTPS1 1 0 :1:1 
+`uc 1 OUTPS2 1 0 :1:2 
+`uc 1 OUTPS3 1 0 :1:3 
+`uc 1 CKPS0 1 0 :1:4 
+`uc 1 CKPS1 1 0 :1:5 
+`uc 1 CKPS2 1 0 :1:6 
+`uc 1 TMR2ON 1 0 :1:7 
+]
+[u S398 . 1 `S373 1 . 1 0 `S377 1 . 1 0 `S381 1 . 1 0 `S389 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES398  1 e 1 @654 ]
+"9303
+[v _T2HLT T2HLT `VEuc  1 e 1 @655 ]
+"9431
+[v _T2CLKCON T2CLKCON `VEuc  1 e 1 @656 ]
+"9589
+[v _T2RST T2RST `VEuc  1 e 1 @657 ]
+"12473
+[v _PWM7DCL PWM7DCL `VEuc  1 e 1 @912 ]
+"12539
+[v _PWM7DCH PWM7DCH `VEuc  1 e 1 @913 ]
+"12709
+[v _PWM7CON PWM7CON `VEuc  1 e 1 @914 ]
+[s S356 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 TMR3IF 1 0 :1:2 
+`uc 1 TMR4IF 1 0 :1:3 
+`uc 1 TMR5IF 1 0 :1:4 
+`uc 1 TMR6IF 1 0 :1:5 
+]
+"21299
+[u S363 . 1 `S356 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES363  1 e 1 @1808 ]
+[s S264 . 1 `uc 1 INTE 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIE 1 0 :1:4 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
 "21564
-[u S274 . 1 `S269 1 . 1 0 ]
-[v _PIE0bits PIE0bits `VES274  1 e 1 @1814 ]
+[u S269 . 1 `S264 1 . 1 0 ]
+[v _PIE0bits PIE0bits `VES269  1 e 1 @1814 ]
 "23324
 [v _OSCCON1 OSCCON1 `VEuc  1 e 1 @2189 ]
 "23464
@@ -181,13 +247,13 @@ channel_FVR 63
 [v _FVRCON FVRCON `VEuc  1 e 1 @2316 ]
 "29763
 [v _PPSLOCK PPSLOCK `VEuc  1 e 1 @3727 ]
-[s S284 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
+[s S279 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
 ]
 "29773
-[u S286 . 1 `S284 1 . 1 0 ]
-[v _PPSLOCKbits PPSLOCKbits `VES286  1 e 1 @3727 ]
-"31841
-[v _RA1PPS RA1PPS `VEuc  1 e 1 @3857 ]
+[u S281 . 1 `S279 1 . 1 0 ]
+[v _PPSLOCKbits PPSLOCKbits `VES281  1 e 1 @3727 ]
+"32791
+[v _RC4PPS RC4PPS `VEuc  1 e 1 @3876 ]
 "32991
 [v _ANSELA ANSELA `VEuc  1 e 1 @3896 ]
 "33053
@@ -207,20 +273,63 @@ channel_FVR 63
 [v _GIE GIE `VEb  1 e 0 @95 ]
 "17 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\lcd.c
 [v _fonts fonts `DC[303]uc  1 e 303 0 ]
-"10 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\main.c
+"19 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\main.c
+[v _call call `uc  1 e 1 0 ]
+"22
 [v _main main `(v  1 e 1 0 ]
 {
-"19
+"26
+[v main@Batt_V Batt_V `ui  1 a 2 12 ]
+"31
+[v main@Batt_V_Old Batt_V_Old `ui  1 a 2 10 ]
+"36
+[v main@dutyCycle7 dutyCycle7 `ui  1 a 2 8 ]
+"27
+[v main@Batt_I Batt_I `ui  1 a 2 6 ]
+"34
+[v main@powerOutOld powerOutOld `ui  1 a 2 4 ]
+"25
+[v main@PV_I PV_I `ui  1 a 2 2 ]
+"24
+[v main@PV_V PV_V `ui  1 a 2 0 ]
+"72
+} 0
+"15 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 4 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
+"53
 } 0
 "37 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
 {
-"63
+"66
 } 0
-"65
+"3 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\tmr2.c
+[v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
+{
+"20
+} 0
+"3 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\pwm.c
+[v _PWM_Initialize PWM_Initialize `(v  1 e 1 0 ]
+{
+"22
+} 0
+"5 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\pin_manager.c
+[v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
+{
+"43
+[v PIN_MANAGER_Initialize@state state `c  1 a 1 0 ]
+"58
+} 0
+"68 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\system.c
 [v _OSCILLATOR_Initialize OSCILLATOR_Initialize `(v  1 e 1 0 ]
 {
-"72
+"75
 } 0
 "247 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\lcd.c
 [v _LCDInit LCDInit `(v  1 e 1 0 ]
@@ -237,11 +346,11 @@ channel_FVR 63
 "124
 [v _gotoXY gotoXY `(v  1 e 1 0 ]
 {
-[v gotoXY@x x `c  1 a 1 wreg ]
-[v gotoXY@x x `c  1 a 1 wreg ]
-[v gotoXY@y y `c  1 p 1 5 ]
+[v gotoXY@x x `uc  1 a 1 wreg ]
+[v gotoXY@x x `uc  1 a 1 wreg ]
+[v gotoXY@y y `uc  1 p 1 5 ]
 "126
-[v gotoXY@x x `c  1 a 1 7 ]
+[v gotoXY@x x `uc  1 a 1 7 ]
 "128
 } 0
 "280
@@ -262,4 +371,10 @@ channel_FVR 63
 [v _ADC_Initialize ADC_Initialize `(v  1 e 1 0 ]
 {
 "107
+} 0
+"32 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_1.X\pwm.c
+[v _PWM7_LoadDutyValue PWM7_LoadDutyValue `(v  1 e 1 0 ]
+{
+[v PWM7_LoadDutyValue@dutyCycle7 dutyCycle7 `ui  1 p 2 0 ]
+"37
 } 0

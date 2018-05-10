@@ -1,7 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "17 adc.c
-[c E14288 60 61 62 63 .. ]
-[n E14288 . channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
+[c E14296 60 61 62 63 .. ]
+[n E14296 . channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
 "2568 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
 [v _ADPCH `Vuc ~T0 @X0 0 e@158 ]
 "1863
@@ -13172,7 +13172,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
-[; ;lcd.h: 19: void gotoXY(int8_t x, int8_t y);
+[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
+[; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
 [; ;lcd.h: 29: void LCDWriteString(const char *characters);
@@ -13181,8 +13185,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 38: void LCDInit(void);
 [; ;lcd.h: 41: void LCDWrite(uint8_t data_or_command, uint8_t data);
 [; ;lcd.h: 44: void LCDDrawBox(void);
-[; ;system.h: 14: void SYSTEM_Initialize(void);
-[; ;system.h: 16: void OSCILLATOR_Initialize(void);
+[; ;system.h: 17: void SYSTEM_Initialize(void);
+[; ;system.h: 19: void OSCILLATOR_Initialize(void);
 [; ;adc.h: 9: typedef uint16_t adc_result_t;
 [; ;adc.h: 12: typedef enum
 [; ;adc.h: 13: {
@@ -13219,52 +13223,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 262: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
-[v F14350 `ui ~T0 @X0 -> 50 `i t ]
-"7 adc.c
-[v _samples `F14350 ~T0 @X0 -> 4 `i e ]
-[i _samples
-:U ..
-:U ..
--> -> 0 `i `ui
-..
-:U ..
--> -> 0 `i `ui
-..
-..
-]
-[; ;adc.c: 7: uint16_t samples[4][50] = {{0},{0}};
-"9
-[v _sampleIndex `ui ~T0 @X0 1 e ]
-[i _sampleIndex
--> -> 0 `i `ui
-]
-[; ;adc.c: 9: uint16_t sampleIndex = {0};
-"11
-[v _totals `ul ~T0 @X0 -> 4 `i e ]
-[i _totals
-:U ..
--> -> -> 0 `i `l `ul
-..
-]
-[; ;adc.c: 11: uint32_t totals[4] = {0};
-"13
-[v _channels `uc ~T0 @X0 -> 4 `i s ]
-[i _channels
-:U ..
--> -> 1 `i `uc
--> -> 3 `i `uc
-..
-]
-[; ;adc.c: 13: static uint8_t channels[4] = {1,3};
-"16
-[v _ADCRead `(ui ~T0 @X0 1 ef1`E14288 ]
+"16 adc.c
+[v _ADCRead `(ui ~T0 @X0 1 ef1`E14296 ]
 "17
 {
 [; ;adc.c: 16: adc_result_t ADCRead(adc_channel_t channel)
 [; ;adc.c: 17: {
 [e :U _ADCRead ]
 "16
-[v _channel `E14288 ~T0 @X0 1 r1 ]
+[v _channel `E14296 ~T0 @X0 1 r1 ]
 "17
 [f ]
 [; ;adc.c: 18: ADPCH = channel;
@@ -13300,65 +13267,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.c: 31: }
 "31
 [e :UE 1563 ]
-}
-"34
-[v _readAnalog `(ui ~T0 @X0 1 ef1`uc ]
-"35
-{
-[; ;adc.c: 34: uint16_t readAnalog(uint8_t channel)
-[; ;adc.c: 35: {
-[e :U _readAnalog ]
-"34
-[v _channel `uc ~T0 @X0 1 r1 ]
-"35
-[f ]
-"36
-[v _value `ui ~T0 @X0 1 a ]
-"38
-[v _analog_channel `uc ~T0 @X0 1 a ]
-[; ;adc.c: 36: uint16_t value;
-[; ;adc.c: 38: uint8_t analog_channel = channels[channel];
-[e = _analog_channel *U + &U _channels * -> _channel `ux -> -> # *U &U _channels `ui `ux ]
-[; ;adc.c: 40: value = ADCRead(analog_channel);
-"40
-[e = _value ( _ADCRead (1 -> _analog_channel `E14288 ]
-[; ;adc.c: 42: totals[channel] = totals[channel]-samples[channel][sampleIndex];
-"42
-[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux - *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux `ui `ux `ul ]
-[; ;adc.c: 44: samples[channel][sampleIndex] = value;
-"44
-[e = *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux `ui `ux _value ]
-[; ;adc.c: 46: totals[channel] = totals[channel]+samples[channel][sampleIndex];
-"46
-[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux + *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux `ui `ux `ul ]
-[; ;adc.c: 48: if(channel>=(4-1))
-"48
-[e $ ! >= -> _channel `i - -> 4 `i -> 1 `i 1568  ]
-[; ;adc.c: 49: {
-"49
-{
-[; ;adc.c: 50: sampleIndex+=1;
-"50
-[e =+ _sampleIndex -> -> 1 `i `ui ]
-[; ;adc.c: 51: if(sampleIndex >= 50)sampleIndex = 0;
-"51
-[e $ ! >= _sampleIndex -> -> 50 `i `ui 1569  ]
-[e = _sampleIndex -> -> 0 `i `ui ]
-[e :U 1569 ]
-"52
-}
-[e :U 1568 ]
-[; ;adc.c: 52: }
-[; ;adc.c: 54: value = totals[channel]/50;
-"54
-[e = _value -> / *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> -> -> 50 `i `l `ul `ui ]
-[; ;adc.c: 56: return value;
-"56
-[e ) _value ]
-[e $UE 1567  ]
-[; ;adc.c: 57: }
-"57
-[e :UE 1567 ]
 }
 "60
 [v _ADC_Initialize `(v ~T0 @X0 1 ef ]
@@ -13427,5 +13335,5 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _ADCON0 -> -> 132 `i `uc ]
 [; ;adc.c: 107: }
 "107
-[e :UE 1570 ]
+[e :UE 1567 ]
 }

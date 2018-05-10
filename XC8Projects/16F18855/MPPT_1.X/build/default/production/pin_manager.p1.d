@@ -1,7 +1,9 @@
  build/default/production/pin_manager.d  \
  build/default/production/pin_manager.p1:  \
  pin_manager.c  \
-lcd.h  \
+pwm.h  \
 pin_manager.h  \
+lcd.h  \
 system.h  \
-adc.h 
+adc.h  \
+tmr2.h 

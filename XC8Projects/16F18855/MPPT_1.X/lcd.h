@@ -16,7 +16,7 @@
 }
 
 // ***** goto Screen Location **************************************************
-void gotoXY(int8_t x, int8_t y);
+void gotoXY(uint8_t x, uint8_t y);
 //void gotoXY(signed char x, signed char y);
 // ***** Display BitMap Image on Display ***************************************
 void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);

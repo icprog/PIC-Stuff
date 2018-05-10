@@ -1,6 +1,12 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"16 system.h
+"19 system.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
+"16 pin_manager.h
+[v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
+"262 tmr2.h
+[v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
+"7 pwm.h
+[v _PWM_Initialize `(v ~T0 @X0 0 ef ]
 "24044 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
 [v _FVRCON `Vuc ~T0 @X0 0 e@2316 ]
 "23 adc.h
@@ -13175,7 +13181,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
-[; ;lcd.h: 19: void gotoXY(int8_t x, int8_t y);
+[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
+[; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
 [; ;lcd.h: 29: void LCDWriteString(const char *characters);
@@ -13220,8 +13230,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 262: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;system.h: 14: void SYSTEM_Initialize(void);
-[; ;system.h: 16: void OSCILLATOR_Initialize(void);
+[; ;system.h: 17: void SYSTEM_Initialize(void);
+[; ;system.h: 19: void OSCILLATOR_Initialize(void);
 "37 system.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
 "38
@@ -13233,52 +13243,61 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 56: OSCILLATOR_Initialize();
 "56
 [e ( _OSCILLATOR_Initialize ..  ]
-[; ;system.c: 57: FVRCON = 0x00;
+[; ;system.c: 57: PIN_MANAGER_Initialize();
 "57
-[e = _FVRCON -> -> 0 `i `uc ]
-[; ;system.c: 58: ADC_Initialize();
+[e ( _PIN_MANAGER_Initialize ..  ]
+[; ;system.c: 58: TMR2_Initialize();
 "58
-[e ( _ADC_Initialize ..  ]
-[; ;system.c: 59: LCDInit();
+[e ( _TMR2_Initialize ..  ]
+[; ;system.c: 59: PWM_Initialize();
 "59
-[e ( _LCDInit ..  ]
-[; ;system.c: 60: _delay((unsigned long)((200)*(1000000/4000.0)));
+[e ( _PWM_Initialize ..  ]
+[; ;system.c: 60: FVRCON = 0x00;
 "60
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;system.c: 61: LCDClear();
+[e = _FVRCON -> -> 0 `i `uc ]
+[; ;system.c: 61: ADC_Initialize();
 "61
-[e ( _LCDClear ..  ]
-[; ;system.c: 62: _delay((unsigned long)((100)*(1000000/4000.0)));
+[e ( _ADC_Initialize ..  ]
+[; ;system.c: 62: LCDInit();
 "62
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;system.c: 63: }
+[e ( _LCDInit ..  ]
+[; ;system.c: 63: _delay((unsigned long)((200)*(1000000/4000.0)));
 "63
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;system.c: 64: LCDClear();
+"64
+[e ( _LCDClear ..  ]
+[; ;system.c: 65: _delay((unsigned long)((100)*(1000000/4000.0)));
+"65
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;system.c: 66: }
+"66
 [e :UE 1563 ]
 }
-"65
+"68
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
-"66
+"69
 {
-[; ;system.c: 65: void OSCILLATOR_Initialize(void)
-[; ;system.c: 66: {
+[; ;system.c: 68: void OSCILLATOR_Initialize(void)
+[; ;system.c: 69: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;system.c: 67: OSCCON1 = 0x60;
-"67
-[e = _OSCCON1 -> -> 96 `i `uc ]
-[; ;system.c: 68: OSCCON3 = 0x00;
-"68
-[e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 69: OSCEN = 0x00;
-"69
-[e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 70: OSCFRQ = 0x00;
+[; ;system.c: 70: OSCCON1 = 0x60;
 "70
-[e = _OSCFRQ -> -> 0 `i `uc ]
-[; ;system.c: 71: OSCTUNE = 0x00;
+[e = _OSCCON1 -> -> 96 `i `uc ]
+[; ;system.c: 71: OSCCON3 = 0x00;
 "71
-[e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 72: }
+[e = _OSCCON3 -> -> 0 `i `uc ]
+[; ;system.c: 72: OSCEN = 0x00;
 "72
+[e = _OSCEN -> -> 0 `i `uc ]
+[; ;system.c: 73: OSCFRQ = 0x00;
+"73
+[e = _OSCFRQ -> -> 0 `i `uc ]
+[; ;system.c: 74: OSCTUNE = 0x00;
+"74
+[e = _OSCTUNE -> -> 0 `i `uc ]
+[; ;system.c: 75: }
+"75
 [e :UE 1564 ]
 }

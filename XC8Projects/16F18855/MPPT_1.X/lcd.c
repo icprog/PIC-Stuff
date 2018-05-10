@@ -121,10 +121,10 @@ const char fonts [] = {
 // </editor-fold>
 
 
-void gotoXY(int8_t x, int8_t y)
+void gotoXY(uint8_t x, uint8_t y)
 {
-    LCDWrite(0, 0x80 | x);              // goto Column position "x".
-    LCDWrite(0, (int8_t)0x40 | y);              // goto Row position "y".
+    LCDWrite(0,(uint8_t)(0x80 | x));            // goto Column position "x".
+    LCDWrite(0,(uint8_t)(0x40 | y));            // goto Row position "y".
 }
 
 
@@ -226,20 +226,20 @@ void LCDWriteInt(int16_t value,int8_t fieldLength, uint8_t numPlaces, uint8_t si
 
 	for(i=j;i<(5-numPlaces);i++)
 	{
-        LCDWriteCharacter(48+str[i]);           // Write out Integer value to the screen as characters
+        LCDWriteCharacter((uint8_t)(48+str[i]));           // Write out Integer value to the screen as characters
 	}
 
     if(numPlaces == 1)
     {
         LCDWriteCharacter(46);                  // A decimal period!
-        LCDWriteCharacter (48+str[4]);
+        LCDWriteCharacter ((uint8_t)(48+str[4]));
     }
 
     if(numPlaces == 2)
     {
         LCDWriteCharacter(46);                  // A decimal period!
-        LCDWriteCharacter(48+str[3]);
-        LCDWriteCharacter(48+str[4]);
+        LCDWriteCharacter((uint8_t)(48+str[3]));
+        LCDWriteCharacter((uint8_t)(48+str[4]));
     }
 }
 
@@ -316,7 +316,7 @@ void LCDWrite(uint8_t data_or_command, uint8_t data)
 
 void LCDDrawBox(void)
 {
-    int j;
+    uint8_t j;
     
     for(j = 0; j < 84; j++)                     // top
     {
