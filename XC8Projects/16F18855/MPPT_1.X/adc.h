@@ -2,8 +2,8 @@
 #define ADC_H
 
 #include "system.h"
-//#include <stdint.h>
-//#include <stdbool.h>
+//#include <stdint.h>                           // Included in System.h
+//#include <stdbool.h>                          // Included in System.h
 
 
 typedef uint16_t adc_result_t;

@@ -17555,7 +17555,16 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 306
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 16 "adc.c"
+# 7 "adc.c"
+uint16_t samples[4][50] = {{0},{0},{0},{0}};
+
+uint16_t sampleIndex = {0};
+
+uint32_t totals[4] = {0};
+
+static uint8_t channels[4] = {16,17,18,19};
+
+
 adc_result_t ADCRead(adc_channel_t channel)
 {
 ADPCH = channel;
@@ -17573,7 +17582,33 @@ while(ADCON0bits.ADGO)
 return (uint16_t)((ADRESH<<8)+ADRESL);
 }
 
-# 60
+
+uint16_t readAnalog(uint8_t channel)
+{
+uint16_t value;
+
+uint8_t analog_channel = channels[channel];
+
+value = ADCRead(analog_channel);
+
+totals[channel] = totals[channel]-samples[channel][sampleIndex];
+
+samples[channel][sampleIndex] = value;
+
+totals[channel] = totals[channel]+samples[channel][sampleIndex];
+
+if(channel>=(4-1))
+{
+sampleIndex+=1;
+if(sampleIndex >= 50)sampleIndex = 0;
+}
+
+value = totals[channel]/50;
+
+return value;
+}
+
+
 void ADC_Initialize(void)
 {
 ADCON1 = 0x00;

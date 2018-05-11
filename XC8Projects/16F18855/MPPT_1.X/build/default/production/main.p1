@@ -2,6 +2,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
 "17 system.h
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
+"19 lcd.h
+[v _gotoXY `(v ~T0 @X0 0 ef2`uc`uc ]
+"36
+[v _LCDWriteInt `(v ~T0 @X0 0 ef4`i`c`uc`uc ]
+"21 adc.h
+[v _readAnalog `(ui ~T0 @X0 0 ef1`uc ]
 "11 pwm.h
 [v _PWM7_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
@@ -13189,547 +13195,241 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;math.h: 53: extern double fmod(double, double);
 [; ;math.h: 54: extern double trunc(double);
 [; ;math.h: 55: extern double round(double);
-"1 aloha.h
-[v _aloha `Cuc ~T0 @X0 -> 0 `x e ]
-[i _aloha
-:U ..
-"2
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-"3
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 128 `i `uc
--> -> 192 `i `uc
--> -> 224 `i `uc
--> -> 240 `i `uc
--> -> 248 `i `uc
--> -> 252 `i `uc
--> -> 252 `i `uc
--> -> 254 `i `uc
--> -> 254 `i `uc
--> -> 14 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 224 `i `uc
-"4
--> -> 240 `i `uc
--> -> 248 `i `uc
--> -> 248 `i `uc
--> -> 248 `i `uc
--> -> 24 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 128 `i `uc
--> -> 0 `i `uc
--> -> 128 `i `uc
--> -> 128 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-"5
--> -> 0 `i `uc
--> -> 192 `i `uc
--> -> 248 `i `uc
--> -> 254 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 63 `i `uc
--> -> 131 `i `uc
--> -> 192 `i `uc
--> -> 224 `i `uc
--> -> 240 `i `uc
--> -> 240 `i `uc
--> -> 240 `i `uc
--> -> 240 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-"6
--> -> 128 `i `uc
--> -> 192 `i `uc
--> -> 240 `i `uc
--> -> 240 `i `uc
--> -> 248 `i `uc
--> -> 252 `i `uc
--> -> 124 `i `uc
--> -> 60 `i `uc
--> -> 28 `i `uc
--> -> 216 `i `uc
--> -> 224 `i `uc
--> -> 240 `i `uc
--> -> 240 `i `uc
--> -> 32 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-"7
--> -> 0 `i `uc
--> -> 192 `i `uc
--> -> 128 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-"8
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 192 `i `uc
--> -> 240 `i `uc
--> -> 60 `i `uc
--> -> 30 `i `uc
--> -> 7 `i `uc
--> -> 193 `i `uc
--> -> 254 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 31 `i `uc
--> -> 0 `i `uc
-"9
--> -> 128 `i `uc
--> -> 248 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 127 `i `uc
--> -> 7 `i `uc
--> -> 224 `i `uc
--> -> 248 `i `uc
--> -> 254 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 127 `i `uc
--> -> 199 `i `uc
--> -> 193 `i `uc
--> -> 193 `i `uc
-"10
--> -> 255 `i `uc
--> -> 254 `i `uc
--> -> 252 `i `uc
--> -> 224 `i `uc
--> -> 254 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 125 `i `uc
--> -> 14 `i `uc
--> -> 131 `i `uc
--> -> 249 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"11
--> -> 63 `i `uc
--> -> 3 `i `uc
--> -> 128 `i `uc
--> -> 252 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 135 `i `uc
--> -> 193 `i `uc
--> -> 112 `i `uc
--> -> 252 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"12
--> -> 3 `i `uc
--> -> 128 `i `uc
--> -> 192 `i `uc
--> -> 224 `i `uc
--> -> 60 `i `uc
--> -> 31 `i `uc
--> -> 3 `i `uc
--> -> 0 `i `uc
--> -> 128 `i `uc
--> -> 192 `i `uc
--> -> 224 `i `uc
--> -> 112 `i `uc
--> -> 112 `i `uc
--> -> 56 `i `uc
--> -> 56 `i `uc
--> -> 56 `i `uc
-"13
--> -> 56 `i `uc
--> -> 56 `i `uc
--> -> 184 `i `uc
--> -> 248 `i `uc
--> -> 120 `i `uc
--> -> 126 `i `uc
--> -> 127 `i `uc
--> -> 115 `i `uc
--> -> 112 `i `uc
--> -> 240 `i `uc
--> -> 240 `i `uc
--> -> 224 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"14
--> -> 255 `i `uc
--> -> 103 `i `uc
--> -> 112 `i `uc
--> -> 48 `i `uc
--> -> 127 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 247 `i `uc
--> -> 128 `i `uc
--> -> 192 `i `uc
--> -> 255 `i `uc
--> -> 127 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"15
--> -> 192 `i `uc
--> -> 224 `i `uc
--> -> 112 `i `uc
--> -> 61 `i `uc
--> -> 31 `i `uc
--> -> 7 `i `uc
--> -> 0 `i `uc
--> -> 31 `i `uc
--> -> 63 `i `uc
--> -> 127 `i `uc
--> -> 127 `i `uc
--> -> 127 `i `uc
--> -> 7 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 1 `i `uc
-"16
--> -> 15 `i `uc
--> -> 15 `i `uc
--> -> 15 `i `uc
--> -> 15 `i `uc
--> -> 14 `i `uc
--> -> 7 `i `uc
--> -> 3 `i `uc
--> -> 1 `i `uc
--> -> 3 `i `uc
--> -> 7 `i `uc
--> -> 7 `i `uc
--> -> 7 `i `uc
--> -> 3 `i `uc
--> -> 1 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-"17
--> -> 1 `i `uc
--> -> 3 `i `uc
--> -> 3 `i `uc
--> -> 3 `i `uc
--> -> 3 `i `uc
--> -> 1 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 31 `i `uc
--> -> 63 `i `uc
--> -> 97 `i `uc
--> -> 96 `i `uc
-"18
--> -> 96 `i `uc
--> -> 96 `i `uc
--> -> 48 `i `uc
--> -> 56 `i `uc
--> -> 28 `i `uc
--> -> 15 `i `uc
--> -> 3 `i `uc
--> -> 1 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-"19
--> -> 3 `i `uc
--> -> 7 `i `uc
--> -> 7 `i `uc
--> -> 7 `i `uc
--> -> 7 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 1 `i `uc
--> -> 3 `i `uc
--> -> 3 `i `uc
--> -> 3 `i `uc
--> -> 3 `i `uc
--> -> 1 `i `uc
--> -> 0 `i `uc
-"20
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-"21
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-"22
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-"23
--> -> 0 `i `uc
-..
-]
-[; ;aloha.h: 1: const char aloha [] = {
-[; ;aloha.h: 2: 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-[; ;aloha.h: 3: 0x00, 0x00, 0x00, 0x80, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC, 0xFC, 0xFE, 0xFE, 0x0E, 0x00, 0x00, 0xE0,
-[; ;aloha.h: 4: 0xF0, 0xF8, 0xF8, 0xF8, 0x18, 0x00, 0x00, 0x00, 0x80, 0x00, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00,
-[; ;aloha.h: 5: 0x00, 0xC0, 0xF8, 0xFE, 0xFF, 0xFF, 0x3F, 0x83, 0xC0, 0xE0, 0xF0, 0xF0, 0xF0, 0xF0, 0x00, 0x00,
-[; ;aloha.h: 6: 0x80, 0xC0, 0xF0, 0xF0, 0xF8, 0xFC, 0x7C, 0x3C, 0x1C, 0xD8, 0xE0, 0xF0, 0xF0, 0x20, 0x00, 0x00,
-[; ;aloha.h: 7: 0x00, 0xC0, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-[; ;aloha.h: 8: 0x00, 0x00, 0x00, 0xC0, 0xF0, 0x3C, 0x1E, 0x07, 0xC1, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0x1F, 0x00,
-[; ;aloha.h: 9: 0x80, 0xF8, 0xFF, 0xFF, 0xFF, 0x7F, 0x07, 0xE0, 0xF8, 0xFE, 0xFF, 0xFF, 0x7F, 0xC7, 0xC1, 0xC1,
-[; ;aloha.h: 10: 0xFF, 0xFE, 0xFC, 0xE0, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0x7D, 0x0E, 0x83, 0xF9, 0xFF, 0xFF, 0xFF,
-[; ;aloha.h: 11: 0x3F, 0x03, 0x80, 0xFC, 0xFF, 0xFF, 0xFF, 0xFF, 0x87, 0xC1, 0x70, 0xFC, 0xFF, 0xFF, 0xFF, 0xFF,
-[; ;aloha.h: 12: 0x03, 0x80, 0xC0, 0xE0, 0x3C, 0x1F, 0x03, 0x00, 0x80, 0xC0, 0xE0, 0x70, 0x70, 0x38, 0x38, 0x38,
-[; ;aloha.h: 13: 0x38, 0x38, 0xB8, 0xF8, 0x78, 0x7E, 0x7F, 0x73, 0x70, 0xF0, 0xF0, 0xE0, 0xFF, 0xFF, 0xFF, 0xFF,
-[; ;aloha.h: 14: 0xFF, 0x67, 0x70, 0x30, 0x7F, 0xFF, 0xFF, 0xFF, 0xF7, 0x80, 0xC0, 0xFF, 0x7F, 0xFF, 0xFF, 0xFF,
-[; ;aloha.h: 15: 0xC0, 0xE0, 0x70, 0x3D, 0x1F, 0x07, 0x00, 0x1F, 0x3F, 0x7F, 0x7F, 0x7F, 0x07, 0x00, 0x00, 0x01,
-[; ;aloha.h: 16: 0x0F, 0x0F, 0x0F, 0x0F, 0x0E, 0x07, 0x03, 0x01, 0x03, 0x07, 0x07, 0x07, 0x03, 0x01, 0x00, 0x00,
-[; ;aloha.h: 17: 0x01, 0x03, 0x03, 0x03, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x3F, 0x61, 0x60,
-[; ;aloha.h: 18: 0x60, 0x60, 0x30, 0x38, 0x1C, 0x0F, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-[; ;aloha.h: 19: 0x03, 0x07, 0x07, 0x07, 0x07, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x03, 0x03, 0x03, 0x01, 0x00,
-[; ;aloha.h: 20: 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-[; ;aloha.h: 21: 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-[; ;aloha.h: 22: 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-[; ;aloha.h: 23: };
-"19 main.c
+"18 main.c
 [v _call `uc ~T0 @X0 1 e ]
 [i _call
 -> -> 0 `i `uc
 ]
-[; ;main.c: 19: bool call = 0;
+[; ;main.c: 18: bool call = 0;
 [v $root$_main `(v ~T0 @X0 0 e ]
-"22
+"21
 [v _main `(v ~T0 @X0 1 ef ]
-"23
+"22
 {
-[; ;main.c: 22: void main(void)
-[; ;main.c: 23: {
+[; ;main.c: 21: void main(void)
+[; ;main.c: 22: {
 [e :U _main ]
 [f ]
-"24
+"23
 [v _PV_V `ui ~T0 @X0 1 a ]
-[; ;main.c: 24: uint16_t PV_V = 0;
+[; ;main.c: 23: uint16_t PV_V = 0;
 [e = _PV_V -> -> 0 `i `ui ]
-"25
+"24
 [v _PV_I `ui ~T0 @X0 1 a ]
-[; ;main.c: 25: uint16_t PV_I = 0;
+[; ;main.c: 24: uint16_t PV_I = 0;
 [e = _PV_I -> -> 0 `i `ui ]
-"26
+"25
 [v _Batt_V `ui ~T0 @X0 1 a ]
-[; ;main.c: 26: uint16_t Batt_V = 0;
+[; ;main.c: 25: uint16_t Batt_V = 0;
 [e = _Batt_V -> -> 0 `i `ui ]
-"27
+"26
 [v _Batt_I `ui ~T0 @X0 1 a ]
-[; ;main.c: 27: uint16_t Batt_I = 0;
+[; ;main.c: 26: uint16_t Batt_I = 0;
 [e = _Batt_I -> -> 0 `i `ui ]
-"31
+"29
 [v _Batt_V_Old `ui ~T0 @X0 1 a ]
-[; ;main.c: 31: uint16_t Batt_V_Old = 0;
+[; ;main.c: 29: uint16_t Batt_V_Old = 0;
 [e = _Batt_V_Old -> -> 0 `i `ui ]
-"34
+"31
 [v _powerOutOld `ui ~T0 @X0 1 a ]
-[; ;main.c: 34: uint16_t powerOutOld = 0;
+[; ;main.c: 31: uint16_t powerOutOld = 0;
 [e = _powerOutOld -> -> 0 `i `ui ]
-"36
+"32
 [v _dutyCycle7 `ui ~T0 @X0 1 a ]
-[; ;main.c: 36: uint16_t dutyCycle7 = 0;
+[; ;main.c: 32: uint16_t dutyCycle7 = 0;
 [e = _dutyCycle7 -> -> 0 `i `ui ]
-[; ;main.c: 38: SYSTEM_Initialize();
-"38
+"33
+[v _j `uc ~T0 @X0 1 a ]
+[; ;main.c: 33: uint8_t j = 0;
+[e = _j -> -> 0 `i `uc ]
+[v F14429 `ui ~T0 @X0 -> 4 `i s ]
+[i F14429
+:U ..
+"34
+-> -> 0 `i `ui
+-> -> 0 `i `ui
+-> -> 0 `i `ui
+-> -> 0 `i `ui
+..
+]
+[v _analogs `ui ~T0 @X0 -> 4 `i a ]
+[; ;main.c: 34: uint16_t analogs[4] = {0,0,0,0};
+[e = _analogs F14429 ]
+"35
+[v _loopCount `uc ~T0 @X0 1 a ]
+[; ;main.c: 35: uint8_t loopCount = 0;
+[e = _loopCount -> -> 0 `i `uc ]
+[; ;main.c: 37: SYSTEM_Initialize();
+"37
 [e ( _SYSTEM_Initialize ..  ]
-[; ;main.c: 40: while(1)
-"40
+[; ;main.c: 39: while(1)
+"39
 [e :U 1565 ]
-[; ;main.c: 41: {
+[; ;main.c: 40: {
+"40
+{
+[; ;main.c: 41: { gotoXY(0,0); LCDWriteInt(loopCount,4, 0, 0);};
 "41
 {
-[; ;main.c: 42: if(call)
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCDWriteInt (4 , , , -> _loopCount `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
+}
+[; ;main.c: 42: { gotoXY(0,1); LCDWriteInt(PV_V,4, 0, 0);};
 "42
-[e $ ! != -> _call `i -> -> -> 0 `i `uc `i 1567  ]
-[; ;main.c: 43: {
+{
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
+[e ( _LCDWriteInt (4 , , , -> _PV_V `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
+}
+[; ;main.c: 43: { gotoXY(0,2); LCDWriteInt(PV_I,4, 0, 0);};
 "43
 {
-[; ;main.c: 44: if(Batt_V*Batt_I>powerOutOld)
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 2 `i `uc ]
+[e ( _LCDWriteInt (4 , , , -> _PV_I `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
+}
+[; ;main.c: 44: { gotoXY(0,3); LCDWriteInt(Batt_V,4, 0, 0);};
 "44
-[e $ ! > * _Batt_V _Batt_I _powerOutOld 1568  ]
-[; ;main.c: 45: {
+{
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 3 `i `uc ]
+[e ( _LCDWriteInt (4 , , , -> _Batt_V `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
+}
+[; ;main.c: 45: { gotoXY(0,4); LCDWriteInt(Batt_I,4, 0, 0);};
 "45
 {
-[; ;main.c: 46: if(Batt_V>Batt_V_Old)
-"46
-[e $ ! > _Batt_V _Batt_V_Old 1569  ]
-[; ;main.c: 47: {
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 4 `i `uc ]
+[e ( _LCDWriteInt (4 , , , -> _Batt_I `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
+}
+[; ;main.c: 47: for(j=0;j<4;j++) analogs[j]=readAnalog(j);
 "47
 {
-[; ;main.c: 48: dutyCycle7+=1;
-"48
-[e =+ _dutyCycle7 -> -> 1 `i `ui ]
-"49
-}
-[; ;main.c: 49: }
-[e $U 1570  ]
-"50
-[e :U 1569 ]
-[; ;main.c: 50: else
-[; ;main.c: 51: {
-"51
-{
-[; ;main.c: 52: dutyCycle7-=1;
-"52
-[e =- _dutyCycle7 -> -> 1 `i `ui ]
-"53
-}
-[e :U 1570 ]
-"54
-}
-[; ;main.c: 53: }
-[; ;main.c: 54: }
-[e $U 1571  ]
-"55
+[e = _j -> -> 0 `i `uc ]
+[e $ < -> _j `i -> 4 `i 1567  ]
+[e $U 1568  ]
+[e :U 1567 ]
+[e = *U + &U _analogs * -> _j `ux -> -> # *U &U _analogs `ui `ux ( _readAnalog (1 _j ]
+[e ++ _j -> -> 1 `i `uc ]
+[e $ < -> _j `i -> 4 `i 1567  ]
 [e :U 1568 ]
-[; ;main.c: 55: else
+}
+[; ;main.c: 49: if(loopCount>10)
+"49
+[e $ ! > -> _loopCount `i -> 10 `i 1570  ]
+[; ;main.c: 50: {
+"50
+{
+[; ;main.c: 51: if(call)
+"51
+[e $ ! != -> _call `i -> -> -> 0 `i `uc `i 1571  ]
+[; ;main.c: 52: {
+"52
+{
+[; ;main.c: 53: if(Batt_V*Batt_I>powerOutOld)
+"53
+[e $ ! > * _Batt_V _Batt_I _powerOutOld 1572  ]
+[; ;main.c: 54: {
+"54
+{
+[; ;main.c: 55: if(Batt_V>Batt_V_Old)
+"55
+[e $ ! > _Batt_V _Batt_V_Old 1573  ]
 [; ;main.c: 56: {
 "56
 {
-[; ;main.c: 57: if(Batt_V>Batt_V_Old)
+[; ;main.c: 57: dutyCycle7+=1;
 "57
-[e $ ! > _Batt_V _Batt_V_Old 1572  ]
-[; ;main.c: 58: {
-"58
-{
-[; ;main.c: 59: dutyCycle7-=1;
-"59
-[e =- _dutyCycle7 -> -> 1 `i `ui ]
-"60
-}
-[; ;main.c: 60: }
-[e $U 1573  ]
-"61
-[e :U 1572 ]
-[; ;main.c: 61: else
-[; ;main.c: 62: {
-"62
-{
-[; ;main.c: 63: dutyCycle7+=1;
-"63
 [e =+ _dutyCycle7 -> -> 1 `i `ui ]
-"64
+"58
 }
+[; ;main.c: 58: }
+[e $U 1574  ]
+"59
 [e :U 1573 ]
+[; ;main.c: 59: else
+[; ;main.c: 60: {
+"60
+{
+[; ;main.c: 61: dutyCycle7-=1;
+"61
+[e =- _dutyCycle7 -> -> 1 `i `ui ]
+"62
+}
+[e :U 1574 ]
+"63
+}
+[; ;main.c: 62: }
+[; ;main.c: 63: }
+[e $U 1575  ]
+"64
+[e :U 1572 ]
+[; ;main.c: 64: else
+[; ;main.c: 65: {
 "65
+{
+[; ;main.c: 66: if(Batt_V>Batt_V_Old)
+"66
+[e $ ! > _Batt_V _Batt_V_Old 1576  ]
+[; ;main.c: 67: {
+"67
+{
+[; ;main.c: 68: dutyCycle7-=1;
+"68
+[e =- _dutyCycle7 -> -> 1 `i `ui ]
+"69
+}
+[; ;main.c: 69: }
+[e $U 1577  ]
+"70
+[e :U 1576 ]
+[; ;main.c: 70: else
+[; ;main.c: 71: {
+"71
+{
+[; ;main.c: 72: dutyCycle7+=1;
+"72
+[e =+ _dutyCycle7 -> -> 1 `i `ui ]
+"73
+}
+[e :U 1577 ]
+"74
+}
+[e :U 1575 ]
+[; ;main.c: 73: }
+[; ;main.c: 74: }
+[; ;main.c: 75: powerOutOld=Batt_V*Batt_I;
+"75
+[e = _powerOutOld * _Batt_V _Batt_I ]
+[; ;main.c: 76: Batt_V_Old=Batt_V;
+"76
+[e = _Batt_V_Old _Batt_V ]
+[; ;main.c: 77: PWM7_LoadDutyValue(dutyCycle7);
+"77
+[e ( _PWM7_LoadDutyValue (1 _dutyCycle7 ]
+[; ;main.c: 78: call=0;
+"78
+[e = _call -> -> 0 `i `uc ]
+"79
 }
 [e :U 1571 ]
-[; ;main.c: 64: }
-[; ;main.c: 65: }
-[; ;main.c: 66: powerOutOld=Batt_V*Batt_I;
-"66
-[e = _powerOutOld * _Batt_V _Batt_I ]
-[; ;main.c: 67: Batt_V_Old=Batt_V;
-"67
-[e = _Batt_V_Old _Batt_V ]
-[; ;main.c: 68: PWM7_LoadDutyValue(dutyCycle7);
-"68
-[e ( _PWM7_LoadDutyValue (1 _dutyCycle7 ]
-[; ;main.c: 69: call=0;
-"69
-[e = _call -> -> 0 `i `uc ]
-"70
+"80
 }
-[e :U 1567 ]
-"71
+[e :U 1570 ]
+[; ;main.c: 79: }
+[; ;main.c: 80: }
+[; ;main.c: 81: loopCount+=1;
+"81
+[e =+ _loopCount -> -> 1 `i `uc ]
+[; ;main.c: 82: if(loopCount>254)loopCount=11;
+"82
+[e $ ! > -> _loopCount `i -> 254 `i 1578  ]
+[e = _loopCount -> -> 11 `i `uc ]
+[e :U 1578 ]
+"83
 }
 [e :U 1564 ]
-"40
+"39
 [e $U 1565  ]
 [e :U 1566 ]
-[; ;main.c: 70: }
-[; ;main.c: 71: }
-[; ;main.c: 72: }
-"72
+[; ;main.c: 83: }
+[; ;main.c: 84: }
+"84
 [e :UE 1563 ]
 }

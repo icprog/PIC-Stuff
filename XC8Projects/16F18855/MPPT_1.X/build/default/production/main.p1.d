@@ -4,7 +4,6 @@
 pwm.h  \
 pin_manager.h  \
 lcd.h  \
-aloha.h  \
 system.h  \
 adc.h  \
 tmr2.h 

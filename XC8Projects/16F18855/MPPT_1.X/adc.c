@@ -1,17 +1,17 @@
 #include <xc.h>
 #include "adc.h"
 
-/*#define     numSamples                      50                                              // Number of Temperature readings to Average
+#define     numSamples                      50                                              // Number of Temperature readings to Average
 #define     numChannels                     4                                               // Number of Analog channels to read
 
-uint16_t samples[numChannels][numSamples]   =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
+uint16_t samples[numChannels][numSamples]   =   {{0},{0},{0},{0}};                          // Was left initialized like this, but following is correct?
 
 uint16_t sampleIndex                        =   {0};
 
 uint32_t totals[numChannels]                =   {0};
 
-static uint8_t channels[numChannels]        =   {1,3};                                      // List all the Analog channel numbers here, must be same number listed as numChannels
-*/
+static uint8_t channels[numChannels]        =   {16,17,18,19};                              // List all the Analog channel numbers here, must be same number listed as numChannels
+
 // *************** ADC Read Individual Channel ****************************************************************************************************
 adc_result_t ADCRead(adc_channel_t channel)
 {
@@ -31,7 +31,7 @@ adc_result_t ADCRead(adc_channel_t channel)
 }
 
 // *************** Read Analogs from Analog channel Array ****************************************************************************************
-/*uint16_t readAnalog(uint8_t channel)
+uint16_t readAnalog(uint8_t channel)
 {
     uint16_t value;
     
@@ -55,7 +55,7 @@ adc_result_t ADCRead(adc_channel_t channel)
         
     return value;   
 }
-*/
+
 // *************** ADC Initialization Routine *****************************************************************************************************
 void ADC_Initialize(void)
 {

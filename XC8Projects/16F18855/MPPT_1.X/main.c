@@ -1,9 +1,8 @@
 #include "system.h"
 #include <math.h>
-#include "aloha.h"
 
 // *************** Defines *****************************************************    
-#define     numSamples  50                                              // Number of Temperature readings to Average
+//#define     numSamples  50                                              // Number of Temperature readings to Average
 
 #define     PWM         dutyCycle7
 
@@ -25,49 +24,62 @@ void main(void)
     uint16_t    PV_I        =   0;
     uint16_t    Batt_V      =   0;
     uint16_t    Batt_I      =   0;
-
 //    uint16_t    PV_V_Old    =   0;
 //    uint16_t    PV_I_Old    =   0;
     uint16_t    Batt_V_Old  =   0;
 //    uint16_t    Batt_I_Old  =   0;
-    
     uint16_t    powerOutOld =   0;
-    
     uint16_t    dutyCycle7  =   0;
+    uint8_t     j           =   0;
+    uint16_t    analogs[4]  =   {0,0,0,0};
+    uint8_t     loopCount   =   0;
     
     SYSTEM_Initialize();
     
     while(1)
     {
-        if(call)
+        LCDWriteIntXY(0,0,loopCount,4,0,0);
+        LCDWriteIntXY(0,1,PV_V,4,0,0);
+        LCDWriteIntXY(0,2,PV_I,4,0,0);
+        LCDWriteIntXY(0,3,Batt_V,4,0,0);
+        LCDWriteIntXY(0,4,Batt_I,4,0,0);
+        
+        for(j=0;j<4;j++) analogs[j]=readAnalog(j);      // Read analogs
+
+        if(loopCount>10)
         {
-            if(powerOut>powerOutOld)
+            if(call)
             {
-                if(Batt_V>Batt_V_Old)
+                if(powerOut>powerOutOld)
                 {
-                    PWM+=1;
+                    if(Batt_V>Batt_V_Old)
+                    {
+                        PWM+=1;
+                    }
+                    else
+                    {
+                        PWM-=1;
+                    }
                 }
                 else
                 {
-                    PWM-=1;
+                    if(Batt_V>Batt_V_Old)
+                    {
+                        PWM-=1;
+                    }
+                    else
+                    {
+                        PWM+=1;
+                    }
                 }
+                powerOutOld=powerOut;
+                Batt_V_Old=Batt_V;
+                PWM7_LoadDutyValue(PWM);
+                call=0;
             }
-            else
-            {
-                if(Batt_V>Batt_V_Old)
-                {
-                    PWM-=1;
-                }
-                else
-                {
-                    PWM+=1;
-                }
-            }
-            powerOutOld=powerOut;
-            Batt_V_Old=Batt_V;
-            PWM7_LoadDutyValue(PWM);
-            call=0;
         }
+        loopCount+=1;
+        if(loopCount>254)loopCount=11;
     }
 }
    
