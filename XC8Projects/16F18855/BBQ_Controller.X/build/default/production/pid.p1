@@ -12636,204 +12636,184 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [; ;pid.c: 5: int16_t error = 0;
 "6
+[v _lastError `i ~T0 @X0 1 s ]
+[i _lastError
+-> 0 `i
+]
+[; ;pid.c: 6: static int16_t lastError = 0;
+"7
 [v _errorValue `i ~T0 @X0 1 e ]
 [i _errorValue
 -> 0 `i
 ]
-[; ;pid.c: 6: int16_t errorValue = 0;
-"7
+[; ;pid.c: 7: int16_t errorValue = 0;
+"8
 [v _derivativeValue `i ~T0 @X0 1 e ]
 [i _derivativeValue
 -> 0 `i
 ]
-[; ;pid.c: 7: int16_t derivativeValue = 0;
-"8
+[; ;pid.c: 8: int16_t derivativeValue = 0;
+"9
 [v _Result `i ~T0 @X0 1 e ]
 [i _Result
 -> 0 `i
 ]
-[; ;pid.c: 8: int16_t Result = 0;
-"9
+[; ;pid.c: 9: int16_t Result = 0;
+"10
 [v _Kp `i ~T0 @X0 1 e ]
 [i _Kp
 -> 4 `i
 ]
-[; ;pid.c: 9: int Kp = 4;
-"10
+[; ;pid.c: 10: int Kp = 4;
+"11
 [v _Ki `i ~T0 @X0 1 e ]
 [i _Ki
 -> 1 `i
 ]
-[; ;pid.c: 10: int Ki = 1;
-"11
+[; ;pid.c: 11: int Ki = 1;
+"12
 [v _Kd `i ~T0 @X0 1 e ]
 [i _Kd
 -> 1 `i
 ]
-[; ;pid.c: 11: int Kd = 1;
-"12
+[; ;pid.c: 12: int Kd = 1;
+"13
 [v _pidIntegrated `i ~T0 @X0 1 s ]
 [i _pidIntegrated
 -> 0 `i
 ]
-[; ;pid.c: 12: static int pidIntegrated = 0;
-"13
-[v _pidPrevError `i ~T0 @X0 1 e ]
-[i _pidPrevError
+[; ;pid.c: 13: static int pidIntegrated = 0;
+"14
+[v _D_PrevError `i ~T0 @X0 1 s ]
+[i _D_PrevError
 -> 0 `i
 ]
-[; ;pid.c: 13: int pidPrevError = 0;
-"14
+[; ;pid.c: 14: static int D_PrevError = 0;
+"15
 [v _pidMinOutput `i ~T0 @X0 1 e ]
 [i _pidMinOutput
 -> 0 `i
 ]
-[; ;pid.c: 14: int pidMinOutput = 0;
-"15
+[; ;pid.c: 15: int pidMinOutput = 0;
+"16
 [v _pidMaxOutput `i ~T0 @X0 1 e ]
 [i _pidMaxOutput
 -> 2047 `i
 ]
-[; ;pid.c: 15: int pidMaxOutput = 2047;
-"16
-[v _pidCount `i ~T0 @X0 1 e ]
-[i _pidCount
--> 0 `i
-]
-[; ;pid.c: 16: int pidCount = 0;
-"17
-[v _signPositive `i ~T0 @X0 1 e ]
-[i _signPositive
--> 0 `i
-]
-[; ;pid.c: 17: int signPositive = 0;
-"18
-[v _lastSign `i ~T0 @X0 1 e ]
-[i _lastSign
--> 0 `i
-]
-[; ;pid.c: 18: int lastSign = 0;
-"21
-[v _PID_Calculate `(i ~T0 @X0 1 ef2`i`i ]
+[; ;pid.c: 16: int pidMaxOutput = 2047;
 "22
+[v _PID_Calculate `(i ~T0 @X0 1 ef2`i`i ]
+"23
 {
-[; ;pid.c: 21: int16_t PID_Calculate(int16_t setpoint, int16_t temp)
-[; ;pid.c: 22: {
+[; ;pid.c: 22: int16_t PID_Calculate(int16_t setpoint, int16_t temp)
+[; ;pid.c: 23: {
 [e :U _PID_Calculate ]
-"21
+"22
 [v _setpoint `i ~T0 @X0 1 r1 ]
 [v _temp `i ~T0 @X0 1 r2 ]
-"22
-[f ]
-[; ;pid.c: 23: pidCount+=1;
 "23
-[e =+ _pidCount -> 1 `i ]
-[; ;pid.c: 26: error = setpoint - temp;
-"26
+[f ]
+[; ;pid.c: 27: error = setpoint - temp;
+"27
 [e = _error - _setpoint _temp ]
-[; ;pid.c: 28: errorValue = error * Kp;
-"28
+[; ;pid.c: 29: errorValue = error * Kp;
+"29
 [e = _errorValue * _error _Kp ]
-[; ;pid.c: 31: if(error>0)signPositive=1;
-"31
-[e $ ! > _error -> 0 `i 1520  ]
-[e = _signPositive -> 1 `i ]
-[e $U 1521  ]
+[; ;pid.c: 32: if(error>lastError)
+"32
+[e $ ! > _error _lastError 1520  ]
+[; ;pid.c: 33: {
 "33
-[e :U 1520 ]
-[; ;pid.c: 33: else signPositive=0;
-[e = _signPositive -> 0 `i ]
-[e :U 1521 ]
-[; ;pid.c: 35: if(signPositive!=lastSign)pidIntegrated=0;
-"35
-[e $ ! != _signPositive _lastSign 1522  ]
-[e = _pidIntegrated -> 0 `i ]
-[e :U 1522 ]
-[; ;pid.c: 37: lastSign=signPositive;
-"37
-[e = _lastSign _signPositive ]
-[; ;pid.c: 41: derivativeValue=(error-pidPrevError)*Kd;
-"41
-[e = _derivativeValue * - _error _pidPrevError _Kd ]
-[; ;pid.c: 42: pidPrevError = error;
-"42
-[e = _pidPrevError _error ]
-[; ;pid.c: 45: if(pidCount>20)
-"45
-[e $ ! > _pidCount -> 20 `i 1523  ]
-[; ;pid.c: 46: {
-"46
 {
-[; ;pid.c: 47: pidIntegrated = pidIntegrated + (error * Ki);
-"47
+[; ;pid.c: 34: pidIntegrated = pidIntegrated + (error * Ki);
+"34
 [e = _pidIntegrated + _pidIntegrated * _error _Ki ]
-[; ;pid.c: 49: if (pidIntegrated< pidMinOutput)
-"49
-[e $ ! < _pidIntegrated _pidMinOutput 1524  ]
-[; ;pid.c: 50: {
-"50
+"35
+}
+[; ;pid.c: 35: }
+[e $U 1521  ]
+"36
+[e :U 1520 ]
+[; ;pid.c: 36: else
+[; ;pid.c: 37: {
+"37
 {
-[; ;pid.c: 51: pidIntegrated= pidMinOutput;
-"51
+[; ;pid.c: 38: pidIntegrated = pidIntegrated - (error * Ki);
+"38
+[e = _pidIntegrated - _pidIntegrated * _error _Ki ]
+"39
+}
+[e :U 1521 ]
+[; ;pid.c: 39: }
+[; ;pid.c: 41: if (pidIntegrated< pidMinOutput)
+"41
+[e $ ! < _pidIntegrated _pidMinOutput 1522  ]
+[; ;pid.c: 42: {
+"42
+{
+[; ;pid.c: 43: pidIntegrated= pidMinOutput;
+"43
 [e = _pidIntegrated _pidMinOutput ]
-"52
+"44
 }
-[e :U 1524 ]
-[; ;pid.c: 52: }
-[; ;pid.c: 54: if (pidIntegrated> pidMaxOutput)
-"54
-[e $ ! > _pidIntegrated _pidMaxOutput 1525  ]
-[; ;pid.c: 55: {
-"55
+[e :U 1522 ]
+[; ;pid.c: 44: }
+[; ;pid.c: 46: if (pidIntegrated> pidMaxOutput)
+"46
+[e $ ! > _pidIntegrated _pidMaxOutput 1523  ]
+[; ;pid.c: 47: {
+"47
 {
-[; ;pid.c: 56: pidIntegrated= pidMaxOutput;
-"56
+[; ;pid.c: 48: pidIntegrated= pidMaxOutput;
+"48
 [e = _pidIntegrated _pidMaxOutput ]
-"57
-}
-[e :U 1525 ]
-[; ;pid.c: 57: }
-[; ;pid.c: 58: pidCount=0;
-"58
-[e = _pidCount -> 0 `i ]
-"59
+"49
 }
 [e :U 1523 ]
-[; ;pid.c: 59: }
-[; ;pid.c: 62: Result = errorValue+pidIntegrated+derivativeValue;
-"62
+[; ;pid.c: 49: }
+[; ;pid.c: 51: lastError=error;
+"51
+[e = _lastError _error ]
+[; ;pid.c: 54: derivativeValue=(error-D_PrevError)*Kd;
+"54
+[e = _derivativeValue * - _error _D_PrevError _Kd ]
+[; ;pid.c: 55: D_PrevError = error;
+"55
+[e = _D_PrevError _error ]
+[; ;pid.c: 88: Result = errorValue+pidIntegrated+derivativeValue;
+"88
 [e = _Result + + _errorValue _pidIntegrated _derivativeValue ]
-[; ;pid.c: 64: if (Result < pidMinOutput)
-"64
-[e $ ! < _Result _pidMinOutput 1526  ]
-[; ;pid.c: 65: {
-"65
+[; ;pid.c: 90: if (Result < pidMinOutput)
+"90
+[e $ ! < _Result _pidMinOutput 1524  ]
+[; ;pid.c: 91: {
+"91
 {
-[; ;pid.c: 66: Result = pidMinOutput;
-"66
+[; ;pid.c: 92: Result = pidMinOutput;
+"92
 [e = _Result _pidMinOutput ]
-"67
+"93
 }
-[e :U 1526 ]
-[; ;pid.c: 67: }
-[; ;pid.c: 69: if (Result > pidMaxOutput)
-"69
-[e $ ! > _Result _pidMaxOutput 1527  ]
-[; ;pid.c: 70: {
-"70
+[e :U 1524 ]
+[; ;pid.c: 93: }
+[; ;pid.c: 95: if (Result > pidMaxOutput)
+"95
+[e $ ! > _Result _pidMaxOutput 1525  ]
+[; ;pid.c: 96: {
+"96
 {
-[; ;pid.c: 71: Result = pidMaxOutput;
-"71
+[; ;pid.c: 97: Result = pidMaxOutput;
+"97
 [e = _Result _pidMaxOutput ]
-"72
+"98
 }
-[e :U 1527 ]
-[; ;pid.c: 72: }
-[; ;pid.c: 74: return (Result);
-"74
+[e :U 1525 ]
+[; ;pid.c: 98: }
+[; ;pid.c: 100: return (Result);
+"100
 [e ) _Result ]
 [e $UE 1519  ]
-[; ;pid.c: 75: }
-"75
+[; ;pid.c: 101: }
+"101
 [e :UE 1519 ]
 }

@@ -16810,6 +16810,7 @@ int16_t PID_Calculate(int16_t setpoint, int16_t temp);
 
 # 5 "pid.c"
 int16_t error = 0;
+static int16_t lastError = 0;
 int16_t errorValue = 0;
 int16_t derivativeValue = 0;
 int16_t Result = 0;
@@ -16817,17 +16818,14 @@ int Kp = 4;
 int Ki = 1;
 int Kd = 1;
 static int pidIntegrated = 0;
-int pidPrevError = 0;
+static int D_PrevError = 0;
 int pidMinOutput = 0;
 int pidMaxOutput = 2047;
-int pidCount = 0;
-int signPositive = 0;
-int lastSign = 0;
 
-
+# 22
 int16_t PID_Calculate(int16_t setpoint, int16_t temp)
 {
-pidCount+=1;
+
 
 
 error = setpoint - temp;
@@ -16835,23 +16833,14 @@ error = setpoint - temp;
 errorValue = error * Kp;
 
 
-if(error>0)signPositive=1;
-
-else signPositive=0;
-
-if(signPositive!=lastSign)pidIntegrated=0;
-
-lastSign=signPositive;
-
-
-
-derivativeValue=(error-pidPrevError)*Kd;
-pidPrevError = error;
-
-
-if(pidCount>20)
+if(error>lastError)
 {
 pidIntegrated = pidIntegrated + (error * Ki);
+}
+else
+{
+pidIntegrated = pidIntegrated - (error * Ki);
+}
 
 if (pidIntegrated< pidMinOutput)
 {
@@ -16862,10 +16851,14 @@ if (pidIntegrated> pidMaxOutput)
 {
 pidIntegrated= pidMaxOutput;
 }
-pidCount=0;
-}
+
+lastError=error;
 
 
+derivativeValue=(error-D_PrevError)*Kd;
+D_PrevError = error;
+
+# 88
 Result = errorValue+pidIntegrated+derivativeValue;
 
 if (Result < pidMinOutput)
