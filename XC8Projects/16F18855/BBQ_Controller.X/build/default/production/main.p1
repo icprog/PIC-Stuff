@@ -12698,15 +12698,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _outputIndex `uc ~T0 @X0 1 a ]
 [; ;main.c: 47: char outputIndex = 0;
 [e = _outputIndex -> -> 0 `i `uc ]
-[v F13670 `i ~T0 @X0 -> 25 `i s ]
+[v F13670 `i ~T0 @X0 -> 10 `i s ]
 [i F13670
 :U ..
 "49
 -> 0 `i
 ..
 ]
-[v _outputSamples `i ~T0 @X0 -> 25 `i a ]
-[; ;main.c: 49: int16_t outputSamples[25]= {0};
+[v _outputSamples `i ~T0 @X0 -> 10 `i a ]
+[; ;main.c: 49: int16_t outputSamples[10]= {0};
 [e = _outputSamples F13670 ]
 "51
 [v _holdOutput `uc ~T0 @X0 1 a ]
@@ -12842,15 +12842,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 137: outputTotal = outputTotal + outputSamples[outputIndex];
 "137
 [e = _outputTotal + _outputTotal -> *U + &U _outputSamples * -> _outputIndex `ux -> -> # *U &U _outputSamples `ui `ux `l ]
-[; ;main.c: 138: dutyCycle6 = outputTotal/25;
+[; ;main.c: 138: dutyCycle6 = outputTotal/10;
 "138
-[e = _dutyCycle6 -> / _outputTotal -> -> 25 `i `l `ui ]
+[e = _dutyCycle6 -> / _outputTotal -> -> 10 `i `l `ui ]
 [; ;main.c: 140: outputIndex+=1;
 "140
 [e =+ _outputIndex -> -> 1 `i `uc ]
-[; ;main.c: 141: if(outputIndex >= 25)outputIndex = 0;
+[; ;main.c: 141: if(outputIndex >= 10)outputIndex = 0;
 "141
-[e $ ! >= -> _outputIndex `i -> 25 `i 1525  ]
+[e $ ! >= -> _outputIndex `i -> 10 `i 1525  ]
 [e = _outputIndex -> -> 0 `i `uc ]
 [e :U 1525 ]
 "142

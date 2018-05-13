@@ -48,6 +48,8 @@ channel_FVR 63
 [v _log log `(d  1 e 3 0 ]
 "15 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]
+"4 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul8.c
+[v ___bmul __bmul `(uc  1 e 1 0 ]
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\pic\eeprom.c
 [v _eecpymem eecpymem `(v  1 e 1 0 ]
 "39
@@ -93,7 +95,7 @@ channel_FVR 63
 "3 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\tmr2.c
 [v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
 "7 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\adc.c
-[v _samples samples `[2][30]ui  1 e 120 @9080 ]
+[v _samples samples `[2][20]ui  1 e 80 0 ]
 "9
 [v _sampleIndex sampleIndex `ui  1 e 2 0 ]
 "11
@@ -118,7 +120,7 @@ channel_FVR 63
 [v _ADRESH ADRESH `VEuc  1 e 1 @141 ]
 "1821
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @147 ]
-[s S115 . 1 `uc 1 ADGO 1 0 :1:0 
+[s S25 . 1 `uc 1 ADGO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM 1 0 :2:2 
 `uc 1 ADCS 1 0 :1:4 
@@ -127,19 +129,19 @@ channel_FVR 63
 `uc 1 ADON 1 0 :1:7 
 ]
 "1852
-[s S123 . 1 `uc 1 DONE 1 0 :1:0 
+[s S33 . 1 `uc 1 DONE 1 0 :1:0 
 ]
-[s S125 . 1 `uc 1 nDONE 1 0 :1:0 
+[s S35 . 1 `uc 1 nDONE 1 0 :1:0 
 ]
-[s S127 . 1 `uc 1 GO 1 0 :1:0 
+[s S37 . 1 `uc 1 GO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM0 1 0 :1:2 
 `uc 1 ADFM1 1 0 :1:3 
 ]
-[s S132 . 1 `uc 1 GO_nDONE 1 0 :1:0 
+[s S42 . 1 `uc 1 GO_nDONE 1 0 :1:0 
 ]
-[u S134 . 1 `S115 1 . 1 0 `S123 1 . 1 0 `S125 1 . 1 0 `S127 1 . 1 0 `S132 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES134  1 e 1 @147 ]
+[u S44 . 1 `S25 1 . 1 0 `S33 1 . 1 0 `S35 1 . 1 0 `S37 1 . 1 0 `S42 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES44  1 e 1 @147 ]
 "1911
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @148 ]
 "1949
@@ -176,36 +178,36 @@ channel_FVR 63
 [v _ADSTPTL ADSTPTL `VEuc  1 e 1 @274 ]
 "3059
 [v _ADSTPTH ADSTPTH `VEuc  1 e 1 @275 ]
-[s S342 . 1 `uc 1 C5TSEL 1 0 :2:0 
+[s S228 . 1 `uc 1 C5TSEL 1 0 :2:0 
 `uc 1 P6TSEL 1 0 :2:2 
 `uc 1 P7TSEL 1 0 :2:4 
 ]
 "7519
-[s S346 . 1 `uc 1 C5TSEL0 1 0 :1:0 
+[s S232 . 1 `uc 1 C5TSEL0 1 0 :1:0 
 `uc 1 C5TSEL1 1 0 :1:1 
 `uc 1 P6TSEL0 1 0 :1:2 
 `uc 1 P6TSEL1 1 0 :1:3 
 `uc 1 P7TSEL0 1 0 :1:4 
 `uc 1 P7TSEL1 1 0 :1:5 
 ]
-[u S353 . 1 `S342 1 . 1 0 `S346 1 . 1 0 ]
-[v _CCPTMRS1bits CCPTMRS1bits `VES353  1 e 1 @543 ]
+[u S239 . 1 `S228 1 . 1 0 `S232 1 . 1 0 ]
+[v _CCPTMRS1bits CCPTMRS1bits `VES239  1 e 1 @543 ]
 "7568
 [v _T2TMR T2TMR `VEuc  1 e 1 @652 ]
 "7605
 [v _T2PR T2PR `VEuc  1 e 1 @653 ]
 "7642
 [v _T2CON T2CON `VEuc  1 e 1 @654 ]
-[s S435 . 1 `uc 1 OUTPS 1 0 :4:0 
+[s S322 . 1 `uc 1 OUTPS 1 0 :4:0 
 `uc 1 CKPS 1 0 :3:4 
 `uc 1 ON 1 0 :1:7 
 ]
 "7678
-[s S439 . 1 `uc 1 T2OUTPS 1 0 :4:0 
+[s S326 . 1 `uc 1 T2OUTPS 1 0 :4:0 
 `uc 1 T2CKPS 1 0 :3:4 
 `uc 1 T2ON 1 0 :1:7 
 ]
-[s S443 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
+[s S330 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
 `uc 1 T2OUTPS1 1 0 :1:1 
 `uc 1 T2OUTPS2 1 0 :1:2 
 `uc 1 T2OUTPS3 1 0 :1:3 
@@ -213,7 +215,7 @@ channel_FVR 63
 `uc 1 T2CKPS1 1 0 :1:5 
 `uc 1 T2CKPS2 1 0 :1:6 
 ]
-[s S451 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S338 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -222,8 +224,8 @@ channel_FVR 63
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR2ON 1 0 :1:7 
 ]
-[u S460 . 1 `S435 1 . 1 0 `S439 1 . 1 0 `S443 1 . 1 0 `S451 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES460  1 e 1 @654 ]
+[u S347 . 1 `S322 1 . 1 0 `S326 1 . 1 0 `S330 1 . 1 0 `S338 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES347  1 e 1 @654 ]
 "7787
 [v _T2HLT T2HLT `VEuc  1 e 1 @655 ]
 "7919
@@ -236,7 +238,7 @@ channel_FVR 63
 [v _PWM7DCH PWM7DCH `VEuc  1 e 1 @913 ]
 "11073
 [v _PWM7CON PWM7CON `VEuc  1 e 1 @914 ]
-[s S418 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[s S305 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 TMR3IF 1 0 :1:2 
 `uc 1 TMR4IF 1 0 :1:3 
@@ -244,16 +246,16 @@ channel_FVR 63
 `uc 1 TMR6IF 1 0 :1:5 
 ]
 "19557
-[u S425 . 1 `S418 1 . 1 0 ]
-[v _PIR4bits PIR4bits `VES425  1 e 1 @1808 ]
-[s S309 . 1 `uc 1 INTE 1 0 :1:0 
+[u S312 . 1 `S305 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES312  1 e 1 @1808 ]
+[s S195 . 1 `uc 1 INTE 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIE 1 0 :1:4 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
 "19817
-[u S314 . 1 `S309 1 . 1 0 ]
-[v _PIE0bits PIE0bits `VES314  1 e 1 @1814 ]
+[u S200 . 1 `S195 1 . 1 0 ]
+[v _PIE0bits PIE0bits `VES200  1 e 1 @1814 ]
 "21546
 [v _OSCCON1 OSCCON1 `VEuc  1 e 1 @2189 ]
 "21684
@@ -268,11 +270,11 @@ channel_FVR 63
 [v _FVRCON FVRCON `VEuc  1 e 1 @2316 ]
 "27917
 [v _PPSLOCK PPSLOCK `VEuc  1 e 1 @3727 ]
-[s S324 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
+[s S210 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
 ]
 "27927
-[u S326 . 1 `S324 1 . 1 0 ]
-[v _PPSLOCKbits PPSLOCKbits `VES326  1 e 1 @3727 ]
+[u S212 . 1 `S210 1 . 1 0 ]
+[v _PPSLOCKbits PPSLOCKbits `VES212  1 e 1 @3727 ]
 "30842
 [v _RC3PPS RC3PPS `VEuc  1 e 1 @3875 ]
 "31087
@@ -371,35 +373,35 @@ channel_FVR 63
 [v _main main `(v  1 e 1 0 ]
 {
 "49
-[v main@outputSamples outputSamples `[25]i  1 a 50 0 ]
+[v main@outputSamples outputSamples `[10]i  1 a 20 10 ]
 "33
-[v main@analogs analogs `[2]ui  1 a 4 67 ]
+[v main@analogs analogs `[2]ui  1 a 4 47 ]
 "45
-[v main@outputTotal outputTotal `l  1 a 4 61 ]
+[v main@outputTotal outputTotal `l  1 a 4 41 ]
 "84
-[v main@dutyCycle6 dutyCycle6 `ui  1 a 2 65 ]
+[v main@dutyCycle6 dutyCycle6 `ui  1 a 2 45 ]
 "53
-[v main@currentTemperature currentTemperature `i  1 a 2 59 ]
+[v main@currentTemperature currentTemperature `i  1 a 2 39 ]
 "65
-[v main@pidPeriodCounter pidPeriodCounter `i  1 a 2 57 ]
+[v main@pidPeriodCounter pidPeriodCounter `i  1 a 2 37 ]
 "55
-[v main@lastTemperature lastTemperature `i  1 a 2 55 ]
+[v main@lastTemperature lastTemperature `i  1 a 2 35 ]
 "43
-[v main@output output `i  1 a 2 51 ]
+[v main@output output `i  1 a 2 31 ]
 "61
-[v main@j j `uc  1 a 1 72 ]
+[v main@j j `uc  1 a 1 52 ]
 "47
-[v main@outputIndex outputIndex `uc  1 a 1 71 ]
+[v main@outputIndex outputIndex `uc  1 a 1 51 ]
 "57
-[v main@lidOpenCount lidOpenCount `uc  1 a 1 54 ]
+[v main@lidOpenCount lidOpenCount `uc  1 a 1 34 ]
 "51
-[v main@holdOutput holdOutput `uc  1 a 1 53 ]
+[v main@holdOutput holdOutput `uc  1 a 1 33 ]
 "63
-[v main@x x `uc  1 a 1 50 ]
+[v main@x x `uc  1 a 1 30 ]
 "31
 [v main@F13664 F13664 `[2]ui  1 s 4 F13664 ]
 "47
-[v main@F13670 F13670 `[25]i  1 s 50 F13670 ]
+[v main@F13670 F13670 `[10]i  1 s 20 F13670 ]
 "434
 } 0
 "4 D:\PIC-Stuff\XC8Projects\16F18855\BBQ_Controller.X\tempCalc.c
@@ -534,6 +536,19 @@ channel_FVR 63
 "34
 [v readAnalog@channel channel `i  1 p 2 6 ]
 "57
+} 0
+"4 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\Umul8.c
+[v ___bmul __bmul `(uc  1 e 1 0 ]
+{
+[v ___bmul@multiplier multiplier `uc  1 a 1 wreg ]
+"6
+[v ___bmul@product product `uc  1 a 1 2 ]
+"4
+[v ___bmul@multiplier multiplier `uc  1 a 1 wreg ]
+[v ___bmul@multiplicand multiplicand `uc  1 p 1 0 ]
+"6
+[v ___bmul@multiplier multiplier `uc  1 a 1 3 ]
+"51
 } 0
 "6 C:\Program Files (x86)\Microchip\xc8\v1.38\sources\common\aldiv.c
 [v ___aldiv __aldiv `(l  1 e 4 0 ]

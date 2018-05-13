@@ -13,7 +13,7 @@
 //#define downKey                 RB1
 #define enterKey                RB2
 //#define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay, also defined in menu.c
-#define numOutSamples           25                                // Number of Output samples to be Averaged into Output
+#define numOutSamples           10                                // Number of Output samples to be Averaged into Output
 
 //#define celcius                 analogs[0]                      // Touch pad to select Degrees C
 //#define farenheit               analogs[1]                      // Touch pad to select Degrees F

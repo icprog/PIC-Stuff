@@ -16824,7 +16824,7 @@ int32_t outputTotal = 0;
 
 char outputIndex = 0;
 
-int16_t outputSamples[25]= {0};
+int16_t outputSamples[10]= {0};
 
 char holdOutput = 0;
 
@@ -16885,10 +16885,10 @@ output = PID_Calculate(setpoint[0]+20,analogs[1]);
 outputTotal = outputTotal - outputSamples[outputIndex];
 outputSamples[outputIndex] = output;
 outputTotal = outputTotal + outputSamples[outputIndex];
-dutyCycle6 = outputTotal/25;
+dutyCycle6 = outputTotal/10;
 
 outputIndex+=1;
-if(outputIndex >= 25)outputIndex = 0;
+if(outputIndex >= 10)outputIndex = 0;
 }
 else
 {
