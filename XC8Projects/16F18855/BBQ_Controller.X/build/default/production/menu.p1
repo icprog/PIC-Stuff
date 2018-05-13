@@ -21,6 +21,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PWM7_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
 "44 lcd.h
 [v _LCD_Clear `(v ~T0 @X0 0 ef ]
+"37986 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic16f18855.h
+[v _TRISC2 `Vb ~T0 @X0 0 e@154 ]
 [; ;menu.h: 4: void menuChoice(void);
 [; ;menu.h: 6: char readKey(void);
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
@@ -12673,11 +12675,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _setpoint `i ~T0 @X0 -> 2 `i e ]
 [i _setpoint
 :U ..
--> 2250 `i
+-> 2150 `i
 -> 523 `i
 ..
 ]
-[; ;menu.c: 15: int16_t setpoint[2] = {2250,523};
+[; ;menu.c: 15: int16_t setpoint[2] = {2150,523};
 "17
 [v _desc `*Cuc ~T0 @X0 -> 0 `x e ]
 [i _desc
@@ -13091,8 +13093,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;menu.c: 148: LCD_Clear();
 "148
 [e ( _LCD_Clear ..  ]
-[; ;menu.c: 149: }
+[; ;menu.c: 149: TRISC2 = 0;
 "149
+[e = _TRISC2 -> -> 0 `i `b ]
+[; ;menu.c: 150: }
+"150
 [e :UE 1524 ]
 }
 [a 3C 85 112 47 68 111 119 110 32 116 111 32 65 108 116 101 114 0 ]

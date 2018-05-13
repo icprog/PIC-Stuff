@@ -16824,7 +16824,7 @@ int32_t outputTotal = 0;
 
 char outputIndex = 0;
 
-int16_t outputSamples[40]= {0};
+int16_t outputSamples[25]= {0};
 
 char holdOutput = 0;
 
@@ -16858,34 +16858,37 @@ LCD_Clear();
 
 while (1)
 {
+extern int16_t errorValue;
+extern int16_t integralValue;
+extern int16_t derivativeValue;
+
 if(loop>253)
 {
 PWM7_LoadDutyValue(setpoint[1]);
 
-{ LCD_Set_Cursor(0,0); LCD_Write_String("Pit:");};
-{ LCD_Set_Cursor(5,0); LCD_Write_Int(analogs[1],-1, 1, 0);};
-LCD_Write_Char(0);
-LCD_Write_Char(70);
+{ LCD_Set_Cursor(0,0); LCD_Write_Int(errorValue,5, 0, 0);};
+LCD_Write_Char(' ');
+LCD_Write_Char(' ');
+{ LCD_Set_Cursor(8,0); LCD_Write_Int(integralValue,5, 0, 0);};
 LCD_Write_Char(' ');
 LCD_Write_Char(' ');
 
-{ LCD_Set_Cursor(0,1); LCD_Write_String("Output:");};
+{ LCD_Set_Cursor(0,1); LCD_Write_Int(derivativeValue,5, 0, 0);};
 LCD_Write_Char(' ');
-LCD_Write_Int(dutyCycle6,5,0,0);
+{ LCD_Set_Cursor(6,1); LCD_Write_Int(analogs[1],4, 1, 0);};
+{ LCD_Set_Cursor(12,1); LCD_Write_Int(dutyCycle6,4, 0, 0);};
 
-
-
-
+# 132
 if(holdOutput==0)
 {
-output = PID_Calculate(setpoint[0],analogs[1]);
+output = PID_Calculate(setpoint[0]+20,analogs[1]);
 outputTotal = outputTotal - outputSamples[outputIndex];
 outputSamples[outputIndex] = output;
 outputTotal = outputTotal + outputSamples[outputIndex];
-dutyCycle6 = outputTotal/40;
+dutyCycle6 = outputTotal/25;
 
 outputIndex+=1;
-if(outputIndex >= 40)outputIndex = 0;
+if(outputIndex >= 25)outputIndex = 0;
 }
 else
 {
@@ -16908,7 +16911,7 @@ lidOpenCount=0;
 if(lastTemperature-currentTemperature>100 || lastTemperature-currentTemperature<-100)
 {
 dutyCycle6=0;
-holdOutput=60;
+holdOutput=5;
 }
 
 if(dutyCycle6<50)dutyCycle6=0;
@@ -16932,6 +16935,7 @@ analogs[1]=tempCalc(analogs[1]);
 
 if(RB2==1)
 {
+TRISC2 = 1;
 LCD_Clear();
 { LCD_Set_Cursor(0,0); LCD_Write_String("Alter with Up/Dn");};
 { LCD_Set_Cursor(0,1); LCD_Write_String("Enter Key to Set");};
@@ -16941,7 +16945,7 @@ menuChoice();
 _delay((unsigned long)((500)*(32000000/4000.0)));
 }
 
-# 415
+# 432
 loop+=1;
 }
 }

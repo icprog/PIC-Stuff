@@ -12,7 +12,7 @@ int lowRangeSet[2]              =   {750,0};               // lowrangeSet[0] is 
 
 int highRangeSet[2]             =   {2750,1023};           // highRangeSet[0] is Pit Temp setpoint upper limit, highRangeSet[1] is backlight intensity
 
-int16_t setpoint[2]             =   {2250,523};            // default startup setpoints for Pit temp & backlight
+int16_t setpoint[2]             =   {2150,523};            // default startup setpoints for Pit temp & backlight
 
 char const *desc[]              =   {" Pit Temp:","BackLight:"};
 
@@ -146,4 +146,5 @@ void menuChoice(void)
     timer=0;
     loop=254;
     LCD_Clear();
+    TRISC2      =   0;    
 }

@@ -1,7 +1,7 @@
 #include <xc.h>
 #include "adc.h"
 
-#define     numSamples                      40                                              // Number of Temperature readings to Average
+#define     numSamples                      30                                              // Number of Temperature readings to Average
 #define     numChannels                     2                                               // Number of Analog channels to read
 
 uint16_t samples[numChannels][numSamples]   =   {{0},{0}};                                  // Was left initialized like this, but following is correct?

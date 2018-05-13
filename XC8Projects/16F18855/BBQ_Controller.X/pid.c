@@ -7,21 +7,22 @@ static int16_t lastError    = 0;
 int16_t errorValue          = 0;
 int16_t derivativeValue     = 0;
 int16_t Result              = 0;
-int Kp                      = 4;    // Controller Gain      (inverse of Proportional Band)
-int Ki                      = 1;    // Controller Integral Reset/Unit Time, determined by how often PID is calculated
-int Kd                      = 1;    // Controller Derivative (or Rate))
-static int pidIntegrated    = 0;
+int Kp                      = 10;   // Controller Gain      (inverse of Proportional Band)
+int Ki                      = 4;    // Controller Integral Reset/Unit Time, determined by how often PID is calculated
+int Kd                      = 2;    // Controller Derivative (or Rate))
+int16_t integralValue       = 0;
+static int16_t pidIntegrated= 0;
 static int D_PrevError      = 0;
-int pidMinOutput            = 0;     // Minimum output limit of Controller
-int pidMaxOutput            = 2047;  // Maximum output limit of Controller
-//int pidCount                = 0;
+int pidMinOutput            = 0;        // Minimum output limit of Controller
+int pidMaxOutput            = 2047;     // Maximum output limit of Controller
+int pidCount                = 0;
 //int signPositive            = 0;
 //int lastSign                = 0;  
 
 // *************** Calculate PID Runs faster if called more often **************    
 int16_t PID_Calculate(int16_t setpoint, int16_t temp)
 {
-//    pidCount+=1;
+    pidCount+=1;
     
 // **************** Calculate Gain *********************************************    
     error = setpoint - temp;                                // error calculation
@@ -29,13 +30,27 @@ int16_t PID_Calculate(int16_t setpoint, int16_t temp)
     errorValue  = error * Kp;                               // Calculate proportional value
 
 // **************** Calculate Integral Action **********************************    
-    if(error>lastError)
+    if(error>=0)
     {
-        pidIntegrated = pidIntegrated + (error * Ki);       // Calculate integral value
+        if(error>lastError)
+        {
+            if(pidIntegrated<2047)pidIntegrated = pidIntegrated + (error * Ki);       // Calculate integral value
+        }
+        else
+        {
+            if(pidIntegrated>0)pidIntegrated = pidIntegrated - (error * Ki);       // Calculate integral value
+        }
     }
     else
     {
-        pidIntegrated = pidIntegrated - (error * Ki);       // Calculate integral value
+        if(error<lastError)
+        {
+            if(pidIntegrated<2047)pidIntegrated = pidIntegrated - (error * Ki);       // Calculate integral value
+        }
+        else
+        {
+            if(pidIntegrated>0)pidIntegrated = pidIntegrated + (error * Ki);       // Calculate integral value
+        }
     }
 
     if (pidIntegrated< pidMinOutput)                        // limit output minimum value
@@ -47,6 +62,12 @@ int16_t PID_Calculate(int16_t setpoint, int16_t temp)
     {
         pidIntegrated= pidMaxOutput;
     }
+    
+    if(pidCount>4)
+    {
+        integralValue = pidIntegrated;                      // Write the average of the last 10 Integral calculations to the Output
+        pidCount=0;
+    }    
     
     lastError=error;                                        // Set lastError = to error (for next iteration)
 
@@ -85,7 +106,7 @@ int16_t PID_Calculate(int16_t setpoint, int16_t temp)
     //}
 
 // *************** Calculate Final Output **************************************    
-    Result = errorValue+pidIntegrated+derivativeValue;   // Calculate total to send to Output 
+    Result = errorValue+integralValue+derivativeValue;      // Calculate total to send to Output 
     
     if (Result < pidMinOutput)                              // limit output minimum value
     {
