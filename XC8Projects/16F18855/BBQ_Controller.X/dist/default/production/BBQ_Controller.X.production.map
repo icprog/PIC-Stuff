@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.38\dat\en_msgs.txt -cs \
   -h+dist/default/production\BBQ_Controller.X.production.sym \
   --cmf=dist/default/production\BBQ_Controller.X.production.cmf -z \
-  -Q16F18855 -oC:\Users\DAVE\AppData\Local\Temp\sgs.2 \
+  -Q16F18855 -oC:\Users\DANNY\AppData\Local\Temp\s7fs.2 \
   -Mdist/default/production/BBQ_Controller.X.production.map -E1 -ver=XC8 \
   -ASTACK=02132h-02377h -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
@@ -32,7 +32,7 @@ Linker command line:
   -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 \
   -AEEDATA=00h-0FFh/0F000h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
-  C:\Users\DAVE\AppData\Local\Temp\sgs.obj \
+  C:\Users\DANNY\AppData\Local\Temp\s7fs.obj \
   dist/default/production\BBQ_Controller.X.production.obj 
 
 Object code version is 3.11
@@ -42,7 +42,7 @@ Machine type is 16F18855
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\DAVE\AppData\Local\Temp\sgs.obj
+C:\Users\DANNY\AppData\Local\Temp\s7fs.obj
                 end_init                              2        2        2        0       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5    1000E       0
@@ -1048,7 +1048,7 @@ _sampleIndex                     bssBANK1     000C5
 _samples                         (abs)        02378
 _setpoint                        dataBANK2    00169
 _tempCalc                        text1        0001F
-_tempCalc$1016                   cstackBANK0  00062
+_tempCalc$1028                   cstackBANK0  00062
 _timer                           bssBANK1     000C7
 _timer2                          bssBANK0     0006F
 _totals                          bssBANK1     000A0
@@ -1634,8 +1634,8 @@ Total ram usage:       15 bytes
  This function calls:
 		Nothing
  This function is called by:
-		_readAnalog
 		_main
+		_readAnalog
  This function uses a non-reentrant model
 
 
@@ -1758,8 +1758,8 @@ Total ram usage:        4 bytes
  This function calls:
 		Nothing
  This function is called by:
-		_menuChoice
 		_main
+		_menuChoice
  This function uses a non-reentrant model
 
 
@@ -1768,8 +1768,8 @@ Total ram usage:        4 bytes
 		line 239 in file "lcd.c"
  Parameters:    Size  Location     Type
   a               2    5[COMMON] PTR const unsigned char 
-		 -> STR_7(17), STR_6(17), STR_5(17), STR_4(17), 
-		 -> STR_3(17), STR_2(11), STR_1(11), 
+		 -> STR_7(17), STR_6(17), STR_5(17), STR_4(11), 
+		 -> STR_3(11), STR_2(17), STR_1(17), 
  Auto vars:     Size  Location     Type
   i               2    8[COMMON] int 
  Return value:  Size  Location     Type
@@ -1791,8 +1791,8 @@ Total ram usage:        5 bytes
  This function calls:
 		_LCD_Write_Char
  This function is called by:
-		_menuChoice
 		_main
+		_menuChoice
  This function uses a non-reentrant model
 
 
@@ -1829,8 +1829,8 @@ Total ram usage:       19 bytes
 		___awdiv
 		___awmod
  This function is called by:
-		_menuChoice
 		_main
+		_menuChoice
  This function uses a non-reentrant model
 
 
@@ -1927,8 +1927,8 @@ Total ram usage:        7 bytes
  This function calls:
 		_LCD_Cmd
  This function is called by:
-		_menuChoice
 		_main
+		_menuChoice
  This function uses a non-reentrant model
 
 
@@ -2142,9 +2142,9 @@ Total ram usage:        0 bytes
  This function calls:
 		_LCD_Cmd
  This function is called by:
-		_SYSTEM_Initialize
-		_menuChoice
 		_main
+		_menuChoice
+		_SYSTEM_Initialize
  This function uses a non-reentrant model
 
 
@@ -2207,11 +2207,11 @@ Total ram usage:        4 bytes
  This function calls:
 		_LCD_Port
  This function is called by:
+		_main
 		_InitCustomChars
 		_LCD_Write_String
 		_LCD_Write_Int
 		_menuChoice
-		_main
  This function uses a non-reentrant model
 
 
