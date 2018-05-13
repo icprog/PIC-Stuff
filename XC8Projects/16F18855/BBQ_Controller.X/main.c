@@ -3,7 +3,7 @@
 // *************** Includes ****************************************************    
 #include "system.h"
 
-    // *************** Defines *****************************************************    
+// *************** Defines *****************************************************
 #define pitSetpoint             setpoint[0]+20
 #define backlightIntensity      setpoint[1]
 #define ambientTemperature      analogs[0]                                      // Analog Chanell 1,  Pin 3
@@ -93,6 +93,17 @@ void main(void)
 
     LCD_Clear();
     // </editor-fold>
+    
+//    volatile unsigned char value = 0x09;
+  //  unsigned char address = 0xE5;
+    //eeprom_write(address, value);     // Writing value 0x9 to EEPROM address 0xE5        
+    //value = eeprom_read (address);    // Reading the value from address 0xE5
+    
+//    eeprom_write(Kp_offset,10);
+  //  eeprom_write(Ki_offset,4);
+    //eeprom_write(Kd_offset,2);
+        
+
     while (1)
     {
         extern int16_t errorValue;

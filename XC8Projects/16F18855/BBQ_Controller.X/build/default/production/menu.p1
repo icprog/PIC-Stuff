@@ -12653,7 +12653,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 50: void LCD_Write_Char(const char a);
 [; ;lcd.h: 52: void LCD_Write_String(const char *a);
 [; ;lcd.h: 54: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
-"11 menu.c
+"15 menu.c
 [v _lowRangeSet `i ~T0 @X0 -> 2 `i e ]
 [i _lowRangeSet
 :U ..
@@ -12661,8 +12661,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `i
 ..
 ]
-[; ;menu.c: 11: int lowRangeSet[2] = {750,0};
-"13
+[; ;menu.c: 15: int lowRangeSet[2] = {750,0};
+"17
 [v _highRangeSet `i ~T0 @X0 -> 2 `i e ]
 [i _highRangeSet
 :U ..
@@ -12670,8 +12670,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 1023 `i
 ..
 ]
-[; ;menu.c: 13: int highRangeSet[2] = {2750,1023};
-"15
+[; ;menu.c: 17: int highRangeSet[2] = {2750,1023};
+"19
 [v _setpoint `i ~T0 @X0 -> 2 `i e ]
 [i _setpoint
 :U ..
@@ -12679,8 +12679,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 523 `i
 ..
 ]
-[; ;menu.c: 15: int16_t setpoint[2] = {2150,523};
-"17
+[; ;menu.c: 19: int16_t setpoint[2] = {2150,523};
+"21
 [v _desc `*Cuc ~T0 @X0 -> 0 `x e ]
 [i _desc
 :U ..
@@ -12688,137 +12688,137 @@ Version 3.2 HI-TECH Software Intermediate Code
 :s 2C
 ..
 ]
-[; ;menu.c: 17: char const *desc[] = {" Pit Temp:","BackLight:"};
-"19
+[; ;menu.c: 21: char const *desc[] = {" Pit Temp:","BackLight:"};
+"23
 [v _loop `uc ~T0 @X0 1 e ]
 [i _loop
 -> -> 64 `i `uc
 ]
-[; ;menu.c: 19: unsigned char loop = 64;
-"21
+[; ;menu.c: 23: unsigned char loop = 64;
+"25
 [v _menuDelay `i ~T0 @X0 1 e ]
 [i _menuDelay
 -> 0 `i
 ]
-[; ;menu.c: 21: int menuDelay = 0;
-"23
+[; ;menu.c: 25: int menuDelay = 0;
+"27
 [v _delayCount `uc ~T0 @X0 1 e ]
 [i _delayCount
 -> -> 0 `i `uc
 ]
-[; ;menu.c: 23: char delayCount = 0;
-"25
+[; ;menu.c: 27: char delayCount = 0;
+"29
 [v _key `uc ~T0 @X0 1 e ]
 [i _key
 -> -> 0 `i `uc
 ]
-[; ;menu.c: 25: char key = 0;
-"27
+[; ;menu.c: 29: char key = 0;
+"31
 [v _choice `uc ~T0 @X0 1 e ]
 [i _choice
 -> -> 0 `i `uc
 ]
-[; ;menu.c: 27: char choice = 0;
-"29
+[; ;menu.c: 31: char choice = 0;
+"33
 [v _testKey `uc ~T0 @X0 1 e ]
 [i _testKey
 -> -> 0 `i `uc
 ]
-[; ;menu.c: 29: char testKey = 0;
-"31
+[; ;menu.c: 33: char testKey = 0;
+"35
 [v _timer `i ~T0 @X0 1 e ]
 [i _timer
 -> 0 `i
 ]
-[; ;menu.c: 31: int timer = 0;
-"33
+[; ;menu.c: 35: int timer = 0;
+"37
 [v _timer2 `uc ~T0 @X0 1 e ]
 [i _timer2
 -> -> 0 `i `uc
 ]
-[; ;menu.c: 33: char timer2 = 0;
-"37
+[; ;menu.c: 37: char timer2 = 0;
+"41
 [v _readKey `(uc ~T0 @X0 1 ef ]
-"38
+"42
 {
-[; ;menu.c: 37: char readKey(void)
-[; ;menu.c: 38: {
+[; ;menu.c: 41: char readKey(void)
+[; ;menu.c: 42: {
 [e :U _readKey ]
 [f ]
-[; ;menu.c: 39: if(RB1==1)
-"39
+[; ;menu.c: 43: if(RB1==1)
+"43
 [e $ ! == -> _RB1 `i -> 1 `i 1520  ]
-[; ;menu.c: 40: {
-"40
+[; ;menu.c: 44: {
+"44
 {
-[; ;menu.c: 41: if(key>0)key-=1;
-"41
+[; ;menu.c: 45: if(key>0)key-=1;
+"45
 [e $ ! > -> _key `i -> 0 `i 1521  ]
 [e =- _key -> -> 1 `i `uc ]
 [e :U 1521 ]
-"42
+"46
 }
 [e :U 1520 ]
-[; ;menu.c: 42: }
-[; ;menu.c: 44: if(RB0==1)
-"44
+[; ;menu.c: 46: }
+[; ;menu.c: 48: if(RB0==1)
+"48
 [e $ ! == -> _RB0 `i -> 1 `i 1522  ]
-[; ;menu.c: 45: {
-"45
+[; ;menu.c: 49: {
+"49
 {
-[; ;menu.c: 46: if(key<1)key+=1;
-"46
+[; ;menu.c: 50: if(key<1)key+=1;
+"50
 [e $ ! < -> _key `i -> 1 `i 1523  ]
 [e =+ _key -> -> 1 `i `uc ]
 [e :U 1523 ]
-"47
+"51
 }
 [e :U 1522 ]
-[; ;menu.c: 47: }
-[; ;menu.c: 49: return key;
-"49
+[; ;menu.c: 51: }
+[; ;menu.c: 53: return key;
+"53
 [e ) _key ]
 [e $UE 1519  ]
-[; ;menu.c: 50: }
-"50
+[; ;menu.c: 54: }
+"54
 [e :UE 1519 ]
 }
-"52
+"56
 [v _menuChoice `(v ~T0 @X0 1 ef ]
-"53
+"57
 {
-[; ;menu.c: 52: void menuChoice(void)
-[; ;menu.c: 53: {
+[; ;menu.c: 56: void menuChoice(void)
+[; ;menu.c: 57: {
 [e :U _menuChoice ]
 [f ]
-[; ;menu.c: 54: while(RB2 != 1)
-"54
+[; ;menu.c: 58: while(RB2 != 1)
+"58
 [e $U 1525  ]
 [e :U 1526 ]
-[; ;menu.c: 55: {
-"55
-{
-[; ;menu.c: 56: choice = readKey();
-"56
-[e = _choice ( _readKey ..  ]
-[; ;menu.c: 58: if(timer > 4000)
-"58
-[e $ ! > _timer -> 4000 `i 1528  ]
 [; ;menu.c: 59: {
 "59
 {
-[; ;menu.c: 60: timer = 0;
+[; ;menu.c: 60: choice = readKey();
 "60
-[e = _timer -> 0 `i ]
-[; ;menu.c: 61: goto Exit;
-"61
-[e $U 1529  ]
+[e = _choice ( _readKey ..  ]
+[; ;menu.c: 62: if(timer > 4000)
 "62
+[e $ ! > _timer -> 4000 `i 1528  ]
+[; ;menu.c: 63: {
+"63
+{
+[; ;menu.c: 64: timer = 0;
+"64
+[e = _timer -> 0 `i ]
+[; ;menu.c: 65: goto Exit;
+"65
+[e $U 1529  ]
+"66
 }
 [e :U 1528 ]
-[; ;menu.c: 62: }
-[; ;menu.c: 64: if(timer2>125){ LCD_Set_Cursor(0,0); LCD_Write_String("Up/Down to Alter");}else { LCD_Set_Cursor(0,0); LCD_Write_String("Enter to Select ");};
-"64
+[; ;menu.c: 66: }
+[; ;menu.c: 68: if(timer2>125){ LCD_Set_Cursor(0,0); LCD_Write_String("Up/Down to Alter");}else { LCD_Set_Cursor(0,0); LCD_Write_String("Enter to Select ");};
+"68
 [e $ ! > -> _timer2 `i -> 125 `i 1530  ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
@@ -12831,41 +12831,41 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCD_Write_String (1 :s 4C ]
 }
 [e :U 1531 ]
-[; ;menu.c: 66: { LCD_Set_Cursor(0,1); LCD_Write_String(desc[choice]);};
-"66
+[; ;menu.c: 70: { LCD_Set_Cursor(0,1); LCD_Write_String(desc[choice]);};
+"70
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
 [e ( _LCD_Write_String (1 *U + &U _desc * -> _choice `ux -> -> # *U &U _desc `ui `ux ]
 }
-[; ;menu.c: 68: if(timer2>249)timer2=0;
-"68
+[; ;menu.c: 72: if(timer2>249)timer2=0;
+"72
 [e $ ! > -> _timer2 `i -> 249 `i 1532  ]
 [e = _timer2 -> -> 0 `i `uc ]
 [e :U 1532 ]
-[; ;menu.c: 70: timer+=1;
-"70
+[; ;menu.c: 74: timer+=1;
+"74
 [e =+ _timer -> 1 `i ]
-[; ;menu.c: 71: timer2+=1;
-"71
+[; ;menu.c: 75: timer2+=1;
+"75
 [e =+ _timer2 -> -> 1 `i `uc ]
-"72
+"76
 }
 [e :U 1525 ]
-"54
+"58
 [e $ != -> _RB2 `i -> 1 `i 1526  ]
 [e :U 1527 ]
-[; ;menu.c: 72: }
-[; ;menu.c: 73: timer=0;
-"73
+[; ;menu.c: 76: }
+[; ;menu.c: 77: timer=0;
+"77
 [e = _timer -> 0 `i ]
-[; ;menu.c: 74: timer2=0;
-"74
-[e = _timer2 -> -> 0 `i `uc ]
-[; ;menu.c: 76: _delay((unsigned long)((1000)*(32000000/4000.0)));
-"76
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;menu.c: 78: if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
+[; ;menu.c: 78: timer2=0;
 "78
+[e = _timer2 -> -> 0 `i `uc ]
+[; ;menu.c: 80: _delay((unsigned long)((1000)*(32000000/4000.0)));
+"80
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[; ;menu.c: 82: if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
+"82
 [e $ ! == -> _choice `i -> 0 `i 1533  ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
@@ -12878,66 +12878,66 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCD_Write_Int (4 , , , *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
 }
 [e :U 1534 ]
-[; ;menu.c: 80: _delay((unsigned long)((2000)*(32000000/4000.0)));
-"80
+[; ;menu.c: 84: _delay((unsigned long)((2000)*(32000000/4000.0)));
+"84
 [e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;menu.c: 82: while(RB2 != 1)
-"82
+[; ;menu.c: 86: while(RB2 != 1)
+"86
 [e $U 1535  ]
 [e :U 1536 ]
-[; ;menu.c: 83: {
-"83
-{
-[; ;menu.c: 84: if(timer > 4000)
-"84
-[e $ ! > _timer -> 4000 `i 1538  ]
-[; ;menu.c: 85: {
-"85
-{
-[; ;menu.c: 86: timer = 0;
-"86
-[e = _timer -> 0 `i ]
-[; ;menu.c: 87: { LCD_Set_Cursor(0,0); LCD_Write_String("   Good-Bye!!   ");};
+[; ;menu.c: 87: {
 "87
+{
+[; ;menu.c: 88: if(timer > 4000)
+"88
+[e $ ! > _timer -> 4000 `i 1538  ]
+[; ;menu.c: 89: {
+"89
+{
+[; ;menu.c: 90: timer = 0;
+"90
+[e = _timer -> 0 `i ]
+[; ;menu.c: 91: { LCD_Set_Cursor(0,0); LCD_Write_String("   Good-Bye!!   ");};
+"91
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
 [e ( _LCD_Write_String (1 :s 5C ]
 }
-[; ;menu.c: 88: _delay((unsigned long)((2000)*(32000000/4000.0)));
-"88
+[; ;menu.c: 92: _delay((unsigned long)((2000)*(32000000/4000.0)));
+"92
 [e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;menu.c: 89: goto Exit;
-"89
+[; ;menu.c: 93: goto Exit;
+"93
 [e $U 1529  ]
-"90
+"94
 }
 [e :U 1538 ]
-[; ;menu.c: 90: }
-[; ;menu.c: 91: _delay((unsigned long)((2)*(32000000/4000.0)));
-"91
-[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;menu.c: 92: timer+=1;
-"92
-[e =+ _timer -> 1 `i ]
-[; ;menu.c: 94: if(RB0==1)
-"94
-[e $ ! == -> _RB0 `i -> 1 `i 1539  ]
-[; ;menu.c: 95: {
+[; ;menu.c: 94: }
+[; ;menu.c: 95: _delay((unsigned long)((2)*(32000000/4000.0)));
 "95
-{
-[; ;menu.c: 96: delayCount+=2;
+[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[; ;menu.c: 96: timer+=1;
 "96
-[e =+ _delayCount -> -> 2 `i `uc ]
-[; ;menu.c: 98: setpoint[choice]+=1;
+[e =+ _timer -> 1 `i ]
+[; ;menu.c: 98: if(RB0==1)
 "98
-[e =+ *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> 1 `i ]
-[; ;menu.c: 99: if(setpoint[choice]>highRangeSet[choice])setpoint[choice]=highRangeSet[choice];
+[e $ ! == -> _RB0 `i -> 1 `i 1539  ]
+[; ;menu.c: 99: {
 "99
+{
+[; ;menu.c: 100: delayCount+=2;
+"100
+[e =+ _delayCount -> -> 2 `i `uc ]
+[; ;menu.c: 102: setpoint[choice]+=1;
+"102
+[e =+ *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> 1 `i ]
+[; ;menu.c: 103: if(setpoint[choice]>highRangeSet[choice])setpoint[choice]=highRangeSet[choice];
+"103
 [e $ ! > *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _highRangeSet * -> _choice `ux -> -> # *U &U _highRangeSet `ui `ux 1540  ]
 [e = *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _highRangeSet * -> _choice `ux -> -> # *U &U _highRangeSet `ui `ux ]
 [e :U 1540 ]
-[; ;menu.c: 100: if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
-"100
+[; ;menu.c: 104: if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
+"104
 [e $ ! == -> _choice `i -> 0 `i 1541  ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
@@ -12950,56 +12950,56 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCD_Write_Int (4 , , , *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
 }
 [e :U 1542 ]
-[; ;menu.c: 101: LCD_Write_Char(' ');
-"101
-[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-[; ;menu.c: 102: menuDelay=1255;
-"102
-[e = _menuDelay -> 1255 `i ]
-[; ;menu.c: 103: if(delayCount<30)
-"103
-[e $ ! < -> _delayCount `i -> 30 `i 1543  ]
-[; ;menu.c: 104: {
-"104
-{
-[; ;menu.c: 105: _delay((unsigned long)((150)*(32000000/4000.0)));
+[; ;menu.c: 105: LCD_Write_Char(' ');
 "105
-[e ( __delay (1 -> * -> -> 150 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;menu.c: 106: menuDelay=1255;
 "106
+[e = _menuDelay -> 1255 `i ]
+[; ;menu.c: 107: if(delayCount<30)
+"107
+[e $ ! < -> _delayCount `i -> 30 `i 1543  ]
+[; ;menu.c: 108: {
+"108
+{
+[; ;menu.c: 109: _delay((unsigned long)((150)*(32000000/4000.0)));
+"109
+[e ( __delay (1 -> * -> -> 150 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+"110
 }
 [e :U 1543 ]
-[; ;menu.c: 106: }
-[; ;menu.c: 107: if(delayCount>(30+10))delayCount=(30+10);
-"107
+[; ;menu.c: 110: }
+[; ;menu.c: 111: if(delayCount>(30+10))delayCount=(30+10);
+"111
 [e $ ! > -> _delayCount `i + -> 30 `i -> 10 `i 1544  ]
 [e = _delayCount -> + -> 30 `i -> 10 `i `uc ]
 [e :U 1544 ]
-[; ;menu.c: 109: timer=0;
-"109
+[; ;menu.c: 113: timer=0;
+"113
 [e = _timer -> 0 `i ]
-"110
+"114
 }
 [e :U 1539 ]
-[; ;menu.c: 110: }
-[; ;menu.c: 113: if(RB1==1)
-"113
-[e $ ! == -> _RB1 `i -> 1 `i 1545  ]
-[; ;menu.c: 114: {
-"114
-{
-[; ;menu.c: 115: delayCount+=2;
-"115
-[e =+ _delayCount -> -> 2 `i `uc ]
-[; ;menu.c: 116: setpoint[choice]-=1;
-"116
-[e =- *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> 1 `i ]
-[; ;menu.c: 117: if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
+[; ;menu.c: 114: }
+[; ;menu.c: 117: if(RB1==1)
 "117
+[e $ ! == -> _RB1 `i -> 1 `i 1545  ]
+[; ;menu.c: 118: {
+"118
+{
+[; ;menu.c: 119: delayCount+=2;
+"119
+[e =+ _delayCount -> -> 2 `i `uc ]
+[; ;menu.c: 120: setpoint[choice]-=1;
+"120
+[e =- *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> 1 `i ]
+[; ;menu.c: 121: if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
+"121
 [e $ ! < *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _lowRangeSet * -> _choice `ux -> -> # *U &U _lowRangeSet `ui `ux 1546  ]
 [e = *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _lowRangeSet * -> _choice `ux -> -> # *U &U _lowRangeSet `ui `ux ]
 [e :U 1546 ]
-[; ;menu.c: 118: if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
-"118
+[; ;menu.c: 122: if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
+"122
 [e $ ! == -> _choice `i -> 0 `i 1547  ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
@@ -13012,92 +13012,92 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCD_Write_Int (4 , , , *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
 }
 [e :U 1548 ]
-[; ;menu.c: 119: LCD_Write_Char(' ');
-"119
-[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
-[; ;menu.c: 120: menuDelay=1255;
-"120
-[e = _menuDelay -> 1255 `i ]
-[; ;menu.c: 122: if(delayCount<30)
-"122
-[e $ ! < -> _delayCount `i -> 30 `i 1549  ]
-[; ;menu.c: 123: {
+[; ;menu.c: 123: LCD_Write_Char(' ');
 "123
-{
-[; ;menu.c: 124: _delay((unsigned long)((150)*(32000000/4000.0)));
+[e ( _LCD_Write_Char (1 -> -> 32 `ui `uc ]
+[; ;menu.c: 124: menuDelay=1255;
 "124
+[e = _menuDelay -> 1255 `i ]
+[; ;menu.c: 126: if(delayCount<30)
+"126
+[e $ ! < -> _delayCount `i -> 30 `i 1549  ]
+[; ;menu.c: 127: {
+"127
+{
+[; ;menu.c: 128: _delay((unsigned long)((150)*(32000000/4000.0)));
+"128
 [e ( __delay (1 -> * -> -> 150 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-"125
+"129
 }
 [e :U 1549 ]
-[; ;menu.c: 125: }
-[; ;menu.c: 127: if(delayCount>(30+10))delayCount=(30+10);
-"127
+[; ;menu.c: 129: }
+[; ;menu.c: 131: if(delayCount>(30+10))delayCount=(30+10);
+"131
 [e $ ! > -> _delayCount `i + -> 30 `i -> 10 `i 1550  ]
 [e = _delayCount -> + -> 30 `i -> 10 `i `uc ]
 [e :U 1550 ]
-[; ;menu.c: 129: timer=0;
-"129
+[; ;menu.c: 133: timer=0;
+"133
 [e = _timer -> 0 `i ]
-"130
+"134
 }
 [e :U 1545 ]
-[; ;menu.c: 130: }
-[; ;menu.c: 132: PWM7_LoadDutyValue(setpoint[1]);
-"132
+[; ;menu.c: 134: }
+[; ;menu.c: 136: PWM7_LoadDutyValue(setpoint[1]);
+"136
 [e ( _PWM7_LoadDutyValue (1 -> *U + &U _setpoint * -> -> -> 1 `i `ui `ux -> -> # *U &U _setpoint `ui `ux `ui ]
-[; ;menu.c: 135: if(delayCount>0)delayCount-=1;
-"135
+[; ;menu.c: 139: if(delayCount>0)delayCount-=1;
+"139
 [e $ ! > -> _delayCount `i -> 0 `i 1551  ]
 [e =- _delayCount -> -> 1 `i `uc ]
 [e :U 1551 ]
-[; ;menu.c: 137: if(!(RB1 || RB0))
-"137
-[e $ ! ! || _RB1 _RB0 1552  ]
-[; ;menu.c: 138: {
-"138
-{
-[; ;menu.c: 139: if(menuDelay>0)
-"139
-[e $ ! > _menuDelay -> 0 `i 1553  ]
-[; ;menu.c: 140: {
-"140
-{
-[; ;menu.c: 141: menuDelay-=1;
+[; ;menu.c: 141: if(!(RB1 || RB0))
 "141
-[e =- _menuDelay -> 1 `i ]
+[e $ ! ! || _RB1 _RB0 1552  ]
+[; ;menu.c: 142: {
 "142
+{
+[; ;menu.c: 143: if(menuDelay>0)
+"143
+[e $ ! > _menuDelay -> 0 `i 1553  ]
+[; ;menu.c: 144: {
+"144
+{
+[; ;menu.c: 145: menuDelay-=1;
+"145
+[e =- _menuDelay -> 1 `i ]
+"146
 }
 [e :U 1553 ]
-"143
+"147
 }
 [e :U 1552 ]
-"144
+"148
 }
 [e :U 1535 ]
-"82
+"86
 [e $ != -> _RB2 `i -> 1 `i 1536  ]
 [e :U 1537 ]
-[; ;menu.c: 142: }
-[; ;menu.c: 143: }
-[; ;menu.c: 144: }
-[; ;menu.c: 145: Exit:
-"145
-[e :U 1529 ]
-[; ;menu.c: 146: timer=0;
-"146
-[e = _timer -> 0 `i ]
-[; ;menu.c: 147: loop=254;
-"147
-[e = _loop -> -> 254 `i `uc ]
-[; ;menu.c: 148: LCD_Clear();
-"148
-[e ( _LCD_Clear ..  ]
-[; ;menu.c: 149: TRISC2 = 0;
+[; ;menu.c: 146: }
+[; ;menu.c: 147: }
+[; ;menu.c: 148: }
+[; ;menu.c: 149: Exit:
 "149
-[e = _TRISC2 -> -> 0 `i `b ]
-[; ;menu.c: 150: }
+[e :U 1529 ]
+[; ;menu.c: 150: timer=0;
 "150
+[e = _timer -> 0 `i ]
+[; ;menu.c: 151: loop=254;
+"151
+[e = _loop -> -> 254 `i `uc ]
+[; ;menu.c: 152: LCD_Clear();
+"152
+[e ( _LCD_Clear ..  ]
+[; ;menu.c: 153: TRISC2 = 0;
+"153
+[e = _TRISC2 -> -> 0 `i `b ]
+[; ;menu.c: 154: }
+"154
 [e :UE 1524 ]
 }
 [a 3C 85 112 47 68 111 119 110 32 116 111 32 65 108 116 101 114 0 ]

@@ -1,6 +1,10 @@
 #include    "menu.h"
 #include    "lcd.h"
 
+#define Kp_offset               0
+#define Ki_offset               1
+#define Kd_offset               2
+
 #define pitSetpoint             setpoint[0]
 #define backLightSetpoint       setpoint[1]
 #define upKey                   RB0

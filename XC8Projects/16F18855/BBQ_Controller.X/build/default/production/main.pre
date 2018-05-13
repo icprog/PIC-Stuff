@@ -16856,6 +16856,7 @@ _delay((unsigned long)((300)*(32000000/4000.0)));
 
 LCD_Clear();
 
+# 107
 while (1)
 {
 extern int16_t errorValue;
@@ -16878,7 +16879,7 @@ LCD_Write_Char(' ');
 { LCD_Set_Cursor(6,1); LCD_Write_Int(analogs[1],4, 1, 0);};
 { LCD_Set_Cursor(12,1); LCD_Write_Int(dutyCycle6,4, 0, 0);};
 
-# 132
+# 143
 if(holdOutput==0)
 {
 output = PID_Calculate(setpoint[0]+20,analogs[1]);
@@ -16945,7 +16946,7 @@ menuChoice();
 _delay((unsigned long)((500)*(32000000/4000.0)));
 }
 
-# 432
+# 443
 loop+=1;
 }
 }
