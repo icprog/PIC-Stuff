@@ -10,7 +10,7 @@ uint16_t sampleIndex                        =   {0};
 
 uint32_t totals[numChannels]                =   {0};
 
-static uint8_t channels[numChannels]        =   {16,17,18,19};                              // List all the Analog channel numbers here, must be same number listed as numChannels
+static uint8_t channels[numChannels]        =   {16,17,18,19};          // List all the Analog channel numbers here, must be same number as numChannels
 
 // *************** ADC Read Individual Channel ****************************************************************************************************
 adc_result_t ADCRead(adc_channel_t channel)

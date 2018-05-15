@@ -26,7 +26,7 @@ void main(void)
     uint16_t    Batt_I      =   0;
 //    uint16_t    PV_V_Old    =   0;
 //    uint16_t    PV_I_Old    =   0;
-    uint16_t    Batt_V_Old  =   0;
+    uint16_t    PV_V_Old  =   0;
 //    uint16_t    Batt_I_Old  =   0;
     uint16_t    powerOutOld =   0;
     uint16_t    dutyCycle7  =   0;
@@ -48,11 +48,11 @@ void main(void)
 
         if(loopCount>10)
         {
-            if(call)
+            if(call)                                    // Need IRQ to set call
             {
                 if(powerOut>powerOutOld)
                 {
-                    if(Batt_V>Batt_V_Old)
+                    if(PV_V>PV_V_Old)
                     {
                         PWM+=1;
                     }
@@ -63,7 +63,7 @@ void main(void)
                 }
                 else
                 {
-                    if(Batt_V>Batt_V_Old)
+                    if(PV_V>PV_V_Old)
                     {
                         PWM-=1;
                     }
@@ -73,7 +73,7 @@ void main(void)
                     }
                 }
                 powerOutOld=powerOut;
-                Batt_V_Old=Batt_V;
+                PV_V_Old=PV_V;
                 PWM7_LoadDutyValue(PWM);
                 call=0;
             }
