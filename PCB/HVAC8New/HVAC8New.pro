@@ -1,25 +1,25 @@
 EAGLE AutoRouter Statistics:
 
-Job           : D:/PIC/PCB/HVAC8New/HVAC8New.brd
+Job           : D:/PIC-Stuff/PCB/HVAC8New/HVAC8New.brd
 
-Start at      : 20:43:37 (8/11/2017)
-End at        : 20:48:09 (8/11/2017)
-Elapsed time  : 00:01:44
+Start at      : 16:50:48 (5/15/2018)
+End at        : 16:54:15 (5/15/2018)
+Elapsed time  : 00:03:21
 
 Signals       :   104   RoutingGrid: 9 mil  Layers: 2
-Connections   :   283   predefined:  1 ( 0 Vias )
+Connections   :   283   predefined:  282 ( 36 Vias )
 
 Router memory :   667528
 
 Passname          : TopRouter     Route Optimize1 Optimize2 Optimize3 Optimize4 Optimize5 Optimize6 Optimize7 Optimize8 Optimize9Optimize10Optimize11Optimize12
 
-Time per pass     :  00:01:01  00:00:04  00:00:03  00:00:03  00:00:04  00:00:03  00:00:03  00:00:03  00:00:04  00:00:03  00:00:03  00:00:03  00:00:04  00:00:03
-Number of Ripups  :         0         4         0         0         0         0         0         0         0         0         0         0         0         0
-max. Level        :         0         1         0         0         0         0         0         0         0         0         0         0         0         0
-max. Total        :         0         4         0         0         0         0         0         0         0         0         0         0         0         0
+Time per pass     :  00:03:19  00:00:00  00:00:00  00:00:00  00:00:01  00:00:00  00:00:00  00:00:00  00:00:00  00:00:01  00:00:00  00:00:00  00:00:00  00:00:00
+Number of Ripups  :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
+max. Level        :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
+max. Total        :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
 
-Routed            :       136       282       281       281       281       281       281       281       281       282       282       282       282       282
-Vias              :         0        49        54        44        43        43        43        43        44        38        36        36        36        36
-Resolution        :    48.4 %   100.0 %    99.6 %    99.6 %    99.6 %    99.6 %    99.6 %    99.6 %    99.6 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
+Routed            :         1         1         1         1         1         1         1         1         1         1         1         1         1         1
+Vias              :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
+Resolution        :   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
 
 Final             : 99.6% finished. Polygons may have fallen apart.
