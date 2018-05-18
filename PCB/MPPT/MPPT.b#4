@@ -45,11 +45,53 @@
 <layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="90" name="Modules" color="5" fill="1" visible="no" active="no"/>
+<layer number="91" name="Nets" color="2" fill="1" visible="no" active="no"/>
+<layer number="92" name="Busses" color="1" fill="1" visible="no" active="no"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="no" active="no"/>
+<layer number="94" name="Symbols" color="4" fill="1" visible="no" active="no"/>
+<layer number="95" name="Names" color="7" fill="1" visible="no" active="no"/>
+<layer number="96" name="Values" color="7" fill="1" visible="no" active="no"/>
+<layer number="97" name="Info" color="7" fill="1" visible="no" active="no"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="no" active="no"/>
 </layers>
 <board>
 <plain>
 </plain>
 <libraries>
+<library name="SamacSys_Parts">
+<description>&lt;b&gt;https://componentsearchengine.com&lt;/b&gt;&lt;p&gt;
+&lt;author&gt;Created by SamacSys&lt;/author&gt;</description>
+<packages>
+<package name="EX-PACKAGE">
+<description>&lt;b&gt;EX-Package&lt;/b&gt;&lt;br&gt;
+</description>
+<smd name="1" x="-1.35" y="0.5" dx="1.27" dy="0.8" layer="1"/>
+<smd name="2" x="-1.35" y="-0.5" dx="1.27" dy="0.8" layer="1"/>
+<smd name="3" x="0.15" y="-1.45" dx="0.85" dy="0.3" layer="1" rot="R90"/>
+<smd name="4" x="0.65" y="-1.45" dx="0.85" dy="0.3" layer="1" rot="R90"/>
+<smd name="5" x="1.35" y="-0.75" dx="0.85" dy="0.3" layer="1"/>
+<smd name="6" x="1.35" y="-0.25" dx="0.85" dy="0.3" layer="1"/>
+<smd name="7" x="1.35" y="0.25" dx="0.85" dy="0.3" layer="1"/>
+<smd name="8" x="1.35" y="0.75" dx="0.85" dy="0.3" layer="1"/>
+<smd name="9" x="0.65" y="1.45" dx="0.85" dy="0.3" layer="1" rot="R90"/>
+<smd name="10" x="0.15" y="1.45" dx="0.85" dy="0.3" layer="1" rot="R90"/>
+<text x="-0.37331875" y="0.065040625" size="1.27" layer="25" align="center">&gt;NAME</text>
+<text x="-0.37331875" y="0.065040625" size="1.27" layer="27" align="center">&gt;VALUE</text>
+<wire x1="-1.5" y1="1.5" x2="1.5" y2="1.5" width="0.254" layer="51"/>
+<wire x1="1.5" y1="1.5" x2="1.5" y2="-1.5" width="0.254" layer="51"/>
+<wire x1="1.5" y1="-1.5" x2="-1.5" y2="-1.5" width="0.254" layer="51"/>
+<wire x1="-1.5" y1="-1.5" x2="-1.5" y2="1.5" width="0.254" layer="51"/>
+<wire x1="-1.5" y1="1.5" x2="-0.3" y2="1.5" width="0.254" layer="21"/>
+<wire x1="-1.5" y1="-1.5" x2="-0.3" y2="-1.5" width="0.254" layer="21"/>
+<wire x1="1.5" y1="1.5" x2="1.12" y2="1.5" width="0.254" layer="21"/>
+<wire x1="1.5" y1="-1.5" x2="1.12" y2="-1.5" width="0.254" layer="21"/>
+<wire x1="-1.5" y1="1.5" x2="-1.5" y2="1.225" width="0.254" layer="21"/>
+<wire x1="-1.5" y1="-1.5" x2="-1.5" y2="-1.225" width="0.254" layer="21"/>
+<circle x="-2.197" y="0.513" radius="0.029" width="0.254" layer="25"/>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -233,6 +275,20 @@ design rules under a new name.
 </pass>
 </autorouter>
 <elements>
+<element name="IC1" library="SamacSys_Parts" package="EX-PACKAGE" value="ACS711KEXLT-15AB-T" x="19.05" y="29.21">
+<attribute name="ARROW_PART_NUMBER" value="ACS711KEXLT-15AB-T" x="19.05" y="29.21" size="1.778" layer="27" display="off"/>
+<attribute name="DESCRIPTION" value="Hall Effect Linear Current Sensor with Overcurrent Fault Output for &lt;100 V Isolation Applications" x="19.05" y="29.21" size="1.778" layer="27" display="off"/>
+<attribute name="HEIGHT" value="mm" x="19.05" y="29.21" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_NAME" value="Allegro Microsystems" x="19.05" y="29.21" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="ACS711KEXLT-15AB-T" x="19.05" y="29.21" size="1.778" layer="27" display="off"/>
+</element>
+<element name="IC2" library="SamacSys_Parts" package="EX-PACKAGE" value="ACS711KEXLT-15AB-T" x="19.05" y="49.53">
+<attribute name="ARROW_PART_NUMBER" value="ACS711KEXLT-15AB-T" x="19.05" y="49.53" size="1.778" layer="27" display="off"/>
+<attribute name="DESCRIPTION" value="Hall Effect Linear Current Sensor with Overcurrent Fault Output for &lt;100 V Isolation Applications" x="19.05" y="49.53" size="1.778" layer="27" display="off"/>
+<attribute name="HEIGHT" value="mm" x="19.05" y="49.53" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_NAME" value="Allegro Microsystems" x="19.05" y="49.53" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="ACS711KEXLT-15AB-T" x="19.05" y="49.53" size="1.778" layer="27" display="off"/>
+</element>
 </elements>
 <signals>
 </signals>
