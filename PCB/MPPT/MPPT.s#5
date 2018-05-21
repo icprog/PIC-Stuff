@@ -144,6 +144,85 @@ Source: &lt;a href="https://www.arrow.com/en/products/acs711kexlt-15ab-t/allegro
 </deviceset>
 </devicesets>
 </library>
+<library name="Stuff_I_Use">
+<packages>
+<package name="CONN-KF2EDG-10(5.08)">
+<description>Pad wth 1.6 mm Hole</description>
+<hole x="-22.4" y="3" drill="1.6"/>
+<pad name="PAD1" x="23.32" y="3" drill="1.6" diameter="3.81" shape="long" rot="R270"/>
+<pad name="PAD2" x="18.24" y="3" drill="1.6" diameter="3.81" shape="long" rot="R270"/>
+<hole x="13.16" y="3" drill="1.6"/>
+<pad name="PAD3" x="13.16" y="3" drill="1.6" diameter="3.81" shape="long" rot="R270"/>
+<pad name="PAD4" x="8.08" y="3" drill="1.6" diameter="3.81" shape="long" rot="R270"/>
+<pad name="PAD5" x="3" y="3" drill="1.6" diameter="3.81" shape="long" rot="R270"/>
+<pad name="PAD6" x="-2.08" y="3" drill="1.6" diameter="3.81" shape="long" rot="R270"/>
+<pad name="PAD7" x="-7.16" y="3" drill="1.6" diameter="3.81" shape="long" rot="R270"/>
+<pad name="PAD8" x="-12.24" y="3" drill="1.6" diameter="3.81" shape="long" rot="R270"/>
+<pad name="PAD9" x="-17.32" y="3" drill="1.6" diameter="3.81" shape="long" rot="R270"/>
+<pad name="PAD10" x="-22.4" y="3" drill="1.6" diameter="3.81" shape="long" rot="R270"/>
+<hole x="18.24" y="3" drill="1.6"/>
+<hole x="23.32" y="3" drill="1.6"/>
+<hole x="3" y="3" drill="1.6"/>
+<hole x="-2.08" y="3" drill="1.6"/>
+<hole x="8.08" y="3" drill="1.6"/>
+<hole x="-7.16" y="3" drill="1.6"/>
+<hole x="-12.24" y="3" drill="1.6"/>
+<hole x="-17.32" y="3" drill="1.6"/>
+<circle x="23.32" y="0.46" radius="1.27" width="0" layer="21"/>
+<wire x1="26" y1="6" x2="26" y2="-6" width="0.127" layer="51"/>
+<wire x1="26" y1="-6" x2="-25" y2="-6" width="0.127" layer="51"/>
+<wire x1="-25" y1="-6" x2="-25" y2="6" width="0.127" layer="51"/>
+<wire x1="-25" y1="6" x2="26" y2="6" width="0.127" layer="51"/>
+<text x="5" y="-4" size="1.27" layer="51" rot="R180">Board Edge</text>
+<wire x1="-25" y1="-6" x2="-25" y2="6" width="0.3048" layer="21"/>
+<wire x1="-25" y1="6" x2="26" y2="6" width="0.3048" layer="21"/>
+<wire x1="26" y1="6" x2="26" y2="-6" width="0.3048" layer="21"/>
+<wire x1="26" y1="-6" x2="-25" y2="-6" width="0.3048" layer="21"/>
+<text x="-24.54" y="-3" size="1.27" layer="25">&gt;NAME</text>
+<text x="-16.86" y="-3" size="1.27" layer="25">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="CONN-KF2EDG-10(5.08)">
+<pin name="P$1" x="-20.32" y="5.08" length="middle" rot="R270"/>
+<pin name="P$2" x="-15.24" y="5.08" length="middle" rot="R270"/>
+<pin name="P$3" x="-10.16" y="5.08" length="middle" rot="R270"/>
+<pin name="P$4" x="-5.08" y="5.08" length="middle" rot="R270"/>
+<pin name="P$5" x="0" y="5.08" length="middle" rot="R270"/>
+<pin name="P$6" x="5.08" y="5.08" length="middle" rot="R270"/>
+<pin name="P$7" x="10.16" y="5.08" length="middle" rot="R270"/>
+<pin name="P$8" x="15.24" y="5.08" length="middle" rot="R270"/>
+<pin name="P$9" x="20.32" y="5.08" length="middle" rot="R270"/>
+<pin name="P$10" x="25.4" y="5.08" length="middle" rot="R270"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="CONN-KF2EDG-10(5.08)">
+<gates>
+<gate name="G$1" symbol="CONN-KF2EDG-10(5.08)" x="20.32" y="0"/>
+</gates>
+<devices>
+<device name="E-BAYPLUGGABLECONNECTORS" package="CONN-KF2EDG-10(5.08)">
+<connects>
+<connect gate="G$1" pin="P$1" pad="PAD1"/>
+<connect gate="G$1" pin="P$10" pad="PAD10"/>
+<connect gate="G$1" pin="P$2" pad="PAD2"/>
+<connect gate="G$1" pin="P$3" pad="PAD3"/>
+<connect gate="G$1" pin="P$4" pad="PAD4"/>
+<connect gate="G$1" pin="P$5" pad="PAD5"/>
+<connect gate="G$1" pin="P$6" pad="PAD6"/>
+<connect gate="G$1" pin="P$7" pad="PAD7"/>
+<connect gate="G$1" pin="P$8" pad="PAD8"/>
+<connect gate="G$1" pin="P$9" pad="PAD9"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -156,6 +235,7 @@ Source: &lt;a href="https://www.arrow.com/en/products/acs711kexlt-15ab-t/allegro
 <parts>
 <part name="IC1" library="SamacSys_Parts" deviceset="ACS711KEXLT-15AB-T" device=""/>
 <part name="IC2" library="SamacSys_Parts" deviceset="ACS711KEXLT-15AB-T" device=""/>
+<part name="U$1" library="Stuff_I_Use" deviceset="CONN-KF2EDG-10(5.08)" device="E-BAYPLUGGABLECONNECTORS"/>
 </parts>
 <sheets>
 <sheet>
@@ -165,6 +245,7 @@ Source: &lt;a href="https://www.arrow.com/en/products/acs711kexlt-15ab-t/allegro
 <instances>
 <instance part="IC1" gate="G$1" x="35.56" y="142.24"/>
 <instance part="IC2" gate="G$1" x="35.56" y="99.06"/>
+<instance part="U$1" gate="G$1" x="175.26" y="121.92" rot="R270"/>
 </instances>
 <busses>
 </busses>
