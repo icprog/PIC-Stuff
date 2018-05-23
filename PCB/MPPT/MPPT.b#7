@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
+<grid distance="2.54" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -1225,6 +1225,27 @@ for trimmer refence see : &lt;u&gt;www.electrospec-inc.com/cross_references/trim
 </package>
 </packages>
 </library>
+<library name="wirepad">
+<description>&lt;b&gt;Single Pads&lt;/b&gt;&lt;p&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="3,81/1,4">
+<description>&lt;b&gt;THROUGH-HOLE PAD&lt;/b&gt;</description>
+<wire x1="1.905" y1="-1.27" x2="1.905" y2="-1.905" width="0.1524" layer="21"/>
+<wire x1="1.905" y1="-1.905" x2="1.27" y2="-1.905" width="0.1524" layer="21"/>
+<wire x1="-1.27" y1="-1.905" x2="-1.905" y2="-1.905" width="0.1524" layer="21"/>
+<wire x1="-1.905" y1="-1.905" x2="-1.905" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="-1.905" y1="1.27" x2="-1.905" y2="1.905" width="0.1524" layer="21"/>
+<wire x1="-1.905" y1="1.905" x2="-1.27" y2="1.905" width="0.1524" layer="21"/>
+<wire x1="1.27" y1="1.905" x2="1.905" y2="1.905" width="0.1524" layer="21"/>
+<wire x1="1.905" y1="1.905" x2="1.905" y2="1.27" width="0.1524" layer="21"/>
+<circle x="0" y="0" radius="1.27" width="0.1524" layer="51"/>
+<pad name="1" x="0" y="0" drill="1.397" diameter="3.81" shape="octagon"/>
+<text x="-1.905" y="2.286" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="0" y="1.2" size="0.0254" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1408,14 +1429,14 @@ design rules under a new name.
 </pass>
 </autorouter>
 <elements>
-<element name="IC1" library="SamacSys_Parts" package="EX-PACKAGE" value="ACS711KEXLT-15AB-T" x="30.48" y="58.42" rot="R270">
+<element name="PV_1_I_SENSE" library="SamacSys_Parts" package="EX-PACKAGE" value="ACS711KEXLT-15AB-T" x="30.48" y="58.42" rot="R270">
 <attribute name="ARROW_PART_NUMBER" value="ACS711KEXLT-15AB-T" x="30.48" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DESCRIPTION" value="Hall Effect Linear Current Sensor with Overcurrent Fault Output for &lt;100 V Isolation Applications" x="30.48" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="HEIGHT" value="mm" x="30.48" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Allegro Microsystems" x="30.48" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="ACS711KEXLT-15AB-T" x="30.48" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="IC2" library="SamacSys_Parts" package="EX-PACKAGE" value="ACS711KEXLT-15AB-T" x="43.18" y="58.42" rot="R270">
+<element name="BATT_1_I_SENSE" library="SamacSys_Parts" package="EX-PACKAGE" value="ACS711KEXLT-15AB-T" x="43.18" y="58.42" rot="R270">
 <attribute name="ARROW_PART_NUMBER" value="ACS711KEXLT-15AB-T" x="43.18" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DESCRIPTION" value="Hall Effect Linear Current Sensor with Overcurrent Fault Output for &lt;100 V Isolation Applications" x="43.18" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="HEIGHT" value="mm" x="43.18" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
@@ -1449,6 +1470,14 @@ design rules under a new name.
 <attribute name="MANUFACTURER_NAME" value="Allegro Microsystems" x="72.39" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="ACS711KEXLT-15AB-T" x="72.39" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
+<element name="BUCK1_IN-" library="wirepad" package="3,81/1,4" value=" " x="2.54" y="-5.08"/>
+<element name="BUCK1_IN+" library="wirepad" package="3,81/1,4" value=" " x="2.54" y="-12.7"/>
+<element name="BUCK1_OUT-" library="wirepad" package="3,81/1,4" value=" " x="2.54" y="-20.32"/>
+<element name="BUCK1_OUT+" library="wirepad" package="3,81/1,4" value=" " x="2.54" y="-27.94"/>
+<element name="BUCK2_IN+" library="wirepad" package="3,81/1,4" value=" " x="2.54" y="-35.56"/>
+<element name="BUCK2_IN-" library="wirepad" package="3,81/1,4" value=" " x="2.54" y="-43.18"/>
+<element name="BUCK2_OUT-" library="wirepad" package="3,81/1,4" value=" " x="2.54" y="-50.8"/>
+<element name="BUCK2_OUT+" library="wirepad" package="3,81/1,4" value=" " x="2.54" y="-58.42"/>
 </elements>
 <signals>
 <signal name="VSS">
@@ -1458,117 +1487,310 @@ design rules under a new name.
 <vertex x="100" y="80"/>
 <vertex x="0" y="80"/>
 </polygon>
-<contactref element="IC1" pad="3"/>
-<contactref element="IC2" pad="3"/>
-<contactref element="IC4" pad="3"/>
+<contactref element="U$1" pad="PAD9"/>
+<contactref element="BUCK2_IN-" pad="1"/>
+<contactref element="C3" pad="1"/>
+<contactref element="U$1" pad="PAD8"/>
+<contactref element="R6" pad="1"/>
+<contactref element="BUCK2_OUT-" pad="1"/>
+<contactref element="R8" pad="1"/>
+<contactref element="C4" pad="1"/>
 <contactref element="IC3" pad="3"/>
-<wire x1="60.78" y1="58.27" x2="70.94" y2="58.27" width="0" layer="19" extent="1-1"/>
-<wire x1="41.73" y1="58.27" x2="60.78" y2="58.27" width="0" layer="19" extent="1-1"/>
-<wire x1="29.03" y1="58.27" x2="41.73" y2="58.27" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$PV_1-">
-<contactref element="IC1" pad="2"/>
-<contactref element="U$1" pad="PAD1"/>
+<contactref element="IC4" pad="3"/>
+<contactref element="BUCK1_OUT-" pad="1"/>
+<contactref element="BATT_1_I_SENSE" pad="3"/>
+<contactref element="U$1" pad="PAD2"/>
+<contactref element="R4" pad="1"/>
+<contactref element="C2" pad="1"/>
+<contactref element="U$1" pad="PAD3"/>
+<contactref element="BUCK1_IN-" pad="1"/>
 <contactref element="R2" pad="2"/>
 <contactref element="C1" pad="1"/>
-<wire x1="29.98" y1="59.77" x2="27.48" y2="70.66" width="0" layer="19" extent="1-1"/>
-<wire x1="26.25" y1="59.69" x2="29.98" y2="59.77" width="0" layer="19" extent="1-1"/>
-<wire x1="26.25" y1="63.5" x2="26.25" y2="59.69" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$PV_1+">
-<contactref element="IC1" pad="1"/>
-<contactref element="U$1" pad="PAD2"/>
-<contactref element="R1" pad="2"/>
-<wire x1="30.98" y1="59.77" x2="32.56" y2="70.66" width="0" layer="19" extent="1-1"/>
-<wire x1="31.33" y1="63.5" x2="30.98" y2="59.77" width="0" layer="19" extent="1-1"/>
+<contactref element="PV_1_I_SENSE" pad="3"/>
+<wire x1="63.04" y1="70.66" x2="68.12" y2="70.66" width="0" layer="19" extent="1-1"/>
+<wire x1="66.46" y1="63.5" x2="68.12" y2="70.66" width="0" layer="19" extent="1-1"/>
+<wire x1="68.16" y1="59.69" x2="66.46" y2="63.5" width="0" layer="19" extent="1-1"/>
+<wire x1="70.94" y1="58.27" x2="68.16" y2="59.69" width="0" layer="19" extent="1-1"/>
+<wire x1="60.78" y1="58.27" x2="68.16" y2="59.69" width="0" layer="19" extent="1-1"/>
+<wire x1="58" y1="59.69" x2="60.78" y2="58.27" width="0" layer="19" extent="1-1"/>
+<wire x1="58" y1="63.5" x2="58" y2="59.69" width="0" layer="19" extent="1-1"/>
+<wire x1="41.73" y1="58.27" x2="58" y2="59.69" width="0" layer="19" extent="1-1"/>
+<wire x1="38.95" y1="59.69" x2="41.73" y2="58.27" width="0" layer="19" extent="1-1"/>
+<wire x1="38.95" y1="63.5" x2="38.95" y2="59.69" width="0" layer="19" extent="1-1"/>
+<wire x1="37.64" y1="70.66" x2="38.95" y2="63.5" width="0" layer="19" extent="1-1"/>
+<wire x1="32.56" y1="70.66" x2="37.64" y2="70.66" width="0" layer="19" extent="1-1"/>
+<wire x1="26.25" y1="63.5" x2="32.56" y2="70.66" width="0" layer="19" extent="1-1"/>
+<wire x1="26.25" y1="59.69" x2="26.25" y2="63.5" width="0" layer="19" extent="1-1"/>
+<wire x1="29.03" y1="58.27" x2="26.25" y2="59.69" width="0" layer="19" extent="1-1"/>
+<wire x1="2.54" y1="-5.08" x2="29.03" y2="58.27" width="0" layer="19" extent="1-1"/>
+<wire x1="2.54" y1="-20.32" x2="2.54" y2="-5.08" width="0" layer="19" extent="1-1"/>
+<wire x1="2.54" y1="-43.18" x2="2.54" y2="-20.32" width="0" layer="19" extent="1-1"/>
+<wire x1="2.54" y1="-50.8" x2="2.54" y2="-43.18" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VDD">
-<contactref element="IC1" pad="10"/>
 <contactref element="IC3" pad="10"/>
 <contactref element="IC4" pad="10"/>
-<contactref element="IC2" pad="10"/>
+<contactref element="BATT_1_I_SENSE" pad="10"/>
+<contactref element="PV_1_I_SENSE" pad="10"/>
 <wire x1="63.68" y1="58.27" x2="73.84" y2="58.27" width="0" layer="19" extent="1-1"/>
 <wire x1="44.63" y1="58.27" x2="63.68" y2="58.27" width="0" layer="19" extent="1-1"/>
 <wire x1="31.93" y1="58.27" x2="44.63" y2="58.27" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="N$1">
-<contactref element="R1" pad="1"/>
+<signal name="N$3">
+<contactref element="C1" pad="2"/>
+<contactref element="C1" pad="2"/>
 <contactref element="R2" pad="1"/>
-<contactref element="C1" pad="2"/>
-<contactref element="C1" pad="2"/>
-<wire x1="24.55" y1="63.5" x2="29.63" y2="63.5" width="0" layer="19" extent="1-1"/>
+<contactref element="R1" pad="2"/>
+<wire x1="24.55" y1="63.5" x2="31.33" y2="63.5" width="0" layer="19" extent="1-1"/>
 <wire x1="24.55" y1="59.69" x2="24.55" y2="63.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$4">
+<contactref element="BATT_1_I_SENSE" pad="1"/>
+<contactref element="BUCK1_OUT+" pad="1"/>
+<wire x1="2.54" y1="-27.94" x2="43.68" y2="59.77" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$5">
 <contactref element="R3" pad="2"/>
-<contactref element="C2" pad="2"/>
 <contactref element="R4" pad="2"/>
+<contactref element="C2" pad="2"/>
 <wire x1="37.25" y1="63.5" x2="42.33" y2="63.5" width="0" layer="19" extent="1-1"/>
 <wire x1="37.25" y1="59.69" x2="37.25" y2="63.5" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="N$2">
-<contactref element="U$1" pad="PAD3"/>
-<contactref element="IC2" pad="2"/>
-<contactref element="C2" pad="1"/>
-<contactref element="R4" pad="1"/>
-<wire x1="38.95" y1="63.5" x2="37.64" y2="70.66" width="0" layer="19" extent="1-1"/>
-<wire x1="38.95" y1="59.69" x2="38.95" y2="63.5" width="0" layer="19" extent="1-1"/>
-<wire x1="42.68" y1="59.77" x2="38.95" y2="59.69" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$3">
-<contactref element="IC2" pad="1"/>
+<signal name="N$6">
+<contactref element="BATT_1_I_SENSE" pad="2"/>
 <contactref element="U$1" pad="PAD4"/>
 <contactref element="R3" pad="1"/>
 <wire x1="44.03" y1="63.5" x2="42.72" y2="70.66" width="0" layer="19" extent="1-1"/>
-<wire x1="43.68" y1="59.77" x2="44.03" y2="63.5" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$B_1-">
-<contactref element="U$1" pad="PAD7"/>
-<contactref element="IC3" pad="2"/>
-<contactref element="C3" pad="1"/>
-<contactref element="R6" pad="1"/>
-<wire x1="58" y1="63.5" x2="57.96" y2="70.66" width="0" layer="19" extent="1-1"/>
-<wire x1="58" y1="59.69" x2="58" y2="63.5" width="0" layer="19" extent="1-1"/>
-<wire x1="61.73" y1="59.77" x2="58" y2="59.69" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$B_1+">
-<contactref element="U$1" pad="PAD8"/>
-<contactref element="IC3" pad="1"/>
-<contactref element="R5" pad="2"/>
-<wire x1="63.08" y1="63.5" x2="63.04" y2="70.66" width="0" layer="19" extent="1-1"/>
-<wire x1="62.73" y1="59.77" x2="63.08" y2="63.5" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$5">
-<contactref element="R5" pad="1"/>
-<contactref element="C3" pad="2"/>
-<contactref element="R6" pad="2"/>
-<wire x1="56.3" y1="63.5" x2="61.38" y2="63.5" width="0" layer="19" extent="1-1"/>
-<wire x1="56.3" y1="59.69" x2="56.3" y2="63.5" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$6">
-<contactref element="R7" pad="2"/>
-<contactref element="R8" pad="1"/>
-<contactref element="C4" pad="2"/>
-<wire x1="66.46" y1="63.5" x2="71.54" y2="63.5" width="0" layer="19" extent="1-1"/>
-<wire x1="66.46" y1="59.69" x2="66.46" y2="63.5" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$7">
-<contactref element="U$1" pad="PAD10"/>
-<contactref element="R7" pad="1"/>
-<contactref element="IC4" pad="1"/>
-<wire x1="73.24" y1="63.5" x2="73.2" y2="70.66" width="0" layer="19" extent="1-1"/>
-<wire x1="72.89" y1="59.77" x2="73.24" y2="63.5" width="0" layer="19" extent="1-1"/>
+<wire x1="42.68" y1="59.77" x2="44.03" y2="63.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$8">
+<contactref element="U$1" pad="PAD7"/>
+<contactref element="IC3" pad="1"/>
+<contactref element="R5" pad="1"/>
+<wire x1="61.38" y1="63.5" x2="57.96" y2="70.66" width="0" layer="19" extent="1-1"/>
+<wire x1="62.73" y1="59.77" x2="61.38" y2="63.5" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$9">
+<contactref element="IC3" pad="2"/>
+<contactref element="BUCK2_IN+" pad="1"/>
+<wire x1="2.54" y1="-35.56" x2="61.73" y2="59.77" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$10">
+<contactref element="R6" pad="2"/>
+<contactref element="R5" pad="2"/>
+<contactref element="C3" pad="2"/>
+<wire x1="56.3" y1="63.5" x2="63.08" y2="63.5" width="0" layer="19" extent="1-1"/>
+<wire x1="56.3" y1="59.69" x2="56.3" y2="63.5" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$7">
+<contactref element="BUCK2_OUT+" pad="1"/>
+<contactref element="IC4" pad="1"/>
+<wire x1="2.54" y1="-58.42" x2="72.89" y2="59.77" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$11">
 <contactref element="IC4" pad="2"/>
-<contactref element="U$1" pad="PAD9"/>
+<contactref element="U$1" pad="PAD10"/>
+<contactref element="R7" pad="2"/>
+<wire x1="71.54" y1="63.5" x2="73.2" y2="70.66" width="0" layer="19" extent="1-1"/>
+<wire x1="71.89" y1="59.77" x2="71.54" y2="63.5" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$12">
+<contactref element="R7" pad="1"/>
 <contactref element="R8" pad="2"/>
-<contactref element="C4" pad="1"/>
-<wire x1="68.16" y1="63.5" x2="68.12" y2="70.66" width="0" layer="19" extent="1-1"/>
-<wire x1="68.16" y1="59.69" x2="68.16" y2="63.5" width="0" layer="19" extent="1-1"/>
-<wire x1="71.89" y1="59.77" x2="68.16" y2="59.69" width="0" layer="19" extent="1-1"/>
+<contactref element="C4" pad="2"/>
+<wire x1="68.16" y1="63.5" x2="73.24" y2="63.5" width="0" layer="19" extent="1-1"/>
+<wire x1="66.46" y1="59.69" x2="68.16" y2="63.5" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$1">
+<contactref element="U$1" pad="PAD1"/>
+<contactref element="PV_1_I_SENSE" pad="1"/>
+<contactref element="R1" pad="1"/>
+<wire x1="29.63" y1="63.5" x2="27.48" y2="70.66" width="0" layer="19" extent="1-1"/>
+<wire x1="30.98" y1="59.77" x2="29.63" y2="63.5" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$13">
+<contactref element="PV_1_I_SENSE" pad="2"/>
+<contactref element="BUCK1_IN+" pad="1"/>
+<wire x1="2.54" y1="-12.7" x2="29.98" y2="59.77" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
+<errors>
+<approved hash="18,29,a811150883073e1e"/>
+<approved hash="18,29,96f05a00ccfd000d"/>
+<approved hash="18,29,c61e7bf111feac11"/>
+<approved hash="18,29,f8fc34f95e049201"/>
+<approved hash="18,29,90f18381698d7afd"/>
+<approved hash="18,29,43fa641c8ee2a904"/>
+<approved hash="18,29,99254fcd99da943c"/>
+<approved hash="18,29,b1275324633066fc"/>
+<approved hash="18,29,91397763bd77b0a3"/>
+<approved hash="18,29,8929537b176ec2dd"/>
+<approved hash="18,29,89274f53e1464cdf"/>
+<approved hash="18,29,91254349ab5e9f3c"/>
+<approved hash="18,29,b12746a064b468fc"/>
+<approved hash="18,29,9921429fbe8bbadb"/>
+<approved hash="18,29,f9214ef708e204dd"/>
+<approved hash="18,29,912732efd2fa56ff"/>
+<approved hash="18,29,359bc56bcff63f06"/>
+<approved hash="18,29,4c8ee1a6e1b94c91"/>
+<approved hash="18,29,4c8ee1a6e1b94c91"/>
+<approved hash="18,29,4a01e237e2284a1e"/>
+<approved hash="18,29,4a01e237e2284a1e"/>
+<approved hash="18,29,c208f1781b642814"/>
+<approved hash="18,29,2433480d4811242f"/>
+<approved hash="18,29,b51152f7b8fa5f1c"/>
+<approved hash="18,29,b1ff9ad21ac931e4"/>
+<approved hash="18,29,b1ff9ad21ac931e4"/>
+<approved hash="18,29,bcb52cf7e0ea70a8"/>
+<approved hash="18,29,bcb52efaaee73ca8"/>
+<approved hash="18,29,0fa8b7897b8fc3ae"/>
+<approved hash="18,29,dfe4b2aa32a75fe9"/>
+<approved hash="18,29,9eae048fc88c52ad"/>
+<approved hash="18,29,61ad958c5982ada3"/>
+<approved hash="18,29,4be04e024e014be3"/>
+<approved hash="18,29,4d6f4d934d904d6c"/>
+<approved hash="18,29,0fa8b58435828fae"/>
+<approved hash="18,29,dfe4b2aa32a75fe9"/>
+<approved hash="18,29,9eae068286811ead"/>
+<approved hash="18,29,b8a5ff7722ab6092"/>
+<approved hash="18,29,e99db8f7b8fbe991"/>
+<approved hash="18,29,61ad9781178fe1a3"/>
+<approved hash="18,29,4be04e024e014be3"/>
+<approved hash="18,29,4d6f4d934d904d6c"/>
+<approved hash="18,29,90de982993faace7"/>
+<approved hash="18,29,b7d710ce86c521dc"/>
+<approved hash="18,29,9537a5c733c30333"/>
+<approved hash="18,29,6b0e4524532e7d04"/>
+<approved hash="18,29,8a6e882d9e299c6a"/>
+<approved hash="18,29,d9d87e37143cb3d3"/>
+<approved hash="18,29,fb3bcb3ea13a913f"/>
+<approved hash="18,29,a6039c708a0eb07d"/>
+<approved hash="18,29,1977775d61470f6d"/>
+<approved hash="18,29,b801ba42ac4eae0d"/>
+<approved hash="18,29,dfc89a36ff2a5e32"/>
+<approved hash="18,29,49cce6e4e6e749cf"/>
+<approved hash="18,29,49cce6e4e6e749cf"/>
+<approved hash="18,29,4f43e575e5764f40"/>
+<approved hash="18,29,4f43e575e5764f40"/>
+<approved hash="18,29,19714f4f4f53196d"/>
+<approved hash="18,29,bebd9d901d8f3ea2"/>
+<approved hash="18,29,bebd9d901d8f3ea2"/>
+<approved hash="18,29,b1f72bb5e7a87dea"/>
+<approved hash="18,29,b1f729b8a9a531ea"/>
+<approved hash="18,29,00eab2cb7ec9cce8"/>
+<approved hash="18,29,dca2b5ec35e95ca7"/>
+<approved hash="18,29,93e803c9cfce5fef"/>
+<approved hash="18,29,62ef90ce5cccaeed"/>
+<approved hash="18,29,48ae414c414348a1"/>
+<approved hash="18,29,4e2142dd42d24e2e"/>
+<approved hash="18,29,00eab0c630c480e8"/>
+<approved hash="18,29,dca2b5ec35e95ca7"/>
+<approved hash="18,29,93e801c481c313ef"/>
+<approved hash="18,29,eadfbfb5bfb9ead3"/>
+<approved hash="18,29,62ef92c312c1e2ed"/>
+<approved hash="18,29,48ae414c414348a1"/>
+<approved hash="18,29,4e2142dd42d24e2e"/>
+<approved hash="18,29,a8de882995b8b5e7"/>
+<approved hash="18,29,b2ea1df38bea24f3"/>
+<approved hash="18,29,9f14a0e436e00910"/>
+<approved hash="18,29,6f33411957037929"/>
+<approved hash="18,29,804df20ee40a9649"/>
+<approved hash="18,29,dce5730a1913b6fc"/>
+<approved hash="18,29,f118ce1da4199b1c"/>
+<approved hash="18,29,4325181318134325"/>
+<approved hash="18,29,4325181318134325"/>
+<approved hash="18,29,45aa1b821b8245aa"/>
+<approved hash="18,29,45aa1b821b8245aa"/>
+<approved hash="18,29,fb2de95d03591129"/>
+<approved hash="18,29,1d17b229b22c1d12"/>
+<approved hash="18,29,b1374352f919bcb3"/>
+<approved hash="18,29,ac364bd0a1d74631"/>
+<approved hash="18,29,d8e0caa020a232e2"/>
+<approved hash="18,29,bbdb60f6e0f23bdf"/>
+<approved hash="18,29,bbdb60f6e0f23bdf"/>
+<approved hash="18,29,b491d4de54d83497"/>
+<approved hash="18,29,b491d6d31ad57897"/>
+<approved hash="18,29,0597bdbb3db98595"/>
+<approved hash="18,29,96950cb98ca41688"/>
+<approved hash="18,29,d9dfb891388a59c4"/>
+<approved hash="18,29,efbaa1d0a1d4efbe"/>
+<approved hash="18,29,67889fa41fa2e78e"/>
+<approved hash="18,29,4b4247be47bf4b43"/>
+<approved hash="18,29,4dcd442f442e4dcc"/>
+<approved hash="18,29,0597bfb673b4c995"/>
+<approved hash="18,29,96950eb4c2a95a88"/>
+<approved hash="18,29,d9dfb891388a59c4"/>
+<approved hash="18,29,67889da951afab8e"/>
+<approved hash="18,29,4b4247be47bf4b43"/>
+<approved hash="18,29,4dcd442f442e4dcc"/>
+<approved hash="18,29,d9c0e901bf058fc4"/>
+<approved hash="18,29,b1dc882ba25fa467"/>
+<approved hash="18,29,16a4f1bd67bb80a2"/>
+<approved hash="18,29,734504b592b1e541"/>
+<approved hash="18,29,78ab9f44f54212ad"/>
+<approved hash="18,29,1d496a4c0048774d"/>
+<approved hash="18,29,2d442734cd30c740"/>
+<approved hash="18,29,9e4eb9a853ae7448"/>
+<approved hash="18,29,78717a026c006e73"/>
+<approved hash="18,29,f966d74cc176ef5c"/>
+<approved hash="18,29,1a3718740e700c33"/>
+<approved hash="18,29,ef5284648464ef52"/>
+<approved hash="18,29,ef5284648464ef52"/>
+<approved hash="18,29,e9dd87f587f5e9dd"/>
+<approved hash="18,29,e9dd87f587f5e9dd"/>
+<approved hash="18,29,f9602e5e2e62f95c"/>
+<approved hash="18,29,7912134eb157988d"/>
+<approved hash="18,29,d0e64aa486a71ce5"/>
+<approved hash="18,29,d0e648a9c8aa50e5"/>
+<approved hash="18,29,1facfc817cbc9f91"/>
+<approved hash="18,29,1facfc817cbc9f91"/>
+<approved hash="18,29,a1e5d3c41ffa6ddb"/>
+<approved hash="18,29,32dba2fa6ef8fed9"/>
+<approved hash="18,29,3d9114df94d8bd96"/>
+<approved hash="18,29,83d931f8fdfd4fdc"/>
+<approved hash="18,29,e99ce07ee07de99f"/>
+<approved hash="18,29,ef13e3efe3ecef10"/>
+<approved hash="18,29,a1e5d1c951f721db"/>
+<approved hash="18,29,32dba0f720f5b2d9"/>
+<approved hash="18,29,3d9114df94d8bd96"/>
+<approved hash="18,29,4be91d831d874bed"/>
+<approved hash="18,29,83d933f5b3f003dc"/>
+<approved hash="18,29,e99ce07ee07de99f"/>
+<approved hash="18,29,ef13e3efe3ecef10"/>
+<approved hash="18,29,29df882f920e5060"/>
+<approved hash="5,1,83e591f975231bc5"/>
+<approved hash="5,1,38c884f50669804e"/>
+<approved hash="5,1,a8104eab2c543843"/>
+<approved hash="5,1,af3e76a223a70393"/>
+<approved hash="5,1,1b16fdab28543c45"/>
+<approved hash="5,1,8a156cab28543c46"/>
+<approved hash="5,1,5071d669d4d548d7"/>
+<approved hash="5,1,daf7bafad7231bd7"/>
+<approved hash="5,1,80a794f96b231b87"/>
+<approved hash="5,1,36d49af518699e52"/>
+<approved hash="5,1,ad524bab24543001"/>
+<approved hash="5,1,a87871a22fa70fd5"/>
+<approved hash="5,1,1c50faab24543003"/>
+<approved hash="5,1,8f5769ab28543c04"/>
+<approved hash="5,1,5271d469d6d54ad7"/>
+<approved hash="5,1,dfb9bdf6dd231b99"/>
+<approved hash="5,1,85c899716b231a68"/>
+<approved hash="5,1,ced692f517699751"/>
+<approved hash="5,1,a02f472b2c5439fc"/>
+<approved hash="5,1,a5057d2227a70628"/>
+<approved hash="5,1,112df62b2c5439fe"/>
+<approved hash="5,1,8230652b28543de3"/>
+<approved hash="5,1,a371e769e4d558d7"/>
+<approved hash="5,1,d2dac270d5231a7a"/>
+<approved hash="5,1,21b63579ab231a16"/>
+<approved hash="5,1,f6d75af55769df51"/>
+<approved hash="5,1,cc5d2b2b2454318e"/>
+<approved hash="5,1,094bd1222fa70e66"/>
+<approved hash="5,1,bd635a2b245431b0"/>
+<approved hash="5,1,2e61c92b28543db2"/>
+<approved hash="5,1,9371176a94d5c8d7"/>
+<approved hash="5,1,7e885e71dd231a28"/>
+</errors>
 </board>
 </drawing>
 </eagle>
