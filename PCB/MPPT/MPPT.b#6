@@ -1696,6 +1696,22 @@ W = angled&lt;p&gt;
 </package>
 </packages>
 </library>
+<library name="Tiny_Buck">
+<packages>
+<package name="TINY_BUCK">
+<pad name="IN+" x="1.7" y="1.9" drill="1.1" shape="square"/>
+<pad name="IN-" x="1.7" y="15.1" drill="1.1" shape="square"/>
+<pad name="OUT-" x="20.2" y="15.1" drill="1.1" shape="square"/>
+<pad name="OUT+" x="20.2" y="1.9" drill="1.1" shape="square"/>
+<circle x="1" y="2" radius="1" width="0" layer="21"/>
+<wire x1="0" y1="0" x2="22.5" y2="0" width="0.127" layer="21"/>
+<wire x1="22.5" y1="0" x2="22.5" y2="17" width="0.127" layer="21"/>
+<wire x1="22.5" y1="17" x2="0" y2="17" width="0.127" layer="21"/>
+<wire x1="0" y1="17" x2="0" y2="0" width="0.127" layer="21"/>
+<text x="0" y="8" size="1.27" layer="25">&gt;NAME</text>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1965,6 +1981,7 @@ design rules under a new name.
 </element>
 <element name="R25" library="resistor" package="R0603" value="1K" x="-10.16" y="-106.68"/>
 <element name="R26" library="resistor" package="R0603" value="1K" x="-10.16" y="-111.76"/>
+<element name="3.3V_BUCK" library="Tiny_Buck" package="TINY_BUCK" value="TINY_BUCK" x="-10.16" y="-132.08"/>
 </elements>
 <signals>
 <signal name="VSS">
@@ -2008,6 +2025,8 @@ design rules under a new name.
 <contactref element="R26" pad="1"/>
 <contactref element="CONTROLLER" pad="8"/>
 <contactref element="CONTROLLER" pad="19"/>
+<contactref element="3.3V_BUCK" pad="OUT-"/>
+<contactref element="3.3V_BUCK" pad="IN-"/>
 <wire x1="78.74" y1="60.96" x2="83.82" y2="60.96" width="0" layer="19" extent="1-1"/>
 <wire x1="68.4" y1="53.19" x2="78.74" y2="60.96" width="0" layer="19" extent="1-1"/>
 <wire x1="65.62" y1="59.69" x2="68.4" y2="53.19" width="0" layer="19" extent="1-1"/>
@@ -2040,7 +2059,9 @@ design rules under a new name.
 <wire x1="-11.01" y1="-83.82" x2="-9.31" y2="-68.58" width="0" layer="19" extent="1-1"/>
 <wire x1="-11.01" y1="-93.98" x2="-11.01" y2="-83.82" width="0" layer="19" extent="1-1"/>
 <wire x1="-11.01" y1="-111.76" x2="-11.01" y2="-93.98" width="0" layer="19" extent="1-1"/>
-<wire x1="8.89" y1="-101.6" x2="-11.01" y2="-93.98" width="0" layer="19" extent="1-1"/>
+<wire x1="-8.46" y1="-116.98" x2="-11.01" y2="-111.76" width="0" layer="19" extent="1-1"/>
+<wire x1="10.04" y1="-116.98" x2="-8.46" y2="-116.98" width="0" layer="19" extent="1-1"/>
+<wire x1="8.89" y1="-101.6" x2="10.04" y2="-116.98" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VDD">
 <contactref element="IC3" pad="10"/>
@@ -2052,6 +2073,7 @@ design rules under a new name.
 <contactref element="CONTROLLER" pad="20"/>
 <contactref element="LCD" pad="6"/>
 <contactref element="R25" pad="2"/>
+<contactref element="3.3V_BUCK" pad="OUT+"/>
 <wire x1="63.68" y1="53.19" x2="71.3" y2="53.19" width="0" layer="19" extent="1-1"/>
 <wire x1="44.63" y1="58.27" x2="63.68" y2="53.19" width="0" layer="19" extent="1-1"/>
 <wire x1="31.93" y1="58.27" x2="44.63" y2="58.27" width="0" layer="19" extent="1-1"/>
@@ -2060,6 +2082,7 @@ design rules under a new name.
 <wire x1="-10.4394" y1="-53.34" x2="-10.4394" y2="-5.08" width="0" layer="19" extent="1-1"/>
 <wire x1="3.81" y1="-101.6" x2="-10.4394" y2="-53.34" width="0" layer="19" extent="1-1"/>
 <wire x1="-9.31" y1="-106.68" x2="3.81" y2="-101.6" width="0" layer="19" extent="1-1"/>
+<wire x1="10.04" y1="-130.18" x2="3.81" y2="-101.6" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$3">
 <contactref element="C1" pad="2"/>
@@ -2089,8 +2112,10 @@ design rules under a new name.
 <contactref element="BATT_1_I_SENSE" pad="2"/>
 <contactref element="U$1" pad="PAD4"/>
 <contactref element="R3" pad="1"/>
-<wire x1="44.03" y1="63.5" x2="42.72" y2="70.66" width="0" layer="19" extent="1-1"/>
-<wire x1="42.68" y1="59.77" x2="44.03" y2="63.5" width="0" layer="19" extent="1-1"/>
+<contactref element="3.3V_BUCK" pad="IN+"/>
+<wire x1="42.68" y1="59.77" x2="-8.46" y2="-130.18" width="0" layer="19" extent="1-1"/>
+<wire x1="44.03" y1="63.5" x2="42.68" y2="59.77" width="0" layer="19" extent="1-1"/>
+<wire x1="42.72" y1="70.66" x2="44.03" y2="63.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$8">
 <contactref element="U$1" pad="PAD7"/>
