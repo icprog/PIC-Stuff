@@ -7187,7 +7187,6 @@ W = angled&lt;p&gt;
 <part name="R6" library="resistor" deviceset="R-US_" device="R0603" value="20K"/>
 <part name="R7" library="resistor" deviceset="R-US_" device="R0603" value="100K"/>
 <part name="R8" library="resistor" deviceset="R-US_" device="R0603" value="20K"/>
-<part name="C1" library="resistor" deviceset="C-US" device="C0603" value="100nF"/>
 <part name="C2" library="resistor" deviceset="C-US" device="C0603" value="100nF"/>
 <part name="C3" library="resistor" deviceset="C-US" device="C0603" value="100nF"/>
 <part name="C4" library="resistor" deviceset="C-US" device="C0603" value="100nF"/>
@@ -7248,6 +7247,7 @@ W = angled&lt;p&gt;
 <part name="C7" library="resistor" deviceset="C-US" device="C0603" value="100nF"/>
 <part name="PROGRAM" library="con-lstb" deviceset="MA08-1" device="" value="Pin 1"/>
 <part name="SV2" library="con-lstb" deviceset="MA04-1" device="" value=" "/>
+<part name="C1" library="resistor" deviceset="C-US" device="C0603" value="100nF"/>
 </parts>
 <sheets>
 <sheet>
@@ -7266,7 +7266,6 @@ W = angled&lt;p&gt;
 <instance part="R6" gate="G$1" x="116.84" y="172.72" rot="R270"/>
 <instance part="R7" gate="G$1" x="157.48" y="177.8"/>
 <instance part="R8" gate="G$1" x="147.32" y="177.8"/>
-<instance part="C1" gate="G$1" x="78.74" y="165.1" rot="R90"/>
 <instance part="C2" gate="G$1" x="104.14" y="177.8"/>
 <instance part="C3" gate="G$1" x="124.46" y="175.26"/>
 <instance part="C4" gate="G$1" x="144.78" y="165.1" rot="R90"/>
@@ -7327,6 +7326,7 @@ W = angled&lt;p&gt;
 <instance part="C7" gate="G$1" x="81.28" y="35.56"/>
 <instance part="PROGRAM" gate="1" x="66.04" y="2.54" rot="R90"/>
 <instance part="SV2" gate="1" x="15.24" y="2.54" rot="R90"/>
+<instance part="C1" gate="G$1" x="78.74" y="165.1" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -7399,15 +7399,15 @@ W = angled&lt;p&gt;
 </segment>
 <segment>
 <pinref part="R2" gate="G$1" pin="2"/>
-<pinref part="C1" gate="G$1" pin="1"/>
 <wire x1="76.2" y1="177.8" x2="76.2" y2="165.1" width="0.1524" layer="91"/>
-<junction x="76.2" y="165.1"/>
 <pinref part="VSS5" gate="G$1" pin="VSS"/>
-<wire x1="76.2" y1="165.1" x2="76.2" y2="157.48" width="0.1524" layer="91"/>
 <pinref part="PV_1_I_SENSE" gate="G$1" pin="GND"/>
+<wire x1="76.2" y1="165.1" x2="76.2" y2="157.48" width="0.1524" layer="91"/>
 <wire x1="76.2" y1="157.48" x2="78.74" y2="157.48" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="157.48" x2="78.74" y2="144.78" width="0.1524" layer="91"/>
 <junction x="76.2" y="157.48"/>
+<pinref part="C1" gate="G$1" pin="1"/>
+<junction x="76.2" y="165.1"/>
 </segment>
 <segment>
 <pinref part="BUFFER1" gate="A" pin="VSS"/>
@@ -7557,19 +7557,17 @@ W = angled&lt;p&gt;
 </net>
 <net name="N$3" class="0">
 <segment>
-<pinref part="C1" gate="G$1" pin="2"/>
-<pinref part="C1" gate="G$1" pin="2"/>
 <wire x1="83.82" y1="165.1" x2="86.36" y2="165.1" width="0.1524" layer="91"/>
 <pinref part="R1" gate="G$1" pin="2"/>
 <pinref part="R2" gate="G$1" pin="1"/>
 <wire x1="86.36" y1="165.1" x2="86.36" y2="177.8" width="0.1524" layer="91"/>
 <junction x="86.36" y="177.8"/>
-<junction x="83.82" y="165.1"/>
 <wire x1="86.36" y1="177.8" x2="86.36" y2="187.96" width="0.1524" layer="91"/>
 <wire x1="86.36" y1="187.96" x2="10.16" y2="187.96" width="0.1524" layer="91"/>
 <wire x1="10.16" y1="187.96" x2="10.16" y2="86.36" width="0.1524" layer="91"/>
 <pinref part="BUFFER1" gate="A" pin="1IN+"/>
 <wire x1="10.16" y1="86.36" x2="35.56" y2="86.36" width="0.1524" layer="91"/>
+<pinref part="C1" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$4" class="0">
