@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -75,8 +75,6 @@
 <smd name="8" x="1.35" y="0.75" dx="0.85" dy="0.3" layer="1"/>
 <smd name="9" x="0.65" y="1.45" dx="0.85" dy="0.3" layer="1" rot="R90"/>
 <smd name="10" x="0.15" y="1.45" dx="0.85" dy="0.3" layer="1" rot="R90"/>
-<text x="-0.37331875" y="0.065040625" size="1.27" layer="25" align="center">&gt;NAME</text>
-<text x="-0.37331875" y="0.065040625" size="1.27" layer="27" align="center">&gt;VALUE</text>
 <wire x1="-1.5" y1="1.5" x2="1.5" y2="1.5" width="0.254" layer="51"/>
 <wire x1="1.5" y1="1.5" x2="1.5" y2="-1.5" width="0.254" layer="51"/>
 <wire x1="1.5" y1="-1.5" x2="-1.5" y2="-1.5" width="0.254" layer="51"/>
