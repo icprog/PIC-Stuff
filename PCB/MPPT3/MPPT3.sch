@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
@@ -11785,7 +11785,7 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <part name="R2" library="resistor" deviceset="R-US_" device="R0603" value="20K"/>
 <part name="R3" library="resistor" deviceset="R-US_" device="R0603" value="100K"/>
 <part name="R4" library="resistor" deviceset="R-US_" device="R0603" value="20K"/>
-<part name="R5" library="resistor" deviceset="R-US_" device="R0603" value="100K"/>
+<part name="R5" library="resistor" deviceset="R-US_" device="R1206" value="100K"/>
 <part name="R6" library="resistor" deviceset="R-US_" device="R0603" value="20K"/>
 <part name="R7" library="resistor" deviceset="R-US_" device="R0603" value="100K"/>
 <part name="R8" library="resistor" deviceset="R-US_" device="R0603" value="20K"/>
@@ -11876,9 +11876,13 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <part name="R32" library="resistor" deviceset="R-US_" device="R1206" value="1K"/>
 <part name="S1" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-PTH-6.0MM" value="Reset"/>
 <part name="VSS14" library="supply1" deviceset="VSS" device=""/>
-<part name="S2" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-PTH-6.0MM" value="UP"/>
-<part name="S3" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-PTH-6.0MM" value="DOWN"/>
-<part name="S4" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-PTH-6.0MM" value="ENTER"/>
+<part name="___" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-PTH-6.0MM" value="UP"/>
+<part name="__" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-PTH-6.0MM" value="DOWN"/>
+<part name="_" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-PTH-6.0MM" value="ENTER"/>
+<part name="R38" library="resistor" deviceset="R-US_" device="R0603" value="10K"/>
+<part name="R39" library="resistor" deviceset="R-US_" device="R0603" value="10K"/>
+<part name="R40" library="resistor" deviceset="R-US_" device="R0603" value="10K"/>
+<part name="VSS15" library="supply1" deviceset="VSS" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -11989,9 +11993,13 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <instance part="R32" gate="G$1" x="50.8" y="139.7" rot="R270"/>
 <instance part="S1" gate="G$1" x="180.34" y="7.62"/>
 <instance part="VSS14" gate="G$1" x="213.36" y="5.08"/>
-<instance part="S2" gate="G$1" x="43.18" y="15.24"/>
-<instance part="S3" gate="G$1" x="43.18" y="7.62"/>
-<instance part="S4" gate="G$1" x="43.18" y="0"/>
+<instance part="___" gate="G$1" x="40.64" y="15.24"/>
+<instance part="__" gate="G$1" x="40.64" y="7.62"/>
+<instance part="_" gate="G$1" x="40.64" y="0"/>
+<instance part="R38" gate="G$1" x="50.8" y="15.24" rot="R180"/>
+<instance part="R39" gate="G$1" x="50.8" y="7.62" rot="R180"/>
+<instance part="R40" gate="G$1" x="50.8" y="0" rot="R180"/>
+<instance part="VSS15" gate="G$1" x="62.23" y="-2.54"/>
 </instances>
 <busses>
 </busses>
@@ -12209,6 +12217,21 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <pinref part="VSS14" gate="G$1" pin="VSS"/>
 <wire x1="185.42" y1="7.62" x2="213.36" y2="7.62" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="CONTROLLER" gate="A" pin="RB3"/>
+<pinref part="R40" gate="G$1" pin="1"/>
+<wire x1="88.9" y1="25.4" x2="58.42" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="58.42" y1="25.4" x2="55.88" y2="15.24" width="0.1524" layer="91"/>
+<pinref part="VSS15" gate="G$1" pin="VSS"/>
+<wire x1="55.88" y1="15.24" x2="55.88" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="7.62" x2="55.88" y2="0" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="0" x2="62.23" y2="0" width="0.1524" layer="91"/>
+<junction x="55.88" y="0"/>
+<pinref part="R39" gate="G$1" pin="1"/>
+<junction x="55.88" y="7.62"/>
+<pinref part="R38" gate="G$1" pin="1"/>
+<junction x="55.88" y="15.24"/>
+</segment>
 </net>
 <net name="VDD" class="0">
 <segment>
@@ -12251,6 +12274,15 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <wire x1="116.84" y1="2.54" x2="116.84" y2="35.56" width="0.1524" layer="91"/>
 <junction x="88.9" y="10.16"/>
 <junction x="116.84" y="35.56"/>
+<pinref part="_" gate="G$1" pin="1"/>
+<wire x1="60.96" y1="30.48" x2="40.64" y2="30.48" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="30.48" x2="35.56" y2="15.24" width="0.1524" layer="91"/>
+<pinref part="___" gate="G$1" pin="1"/>
+<junction x="35.56" y="15.24"/>
+<wire x1="35.56" y1="15.24" x2="35.56" y2="7.62" width="0.1524" layer="91"/>
+<pinref part="__" gate="G$1" pin="1"/>
+<junction x="35.56" y="7.62"/>
+<wire x1="35.56" y1="7.62" x2="35.56" y2="0" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="VDD8" gate="G$1" pin="VDD"/>
@@ -12686,6 +12718,7 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <pinref part="S1" gate="G$1" pin="1"/>
 <wire x1="144.78" y1="7.62" x2="144.78" y2="15.24" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="7.62" x2="144.78" y2="7.62" width="0.1524" layer="91"/>
+<junction x="144.78" y="7.62"/>
 </segment>
 </net>
 <net name="N$44" class="0">
@@ -12914,6 +12947,24 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <pinref part="R33" gate="G$1" pin="2"/>
 <junction x="91.44" y="134.62"/>
 <pinref part="R32" gate="G$1" pin="2"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<pinref part="___" gate="G$1" pin="2"/>
+<pinref part="R38" gate="G$1" pin="2"/>
+</segment>
+</net>
+<net name="N$10" class="0">
+<segment>
+<pinref part="__" gate="G$1" pin="2"/>
+<pinref part="R39" gate="G$1" pin="2"/>
+</segment>
+</net>
+<net name="N$51" class="0">
+<segment>
+<pinref part="_" gate="G$1" pin="2"/>
+<pinref part="R40" gate="G$1" pin="2"/>
 </segment>
 </net>
 </nets>
