@@ -3448,7 +3448,7 @@ design rules under a new name.</description>
 <element name="U$3" library="holes" package="4,5" value="" x="93.1" y="3.25"/>
 <element name="U$4" library="holes" package="4,5" value="" x="3.15" y="3.25"/>
 <element name="U$5" library="holes" package="4,5" value="" x="93.1" y="75"/>
-<element name="U$7" library="DAVE" package="DAVE" value="" x="10.6225" y="9.275"/>
+<element name="U$7" library="DAVE" package="DAVE" value="" x="10.305" y="9.5925"/>
 <element name="PROGRAMMER" library="con-lstb" package="MA06-1" value=" " x="45.035" y="4.98" rot="R180">
 <attribute name="OC_NEWARK" value="unknown" x="45.035" y="4.98" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="" x="45.035" y="4.98" size="1.778" layer="27" rot="R180" display="off"/>
@@ -3484,22 +3484,25 @@ design rules under a new name.</description>
 <element name="C13" library="resistor" package="C0603" value="100nF" x="25.4" y="64.77" rot="R180"/>
 <element name="R33" library="resistor" package="R1206" value="1K" x="36.195" y="52.07" rot="R135"/>
 <element name="R32" library="resistor" package="R1206" value="1K" x="22.86" y="50.8" rot="R270"/>
-<element name="S1" library="SparkFun-Switches" package="TACTILE_SWITCH_PTH_6.0MM" value="Reset" x="17.78" y="3.81" rot="R180">
-<attribute name="SF_SKU" value="COM-00097" x="17.78" y="3.81" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="PROD_ID" value=" SWCH-08441" x="17.78" y="3.81" size="1.778" layer="27" rot="R180" display="off"/>
+<element name="S1" library="SparkFun-Switches" package="TACTILE_SWITCH_PTH_6.0MM" value="Reset" x="4.445" y="20.6375">
+<attribute name="SF_SKU" value="COM-00097" x="4.445" y="20.6375" size="1.778" layer="27" display="off"/>
+<attribute name="PROD_ID" value=" SWCH-08441" x="4.445" y="20.6375" size="1.778" layer="27" display="off"/>
 </element>
-<element name="S2" library="SparkFun-Switches" package="TACTILE_SWITCH_PTH_6.0MM" value="UP" x="0.635" y="-7.9375">
-<attribute name="SF_SKU" value="COM-00097" x="0.635" y="-7.9375" size="1.778" layer="27" display="off"/>
-<attribute name="PROD_ID" value=" SWCH-08441" x="0.635" y="-7.9375" size="1.778" layer="27" display="off"/>
+<element name="___" library="SparkFun-Switches" package="TACTILE_SWITCH_PTH_6.0MM" value="UP" x="83.5025" y="4.1275">
+<attribute name="SF_SKU" value="COM-00097" x="83.5025" y="4.1275" size="1.778" layer="27" display="off"/>
+<attribute name="PROD_ID" value=" SWCH-08441" x="83.5025" y="4.1275" size="1.778" layer="27" display="off"/>
 </element>
-<element name="S3" library="SparkFun-Switches" package="TACTILE_SWITCH_PTH_6.0MM" value="DOWN" x="0" y="-16.1925">
-<attribute name="SF_SKU" value="COM-00097" x="0" y="-16.1925" size="1.778" layer="27" display="off"/>
-<attribute name="PROD_ID" value=" SWCH-08441" x="0" y="-16.1925" size="1.778" layer="27" display="off"/>
+<element name="__" library="SparkFun-Switches" package="TACTILE_SWITCH_PTH_6.0MM" value="DOWN" x="74.6125" y="4.1275">
+<attribute name="SF_SKU" value="COM-00097" x="74.6125" y="4.1275" size="1.778" layer="27" display="off"/>
+<attribute name="PROD_ID" value=" SWCH-08441" x="74.6125" y="4.1275" size="1.778" layer="27" display="off"/>
 </element>
-<element name="S4" library="SparkFun-Switches" package="TACTILE_SWITCH_PTH_6.0MM" value="ENTER" x="-0.635" y="-24.4475">
-<attribute name="SF_SKU" value="COM-00097" x="-0.635" y="-24.4475" size="1.778" layer="27" display="off"/>
-<attribute name="PROD_ID" value=" SWCH-08441" x="-0.635" y="-24.4475" size="1.778" layer="27" display="off"/>
+<element name="_" library="SparkFun-Switches" package="TACTILE_SWITCH_PTH_6.0MM" value="ENTER" x="18.0975" y="4.1275">
+<attribute name="SF_SKU" value="COM-00097" x="18.0975" y="4.1275" size="1.778" layer="27" display="off"/>
+<attribute name="PROD_ID" value=" SWCH-08441" x="18.0975" y="4.1275" size="1.778" layer="27" display="off"/>
 </element>
+<element name="R38" library="resistor" package="R0603" value="10K" x="58.7375" y="2.2225" rot="R180"/>
+<element name="R39" library="resistor" package="R0603" value="10K" x="58.7375" y="6.0325" rot="R180"/>
+<element name="R40" library="resistor" package="R0603" value="10K" x="61.2775" y="9.525" rot="R180"/>
 </elements>
 <signals>
 <signal name="VSS">
@@ -3588,6 +3591,10 @@ design rules under a new name.</description>
 <via x="71.755" y="30.7975" extent="1-16" drill="0.6" shape="square"/>
 <via x="66.3575" y="15.5575" extent="1-16" drill="0.5" shape="square"/>
 <contactref element="S1" pad="3"/>
+<contactref element="R40" pad="1"/>
+<contactref element="CONTROLLER" pad="24"/>
+<contactref element="R39" pad="1"/>
+<contactref element="R38" pad="1"/>
 </signal>
 <signal name="VDD">
 <contactref element="BUFFER1" pad="4"/>
@@ -3649,6 +3656,12 @@ design rules under a new name.</description>
 <via x="53.975" y="40.005" extent="1-16" drill="0.6" shape="square"/>
 <wire x1="53.975" y1="40.005" x2="48.845" y2="34.875" width="0.4064" layer="16"/>
 <wire x1="48.845" y1="34.875" x2="48.845" y2="4.98" width="0.4064" layer="16"/>
+<contactref element="_" pad="1"/>
+<contactref element="___" pad="1"/>
+<contactref element="__" pad="1"/>
+<wire x1="78.635" y1="8.27" x2="80.2513" y2="6.3881" width="0" layer="19" extent="1-1"/>
+<wire x1="71.3613" y1="6.3881" x2="66" y2="8.27" width="0" layer="19" extent="1-1"/>
+<wire x1="14.8463" y1="6.3881" x2="29.5275" y2="20.0025" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="N$3">
 <contactref element="R2" pad="1"/>
@@ -4116,12 +4129,14 @@ design rules under a new name.</description>
 <wire x1="55.88" y1="8.255" x2="51.365" y2="8.245" width="0.4064" layer="1"/>
 <wire x1="51.365" y1="8.245" x2="51.385" y2="4.98" width="0.4064" layer="1"/>
 <contactref element="S1" pad="1"/>
-<wire x1="21.0312" y1="1.5494" x2="27.4193" y2="7.9375" width="0.4064" layer="1"/>
-<wire x1="27.4193" y1="7.9375" x2="31.75" y2="7.9375" width="0.4064" layer="1"/>
 <wire x1="31.75" y1="7.9375" x2="38.1" y2="1.5875" width="0.4064" layer="1"/>
 <wire x1="38.1" y1="1.5875" x2="48.26" y2="1.5875" width="0.4064" layer="1"/>
 <wire x1="48.26" y1="1.5875" x2="51.385" y2="4.7125" width="0.4064" layer="1"/>
 <wire x1="51.385" y1="4.7125" x2="51.385" y2="4.98" width="0.4064" layer="1"/>
+<wire x1="31.75" y1="7.9375" x2="8.89" y2="7.9375" width="0.4064" layer="1"/>
+<wire x1="8.89" y1="7.9375" x2="2.54" y2="14.2875" width="0.4064" layer="1"/>
+<wire x1="2.54" y1="14.2875" x2="2.54" y2="21.5519" width="0.4064" layer="1"/>
+<wire x1="2.54" y1="21.5519" x2="1.1938" y2="22.8981" width="0.4064" layer="1"/>
 </signal>
 <signal name="N$44">
 <contactref element="PROGRAMMER" pad="4"/>
@@ -4349,6 +4364,21 @@ design rules under a new name.</description>
 <wire x1="47.41" y1="52.92" x2="47.41" y2="53.34" width="0.4064" layer="1"/>
 <wire x1="64.135" y1="20.32" x2="66.99999375" y2="17.45500625" width="0.4064" layer="1"/>
 <wire x1="66.99999375" y1="17.45500625" x2="69.6595" y2="17.45500625" width="0.4064" layer="1"/>
+</signal>
+<signal name="N$4">
+<contactref element="___" pad="3"/>
+<contactref element="R38" pad="2"/>
+<wire x1="57.8875" y1="2.2225" x2="80.2513" y2="1.8669" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$10">
+<contactref element="__" pad="3"/>
+<contactref element="R39" pad="2"/>
+<wire x1="57.8875" y1="6.0325" x2="71.3613" y2="1.8669" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$51">
+<contactref element="_" pad="3"/>
+<contactref element="R40" pad="2"/>
+<wire x1="14.8463" y1="1.8669" x2="60.4275" y2="9.525" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>
