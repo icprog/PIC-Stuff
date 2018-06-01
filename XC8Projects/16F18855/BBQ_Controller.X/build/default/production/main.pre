@@ -16882,7 +16882,7 @@ LCD_Write_Char(' ');
 # 143
 if(holdOutput==0)
 {
-output = PID_Calculate(setpoint[0]+20,analogs[1]);
+output = PID_Calculate(setpoint[0],analogs[1]);
 outputTotal = outputTotal - outputSamples[outputIndex];
 outputSamples[outputIndex] = output;
 outputTotal = outputTotal + outputSamples[outputIndex];

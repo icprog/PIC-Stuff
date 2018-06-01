@@ -4,7 +4,7 @@
 #include "system.h"
 
 // *************** Defines *****************************************************
-#define pitSetpoint             setpoint[0]+20
+#define pitSetpoint             setpoint[0]
 #define backlightIntensity      setpoint[1]
 #define ambientTemperature      analogs[0]                                      // Analog Chanell 1,  Pin 3
 #define pitTemperature          analogs[1]                                      // Analog Chanell 3,  Pin 5
