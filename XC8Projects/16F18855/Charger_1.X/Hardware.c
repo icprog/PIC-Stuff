@@ -39,7 +39,7 @@ void Initialize_Hardware()
 
 	CLRWDT();
 
-	T0IF = 0;
+	TMR0IF = 0;
 
 	AD_SET_CHAN(31);	
 	
@@ -65,7 +65,7 @@ void Initialize_Hardware()
 void Init_Registers()
 {
 	//		   	  76543210
-	OSCCON = 	0b01111000;
+	OSCCON = 	0b01111000;       // 7 Unimplemented, 6..3 16 MHz clock, 2 unimplemented, 1,0 Clock cofig by FOSC 1..0 in CONFIG Word
 
 	OPTION_REG = 	0b01000011;	///> set prescaler to 1/16
 
@@ -119,8 +119,8 @@ void Delay_ms(unsigned int msec)
 {
 	while(msec)
 	{
-		while(!T0IF);
-		T0IF = 0;
+		while(!TMR0IF);
+		TMR0IF = 0;
 		msec--;
 	}
 }
