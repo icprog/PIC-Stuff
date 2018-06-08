@@ -1,18 +1,8 @@
-/*****************************************************************************
-*                           Lead-acid.h
-*
-* Description: Lead-acid specific parameters
-*
-* Hardware:  Synchronous Inverse SEPIC (Zeta) Converter + Battery Charging Library
-*
-* Resources: PICC 9.83 / MPLAB 8.80
-*
-******************************************************************************/
-
 //Lead-acid battery specific parameters
-
-#define PRESET1
-//define PRESET2
+#ifndef     LEAD_ACID_H
+#define     LEAD_ACID_H
+#define     PRESET1
+//define      PRESET2
 
 
 //	1.75V per cell cutoff voltage
@@ -34,7 +24,7 @@
 
 #endif
 
-#define		BATTERY_STANDBY_MODE
+#define BATTERY_STANDBY_MODE
 	
 
 #define	PRECHARGE_TIME		600
@@ -45,3 +35,4 @@
 
 #define IFLAT_COUNT		600
 
+#endif

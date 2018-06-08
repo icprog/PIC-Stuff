@@ -1,31 +1,20 @@
-/*****************************************************************************
-*                           BatteryCharger.c
-*
-* Description: Battery Charging Functions
-*
-* Hardware:  Synchronous Inverse SEPIC (Zeta) Converter + Battery Charging Library
-*
-* Resources: PICC 9.83 / MPLAB 8.80
-*
+#include "battery_charger.h"
 
-******************************************************************************/
+uint8_t     battery_state;
+//unsigned char imin_db;
+//unsigned int iflat_db;
+uint16_t    state_counter;
+//unsigned int imin;
+uint16_t    iref;                                       // setpoint for current output
 
-#include "BatteryCharger.h"
-
-unsigned char battery_state;
-unsigned char imin_db;
-unsigned int iflat_db;
-unsigned int state_counter;
-unsigned int imin;
-
-void Init_State_Machine()
+void Init_Battery_State_Machine()
 {
 	battery_state = PRECHARGE;	
 	state_counter = PRECHARGE_TIME;
-	SET_LED_BLINK(BLINK_05HZ);
+//	SET_LED_BLINK(BLINK_05HZ);
 
-	SET_CURRENT(ILIM_PRECHARGE);
-	SET_VOLTAGE(CHARGING_VOLTAGE);
+	SET_CURRENT(ILIM_PRECHARGE);                        // SET_CURRENT is in Hardware.h    ILIM_PRECHARGE is in Lead-acid.h
+	SET_VOLTAGE(CHARGING_VOLTAGE);                        //SET_VOLTAGE is in Hardware.h CHARGING_VOLTAGE  is in Lead-acid.h
 
 	imin = ILIM;
 	imin_db = IMIN_UPDATE;
@@ -38,13 +27,13 @@ void Battery_State_Machine()
 {
 	if(battery_state == PRECHARGE)
 	{
-		SET_LED_BLINK(BLINK_05HZ);
+//		SET_LED_BLINK(BLINK_05HZ);
 		if(VSENSE < CUTOFF_VOLTAGE)
 		{
 			if(state_counter) state_counter--; else
 				{
 					battery_state = FAULT;
-					SET_LED_BLINK(BLINK_05HZ);
+//					SET_LED_BLINK(BLINK_05HZ);
 				}
 		} else
 		{
@@ -54,7 +43,7 @@ void Battery_State_Machine()
 	} else
 	if(battery_state == CHARGE)
 	{
-		SET_LED_BLINK(BLINK_05HZ);
+//		SET_LED_BLINK(BLINK_05HZ);
 		if(CONSTANT_VOLTAGE)
 		{
 			if(ISENSE < imin)
@@ -84,17 +73,17 @@ void Battery_State_Machine()
 
 				SET_VOLTAGE(FLOATING_VOLTAGE);
 			#else
-				battery_state = DONE;
+				battery_state = FINISHED;
 				if(imin < I_BAT_DETECT) battery_state = IDLE;
 			#endif
 		}
 	} else
 	if(battery_state == FLOAT)
 	{
-		SET_LED_BLINK(LED_ON);
+//		SET_LED_BLINK(LED_ON);
 		if(state_counter) state_counter--; else
 		{
-			battery_state = DONE;
+			battery_state = FINISHED;
 		}
 		#ifdef BATTERY_SLA
 			if(state_counter < FLOAT_RELAX_TIME && ISENSE < I_BAT_DETECT)
@@ -103,21 +92,21 @@ void Battery_State_Machine()
 	} else
 	if(battery_state == IDLE)
 	{
-		SET_LED_BLINK(LED_OFF);
+//		SET_LED_BLINK(LED_OFF);
 		SET_VOLTAGE(0);
 		SET_CURRENT(0);
 		STOP_CONVERTER();
 	} else
 	if(battery_state == FAULT)
 	{
-		SET_LED_BLINK(BLINK_2HZ);
+//		SET_LED_BLINK(BLINK_2HZ);
 		SET_VOLTAGE(0);
 		SET_CURRENT(0);
 		STOP_CONVERTER();	
 	} else
-	if(battery_state == DONE)
+	if(battery_state == FINISHED)
 	{
-		SET_LED_BLINK(LED_ON);
+//		SET_LED_BLINK(LED_ON);
 		#ifdef BATTERY_STANDBY_MODE
 			if(VSENSE < TOPPING_VOLTAGE && VSENSE > VBAT_DETECTION)
 			{

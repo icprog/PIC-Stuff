@@ -11,11 +11,11 @@
 
 #include <xc.h>
 
-#define _XTAL_FREQ 				16000000
+// #define _XTAL_FREQ 				16000000
 
 #ifndef HARDWARE_H
 	#define HARDWARE_H
-	enum LED_MODES { LED_OFF = 100, LED_ON = 101, BLINK_05HZ = 16, BLINK_2HZ = 4 };
+//	enum LED_MODES { LED_OFF = 100, LED_ON = 101, BLINK_05HZ = 16, BLINK_2HZ = 4 };
 #endif
 
 #define		IOUT				RA1
@@ -71,7 +71,7 @@
 #define		VSENSE		vout
 
 #define		SET_VOLTAGE(x)		{ vref = x; }
-#define		SET_CURRENT(x)		{ iref = x; }
+// #define		SET_CURRENT(x)		{ iref = x; }  // moved to BatteryCharger
 #define		SET_LED_BLINK(x)	{ led_state = x; }
 
 #define		CONSTANT_VOLTAGE	(!cmode)

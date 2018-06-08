@@ -21,7 +21,7 @@ unsigned int iout;
 unsigned int vout;
 
 unsigned int vref;
-unsigned int iref; 
+//unsigned int iref;        // Moved to charger
 unsigned int warmup;
 unsigned char cc_cv;
 
@@ -127,20 +127,20 @@ void Delay_ms(unsigned int msec)
 
 void pid(unsigned int feedback, unsigned int setpoint)
 {
-int 	er;
+int 	error;
 int		ipid;
 	
-	er = setpoint - feedback;
+	error = setpoint - feedback;
 
-	if(er > ERR_MAX) er = ERR_MAX;
-	if(er < ERR_MIN) er = ERR_MIN;
+	if(error > ERR_MAX) error = ERR_MAX;
+	if(error < ERR_MIN) error = ERR_MIN;
 
 	if(!warmup)
 	{
-		if(cmode) pp = er; else
-		pp = er;
+		if(cmode) pp = error; else
+		pp = error;
 
-		pi += er;
+		pi += error;
 		if(pi > ERR_MAX) pi = ERR_MAX;
 		if(pi < ERR_MIN) pi = ERR_MIN;
 
@@ -154,7 +154,7 @@ int		ipid;
 	} else
 	{	
 		warmup--;
-		if(er > 0) increment++; else increment--;
+		if(error > 0) increment++; else increment--;
 		pi = 0;
 	}
 		
