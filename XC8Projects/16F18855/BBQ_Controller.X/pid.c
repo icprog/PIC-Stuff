@@ -29,22 +29,22 @@ int16_t PID_Calculate(int16_t setpoint, int16_t temp)
     {
         if(error>=lastError)                                                    // Error is getting larger or not changing
         {
-            if(pidIntegrated<2047)pidIntegrated = pidIntegrated + (error * Ki); // Sum onto the integral value
+            if(pidIntegrated<2047)pidIntegrated = pidIntegrated + (error * Ki/4);// Sum onto the integral value
         }
         else                                                                    // Error is getting smaller
         {
-            if(pidIntegrated>0)pidIntegrated = pidIntegrated - (error * Ki/2);  // Subtract 1/2 of the integral gain from the integrated total
+            if(pidIntegrated>0)pidIntegrated = pidIntegrated - (error * Ki/8);  // Subtract 1/2 of the integral gain from the integrated total
         }
     }
     else                                                                        // Temperature is higher than setpoint
     {
         if(error>lastError)                                                     // Error is now a negative value, so ">" is a smaller error
         {
-            if(pidIntegrated<2047)pidIntegrated = pidIntegrated - (error * Ki/8);// Sum a small amount to integral value to control Output from going too low (Cools slowly)
+            if(pidIntegrated<2047)pidIntegrated = pidIntegrated - (error * Ki/16);// Sum a small amount to integral value to control Output from going too low (Cools slowly)
         }
         else
         {
-            if(pidIntegrated>0)pidIntegrated = pidIntegrated + (error * Ki);    // Subtract Integral gain 
+            if(pidIntegrated>0)pidIntegrated = pidIntegrated + (error * Ki/2);  // Subtract Integral gain 
         }
     }
 

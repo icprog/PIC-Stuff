@@ -12737,10 +12737,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pid.c: 31: {
 "31
 {
-[; ;pid.c: 32: if(pidIntegrated<2047)pidIntegrated = pidIntegrated + (error * Ki);
+[; ;pid.c: 32: if(pidIntegrated<2047)pidIntegrated = pidIntegrated + (error * Ki/4);
 "32
 [e $ ! < _pidIntegrated -> 2047 `i 1522  ]
-[e = _pidIntegrated + _pidIntegrated * _error _Ki ]
+[e = _pidIntegrated + _pidIntegrated / * _error _Ki -> 4 `i ]
 [e :U 1522 ]
 "33
 }
@@ -12752,10 +12752,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pid.c: 35: {
 "35
 {
-[; ;pid.c: 36: if(pidIntegrated>0)pidIntegrated = pidIntegrated - (error * Ki/2);
+[; ;pid.c: 36: if(pidIntegrated>0)pidIntegrated = pidIntegrated - (error * Ki/8);
 "36
 [e $ ! > _pidIntegrated -> 0 `i 1524  ]
-[e = _pidIntegrated - _pidIntegrated / * _error _Ki -> 2 `i ]
+[e = _pidIntegrated - _pidIntegrated / * _error _Ki -> 8 `i ]
 [e :U 1524 ]
 "37
 }
@@ -12777,10 +12777,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pid.c: 42: {
 "42
 {
-[; ;pid.c: 43: if(pidIntegrated<2047)pidIntegrated = pidIntegrated - (error * Ki/8);
+[; ;pid.c: 43: if(pidIntegrated<2047)pidIntegrated = pidIntegrated - (error * Ki/16);
 "43
 [e $ ! < _pidIntegrated -> 2047 `i 1527  ]
-[e = _pidIntegrated - _pidIntegrated / * _error _Ki -> 8 `i ]
+[e = _pidIntegrated - _pidIntegrated / * _error _Ki -> 16 `i ]
 [e :U 1527 ]
 "44
 }
@@ -12792,10 +12792,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pid.c: 46: {
 "46
 {
-[; ;pid.c: 47: if(pidIntegrated>0)pidIntegrated = pidIntegrated + (error * Ki);
+[; ;pid.c: 47: if(pidIntegrated>0)pidIntegrated = pidIntegrated + (error * Ki/2);
 "47
 [e $ ! > _pidIntegrated -> 0 `i 1529  ]
-[e = _pidIntegrated + _pidIntegrated * _error _Ki ]
+[e = _pidIntegrated + _pidIntegrated / * _error _Ki -> 2 `i ]
 [e :U 1529 ]
 "48
 }
