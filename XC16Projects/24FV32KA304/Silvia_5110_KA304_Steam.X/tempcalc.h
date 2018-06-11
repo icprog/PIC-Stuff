@@ -6,6 +6,6 @@
 
 float tempCalc(unsigned int a);
 
-float aTempCalc(unsigned int a);
+int aTempCalc(unsigned int a);
 
 #endif

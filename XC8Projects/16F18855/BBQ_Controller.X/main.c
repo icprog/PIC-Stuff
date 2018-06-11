@@ -3,7 +3,7 @@
 // *************** Includes ****************************************************    
 #include "system.h"
 
-    // *************** Defines *****************************************************    
+// *************** Defines *****************************************************
 #define pitSetpoint             setpoint[0]
 #define backlightIntensity      setpoint[1]
 #define ambientTemperature      analogs[0]                                      // Analog Chanell 1,  Pin 3
@@ -13,7 +13,7 @@
 //#define downKey                 RB1
 #define enterKey                RB2
 //#define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay, also defined in menu.c
-#define numOutSamples           40                              // Number of Output samples to be Averaged into Output
+#define numOutSamples           10                                // Number of Output samples to be Averaged into Output
 
 //#define celcius                 analogs[0]                      // Touch pad to select Degrees C
 //#define farenheit               analogs[1]                      // Touch pad to select Degrees F
@@ -93,22 +93,49 @@ void main(void)
 
     LCD_Clear();
     // </editor-fold>
+    
+//    volatile unsigned char value = 0x09;
+  //  unsigned char address = 0xE5;
+    //eeprom_write(address, value);     // Writing value 0x9 to EEPROM address 0xE5        
+    //value = eeprom_read (address);    // Reading the value from address 0xE5
+    
+//    eeprom_write(Kp_offset,10);
+  //  eeprom_write(Ki_offset,4);
+    //eeprom_write(Kd_offset,2);
+        
+
     while (1)
     {
+        extern int16_t errorValue;
+        extern int16_t integralValue;
+        extern int16_t derivativeValue;
+   
         if(loop>253)
         {
             PWM7_LoadDutyValue(backlightIntensity);
-        
-            LCDWriteStringXY(0,0,"Pit:");
-            LCDWriteIntXY(5,0,pitTemperature,-1,1,0);
-            LCD_Write_Char(0);                                              // generate degree symbol in font list
-            LCD_Write_Char(70);
-            LCD_Write_Char(' ');                                              
-            LCD_Write_Char(' ');                                              
+            
+            LCDWriteIntXY(0,0,errorValue,5,0,0);
+            LCD_Write_Char(' ');
+            LCD_Write_Char(' ');
+            LCDWriteIntXY(8,0,integralValue,5,0,0);
+            LCD_Write_Char(' ');
+            LCD_Write_Char(' ');
 
-            LCDWriteStringXY(0,1,"Output:");
-            LCD_Write_Char(' ');                                              
-            LCD_Write_Int(dutyCycle6,5,0,0);
+            LCDWriteIntXY(0,1,derivativeValue,5,0,0);
+            LCD_Write_Char(' ');
+            LCDWriteIntXY(6,1,pitTemperature,4,1,0);
+            LCDWriteIntXY(12,1,dutyCycle6,4,0,0);
+        
+//            LCDWriteStringXY(0,0,"Pit:");
+//            LCDWriteIntXY(5,0,pitTemperature,-1,1,0);
+  //          LCD_Write_Char(0);                                              // generate degree symbol in font list
+    //        LCD_Write_Char(70);
+      //      LCD_Write_Char(' ');                                              
+        //    LCD_Write_Char(' ');                                              
+
+          //  LCDWriteStringXY(0,1,"Output:");
+            //LCD_Write_Char(' ');                                              
+//            LCD_Write_Int(dutyCycle6,5,0,0);
 //        LCD_Write_Int(ambientTemperature,-1,1,0);
 //        LCD_Write_Char(0);                                              // generate degree symbol in font list
   //      LCD_Write_Char(70);
@@ -145,7 +172,7 @@ void main(void)
             if(lastTemperature-currentTemperature>100 || lastTemperature-currentTemperature<-100)
             {
                 dutyCycle6=0;
-                holdOutput=60;
+                holdOutput=5;
             }
 
             if(dutyCycle6<50)dutyCycle6=0;
@@ -169,6 +196,7 @@ void main(void)
 
         if(enterKey==1)
         {
+            TRISC2      =   1;                                      // Disable Pit Fan Output while in Menu
             LCD_Clear();
             LCDWriteStringXY(0,0,"Alter with Up/Dn");
             LCDWriteStringXY(0,1,"Enter Key to Set");

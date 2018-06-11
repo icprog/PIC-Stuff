@@ -53,7 +53,7 @@ char readButton(void)
                 
             if (j >10)                          // If button has been pressed for an additional 50 program cycles,
             {
-                __delay_ms(125);                // return the key every program cycle, with a delay between Key presses if Key is held down
+                __delay_ms(25);                 // return the key every program cycle, with a delay between Key presses if Key is held down
                 return (lastButton);
                 j = 10;
             }

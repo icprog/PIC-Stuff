@@ -15,10 +15,10 @@ void userMenu(void)
 {
     char testKey2   =   None;
     int timer2      =   0;
-    int setRangeL[]         = {1750,2650,1850};         // Set Point Low Limits      FIX Group Setpoint back to Min 180
+    int setRangeL[]         = {1800,2850,1850};         // Set Point Low Limits      
     int setRangeH[]         = {2100,3000,2150};         // Set Point High Limits
     
-    extern unsigned int setpoint[];                     //setpoint EEPROM Address "offset" values
+    extern unsigned int setpoint[];                     //setpoint
     extern int const Kp[];
     extern int const Ki[];
     extern int const Kd[];
@@ -29,7 +29,7 @@ void userMenu(void)
     gotoXY(1,4);
     LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
 
-    __delay_ms(1000);
+    __delay_ms(250);
             
     while(testKey2==None)
     {
