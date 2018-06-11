@@ -1,22 +1,11 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"41 lcd.h
-[v _LCDWrite `(v ~T0 @X0 0 ef2`uc`uc ]
-"595 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
-[s S36 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S36 . TRISA0 TRISA1 TRISA2 TRISA3 TRISA4 TRISA5 TRISA6 TRISA7 ]
-"594
-[u S35 `S36 1 ]
-[n S35 . . ]
-"606
-[v _TRISAbits `VS35 ~T0 @X0 0 e@17 ]
-"781
-[s S42 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S42 . LATA0 LATA1 LATA2 LATA3 LATA4 LATA5 LATA6 LATA7 ]
-"780
-[u S41 `S42 1 ]
-[n S41 . . ]
-"792
-[v _LATAbits `VS41 ~T0 @X0 0 e@22 ]
+"21 battery_charger.c
+[c E14320 0 1 2 3 4 5 .. ]
+[n E14320 charge_states IDLE FAULT FINISHED PRECHARGE CHARGE FLOAT  ]
+"40239 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
+[v _TRISA6 `Vb ~T0 @X0 0 e@142 ]
+"40241
+[v _TRISA7 `Vb ~T0 @X0 0 e@143 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -13165,12 +13154,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.h: 53: extern unsigned char battery_state;
 [; ;battery_charger.h: 55: void Init_Battery_State_Machine(void);
 [; ;battery_charger.h: 56: void Battery_State_Machine(void);
-[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
-[; ;tmr2.h: 262: void TMR2_Initialize(void);
-[; ;pwm.h: 7: void PWM_Initialize(void);
-[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
-[; ;system.h: 17: void SYSTEM_Initialize(void);
-[; ;system.h: 19: void OSCILLATOR_Initialize(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13180,1144 +13163,438 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 38: void LCDInit(void);
 [; ;lcd.h: 41: void LCDWrite(uint8_t data_or_command, uint8_t data);
 [; ;lcd.h: 44: void LCDDrawBox(void);
-"17 lcd.c
-[v _fonts `Cuc ~T0 @X0 -> 0 `x e ]
-[i _fonts
-:U ..
-"18
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
+[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
+[; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
+[; ;system.h: 17: void SYSTEM_Initialize(void);
+[; ;system.h: 19: void OSCILLATOR_Initialize(void);
+[; ;battery_charger.h: 53: extern unsigned char battery_state;
+[; ;battery_charger.h: 55: void Init_Battery_State_Machine(void);
+[; ;battery_charger.h: 56: void Battery_State_Machine(void);
+"3 battery_charger.c
+[v _battery_state `uc ~T0 @X0 1 e ]
+[; ;battery_charger.c: 3: uint8_t battery_state;
+"4
+[v _Imin_db `uc ~T0 @X0 1 e ]
+[; ;battery_charger.c: 4: uint8_t Imin_db;
+"5
+[v _Iflat_db `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 5: uint16_t Iflat_db;
+"6
+[v _state_counter `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 6: uint16_t state_counter;
+"7
+[v _Imin `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 7: uint16_t Imin;
+"8
+[v _Iref `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 8: uint16_t Iref;
+"9
+[v _Vref `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 9: uint16_t Vref;
+"10
+[v _warmup `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 10: uint16_t warmup;
+"11
+[v _Iout `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 11: uint16_t Iout;
+"12
+[v _Vout `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 12: uint16_t Vout;
+"13
+[v _Imode `c ~T0 @X0 1 e ]
+[; ;battery_charger.c: 13: int8_t Imode;
+"14
+[v _increment `i ~T0 @X0 1 e ]
+[; ;battery_charger.c: 14: int16_t increment;
 "19
--> -> 0 `i `uc
--> -> 78 `i `uc
--> -> 0 `i `uc
+[v _Init_Battery_State_Machine `(v ~T0 @X0 1 ef ]
 "20
--> -> 6 `i `uc
--> -> 0 `i `uc
--> -> 6 `i `uc
-"21
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"22
--> -> 72 `i `uc
--> -> 214 `i `uc
--> -> 36 `i `uc
-"23
--> -> 18 `i `uc
--> -> 8 `i `uc
--> -> 36 `i `uc
-"25
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"26
--> -> 0 `i `uc
--> -> 6 `i `uc
--> -> 0 `i `uc
-"27
--> -> 56 `i `uc
--> -> 68 `i `uc
--> -> 130 `i `uc
-"28
--> -> 130 `i `uc
--> -> 68 `i `uc
--> -> 56 `i `uc
-"29
--> -> 20 `i `uc
--> -> 8 `i `uc
--> -> 62 `i `uc
-"30
--> -> 16 `i `uc
--> -> 56 `i `uc
--> -> 16 `i `uc
-"31
--> -> 160 `i `uc
--> -> 96 `i `uc
--> -> 0 `i `uc
-"32
--> -> 16 `i `uc
--> -> 16 `i `uc
--> -> 16 `i `uc
-"33
--> -> 96 `i `uc
--> -> 96 `i `uc
--> -> 0 `i `uc
-"34
--> -> 96 `i `uc
--> -> 24 `i `uc
--> -> 6 `i `uc
-"35
--> -> 124 `i `uc
--> -> 66 `i `uc
--> -> 124 `i `uc
-"36
--> -> 68 `i `uc
--> -> 126 `i `uc
--> -> 64 `i `uc
-"37
--> -> 100 `i `uc
--> -> 82 `i `uc
--> -> 76 `i `uc
-"38
--> -> 74 `i `uc
--> -> 74 `i `uc
--> -> 52 `i `uc
-"39
--> -> 56 `i `uc
--> -> 36 `i `uc
--> -> 126 `i `uc
-"40
--> -> 78 `i `uc
--> -> 74 `i `uc
--> -> 50 `i `uc
-"41
--> -> 60 `i `uc
--> -> 74 `i `uc
--> -> 50 `i `uc
-"42
--> -> 98 `i `uc
--> -> 26 `i `uc
--> -> 6 `i `uc
-"43
--> -> 118 `i `uc
--> -> 74 `i `uc
--> -> 118 `i `uc
-"44
--> -> 76 `i `uc
--> -> 82 `i `uc
--> -> 60 `i `uc
-"45
--> -> 108 `i `uc
--> -> 108 `i `uc
--> -> 0 `i `uc
-"46
--> -> 172 `i `uc
--> -> 108 `i `uc
--> -> 0 `i `uc
-"47
--> -> 16 `i `uc
--> -> 40 `i `uc
--> -> 68 `i `uc
-"48
--> -> 40 `i `uc
--> -> 40 `i `uc
--> -> 40 `i `uc
-"49
--> -> 68 `i `uc
--> -> 40 `i `uc
--> -> 16 `i `uc
-"50
--> -> 2 `i `uc
--> -> 89 `i `uc
--> -> 6 `i `uc
-"51
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"52
--> -> 124 `i `uc
--> -> 18 `i `uc
--> -> 124 `i `uc
-"53
--> -> 126 `i `uc
--> -> 90 `i `uc
--> -> 52 `i `uc
-"54
--> -> 60 `i `uc
--> -> 66 `i `uc
--> -> 66 `i `uc
-"55
--> -> 126 `i `uc
--> -> 66 `i `uc
--> -> 60 `i `uc
-"56
--> -> 126 `i `uc
--> -> 74 `i `uc
--> -> 66 `i `uc
-"57
--> -> 126 `i `uc
--> -> 10 `i `uc
--> -> 10 `i `uc
-"58
--> -> 60 `i `uc
--> -> 82 `i `uc
--> -> 52 `i `uc
-"59
--> -> 126 `i `uc
--> -> 8 `i `uc
--> -> 126 `i `uc
-"60
--> -> 66 `i `uc
--> -> 126 `i `uc
--> -> 66 `i `uc
-"61
--> -> 48 `i `uc
--> -> 64 `i `uc
--> -> 62 `i `uc
-"62
--> -> 126 `i `uc
--> -> 24 `i `uc
--> -> 102 `i `uc
-"63
--> -> 126 `i `uc
--> -> 64 `i `uc
--> -> 64 `i `uc
-"64
--> -> 126 `i `uc
--> -> 28 `i `uc
--> -> 126 `i `uc
-"65
--> -> 126 `i `uc
--> -> 2 `i `uc
--> -> 126 `i `uc
-"66
--> -> 60 `i `uc
--> -> 66 `i `uc
--> -> 60 `i `uc
-"67
--> -> 126 `i `uc
--> -> 18 `i `uc
--> -> 12 `i `uc
-"68
--> -> 126 `i `uc
--> -> 98 `i `uc
--> -> 254 `i `uc
-"69
--> -> 126 `i `uc
--> -> 50 `i `uc
--> -> 78 `i `uc
-"70
--> -> 68 `i `uc
--> -> 74 `i `uc
--> -> 50 `i `uc
-"71
--> -> 2 `i `uc
--> -> 126 `i `uc
--> -> 2 `i `uc
-"72
--> -> 126 `i `uc
--> -> 64 `i `uc
--> -> 126 `i `uc
-"73
--> -> 62 `i `uc
--> -> 64 `i `uc
--> -> 62 `i `uc
-"74
--> -> 126 `i `uc
--> -> 56 `i `uc
--> -> 126 `i `uc
-"75
--> -> 102 `i `uc
--> -> 24 `i `uc
--> -> 102 `i `uc
-"76
--> -> 14 `i `uc
--> -> 112 `i `uc
--> -> 14 `i `uc
-"77
--> -> 98 `i `uc
--> -> 90 `i `uc
--> -> 70 `i `uc
-"78
--> -> 0 `i `uc
--> -> 126 `i `uc
--> -> 66 `i `uc
-"79
--> -> 6 `i `uc
--> -> 24 `i `uc
--> -> 96 `i `uc
-"80
--> -> 66 `i `uc
--> -> 126 `i `uc
--> -> 0 `i `uc
-"81
--> -> 4 `i `uc
--> -> 2 `i `uc
--> -> 4 `i `uc
-"82
--> -> 64 `i `uc
--> -> 64 `i `uc
--> -> 64 `i `uc
-"83
--> -> 0 `i `uc
--> -> 2 `i `uc
--> -> 4 `i `uc
-"84
--> -> 116 `i `uc
--> -> 84 `i `uc
--> -> 120 `i `uc
-"85
--> -> 126 `i `uc
--> -> 72 `i `uc
--> -> 48 `i `uc
-"86
--> -> 48 `i `uc
--> -> 72 `i `uc
--> -> 72 `i `uc
-"87
--> -> 48 `i `uc
--> -> 72 `i `uc
--> -> 126 `i `uc
-"88
--> -> 56 `i `uc
--> -> 84 `i `uc
--> -> 88 `i `uc
-"89
--> -> 124 `i `uc
--> -> 10 `i `uc
--> -> 2 `i `uc
-"90
--> -> 152 `i `uc
--> -> 164 `i `uc
--> -> 124 `i `uc
-"91
--> -> 126 `i `uc
--> -> 8 `i `uc
--> -> 112 `i `uc
-"92
--> -> 72 `i `uc
--> -> 122 `i `uc
--> -> 64 `i `uc
-"93
--> -> 136 `i `uc
--> -> 250 `i `uc
--> -> 0 `i `uc
-"94
--> -> 126 `i `uc
--> -> 24 `i `uc
--> -> 100 `i `uc
-"95
--> -> 66 `i `uc
--> -> 126 `i `uc
--> -> 64 `i `uc
-"96
--> -> 124 `i `uc
--> -> 56 `i `uc
--> -> 124 `i `uc
-"97
--> -> 124 `i `uc
--> -> 4 `i `uc
--> -> 120 `i `uc
-"98
--> -> 56 `i `uc
--> -> 68 `i `uc
--> -> 56 `i `uc
-"99
--> -> 252 `i `uc
--> -> 36 `i `uc
--> -> 24 `i `uc
-"100
--> -> 24 `i `uc
--> -> 36 `i `uc
--> -> 252 `i `uc
-"101
--> -> 120 `i `uc
--> -> 4 `i `uc
--> -> 4 `i `uc
-"102
--> -> 72 `i `uc
--> -> 84 `i `uc
--> -> 36 `i `uc
-"103
--> -> 4 `i `uc
--> -> 62 `i `uc
--> -> 68 `i `uc
-"104
--> -> 124 `i `uc
--> -> 64 `i `uc
--> -> 124 `i `uc
-"105
--> -> 60 `i `uc
--> -> 64 `i `uc
--> -> 60 `i `uc
-"106
--> -> 124 `i `uc
--> -> 48 `i `uc
--> -> 124 `i `uc
-"107
--> -> 108 `i `uc
--> -> 16 `i `uc
--> -> 108 `i `uc
-"108
--> -> 156 `i `uc
--> -> 160 `i `uc
--> -> 124 `i `uc
-"109
--> -> 100 `i `uc
--> -> 84 `i `uc
--> -> 76 `i `uc
-"110
--> -> 12 `i `uc
--> -> 18 `i `uc
--> -> 12 `i `uc
-"111
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"112
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"113
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"114
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"115
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"116
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"117
--> -> 252 `i `uc
--> -> 64 `i `uc
--> -> 124 `i `uc
-"118
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-"119
--> -> 255 `i `uc
--> -> 255 `i `uc
--> -> 255 `i `uc
-..
-]
-[; ;lcd.c: 17: const char fonts [] = {
-[; ;lcd.c: 18: 0x00, 0x00, 0x00,
-[; ;lcd.c: 19: 0x00, 0x4E, 0x00,
-[; ;lcd.c: 20: 0x06, 0x00, 0x06,
-[; ;lcd.c: 21: 0xff, 0xff, 0xff,
-[; ;lcd.c: 22: 0x48, 0xd6, 0x24,
-[; ;lcd.c: 23: 0x12, 0x08, 0x24,
-[; ;lcd.c: 25: 0xff, 0xff, 0xff,
-[; ;lcd.c: 26: 0x00, 0x06, 0x00,
-[; ;lcd.c: 27: 0x38, 0x44, 0x82,
-[; ;lcd.c: 28: 0x82, 0x44, 0x38,
-[; ;lcd.c: 29: 0x14, 0x08, 0x3E,
-[; ;lcd.c: 30: 0x10, 0x38, 0x10,
-[; ;lcd.c: 31: 0xa0, 0x60, 0x00,
-[; ;lcd.c: 32: 0x10, 0x10, 0x10,
-[; ;lcd.c: 33: 0x60, 0x60, 0x00,
-[; ;lcd.c: 34: 0x60, 0x18, 0x06,
-[; ;lcd.c: 35: 0x7c, 0x42, 0x7c,
-[; ;lcd.c: 36: 0x44, 0x7e, 0x40,
-[; ;lcd.c: 37: 0x64, 0x52, 0x4c,
-[; ;lcd.c: 38: 0x4a, 0x4a, 0x34,
-[; ;lcd.c: 39: 0x38, 0x24, 0x7e,
-[; ;lcd.c: 40: 0x4e, 0x4a, 0x32,
-[; ;lcd.c: 41: 0x3c, 0x4a, 0x32,
-[; ;lcd.c: 42: 0x62, 0x1a, 0x06,
-[; ;lcd.c: 43: 0x76, 0x4a, 0x76,
-[; ;lcd.c: 44: 0x4c, 0x52, 0x3c,
-[; ;lcd.c: 45: 0x6c, 0x6c, 0x00,
-[; ;lcd.c: 46: 0xac, 0x6c, 0x00,
-[; ;lcd.c: 47: 0x10, 0x28, 0x44,
-[; ;lcd.c: 48: 0x28, 0x28, 0x28,
-[; ;lcd.c: 49: 0x44, 0x28, 0x10,
-[; ;lcd.c: 50: 0x02, 0x59, 0x06,
-[; ;lcd.c: 51: 0xFF, 0xFF, 0xFF,
-[; ;lcd.c: 52: 0x7c, 0x12, 0x7c,
-[; ;lcd.c: 53: 0x7E, 0x5A, 0x34,
-[; ;lcd.c: 54: 0x3c, 0x42, 0x42,
-[; ;lcd.c: 55: 0x7e, 0x42, 0x3c,
-[; ;lcd.c: 56: 0x7e, 0x4a, 0x42,
-[; ;lcd.c: 57: 0x7e, 0x0a, 0x0a,
-[; ;lcd.c: 58: 0x3c, 0x52, 0x34,
-[; ;lcd.c: 59: 0x7e, 0x08, 0x7e,
-[; ;lcd.c: 60: 0x42, 0x7e, 0x42,
-[; ;lcd.c: 61: 0x30, 0x40, 0x3e,
-[; ;lcd.c: 62: 0x7e, 0x18, 0x66,
-[; ;lcd.c: 63: 0x7e, 0x40, 0x40,
-[; ;lcd.c: 64: 0x7e, 0x1c, 0x7e,
-[; ;lcd.c: 65: 0x7e, 0x02, 0x7e,
-[; ;lcd.c: 66: 0x3c, 0x42, 0x3c,
-[; ;lcd.c: 67: 0x7e, 0x12, 0x0c,
-[; ;lcd.c: 68: 0x7e, 0x62, 0xfe,
-[; ;lcd.c: 69: 0x7e, 0x32, 0x4e,
-[; ;lcd.c: 70: 0x44, 0x4a, 0x32,
-[; ;lcd.c: 71: 0x02, 0x7e, 0x02,
-[; ;lcd.c: 72: 0x7E, 0x40, 0x7E,
-[; ;lcd.c: 73: 0x3e, 0x40, 0x3e,
-[; ;lcd.c: 74: 0x7E, 0x38, 0x7E,
-[; ;lcd.c: 75: 0x66, 0x18, 0x66,
-[; ;lcd.c: 76: 0x0e, 0x70, 0x0e,
-[; ;lcd.c: 77: 0x62, 0x5a, 0x46,
-[; ;lcd.c: 78: 0x00, 0x7e, 0x42,
-[; ;lcd.c: 79: 0x06, 0x18, 0x60,
-[; ;lcd.c: 80: 0x42, 0x7e, 0x00,
-[; ;lcd.c: 81: 0x04, 0x02, 0x04,
-[; ;lcd.c: 82: 0x40, 0x40, 0x40,
-[; ;lcd.c: 83: 0x00, 0x02, 0x04,
-[; ;lcd.c: 84: 0x74, 0x54, 0x78,
-[; ;lcd.c: 85: 0x7e, 0x48, 0x30,
-[; ;lcd.c: 86: 0x30, 0x48, 0x48,
-[; ;lcd.c: 87: 0x30, 0x48, 0x7e,
-[; ;lcd.c: 88: 0x38, 0x54, 0x58,
-[; ;lcd.c: 89: 0x7C, 0x0A, 0x02,
-[; ;lcd.c: 90: 0x98, 0xa4, 0x7c,
-[; ;lcd.c: 91: 0x7e, 0x08, 0x70,
-[; ;lcd.c: 92: 0x48, 0x7a, 0x40,
-[; ;lcd.c: 93: 0x88, 0xfa, 0x00,
-[; ;lcd.c: 94: 0x7e, 0x18, 0x64,
-[; ;lcd.c: 95: 0x42, 0x7E, 0x40,
-[; ;lcd.c: 96: 0x7c, 0x38, 0x7c,
-[; ;lcd.c: 97: 0x7C, 0x04, 0x78,
-[; ;lcd.c: 98: 0x38, 0x44, 0x38,
-[; ;lcd.c: 99: 0xFC, 0x24, 0x18,
-[; ;lcd.c: 100: 0x18, 0x24, 0xFC,
-[; ;lcd.c: 101: 0x78, 0x04, 0x04,
-[; ;lcd.c: 102: 0x48, 0x54, 0x24,
-[; ;lcd.c: 103: 0x04, 0x3e, 0x44,
-[; ;lcd.c: 104: 0x7C, 0x40, 0x7C,
-[; ;lcd.c: 105: 0x3c, 0x40, 0x3c,
-[; ;lcd.c: 106: 0x7c, 0x30, 0x7c,
-[; ;lcd.c: 107: 0x6c, 0x10, 0x6c,
-[; ;lcd.c: 108: 0x9c, 0xa0, 0x7c,
-[; ;lcd.c: 109: 0x64, 0x54, 0x4c,
-[; ;lcd.c: 110: 0x0C, 0x12, 0x0c,
-[; ;lcd.c: 111: 0xFF, 0xFF, 0xFF,
-[; ;lcd.c: 112: 0xFF, 0xFF, 0xFF,
-[; ;lcd.c: 113: 0xFF, 0xFF, 0xFF,
-[; ;lcd.c: 114: 0xFF, 0xFF, 0xFF,
-[; ;lcd.c: 115: 0xFF, 0xFF, 0xFF,
-[; ;lcd.c: 116: 0xFF, 0xFF, 0xFF,
-[; ;lcd.c: 117: 0xfc, 0x40, 0x7c,
-[; ;lcd.c: 118: 0xFF, 0xFF, 0xFF,
-[; ;lcd.c: 119: 0xFF, 0xFF, 0xFF,
-[; ;lcd.c: 120: };
-"124
-[v _gotoXY `(v ~T0 @X0 1 ef2`uc`uc ]
-"125
 {
-[; ;lcd.c: 124: void gotoXY(uint8_t x, uint8_t y)
-[; ;lcd.c: 125: {
-[e :U _gotoXY ]
-"124
-[v _x `uc ~T0 @X0 1 r1 ]
-[v _y `uc ~T0 @X0 1 r2 ]
-"125
+[; ;battery_charger.c: 19: void Init_Battery_State_Machine()
+[; ;battery_charger.c: 20: {
+[e :U _Init_Battery_State_Machine ]
 [f ]
-[; ;lcd.c: 126: LCDWrite(0,(uint8_t)(0x80 | x));
-"126
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> | -> 128 `i -> _x `i `uc ]
-[; ;lcd.c: 127: LCDWrite(0,(uint8_t)(0x40 | y));
-"127
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> | -> 64 `i -> _y `i `uc ]
-[; ;lcd.c: 128: }
-"128
+[; ;battery_charger.c: 21: battery_state = PRECHARGE;
+"21
+[e = _battery_state -> . `E14320 3 `uc ]
+[; ;battery_charger.c: 22: state_counter = 600;
+"22
+[e = _state_counter -> -> 600 `i `ui ]
+[; ;battery_charger.c: 24: { Iref = 173; };
+"24
+{
+[e = _Iref -> -> 173 `i `ui ]
+}
+[; ;battery_charger.c: 25: { Vref = 1474; };
+"25
+{
+[e = _Vref -> -> 1474 `i `ui ]
+}
+[; ;battery_charger.c: 27: Imin = 347;
+"27
+[e = _Imin -> -> 347 `i `ui ]
+[; ;battery_charger.c: 28: Imin_db = 5;
+"28
+[e = _Imin_db -> -> 5 `i `uc ]
+[; ;battery_charger.c: 29: Iflat_db = 600;
+"29
+[e = _Iflat_db -> -> 600 `i `ui ]
+[; ;battery_charger.c: 31: { warmup = 64; TRISA6 = 0; TRISA7 = 0; };
+"31
+{
+[e = _warmup -> -> 64 `i `ui ]
+[e = _TRISA6 -> -> 0 `i `b ]
+[e = _TRISA7 -> -> 0 `i `b ]
+}
+[; ;battery_charger.c: 32: }
+"32
 [e :UE 1563 ]
 }
-"131
-[v _LCDBitmap `(v ~T0 @X0 1 ef3`*Cuc`uc`ui ]
-"132
+"34
+[v _Battery_State_Machine `(v ~T0 @X0 1 ef ]
+"35
 {
-[; ;lcd.c: 131: void LCDBitmap(const char my_array[], uint8_t startPosition, uint16_t len)
-[; ;lcd.c: 132: {
-[e :U _LCDBitmap ]
-"131
-[v _my_array `*Cuc ~T0 @X0 1 r1 ]
-[v _startPosition `uc ~T0 @X0 1 r2 ]
-[v _len `ui ~T0 @X0 1 r3 ]
-"132
+[; ;battery_charger.c: 34: void Battery_State_Machine()
+[; ;battery_charger.c: 35: {
+[e :U _Battery_State_Machine ]
 [f ]
-"133
-[v _index `ui ~T0 @X0 1 a ]
-[; ;lcd.c: 133: uint16_t index;
-[; ;lcd.c: 134: gotoXY(0,startPosition);
-"134
-[e ( _gotoXY (2 , -> -> 0 `i `uc _startPosition ]
-[; ;lcd.c: 135: for (index = 0 ; index < len ; index++)
-"135
+[; ;battery_charger.c: 36: if(battery_state == PRECHARGE)
+"36
+[e $ ! == -> _battery_state `i -> . `E14320 3 `i 1565  ]
+[; ;battery_charger.c: 37: {
+"37
 {
-[e = _index -> -> 0 `i `ui ]
+[; ;battery_charger.c: 38: if(Vout < 1075)
+"38
+[e $ ! < _Vout -> -> 1075 `i `ui 1566  ]
+[; ;battery_charger.c: 39: {
+"39
+{
+[; ;battery_charger.c: 40: if(state_counter) state_counter--; else
+"40
+[e $ ! != _state_counter -> -> 0 `i `ui 1567  ]
+[e -- _state_counter -> -> 1 `i `ui ]
 [e $U 1568  ]
-"136
-[e :U 1565 ]
-[; ;lcd.c: 136: LCDWrite(1, my_array[index]);
-[e ( _LCDWrite (2 , -> -> 1 `i `uc *U + _my_array * -> _index `ux -> -> # *U _my_array `ui `ux ]
-"135
-[e ++ _index -> -> 1 `i `ui ]
+[e :U 1567 ]
+[; ;battery_charger.c: 41: {
+"41
+{
+[; ;battery_charger.c: 42: battery_state = FAULT;
+"42
+[e = _battery_state -> . `E14320 1 `uc ]
+"43
+}
 [e :U 1568 ]
-[e $ < _index _len 1565  ]
+"44
+}
+[; ;battery_charger.c: 43: }
+[; ;battery_charger.c: 44: } else
+[e $U 1569  ]
 [e :U 1566 ]
-"136
-}
-[; ;lcd.c: 137: }
-"137
-[e :UE 1564 ]
-}
-"140
-[v _LCDWriteCharacter `(v ~T0 @X0 1 ef1`Cuc ]
-"141
+[; ;battery_charger.c: 45: {
+"45
 {
-[; ;lcd.c: 140: void LCDWriteCharacter(const char character)
-[; ;lcd.c: 141: {
-[e :U _LCDWriteCharacter ]
-"140
-[v _character `Cuc ~T0 @X0 1 r1 ]
-"141
-[f ]
-"142
-[v _base `ui ~T0 @X0 1 a ]
-[; ;lcd.c: 142: uint16_t base;
-[; ;lcd.c: 143: base = character - 0x20;
-"143
-[e = _base -> - -> _character `i -> 32 `i `ui ]
-[; ;lcd.c: 144: base *= 3;
-"144
-[e =* _base -> -> 3 `i `ui ]
-[; ;lcd.c: 145: LCDWrite(1,fonts[base]);
-"145
-[e ( _LCDWrite (2 , -> -> 1 `i `uc *U + &U _fonts * -> _base `ux -> -> # *U &U _fonts `ui `ux ]
-[; ;lcd.c: 146: LCDWrite(1,fonts[base + 1]);
-"146
-[e ( _LCDWrite (2 , -> -> 1 `i `uc *U + &U _fonts * -> + _base -> -> 1 `i `ui `ux -> -> # *U &U _fonts `ui `ux ]
-[; ;lcd.c: 147: LCDWrite(1,fonts[base + 2]);
-"147
-[e ( _LCDWrite (2 , -> -> 1 `i `uc *U + &U _fonts * -> + _base -> -> 2 `i `ui `ux -> -> # *U &U _fonts `ui `ux ]
-[; ;lcd.c: 148: LCDWrite(1, 0x00);
-"148
-[e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-[; ;lcd.c: 149: }
-"149
-[e :UE 1569 ]
+[; ;battery_charger.c: 46: battery_state = CHARGE;
+"46
+[e = _battery_state -> . `E14320 4 `uc ]
+[; ;battery_charger.c: 47: { Iref = 347; };
+"47
+{
+[e = _Iref -> -> 347 `i `ui ]
 }
-"176
-[v _LCDWriteString `(v ~T0 @X0 1 ef1`*Cuc ]
-"177
-{
-[; ;lcd.c: 176: void LCDWriteString(const char *characters)
-[; ;lcd.c: 177: {
-[e :U _LCDWriteString ]
-"176
-[v _characters `*Cuc ~T0 @X0 1 r1 ]
-"177
-[f ]
-[; ;lcd.c: 178: while (*characters)
-"178
-[e $U 1571  ]
-[e :U 1572 ]
-[; ;lcd.c: 179: LCDWriteCharacter(*characters++);
-"179
-[e ( _LCDWriteCharacter (1 *U ++ _characters * -> -> 1 `i `x -> -> # *U _characters `i `x ]
-[e :U 1571 ]
-"178
-[e $ != -> *U _characters `i -> -> -> 0 `i `Cuc `i 1572  ]
-[e :U 1573 ]
-[; ;lcd.c: 180: }
-"180
-[e :UE 1570 ]
+"48
 }
-"182
-[v _LCDClear `(v ~T0 @X0 1 ef ]
-"183
+[e :U 1569 ]
+"49
+}
+[; ;battery_charger.c: 48: }
+[; ;battery_charger.c: 49: } else
+[e $U 1570  ]
+[e :U 1565 ]
+[; ;battery_charger.c: 50: if(battery_state == CHARGE)
+"50
+[e $ ! == -> _battery_state `i -> . `E14320 4 `i 1571  ]
+[; ;battery_charger.c: 51: {
+"51
 {
-[; ;lcd.c: 182: void LCDClear(void)
-[; ;lcd.c: 183: {
-[e :U _LCDClear ]
-[f ]
-"184
-[v _index `i ~T0 @X0 1 a ]
-[; ;lcd.c: 184: int index;
-[; ;lcd.c: 185: for (index = 0 ; index < (84 * 48 / 8) ; index++)
-"185
+[; ;battery_charger.c: 52: if((!Imode))
+"52
+[e $ ! ! != -> _Imode `i -> -> -> 0 `i `c `i 1572  ]
+[; ;battery_charger.c: 53: {
+"53
 {
-[e = _index -> 0 `i ]
-[e $ < _index / * -> 84 `i -> 48 `i -> 8 `i 1575  ]
-[e $U 1576  ]
-"186
+[; ;battery_charger.c: 54: if(Iout < Imin)
+"54
+[e $ ! < _Iout _Imin 1573  ]
+[; ;battery_charger.c: 55: {
+"55
+{
+[; ;battery_charger.c: 56: if(Imin_db) Imin_db--; else
+"56
+[e $ ! != -> _Imin_db `i -> -> -> 0 `i `uc `i 1574  ]
+[e -- _Imin_db -> -> 1 `i `uc ]
+[e $U 1575  ]
+[e :U 1574 ]
+[; ;battery_charger.c: 57: {
+"57
+{
+[; ;battery_charger.c: 58: Imin = Iout;
+"58
+[e = _Imin _Iout ]
+[; ;battery_charger.c: 59: Imin_db = 5;
+"59
+[e = _Imin_db -> -> 5 `i `uc ]
+[; ;battery_charger.c: 60: Iflat_db = 600;
+"60
+[e = _Iflat_db -> -> 600 `i `ui ]
+"61
+}
 [e :U 1575 ]
-[; ;lcd.c: 186: LCDWrite(1, 0x00);
-[e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"185
-[e ++ _index -> 1 `i ]
-[e $ < _index / * -> 84 `i -> 48 `i -> 8 `i 1575  ]
+"62
+}
+[; ;battery_charger.c: 61: }
+[; ;battery_charger.c: 62: } else
+[e $U 1576  ]
+[e :U 1573 ]
+[; ;battery_charger.c: 63: {
+"63
+{
+[; ;battery_charger.c: 64: Imin_db = 5;
+"64
+[e = _Imin_db -> -> 5 `i `uc ]
+[; ;battery_charger.c: 65: if(Iflat_db) Iflat_db--;
+"65
+[e $ ! != _Iflat_db -> -> 0 `i `ui 1577  ]
+[e -- _Iflat_db -> -> 1 `i `ui ]
+[e :U 1577 ]
+"66
+}
 [e :U 1576 ]
-"186
+"67
 }
-[; ;lcd.c: 187: gotoXY(0, 0);
-"187
-[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[; ;lcd.c: 188: }
-"188
-[e :UE 1574 ]
-}
-"190
-[v _LCDWriteInt `(v ~T0 @X0 1 ef4`i`c`uc`uc ]
-"191
+[; ;battery_charger.c: 66: }
+[; ;battery_charger.c: 67: } else
+[e $U 1578  ]
+[e :U 1572 ]
+[; ;battery_charger.c: 68: {
+"68
 {
-[; ;lcd.c: 190: void LCDWriteInt(int16_t value,int8_t fieldLength, uint8_t numPlaces, uint8_t sign)
-[; ;lcd.c: 191: {
-[e :U _LCDWriteInt ]
-"190
-[v _value `i ~T0 @X0 1 r1 ]
-[v _fieldLength `c ~T0 @X0 1 r2 ]
-[v _numPlaces `uc ~T0 @X0 1 r3 ]
-[v _sign `uc ~T0 @X0 1 r4 ]
-"191
-[f ]
-[v F14388 `uc ~T0 @X0 -> 5 `i s ]
-[i F14388
-:U ..
-"192
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-..
-]
-[v _str `uc ~T0 @X0 -> 5 `i a ]
-[; ;lcd.c: 192: uint8_t str[5]={0,0,0,0,0};
-[e = _str F14388 ]
-"193
-[v _i `uc ~T0 @X0 1 a ]
-[; ;lcd.c: 193: uint8_t i=4,j=0;
-[e = _i -> -> 4 `i `uc ]
-[v _j `uc ~T0 @X0 1 a ]
-[e = _j -> -> 0 `i `uc ]
-[; ;lcd.c: 195: if(value<0)
-"195
-[e $ ! < _value -> 0 `i 1579  ]
-[; ;lcd.c: 196: {
-"196
-{
-[; ;lcd.c: 197: LCDWriteCharacter('-');
-"197
-[e ( _LCDWriteCharacter (1 -> -> 45 `ui `uc ]
-[; ;lcd.c: 198: value=value*-1;
-"198
-[e = _value * _value -U -> 1 `i ]
-"199
+[; ;battery_charger.c: 69: Imin_db = 5;
+"69
+[e = _Imin_db -> -> 5 `i `uc ]
+[; ;battery_charger.c: 70: Iflat_db = 600;
+"70
+[e = _Iflat_db -> -> 600 `i `ui ]
+[; ;battery_charger.c: 71: Imin = 347;
+"71
+[e = _Imin -> -> 347 `i `ui ]
+"72
 }
-[; ;lcd.c: 199: }
-[e $U 1580  ]
-"201
+[e :U 1578 ]
+[; ;battery_charger.c: 72: }
+[; ;battery_charger.c: 73: if(Imin < 35 || !Iflat_db)
+"73
+[e $ ! || < _Imin -> -> 35 `i `ui ! != _Iflat_db -> -> 0 `i `ui 1579  ]
+[; ;battery_charger.c: 74: {
+"74
+{
+[; ;battery_charger.c: 76: battery_state = FLOAT;
+"76
+[e = _battery_state -> . `E14320 5 `uc ]
+[; ;battery_charger.c: 77: state_counter = 43200;
+"77
+[e = _state_counter -> -> 43200 `l `ui ]
+[; ;battery_charger.c: 79: { Vref = 1382; };
+"79
+{
+[e = _Vref -> -> 1382 `i `ui ]
+}
+"84
+}
 [e :U 1579 ]
-[; ;lcd.c: 201: else
-[; ;lcd.c: 202: {
-"202
-{
-[; ;lcd.c: 203: if(sign == 1)
-"203
-[e $ ! == -> _sign `i -> 1 `i 1581  ]
-[; ;lcd.c: 204: {
-"204
-{
-[; ;lcd.c: 205: LCDWriteCharacter('+');
-"205
-[e ( _LCDWriteCharacter (1 -> -> 43 `ui `uc ]
-"206
+"85
 }
-[e :U 1581 ]
-"207
-}
-[e :U 1580 ]
-[; ;lcd.c: 206: }
-[; ;lcd.c: 207: }
-[; ;lcd.c: 209: while(value)
-"209
-[e $U 1582  ]
-[e :U 1583 ]
-[; ;lcd.c: 210: {
-"210
+[; ;battery_charger.c: 84: }
+[; ;battery_charger.c: 85: } else
+[e $U 1580  ]
+[e :U 1571 ]
+[; ;battery_charger.c: 86: if(battery_state == FLOAT)
+"86
+[e $ ! == -> _battery_state `i -> . `E14320 5 `i 1581  ]
+[; ;battery_charger.c: 87: {
+"87
 {
-[; ;lcd.c: 211: str[i]=(uint16_t)value%10;
-"211
-[e = *U + &U _str * -> _i `ux -> -> # *U &U _str `ui `ux -> % -> _value `ui -> -> 10 `i `ui `uc ]
-[; ;lcd.c: 212: value=value/10;
-"212
-[e = _value / _value -> 10 `i ]
-[; ;lcd.c: 213: i--;
-"213
-[e -- _i -> -> 1 `i `uc ]
-"214
-}
+[; ;battery_charger.c: 88: if(state_counter) state_counter--; else
+"88
+[e $ ! != _state_counter -> -> 0 `i `ui 1582  ]
+[e -- _state_counter -> -> 1 `i `ui ]
+[e $U 1583  ]
 [e :U 1582 ]
-"209
-[e $ != _value -> 0 `i 1583  ]
+[; ;battery_charger.c: 89: {
+"89
+{
+[; ;battery_charger.c: 90: battery_state = FINISHED;
+"90
+[e = _battery_state -> . `E14320 2 `uc ]
+"91
+}
+[e :U 1583 ]
+[; ;battery_charger.c: 91: }
+[; ;battery_charger.c: 93: if(state_counter < (43200 - 10) && Iout < 16)
+"93
+[e $ ! && < -> _state_counter `l - -> 43200 `l -> -> 10 `i `l < _Iout -> -> 16 `i `ui 1584  ]
+[; ;battery_charger.c: 94: battery_state = IDLE;
+"94
+[e = _battery_state -> . `E14320 0 `uc ]
 [e :U 1584 ]
-[; ;lcd.c: 214: }
-[; ;lcd.c: 215: if(fieldLength==-1)
-"215
-[e $ ! == -> _fieldLength `i -U -> 1 `i 1585  ]
-[; ;lcd.c: 216: {
-"216
-{
-[; ;lcd.c: 217: while(str[j]==0)
-"217
-[e $U 1586  ]
-[e :U 1587 ]
-[; ;lcd.c: 218: {
-"218
-{
-[; ;lcd.c: 219: j++;
-"219
-[e ++ _j -> -> 1 `i `uc ]
-"220
+"96
 }
+[; ;battery_charger.c: 96: } else
+[e $U 1585  ]
+[e :U 1581 ]
+[; ;battery_charger.c: 97: if(battery_state == IDLE)
+"97
+[e $ ! == -> _battery_state `i -> . `E14320 0 `i 1586  ]
+[; ;battery_charger.c: 98: {
+"98
+{
+[; ;battery_charger.c: 99: { Vref = 0; };
+"99
+{
+[e = _Vref -> -> 0 `i `ui ]
+}
+[; ;battery_charger.c: 100: { Iref = 0; };
+"100
+{
+[e = _Iref -> -> 0 `i `ui ]
+}
+[; ;battery_charger.c: 101: { increment = 0; TRISA6 = 1; TRISA7 = 1; };
+"101
+{
+[e = _increment -> 0 `i ]
+[e = _TRISA6 -> -> 1 `i `b ]
+[e = _TRISA7 -> -> 1 `i `b ]
+}
+"102
+}
+[; ;battery_charger.c: 102: } else
+[e $U 1587  ]
 [e :U 1586 ]
-"217
-[e $ == -> *U + &U _str * -> _j `ux -> -> # *U &U _str `ui `ux `i -> 0 `i 1587  ]
-[e :U 1588 ]
-"221
+[; ;battery_charger.c: 103: if(battery_state == FAULT)
+"103
+[e $ ! == -> _battery_state `i -> . `E14320 1 `i 1588  ]
+[; ;battery_charger.c: 104: {
+"104
+{
+[; ;battery_charger.c: 105: { Vref = 0; };
+"105
+{
+[e = _Vref -> -> 0 `i `ui ]
 }
-[; ;lcd.c: 220: }
-[; ;lcd.c: 221: }
+[; ;battery_charger.c: 106: { Iref = 0; };
+"106
+{
+[e = _Iref -> -> 0 `i `ui ]
+}
+[; ;battery_charger.c: 107: { increment = 0; TRISA6 = 1; TRISA7 = 1; };
+"107
+{
+[e = _increment -> 0 `i ]
+[e = _TRISA6 -> -> 1 `i `b ]
+[e = _TRISA7 -> -> 1 `i `b ]
+}
+"108
+}
+[; ;battery_charger.c: 108: } else
 [e $U 1589  ]
-"222
-[e :U 1585 ]
-[; ;lcd.c: 222: else
-[; ;lcd.c: 223: {
-"223
+[e :U 1588 ]
+[; ;battery_charger.c: 109: if(battery_state == FINISHED)
+"109
+[e $ ! == -> _battery_state `i -> . `E14320 2 `i 1590  ]
+[; ;battery_charger.c: 110: {
+"110
 {
-[; ;lcd.c: 224: j=(uint8_t)(5-fieldLength);
-"224
-[e = _j -> - -> 5 `i -> _fieldLength `i `uc ]
-"225
+[; ;battery_charger.c: 112: if(Vout < 1290 && Vout > 1640)
+"112
+[e $ ! && < _Vout -> -> 1290 `i `ui > _Vout -> -> 1640 `i `ui 1591  ]
+[; ;battery_charger.c: 113: {
+"113
+{
+[; ;battery_charger.c: 114: battery_state = CHARGE;
+"114
+[e = _battery_state -> . `E14320 4 `uc ]
+[; ;battery_charger.c: 116: { Iref = 347; };
+"116
+{
+[e = _Iref -> -> 347 `i `ui ]
 }
-[e :U 1589 ]
-[; ;lcd.c: 225: }
-[; ;lcd.c: 227: for(i=j;i<(5-numPlaces);i++)
-"227
+[; ;battery_charger.c: 117: { Vref = 1474; };
+"117
 {
-[e = _i _j ]
-[e $U 1593  ]
-"228
-[e :U 1590 ]
-[; ;lcd.c: 228: {
-{
-[; ;lcd.c: 229: LCDWriteCharacter((uint8_t)(48+str[i]));
-"229
-[e ( _LCDWriteCharacter (1 -> + -> 48 `i -> *U + &U _str * -> _i `ux -> -> # *U &U _str `ui `ux `i `uc ]
-"230
+[e = _Vref -> -> 1474 `i `ui ]
 }
-"227
-[e ++ _i -> -> 1 `i `uc ]
-[e :U 1593 ]
-[e $ < -> _i `i - -> 5 `i -> _numPlaces `i 1590  ]
+[; ;battery_charger.c: 119: Imin = 347;
+"119
+[e = _Imin -> -> 347 `i `ui ]
+[; ;battery_charger.c: 120: Imin_db = 5;
+"120
+[e = _Imin_db -> -> 5 `i `uc ]
+[; ;battery_charger.c: 121: Iflat_db = 600;
+"121
+[e = _Iflat_db -> -> 600 `i `ui ]
+[; ;battery_charger.c: 123: { warmup = 64; TRISA6 = 0; TRISA7 = 0; };
+"123
+{
+[e = _warmup -> -> 64 `i `ui ]
+[e = _TRISA6 -> -> 0 `i `b ]
+[e = _TRISA7 -> -> 0 `i `b ]
+}
+"124
+}
+[; ;battery_charger.c: 124: } else
+[e $U 1592  ]
 [e :U 1591 ]
-"230
-}
-[; ;lcd.c: 230: }
-[; ;lcd.c: 232: if(numPlaces == 1)
-"232
-[e $ ! == -> _numPlaces `i -> 1 `i 1594  ]
-[; ;lcd.c: 233: {
-"233
+[; ;battery_charger.c: 125: {
+"125
 {
-[; ;lcd.c: 234: LCDWriteCharacter(46);
-"234
-[e ( _LCDWriteCharacter (1 -> -> 46 `i `uc ]
-[; ;lcd.c: 235: LCDWriteCharacter ((uint8_t)(48+str[4]));
-"235
-[e ( _LCDWriteCharacter (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
-"236
-}
-[e :U 1594 ]
-[; ;lcd.c: 236: }
-[; ;lcd.c: 238: if(numPlaces == 2)
-"238
-[e $ ! == -> _numPlaces `i -> 2 `i 1595  ]
-[; ;lcd.c: 239: {
-"239
+[; ;battery_charger.c: 126: { Vref = 0; };
+"126
 {
-[; ;lcd.c: 240: LCDWriteCharacter(46);
-"240
-[e ( _LCDWriteCharacter (1 -> -> 46 `i `uc ]
-[; ;lcd.c: 241: LCDWriteCharacter((uint8_t)(48+str[3]));
-"241
-[e ( _LCDWriteCharacter (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 3 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
-[; ;lcd.c: 242: LCDWriteCharacter((uint8_t)(48+str[4]));
-"242
-[e ( _LCDWriteCharacter (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
-"243
+[e = _Vref -> -> 0 `i `ui ]
 }
-[e :U 1595 ]
-[; ;lcd.c: 243: }
-[; ;lcd.c: 244: }
-"244
-[e :UE 1578 ]
-}
-"247
-[v _LCDInit `(v ~T0 @X0 1 ef ]
-"248
+[; ;battery_charger.c: 127: { Iref = 0; };
+"127
 {
-[; ;lcd.c: 247: void LCDInit(void)
-[; ;lcd.c: 248: {
-[e :U _LCDInit ]
-[f ]
-[; ;lcd.c: 249: TRISAbits.TRISA0 = 0;
-"249
-[e = . . _TRISAbits 0 0 -> -> 0 `i `uc ]
-[; ;lcd.c: 250: TRISAbits.TRISA1 = 0;
-"250
-[e = . . _TRISAbits 0 1 -> -> 0 `i `uc ]
-[; ;lcd.c: 251: TRISAbits.TRISA2 = 0;
-"251
-[e = . . _TRISAbits 0 2 -> -> 0 `i `uc ]
-[; ;lcd.c: 252: TRISAbits.TRISA3 = 0;
-"252
-[e = . . _TRISAbits 0 3 -> -> 0 `i `uc ]
-[; ;lcd.c: 253: TRISAbits.TRISA4 = 0;
-"253
-[e = . . _TRISAbits 0 4 -> -> 0 `i `uc ]
-[; ;lcd.c: 254: LATAbits.LATA3 = 0;
-"254
-[e = . . _LATAbits 0 3 -> -> 0 `i `uc ]
-[; ;lcd.c: 255: LATAbits.LATA4 = 0;
-"255
-[e = . . _LATAbits 0 4 -> -> 0 `i `uc ]
-[; ;lcd.c: 256: LATAbits.LATA2 = 0;
-"256
-[e = . . _LATAbits 0 2 -> -> 0 `i `uc ]
-[; ;lcd.c: 257: LATAbits.LATA0 = 0;
-"257
-[e = . . _LATAbits 0 0 -> -> 0 `i `uc ]
-[; ;lcd.c: 259: LATAbits.LATA0 = 1;
-"259
-[e = . . _LATAbits 0 0 -> -> 1 `i `uc ]
-[; ;lcd.c: 261: LCDWrite(0, 0x21);
-"261
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 33 `i `uc ]
-[; ;lcd.c: 268: LCDWrite(0, 0xBE);
-"268
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 190 `i `uc ]
-[; ;lcd.c: 270: LCDWrite(0, 0x04);
-"270
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 4 `i `uc ]
-[; ;lcd.c: 272: LCDWrite(0, 0x14);
-"272
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 20 `i `uc ]
-[; ;lcd.c: 274: LCDWrite(0, 0x20);
-"274
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 32 `i `uc ]
-[; ;lcd.c: 276: LCDWrite(0, 0x0C);
-"276
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 12 `i `uc ]
-[; ;lcd.c: 277: }
-"277
-[e :UE 1596 ]
+[e = _Iref -> -> 0 `i `ui ]
 }
-"280
-[v _LCDWrite `(v ~T0 @X0 1 ef2`uc`uc ]
-"281
+[; ;battery_charger.c: 128: { increment = 0; TRISA6 = 1; TRISA7 = 1; };
+"128
 {
-[; ;lcd.c: 280: void LCDWrite(uint8_t data_or_command, uint8_t data)
-[; ;lcd.c: 281: {
-[e :U _LCDWrite ]
-"280
-[v _data_or_command `uc ~T0 @X0 1 r1 ]
-[v _data `uc ~T0 @X0 1 r2 ]
-"281
-[f ]
-"282
-[v _i `uc ~T0 @X0 1 a ]
-[v _d `uc ~T0 @X0 1 a ]
-[; ;lcd.c: 282: uint8_t i,d;
-[; ;lcd.c: 284: d=data;
-"284
-[e = _d _data ]
-[; ;lcd.c: 286: if(data_or_command == 0)
-"286
-[e $ ! == -> _data_or_command `i -> 0 `i 1598  ]
-[; ;lcd.c: 287: {
-"287
-{
-[; ;lcd.c: 288: LATAbits.LATA2 = 0;
-"288
-[e = . . _LATAbits 0 2 -> -> 0 `i `uc ]
-"289
+[e = _increment -> 0 `i ]
+[e = _TRISA6 -> -> 1 `i `b ]
+[e = _TRISA7 -> -> 1 `i `b ]
 }
-[; ;lcd.c: 289: }
-[e $U 1599  ]
-"290
-[e :U 1598 ]
-[; ;lcd.c: 290: else
-[; ;lcd.c: 291: {
-"291
-{
-[; ;lcd.c: 292: LATAbits.LATA2 = 1;
-"292
-[e = . . _LATAbits 0 2 -> -> 1 `i `uc ]
-"293
+[; ;battery_charger.c: 129: if(Vout < 1640) battery_state = IDLE;
+"129
+[e $ ! < _Vout -> -> 1640 `i `ui 1593  ]
+[e = _battery_state -> . `E14320 0 `uc ]
+[e :U 1593 ]
+"130
 }
-[e :U 1599 ]
-[; ;lcd.c: 293: }
-[; ;lcd.c: 295: LATAbits.LATA1 = 0;
-"295
-[e = . . _LATAbits 0 1 -> -> 0 `i `uc ]
-[; ;lcd.c: 297: for(i=0;i<8;i++)
-"297
-{
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 8 `i 1600  ]
-[e $U 1601  ]
-"298
-[e :U 1600 ]
-[; ;lcd.c: 298: {
-{
-[; ;lcd.c: 299: LATAbits.LATA3 = 0;
-"299
-[e = . . _LATAbits 0 3 -> -> 0 `i `uc ]
-[; ;lcd.c: 301: if(d&0x80)
-"301
-[e $ ! != & -> _d `i -> 128 `i -> 0 `i 1603  ]
-[; ;lcd.c: 302: {
-"302
-{
-[; ;lcd.c: 303: LATAbits.LATA3 = 1;
-"303
-[e = . . _LATAbits 0 3 -> -> 1 `i `uc ]
-"304
+[e :U 1592 ]
+"134
 }
-[e :U 1603 ]
-[; ;lcd.c: 304: }
-[; ;lcd.c: 306: LATAbits.LATA4 = 1;
-"306
-[e = . . _LATAbits 0 4 -> -> 1 `i `uc ]
-[; ;lcd.c: 308: d<<=1;
-"308
-[e =<< _d -> 1 `i ]
-[; ;lcd.c: 310: LATAbits.LATA4=0;
-"310
-[e = . . _LATAbits 0 4 -> -> 0 `i `uc ]
-"311
-}
-"297
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 8 `i 1600  ]
-[e :U 1601 ]
-"311
-}
-[; ;lcd.c: 311: }
-[; ;lcd.c: 313: LATAbits.LATA1 = 1;
-"313
-[e = . . _LATAbits 0 1 -> -> 1 `i `uc ]
-[; ;lcd.c: 314: }
-"314
-[e :UE 1597 ]
-}
-"317
-[v _LCDDrawBox `(v ~T0 @X0 1 ef ]
-"318
-{
-[; ;lcd.c: 317: void LCDDrawBox(void)
-[; ;lcd.c: 318: {
-[e :U _LCDDrawBox ]
-[f ]
-"319
-[v _j `uc ~T0 @X0 1 a ]
-[; ;lcd.c: 319: uint8_t j;
-[; ;lcd.c: 321: for(j = 0; j < 84; j++)
-"321
-{
-[e = _j -> -> 0 `i `uc ]
-[e $ < -> _j `i -> 84 `i 1605  ]
-[e $U 1606  ]
-"322
-[e :U 1605 ]
-[; ;lcd.c: 322: {
-{
-[; ;lcd.c: 323: gotoXY(j, 0);
-"323
-[e ( _gotoXY (2 , _j -> -> 0 `i `uc ]
-[; ;lcd.c: 324: LCDWrite(1,0x01);
-"324
-[e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-"325
-}
-"321
-[e ++ _j -> -> 1 `i `uc ]
-[e $ < -> _j `i -> 84 `i 1605  ]
-[e :U 1606 ]
-"325
-}
-[; ;lcd.c: 325: }
-[; ;lcd.c: 327: for(j = 0; j < 84; j++)
-"327
-{
-[e = _j -> -> 0 `i `uc ]
-[e $ < -> _j `i -> 84 `i 1608  ]
-[e $U 1609  ]
-"328
-[e :U 1608 ]
-[; ;lcd.c: 328: {
-{
-[; ;lcd.c: 329: gotoXY(j, 5);
-"329
-[e ( _gotoXY (2 , _j -> -> 5 `i `uc ]
-[; ;lcd.c: 330: LCDWrite(1,0x80);
-"330
-[e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 128 `i `uc ]
-"331
-}
-"327
-[e ++ _j -> -> 1 `i `uc ]
-[e $ < -> _j `i -> 84 `i 1608  ]
-[e :U 1609 ]
-"331
-}
-[; ;lcd.c: 331: }
-[; ;lcd.c: 333: for(j = 0; j < 6; j++)
-"333
-{
-[e = _j -> -> 0 `i `uc ]
-[e $ < -> _j `i -> 6 `i 1611  ]
-[e $U 1612  ]
-"334
-[e :U 1611 ]
-[; ;lcd.c: 334: {
-{
-[; ;lcd.c: 335: gotoXY(83, j);
-"335
-[e ( _gotoXY (2 , -> -> 83 `i `uc _j ]
-[; ;lcd.c: 336: LCDWrite(1,0xff);
-"336
-[e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 255 `i `uc ]
-"337
-}
-"333
-[e ++ _j -> -> 1 `i `uc ]
-[e $ < -> _j `i -> 6 `i 1611  ]
-[e :U 1612 ]
-"337
-}
-[; ;lcd.c: 337: }
-[; ;lcd.c: 339: for(j = 0; j < 6; j++)
-"339
-{
-[e = _j -> -> 0 `i `uc ]
-[e $ < -> _j `i -> 6 `i 1614  ]
-[e $U 1615  ]
-"340
-[e :U 1614 ]
-[; ;lcd.c: 340: {
-{
-[; ;lcd.c: 341: gotoXY(0, j);
-"341
-[e ( _gotoXY (2 , -> -> 0 `i `uc _j ]
-[; ;lcd.c: 342: LCDWrite(1,0xff);
-"342
-[e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 255 `i `uc ]
-"343
-}
-"339
-[e ++ _j -> -> 1 `i `uc ]
-[e $ < -> _j `i -> 6 `i 1614  ]
-[e :U 1615 ]
-"343
-}
-[; ;lcd.c: 343: }
-[; ;lcd.c: 344: }
-"344
-[e :UE 1604 ]
+[e :U 1590 ]
+"135
+[e :U 1589 ]
+[e :U 1587 ]
+[e :U 1585 ]
+[e :U 1580 ]
+[e :U 1570 ]
+[; ;battery_charger.c: 130: }
+[; ;battery_charger.c: 134: }
+[; ;battery_charger.c: 135: }
+[e :UE 1564 ]
 }

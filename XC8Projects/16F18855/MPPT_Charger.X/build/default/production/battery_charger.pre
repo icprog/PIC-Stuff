@@ -17509,10 +17509,10 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 306
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 13 "battery_charger.h"
+# 28 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 38
+# 53
 extern unsigned char battery_state;
 
 void Init_Battery_State_Machine(void);
@@ -17564,7 +17564,7 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 38 "battery_charger.h"
+# 53 "battery_charger.h"
 extern unsigned char battery_state;
 
 void Init_Battery_State_Machine(void);
@@ -17572,131 +17572,132 @@ void Battery_State_Machine(void);
 
 # 3 "battery_charger.c"
 uint8_t battery_state;
-
-
+uint8_t Imin_db;
+uint16_t Iflat_db;
 uint16_t state_counter;
+uint16_t Imin;
+uint16_t Iref;
+uint16_t Vref;
+uint16_t warmup;
+uint16_t Iout;
+uint16_t Vout;
+int8_t Imode;
+int16_t increment;
 
-uint16_t iref;
+
+
 
 void Init_Battery_State_Machine()
 {
 battery_state = PRECHARGE;
 state_counter = 600;
 
+{ Iref = 173; };
+{ Vref = 1474; };
 
-{ iref = 173; };
-SET_VOLTAGE(1474);
+Imin = 347;
+Imin_db = 5;
+Iflat_db = 600;
 
-imin = 347;
-imin_db = 5;
-iflat_db = 600;
-
-START_CONVERTER();
+{ warmup = 64; TRISA6 = 0; TRISA7 = 0; };
 }
 
 void Battery_State_Machine()
 {
 if(battery_state == PRECHARGE)
 {
-
-if(VSENSE < 1075)
+if(Vout < 1075)
 {
 if(state_counter) state_counter--; else
 {
 battery_state = FAULT;
-
 }
 } else
 {
 battery_state = CHARGE;
-{ iref = 347; };
+{ Iref = 347; };
 }
 } else
 if(battery_state == CHARGE)
 {
-
-if(CONSTANT_VOLTAGE)
+if((!Imode))
 {
-if(ISENSE < imin)
+if(Iout < Imin)
 {
-if(imin_db) imin_db--; else
+if(Imin_db) Imin_db--; else
 {
-imin = ISENSE;
-imin_db = 5;
-iflat_db = 600;
+Imin = Iout;
+Imin_db = 5;
+Iflat_db = 600;
 }
 } else
 {
-imin_db = 5;
-if(iflat_db) iflat_db--;
+Imin_db = 5;
+if(Iflat_db) Iflat_db--;
 }
 } else
 {
-imin_db = 5;
-iflat_db = 600;
-imin = 347;
+Imin_db = 5;
+Iflat_db = 600;
+Imin = 347;
 }
-if(imin < 35 || !iflat_db)
+if(Imin < 35 || !Iflat_db)
 {
 
 battery_state = FLOAT;
 state_counter = 43200;
 
-SET_VOLTAGE(1382);
+{ Vref = 1382; };
 
-# 79
+# 84
 }
 } else
 if(battery_state == FLOAT)
 {
-
 if(state_counter) state_counter--; else
 {
 battery_state = FINISHED;
 }
 
-if(state_counter < (43200 - 10) && ISENSE < I_BAT_DETECT)
+if(state_counter < (43200 - 10) && Iout < 16)
 battery_state = IDLE;
 
 } else
 if(battery_state == IDLE)
 {
-
-SET_VOLTAGE(0);
-{ iref = 0; };
-STOP_CONVERTER();
+{ Vref = 0; };
+{ Iref = 0; };
+{ increment = 0; TRISA6 = 1; TRISA7 = 1; };
 } else
 if(battery_state == FAULT)
 {
-
-SET_VOLTAGE(0);
-{ iref = 0; };
-STOP_CONVERTER();
+{ Vref = 0; };
+{ Iref = 0; };
+{ increment = 0; TRISA6 = 1; TRISA7 = 1; };
 } else
 if(battery_state == FINISHED)
 {
 
-
-if(VSENSE < 1290 && VSENSE > 1640)
+if(Vout < 1290 && Vout > 1640)
 {
 battery_state = CHARGE;
 
-{ iref = 347; };
-SET_VOLTAGE(1474);
+{ Iref = 347; };
+{ Vref = 1474; };
 
-imin = 347;
-imin_db = 5;
-iflat_db = 600;
+Imin = 347;
+Imin_db = 5;
+Iflat_db = 600;
 
-START_CONVERTER();
+{ warmup = 64; TRISA6 = 0; TRISA7 = 0; };
 } else
 {
-SET_VOLTAGE(0);
-{ iref = 0; };
-STOP_CONVERTER();
-if(VSENSE < 1640) battery_state = IDLE;
+{ Vref = 0; };
+{ Iref = 0; };
+{ increment = 0; TRISA6 = 1; TRISA7 = 1; };
+if(Vout < 1640) battery_state = IDLE;
 }
 
-# 133
+# 134
 }
 }

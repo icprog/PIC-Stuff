@@ -17,19 +17,20 @@ unsigned char lbut, led_state;
 unsigned char but_cnt, led_cnt;
 
 unsigned int ad_res;
-unsigned int iout;
-unsigned int vout;
+//unsigned int iout;          // Moved to charger         
+//unsigned int vout;          // Moved to charger
 
-unsigned int vref;
+//unsigned int vref;        // Moved to Charger
 //unsigned int iref;        // Moved to charger
-unsigned int warmup;
+//unsigned int warmup;        // Moved to charger
+
 unsigned char cc_cv;
 
 unsigned int second;
 
-int increment;
+//int increment;                // Moved to Charger
 
-char cmode;
+//char cmode;               // Moved charger
 
 int	pp,pi;
 

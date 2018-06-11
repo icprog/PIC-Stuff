@@ -11,11 +11,11 @@
 
 #include <xc.h>
 
-// #define _XTAL_FREQ 				16000000
+// #define _XTAL_FREQ 				16000000                                    //moved to system
 
 #ifndef HARDWARE_H
 	#define HARDWARE_H
-//	enum LED_MODES { LED_OFF = 100, LED_ON = 101, BLINK_05HZ = 16, BLINK_2HZ = 4 };
+//	enum LED_MODES { LED_OFF = 100, LED_ON = 101, BLINK_05HZ = 16, BLINK_2HZ = 4 };     // not going to use
 #endif
 
 #define		IOUT				RA1
@@ -50,7 +50,7 @@
 #define		NCO_16P				0x80
 #define		NCO_32P				0xA0
 
-#define		WARMUP_TIME			64
+//#define		WARMUP_TIME			64                                              // moved to BatteryCharger
 #define		CURRENT_MODE		4
 #define		ERR_MAX				4095
 #define		ERR_MIN				-4095
@@ -64,18 +64,18 @@
 #define		AD_CONVERT()		{ GO_nDONE = 1; while(GO_nDONE); }
 #define		VREF_COMP(x)		{ x = (unsigned int)x * VREF_VDD_MAX / vref; }
 
-#define		STOP_CONVERTER()	{ increment = 0; set_NCO(); TRIS_NCO = 1; }
-#define  	START_CONVERTER()	{ warmup = WARMUP_TIME; TRIS_NCO = 0; }
+#define		STOP_CONVERTER()	{ increment = 0; set_NCO(); TRIS_NCO = 1; }     // moved to BatteryCharger
+#define  	START_CONVERTER()	{ warmup = WARMUP_TIME; TRIS_NCO = 0; }         // moved to BatteryCharger
 
-#define		ISENSE		iout
-#define		VSENSE		vout
+//#define		ISENSE		iout                                                         // moved to BatteryCharger
+//#define		VSENSE		vout                                                     // moved to BatteryCharger
 
-#define		SET_VOLTAGE(x)		{ vref = x; }
-// #define		SET_CURRENT(x)		{ iref = x; }  // moved to BatteryCharger
+//#define		SET_VOLTAGE(x)		{ vref = x; }                               // moved to BatteryCharger
+// #define		SET_CURRENT(x)		{ iref = x; }                               // moved to BatteryCharger
 #define		SET_LED_BLINK(x)	{ led_state = x; }
 
-#define		CONSTANT_VOLTAGE	(!cmode)
-#define		I_BAT_DETECT		16 
+//#define		CONSTANT_VOLTAGE	(!cmode)                                    // Moved to charger
+//#define		I_BAT_DETECT		16                                          // Moved to Charger
 
 #define		STOUS(x)		{ x -= 1; x = ~x; }
 #define		USTOS(x)		{ x = ~x; x += 1; }
