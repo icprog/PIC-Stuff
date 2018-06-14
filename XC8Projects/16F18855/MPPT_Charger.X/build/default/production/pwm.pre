@@ -17509,10 +17509,10 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 306
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 28 "battery_charger.h"
+# 32 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 53
+# 57
 extern unsigned char battery_state;
 
 void Init_Battery_State_Machine(void);
@@ -17560,26 +17560,40 @@ void OSCILLATOR_Initialize(void);
 # 7 "pwm.h"
 void PWM_Initialize(void);
 
-
+void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
 # 3 "pwm.c"
 void PWM_Initialize(void)
 {
+PWM6CON = 0x80;
 
-# 14
+PWM6DCH = 0x00;
+
+PWM6DCL = 0x00;
+
+CCPTMRS1bits.P6TSEL = 0x1;
+
+
 PWM7CON = 0x80;
 
 PWM7DCH = 0x00;
 
 PWM7DCL = 0x00;
 
-CCPTMRS1bits.P6TSEL = 0x1;
+CCPTMRS1bits.P7TSEL = 0x1;
 
 }
 
-# 32
+
+void PWM6_LoadDutyValue(uint16_t dutyCycle6)
+{
+PWM6DCH = (dutyCycle6 & 0x03FC)>>2;
+
+PWM6DCL = (dutyCycle6 & 0x0003)<<6;
+}
+
 void PWM7_LoadDutyValue(uint16_t dutyCycle7)
 {
 PWM7DCH = (dutyCycle7 & 0x03FC)>>2;

@@ -18,13 +18,13 @@ int16_t     increment;
 
 void Init_Battery_State_Machine()
 {
-	battery_state = PRECHARGE;	
-	state_counter = PRECHARGE_TIME;
+	battery_state = PRECHARGE;                          // Set to PRECHARGE on a system Reset
+	state_counter = PRECHARGE_TIME;                     // Set counter to PRECHARGE_TIME
 
-	SET_CURRENT(ILIM_PRECHARGE);                        // SET_CURRENT is in Hardware.h    ILIM_PRECHARGE is in Lead-acid.h
-	SET_VOLTAGE(CHARGING_VOLTAGE);                        //SET_VOLTAGE is in Hardware.h CHARGING_VOLTAGE  is in Lead-acid.h
+	SET_CURRENT(ILIM_PRECHARGE);                        // SET_CURRENT to ILIM_PRECHARGE (ILIM_PRECHARGE is in lead-acid.h)
+	SET_VOLTAGE(CHARGING_VOLTAGE);                      // SET_VOLTAGE to CHARGING_VOLTAGE (CHARGING_VOLTAGE is in lead-acid.h)
 
-	Imin = ILIM;
+	Imin = ILIM;                                        // Set Imin to the Maximum Current Limit (found in lead_acid.h)
 	Imin_db = IMIN_UPDATE;
 	Iflat_db = IFLAT_COUNT;
 
@@ -35,19 +35,24 @@ void Battery_State_Machine()
 {
 	if(battery_state == PRECHARGE)
 	{
-		if(VSENSE < CUTOFF_VOLTAGE)
+		if(VSENSE < CUTOFF_VOLTAGE)                     // If Battery Voltage is below CUTOFF_VOLTAGE
 		{
-			if(state_counter) state_counter--; else
-				{
-					battery_state = FAULT;
-				}
-		} else
+			if(state_counter)                           // If state_counter > 0
+            {
+                state_counter-=1;                       // decrement it
+            }
+            else
+            {
+                battery_state = FAULT;                  // else, Set FAULT mode
+			}
+		} 
+        else                                            // VSENSE is >= CUTOFF_VOLTAGE
 		{
-			battery_state = CHARGE;
-			SET_CURRENT(ILIM);
+			battery_state = MPPT;                       // Set MPPT mode
+			SET_CURRENT(ILIM);                          // Set Current to Maximum limit
 		}
-	} else
-	if(battery_state == CHARGE)
+	}
+    else if(battery_state == MPPT)
 	{
 		if(CONSTANT_VOLTAGE)
 		{
@@ -82,10 +87,14 @@ void Battery_State_Machine()
 				if(Imin < I_BAT_DETECT) battery_state = IDLE;
 			#endif
 		}
-	} else
-	if(battery_state == FLOAT)
+	} 
+    else if(battery_state == FLOAT)
 	{
-		if(state_counter) state_counter--; else
+        if(state_counter)
+        {
+            state_counter-=1;
+        }
+        else
 		{
 			battery_state = FINISHED;
 		}

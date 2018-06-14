@@ -6,7 +6,7 @@
 
 void PWM_Initialize(void);
 
-//void PWM6_LoadDutyValue(uint16_t dutyCycle);
+void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 

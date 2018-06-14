@@ -1,10 +1,10 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"12709 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
-[v _PWM7CON `Vuc ~T0 @X0 0 e@914 ]
-"12539
-[v _PWM7DCH `Vuc ~T0 @X0 0 e@913 ]
-"12473
-[v _PWM7DCL `Vuc ~T0 @X0 0 e@912 ]
+"12407 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
+[v _PWM6CON `Vuc ~T0 @X0 0 e@910 ]
+"12237
+[v _PWM6DCH `Vuc ~T0 @X0 0 e@909 ]
+"12171
+[v _PWM6DCL `Vuc ~T0 @X0 0 e@908 ]
 "9017
 [s S399 :2 `uc 1 :2 `uc 1 :2 `uc 1 ]
 [n S399 . C5TSEL P6TSEL P7TSEL ]
@@ -16,6 +16,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S398 . . . ]
 "9031
 [v _CCPTMRS1bits `VS398 ~T0 @X0 0 e@543 ]
+"12709
+[v _PWM7CON `Vuc ~T0 @X0 0 e@914 ]
+"12539
+[v _PWM7DCH `Vuc ~T0 @X0 0 e@913 ]
+"12473
+[v _PWM7DCL `Vuc ~T0 @X0 0 e@912 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -13160,10 +13166,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 262: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 28: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
-[; ;battery_charger.h: 53: extern unsigned char battery_state;
-[; ;battery_charger.h: 55: void Init_Battery_State_Machine(void);
-[; ;battery_charger.h: 56: void Battery_State_Machine(void);
+[; ;battery_charger.h: 32: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;battery_charger.h: 57: extern unsigned char battery_state;
+[; ;battery_charger.h: 59: void Init_Battery_State_Machine(void);
+[; ;battery_charger.h: 60: void Battery_State_Machine(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13178,6 +13184,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.h: 17: void SYSTEM_Initialize(void);
 [; ;system.h: 19: void OSCILLATOR_Initialize(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
 "3 pwm.c
 [v _PWM_Initialize `(v ~T0 @X0 1 ef ]
@@ -13187,6 +13194,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.c: 4: {
 [e :U _PWM_Initialize ]
 [f ]
+[; ;pwm.c: 5: PWM6CON = 0x80;
+"5
+[e = _PWM6CON -> -> 128 `i `uc ]
+[; ;pwm.c: 7: PWM6DCH = 0x00;
+"7
+[e = _PWM6DCH -> -> 0 `i `uc ]
+[; ;pwm.c: 9: PWM6DCL = 0x00;
+"9
+[e = _PWM6DCL -> -> 0 `i `uc ]
+[; ;pwm.c: 11: CCPTMRS1bits.P6TSEL = 0x1;
+"11
+[e = . . _CCPTMRS1bits 0 1 -> -> 1 `i `uc ]
 [; ;pwm.c: 14: PWM7CON = 0x80;
 "14
 [e = _PWM7CON -> -> 128 `i `uc ]
@@ -13196,12 +13215,33 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.c: 18: PWM7DCL = 0x00;
 "18
 [e = _PWM7DCL -> -> 0 `i `uc ]
-[; ;pwm.c: 20: CCPTMRS1bits.P6TSEL = 0x1;
+[; ;pwm.c: 20: CCPTMRS1bits.P7TSEL = 0x1;
 "20
-[e = . . _CCPTMRS1bits 0 1 -> -> 1 `i `uc ]
+[e = . . _CCPTMRS1bits 0 2 -> -> 1 `i `uc ]
 [; ;pwm.c: 22: }
 "22
 [e :UE 1563 ]
+}
+"25
+[v _PWM6_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
+"26
+{
+[; ;pwm.c: 25: void PWM6_LoadDutyValue(uint16_t dutyCycle6)
+[; ;pwm.c: 26: {
+[e :U _PWM6_LoadDutyValue ]
+"25
+[v _dutyCycle6 `ui ~T0 @X0 1 r1 ]
+"26
+[f ]
+[; ;pwm.c: 27: PWM6DCH = (dutyCycle6 & 0x03FC)>>2;
+"27
+[e = _PWM6DCH -> >> & _dutyCycle6 -> -> 1020 `i `ui -> 2 `i `uc ]
+[; ;pwm.c: 29: PWM6DCL = (dutyCycle6 & 0x0003)<<6;
+"29
+[e = _PWM6DCL -> << & _dutyCycle6 -> -> 3 `i `ui -> 6 `i `uc ]
+[; ;pwm.c: 30: }
+"30
+[e :UE 1564 ]
 }
 "32
 [v _PWM7_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
@@ -13222,5 +13262,5 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _PWM7DCL -> << & _dutyCycle7 -> -> 3 `i `ui -> 6 `i `uc ]
 [; ;pwm.c: 37: }
 "37
-[e :UE 1564 ]
+[e :UE 1565 ]
 }

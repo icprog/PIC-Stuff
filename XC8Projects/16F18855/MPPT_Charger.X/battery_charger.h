@@ -1,9 +1,13 @@
 #include "system.h"
 
-#define		IOUT1				RC4 // was RA1
 #define		VIN1				RC7 // was RA2
 #define		IIN1        		RC6 // was RC2
 #define		VOUT1				RC5 // was RC3
+#define		IOUT1				RC4 // was RA1
+#define     VIN2                RC3
+#define     IIN2                RC2
+#define     VOUT2               RC1
+#define     IOUT2               RC0
 
 #define		SET_CURRENT(x)		{ Iref = x; }
 #define		SET_VOLTAGE(x)		{ Vref = x; }
@@ -25,7 +29,7 @@
 
 #ifndef BATTERY_CHARGER_H
 	#define BATTERY_CHARGER_H
-	enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+	enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, MPPT = 4, FLOAT = 5 };
 #endif
     
     
@@ -50,7 +54,7 @@
 #define 	IMIN_UPDATE			5
 #define		VBAT_DETECTION		1640
 
-extern unsigned char battery_state;
+extern uint8_t  battery_state;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);

@@ -17509,11 +17509,12 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 306
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 28 "battery_charger.h"
+# 32 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 53
-extern unsigned char battery_state;
+# 57
+extern uint8_t battery_state;
+extern int8_t cmode;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
@@ -17555,7 +17556,7 @@ void TMR2_Initialize(void);
 # 7 "pwm.h"
 void PWM_Initialize(void);
 
-
+void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
@@ -17564,8 +17565,9 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 53 "battery_charger.h"
-extern unsigned char battery_state;
+# 57 "battery_charger.h"
+extern uint8_t battery_state;
+extern int8_t cmode;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
@@ -17608,17 +17610,22 @@ if(battery_state == PRECHARGE)
 {
 if(Vout < 1075)
 {
-if(state_counter) state_counter--; else
+if(state_counter)
+{
+state_counter-=1;
+}
+else
 {
 battery_state = FAULT;
 }
-} else
+}
+else
 {
 battery_state = CHARGE;
 { Iref = 347; };
 }
-} else
-if(battery_state == CHARGE)
+}
+else if(battery_state == CHARGE)
 {
 if((!Imode))
 {
@@ -17649,12 +17656,16 @@ state_counter = 43200;
 
 { Vref = 1382; };
 
-# 84
+# 89
 }
-} else
-if(battery_state == FLOAT)
+}
+else if(battery_state == FLOAT)
 {
-if(state_counter) state_counter--; else
+if(state_counter)
+{
+state_counter-=1;
+}
+else
 {
 battery_state = FINISHED;
 }
@@ -17698,6 +17709,6 @@ Iflat_db = 600;
 if(Vout < 1640) battery_state = IDLE;
 }
 
-# 134
+# 143
 }
 }
