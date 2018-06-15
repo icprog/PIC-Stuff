@@ -173,7 +173,7 @@ void cc_cv_mode()
         }
 	}
 }
-
+/*
 void pid(uint16_t feedback, uint16_t setpoint)
 {
 int 	er;
@@ -209,4 +209,4 @@ int		ipid;
 		
 //	set_NCO();
 }
-
+*/

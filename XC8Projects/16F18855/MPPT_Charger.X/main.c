@@ -55,6 +55,8 @@ void main(void)
     uint8_t         fastLoop        =   0;
     uint8_t         slowLoop        =   0;
     extern int8_t   Imode;
+    extern uint16_t Vref;                                       // setpoint for voltage output
+
     
     SYSTEM_Initialize();
     
@@ -105,7 +107,7 @@ void main(void)
                 }
                 power0OutOld=power0Out;
                 VIn0_Old=VIn0;
-                PWM6_LoadDutyValue(PWM0);
+//                PWM6_LoadDutyValue(PWM0);
                 
                 if(power1Out>power1OutOld)
                 {
@@ -131,10 +133,32 @@ void main(void)
                 }
                 power1OutOld=power1Out;
                 VIn1_Old=VIn1;
-                PWM7_LoadDutyValue(PWM1);
+//                PWM7_LoadDutyValue(PWM1);
                 fastLoop=0;
                 slowLoop+=1;
             }
+            else
+            {
+                if(VOut0>(int16_t)Vref)
+                {
+                    PWM0-=1;;
+                }
+                else
+                {
+                    PWM0+=1;
+                }
+ 
+                if(VOut1>(int16_t)Vref)
+                {
+                    PWM1-=1;;
+                }
+                else
+                {
+                    PWM1+=1;
+                }
+            }
+            PWM6_LoadDutyValue(PWM0);
+            PWM7_LoadDutyValue(PWM1);
         }
         fastLoop+=1;
         
@@ -150,21 +174,20 @@ void main(void)
             LCDWriteIntXY(20,3,IIn1,4,0,0);
             LCDWriteIntXY(0,4,VOut1,4,0,0);
             LCDWriteIntXY(20,4,IOut1,4,0,0);
-            LCDWriteIntXY(0,5,PWM0,1,5,0,0);
+            LCDWriteIntXY(0,5,PWM0,5,0,0);
             LCDWriteIntXY(24,5,PWM1,5,0,0);
             
             if(battery_state > FINISHED)
             {
             	cc_cv_mode();
-
-                if(!Imode)
-                {
-                    pid(Vout, Vref);
-                }
-                else
-                {
-            		pid(Iout, Iref);
-            	}
+//                if(!Imode)
+  //              {
+    //                pid(Vout, Vref);
+      //          }
+        //        else
+          //      {
+            //		pid(Iout, Iref);
+              //}
             }
             slowLoop=0;
         }

@@ -17714,39 +17714,3 @@ cc_cv = 4;
 }
 }
 
-void pid(uint16_t feedback, uint16_t setpoint)
-{
-int er;
-int ipid;
-
-er = setpoint - feedback;
-
-if(er > 4095) er = 4095;
-if(er < -4095) er = -4095;
-
-if(!warmup)
-{
-if(Imode) pp = er; else
-pp = er;
-
-pi += er;
-if(pi > 4095) pi = 4095;
-if(pi < -4095) pi = -4095;
-
-ipid = pp;
-ipid += (pi / 256);
-
-if(ipid > 4095) ipid = 4095;
-if(ipid < -4095) ipid = -4095;
-
-increment += ipid;
-} else
-{
-warmup--;
-if(er > 0) increment++; else increment--;
-pi = 0;
-}
-
-
-}
-
