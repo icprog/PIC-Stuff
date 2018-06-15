@@ -17429,30 +17429,17 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
 
-# 9 "adc.h"
-typedef int16_t adc_result_t;
+# 21 "adc.h"
+int16_t readAnalog(uint16_t channel);
 
-
-typedef enum
-{
-
-channel_VSS = 0x3C,
-channel_Temp = 0x3D,
-channel_DAC1 = 0x3E,
-channel_FVR = 0x3F
-} adcc_channel_t;
-
-int16_t readAnalog(int16_t channel);
+int16_t ADCRead(uint16_t channel);
 
 void ADC_Initialize(void);
 
-void ADCC_StartConversion(adcc_channel_t channel);
-
+# 31
 bool ADCC_IsConversionDone();
 
-adc_result_t ADCC_GetConversionResult(void);
-
-adc_result_t ADCRead(adcc_channel_t channel);
+int16_t ADCC_GetConversionResult(void);
 
 void ADCC_StopConversion(void);
 
@@ -17476,48 +17463,49 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 77
+# 79
 uint16_t ADCC_GetPreviousResult(void);
 
-# 101
+# 103
 void ADCC_DefineSetPoint(uint16_t);
 
-# 126
+# 128
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 151
+# 153
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 174
+# 176
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 196
+# 198
 void ADCC_EnableDoubleSampling(void);
 
-# 218
+# 220
 void ADCC_EnableContinuousConversion(void);
 
-# 240
+# 242
 void ADCC_DisableContinuousConversion(void);
 
-# 262
+# 264
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 284
+# 286
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 306
+# 308
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 32 "battery_charger.h"
-enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+# 36 "battery_charger.h"
+enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, MPPT = 4, FLOAT = 5 };
 
-# 57
+# 61
 extern uint8_t battery_state;
-extern int8_t cmode;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
+void cc_cv_mode();
+void pid(uint16_t feedback, uint16_t setpoint);
 
 # 19 "lcd.h"
 void gotoXY(uint8_t x, uint8_t y);
@@ -17565,12 +17553,13 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 57 "battery_charger.h"
+# 61 "battery_charger.h"
 extern uint8_t battery_state;
-extern int8_t cmode;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
+void cc_cv_mode();
+void pid(uint16_t feedback, uint16_t setpoint);
 
 # 3 "battery_charger.c"
 uint8_t battery_state;
@@ -17585,10 +17574,9 @@ uint16_t Iout;
 uint16_t Vout;
 int8_t Imode;
 int16_t increment;
+uint8_t cc_cv;
 
-
-
-
+# 21
 void Init_Battery_State_Machine()
 {
 battery_state = PRECHARGE;
@@ -17621,11 +17609,11 @@ battery_state = FAULT;
 }
 else
 {
-battery_state = CHARGE;
+battery_state = MPPT;
 { Iref = 347; };
 }
 }
-else if(battery_state == CHARGE)
+else if(battery_state == MPPT)
 {
 if((!Imode))
 {
@@ -17642,7 +17630,8 @@ Iflat_db = 600;
 Imin_db = 5;
 if(Iflat_db) Iflat_db--;
 }
-} else
+}
+else
 {
 Imin_db = 5;
 Iflat_db = 600;
@@ -17652,33 +17641,17 @@ if(Imin < 35 || !Iflat_db)
 {
 
 battery_state = FLOAT;
-state_counter = 43200;
+
 
 { Vref = 1382; };
 
-# 89
+# 92
 }
 }
 else if(battery_state == FLOAT)
 {
-if(state_counter)
-{
-state_counter-=1;
-}
-else
-{
-battery_state = FINISHED;
-}
 
-if(state_counter < (43200 - 10) && Iout < 16)
-battery_state = IDLE;
-
-} else
-if(battery_state == IDLE)
-{
-{ Vref = 0; };
-{ Iref = 0; };
-{ increment = 0; TRISA6 = 1; TRISA7 = 1; };
+# 114
 } else
 if(battery_state == FAULT)
 {
@@ -17691,7 +17664,7 @@ if(battery_state == FINISHED)
 
 if(Vout < 1290 && Vout > 1640)
 {
-battery_state = CHARGE;
+battery_state = MPPT;
 
 { Iref = 347; };
 { Vref = 1474; };
@@ -17709,6 +17682,71 @@ Iflat_db = 600;
 if(Vout < 1640) battery_state = IDLE;
 }
 
-# 143
+# 146
 }
 }
+
+void cc_cv_mode()
+{
+if(Vout > Vref)
+{
+if(cc_cv)
+{
+cc_cv-=1;
+}
+else
+{
+if(Imode)
+{
+pi = 0;
+Imode = 0;
+}
+}
+}
+if(Iout > Iref)
+{
+if(!Imode)
+{
+pi = 0;
+Imode = 1;
+cc_cv = 4;
+}
+}
+}
+
+void pid(uint16_t feedback, uint16_t setpoint)
+{
+int er;
+int ipid;
+
+er = setpoint - feedback;
+
+if(er > 4095) er = 4095;
+if(er < -4095) er = -4095;
+
+if(!warmup)
+{
+if(Imode) pp = er; else
+pp = er;
+
+pi += er;
+if(pi > 4095) pi = 4095;
+if(pi < -4095) pi = -4095;
+
+ipid = pp;
+ipid += (pi / 256);
+
+if(ipid > 4095) ipid = 4095;
+if(ipid < -4095) ipid = -4095;
+
+increment += ipid;
+} else
+{
+warmup--;
+if(er > 0) increment++; else increment--;
+pi = 0;
+}
+
+
+}
+

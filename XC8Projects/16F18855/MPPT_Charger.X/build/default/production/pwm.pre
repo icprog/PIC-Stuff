@@ -17429,30 +17429,17 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
 
-# 9 "adc.h"
-typedef int16_t adc_result_t;
+# 21 "adc.h"
+int16_t readAnalog(uint16_t channel);
 
-
-typedef enum
-{
-
-channel_VSS = 0x3C,
-channel_Temp = 0x3D,
-channel_DAC1 = 0x3E,
-channel_FVR = 0x3F
-} adcc_channel_t;
-
-int16_t readAnalog(int16_t channel);
+int16_t ADCRead(uint16_t channel);
 
 void ADC_Initialize(void);
 
-void ADCC_StartConversion(adcc_channel_t channel);
-
+# 31
 bool ADCC_IsConversionDone();
 
-adc_result_t ADCC_GetConversionResult(void);
-
-adc_result_t ADCRead(adcc_channel_t channel);
+int16_t ADCC_GetConversionResult(void);
 
 void ADCC_StopConversion(void);
 
@@ -17476,47 +17463,49 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 77
+# 79
 uint16_t ADCC_GetPreviousResult(void);
 
-# 101
+# 103
 void ADCC_DefineSetPoint(uint16_t);
 
-# 126
+# 128
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 151
+# 153
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 174
+# 176
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 196
+# 198
 void ADCC_EnableDoubleSampling(void);
 
-# 218
+# 220
 void ADCC_EnableContinuousConversion(void);
 
-# 240
+# 242
 void ADCC_DisableContinuousConversion(void);
 
-# 262
+# 264
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 284
+# 286
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 306
+# 308
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 32 "battery_charger.h"
-enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+# 36 "battery_charger.h"
+enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, MPPT = 4, FLOAT = 5 };
 
-# 57
-extern unsigned char battery_state;
+# 61
+extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
+void cc_cv_mode();
+void pid(uint16_t feedback, uint16_t setpoint);
 
 # 19 "lcd.h"
 void gotoXY(uint8_t x, uint8_t y);

@@ -24,7 +24,7 @@ unsigned int ad_res;
 //unsigned int iref;        // Moved to charger
 //unsigned int warmup;        // Moved to charger
 
-unsigned char cc_cv;
+//unsigned char cc_cv;          // moved to charger
 
 unsigned int second;
 

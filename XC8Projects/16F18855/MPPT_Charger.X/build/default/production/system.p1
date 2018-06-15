@@ -3,7 +3,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
 "19 system.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
-"23 adc.h
+"25 adc.h
 [v _ADC_Initialize `(v ~T0 @X0 0 ef ]
 "7 pwm.h
 [v _PWM_Initialize `(v ~T0 @X0 0 ef ]
@@ -13179,46 +13179,39 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
-[; ;adc.h: 9: typedef int16_t adc_result_t;
-[; ;adc.h: 12: typedef enum
-[; ;adc.h: 13: {
-[; ;adc.h: 15: channel_VSS = 0x3C,
-[; ;adc.h: 16: channel_Temp = 0x3D,
-[; ;adc.h: 17: channel_DAC1 = 0x3E,
-[; ;adc.h: 18: channel_FVR = 0x3F
-[; ;adc.h: 19: } adcc_channel_t;
-[; ;adc.h: 21: int16_t readAnalog(int16_t channel);
-[; ;adc.h: 23: void ADC_Initialize(void);
-[; ;adc.h: 25: void ADCC_StartConversion(adcc_channel_t channel);
-[; ;adc.h: 27: bool ADCC_IsConversionDone();
-[; ;adc.h: 29: adc_result_t ADCC_GetConversionResult(void);
-[; ;adc.h: 31: adc_result_t ADCRead(adcc_channel_t channel);
-[; ;adc.h: 33: void ADCC_StopConversion(void);
-[; ;adc.h: 35: void ADCC_SetStopOnInterrupt(void);
-[; ;adc.h: 37: void ADCC_DischargeSampleCapacitor(void);
-[; ;adc.h: 39: void ADCC_LoadAcquisitionRegister(uint8_t);
-[; ;adc.h: 41: void ADCC_SetPrechargeTime(uint8_t);
-[; ;adc.h: 43: void ADCC_SetRepeatCount(uint8_t);
-[; ;adc.h: 45: uint8_t ADCC_GetCurrentCountofConversions(void);
-[; ;adc.h: 47: void ADCC_ClearAccumulator(void);
-[; ;adc.h: 49: uint16_t ADCC_GetAccumulatorValue(void);
-[; ;adc.h: 51: bool ADCC_HasAccumulatorOverflowed(void);
-[; ;adc.h: 53: uint16_t ADCC_GetFilterValue(void);
-[; ;adc.h: 77: uint16_t ADCC_GetPreviousResult(void);
-[; ;adc.h: 101: void ADCC_DefineSetPoint(uint16_t);
-[; ;adc.h: 126: void ADCC_SetUpperThreshold(uint16_t);
-[; ;adc.h: 151: void ADCC_SetLowerThreshold(uint16_t);
-[; ;adc.h: 174: uint16_t ADCC_GetErrorCalculation(void);
-[; ;adc.h: 196: void ADCC_EnableDoubleSampling(void);
-[; ;adc.h: 218: void ADCC_EnableContinuousConversion(void);
-[; ;adc.h: 240: void ADCC_DisableContinuousConversion(void);
-[; ;adc.h: 262: bool ADCC_HasErrorCrossedUpperThreshold(void);
-[; ;adc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
-[; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 28: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
-[; ;battery_charger.h: 53: extern unsigned char battery_state;
-[; ;battery_charger.h: 55: void Init_Battery_State_Machine(void);
-[; ;battery_charger.h: 56: void Battery_State_Machine(void);
+[; ;adc.h: 21: int16_t readAnalog(uint16_t channel);
+[; ;adc.h: 23: int16_t ADCRead(uint16_t channel);
+[; ;adc.h: 25: void ADC_Initialize(void);
+[; ;adc.h: 31: bool ADCC_IsConversionDone();
+[; ;adc.h: 33: int16_t ADCC_GetConversionResult(void);
+[; ;adc.h: 35: void ADCC_StopConversion(void);
+[; ;adc.h: 37: void ADCC_SetStopOnInterrupt(void);
+[; ;adc.h: 39: void ADCC_DischargeSampleCapacitor(void);
+[; ;adc.h: 41: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adc.h: 43: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adc.h: 45: void ADCC_SetRepeatCount(uint8_t);
+[; ;adc.h: 47: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adc.h: 49: void ADCC_ClearAccumulator(void);
+[; ;adc.h: 51: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adc.h: 53: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adc.h: 55: uint16_t ADCC_GetFilterValue(void);
+[; ;adc.h: 79: uint16_t ADCC_GetPreviousResult(void);
+[; ;adc.h: 103: void ADCC_DefineSetPoint(uint16_t);
+[; ;adc.h: 128: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adc.h: 153: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adc.h: 176: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adc.h: 198: void ADCC_EnableDoubleSampling(void);
+[; ;adc.h: 220: void ADCC_EnableContinuousConversion(void);
+[; ;adc.h: 242: void ADCC_DisableContinuousConversion(void);
+[; ;adc.h: 264: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adc.h: 286: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adc.h: 308: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;battery_charger.h: 36: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, MPPT = 4, FLOAT = 5 };
+[; ;battery_charger.h: 61: extern uint8_t battery_state;
+[; ;battery_charger.h: 63: void Init_Battery_State_Machine(void);
+[; ;battery_charger.h: 64: void Battery_State_Machine(void);
+[; ;battery_charger.h: 65: void cc_cv_mode();
+[; ;battery_charger.h: 66: void pid(uint16_t feedback, uint16_t setpoint);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13231,6 +13224,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
 [; ;system.h: 17: void SYSTEM_Initialize(void);
 [; ;system.h: 19: void OSCILLATOR_Initialize(void);

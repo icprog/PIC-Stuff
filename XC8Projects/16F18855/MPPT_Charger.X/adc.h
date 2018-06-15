@@ -6,29 +6,31 @@
 #include <stdbool.h>
 
 
-typedef int16_t adc_result_t;
+//typedef int16_t adc_result_t;
 
 
-typedef enum
-{
+//typedef enum
+//{
 //    POT         =   0x4,
-    channel_VSS =   0x3C,
-    channel_Temp =  0x3D,
-    channel_DAC1 =  0x3E,
-    channel_FVR =   0x3F
-} adcc_channel_t;                                   //   This routine defines the channels that are available for the module to use.
+  //  channel_VSS =   0x3C,
+    //channel_Temp =  0x3D,
+//    channel_DAC1 =  0x3E,
+  //  channel_FVR =   0x3F
+//} adcc_channel_t;                                   //   This routine defines the channels that are available for the module to use.
 
-int16_t readAnalog(int16_t channel);
+int16_t readAnalog(uint16_t channel);
+
+int16_t ADCRead(uint16_t channel);//adcc_channel_t channel);
 
 void ADC_Initialize(void);
 
-void ADCC_StartConversion(adcc_channel_t channel);
+
+
+//void ADCC_StartConversion(adcc_channel_t channel);
 
 bool ADCC_IsConversionDone();
 
-adc_result_t ADCC_GetConversionResult(void);
-
-adc_result_t ADCRead(adcc_channel_t channel);
+int16_t ADCC_GetConversionResult(void);
 
 void ADCC_StopConversion(void);
 

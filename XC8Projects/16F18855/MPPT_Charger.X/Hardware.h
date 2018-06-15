@@ -51,9 +51,9 @@
 #define		NCO_32P				0xA0
 
 //#define		WARMUP_TIME			64                                              // moved to BatteryCharger
-#define		CURRENT_MODE		4
-#define		ERR_MAX				4095
-#define		ERR_MIN				-4095
+//#define		CURRENT_MODE		4                                           // moved to battery_charger.h
+//#define		ERR_MAX				4095                                           // moved to battery_charger.h
+//#define		ERR_MIN				-4095                                           // moved to battery_charger.h
 
 //	For this demo board VDD is 5037mV, IOUT shunt is 5mOhm, IOUT amplification 106, VOUT divider is 4
 
@@ -64,8 +64,8 @@
 #define		AD_CONVERT()		{ GO_nDONE = 1; while(GO_nDONE); }
 #define		VREF_COMP(x)		{ x = (unsigned int)x * VREF_VDD_MAX / vref; }
 
-#define		STOP_CONVERTER()	{ increment = 0; set_NCO(); TRIS_NCO = 1; }     // moved to BatteryCharger
-#define  	START_CONVERTER()	{ warmup = WARMUP_TIME; TRIS_NCO = 0; }         // moved to BatteryCharger
+//#define		STOP_CONVERTER()	{ increment = 0; set_NCO(); TRIS_NCO = 1; }     // moved to BatteryCharger
+//#define  	START_CONVERTER()	{ warmup = WARMUP_TIME; TRIS_NCO = 0; }         // moved to BatteryCharger
 
 //#define		ISENSE		iout                                                         // moved to BatteryCharger
 //#define		VSENSE		vout                                                     // moved to BatteryCharger

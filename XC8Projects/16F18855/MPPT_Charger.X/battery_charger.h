@@ -1,19 +1,23 @@
 #include "system.h"
 
-#define		VIN1				RC7 // was RA2
-#define		IIN1        		RC6 // was RC2
-#define		VOUT1				RC5 // was RC3
-#define		IOUT1				RC4 // was RA1
-#define     VIN2                RC3
-#define     IIN2                RC2
-#define     VOUT2               RC1
-#define     IOUT2               RC0
+//#define		VIN1				RC7 // was RA2
+//#define		IIN1        		RC6 // was RC2
+//#define		VOUT1				RC5 // was RC3
+//#define		IOUT1				RC4 // was RA1
+//#define     VIN2                RC3
+//#define     IIN2                RC2
+//#define     VOUT2               RC1
+//#define     IOUT2               RC0
 
 #define		SET_CURRENT(x)		{ Iref = x; }
-#define		SET_VOLTAGE(x)		{ Vref = x; }
+#define		SET_VOLTAGE(x)		{ Vref = x; }               // This is where Vref gets set
 #define		WARMUP_TIME			64
 #define		CONSTANT_VOLTAGE	(!Imode)
 #define		I_BAT_DETECT		16 
+#define		CURRENT_MODE		4
+#define		ERR_MAX				4095
+#define		ERR_MIN				-4095
+
 #define		CO1					RA6
 #define		CO2					RA7
 #define		TRIS_CO1			TRISA6
@@ -58,3 +62,5 @@ extern uint8_t  battery_state;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
+void cc_cv_mode();
+void pid(uint16_t feedback, uint16_t setpoint);

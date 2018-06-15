@@ -12,6 +12,8 @@ uint16_t    Iout;
 uint16_t    Vout;
 int8_t      Imode;
 int16_t     increment;
+uint8_t     cc_cv;
+
 
 
 
@@ -54,7 +56,7 @@ void Battery_State_Machine()
 	}
     else if(battery_state == MPPT)
 	{
-		if(CONSTANT_VOLTAGE)
+		if(CONSTANT_VOLTAGE)                            // Mode is "Voltage Mode", not "Current Mode"
 		{
 			if(ISENSE < Imin)
 			{
@@ -69,7 +71,8 @@ void Battery_State_Machine()
 				Imin_db = IMIN_UPDATE;
 				if(Iflat_db) Iflat_db--;
 			}
-		} else
+		}
+        else
 		{
 			Imin_db = IMIN_UPDATE;
 			Iflat_db = IFLAT_COUNT;
@@ -79,7 +82,7 @@ void Battery_State_Machine()
 		{
 			#ifdef	BATTERY_SLA
 				battery_state = FLOAT;
-				state_counter = FLOAT_TIME;
+//				state_counter = FLOAT_TIME;
 
 				SET_VOLTAGE(FLOATING_VOLTAGE);
 			#else
@@ -90,24 +93,24 @@ void Battery_State_Machine()
 	} 
     else if(battery_state == FLOAT)
 	{
-        if(state_counter)
-        {
-            state_counter-=1;
-        }
-        else
-		{
-			battery_state = FINISHED;
-		}
-		#ifdef BATTERY_SLA
-			if(state_counter < FLOAT_RELAX_TIME && ISENSE < I_BAT_DETECT)
-			battery_state = IDLE;
-		#endif
-	} else
-	if(battery_state == IDLE)
-	{
-		SET_VOLTAGE(0);
-		SET_CURRENT(0);
-		STOP_CONVERTER();
+//        if(state_counter)
+  //      {
+    //        state_counter-=1;
+      //  }
+        //else
+//		{
+//			battery_state = FINISHED;
+//		}
+//		#ifdef BATTERY_SLA
+//			if(state_counter < FLOAT_RELAX_TIME && ISENSE < I_BAT_DETECT)
+//			battery_state = IDLE;
+//		#endif
+//	} else
+//	if(battery_state == IDLE)
+//	{
+//		SET_VOLTAGE(0);
+//		SET_CURRENT(0);
+//		STOP_CONVERTER();
 	} else
 	if(battery_state == FAULT)
 	{
@@ -120,7 +123,7 @@ void Battery_State_Machine()
 		#ifdef BATTERY_STANDBY_MODE
 			if(VSENSE < TOPPING_VOLTAGE && VSENSE > VBAT_DETECTION)
 			{
-				battery_state = CHARGE;
+				battery_state = MPPT;
 
 				SET_CURRENT(ILIM);
 				SET_VOLTAGE(CHARGING_VOLTAGE);
@@ -142,3 +145,68 @@ void Battery_State_Machine()
 		#endif
 	}
 }
+
+void cc_cv_mode()
+{
+	if(Vout > Vref)                                     // Vref is set by SET_VOLTAGE()
+	{
+		if(cc_cv)
+        {
+            cc_cv-=1;
+        }
+        else
+		{
+			if(Imode)
+            {
+                pi = 0;
+                Imode = 0;
+            }
+		}
+	}
+	if(Iout > Iref) 
+	{
+		if(!Imode)
+        {
+            pi = 0;
+            Imode = 1;
+            cc_cv = CURRENT_MODE;
+        }
+	}
+}
+
+void pid(uint16_t feedback, uint16_t setpoint)
+{
+int 	er;
+int		ipid;
+	
+	er = setpoint - feedback;
+
+	if(er > ERR_MAX) er = ERR_MAX;
+	if(er < ERR_MIN) er = ERR_MIN;
+
+	if(!warmup)
+	{
+		if(Imode) pp = er; else
+		pp = er;
+
+		pi += er;
+		if(pi > ERR_MAX) pi = ERR_MAX;
+		if(pi < ERR_MIN) pi = ERR_MIN;
+
+		ipid = pp;
+		ipid += (pi / 256);
+
+		if(ipid > ERR_MAX) ipid = ERR_MAX;
+		if(ipid < ERR_MIN) ipid = ERR_MIN;
+
+		increment += ipid;
+	} else
+	{	
+		warmup--;
+		if(er > 0) increment++; else increment--;
+		pi = 0;
+	}
+		
+//	set_NCO();
+}
+

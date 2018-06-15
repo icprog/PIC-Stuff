@@ -2,18 +2,18 @@
 #include "adc.h"
 
 #define     numSamples                      20                                              // Number of Temperature readings to Average
-#define     numChannels                     2                                               // Number of Analog channels to read
+#define     numChannels                     8                                               // Number of Analog channels to read
 
-uint16_t samples[numChannels][numSamples]   =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
+int16_t samples[numChannels][numSamples]   =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
 
 uint16_t sampleIndex                        =   {0};
 
 int32_t totals[numChannels]                 =   {0};
 
-static int channels[numChannels]            =   {1,3};                                      // List all the Analog channel numbers here, must be same number listed as numChannels
+static uint16_t channels[numChannels]       =   {15, 16, 17, 18, 19, 20, 21, 22};           // List all the Analog channel numbers here, must be same number listed as numChannels
 
 // *************** ADC Read Individual Channel ****************************************************************************************************
-adc_result_t ADCRead(adcc_channel_t channel)
+int16_t ADCRead(uint16_t channel)//adcc_channel_t channel)
 {
     ADPCH                                   =   channel;                                      // select the A/D channel
 
@@ -31,11 +31,11 @@ adc_result_t ADCRead(adcc_channel_t channel)
 }
 
 // *************** Read Analogs from Analog channel Array ****************************************************************************************
-int16_t readAnalog(int channel)
+int16_t readAnalog(uint16_t channel)
 {
     int16_t value;
     
-    int16_t analog_channel = channels[channel];
+    uint16_t analog_channel = channels[channel];
     
     value = ADCRead(analog_channel);
             

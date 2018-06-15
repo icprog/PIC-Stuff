@@ -18,7 +18,7 @@
 	#define TOPPING_VOLTAGE			1290	//6.30V
 	#define	CUTOFF_VOLTAGE			1075	//5.25V
 
-	#define	ILIM_PRECHARGE			173		//50mA, C/10
+	#define	ILIM_PRECHARGE			173		//50mA, C/10        Small current set at PRECHARGE stage
 	#define	ILIM					347		//800mA, C/5
 	#define IFLOAT					35		//80mA, C/50 (2%) minimum charging current				
 
