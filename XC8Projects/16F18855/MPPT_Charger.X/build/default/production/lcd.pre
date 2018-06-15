@@ -17550,9 +17550,6 @@ void LCDInit(void);
 
 void LCDWrite(uint8_t data_or_command, uint8_t data);
 
-
-void LCDDrawBox(void);
-
 # 17 "lcd.c"
 const char fonts [] = {
 0x00, 0x00, 0x00,
@@ -17825,32 +17822,3 @@ LATAbits.LATA4=0;
 LATAbits.LATA1 = 1;
 }
 
-
-void LCDDrawBox(void)
-{
-uint8_t j;
-
-for(j = 0; j < 84; j++)
-{
-gotoXY(j, 0);
-LCDWrite(1,0x01);
-}
-
-for(j = 0; j < 84; j++)
-{
-gotoXY(j, 5);
-LCDWrite(1,0x80);
-}
-
-for(j = 0; j < 6; j++)
-{
-gotoXY(83, j);
-LCDWrite(1,0xff);
-}
-
-for(j = 0; j < 6; j++)
-{
-gotoXY(0, j);
-LCDWrite(1,0xff);
-}
-}

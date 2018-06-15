@@ -20,15 +20,15 @@
 
 #define		CO1					RA6
 #define		CO2					RA7
-#define		TRIS_CO1			TRISA6
-#define		TRIS_CO2			TRISA7
+#define		TRIS_PWM0Out        TRISA6
+#define		TRIS_PWM1Out       	TRISA7
 #define		VSENSE              Vout
 #define		ISENSE              Iout
 
 
-#define		STOP_CONVERTER()	{ increment = 0; TRIS_CO1 = 1; TRIS_CO2 = 1; }   // NCO is Numerically controller oscillator, will now be PWM to Converter?
+#define		STOP_CONVERTER()	{ TRIS_PWM0Out = 1; TRIS_PWM1Out = 1; }   // NCO is Numerically controller oscillator, will now be PWM to Converter?
 //#define		STOP_CONVERTER()	{ increment = 0; set_NCO(); TRIS_CO1 = 1; TRIS_CO2 = 1; }   // NCO is Numerically controller oscillator, will now be PWM to Converter?
-#define  	START_CONVERTER()	{ warmup = WARMUP_TIME; TRIS_CO1 = 0; TRIS_CO2 = 0; }       // NCO is PWM to Converter?
+#define  	START_CONVERTER()	{ warmup = WARMUP_TIME; TRIS_PWM0Out = 0; TRIS_PWM1Out = 0; }       // NCO is PWM to Converter?
 
 
 #ifndef BATTERY_CHARGER_H

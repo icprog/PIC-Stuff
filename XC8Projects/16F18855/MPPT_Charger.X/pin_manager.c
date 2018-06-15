@@ -46,10 +46,8 @@ void PIN_MANAGER_Initialize(void)
     PPSLOCK = 0xAA;
     PPSLOCKbits.PPSLOCKED = 0x00;       // unlock PPS
 
-//    T2AINPPSbits.T2AINPPS = 0x0013;   //RC3->TMR2:T2IN; RC3 as hardware input pin to timer 2???
-    RC4PPS = 0x000F;                    //RC4->PWM7:PWM7OUT;
-//    RA2PPS = 0x000E;   //RA2->PWM6:PWM6OUT;
-//    RA3PPS = 0x000E;                    //RA3->PWM6:PWM6OUT;
+    RA6PPS = 0x000E;                    //RA6->PWM6:PWM6OUT;
+    RA7PPS = 0x000F;                    //RC4->PWM7:PWM7OUT;
 
     PPSLOCK = 0x55;
     PPSLOCK = 0xAA;

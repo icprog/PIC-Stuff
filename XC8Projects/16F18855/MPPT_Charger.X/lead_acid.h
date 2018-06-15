@@ -11,7 +11,7 @@
 //	2.40V per cell charging voltage
 
 #ifdef PRESET1
-	#define LA_3CELL
+	#define LA_6CELL
 	#define CAPACITY 				4000
 	#define CHARGING_VOLTAGE		1474	//7.20V
 	#define	FLOATING_VOLTAGE		1382	//6.75V

@@ -164,6 +164,7 @@ void main(void)
         
         if(slowLoop>100)
         {
+            Battery_State_Machine();
             LCDWriteIntXY(0,0,fastLoop,4,0,0);
             LCDWriteIntXY(20,0,fastLoop,4,0,0);
             LCDWriteIntXY(0,1,VIn0,4,0,0);
@@ -180,14 +181,6 @@ void main(void)
             if(battery_state > FINISHED)
             {
             	cc_cv_mode();
-//                if(!Imode)
-  //              {
-    //                pid(Vout, Vref);
-      //          }
-        //        else
-          //      {
-            //		pid(Iout, Iref);
-              //}
             }
             slowLoop=0;
         }

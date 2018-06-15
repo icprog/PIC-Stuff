@@ -314,7 +314,7 @@ void LCDWrite(uint8_t data_or_command, uint8_t data)
 }
 
 
-void LCDDrawBox(void)
+/*void LCDDrawBox(void)
 {
     uint8_t j;
     
@@ -341,4 +341,4 @@ void LCDDrawBox(void)
         gotoXY(0, j);
         LCDWrite(LCD_DATA,0xff);
     }
-}
+}*/

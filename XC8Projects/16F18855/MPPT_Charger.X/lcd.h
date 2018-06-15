@@ -41,6 +41,6 @@ void LCDInit(void);
 void LCDWrite(uint8_t data_or_command, uint8_t data);
 
 // ***** Draw a simple Box to the Display **************************************
-void LCDDrawBox(void);
+//void LCDDrawBox(void);
 
 #endif

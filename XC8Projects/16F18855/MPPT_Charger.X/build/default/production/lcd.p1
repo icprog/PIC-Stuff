@@ -13173,7 +13173,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 36: void LCDWriteInt(int16_t value,int8_t fieldLength, uint8_t numPlaces, uint8_t sign);
 [; ;lcd.h: 38: void LCDInit(void);
 [; ;lcd.h: 41: void LCDWrite(uint8_t data_or_command, uint8_t data);
-[; ;lcd.h: 44: void LCDDrawBox(void);
 "17 lcd.c
 [v _fonts `Cuc ~T0 @X0 -> 0 `x e ]
 [i _fonts
@@ -13858,8 +13857,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `uc ~T0 @X0 1 r4 ]
 "191
 [f ]
-[v F14385 `uc ~T0 @X0 -> 5 `i s ]
-[i F14385
+[v F14383 `uc ~T0 @X0 -> 5 `i s ]
+[i F14383
 :U ..
 "192
 -> -> 0 `i `uc
@@ -13871,7 +13870,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _str `uc ~T0 @X0 -> 5 `i a ]
 [; ;lcd.c: 192: uint8_t str[5]={0,0,0,0,0};
-[e = _str F14385 ]
+[e = _str F14383 ]
 "193
 [v _i `uc ~T0 @X0 1 a ]
 [; ;lcd.c: 193: uint8_t i=4,j=0;
@@ -14199,119 +14198,4 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 314: }
 "314
 [e :UE 1597 ]
-}
-"317
-[v _LCDDrawBox `(v ~T0 @X0 1 ef ]
-"318
-{
-[; ;lcd.c: 317: void LCDDrawBox(void)
-[; ;lcd.c: 318: {
-[e :U _LCDDrawBox ]
-[f ]
-"319
-[v _j `uc ~T0 @X0 1 a ]
-[; ;lcd.c: 319: uint8_t j;
-[; ;lcd.c: 321: for(j = 0; j < 84; j++)
-"321
-{
-[e = _j -> -> 0 `i `uc ]
-[e $ < -> _j `i -> 84 `i 1605  ]
-[e $U 1606  ]
-"322
-[e :U 1605 ]
-[; ;lcd.c: 322: {
-{
-[; ;lcd.c: 323: gotoXY(j, 0);
-"323
-[e ( _gotoXY (2 , _j -> -> 0 `i `uc ]
-[; ;lcd.c: 324: LCDWrite(1,0x01);
-"324
-[e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-"325
-}
-"321
-[e ++ _j -> -> 1 `i `uc ]
-[e $ < -> _j `i -> 84 `i 1605  ]
-[e :U 1606 ]
-"325
-}
-[; ;lcd.c: 325: }
-[; ;lcd.c: 327: for(j = 0; j < 84; j++)
-"327
-{
-[e = _j -> -> 0 `i `uc ]
-[e $ < -> _j `i -> 84 `i 1608  ]
-[e $U 1609  ]
-"328
-[e :U 1608 ]
-[; ;lcd.c: 328: {
-{
-[; ;lcd.c: 329: gotoXY(j, 5);
-"329
-[e ( _gotoXY (2 , _j -> -> 5 `i `uc ]
-[; ;lcd.c: 330: LCDWrite(1,0x80);
-"330
-[e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 128 `i `uc ]
-"331
-}
-"327
-[e ++ _j -> -> 1 `i `uc ]
-[e $ < -> _j `i -> 84 `i 1608  ]
-[e :U 1609 ]
-"331
-}
-[; ;lcd.c: 331: }
-[; ;lcd.c: 333: for(j = 0; j < 6; j++)
-"333
-{
-[e = _j -> -> 0 `i `uc ]
-[e $ < -> _j `i -> 6 `i 1611  ]
-[e $U 1612  ]
-"334
-[e :U 1611 ]
-[; ;lcd.c: 334: {
-{
-[; ;lcd.c: 335: gotoXY(83, j);
-"335
-[e ( _gotoXY (2 , -> -> 83 `i `uc _j ]
-[; ;lcd.c: 336: LCDWrite(1,0xff);
-"336
-[e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 255 `i `uc ]
-"337
-}
-"333
-[e ++ _j -> -> 1 `i `uc ]
-[e $ < -> _j `i -> 6 `i 1611  ]
-[e :U 1612 ]
-"337
-}
-[; ;lcd.c: 337: }
-[; ;lcd.c: 339: for(j = 0; j < 6; j++)
-"339
-{
-[e = _j -> -> 0 `i `uc ]
-[e $ < -> _j `i -> 6 `i 1614  ]
-[e $U 1615  ]
-"340
-[e :U 1614 ]
-[; ;lcd.c: 340: {
-{
-[; ;lcd.c: 341: gotoXY(0, j);
-"341
-[e ( _gotoXY (2 , -> -> 0 `i `uc _j ]
-[; ;lcd.c: 342: LCDWrite(1,0xff);
-"342
-[e ( _LCDWrite (2 , -> -> 1 `i `uc -> -> 255 `i `uc ]
-"343
-}
-"339
-[e ++ _j -> -> 1 `i `uc ]
-[e $ < -> _j `i -> 6 `i 1614  ]
-[e :U 1615 ]
-"343
-}
-[; ;lcd.c: 343: }
-[; ;lcd.c: 344: }
-"344
-[e :UE 1604 ]
 }

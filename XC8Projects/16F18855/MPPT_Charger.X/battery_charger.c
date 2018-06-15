@@ -1,18 +1,18 @@
 #include "battery_charger.h"
 
-uint8_t     battery_state;
-uint8_t     Imin_db;
-uint16_t    Iflat_db;
-uint16_t    state_counter;
-uint16_t    Imin;
-uint16_t    Iref;                                       // setpoint for current output
-uint16_t    Vref;                                       // setpoint for voltage output
-uint16_t    warmup;
-uint16_t    Iout;
-uint16_t    Vout;
-int8_t      Imode;
-int16_t     increment;
-uint8_t     cc_cv;
+uint8_t             battery_state;
+uint8_t             Imin_db;
+uint16_t            Iflat_db;
+uint16_t            state_counter;
+uint16_t            Imin;
+uint16_t            Iref;                                       // setpoint for current output
+uint16_t            Vref;                                       // setpoint for voltage output
+uint16_t            warmup;
+uint16_t            Iout;
+uint16_t            Vout;
+int8_t              Imode;
+//int16_t     increment;
+uint8_t             cc_cv;
 
 
 
@@ -158,7 +158,6 @@ void cc_cv_mode()
 		{
 			if(Imode)
             {
-                pi = 0;
                 Imode = 0;
             }
 		}
@@ -167,46 +166,8 @@ void cc_cv_mode()
 	{
 		if(!Imode)
         {
-            pi = 0;
             Imode = 1;
             cc_cv = CURRENT_MODE;
         }
 	}
 }
-/*
-void pid(uint16_t feedback, uint16_t setpoint)
-{
-int 	er;
-int		ipid;
-	
-	er = setpoint - feedback;
-
-	if(er > ERR_MAX) er = ERR_MAX;
-	if(er < ERR_MIN) er = ERR_MIN;
-
-	if(!warmup)
-	{
-		if(Imode) pp = er; else
-		pp = er;
-
-		pi += er;
-		if(pi > ERR_MAX) pi = ERR_MAX;
-		if(pi < ERR_MIN) pi = ERR_MIN;
-
-		ipid = pp;
-		ipid += (pi / 256);
-
-		if(ipid > ERR_MAX) ipid = ERR_MAX;
-		if(ipid < ERR_MIN) ipid = ERR_MIN;
-
-		increment += ipid;
-	} else
-	{	
-		warmup--;
-		if(er > 0) increment++; else increment--;
-		pi = 0;
-	}
-		
-//	set_NCO();
-}
-*/
