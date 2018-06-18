@@ -10,19 +10,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PWM6_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
 "11
 [v _PWM7_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
-"64 battery_charger.h
-[v _Battery_State_Machine `(v ~T0 @X0 0 ef ]
 "19 lcd.h
 [v _gotoXY `(v ~T0 @X0 0 ef2`uc`uc ]
 "36
 [v _LCDWriteInt `(v ~T0 @X0 0 ef4`i`c`uc`uc ]
-"61 battery_charger.h
-[v _battery_state `uc ~T0 @X0 0 e ]
-"181 main.c
-[c E14311 0 1 2 3 4 5 .. ]
-[n E14311 charge_states IDLE FAULT FINISHED PRECHARGE MPPT FLOAT  ]
-"65 battery_charger.h
-[v _cc_cv_mode `(v ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -13239,8 +13230,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _fastLoop -> -> 0 `i `uc ]
 "56
 [v _slowLoop `uc ~T0 @X0 1 a ]
-[; ;main.c: 56: uint8_t slowLoop = 0;
-[e = _slowLoop -> -> 0 `i `uc ]
+[; ;main.c: 56: uint8_t slowLoop = 200;
+[e = _slowLoop -> -> 200 `i `uc ]
 "57
 [v _Imode `c ~T0 @X0 0 e ]
 "58
@@ -13439,78 +13430,78 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 135: VIn1_Old=analogs[3];
 "135
 [e = _VIn1_Old *U + &U _analogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _analogs `ui `ux ]
-[; ;main.c: 137: fastLoop=0;
 "137
-[e = _fastLoop -> -> 0 `i `uc ]
-[; ;main.c: 138: slowLoop+=1;
-"138
-[e =+ _slowLoop -> -> 1 `i `uc ]
-"139
 }
-[; ;main.c: 139: }
+[; ;main.c: 137: }
 [e $U 1584  ]
-"140
+"138
 [e :U 1571 ]
-[; ;main.c: 140: else
+[; ;main.c: 138: else
+[; ;main.c: 139: {
+"139
+{
+[; ;main.c: 140: if(analogs[5]>(int16_t)Vref)
+"140
+[e $ ! > *U + &U _analogs * -> -> -> 5 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> _Vref `i 1585  ]
 [; ;main.c: 141: {
 "141
 {
-[; ;main.c: 142: if(analogs[5]>(int16_t)Vref)
+[; ;main.c: 142: dutyCycle6-=1;;
 "142
-[e $ ! > *U + &U _analogs * -> -> -> 5 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> _Vref `i 1585  ]
-[; ;main.c: 143: {
-"143
-{
-[; ;main.c: 144: dutyCycle6-=1;;
-"144
 [e =- _dutyCycle6 -> -> 1 `i `ui ]
-"145
+"143
 }
-[; ;main.c: 145: }
+[; ;main.c: 143: }
 [e $U 1586  ]
-"146
+"144
 [e :U 1585 ]
-[; ;main.c: 146: else
-[; ;main.c: 147: {
-"147
+[; ;main.c: 144: else
+[; ;main.c: 145: {
+"145
 {
-[; ;main.c: 148: dutyCycle6+=1;
-"148
+[; ;main.c: 146: dutyCycle6+=1;
+"146
 [e =+ _dutyCycle6 -> -> 1 `i `ui ]
-"149
+"147
 }
 [e :U 1586 ]
-[; ;main.c: 149: }
-[; ;main.c: 151: if(analogs[1]>(int16_t)Vref)
-"151
+[; ;main.c: 147: }
+[; ;main.c: 149: if(analogs[1]>(int16_t)Vref)
+"149
 [e $ ! > *U + &U _analogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> _Vref `i 1587  ]
-[; ;main.c: 152: {
-"152
+[; ;main.c: 150: {
+"150
 {
-[; ;main.c: 153: dutyCycle7-=1;;
-"153
+[; ;main.c: 151: dutyCycle7-=1;;
+"151
 [e =- _dutyCycle7 -> -> 1 `i `ui ]
-"154
+"152
 }
-[; ;main.c: 154: }
+[; ;main.c: 152: }
 [e $U 1588  ]
-"155
+"153
 [e :U 1587 ]
-[; ;main.c: 155: else
-[; ;main.c: 156: {
-"156
+[; ;main.c: 153: else
+[; ;main.c: 154: {
+"154
 {
-[; ;main.c: 157: dutyCycle7+=1;
-"157
+[; ;main.c: 155: dutyCycle7+=1;
+"155
 [e =+ _dutyCycle7 -> -> 1 `i `ui ]
-"158
+"156
 }
 [e :U 1588 ]
-"159
+"157
 }
 [e :U 1584 ]
-[; ;main.c: 158: }
-[; ;main.c: 159: }
+[; ;main.c: 156: }
+[; ;main.c: 157: }
+[; ;main.c: 158: fastLoop=0;
+"158
+[e = _fastLoop -> -> 0 `i `uc ]
+[; ;main.c: 159: slowLoop+=1;
+"159
+[e =+ _slowLoop -> -> 1 `i `uc ]
 [; ;main.c: 160: PWM6_LoadDutyValue(dutyCycle6);
 "160
 [e ( _PWM6_LoadDutyValue (1 _dutyCycle6 ]
@@ -13524,26 +13515,23 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 163: fastLoop+=1;
 "163
 [e =+ _fastLoop -> -> 1 `i `uc ]
-[; ;main.c: 165: if(slowLoop>100)
+[; ;main.c: 165: if(slowLoop>200)
 "165
-[e $ ! > -> _slowLoop `i -> 100 `i 1589  ]
+[e $ ! > -> _slowLoop `i -> 200 `i 1589  ]
 [; ;main.c: 166: {
 "166
 {
-[; ;main.c: 167: Battery_State_Machine();
-"167
-[e ( _Battery_State_Machine ..  ]
 [; ;main.c: 168: { gotoXY(0,0); LCDWriteInt(fastLoop,4, 0, 0);};
 "168
 {
 [e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
 [e ( _LCDWriteInt (4 , , , -> _fastLoop `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 169: { gotoXY(20,0); LCDWriteInt(fastLoop,4, 0, 0);};
+[; ;main.c: 169: { gotoXY(20,0); LCDWriteInt(slowLoop,4, 0, 0);};
 "169
 {
 [e ( _gotoXY (2 , -> -> 20 `i `uc -> -> 0 `i `uc ]
-[e ( _LCDWriteInt (4 , , , -> _fastLoop `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCDWriteInt (4 , , , -> _slowLoop `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
 [; ;main.c: 170: { gotoXY(0,1); LCDWriteInt(analogs[7],4, 0, 0);};
 "170
@@ -13569,70 +13557,63 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _gotoXY (2 , -> -> 20 `i `uc -> -> 2 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 4 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 174: { gotoXY(0,3); LCDWriteInt(analogs[3],4, 0, 0);};
+[; ;main.c: 174: { gotoXY(40,2); LCDWriteInt(Vref,4, 0, 0);};
 "174
+{
+[e ( _gotoXY (2 , -> -> 40 `i `uc -> -> 2 `i `uc ]
+[e ( _LCDWriteInt (4 , , , -> _Vref `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
+}
+[; ;main.c: 175: { gotoXY(0,3); LCDWriteInt(analogs[3],4, 0, 0);};
+"175
 {
 [e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 3 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 175: { gotoXY(20,3); LCDWriteInt(analogs[2],4, 0, 0);};
-"175
+[; ;main.c: 176: { gotoXY(20,3); LCDWriteInt(analogs[2],4, 0, 0);};
+"176
 {
 [e ( _gotoXY (2 , -> -> 20 `i `uc -> -> 3 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 2 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 176: { gotoXY(0,4); LCDWriteInt(analogs[1],4, 0, 0);};
-"176
+[; ;main.c: 177: { gotoXY(0,4); LCDWriteInt(analogs[1],4, 0, 0);};
+"177
 {
 [e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 4 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 177: { gotoXY(20,4); LCDWriteInt(analogs[0],4, 0, 0);};
-"177
+[; ;main.c: 178: { gotoXY(20,4); LCDWriteInt(analogs[0],4, 0, 0);};
+"178
 {
 [e ( _gotoXY (2 , -> -> 20 `i `uc -> -> 4 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 178: { gotoXY(0,5); LCDWriteInt(dutyCycle6,5, 0, 0);};
-"178
+[; ;main.c: 179: { gotoXY(0,5); LCDWriteInt(dutyCycle6,5, 0, 0);};
+"179
 {
 [e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 5 `i `uc ]
 [e ( _LCDWriteInt (4 , , , -> _dutyCycle6 `i -> -> 5 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 179: { gotoXY(24,5); LCDWriteInt(dutyCycle7,5, 0, 0);};
-"179
+[; ;main.c: 180: { gotoXY(24,5); LCDWriteInt(dutyCycle7,5, 0, 0);};
+"180
 {
 [e ( _gotoXY (2 , -> -> 24 `i `uc -> -> 5 `i `uc ]
 [e ( _LCDWriteInt (4 , , , -> _dutyCycle7 `i -> -> 5 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 181: if(battery_state > FINISHED)
-"181
-[e $ ! > -> _battery_state `i -> . `E14311 2 `i 1590  ]
-[; ;main.c: 182: {
-"182
-{
-[; ;main.c: 183: cc_cv_mode();
-"183
-[e ( _cc_cv_mode ..  ]
-"184
-}
-[e :U 1590 ]
-[; ;main.c: 184: }
-[; ;main.c: 185: slowLoop=0;
-"185
-[e = _slowLoop -> -> 0 `i `uc ]
+[; ;main.c: 186: slowLoop=0;
 "186
+[e = _slowLoop -> -> 0 `i `uc ]
+"187
 }
 [e :U 1589 ]
-"187
+"188
 }
 [e :U 1564 ]
 "76
 [e $U 1565  ]
 [e :U 1566 ]
-[; ;main.c: 186: }
 [; ;main.c: 187: }
 [; ;main.c: 188: }
-"188
+[; ;main.c: 189: }
+"189
 [e :UE 1563 ]
 }

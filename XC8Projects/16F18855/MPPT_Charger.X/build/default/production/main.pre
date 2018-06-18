@@ -17564,7 +17564,7 @@ uint16_t dutyCycle7 = 0;
 uint8_t j = 0;
 int16_t analogs[8] = {0,0,0,0,0,0,0,0};
 uint8_t fastLoop = 0;
-uint8_t slowLoop = 0;
+uint8_t slowLoop = 200;
 extern int8_t Imode;
 extern uint16_t Vref;
 
@@ -17635,8 +17635,6 @@ dutyCycle7+=1;
 power1OutOld=analogs[1]*analogs[0];
 VIn1_Old=analogs[3];
 
-fastLoop=0;
-slowLoop+=1;
 }
 else
 {
@@ -17658,20 +17656,23 @@ else
 dutyCycle7+=1;
 }
 }
+fastLoop=0;
+slowLoop+=1;
 PWM6_LoadDutyValue(dutyCycle6);
 PWM7_LoadDutyValue(dutyCycle7);
 }
 fastLoop+=1;
 
-if(slowLoop>100)
+if(slowLoop>200)
 {
-Battery_State_Machine();
+
 { gotoXY(0,0); LCDWriteInt(fastLoop,4, 0, 0);};
-{ gotoXY(20,0); LCDWriteInt(fastLoop,4, 0, 0);};
+{ gotoXY(20,0); LCDWriteInt(slowLoop,4, 0, 0);};
 { gotoXY(0,1); LCDWriteInt(analogs[7],4, 0, 0);};
 { gotoXY(20,1); LCDWriteInt(analogs[6],4, 0, 0);};
 { gotoXY(0,2); LCDWriteInt(analogs[5],4, 0, 0);};
 { gotoXY(20,2); LCDWriteInt(analogs[4],4, 0, 0);};
+{ gotoXY(40,2); LCDWriteInt(Vref,4, 0, 0);};
 { gotoXY(0,3); LCDWriteInt(analogs[3],4, 0, 0);};
 { gotoXY(20,3); LCDWriteInt(analogs[2],4, 0, 0);};
 { gotoXY(0,4); LCDWriteInt(analogs[1],4, 0, 0);};
@@ -17679,10 +17680,7 @@ Battery_State_Machine();
 { gotoXY(0,5); LCDWriteInt(dutyCycle6,5, 0, 0);};
 { gotoXY(24,5); LCDWriteInt(dutyCycle7,5, 0, 0);};
 
-if(battery_state > FINISHED)
-{
-cc_cv_mode();
-}
+# 186
 slowLoop=0;
 }
 }

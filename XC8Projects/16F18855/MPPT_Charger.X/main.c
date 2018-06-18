@@ -53,7 +53,7 @@ void main(void)
     uint8_t         j               =   0;
     int16_t         analogs[8]      =   {0,0,0,0,0,0,0,0};
     uint8_t         fastLoop        =   0;
-    uint8_t         slowLoop        =   0;
+    uint8_t         slowLoop        =   200;
     extern int8_t   Imode;
     extern uint16_t Vref;                                       // setpoint for voltage output
 
@@ -134,8 +134,6 @@ void main(void)
                 power1OutOld=power1Out;
                 VIn1_Old=VIn1;
 //                PWM7_LoadDutyValue(PWM1);
-                fastLoop=0;
-                slowLoop+=1;
             }
             else
             {
@@ -157,20 +155,23 @@ void main(void)
                     PWM1+=1;
                 }
             }
+            fastLoop=0;
+            slowLoop+=1;
             PWM6_LoadDutyValue(PWM0);
             PWM7_LoadDutyValue(PWM1);
         }
         fastLoop+=1;
         
-        if(slowLoop>100)
+        if(slowLoop>200)
         {
-            Battery_State_Machine();
+//            Battery_State_Machine();
             LCDWriteIntXY(0,0,fastLoop,4,0,0);
-            LCDWriteIntXY(20,0,fastLoop,4,0,0);
+            LCDWriteIntXY(20,0,slowLoop,4,0,0);
             LCDWriteIntXY(0,1,VIn0,4,0,0);
             LCDWriteIntXY(20,1,IIn0,4,0,0);
             LCDWriteIntXY(0,2,VOut0,4,0,0);
             LCDWriteIntXY(20,2,IOut0,4,0,0);
+            LCDWriteIntXY(40,2,Vref,4,0,0);
             LCDWriteIntXY(0,3,VIn1,4,0,0);
             LCDWriteIntXY(20,3,IIn1,4,0,0);
             LCDWriteIntXY(0,4,VOut1,4,0,0);
@@ -178,10 +179,10 @@ void main(void)
             LCDWriteIntXY(0,5,PWM0,5,0,0);
             LCDWriteIntXY(24,5,PWM1,5,0,0);
             
-            if(battery_state > FINISHED)
-            {
-            	cc_cv_mode();
-            }
+//            if(battery_state > FINISHED)
+  //          {
+    //        	cc_cv_mode();
+      //      }
             slowLoop=0;
         }
     }

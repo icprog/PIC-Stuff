@@ -4,9 +4,9 @@
 
 void PIN_MANAGER_Initialize(void)
 {
-    LATA = 0x20;                    // LATA5 MUST be set to a 1 on an Output for LCD to get power
-    LATB = 0x04;                    // LATB2 needs to be 1, to provide + Supply V for Thermistor measurement    
-    LATC = 0x80;                    // LATC7 needs to be 1, to provide + Supply V for Thermistor measurement
+    LATA = 0x00;                    
+    LATB = 0x00;                       
+    LATC = 0x00;                    
 
     WPUA = 0x00;
     WPUB = 0x00;
@@ -14,12 +14,12 @@ void PIN_MANAGER_Initialize(void)
     WPUE = 0x8;
 
     TRISA = 0x00;
-    TRISB = 0x02;                   // RB1 as Input
-    TRISC = 0x40;                   // RC6 as Input
+    TRISB = 0x0F;                   // RB0, 1, 2, and 3 as Input
+    TRISC = 0xFF;                   // Port C as Input
 
     ANSELA = 0x00;
-    ANSELB = 0x02;                  // RB1 as Analog Input(AN9))
-    ANSELC = 0x40;                  // RC6 as Analog Input(AN22))
+    ANSELB = 0x0B;                  // RB0, 1, and 3 as Analog Input
+    ANSELC = 0xFF;                  // Port C as Analog Input
     
     
 /*    LATA = 0x00;
