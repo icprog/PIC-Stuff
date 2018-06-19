@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.45\dat\en_msgs.txt -cs \
   -h+dist/default/production\MPPT_Charger.X.production.sym \
   --cmf=dist/default/production\MPPT_Charger.X.production.cmf -z -Q16F18855 \
-  -oC:\Users\DAVE\AppData\Local\Temp\s3bc.2 \
+  -oC:\Users\DAVE\AppData\Local\Temp\s2eg.2 \
   -Mdist/default/production/MPPT_Charger.X.production.map -E1 -ver=XC8 \
   -ASTACK=02095h-022afh -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
@@ -32,7 +32,7 @@ Linker command line:
   -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 \
   -AEEDATA=00h-0FFh/0F000h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
-  C:\Users\DAVE\AppData\Local\Temp\s3bc.obj \
+  C:\Users\DAVE\AppData\Local\Temp\s2eg.obj \
   dist/default/production\MPPT_Charger.X.production.obj 
 
 Object code version is 3.11
@@ -42,7 +42,7 @@ Machine type is 16F18855
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\DAVE\AppData\Local\Temp\s3bc.obj
+C:\Users\DAVE\AppData\Local\Temp\s2eg.obj
                 end_init                              2        2        2        0       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5    1000E       0
@@ -437,12 +437,12 @@ _ANSELC                          (abs)        00F4E
 _CCPTMRS1bits                    (abs)        0021F
 _FVRCON                          (abs)        0090C
 _GIE                             (abs)        0005F
-_Iflat_db                        bssBANK0     0006B
-_Imin                            bssBANK0     00067
+_Iflat_db                        bssBANK0     00069
+_Imin                            bssBANK0     00065
 _Imin_db                         bssBANK0     0006F
 _Imode                           bssBANK0     0006E
-_Iout                            bssBANK0     0005F
-_Iref                            bssBANK0     00065
+_Iout                            bssBANK0     0005D
+_Iref                            bssBANK0     00063
 _LATA                            (abs)        00016
 _LATAbits                        (abs)        00016
 _LATB                            (abs)        00017
@@ -489,8 +489,8 @@ _TRISA7                          (abs)        0008F
 _TRISAbits                       (abs)        00011
 _TRISB                           (abs)        00012
 _TRISC                           (abs)        00013
-_Vout                            bssBANK0     0005D
-_Vref                            bssBANK0     00063
+_Vout                            bssBANK0     0005B
+_Vref                            bssBANK0     00061
 _WPUA                            (abs)        00F39
 _WPUB                            (abs)        00F44
 _WPUC                            (abs)        00F4F
@@ -820,11 +820,11 @@ _fonts                           stringtext1  00800
 _gotoXY                          text11       000DB
 _main                            maintext     00595
 _readAnalog                      text1        0045D
-_sampleIndex                     bssBANK0     0005B
+_sampleIndex                     bssBANK0     0006B
 _samples                         (abs)        022B0
-_state_counter                   bssBANK0     00069
+_state_counter                   bssBANK0     00067
 _totals                          bssBANK1     000A0
-_warmup                          bssBANK0     00061
+_warmup                          bssBANK0     0005F
 btemp                            (abs)        0007E
 clear_ram0                       clrtext      00097
 end_of_initialization            cinit        007FD
@@ -1492,9 +1492,9 @@ Total ram usage:        6 bytes
  This function calls:
 		Nothing
  This function is called by:
+		_readAnalog
 		_LCDWriteCharacter
 		_main
-		_readAnalog
  This function uses a non-reentrant model
 
 

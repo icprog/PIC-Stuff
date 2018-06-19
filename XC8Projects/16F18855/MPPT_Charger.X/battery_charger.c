@@ -50,11 +50,11 @@ void Battery_State_Machine()
 		} 
         else                                            // VSENSE is >= CUTOFF_VOLTAGE
 		{
-			battery_state = MPPT;                       // Set MPPT mode
+			battery_state = CHARGE;                       // Set CHARGE mode
 			SET_CURRENT(ILIM);                          // Set Current to Maximum limit
 		}
 	}
-    else if(battery_state == MPPT)
+    else if(battery_state == CHARGE)
 	{
 		if(CONSTANT_VOLTAGE)                            // Mode is "Voltage Mode", not "Current Mode"
 		{
@@ -123,7 +123,7 @@ void Battery_State_Machine()
 		#ifdef BATTERY_STANDBY_MODE
 			if(VSENSE < TOPPING_VOLTAGE && VSENSE > VBAT_DETECTION)
 			{
-				battery_state = MPPT;
+				battery_state = CHARGE;
 
 				SET_CURRENT(ILIM);
 				SET_VOLTAGE(CHARGING_VOLTAGE);
@@ -150,24 +150,24 @@ void cc_cv_mode()
 {
 	if(Vout > Vref)                                     // Vref is set by SET_VOLTAGE()
 	{
-		if(cc_cv)
+		if(cc_cv)                                       // Set to "cc_cv" Value at last switch into "Current Mode"
         {
-            cc_cv-=1;
+            cc_cv-=1;                                   // Decrement it by 1,
         }
         else
 		{
-			if(Imode)
+			if(Imode)                                   // until it is zero, 
             {
-                Imode = 0;
+                Imode = 0;                              // then, switch to "Voltage Mode"
             }
 		}
 	}
-	if(Iout > Iref) 
+	if(Iout > Iref)                                     // Iref is set by "SET_CURRENT(some Value here)"
 	{
-		if(!Imode)
+		if(!Imode)                                      // If not "CURRENT Mode",
         {
-            Imode = 1;
-            cc_cv = CURRENT_MODE;
+            Imode = 1;                                  // switch to "Current Mode"
+            cc_cv = CURRENT_MODE;                       // and, set the cc_cv to count "CURRENT_MODE" number of slowLoop iterations, before allowing a return to "VOLTAGE Mode"
         }
 	}
 }

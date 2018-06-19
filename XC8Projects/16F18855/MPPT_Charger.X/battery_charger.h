@@ -9,12 +9,12 @@
 //#define     VOUT2               RC1
 //#define     IOUT2               RC0
 
-#define		SET_CURRENT(x)		{ Iref = x; }
+#define		SET_CURRENT(x)		{ Iref = x; }               // This is where we set Iref
 #define		SET_VOLTAGE(x)		{ Vref = x; }               // This is where Vref gets set
 #define		WARMUP_TIME			64
 #define		CONSTANT_VOLTAGE	(!Imode)
 #define		I_BAT_DETECT		16 
-#define		CURRENT_MODE		4
+#define		CURRENT_MODE		10                          // Number of slowLoop cycles Voltage is over Vref before we drop back to "Voltage Mode" from "Current Mode"
 #define		ERR_MAX				4095
 #define		ERR_MIN				-4095
 
@@ -33,7 +33,7 @@
 
 #ifndef BATTERY_CHARGER_H
 	#define BATTERY_CHARGER_H
-	enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, MPPT = 4, FLOAT = 5 };
+	enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 #endif
     
     

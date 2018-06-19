@@ -17506,7 +17506,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 36 "battery_charger.h"
-enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, MPPT = 4, FLOAT = 5 };
+enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
 # 61
 extern uint8_t battery_state;
@@ -17615,11 +17615,11 @@ battery_state = FAULT;
 }
 else
 {
-battery_state = MPPT;
+battery_state = CHARGE;
 { Iref = 347; };
 }
 }
-else if(battery_state == MPPT)
+else if(battery_state == CHARGE)
 {
 if((!Imode))
 {
@@ -17670,7 +17670,7 @@ if(battery_state == FINISHED)
 
 if(Vout < 1290 && Vout > 1640)
 {
-battery_state = MPPT;
+battery_state = CHARGE;
 
 { Iref = 347; };
 { Vref = 1474; };
@@ -17713,7 +17713,7 @@ if(Iout > Iref)
 if(!Imode)
 {
 Imode = 1;
-cc_cv = 4;
+cc_cv = 10;
 }
 }
 }

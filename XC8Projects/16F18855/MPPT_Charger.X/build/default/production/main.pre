@@ -17506,7 +17506,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 36 "battery_charger.h"
-enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, MPPT = 4, FLOAT = 5 };
+enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
 # 61
 extern uint8_t battery_state;
@@ -17585,8 +17585,6 @@ LCDClear();
 # 76
 while (1)
 {
-
-
 for(j=0;j<8;j++) analogs[j]=readAnalog(j);
 
 if(fastLoop>10)
@@ -17675,7 +17673,7 @@ fastLoop+=1;
 if(slowLoop>20)
 {
 
-# 181
+# 179
 { gotoXY(0,1); LCDWriteInt(analogs[7],4, 0, 0);};
 { gotoXY(20,1); LCDWriteInt(analogs[6],4, 0, 0);};
 { gotoXY(0,2); LCDWriteInt(analogs[5],4, 0, 0);};
@@ -17688,7 +17686,7 @@ if(slowLoop>20)
 { gotoXY(0,5); LCDWriteInt(dutyCycle6,5, 0, 0);};
 { gotoXY(24,5); LCDWriteInt(dutyCycle7,5, 0, 0);};
 
-# 197
+# 195
 slowLoop=0;
 }
 }

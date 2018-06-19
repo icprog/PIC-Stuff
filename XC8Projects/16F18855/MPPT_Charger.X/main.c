@@ -75,8 +75,6 @@ void main(void)
 
     while (1)
     {
-        
-        
         for(j=0;j<8;j++) analogs[j]=readAnalog(j);      // Read analogs
 
         if(fastLoop>10)

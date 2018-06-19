@@ -13157,7 +13157,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 264: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 286: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 308: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 36: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, MPPT = 4, FLOAT = 5 };
+[; ;battery_charger.h: 36: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 [; ;battery_charger.h: 61: extern uint8_t battery_state;
 [; ;battery_charger.h: 63: void Init_Battery_State_Machine(void);
 [; ;battery_charger.h: 64: void Battery_State_Machine(void);
@@ -13258,8 +13258,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 77: {
 "77
 {
-[; ;main.c: 80: for(j=0;j<8;j++) analogs[j]=readAnalog(j);
-"80
+[; ;main.c: 78: for(j=0;j<8;j++) analogs[j]=readAnalog(j);
+"78
 {
 [e = _j -> -> 0 `i `uc ]
 [e $ < -> _j `i -> 8 `i 1567  ]
@@ -13270,346 +13270,346 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ < -> _j `i -> 8 `i 1567  ]
 [e :U 1568 ]
 }
-[; ;main.c: 82: if(fastLoop>10)
-"82
+[; ;main.c: 80: if(fastLoop>10)
+"80
 [e $ ! > -> _fastLoop `i -> 10 `i 1570  ]
+[; ;main.c: 81: {
+"81
+{
+[; ;main.c: 82: if(Imode)
+"82
+[e $ ! != -> _Imode `i -> -> -> 0 `i `c `i 1571  ]
 [; ;main.c: 83: {
 "83
 {
-[; ;main.c: 84: if(Imode)
+[; ;main.c: 84: if(analogs[5]*analogs[4]>power0OutOld)
 "84
-[e $ ! != -> _Imode `i -> -> -> 0 `i `c `i 1571  ]
+[e $ ! > * *U + &U _analogs * -> -> -> 5 `i `ui `ux -> -> # *U &U _analogs `ui `ux *U + &U _analogs * -> -> -> 4 `i `ui `ux -> -> # *U &U _analogs `ui `ux _power0OutOld 1572  ]
 [; ;main.c: 85: {
 "85
 {
-[; ;main.c: 86: if(analogs[5]*analogs[4]>power0OutOld)
+[; ;main.c: 86: if(analogs[7]>VIn0_Old)
 "86
-[e $ ! > * *U + &U _analogs * -> -> -> 5 `i `ui `ux -> -> # *U &U _analogs `ui `ux *U + &U _analogs * -> -> -> 4 `i `ui `ux -> -> # *U &U _analogs `ui `ux _power0OutOld 1572  ]
+[e $ ! > *U + &U _analogs * -> -> -> 7 `i `ui `ux -> -> # *U &U _analogs `ui `ux _VIn0_Old 1573  ]
 [; ;main.c: 87: {
 "87
 {
-[; ;main.c: 88: if(analogs[7]>VIn0_Old)
+[; ;main.c: 88: dutyCycle6+=1;
 "88
-[e $ ! > *U + &U _analogs * -> -> -> 7 `i `ui `ux -> -> # *U &U _analogs `ui `ux _VIn0_Old 1573  ]
-[; ;main.c: 89: {
-"89
-{
-[; ;main.c: 90: dutyCycle6+=1;
-"90
 [e =+ _dutyCycle6 -> -> 1 `i `ui ]
-"91
+"89
 }
-[; ;main.c: 91: }
+[; ;main.c: 89: }
 [e $U 1574  ]
-"92
+"90
 [e :U 1573 ]
-[; ;main.c: 92: else
-[; ;main.c: 93: {
-"93
+[; ;main.c: 90: else
+[; ;main.c: 91: {
+"91
 {
-[; ;main.c: 94: dutyCycle6-=1;
-"94
+[; ;main.c: 92: dutyCycle6-=1;
+"92
 [e =- _dutyCycle6 -> -> 1 `i `ui ]
-"95
+"93
 }
 [e :U 1574 ]
-"96
+"94
 }
-[; ;main.c: 95: }
-[; ;main.c: 96: }
+[; ;main.c: 93: }
+[; ;main.c: 94: }
 [e $U 1575  ]
-"97
+"95
 [e :U 1572 ]
-[; ;main.c: 97: else
+[; ;main.c: 95: else
+[; ;main.c: 96: {
+"96
+{
+[; ;main.c: 97: if(analogs[7]>VIn0_Old)
+"97
+[e $ ! > *U + &U _analogs * -> -> -> 7 `i `ui `ux -> -> # *U &U _analogs `ui `ux _VIn0_Old 1576  ]
 [; ;main.c: 98: {
 "98
 {
-[; ;main.c: 99: if(analogs[7]>VIn0_Old)
+[; ;main.c: 99: dutyCycle6-=1;
 "99
-[e $ ! > *U + &U _analogs * -> -> -> 7 `i `ui `ux -> -> # *U &U _analogs `ui `ux _VIn0_Old 1576  ]
-[; ;main.c: 100: {
-"100
-{
-[; ;main.c: 101: dutyCycle6-=1;
-"101
 [e =- _dutyCycle6 -> -> 1 `i `ui ]
-"102
+"100
 }
-[; ;main.c: 102: }
+[; ;main.c: 100: }
 [e $U 1577  ]
-"103
+"101
 [e :U 1576 ]
-[; ;main.c: 103: else
-[; ;main.c: 104: {
-"104
+[; ;main.c: 101: else
+[; ;main.c: 102: {
+"102
 {
-[; ;main.c: 105: dutyCycle6+=1;
-"105
+[; ;main.c: 103: dutyCycle6+=1;
+"103
 [e =+ _dutyCycle6 -> -> 1 `i `ui ]
-"106
+"104
 }
 [e :U 1577 ]
-"107
+"105
 }
 [e :U 1575 ]
-[; ;main.c: 106: }
-[; ;main.c: 107: }
-[; ;main.c: 108: power0OutOld=analogs[5]*analogs[4];
-"108
+[; ;main.c: 104: }
+[; ;main.c: 105: }
+[; ;main.c: 106: power0OutOld=analogs[5]*analogs[4];
+"106
 [e = _power0OutOld * *U + &U _analogs * -> -> -> 5 `i `ui `ux -> -> # *U &U _analogs `ui `ux *U + &U _analogs * -> -> -> 4 `i `ui `ux -> -> # *U &U _analogs `ui `ux ]
-[; ;main.c: 109: VIn0_Old=analogs[7];
-"109
+[; ;main.c: 107: VIn0_Old=analogs[7];
+"107
 [e = _VIn0_Old *U + &U _analogs * -> -> -> 7 `i `ui `ux -> -> # *U &U _analogs `ui `ux ]
-[; ;main.c: 112: if(analogs[1]*analogs[0]>power1OutOld)
-"112
+[; ;main.c: 110: if(analogs[1]*analogs[0]>power1OutOld)
+"110
 [e $ ! > * *U + &U _analogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _analogs `ui `ux *U + &U _analogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _analogs `ui `ux _power1OutOld 1578  ]
+[; ;main.c: 111: {
+"111
+{
+[; ;main.c: 112: if(analogs[3]>VIn1_Old)
+"112
+[e $ ! > *U + &U _analogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _analogs `ui `ux _VIn1_Old 1579  ]
 [; ;main.c: 113: {
 "113
 {
-[; ;main.c: 114: if(analogs[3]>VIn1_Old)
+[; ;main.c: 114: dutyCycle7+=1;
 "114
-[e $ ! > *U + &U _analogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _analogs `ui `ux _VIn1_Old 1579  ]
-[; ;main.c: 115: {
-"115
-{
-[; ;main.c: 116: dutyCycle7+=1;
-"116
 [e =+ _dutyCycle7 -> -> 1 `i `ui ]
-"117
+"115
 }
-[; ;main.c: 117: }
+[; ;main.c: 115: }
 [e $U 1580  ]
-"118
+"116
 [e :U 1579 ]
-[; ;main.c: 118: else
-[; ;main.c: 119: {
-"119
+[; ;main.c: 116: else
+[; ;main.c: 117: {
+"117
 {
-[; ;main.c: 120: dutyCycle7-=1;
-"120
+[; ;main.c: 118: dutyCycle7-=1;
+"118
 [e =- _dutyCycle7 -> -> 1 `i `ui ]
-"121
+"119
 }
 [e :U 1580 ]
-"122
+"120
 }
-[; ;main.c: 121: }
-[; ;main.c: 122: }
+[; ;main.c: 119: }
+[; ;main.c: 120: }
 [e $U 1581  ]
-"123
+"121
 [e :U 1578 ]
-[; ;main.c: 123: else
+[; ;main.c: 121: else
+[; ;main.c: 122: {
+"122
+{
+[; ;main.c: 123: if(analogs[3]>VIn1_Old)
+"123
+[e $ ! > *U + &U _analogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _analogs `ui `ux _VIn1_Old 1582  ]
 [; ;main.c: 124: {
 "124
 {
-[; ;main.c: 125: if(analogs[3]>VIn1_Old)
+[; ;main.c: 125: dutyCycle7-=1;
 "125
-[e $ ! > *U + &U _analogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _analogs `ui `ux _VIn1_Old 1582  ]
-[; ;main.c: 126: {
-"126
-{
-[; ;main.c: 127: dutyCycle7-=1;
-"127
 [e =- _dutyCycle7 -> -> 1 `i `ui ]
-"128
+"126
 }
-[; ;main.c: 128: }
+[; ;main.c: 126: }
 [e $U 1583  ]
-"129
+"127
 [e :U 1582 ]
-[; ;main.c: 129: else
-[; ;main.c: 130: {
-"130
+[; ;main.c: 127: else
+[; ;main.c: 128: {
+"128
 {
-[; ;main.c: 131: dutyCycle7+=1;
-"131
+[; ;main.c: 129: dutyCycle7+=1;
+"129
 [e =+ _dutyCycle7 -> -> 1 `i `ui ]
-"132
+"130
 }
 [e :U 1583 ]
-"133
+"131
 }
 [e :U 1581 ]
-[; ;main.c: 132: }
-[; ;main.c: 133: }
-[; ;main.c: 134: power1OutOld=analogs[1]*analogs[0];
-"134
+[; ;main.c: 130: }
+[; ;main.c: 131: }
+[; ;main.c: 132: power1OutOld=analogs[1]*analogs[0];
+"132
 [e = _power1OutOld * *U + &U _analogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _analogs `ui `ux *U + &U _analogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _analogs `ui `ux ]
-[; ;main.c: 135: VIn1_Old=analogs[3];
-"135
+[; ;main.c: 133: VIn1_Old=analogs[3];
+"133
 [e = _VIn1_Old *U + &U _analogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _analogs `ui `ux ]
-"137
+"135
 }
-[; ;main.c: 137: }
+[; ;main.c: 135: }
 [e $U 1584  ]
-"138
+"136
 [e :U 1571 ]
-[; ;main.c: 138: else
+[; ;main.c: 136: else
+[; ;main.c: 137: {
+"137
+{
+[; ;main.c: 138: if(analogs[5]>(int16_t)Vref)
+"138
+[e $ ! > *U + &U _analogs * -> -> -> 5 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> _Vref `i 1585  ]
 [; ;main.c: 139: {
 "139
 {
-[; ;main.c: 140: if(analogs[5]>(int16_t)Vref)
+[; ;main.c: 140: dutyCycle6-=1;;
 "140
-[e $ ! > *U + &U _analogs * -> -> -> 5 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> _Vref `i 1585  ]
-[; ;main.c: 141: {
-"141
-{
-[; ;main.c: 142: dutyCycle6-=1;;
-"142
 [e =- _dutyCycle6 -> -> 1 `i `ui ]
-"143
+"141
 }
-[; ;main.c: 143: }
+[; ;main.c: 141: }
 [e $U 1586  ]
-"144
+"142
 [e :U 1585 ]
-[; ;main.c: 144: else
-[; ;main.c: 145: {
-"145
+[; ;main.c: 142: else
+[; ;main.c: 143: {
+"143
 {
-[; ;main.c: 146: dutyCycle6+=1;
-"146
+[; ;main.c: 144: dutyCycle6+=1;
+"144
 [e =+ _dutyCycle6 -> -> 1 `i `ui ]
-"147
+"145
 }
 [e :U 1586 ]
-[; ;main.c: 147: }
-[; ;main.c: 149: if(analogs[1]>(int16_t)Vref)
-"149
+[; ;main.c: 145: }
+[; ;main.c: 147: if(analogs[1]>(int16_t)Vref)
+"147
 [e $ ! > *U + &U _analogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> _Vref `i 1587  ]
-[; ;main.c: 150: {
-"150
+[; ;main.c: 148: {
+"148
 {
-[; ;main.c: 151: dutyCycle7-=1;;
-"151
+[; ;main.c: 149: dutyCycle7-=1;;
+"149
 [e =- _dutyCycle7 -> -> 1 `i `ui ]
-"152
+"150
 }
-[; ;main.c: 152: }
+[; ;main.c: 150: }
 [e $U 1588  ]
-"153
+"151
 [e :U 1587 ]
-[; ;main.c: 153: else
-[; ;main.c: 154: {
-"154
+[; ;main.c: 151: else
+[; ;main.c: 152: {
+"152
 {
-[; ;main.c: 155: dutyCycle7+=1;
-"155
+[; ;main.c: 153: dutyCycle7+=1;
+"153
 [e =+ _dutyCycle7 -> -> 1 `i `ui ]
-"156
+"154
 }
 [e :U 1588 ]
-"157
+"155
 }
 [e :U 1584 ]
-[; ;main.c: 156: }
-[; ;main.c: 157: }
-[; ;main.c: 158: fastLoop=0;
-"158
+[; ;main.c: 154: }
+[; ;main.c: 155: }
+[; ;main.c: 156: fastLoop=0;
+"156
 [e = _fastLoop -> -> 0 `i `uc ]
-[; ;main.c: 159: slowLoop+=1;
-"159
+[; ;main.c: 157: slowLoop+=1;
+"157
 [e =+ _slowLoop -> -> 1 `i `uc ]
-[; ;main.c: 160: PWM6_LoadDutyValue(dutyCycle6);
-"160
+[; ;main.c: 158: PWM6_LoadDutyValue(dutyCycle6);
+"158
 [e ( _PWM6_LoadDutyValue (1 _dutyCycle6 ]
-[; ;main.c: 161: PWM7_LoadDutyValue(dutyCycle7);
-"161
+[; ;main.c: 159: PWM7_LoadDutyValue(dutyCycle7);
+"159
 [e ( _PWM7_LoadDutyValue (1 _dutyCycle7 ]
-"162
+"160
 }
 [e :U 1570 ]
-[; ;main.c: 162: }
-[; ;main.c: 163: fastLoop+=1;
-"163
+[; ;main.c: 160: }
+[; ;main.c: 161: fastLoop+=1;
+"161
 [e =+ _fastLoop -> -> 1 `i `uc ]
-[; ;main.c: 165: if(slowLoop>20)
-"165
+[; ;main.c: 163: if(slowLoop>20)
+"163
 [e $ ! > -> _slowLoop `i -> 20 `i 1589  ]
-[; ;main.c: 166: {
-"166
+[; ;main.c: 164: {
+"164
 {
-[; ;main.c: 181: { gotoXY(0,1); LCDWriteInt(analogs[7],4, 0, 0);};
-"181
+[; ;main.c: 179: { gotoXY(0,1); LCDWriteInt(analogs[7],4, 0, 0);};
+"179
 {
 [e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 7 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 182: { gotoXY(20,1); LCDWriteInt(analogs[6],4, 0, 0);};
-"182
+[; ;main.c: 180: { gotoXY(20,1); LCDWriteInt(analogs[6],4, 0, 0);};
+"180
 {
 [e ( _gotoXY (2 , -> -> 20 `i `uc -> -> 1 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 6 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 183: { gotoXY(0,2); LCDWriteInt(analogs[5],4, 0, 0);};
-"183
+[; ;main.c: 181: { gotoXY(0,2); LCDWriteInt(analogs[5],4, 0, 0);};
+"181
 {
 [e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 2 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 5 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 184: { gotoXY(20,2); LCDWriteInt(analogs[4],4, 0, 0);};
-"184
+[; ;main.c: 182: { gotoXY(20,2); LCDWriteInt(analogs[4],4, 0, 0);};
+"182
 {
 [e ( _gotoXY (2 , -> -> 20 `i `uc -> -> 2 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 4 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 185: { gotoXY(40,2); LCDWriteInt(Vref,4, 0, 0);};
-"185
+[; ;main.c: 183: { gotoXY(40,2); LCDWriteInt(Vref,4, 0, 0);};
+"183
 {
 [e ( _gotoXY (2 , -> -> 40 `i `uc -> -> 2 `i `uc ]
 [e ( _LCDWriteInt (4 , , , -> _Vref `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 186: { gotoXY(0,3); LCDWriteInt(analogs[3],4, 0, 0);};
-"186
+[; ;main.c: 184: { gotoXY(0,3); LCDWriteInt(analogs[3],4, 0, 0);};
+"184
 {
 [e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 3 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 187: { gotoXY(20,3); LCDWriteInt(analogs[2],4, 0, 0);};
-"187
+[; ;main.c: 185: { gotoXY(20,3); LCDWriteInt(analogs[2],4, 0, 0);};
+"185
 {
 [e ( _gotoXY (2 , -> -> 20 `i `uc -> -> 3 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 2 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 188: { gotoXY(0,4); LCDWriteInt(analogs[1],4, 0, 0);};
-"188
+[; ;main.c: 186: { gotoXY(0,4); LCDWriteInt(analogs[1],4, 0, 0);};
+"186
 {
 [e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 4 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 189: { gotoXY(20,4); LCDWriteInt(analogs[0],4, 0, 0);};
-"189
+[; ;main.c: 187: { gotoXY(20,4); LCDWriteInt(analogs[0],4, 0, 0);};
+"187
 {
 [e ( _gotoXY (2 , -> -> 20 `i `uc -> -> 4 `i `uc ]
 [e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 190: { gotoXY(0,5); LCDWriteInt(dutyCycle6,5, 0, 0);};
-"190
+[; ;main.c: 188: { gotoXY(0,5); LCDWriteInt(dutyCycle6,5, 0, 0);};
+"188
 {
 [e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 5 `i `uc ]
 [e ( _LCDWriteInt (4 , , , -> _dutyCycle6 `i -> -> 5 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 191: { gotoXY(24,5); LCDWriteInt(dutyCycle7,5, 0, 0);};
-"191
+[; ;main.c: 189: { gotoXY(24,5); LCDWriteInt(dutyCycle7,5, 0, 0);};
+"189
 {
 [e ( _gotoXY (2 , -> -> 24 `i `uc -> -> 5 `i `uc ]
 [e ( _LCDWriteInt (4 , , , -> _dutyCycle7 `i -> -> 5 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 197: slowLoop=0;
-"197
+[; ;main.c: 195: slowLoop=0;
+"195
 [e = _slowLoop -> -> 0 `i `uc ]
-"198
+"196
 }
 [e :U 1589 ]
-"199
+"197
 }
 [e :U 1564 ]
 "76
 [e $U 1565  ]
 [e :U 1566 ]
+[; ;main.c: 196: }
+[; ;main.c: 197: }
 [; ;main.c: 198: }
-[; ;main.c: 199: }
-[; ;main.c: 200: }
-"200
+"198
 [e :UE 1563 ]
 }

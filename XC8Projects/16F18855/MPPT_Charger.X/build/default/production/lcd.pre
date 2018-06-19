@@ -17506,7 +17506,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 36 "battery_charger.h"
-enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, MPPT = 4, FLOAT = 5 };
+enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
 # 61
 extern uint8_t battery_state;
@@ -17783,11 +17783,11 @@ LATAbits.LATA0 = 1;
 LCDWrite(0, 0x21);
 
 # 268
-LCDWrite(0, 0xB1);
+LCDWrite(0, 0XB7);
 
 LCDWrite(0, 0x04);
 
-LCDWrite(0, 0x13);
+LCDWrite(0, 0x14);
 
 LCDWrite(0, 0x20);
 

@@ -1,7 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "23 battery_charger.c
 [c E14318 0 1 2 3 4 5 .. ]
-[n E14318 charge_states IDLE FAULT FINISHED PRECHARGE MPPT FLOAT  ]
+[n E14318 charge_states IDLE FAULT FINISHED PRECHARGE CHARGE FLOAT  ]
 "40239 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
 [v _TRISA6 `Vb ~T0 @X0 0 e@142 ]
 "40241
@@ -13149,7 +13149,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 264: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 286: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 308: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 36: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, MPPT = 4, FLOAT = 5 };
+[; ;battery_charger.h: 36: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 [; ;battery_charger.h: 61: extern uint8_t battery_state;
 [; ;battery_charger.h: 63: void Init_Battery_State_Machine(void);
 [; ;battery_charger.h: 64: void Battery_State_Machine(void);
@@ -13311,7 +13311,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.c: 52: {
 "52
 {
-[; ;battery_charger.c: 53: battery_state = MPPT;
+[; ;battery_charger.c: 53: battery_state = CHARGE;
 "53
 [e = _battery_state -> . `E14318 4 `uc ]
 [; ;battery_charger.c: 54: { Iref = 347; };
@@ -13329,7 +13329,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 1570  ]
 "57
 [e :U 1565 ]
-[; ;battery_charger.c: 57: else if(battery_state == MPPT)
+[; ;battery_charger.c: 57: else if(battery_state == CHARGE)
 [e $ ! == -> _battery_state `i -> . `E14318 4 `i 1571  ]
 [; ;battery_charger.c: 58: {
 "58
@@ -13484,7 +13484,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.c: 125: {
 "125
 {
-[; ;battery_charger.c: 126: battery_state = MPPT;
+[; ;battery_charger.c: 126: battery_state = CHARGE;
 "126
 [e = _battery_state -> . `E14318 4 `uc ]
 [; ;battery_charger.c: 128: { Iref = 347; };
@@ -13627,9 +13627,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.c: 169: Imode = 1;
 "169
 [e = _Imode -> -> 1 `i `c ]
-[; ;battery_charger.c: 170: cc_cv = 4;
+[; ;battery_charger.c: 170: cc_cv = 10;
 "170
-[e = _cc_cv -> -> 4 `i `uc ]
+[e = _cc_cv -> -> 10 `i `uc ]
 "171
 }
 [e :U 1595 ]
