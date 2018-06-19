@@ -1,7 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "23 battery_charger.c
-[c E14311 0 1 2 3 4 5 .. ]
-[n E14311 charge_states IDLE FAULT FINISHED PRECHARGE MPPT FLOAT  ]
+[c E14318 0 1 2 3 4 5 .. ]
+[n E14318 charge_states IDLE FAULT FINISHED PRECHARGE MPPT FLOAT  ]
 "40239 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
 [v _TRISA6 `Vb ~T0 @X0 0 e@142 ]
 "40241
@@ -13114,8 +13114,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;adc.h: 12: typedef enum
+[; ;adc.h: 13: {
+[; ;adc.h: 14: POT = 0x4,
+[; ;adc.h: 15: channel_VSS = 0x3C,
+[; ;adc.h: 16: channel_Temp = 0x3D,
+[; ;adc.h: 17: channel_DAC1 = 0x3E,
+[; ;adc.h: 18: channel_FVR = 0x3F
+[; ;adc.h: 19: } adcc_channel_t;
 [; ;adc.h: 21: int16_t readAnalog(uint16_t channel);
-[; ;adc.h: 23: int16_t ADCRead(uint16_t channel);
+[; ;adc.h: 23: int16_t ADCRead(adcc_channel_t channel);
 [; ;adc.h: 25: void ADC_Initialize(void);
 [; ;adc.h: 31: bool ADCC_IsConversionDone();
 [; ;adc.h: 33: int16_t ADCC_GetConversionResult(void);
@@ -13213,7 +13221,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;battery_charger.c: 23: battery_state = PRECHARGE;
 "23
-[e = _battery_state -> . `E14311 3 `uc ]
+[e = _battery_state -> . `E14318 3 `uc ]
 [; ;battery_charger.c: 24: state_counter = 600;
 "24
 [e = _state_counter -> -> 600 `i `ui ]
@@ -13257,7 +13265,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;battery_charger.c: 38: if(battery_state == PRECHARGE)
 "38
-[e $ ! == -> _battery_state `i -> . `E14311 3 `i 1565  ]
+[e $ ! == -> _battery_state `i -> . `E14318 3 `i 1565  ]
 [; ;battery_charger.c: 39: {
 "39
 {
@@ -13288,7 +13296,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;battery_charger.c: 48: battery_state = FAULT;
 "48
-[e = _battery_state -> . `E14311 1 `uc ]
+[e = _battery_state -> . `E14318 1 `uc ]
 "49
 }
 [e :U 1568 ]
@@ -13305,7 +13313,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;battery_charger.c: 53: battery_state = MPPT;
 "53
-[e = _battery_state -> . `E14311 4 `uc ]
+[e = _battery_state -> . `E14318 4 `uc ]
 [; ;battery_charger.c: 54: { Iref = 347; };
 "54
 {
@@ -13322,7 +13330,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "57
 [e :U 1565 ]
 [; ;battery_charger.c: 57: else if(battery_state == MPPT)
-[e $ ! == -> _battery_state `i -> . `E14311 4 `i 1571  ]
+[e $ ! == -> _battery_state `i -> . `E14318 4 `i 1571  ]
 [; ;battery_charger.c: 58: {
 "58
 {
@@ -13411,7 +13419,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;battery_charger.c: 84: battery_state = FLOAT;
 "84
-[e = _battery_state -> . `E14311 5 `uc ]
+[e = _battery_state -> . `E14318 5 `uc ]
 [; ;battery_charger.c: 87: { Vref = 1382; };
 "87
 {
@@ -13428,7 +13436,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "94
 [e :U 1571 ]
 [; ;battery_charger.c: 94: else if(battery_state == FLOAT)
-[e $ ! == -> _battery_state `i -> . `E14311 5 `i 1581  ]
+[e $ ! == -> _battery_state `i -> . `E14318 5 `i 1581  ]
 [; ;battery_charger.c: 95: {
 "95
 {
@@ -13439,7 +13447,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 1581 ]
 [; ;battery_charger.c: 115: if(battery_state == FAULT)
 "115
-[e $ ! == -> _battery_state `i -> . `E14311 1 `i 1583  ]
+[e $ ! == -> _battery_state `i -> . `E14318 1 `i 1583  ]
 [; ;battery_charger.c: 116: {
 "116
 {
@@ -13466,7 +13474,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 1583 ]
 [; ;battery_charger.c: 121: if(battery_state == FINISHED)
 "121
-[e $ ! == -> _battery_state `i -> . `E14311 2 `i 1585  ]
+[e $ ! == -> _battery_state `i -> . `E14318 2 `i 1585  ]
 [; ;battery_charger.c: 122: {
 "122
 {
@@ -13478,7 +13486,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;battery_charger.c: 126: battery_state = MPPT;
 "126
-[e = _battery_state -> . `E14311 4 `uc ]
+[e = _battery_state -> . `E14318 4 `uc ]
 [; ;battery_charger.c: 128: { Iref = 347; };
 "128
 {
@@ -13532,7 +13540,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.c: 141: if(Vout < 1640) battery_state = IDLE;
 "141
 [e $ ! < _Vout -> -> 1640 `i `ui 1588  ]
-[e = _battery_state -> . `E14311 0 `uc ]
+[e = _battery_state -> . `E14318 0 `uc ]
 [e :U 1588 ]
 "142
 }

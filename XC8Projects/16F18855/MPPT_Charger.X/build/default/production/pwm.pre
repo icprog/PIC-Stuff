@@ -17429,10 +17429,19 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
 
-# 21 "adc.h"
+# 12 "adc.h"
+typedef enum
+{
+POT = 0x4,
+channel_VSS = 0x3C,
+channel_Temp = 0x3D,
+channel_DAC1 = 0x3E,
+channel_FVR = 0x3F
+} adcc_channel_t;
+
 int16_t readAnalog(uint16_t channel);
 
-int16_t ADCRead(uint16_t channel);
+int16_t ADCRead(adcc_channel_t channel);
 
 void ADC_Initialize(void);
 

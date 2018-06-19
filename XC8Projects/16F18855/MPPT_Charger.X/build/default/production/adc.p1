@@ -1,4 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
+"17 adc.c
+[c E14258 4 60 61 62 63 .. ]
+[n E14258 . POT channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
 "2568 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
 [v _ADPCH `Vuc ~T0 @X0 0 e@158 ]
 "1863
@@ -35,6 +38,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADACT `Vuc ~T0 @X0 0 e@153 ]
 "2155
 [v _ADSTAT `Vuc ~T0 @X0 0 e@151 ]
+"24044
+[v _FVRCON `Vuc ~T0 @X0 0 e@2316 ]
 "2225
 [v _ADCLK `Vuc ~T0 @X0 0 e@152 ]
 "2335
@@ -13169,8 +13174,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;adc.h: 12: typedef enum
+[; ;adc.h: 13: {
+[; ;adc.h: 14: POT = 0x4,
+[; ;adc.h: 15: channel_VSS = 0x3C,
+[; ;adc.h: 16: channel_Temp = 0x3D,
+[; ;adc.h: 17: channel_DAC1 = 0x3E,
+[; ;adc.h: 18: channel_FVR = 0x3F
+[; ;adc.h: 19: } adcc_channel_t;
 [; ;adc.h: 21: int16_t readAnalog(uint16_t channel);
-[; ;adc.h: 23: int16_t ADCRead(uint16_t channel);
+[; ;adc.h: 23: int16_t ADCRead(adcc_channel_t channel);
 [; ;adc.h: 25: void ADC_Initialize(void);
 [; ;adc.h: 31: bool ADCC_IsConversionDone();
 [; ;adc.h: 33: int16_t ADCC_GetConversionResult(void);
@@ -13196,9 +13209,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 264: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 286: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 308: uint8_t ADCC_GetConversionStageStatus(void);
-[v F14312 `i ~T0 @X0 -> 20 `i t ]
+[v F14319 `i ~T0 @X0 -> 20 `i t ]
 "7 adc.c
-[v _samples `F14312 ~T0 @X0 -> 8 `i e ]
+[v _samples `F14319 ~T0 @X0 -> 8 `i e ]
 [i _samples
 :U ..
 :U ..
@@ -13228,7 +13241,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _channels `ui ~T0 @X0 -> 8 `i s ]
 [i _channels
 :U ..
--> -> 15 `i `ui
 -> -> 16 `i `ui
 -> -> 17 `i `ui
 -> -> 18 `i `ui
@@ -13236,18 +13248,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 20 `i `ui
 -> -> 21 `i `ui
 -> -> 22 `i `ui
+-> -> 23 `i `ui
 ..
 ]
-[; ;adc.c: 13: static uint16_t channels[8] = {15, 16, 17, 18, 19, 20, 21, 22};
+[; ;adc.c: 13: static uint16_t channels[8] = {16, 17, 18, 19, 20, 21, 22, 23};
 "16
-[v _ADCRead `(i ~T0 @X0 1 ef1`ui ]
+[v _ADCRead `(i ~T0 @X0 1 ef1`E14258 ]
 "17
 {
-[; ;adc.c: 16: int16_t ADCRead(uint16_t channel)
+[; ;adc.c: 16: int16_t ADCRead(adcc_channel_t channel)
 [; ;adc.c: 17: {
 [e :U _ADCRead ]
 "16
-[v _channel `ui ~T0 @X0 1 r1 ]
+[v _channel `E14258 ~T0 @X0 1 r1 ]
 "17
 [f ]
 [; ;adc.c: 18: ADPCH = channel;
@@ -13304,7 +13317,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _analog_channel *U + &U _channels * -> _channel `ux -> -> # *U &U _channels `ui `ux ]
 [; ;adc.c: 40: value = ADCRead(analog_channel);
 "40
-[e = _value ( _ADCRead (1 _analog_channel ]
+[e = _value ( _ADCRead (1 -> _analog_channel `E14258 ]
 [; ;adc.c: 42: totals[channel] = totals[channel]-samples[channel][sampleIndex];
 "42
 [e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux - *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 20 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 20 `i `ui `ux `ui `ux `l ]
@@ -13366,12 +13379,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.c: 70: ADSTAT = 0x00;
 "70
 [e = _ADSTAT -> -> 0 `i `uc ]
-[; ;adc.c: 73: ADCLK = 0x3F;
-"73
-[e = _ADCLK -> -> 63 `i `uc ]
-[; ;adc.c: 81: ADREF = 0x00;
-"81
-[e = _ADREF -> -> 0 `i `uc ]
+[; ;adc.c: 72: FVRCON = 0b11000011;
+"72
+[e = _FVRCON -> -> 195 `i `uc ]
+[; ;adc.c: 75: ADCLK = 0X09;
+"75
+[e = _ADCLK -> -> 9 `i `uc ]
+[; ;adc.c: 80: ADREF = 0x03;
+"80
+[e = _ADREF -> -> 3 `i `uc ]
 [; ;adc.c: 83: ADCAP = 0x00;
 "83
 [e = _ADCAP -> -> 0 `i `uc ]

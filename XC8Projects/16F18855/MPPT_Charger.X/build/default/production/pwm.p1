@@ -13130,8 +13130,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;adc.h: 12: typedef enum
+[; ;adc.h: 13: {
+[; ;adc.h: 14: POT = 0x4,
+[; ;adc.h: 15: channel_VSS = 0x3C,
+[; ;adc.h: 16: channel_Temp = 0x3D,
+[; ;adc.h: 17: channel_DAC1 = 0x3E,
+[; ;adc.h: 18: channel_FVR = 0x3F
+[; ;adc.h: 19: } adcc_channel_t;
 [; ;adc.h: 21: int16_t readAnalog(uint16_t channel);
-[; ;adc.h: 23: int16_t ADCRead(uint16_t channel);
+[; ;adc.h: 23: int16_t ADCRead(adcc_channel_t channel);
 [; ;adc.h: 25: void ADC_Initialize(void);
 [; ;adc.h: 31: bool ADCC_IsConversionDone();
 [; ;adc.h: 33: int16_t ADCC_GetConversionResult(void);

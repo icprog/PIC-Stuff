@@ -2,18 +2,18 @@
 #include "adc.h"
 
 #define     numSamples                      20                                              // Number of Temperature readings to Average
-#define     numChannels                     8                                               // Number of Analog channels to read
+#define     numChannels                     2                                               // Number of Analog channels to read
 
-int16_t samples[numChannels][numSamples]   =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
+uint16_t samples[numChannels][numSamples]   =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
 
 uint16_t sampleIndex                        =   {0};
 
 int32_t totals[numChannels]                 =   {0};
 
-static uint16_t channels[numChannels]       =   {16, 17, 18, 19, 20, 21, 22, 23};           // List all the Analog channel numbers here, must be same number listed as numChannels
+static int channels[numChannels]            =   {1,3};                                      // List all the Analog channel numbers here, must be same number listed as numChannels
 
 // *************** ADC Read Individual Channel ****************************************************************************************************
-int16_t ADCRead(adcc_channel_t channel)
+adc_result_t ADCRead(adcc_channel_t channel)
 {
     ADPCH                                   =   channel;                                      // select the A/D channel
 
@@ -31,11 +31,11 @@ int16_t ADCRead(adcc_channel_t channel)
 }
 
 // *************** Read Analogs from Analog channel Array ****************************************************************************************
-int16_t readAnalog(uint16_t channel)
+int readAnalog(int channel)
 {
-    int16_t value;
+    int value;
     
-    uint16_t analog_channel = channels[channel];
+    int analog_channel = channels[channel];
     
     value = ADCRead(analog_channel);
             
@@ -57,7 +57,7 @@ int16_t readAnalog(uint16_t channel)
 }
 
 // *************** ADC Initialization Routine *****************************************************************************************************
-void ADC_Initialize(void)
+void ADCC_Initialize(void)
 {
     ADCON1 = 0x00;  // ADDSEN disabled; ADGPOL digital_low; ADIPEN disabled; ADPPOL VSS; 
 
@@ -69,16 +69,16 @@ void ADC_Initialize(void)
 
     ADSTAT = 0x00;  // ADAOV ACC or ADERR not Overflowed; 
 
-    FVRCON = 0b11000011;    // FVREN = 1, FVRRDY = 1, Buffer Gain is 4X (4.096V)
-//    ADCLK = 0x3F;   //ADC CLK FOSC/128
+//    FVRCON = 0b11000001;
+    ADCLK = 0x3F;   //ADC CLK FOSC/128
 //    ADCLK = 0x00;   //ADC CLK FOSC/2
-    ADCLK = 0X09;   // ADC Clock FOSC/20    
+    
 //    FVREN = 1;
     
-//    ADFVR = 0x01;
+  //  ADFVR = 0x01;
     
-    ADREF = 0x03;   // ADNREF VSS; ADPREF FVR;
-//    ADREF = 0x00;   // ADNREF VSS; ADPREF VDD;
+//    ADREF = 0x03;   // ADNREF VSS; ADPREF FVR;
+    ADREF = 0x00;   // ADNREF VSS; ADPREF VDD;
 
     ADCAP = 0x00; 
 //    ADCAP = 0x1F;

@@ -162,11 +162,22 @@ void main(void)
         }
         fastLoop+=1;
         
-        if(slowLoop>200)
+        if(slowLoop>20)
         {
 //            Battery_State_Machine();
-            LCDWriteIntXY(0,0,fastLoop,4,0,0);
-            LCDWriteIntXY(20,0,slowLoop,4,0,0);
+//            LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
+  //          LCDWriteIntXY(20,0,ADCRead(22),4,0,0);
+    //        LCDWriteIntXY(0,1,ADCRead(21),4,0,0);
+      //      LCDWriteIntXY(20,1,ADCRead(20),4,0,0);
+        //    LCDWriteIntXY(0,3,ADCRead(19),4,0,0);
+          //  LCDWriteIntXY(20,3,ADCRead(18),4,0,0);
+            //LCDWriteIntXY(0,4,ADCRead(17),4,0,0);
+            //LCDWriteIntXY(20,4,ADCRead(16),4,0,0);
+
+//            LCDWriteIntXY(0,2,ADCRead(22),4,0,0);
+  //          LCDWriteIntXY(20,2,ADCRead(15),4,0,0);
+            
+            //            LCDWriteIntXY(0,0,analogs[7],4,0,0);
             LCDWriteIntXY(0,1,VIn0,4,0,0);
             LCDWriteIntXY(20,1,IIn0,4,0,0);
             LCDWriteIntXY(0,2,VOut0,4,0,0);

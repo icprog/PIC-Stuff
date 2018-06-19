@@ -1,36 +1,34 @@
-#ifndef _ADC_H
-#define _ADC_H
+#ifndef _ADCC_H
+#define _ADCC_H
 
 #include <xc.h>
 #include <stdint.h>
 #include <stdbool.h>
 
 
-//typedef int16_t adc_result_t;
+typedef uint16_t adc_result_t;
 
 
 typedef enum
 {
-    POT         =   0x4,
+//    POT         =   0x4,
     channel_VSS =   0x3C,
     channel_Temp =  0x3D,
     channel_DAC1 =  0x3E,
     channel_FVR =   0x3F
 } adcc_channel_t;                                   //   This routine defines the channels that are available for the module to use.
 
-int16_t readAnalog(uint16_t channel);
+int readAnalog(int channel);
 
-int16_t ADCRead(adcc_channel_t channel);
+void ADCC_Initialize(void);
 
-void ADC_Initialize(void);
-
-
-
-//void ADCC_StartConversion(adcc_channel_t channel);
+void ADCC_StartConversion(adcc_channel_t channel);
 
 bool ADCC_IsConversionDone();
 
-int16_t ADCC_GetConversionResult(void);
+adc_result_t ADCC_GetConversionResult(void);
+
+adc_result_t ADCRead(adcc_channel_t channel);
 
 void ADCC_StopConversion(void);
 
