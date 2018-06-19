@@ -2,15 +2,17 @@
 
 void TMR2_Initialize(void)
 {
-    T2CON = 0x00;                   // T2CKPS 1:64 Clock PreScaler; T2OUTPS 1:1 Out PostScaler; TMR2ON off; 4MHz/4=1MHz/256(PR2)=3906.25Hz/64=61Hz!!
+    T2CON = 0x00;                   // T2CKPS 1:1 Clock PreScaler; T2OUTPS 1:1 Out PostScaler; TMR2ON off; 32MHz/4=8MHz/256(PR2)=31250Hz
     
-    T2CLKCON = 0x01;                // Pg 440, T2CS(T2 Clock Source) FOSC/4, MUST be FOSC/4 for PWM to function; 
+    T2CLKCON = 0x01;                // Register on Pg 440, T2CS(T2 Clock Source) FOSC/4, MUST be FOSC/4 for PWM to function(pg 285); 
     
     T2HLT = 0x00;                   // Pg 442, Hardware Limit Cntrl, T2PSYNC Not Synchronized; T2MODE Software control; T2CKPOL Ris ing Edge; T2CKSYNC Not Synchronized;
                                     // Setup as freerunning software gated
     T2RST = 0x00;                   // Pg 443, External Reset Source, T2RSEL T2CKIPPS pin;
 
-    T2PR = 0xFF;                    // Period register, PR2 255 
+    T2PR = 0x3E;                    // Period register, PR2 255 
+    
+//    PR2 =   0X3F;
 
     T2TMR = 0x00;                   // TMR2 0; Timer2 Preset, resets to zero on a Timer overflow
     

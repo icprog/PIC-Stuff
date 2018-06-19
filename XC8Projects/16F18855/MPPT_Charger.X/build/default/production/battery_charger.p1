@@ -13608,37 +13608,37 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 1592 ]
 "164
 }
-[e :U 1590 ]
 [; ;battery_charger.c: 162: }
 [; ;battery_charger.c: 163: }
 [; ;battery_charger.c: 164: }
-[; ;battery_charger.c: 165: if(Iout > Iref)
+[e $U 1594  ]
 "165
-[e $ ! > _Iout _Iref 1594  ]
-[; ;battery_charger.c: 166: {
-"166
-{
-[; ;battery_charger.c: 167: if(!Imode)
+[e :U 1590 ]
+[; ;battery_charger.c: 165: else
+[; ;battery_charger.c: 167: {
 "167
-[e $ ! ! != -> _Imode `i -> -> -> 0 `i `c `i 1595  ]
-[; ;battery_charger.c: 168: {
-"168
 {
-[; ;battery_charger.c: 169: Imode = 1;
+[; ;battery_charger.c: 168: if(!Imode)
+"168
+[e $ ! ! != -> _Imode `i -> -> -> 0 `i `c `i 1595  ]
+[; ;battery_charger.c: 169: {
 "169
-[e = _Imode -> -> 1 `i `c ]
-[; ;battery_charger.c: 170: cc_cv = 10;
+{
+[; ;battery_charger.c: 170: Imode = 1;
 "170
-[e = _cc_cv -> -> 10 `i `uc ]
+[e = _Imode -> -> 1 `i `c ]
+[; ;battery_charger.c: 171: cc_cv = 10;
 "171
-}
-[e :U 1595 ]
+[e = _cc_cv -> -> 10 `i `uc ]
 "172
 }
+[e :U 1595 ]
+"173
+}
 [e :U 1594 ]
-[; ;battery_charger.c: 171: }
 [; ;battery_charger.c: 172: }
 [; ;battery_charger.c: 173: }
-"173
+[; ;battery_charger.c: 174: }
+"174
 [e :UE 1589 ]
 }

@@ -7,7 +7,7 @@ void PWM_Initialize(void)
     PWM6DCH             = 0x00;         //0x3C;                     // Pg 288, Duty Cycle High 60; 
      
     PWM6DCL             = 0x00;         //0x40;                     // Pg 288, Duty Cycle Low 1;
-     
+         
     CCPTMRS1bits.P6TSEL = 0x1;          //Pg 456, PWM6 Timer Selection 0X1 = TMR2
 
 

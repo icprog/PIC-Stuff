@@ -17567,8 +17567,8 @@ int16_t VIn1_Old = 0;
 int16_t power0OutOld = 0;
 int16_t power1OutOld = 0;
 
-uint16_t dutyCycle6 = 0;
-uint16_t dutyCycle7 = 0;
+uint16_t dutyCycle6 = 126;
+uint16_t dutyCycle7 = 126;
 
 uint8_t j = 0;
 int16_t analogs[8] = {0,0,0,0,0,0,0,0};
@@ -17587,7 +17587,7 @@ while (1)
 {
 for(j=0;j<8;j++) analogs[j]=readAnalog(j);
 
-if(fastLoop>10)
+if(fastLoop>100)
 {
 if(Imode)
 {
@@ -17647,20 +17647,20 @@ else
 {
 if(analogs[5]>(int16_t)Vref)
 {
-dutyCycle6-=1;;
+
 }
 else
 {
-dutyCycle6+=1;
+
 }
 
 if(analogs[1]>(int16_t)Vref)
 {
-dutyCycle7-=1;;
+if(dutyCycle7>0) dutyCycle7-=1;;
 }
 else
 {
-dutyCycle7+=1;
+if(dutyCycle7<255) dutyCycle7+=1;
 }
 }
 fastLoop=0;
@@ -17670,7 +17670,7 @@ PWM7_LoadDutyValue(dutyCycle7);
 }
 fastLoop+=1;
 
-if(slowLoop>20)
+if(slowLoop>1)
 {
 
 # 179

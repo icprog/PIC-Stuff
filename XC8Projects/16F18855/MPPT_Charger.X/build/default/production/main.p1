@@ -13205,12 +13205,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _power1OutOld -> 0 `i ]
 "50
 [v _dutyCycle6 `ui ~T0 @X0 1 a ]
-[; ;main.c: 50: uint16_t dutyCycle6 = 0;
-[e = _dutyCycle6 -> -> 0 `i `ui ]
+[; ;main.c: 50: uint16_t dutyCycle6 = 126;
+[e = _dutyCycle6 -> -> 126 `i `ui ]
 "51
 [v _dutyCycle7 `ui ~T0 @X0 1 a ]
-[; ;main.c: 51: uint16_t dutyCycle7 = 0;
-[e = _dutyCycle7 -> -> 0 `i `ui ]
+[; ;main.c: 51: uint16_t dutyCycle7 = 126;
+[e = _dutyCycle7 -> -> 126 `i `ui ]
 "53
 [v _j `uc ~T0 @X0 1 a ]
 [; ;main.c: 53: uint8_t j = 0;
@@ -13270,9 +13270,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ < -> _j `i -> 8 `i 1567  ]
 [e :U 1568 ]
 }
-[; ;main.c: 80: if(fastLoop>10)
+[; ;main.c: 80: if(fastLoop>100)
 "80
-[e $ ! > -> _fastLoop `i -> 10 `i 1570  ]
+[e $ ! > -> _fastLoop `i -> 100 `i 1570  ]
 [; ;main.c: 81: {
 "81
 {
@@ -13454,9 +13454,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 139: {
 "139
 {
-[; ;main.c: 140: dutyCycle6-=1;;
-"140
-[e =- _dutyCycle6 -> -> 1 `i `ui ]
 "141
 }
 [; ;main.c: 141: }
@@ -13467,9 +13464,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 143: {
 "143
 {
-[; ;main.c: 144: dutyCycle6+=1;
-"144
-[e =+ _dutyCycle6 -> -> 1 `i `ui ]
 "145
 }
 [e :U 1586 ]
@@ -13480,25 +13474,29 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 148: {
 "148
 {
-[; ;main.c: 149: dutyCycle7-=1;;
+[; ;main.c: 149: if(dutyCycle7>0) dutyCycle7-=1;;
 "149
+[e $ ! > _dutyCycle7 -> -> 0 `i `ui 1588  ]
 [e =- _dutyCycle7 -> -> 1 `i `ui ]
+[e :U 1588 ]
 "150
 }
 [; ;main.c: 150: }
-[e $U 1588  ]
+[e $U 1589  ]
 "151
 [e :U 1587 ]
 [; ;main.c: 151: else
 [; ;main.c: 152: {
 "152
 {
-[; ;main.c: 153: dutyCycle7+=1;
+[; ;main.c: 153: if(dutyCycle7<255) dutyCycle7+=1;
 "153
+[e $ ! < _dutyCycle7 -> -> 255 `i `ui 1590  ]
 [e =+ _dutyCycle7 -> -> 1 `i `ui ]
+[e :U 1590 ]
 "154
 }
-[e :U 1588 ]
+[e :U 1589 ]
 "155
 }
 [e :U 1584 ]
@@ -13523,9 +13521,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 161: fastLoop+=1;
 "161
 [e =+ _fastLoop -> -> 1 `i `uc ]
-[; ;main.c: 163: if(slowLoop>20)
+[; ;main.c: 163: if(slowLoop>1)
 "163
-[e $ ! > -> _slowLoop `i -> 20 `i 1589  ]
+[e $ ! > -> _slowLoop `i -> 1 `i 1591  ]
 [; ;main.c: 164: {
 "164
 {
@@ -13600,7 +13598,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _slowLoop -> -> 0 `i `uc ]
 "196
 }
-[e :U 1589 ]
+[e :U 1591 ]
 "197
 }
 [e :U 1564 ]

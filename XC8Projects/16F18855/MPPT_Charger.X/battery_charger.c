@@ -162,7 +162,8 @@ void cc_cv_mode()
             }
 		}
 	}
-	if(Iout > Iref)                                     // Iref is set by "SET_CURRENT(some Value here)"
+    else
+//	if(Iout > Iref)                                     // Iref is set by "SET_CURRENT(some Value here)"
 	{
 		if(!Imode)                                      // If not "CURRENT Mode",
         {

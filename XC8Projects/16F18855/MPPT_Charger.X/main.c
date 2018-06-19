@@ -47,8 +47,8 @@ void main(void)
     int16_t         power0OutOld    =   0;
     int16_t         power1OutOld    =   0;
     
-    uint16_t        dutyCycle6      =   0;
-    uint16_t        dutyCycle7      =   0;
+    uint16_t        dutyCycle6      =   126;                    // 126 is midpoint, allow adjusting up or down
+    uint16_t        dutyCycle7      =   126;                    // 126 is midpoint, allow adjusting up or down
     
     uint8_t         j               =   0;
     int16_t         analogs[8]      =   {0,0,0,0,0,0,0,0};
@@ -77,7 +77,7 @@ void main(void)
     {
         for(j=0;j<8;j++) analogs[j]=readAnalog(j);      // Read analogs
 
-        if(fastLoop>10)
+        if(fastLoop>100)
         {
             if(Imode)
             {
@@ -137,20 +137,20 @@ void main(void)
             {
                 if(VOut0>(int16_t)Vref)
                 {
-                    PWM0-=1;;
+//                    if(PWM0>0) PWM0-=1;;
                 }
                 else
                 {
-                    PWM0+=1;
+  //                  if(PWM0<252) PWM0+=1;
                 }
  
                 if(VOut1>(int16_t)Vref)
                 {
-                    PWM1-=1;;
+                    if(PWM1>0) PWM1-=1;;
                 }
                 else
                 {
-                    PWM1+=1;
+                    if(PWM1<255) PWM1+=1;
                 }
             }
             fastLoop=0;
@@ -160,7 +160,7 @@ void main(void)
         }
         fastLoop+=1;
         
-        if(slowLoop>20)
+        if(slowLoop>1)
         {
 //            Battery_State_Machine();
 //            LCDWriteIntXY(0,0,ADCRead(23),4,0,0);

@@ -15,11 +15,11 @@
 #define		CONSTANT_VOLTAGE	(!Imode)
 #define		I_BAT_DETECT		16 
 #define		CURRENT_MODE		10                          // Number of slowLoop cycles Voltage is over Vref before we drop back to "Voltage Mode" from "Current Mode"
-#define		ERR_MAX				4095
-#define		ERR_MIN				-4095
+//#define		ERR_MAX				4095
+//#define		ERR_MIN				-4095
 
-#define		CO1					RA6
-#define		CO2					RA7
+//#define		CO1					RA6
+//#define		CO2					RA7
 #define		TRIS_PWM0Out        TRISA6
 #define		TRIS_PWM1Out       	TRISA7
 #define		VSENSE              Vout
