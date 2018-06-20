@@ -13166,13 +13166,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.h: 64: void Battery_State_Machine(void);
 [; ;battery_charger.h: 65: void cc_cv_mode();
 [; ;battery_charger.h: 66: void pid(uint16_t feedback, uint16_t setpoint);
+[; ;buttons.h: 12: char readButton(void);
 [; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
 [; ;tmr2.h: 262: void TMR2_Initialize(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
-[; ;system.h: 17: void SYSTEM_Initialize(void);
-[; ;system.h: 19: void OSCILLATOR_Initialize(void);
+[; ;system.h: 18: void SYSTEM_Initialize(void);
+[; ;system.h: 20: void OSCILLATOR_Initialize(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13865,8 +13866,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `uc ~T0 @X0 1 r4 ]
 "191
 [f ]
-[v F14390 `uc ~T0 @X0 -> 5 `i s ]
-[i F14390
+[v F14392 `uc ~T0 @X0 -> 5 `i s ]
+[i F14392
 :U ..
 "192
 -> -> 0 `i `uc
@@ -13878,7 +13879,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _str `uc ~T0 @X0 -> 5 `i a ]
 [; ;lcd.c: 192: uint8_t str[5]={0,0,0,0,0};
-[e = _str F14390 ]
+[e = _str F14392 ]
 "193
 [v _i `uc ~T0 @X0 1 a ]
 [; ;lcd.c: 193: uint8_t i=4,j=0;

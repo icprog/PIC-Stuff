@@ -17516,6 +17516,9 @@ void Battery_State_Machine(void);
 void cc_cv_mode();
 void pid(uint16_t feedback, uint16_t setpoint);
 
+# 12 "buttons.h"
+char readButton(void);
+
 # 19 "lcd.h"
 void gotoXY(uint8_t x, uint8_t y);
 
@@ -17554,7 +17557,7 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
-# 17 "system.h"
+# 18 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);

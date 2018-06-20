@@ -178,6 +178,7 @@ void main(void)
             //            LCDWriteIntXY(0,0,analogs[7],4,0,0);
             LCDWriteIntXY(0,1,VIn0,4,0,0);
             LCDWriteIntXY(20,1,IIn0,4,0,0);
+            LCDWriteIntXY(40,1,ADCRead(11),5,0,0);
             LCDWriteIntXY(0,2,VOut0,4,0,0);
             LCDWriteIntXY(20,2,IOut0,4,0,0);
             LCDWriteIntXY(40,2,Vref,4,0,0);

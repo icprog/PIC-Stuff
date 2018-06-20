@@ -4,6 +4,7 @@
 #include <xc.h>
 #include "adc.h"
 #include "battery_charger.h"
+#include "buttons.h"
 #include "lcd.h"
 #include "lead_acid.h"
 #include "pin_manager.h"

@@ -11,42 +11,42 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
-$C:\Users\DAVE\AppData\Local\Temp\s13c.obj
+$C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
 reset_vec CODE 0 0 0 2 2
 end_init CODE 0 2 2 2 2
 config CONFIG 0 8007 8007 5 2
 $dist/default/production\MPPT_Charger.X.production.obj
 cinit CODE 0 7CE 7CE 32 2
-text1 CODE 0 465 465 138 2
-text2 CODE 0 32A 32A 82 2
-text3 CODE 0 C5 C5 E 2
-text4 CODE 0 1E8 1E8 2E 2
-text5 CODE 0 B7 B7 E 2
-text6 CODE 0 F6 F6 15 2
-text7 CODE 0 216 216 34 2
-text8 CODE 0 96 96 9 2
-text9 CODE 0 24A 24A 3B 2
-text10 CODE 0 196 196 26 2
-text11 CODE 0 E3 E3 13 2
-text12 CODE 0 152 152 1F 2
-text13 CODE 0 121 121 16 2
-text14 CODE 0 10B 10B 16 2
-text15 CODE 0 3AC 3AC B9 2
-text16 CODE 0 1BC 1BC 2C 2
-text17 CODE 0 285 285 51 2
-text18 CODE 0 2D6 2D6 54 2
-text19 CODE 0 137 137 1B 2
-text20 CODE 0 171 171 25 2
-maintext CODE 0 59D 59D 231 2
+text1 CODE 0 44D 44D 138 2
+text2 CODE 0 312 312 82 2
+text3 CODE 0 AD AD E 2
+text4 CODE 0 1D0 1D0 2E 2
+text5 CODE 0 9F 9F E 2
+text6 CODE 0 DE DE 15 2
+text7 CODE 0 1FE 1FE 34 2
+text8 CODE 0 7E 7E 9 2
+text9 CODE 0 232 232 3B 2
+text10 CODE 0 17E 17E 26 2
+text11 CODE 0 CB CB 13 2
+text12 CODE 0 13A 13A 1F 2
+text13 CODE 0 109 109 16 2
+text14 CODE 0 F3 F3 16 2
+text15 CODE 0 394 394 B9 2
+text16 CODE 0 1A4 1A4 2C 2
+text17 CODE 0 26D 26D 51 2
+text18 CODE 0 2BE 2BE 54 2
+text19 CODE 0 11F 11F 1B 2
+text20 CODE 0 159 159 25 2
+maintext CODE 0 585 585 249 2
 cstackCOMMON COMMON 1 70 70 D 1
 cstackBANK0 BANK0 1 20 20 3B 1
-inittext CODE 0 AB AB C 2
+inittext CODE 0 93 93 C 2
 stringtext1 STRCODE 0 800 800 12F 2
-bssBANK0 BANK0 1 5B 5B 15 1
-bssBANK1 BANK1 1 A0 A0 35 1
-idataBANK1 CODE 0 D3 D3 10 2
-dataBANK1 BANK1 1 D5 D5 10 1
-clrtext CODE 0 9F 9F C 2
+bssBANK0 BANK0 1 5B 5B 14 1
+bssBANK1 BANK1 1 A0 A0 3B 1
+idataBANK1 CODE 0 BB BB 10 2
+dataBANK1 BANK1 1 DB DB 10 1
+clrtext CODE 0 87 87 C 2
 bssCOMMON COMMON 1 7D 7D 1 1
 # %UNUSED Section
 # This section enumerates the unused ranges of each CLASS. Each entry
@@ -54,7 +54,8 @@ bssCOMMON COMMON 1 7D 7D 1 1
 #    <class name> <range> <delta>
 # Addresses given in the range are in hexadecimal and units of delta.
 %UNUSED
-RAM E5-EF 1
+RAM 6F-6F 1
+RAM EB-EF 1
 RAM 120-16F 1
 RAM 1A0-1EF 1
 RAM 220-26F 1
@@ -62,7 +63,8 @@ RAM 2A0-2EF 1
 RAM 320-36F 1
 RAM 3A0-3EF 1
 RAM 420-44F 1
-BANK1 E5-EF 1
+BANK0 6F-6F 1
+BANK1 EB-EF 1
 BANK2 120-16F 1
 BANK3 1A0-1EF 1
 BANK4 220-26F 1
@@ -70,9 +72,9 @@ BANK5 2A0-2EF 1
 BANK6 320-36F 1
 BANK7 3A0-3EF 1
 BANK8 420-44F 1
-CONST 4-95 2
+CONST 4-7D 2
 CONST 92F-1FFF 2
-ENTRY 4-95 2
+ENTRY 4-7D 2
 ENTRY 92F-1FFF 2
 IDLOC 8000-8003 2
 SFR10 500-51F 1
@@ -97,8 +99,8 @@ SFR28 E00-E6F 1
 SFR29 E80-EEF 1
 SFR30 F00-F6F 1
 SFR31 F80-FEF 1
-STACK 2095-22AF 1
-CODE 4-95 2
+STACK 209B-22AF 1
+CODE 4-7D 2
 CODE 92F-1FFF 2
 SFR0 0-1F 1
 SFR1 80-9F 1
@@ -112,9 +114,9 @@ SFR8 400-41F 1
 SFR9 480-49F 1
 BIGRAM 2000-23EF 1
 EEDATA F000-F0FF 2
-STRCODE 4-95 2
+STRCODE 4-7D 2
 STRCODE 92F-1FFF 2
-STRING 4-95 2
+STRING 4-7D 2
 STRING 92F-1FFF 2
 # %LINETAB Section
 # This section enumerates the file/line to address mappings.
@@ -130,405 +132,406 @@ STRING 92F-1FFF 2
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production\MPPT_Charger.X.production.obj
-7CE cinit CODE >8863:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7CE cinit CODE >8866:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7CE cinit CODE >8954:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7CF cinit CODE >8955:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7D0 cinit CODE >8956:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7D1 cinit CODE >8957:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7D2 cinit CODE >8958:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7D3 cinit CODE >8959:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7D4 cinit CODE >8960:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7D5 cinit CODE >8961:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7D6 cinit CODE >8962:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7D7 cinit CODE >8963:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7D8 cinit CODE >8964:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7D9 cinit CODE >8965:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7DC cinit CODE >8988:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7DD cinit CODE >8989:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7DE cinit CODE >8990:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7DF cinit CODE >8991:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7E0 cinit CODE >8992:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7E1 cinit CODE >8993:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7E2 cinit CODE >8994:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7E3 cinit CODE >8995:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7E4 cinit CODE >8996:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7E7 cinit CODE >9000:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7E8 cinit CODE >9004:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7E9 cinit CODE >9005:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7EA cinit CODE >9006:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7EB cinit CODE >9007:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7EC cinit CODE >9008:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7ED cinit CODE >9009:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7EE cinit CODE >9010:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7EF cinit CODE >9011:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7F0 cinit CODE >9012:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7F3 cinit CODE >9016:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7F4 cinit CODE >9017:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7F5 cinit CODE >9018:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7F6 cinit CODE >9019:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7F7 cinit CODE >9020:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7F8 cinit CODE >9021:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7F9 cinit CODE >9022:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7FA cinit CODE >9023:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7FB cinit CODE >9024:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7FD cinit CODE >9030:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7FD cinit CODE >9032:C:\Users\DAVE\AppData\Local\Temp\s13c.
-7FE cinit CODE >9033:C:\Users\DAVE\AppData\Local\Temp\s13c.
-171 text20 CODE >280:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-172 text20 CODE >284:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-176 text20 CODE >286:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-179 text20 CODE >288:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-17B text20 CODE >289:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-17C text20 CODE >290:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-17C text20 CODE >292:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-17E text20 CODE >293:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-17E text20 CODE >295:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-17F text20 CODE >297:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-184 text20 CODE >298:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-184 text20 CODE >299:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-185 text20 CODE >301:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-187 text20 CODE >303:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-188 text20 CODE >304:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-188 text20 CODE >306:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-189 text20 CODE >308:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-18B text20 CODE >310:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-18C text20 CODE >297:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-194 text20 CODE >313:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-195 text20 CODE >314:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-137 text19 CODE >15:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
-137 text19 CODE >43:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
-139 text19 CODE >45:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
-13B text19 CODE >46:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
-13F text19 CODE >47:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
-144 text19 CODE >48:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
-149 text19 CODE >49:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
-14D text19 CODE >52:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
-2D6 text18 CODE >140:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-2D7 text18 CODE >143:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-2DE text18 CODE >144:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-2ED text18 CODE >145:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-2FD text18 CODE >146:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-311 text18 CODE >147:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-325 text18 CODE >148:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-329 text18 CODE >149:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-285 text17 CODE >6:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-285 text17 CODE >14:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-286 text17 CODE >15:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-288 text17 CODE >16:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-28D text17 CODE >17:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-28F text17 CODE >19:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-291 text17 CODE >20:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-296 text17 CODE >21:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-29A text17 CODE >23:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-29C text17 CODE >24:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2A0 text17 CODE >25:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2A2 text17 CODE >26:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2A4 text17 CODE >27:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2A9 text17 CODE >28:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2AD text17 CODE >26:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2AE text17 CODE >31:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2B3 text17 CODE >32:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2BB text17 CODE >33:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2BF text17 CODE >34:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2C0 text17 CODE >36:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2C5 text17 CODE >37:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2C9 text17 CODE >39:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2CC text17 CODE >40:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-2D1 text17 CODE >41:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
-1BC text16 CODE >6:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-1BC text16 CODE >13:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-1C0 text16 CODE >14:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-1C2 text16 CODE >15:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-1C4 text16 CODE >16:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-1C9 text16 CODE >17:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-1CD text16 CODE >15:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-1CE text16 CODE >20:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-1D6 text16 CODE >21:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-1DA text16 CODE >22:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-1DF text16 CODE >23:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-1E3 text16 CODE >25:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
-3AC text15 CODE >190:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3AC text15 CODE >192:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3BB text15 CODE >193:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3C0 text15 CODE >195:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3C2 text15 CODE >197:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3C6 text15 CODE >198:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3CC text15 CODE >199:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3CD text15 CODE >203:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3D0 text15 CODE >205:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3D4 text15 CODE >209:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3D9 text15 CODE >211:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3EE text15 CODE >212:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-3FE text15 CODE >213:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-400 text15 CODE >209:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-401 text15 CODE >215:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-405 text15 CODE >219:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-409 text15 CODE >217:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-411 text15 CODE >224:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-417 text15 CODE >227:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-432 text15 CODE >229:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-43C text15 CODE >227:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-442 text15 CODE >232:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-446 text15 CODE >234:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-44A text15 CODE >235:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-450 text15 CODE >238:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-455 text15 CODE >240:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-459 text15 CODE >241:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-45F text15 CODE >242:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-10B text14 CODE >25:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-10B text14 CODE >27:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-116 text14 CODE >29:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-120 text14 CODE >30:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-121 text13 CODE >32:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-121 text13 CODE >34:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-12C text13 CODE >36:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-136 text13 CODE >37:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-152 text12 CODE >60:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-152 text12 CODE >62:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-154 text12 CODE >64:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-155 text12 CODE >66:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-156 text12 CODE >68:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-157 text12 CODE >70:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-158 text12 CODE >72:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-15B text12 CODE >75:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-15E text12 CODE >80:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-160 text12 CODE >83:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-161 text12 CODE >86:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-163 text12 CODE >88:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-164 text12 CODE >90:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-165 text12 CODE >92:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-167 text12 CODE >94:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-168 text12 CODE >96:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-169 text12 CODE >98:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-16A text12 CODE >100:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-16B text12 CODE >102:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-16C text12 CODE >104:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-16D text12 CODE >106:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-170 text12 CODE >107:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-E3 text11 CODE >124:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-E4 text11 CODE >126:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-ED text11 CODE >127:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-F5 text11 CODE >128:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-196 text10 CODE >182:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-196 text10 CODE >185:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-1A3 text10 CODE >186:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-1A8 text10 CODE >185:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-1B7 text10 CODE >187:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-1BB text10 CODE >188:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-24A text9 CODE >247:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-24A text9 CODE >249:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-24C text9 CODE >250:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-24D text9 CODE >251:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-24E text9 CODE >252:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-24F text9 CODE >253:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-250 text9 CODE >254:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-251 text9 CODE >255:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-252 text9 CODE >256:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-253 text9 CODE >257:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-254 text9 CODE >259:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-255 text9 CODE >261:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-25D text9 CODE >268:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-265 text9 CODE >270:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-26D text9 CODE >272:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-275 text9 CODE >274:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-27D text9 CODE >276:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-284 text9 CODE >277:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
-96 text8 CODE >87:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-96 text8 CODE >89:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-99 text8 CODE >90:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-9A text8 CODE >91:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-9B text8 CODE >92:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-9D text8 CODE >93:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-9E text8 CODE >94:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-216 text7 CODE >5:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-216 text7 CODE >7:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-218 text7 CODE >8:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-219 text7 CODE >9:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-21A text7 CODE >11:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-21C text7 CODE >12:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-21D text7 CODE >13:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-21E text7 CODE >14:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-220 text7 CODE >16:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-222 text7 CODE >17:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-224 text7 CODE >18:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-226 text7 CODE >20:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-228 text7 CODE >21:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-22A text7 CODE >22:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-22C text7 CODE >42:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-22E text7 CODE >43:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-232 text7 CODE >44:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-233 text7 CODE >45:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-236 text7 CODE >46:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-238 text7 CODE >47:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-239 text7 CODE >49:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-23C text7 CODE >50:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-23E text7 CODE >52:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-241 text7 CODE >53:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-243 text7 CODE >54:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-244 text7 CODE >55:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-249 text7 CODE >56:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
-F6 text6 CODE >3:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-F6 text6 CODE >5:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-F9 text6 CODE >7:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-FA text6 CODE >9:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-FB text6 CODE >11:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-100 text6 CODE >14:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-103 text6 CODE >16:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-104 text6 CODE >18:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-105 text6 CODE >20:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-10A text6 CODE >22:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
-B7 text5 CODE >3:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
-B7 text5 CODE >5:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
-B9 text5 CODE >7:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
-BB text5 CODE >9:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
-BC text5 CODE >11:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
-BD text5 CODE >13:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
-BF text5 CODE >17:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
-C0 text5 CODE >19:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
-C2 text5 CODE >21:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
-C4 text5 CODE >22:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
-1E8 text4 CODE >71:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-1E8 text4 CODE >73:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-1EB text4 CODE >74:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-1EE text4 CODE >76:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-1F1 text4 CODE >77:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-1F4 text4 CODE >79:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-1F7 text4 CODE >81:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-1FA text4 CODE >82:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-206 text4 CODE >83:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-209 text4 CODE >84:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-215 text4 CODE >85:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
-C5 text3 CODE >16:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-C6 text3 CODE >18:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-C9 text3 CODE >20:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-CA text3 CODE >22:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-CB text3 CODE >24:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-CC text3 CODE >26:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-CC text3 CODE >28:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-CE text3 CODE >30:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-32A text2 CODE >6:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-32A text2 CODE >14:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-32C text2 CODE >15:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-32E text2 CODE >16:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-339 text2 CODE >17:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-33B text2 CODE >18:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-33B text2 CODE >19:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-33D text2 CODE >20:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-348 text2 CODE >21:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-34C text2 CODE >23:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-354 text2 CODE >24:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-35A text2 CODE >25:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-35C text2 CODE >26:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-35E text2 CODE >27:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-365 text2 CODE >28:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-369 text2 CODE >26:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-36A text2 CODE >31:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-371 text2 CODE >32:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-381 text2 CODE >33:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-389 text2 CODE >34:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-38A text2 CODE >36:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-391 text2 CODE >37:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-395 text2 CODE >39:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-398 text2 CODE >40:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-3A3 text2 CODE >41:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
-465 text1 CODE >34:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-465 text1 CODE >38:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-46E text1 CODE >40:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-476 text1 CODE >42:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-4DF text1 CODE >44:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-505 text1 CODE >46:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-562 text1 CODE >48:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-569 text1 CODE >50:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-56D text1 CODE >51:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-576 text1 CODE >54:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-597 text1 CODE >56:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
-59D maintext CODE >43:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-59D maintext CODE >45:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5A0 maintext CODE >46:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5A2 maintext CODE >47:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5A4 maintext CODE >48:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5A6 maintext CODE >50:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5AA maintext CODE >51:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5AE maintext CODE >53:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5AF maintext CODE >54:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5BD maintext CODE >55:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5BE maintext CODE >56:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5C2 maintext CODE >61:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5C5 maintext CODE >63:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5C8 maintext CODE >78:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5E9 maintext CODE >80:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5ED maintext CODE >82:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-5F0 maintext CODE >84:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-608 maintext CODE >86:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-615 maintext CODE >88:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-616 maintext CODE >97:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-623 maintext CODE >99:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-628 maintext CODE >100:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-629 maintext CODE >103:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-62E maintext CODE >106:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-63E maintext CODE >107:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-642 maintext CODE >110:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-65A maintext CODE >112:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-667 maintext CODE >114:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-668 maintext CODE >123:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-675 maintext CODE >125:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-67A maintext CODE >126:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-67B maintext CODE >129:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-680 maintext CODE >132:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-690 maintext CODE >133:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-694 maintext CODE >135:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-695 maintext CODE >147:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6A1 maintext CODE >149:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6AA maintext CODE >150:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6AB maintext CODE >153:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6B7 maintext CODE >156:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6B8 maintext CODE >157:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6BC maintext CODE >158:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6C3 maintext CODE >159:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6CB maintext CODE >161:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6D0 maintext CODE >163:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6D4 maintext CODE >179:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6E8 maintext CODE >180:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-6FC maintext CODE >181:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-713 maintext CODE >182:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-72A maintext CODE >183:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-741 maintext CODE >184:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-758 maintext CODE >185:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-76F maintext CODE >186:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-786 maintext CODE >187:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-79D maintext CODE >188:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-7B4 maintext CODE >189:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-7CB maintext CODE >195:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+7CE cinit CODE >9900:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7CE cinit CODE >9903:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7CE cinit CODE >10003:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7CF cinit CODE >10004:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7D0 cinit CODE >10005:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7D1 cinit CODE >10006:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7D2 cinit CODE >10007:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7D3 cinit CODE >10008:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7D4 cinit CODE >10009:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7D5 cinit CODE >10010:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7D6 cinit CODE >10011:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7D7 cinit CODE >10012:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7D8 cinit CODE >10013:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7D9 cinit CODE >10014:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7DC cinit CODE >10037:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7DD cinit CODE >10038:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7DE cinit CODE >10039:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7DF cinit CODE >10040:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7E0 cinit CODE >10041:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7E1 cinit CODE >10042:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7E2 cinit CODE >10043:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7E3 cinit CODE >10044:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7E4 cinit CODE >10045:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7E7 cinit CODE >10049:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7E8 cinit CODE >10053:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7E9 cinit CODE >10054:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7EA cinit CODE >10055:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7EB cinit CODE >10056:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7EC cinit CODE >10057:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7ED cinit CODE >10058:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7EE cinit CODE >10059:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7EF cinit CODE >10060:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7F0 cinit CODE >10061:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7F3 cinit CODE >10065:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7F4 cinit CODE >10066:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7F5 cinit CODE >10067:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7F6 cinit CODE >10068:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7F7 cinit CODE >10069:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7F8 cinit CODE >10070:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7F9 cinit CODE >10071:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7FA cinit CODE >10072:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7FB cinit CODE >10073:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7FD cinit CODE >10079:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7FD cinit CODE >10081:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+7FE cinit CODE >10082:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+159 text20 CODE >280:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+15A text20 CODE >284:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+15E text20 CODE >286:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+161 text20 CODE >288:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+163 text20 CODE >289:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+164 text20 CODE >290:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+164 text20 CODE >292:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+166 text20 CODE >293:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+166 text20 CODE >295:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+167 text20 CODE >297:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+16C text20 CODE >298:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+16C text20 CODE >299:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+16D text20 CODE >301:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+16F text20 CODE >303:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+170 text20 CODE >304:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+170 text20 CODE >306:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+171 text20 CODE >308:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+173 text20 CODE >310:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+174 text20 CODE >297:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+17C text20 CODE >313:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+17D text20 CODE >314:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+11F text19 CODE >15:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
+11F text19 CODE >43:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
+121 text19 CODE >45:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
+123 text19 CODE >46:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
+127 text19 CODE >47:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
+12C text19 CODE >48:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
+131 text19 CODE >49:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
+135 text19 CODE >52:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\Umul16.c
+2BE text18 CODE >140:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+2BF text18 CODE >143:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+2C6 text18 CODE >144:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+2D5 text18 CODE >145:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+2E5 text18 CODE >146:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+2F9 text18 CODE >147:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+30D text18 CODE >148:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+311 text18 CODE >149:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+26D text17 CODE >6:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+26D text17 CODE >14:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+26E text17 CODE >15:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+270 text17 CODE >16:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+275 text17 CODE >17:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+277 text17 CODE >19:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+279 text17 CODE >20:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+27E text17 CODE >21:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+282 text17 CODE >23:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+284 text17 CODE >24:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+288 text17 CODE >25:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+28A text17 CODE >26:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+28C text17 CODE >27:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+291 text17 CODE >28:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+295 text17 CODE >26:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+296 text17 CODE >31:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+29B text17 CODE >32:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+2A3 text17 CODE >33:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+2A7 text17 CODE >34:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+2A8 text17 CODE >36:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+2AD text17 CODE >37:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+2B1 text17 CODE >39:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+2B4 text17 CODE >40:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+2B9 text17 CODE >41:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\awdiv.c
+1A4 text16 CODE >6:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+1A4 text16 CODE >13:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+1A8 text16 CODE >14:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+1AA text16 CODE >15:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+1AC text16 CODE >16:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+1B1 text16 CODE >17:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+1B5 text16 CODE >15:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+1B6 text16 CODE >20:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+1BE text16 CODE >21:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+1C2 text16 CODE >22:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+1C7 text16 CODE >23:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+1CB text16 CODE >25:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c
+394 text15 CODE >190:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+394 text15 CODE >192:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3A3 text15 CODE >193:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3A8 text15 CODE >195:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3AA text15 CODE >197:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3AE text15 CODE >198:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3B4 text15 CODE >199:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3B5 text15 CODE >203:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3B8 text15 CODE >205:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3BC text15 CODE >209:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3C1 text15 CODE >211:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3D6 text15 CODE >212:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3E6 text15 CODE >213:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3E8 text15 CODE >209:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3E9 text15 CODE >215:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3ED text15 CODE >219:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3F1 text15 CODE >217:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3F9 text15 CODE >224:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+3FF text15 CODE >227:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+41A text15 CODE >229:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+424 text15 CODE >227:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+42A text15 CODE >232:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+42E text15 CODE >234:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+432 text15 CODE >235:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+438 text15 CODE >238:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+43D text15 CODE >240:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+441 text15 CODE >241:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+447 text15 CODE >242:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+F3 text14 CODE >25:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+F3 text14 CODE >27:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+FE text14 CODE >29:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+108 text14 CODE >30:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+109 text13 CODE >32:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+109 text13 CODE >34:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+114 text13 CODE >36:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+11E text13 CODE >37:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+13A text12 CODE >60:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+13A text12 CODE >62:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+13C text12 CODE >64:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+13D text12 CODE >66:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+13E text12 CODE >68:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+13F text12 CODE >70:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+140 text12 CODE >72:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+143 text12 CODE >75:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+146 text12 CODE >80:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+148 text12 CODE >83:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+149 text12 CODE >86:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+14B text12 CODE >88:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+14C text12 CODE >90:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+14D text12 CODE >92:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+14F text12 CODE >94:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+150 text12 CODE >96:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+151 text12 CODE >98:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+152 text12 CODE >100:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+153 text12 CODE >102:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+154 text12 CODE >104:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+155 text12 CODE >106:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+158 text12 CODE >107:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+CB text11 CODE >124:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+CC text11 CODE >126:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+D5 text11 CODE >127:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+DD text11 CODE >128:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+17E text10 CODE >182:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+17E text10 CODE >185:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+18B text10 CODE >186:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+190 text10 CODE >185:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+19F text10 CODE >187:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+1A3 text10 CODE >188:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+232 text9 CODE >247:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+232 text9 CODE >249:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+234 text9 CODE >250:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+235 text9 CODE >251:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+236 text9 CODE >252:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+237 text9 CODE >253:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+238 text9 CODE >254:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+239 text9 CODE >255:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+23A text9 CODE >256:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+23B text9 CODE >257:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+23C text9 CODE >259:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+23D text9 CODE >261:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+245 text9 CODE >268:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+24D text9 CODE >270:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+255 text9 CODE >272:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+25D text9 CODE >274:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+265 text9 CODE >276:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+26C text9 CODE >277:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\lcd.c
+7E text8 CODE >87:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+7E text8 CODE >89:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+81 text8 CODE >90:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+82 text8 CODE >91:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+83 text8 CODE >92:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+85 text8 CODE >93:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+86 text8 CODE >94:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+1FE text7 CODE >5:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+1FE text7 CODE >7:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+200 text7 CODE >8:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+201 text7 CODE >9:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+202 text7 CODE >11:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+204 text7 CODE >12:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+205 text7 CODE >13:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+206 text7 CODE >14:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+208 text7 CODE >16:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+20A text7 CODE >17:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+20C text7 CODE >18:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+20E text7 CODE >20:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+210 text7 CODE >21:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+212 text7 CODE >22:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+214 text7 CODE >42:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+216 text7 CODE >43:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+21A text7 CODE >44:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+21B text7 CODE >45:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+21E text7 CODE >46:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+220 text7 CODE >47:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+221 text7 CODE >49:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+224 text7 CODE >50:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+226 text7 CODE >52:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+229 text7 CODE >53:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+22B text7 CODE >54:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+22C text7 CODE >55:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+231 text7 CODE >56:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pin_manager.c
+DE text6 CODE >3:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+DE text6 CODE >5:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+E1 text6 CODE >7:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+E2 text6 CODE >9:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+E3 text6 CODE >11:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+E8 text6 CODE >14:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+EB text6 CODE >16:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+EC text6 CODE >18:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+ED text6 CODE >20:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+F2 text6 CODE >22:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\pwm.c
+9F text5 CODE >3:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
+9F text5 CODE >5:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
+A1 text5 CODE >7:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
+A3 text5 CODE >9:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
+A4 text5 CODE >11:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
+A5 text5 CODE >13:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
+A7 text5 CODE >17:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
+A8 text5 CODE >19:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
+AA text5 CODE >21:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
+AC text5 CODE >22:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\tmr2.c
+1D0 text4 CODE >71:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+1D0 text4 CODE >73:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+1D3 text4 CODE >74:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+1D6 text4 CODE >76:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+1D9 text4 CODE >77:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+1DC text4 CODE >79:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+1DF text4 CODE >81:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+1E2 text4 CODE >82:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+1EE text4 CODE >83:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+1F1 text4 CODE >84:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+1FD text4 CODE >85:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\system.c
+AD text3 CODE >16:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+AE text3 CODE >18:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+B1 text3 CODE >20:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+B2 text3 CODE >22:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+B3 text3 CODE >24:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+B4 text3 CODE >26:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+B4 text3 CODE >28:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+B6 text3 CODE >30:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+312 text2 CODE >6:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+312 text2 CODE >14:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+314 text2 CODE >15:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+316 text2 CODE >16:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+321 text2 CODE >17:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+323 text2 CODE >18:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+323 text2 CODE >19:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+325 text2 CODE >20:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+330 text2 CODE >21:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+334 text2 CODE >23:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+33C text2 CODE >24:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+342 text2 CODE >25:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+344 text2 CODE >26:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+346 text2 CODE >27:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+34D text2 CODE >28:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+351 text2 CODE >26:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+352 text2 CODE >31:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+359 text2 CODE >32:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+369 text2 CODE >33:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+371 text2 CODE >34:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+372 text2 CODE >36:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+379 text2 CODE >37:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+37D text2 CODE >39:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+380 text2 CODE >40:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+38B text2 CODE >41:C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\aldiv.c
+44D text1 CODE >34:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+44D text1 CODE >38:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+456 text1 CODE >40:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+45E text1 CODE >42:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+4C7 text1 CODE >44:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+4ED text1 CODE >46:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+54A text1 CODE >48:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+551 text1 CODE >50:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+555 text1 CODE >51:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+55E text1 CODE >54:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+57F text1 CODE >56:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\adc.c
+585 maintext CODE >43:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+585 maintext CODE >45:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+588 maintext CODE >46:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+58A maintext CODE >47:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+58C maintext CODE >48:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+58E maintext CODE >50:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+592 maintext CODE >51:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+596 maintext CODE >53:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+597 maintext CODE >54:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+5A5 maintext CODE >55:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+5A6 maintext CODE >56:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+5AA maintext CODE >61:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+5AD maintext CODE >63:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+5B0 maintext CODE >78:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+5D1 maintext CODE >80:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+5D5 maintext CODE >82:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+5D8 maintext CODE >84:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+5F0 maintext CODE >86:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+5FD maintext CODE >88:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+5FE maintext CODE >97:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+60B maintext CODE >99:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+610 maintext CODE >100:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+611 maintext CODE >103:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+616 maintext CODE >106:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+626 maintext CODE >107:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+62A maintext CODE >110:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+642 maintext CODE >112:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+64F maintext CODE >114:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+650 maintext CODE >123:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+65D maintext CODE >125:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+662 maintext CODE >126:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+663 maintext CODE >129:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+668 maintext CODE >132:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+678 maintext CODE >133:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+67C maintext CODE >135:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+67D maintext CODE >147:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+689 maintext CODE >149:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+692 maintext CODE >150:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+693 maintext CODE >153:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+69F maintext CODE >156:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+6A0 maintext CODE >157:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+6A4 maintext CODE >158:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+6AB maintext CODE >159:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+6B3 maintext CODE >161:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+6B8 maintext CODE >163:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+6BC maintext CODE >179:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+6D0 maintext CODE >180:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+6E4 maintext CODE >181:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+6FC maintext CODE >182:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+713 maintext CODE >183:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+72A maintext CODE >184:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+741 maintext CODE >185:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+758 maintext CODE >186:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+76F maintext CODE >187:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+786 maintext CODE >188:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+79D maintext CODE >189:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+7B4 maintext CODE >190:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
+7CB maintext CODE >196:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
 7CD maintext CODE >76:D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger.X\main.c
-9F clrtext CODE >8971:C:\Users\DAVE\AppData\Local\Temp\s13c.
-9F clrtext CODE >8972:C:\Users\DAVE\AppData\Local\Temp\s13c.
-A0 clrtext CODE >8973:C:\Users\DAVE\AppData\Local\Temp\s13c.
-A0 clrtext CODE >8974:C:\Users\DAVE\AppData\Local\Temp\s13c.
-A1 clrtext CODE >8975:C:\Users\DAVE\AppData\Local\Temp\s13c.
-A2 clrtext CODE >8976:C:\Users\DAVE\AppData\Local\Temp\s13c.
-A3 clrtext CODE >8977:C:\Users\DAVE\AppData\Local\Temp\s13c.
-A4 clrtext CODE >8978:C:\Users\DAVE\AppData\Local\Temp\s13c.
-A5 clrtext CODE >8979:C:\Users\DAVE\AppData\Local\Temp\s13c.
-A6 clrtext CODE >8980:C:\Users\DAVE\AppData\Local\Temp\s13c.
-A7 clrtext CODE >8981:C:\Users\DAVE\AppData\Local\Temp\s13c.
-A8 clrtext CODE >8982:C:\Users\DAVE\AppData\Local\Temp\s13c.
-A9 clrtext CODE >8984:C:\Users\DAVE\AppData\Local\Temp\s13c.
-AA clrtext CODE >8983:C:\Users\DAVE\AppData\Local\Temp\s13c.
-AB inittext CODE >8937:C:\Users\DAVE\AppData\Local\Temp\s13c.
-AB inittext CODE >8938:C:\Users\DAVE\AppData\Local\Temp\s13c.
-AC inittext CODE >8939:C:\Users\DAVE\AppData\Local\Temp\s13c.
-AC inittext CODE >8940:C:\Users\DAVE\AppData\Local\Temp\s13c.
-AD inittext CODE >8941:C:\Users\DAVE\AppData\Local\Temp\s13c.
-AE inittext CODE >8942:C:\Users\DAVE\AppData\Local\Temp\s13c.
-AF inittext CODE >8943:C:\Users\DAVE\AppData\Local\Temp\s13c.
-B0 inittext CODE >8944:C:\Users\DAVE\AppData\Local\Temp\s13c.
-B1 inittext CODE >8945:C:\Users\DAVE\AppData\Local\Temp\s13c.
-B2 inittext CODE >8946:C:\Users\DAVE\AppData\Local\Temp\s13c.
-B3 inittext CODE >8947:C:\Users\DAVE\AppData\Local\Temp\s13c.
-B4 inittext CODE >8948:C:\Users\DAVE\AppData\Local\Temp\s13c.
-B5 inittext CODE >8950:C:\Users\DAVE\AppData\Local\Temp\s13c.
-B6 inittext CODE >8949:C:\Users\DAVE\AppData\Local\Temp\s13c.
+87 clrtext CODE >10020:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+87 clrtext CODE >10021:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+88 clrtext CODE >10022:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+88 clrtext CODE >10023:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+89 clrtext CODE >10024:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+8A clrtext CODE >10025:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+8B clrtext CODE >10026:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+8C clrtext CODE >10027:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+8D clrtext CODE >10028:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+8E clrtext CODE >10029:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+8F clrtext CODE >10030:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+90 clrtext CODE >10031:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+91 clrtext CODE >10033:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+92 clrtext CODE >10032:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+93 inittext CODE >9986:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+93 inittext CODE >9987:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+94 inittext CODE >9988:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+94 inittext CODE >9989:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+95 inittext CODE >9990:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+96 inittext CODE >9991:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+97 inittext CODE >9992:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+98 inittext CODE >9993:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+99 inittext CODE >9994:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+9A inittext CODE >9995:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+9B inittext CODE >9996:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+9C inittext CODE >9997:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+9D inittext CODE >9999:C:\Users\DAVE\AppData\Local\Temp\s3ns.
+9E inittext CODE >9998:C:\Users\DAVE\AppData\Local\Temp\s3ns.
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -541,6 +544,7 @@ B6 inittext CODE >8949:C:\Users\DAVE\AppData\Local\Temp\s13c.
 # was defined in a psect then <psect> will be "-". File-name
 # is the name of the object file in which the symbol was defined.
 %SYMTAB
+_j 69 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
 ___latbits 2 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 ___awdiv@counter 75 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 gotoXY@x 77 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
@@ -548,7 +552,7 @@ gotoXY@y 75 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.produ
 ___lwmod@counter 75 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 __LdataBANK1 0 0 ABS 0 dataBANK1 -
 __Hspace_0 800C 0 ABS 0 - -
-__Hspace_1 E5 0 ABS 0 - -
+__Hspace_1 EB 0 ABS 0 - -
 __Hspace_2 0 0 ABS 0 - -
 __Hspace_3 0 0 ABS 0 - -
 __HidataBANK1 0 0 ABS 0 idataBANK1 -
@@ -564,9 +568,9 @@ __CFG_MCLRE$ON 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 main@j 58 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
 __Hstrings 0 0 ABS 0 strings -
 __CFG_WDTCCS$SC 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-_Imin 67 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+_Imin 63 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
 _Iout 5F 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
-_Iref 65 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+_Iref D7 0 BANK1 1 bssBANK1 dist/default/production\MPPT_Charger.X.production.obj
 _LATA 16 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _LATB 17 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _LATC 18 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
@@ -576,14 +580,14 @@ _WPUA F39 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _WPUB F44 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _WPUC F4F 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _WPUE F65 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-_Vref 63 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
-___sp 0 0 STACK 2 stack C:\Users\DAVE\AppData\Local\Temp\s13c.obj
-_main B3A 0 CODE 0 maintext dist/default/production\MPPT_Charger.X.production.obj
+_Vref 61 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+___sp 0 0 STACK 2 stack C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
+_main B0A 0 CODE 0 maintext dist/default/production\MPPT_Charger.X.production.obj
 btemp 7E 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-__end_of_LCDWriteInt 8CA 0 CODE 0 text15 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_LCDWriteInt 89A 0 CODE 0 text15 dist/default/production\MPPT_Charger.X.production.obj
 __size_of_PWM7_LoadDutyValue 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-start 4 0 CODE 0 init C:\Users\DAVE\AppData\Local\Temp\s13c.obj
-_PWM6_LoadDutyValue 216 0 CODE 0 text14 dist/default/production\MPPT_Charger.X.production.obj
+start 4 0 CODE 0 init C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
+_PWM6_LoadDutyValue 1E6 0 CODE 0 text14 dist/default/production\MPPT_Charger.X.production.obj
 __size_of___aldiv 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __size_of___awdiv 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __size_of_main 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
@@ -591,30 +595,30 @@ __size_of___lwmod 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.
 __HbssCOMMON 0 0 ABS 0 bssCOMMON -
 ?___wmul 70 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 __size_of_LCDInit 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-_LCDClear 32C 0 CODE 0 text10 dist/default/production\MPPT_Charger.X.production.obj
+_LCDClear 2FC 0 CODE 0 text10 dist/default/production\MPPT_Charger.X.production.obj
 __LidataBANK1 0 0 ABS 0 idataBANK1 -
-_LCDWrite 2E2 0 CODE 0 text20 dist/default/production\MPPT_Charger.X.production.obj
+_LCDWrite 2B2 0 CODE 0 text20 dist/default/production\MPPT_Charger.X.production.obj
 __Hpowerup 0 0 CODE 0 powerup -
-LCDWriteInt@F14390 D0 0 BANK1 1 bssBANK1 dist/default/production\MPPT_Charger.X.production.obj
-_TMR2_Initialize 16E 0 CODE 0 text5 dist/default/production\MPPT_Charger.X.production.obj
+LCDWriteInt@F14392 D0 0 BANK1 1 bssBANK1 dist/default/production\MPPT_Charger.X.production.obj
+_TMR2_Initialize 13E 0 CODE 0 text5 dist/default/production\MPPT_Charger.X.production.obj
 __size_of_SYSTEM_Initialize 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 readAnalog@channel 26 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
-__end_of_LCDClear 378 0 CODE 0 text10 dist/default/production\MPPT_Charger.X.production.obj
-_Imin_db 6F 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
-__end_of_LCDWrite 32C 0 CODE 0 text20 dist/default/production\MPPT_Charger.X.production.obj
-intlevel0 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s13c.obj
-intlevel1 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s13c.obj
-intlevel2 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s13c.obj
-intlevel3 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s13c.obj
-intlevel4 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s13c.obj
-intlevel5 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s13c.obj
+__end_of_LCDClear 348 0 CODE 0 text10 dist/default/production\MPPT_Charger.X.production.obj
+_Imin_db 6E 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_LCDWrite 2FC 0 CODE 0 text20 dist/default/production\MPPT_Charger.X.production.obj
+intlevel0 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
+intlevel1 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
+intlevel2 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
+intlevel3 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
+intlevel4 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
+intlevel5 0 0 ENTRY 0 functab C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
 __LbssCOMMON 0 0 ABS 0 bssCOMMON -
 __size_of_ADC_Initialize 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 ___aldiv@divisor 70 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 wtemp0 7E 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __Hfunctab 0 0 ENTRY 0 functab -
 ___aldiv@sign 21 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
-_LCDWriteCharacter 5AC 0 CODE 0 text18 dist/default/production\MPPT_Charger.X.production.obj
+_LCDWriteCharacter 57C 0 CODE 0 text18 dist/default/production\MPPT_Charger.X.production.obj
 ___awdiv@sign 76 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 __Hclrtext 0 0 ABS 0 clrtext -
 ___wmul@multiplicand 72 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
@@ -638,48 +642,48 @@ _ANSELB F43 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _ANSELC F4E 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 ___awdiv@dividend 72 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 PWM7_LoadDutyValue@dutyCycle7 70 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
-__end_of___wmul 2A4 0 CODE 0 text19 dist/default/production\MPPT_Charger.X.production.obj
-_Iflat_db 6B 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+__end_of___wmul 274 0 CODE 0 text19 dist/default/production\MPPT_Charger.X.production.obj
+_Iflat_db 65 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
 __Lmaintext 0 0 ABS 0 maintext -
 _FVRCON 90C 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 ___awdiv@divisor 70 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 ___lwmod@divisor 70 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
-__end_of___aldiv 758 0 CODE 0 text2 dist/default/production\MPPT_Charger.X.production.obj
-__end_of___awdiv 5AC 0 CODE 0 text17 dist/default/production\MPPT_Charger.X.production.obj
+__end_of___aldiv 728 0 CODE 0 text2 dist/default/production\MPPT_Charger.X.production.obj
+__end_of___awdiv 57C 0 CODE 0 text17 dist/default/production\MPPT_Charger.X.production.obj
 readAnalog@analog_channel 79 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 __CFG_FEXTOSC$OFF 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-__end_of___lwmod 3D0 0 CODE 0 text16 dist/default/production\MPPT_Charger.X.production.obj
+__end_of___lwmod 3A0 0 CODE 0 text16 dist/default/production\MPPT_Charger.X.production.obj
 PIN_MANAGER_Initialize@state 70 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
-__end_of_LCDInit 50A 0 CODE 0 text9 dist/default/production\MPPT_Charger.X.production.obj
-__end_of_gotoXY 1EC 0 CODE 0 text11 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_LCDInit 4DA 0 CODE 0 text9 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_gotoXY 1BC 0 CODE 0 text11 dist/default/production\MPPT_Charger.X.production.obj
 __size_of_TMR2_Initialize 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 ___lwmod@dividend 72 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
-_PIN_MANAGER_Initialize 42C 0 CODE 0 text7 dist/default/production\MPPT_Charger.X.production.obj
+_PIN_MANAGER_Initialize 3FC 0 CODE 0 text7 dist/default/production\MPPT_Charger.X.production.obj
 start_initialization F9C 0 CODE 0 cinit dist/default/production\MPPT_Charger.X.production.obj
 LCDWriteInt@str 29 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
 _OSCFRQ 893 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-_sampleIndex 5B 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+_sampleIndex 67 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
 __CFG_WDTCPS$WDTCPS_31 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __size_of_LCDWriteInt 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _TRISAbits 11 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 ___aldiv@quotient 22 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
-_ADCRead 18A 0 CODE 0 text3 dist/default/production\MPPT_Charger.X.production.obj
+_ADCRead 15A 0 CODE 0 text3 dist/default/production\MPPT_Charger.X.production.obj
 _ADSTPTH 113 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _ADSTPTL 112 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _RA6PPS F16 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _RA7PPS F17 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-__end_of_SYSTEM_Initialize 42C 0 CODE 0 text4 dist/default/production\MPPT_Charger.X.production.obj
-clear_ram0 13E 0 CODE 0 clrtext dist/default/production\MPPT_Charger.X.production.obj
+__end_of_SYSTEM_Initialize 3FC 0 CODE 0 text4 dist/default/production\MPPT_Charger.X.production.obj
+clear_ram0 10E 0 CODE 0 clrtext dist/default/production\MPPT_Charger.X.production.obj
 __pcstackBANK0 20 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
 main@power0OutOld 3C 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
 _T2CLKCON 290 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _TRISA6 8E 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _TRISA7 8F 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-_readAnalog 8CA 0 CODE 0 text1 dist/default/production\MPPT_Charger.X.production.obj
+_readAnalog 89A 0 CODE 0 text1 dist/default/production\MPPT_Charger.X.production.obj
 LCDClear@index 79 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 main@dutyCycle6 46 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
 main@dutyCycle7 59 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
-___int_sp 0 0 STACK 2 stack C:\Users\DAVE\AppData\Local\Temp\s13c.obj
+___int_sp 0 0 STACK 2 stack C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
 __Hbank0 0 0 ABS 0 bank0 -
 __Hbank1 0 0 ABS 0 bank1 -
 __Hbank2 0 0 ABS 0 bank2 -
@@ -741,7 +745,7 @@ __Hbank30 0 0 BANK30 1 bank30 -
 __Hbank31 0 0 BANK31 1 bank31 -
 __Hbigram 0 0 ABS 0 bigram -
 __Hmaintext 0 0 ABS 0 maintext -
-main@F14381 C0 0 BANK1 1 bssBANK1 dist/default/production\MPPT_Charger.X.production.obj
+main@F14383 C0 0 BANK1 1 bssBANK1 dist/default/production\MPPT_Charger.X.production.obj
 __size_of_PWM6_LoadDutyValue 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __Hcommon 0 0 ABS 0 common -
 __Hconfig 10018 0 CONFIG 0 config -
@@ -781,7 +785,7 @@ __Lsfr29 0 0 ABS 0 sfr29 -
 __Lsfr30 0 0 ABS 0 sfr30 -
 __Lsfr31 0 0 ABS 0 sfr31 -
 __Lstack 0 0 STACK 2 stack -
-init_ram 156 0 CODE 0 inittext dist/default/production\MPPT_Charger.X.production.obj
+init_ram 126 0 CODE 0 inittext dist/default/production\MPPT_Charger.X.production.obj
 __Linittext 0 0 ABS 0 inittext -
 __Habs1 0 0 ABS 0 abs1 -
 __Hcode 0 0 ABS 0 code -
@@ -813,47 +817,48 @@ __Lsfr9 0 0 ABS 0 sfr9 -
 __Ltext 0 0 ABS 0 text -
 __pstringtext1 1000 0 STRCODE 0 stringtext1 dist/default/production\MPPT_Charger.X.production.obj
 ?_ADCRead 70 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
-___wmul 26E 0 CODE 0 text19 dist/default/production\MPPT_Charger.X.production.obj
+___wmul 23E 0 CODE 0 text19 dist/default/production\MPPT_Charger.X.production.obj
 __CFG_WDTCWS$WDTCWS_7 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __LcstackBANK0 0 0 ABS 0 cstackBANK0 -
 __HcstackCOMMON 0 0 ABS 0 cstackCOMMON -
 readAnalog@value 7B 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 _GIE 5F 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __S0 800C 0 ABS 0 - -
-__S1 E5 0 ABS 0 - -
+__S1 EB 0 ABS 0 - -
 __S2 0 0 ABS 0 - -
 __S3 0 0 ABS 0 - -
-__end_of_readAnalog B3A 0 CODE 0 text1 dist/default/production\MPPT_Charger.X.production.obj
-_SYSTEM_Initialize 3D0 0 CODE 0 text4 dist/default/production\MPPT_Charger.X.production.obj
+_button 6B 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_readAnalog B0A 0 CODE 0 text1 dist/default/production\MPPT_Charger.X.production.obj
+_SYSTEM_Initialize 3A0 0 CODE 0 text4 dist/default/production\MPPT_Charger.X.production.obj
 __CFG_BOREN$ON 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-_gotoXY 1C6 0 CODE 0 text11 dist/default/production\MPPT_Charger.X.production.obj
+_gotoXY 196 0 CODE 0 text11 dist/default/production\MPPT_Charger.X.production.obj
 __Lintentry 4 0 CODE 0 intentry -
-reset_vec 0 0 CODE 0 reset_vec C:\Users\DAVE\AppData\Local\Temp\s13c.obj
+reset_vec 0 0 CODE 0 reset_vec C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
 _CCPTMRS1bits 21F 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-__pdataBANK1 D5 0 BANK1 1 dataBANK1 dist/default/production\MPPT_Charger.X.production.obj
+__pdataBANK1 DB 0 BANK1 1 dataBANK1 dist/default/production\MPPT_Charger.X.production.obj
 __size_of___wmul 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __LbssBANK0 0 0 ABS 0 bssBANK0 -
 __LbssBANK1 0 0 ABS 0 bssBANK1 -
 __CFG_FCMEN$ON 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __Lstringtext1 0 0 ABS 0 stringtext1 -
-_ADC_Initialize 2A4 0 CODE 0 text12 dist/default/production\MPPT_Charger.X.production.obj
+_ADC_Initialize 274 0 CODE 0 text12 dist/default/production\MPPT_Charger.X.production.obj
 _PIE0bits 716 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-__ptext10 32C 0 CODE 0 text10 dist/default/production\MPPT_Charger.X.production.obj
-__ptext11 1C6 0 CODE 0 text11 dist/default/production\MPPT_Charger.X.production.obj
-__ptext12 2A4 0 CODE 0 text12 dist/default/production\MPPT_Charger.X.production.obj
-__ptext13 242 0 CODE 0 text13 dist/default/production\MPPT_Charger.X.production.obj
-__ptext14 216 0 CODE 0 text14 dist/default/production\MPPT_Charger.X.production.obj
-__ptext15 758 0 CODE 0 text15 dist/default/production\MPPT_Charger.X.production.obj
-__ptext16 378 0 CODE 0 text16 dist/default/production\MPPT_Charger.X.production.obj
-__ptext17 50A 0 CODE 0 text17 dist/default/production\MPPT_Charger.X.production.obj
-__ptext18 5AC 0 CODE 0 text18 dist/default/production\MPPT_Charger.X.production.obj
-__ptext19 26E 0 CODE 0 text19 dist/default/production\MPPT_Charger.X.production.obj
-__ptext20 2E2 0 CODE 0 text20 dist/default/production\MPPT_Charger.X.production.obj
-__end_of_PIN_MANAGER_Initialize 494 0 CODE 0 text7 dist/default/production\MPPT_Charger.X.production.obj
-___aldiv 654 0 CODE 0 text2 dist/default/production\MPPT_Charger.X.production.obj
-___awdiv 50A 0 CODE 0 text17 dist/default/production\MPPT_Charger.X.production.obj
-__end_of_PWM7_LoadDutyValue 26E 0 CODE 0 text13 dist/default/production\MPPT_Charger.X.production.obj
-___lwmod 378 0 CODE 0 text16 dist/default/production\MPPT_Charger.X.production.obj
+__ptext10 2FC 0 CODE 0 text10 dist/default/production\MPPT_Charger.X.production.obj
+__ptext11 196 0 CODE 0 text11 dist/default/production\MPPT_Charger.X.production.obj
+__ptext12 274 0 CODE 0 text12 dist/default/production\MPPT_Charger.X.production.obj
+__ptext13 212 0 CODE 0 text13 dist/default/production\MPPT_Charger.X.production.obj
+__ptext14 1E6 0 CODE 0 text14 dist/default/production\MPPT_Charger.X.production.obj
+__ptext15 728 0 CODE 0 text15 dist/default/production\MPPT_Charger.X.production.obj
+__ptext16 348 0 CODE 0 text16 dist/default/production\MPPT_Charger.X.production.obj
+__ptext17 4DA 0 CODE 0 text17 dist/default/production\MPPT_Charger.X.production.obj
+__ptext18 57C 0 CODE 0 text18 dist/default/production\MPPT_Charger.X.production.obj
+__ptext19 23E 0 CODE 0 text19 dist/default/production\MPPT_Charger.X.production.obj
+__ptext20 2B2 0 CODE 0 text20 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_PIN_MANAGER_Initialize 464 0 CODE 0 text7 dist/default/production\MPPT_Charger.X.production.obj
+___aldiv 624 0 CODE 0 text2 dist/default/production\MPPT_Charger.X.production.obj
+___awdiv 4DA 0 CODE 0 text17 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_PWM7_LoadDutyValue 23E 0 CODE 0 text13 dist/default/production\MPPT_Charger.X.production.obj
+___lwmod 348 0 CODE 0 text16 dist/default/production\MPPT_Charger.X.production.obj
 LCDWriteInt@sign 24 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
 __Lbank10 0 0 ABS 0 bank10 -
 __Lbank11 0 0 ABS 0 bank11 -
@@ -877,7 +882,7 @@ __Lbank28 0 0 BANK28 1 bank28 -
 __Lbank29 0 0 BANK29 1 bank29 -
 __Lbank30 0 0 BANK30 1 bank30 -
 __Lbank31 0 0 BANK31 1 bank31 -
-__pmaintext B3A 0 CODE 0 maintext dist/default/production\MPPT_Charger.X.production.obj
+__pmaintext B0A 0 CODE 0 maintext dist/default/production\MPPT_Charger.X.production.obj
 __Lbigram 0 0 ABS 0 bigram -
 __CFG_BORV$LO 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __Lcommon 0 0 ABS 0 common -
@@ -885,28 +890,28 @@ __Lconfig 1000E 0 CONFIG 0 config -
 __CFG_CP$OFF 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __CFG_WDTE$OFF 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __Hinittext 0 0 ABS 0 inittext -
-_LCDInit 494 0 CODE 0 text9 dist/default/production\MPPT_Charger.X.production.obj
+_LCDInit 464 0 CODE 0 text9 dist/default/production\MPPT_Charger.X.production.obj
 ___wmul@multiplier 70 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 _LATAbits 16 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _samples 22B0 0 ABS 1 - dist/default/production\MPPT_Charger.X.production.obj
 __size_of_gotoXY 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 main@VIn0_Old 42 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
 main@VIn1_Old 44 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
-_LCDWriteInt 758 0 CODE 0 text15 dist/default/production\MPPT_Charger.X.production.obj
+_LCDWriteInt 728 0 CODE 0 text15 dist/default/production\MPPT_Charger.X.production.obj
 main@power1OutOld 3E 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
 _totals A0 0 BANK1 1 bssBANK1 dist/default/production\MPPT_Charger.X.production.obj
 _battery_state 7D 0 COMMON 1 bssCOMMON dist/default/production\MPPT_Charger.X.production.obj
-stackhi 22AF 0 ABS 0 - C:\Users\DAVE\AppData\Local\Temp\s13c.obj
-stacklo 2095 0 ABS 0 - C:\Users\DAVE\AppData\Local\Temp\s13c.obj
-_state_counter 69 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+stackhi 22AF 0 ABS 0 - C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
+stacklo 209B 0 ABS 0 - C:\Users\DAVE\AppData\Local\Temp\s3ns.obj
+_state_counter D9 0 BANK1 1 bssBANK1 dist/default/production\MPPT_Charger.X.production.obj
 _OSCCON1 88D 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _OSCCON3 88F 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _OSCTUNE 892 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _ADCON0bits 93 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 main@analogs 48 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
-_warmup 61 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+_warmup D5 0 BANK1 1 bssBANK1 dist/default/production\MPPT_Charger.X.production.obj
 __pbssBIGRAM 22B0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-_PWM7_LoadDutyValue 242 0 CODE 0 text13 dist/default/production\MPPT_Charger.X.production.obj
+_PWM7_LoadDutyValue 212 0 CODE 0 text13 dist/default/production\MPPT_Charger.X.production.obj
 __Lspace_0 0 0 ABS 0 - -
 __Lspace_1 0 0 ABS 0 - -
 __Lspace_2 0 0 ABS 0 - -
@@ -915,14 +920,14 @@ ADCRead@channel 73 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.
 __pbssCOMMON 7D 0 COMMON 1 bssCOMMON dist/default/production\MPPT_Charger.X.production.obj
 __CFG_LPBOREN$OFF 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 main@fastLoop 40 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
-__end_of_ADC_Initialize 2E2 0 CODE 0 text12 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_ADC_Initialize 2B2 0 CODE 0 text12 dist/default/production\MPPT_Charger.X.production.obj
 __HcstackBANK0 0 0 ABS 0 cstackBANK0 -
 _PIR4bits 710 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __Lend_init 4 0 CODE 0 end_init -
 __CFG_LVP$ON 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __CFG_CSWEN$ON 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __LcstackCOMMON 0 0 ABS 0 cstackCOMMON -
-_channels D5 0 BANK1 1 dataBANK1 dist/default/production\MPPT_Charger.X.production.obj
+_channels DB 0 BANK1 1 dataBANK1 dist/default/production\MPPT_Charger.X.production.obj
 __CFG_ZCD$OFF 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 end_of_initialization FFA 0 CODE 0 cinit dist/default/production\MPPT_Charger.X.production.obj
 __Hintentry 4 0 CODE 0 intentry -
@@ -940,15 +945,15 @@ __Hreset_vec 4 0 CODE 0 reset_vec -
 __HbssBANK0 0 0 ABS 0 bssBANK0 -
 __HbssBANK1 0 0 ABS 0 bssBANK1 -
 LCDWriteCharacter@character 79 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
-__ptext1 8CA 0 CODE 0 text1 dist/default/production\MPPT_Charger.X.production.obj
-__ptext2 654 0 CODE 0 text2 dist/default/production\MPPT_Charger.X.production.obj
-__ptext3 18A 0 CODE 0 text3 dist/default/production\MPPT_Charger.X.production.obj
-__ptext4 3D0 0 CODE 0 text4 dist/default/production\MPPT_Charger.X.production.obj
-__ptext5 16E 0 CODE 0 text5 dist/default/production\MPPT_Charger.X.production.obj
-__ptext6 1EC 0 CODE 0 text6 dist/default/production\MPPT_Charger.X.production.obj
-__ptext7 42C 0 CODE 0 text7 dist/default/production\MPPT_Charger.X.production.obj
-__ptext8 12C 0 CODE 0 text8 dist/default/production\MPPT_Charger.X.production.obj
-__ptext9 494 0 CODE 0 text9 dist/default/production\MPPT_Charger.X.production.obj
+__ptext1 89A 0 CODE 0 text1 dist/default/production\MPPT_Charger.X.production.obj
+__ptext2 624 0 CODE 0 text2 dist/default/production\MPPT_Charger.X.production.obj
+__ptext3 15A 0 CODE 0 text3 dist/default/production\MPPT_Charger.X.production.obj
+__ptext4 3A0 0 CODE 0 text4 dist/default/production\MPPT_Charger.X.production.obj
+__ptext5 13E 0 CODE 0 text5 dist/default/production\MPPT_Charger.X.production.obj
+__ptext6 1BC 0 CODE 0 text6 dist/default/production\MPPT_Charger.X.production.obj
+__ptext7 3FC 0 CODE 0 text7 dist/default/production\MPPT_Charger.X.production.obj
+__ptext8 FC 0 CODE 0 text8 dist/default/production\MPPT_Charger.X.production.obj
+__ptext9 464 0 CODE 0 text9 dist/default/production\MPPT_Charger.X.production.obj
 ___aldiv@dividend 74 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 __size_of_ADCRead 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __Lpowerup 0 0 CODE 0 powerup -
@@ -962,14 +967,16 @@ __Lfunctab 0 0 ENTRY 0 functab -
 LCDWriteCharacter@base 7A 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 ?_readAnalog 26 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
 LCDWrite@data_or_command 72 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
-__pidataBANK1 1A6 0 CODE 0 idataBANK1 dist/default/production\MPPT_Charger.X.production.obj
+__pidataBANK1 176 0 CODE 0 idataBANK1 dist/default/production\MPPT_Charger.X.production.obj
 __CFG_SCANE$not_available 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __Lclrtext 0 0 ABS 0 clrtext -
-_PWM_Initialize 1EC 0 CODE 0 text6 dist/default/production\MPPT_Charger.X.production.obj
+_readButtons 5B 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+_PWM_Initialize 1BC 0 CODE 0 text6 dist/default/production\MPPT_Charger.X.production.obj
 LCDWrite@d 73 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 LCDWrite@i 74 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 __pcstackCOMMON 70 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 __Hend_init 8 0 CODE 0 end_init -
+_lastButton 6A 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
 ___aldiv@counter 20 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
 __end_of_main F9C 0 CODE 0 maintext dist/default/production\MPPT_Charger.X.production.obj
 _ADACQ 9D 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
@@ -980,7 +987,7 @@ _ADPCH 9E 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _ADPRE 9C 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _ADREF 9A 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _ADRPT 10D 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-_Imode 6E 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+_Imode 6D 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
 __end_of_fonts 125E 0 STRCODE 0 stringtext1 dist/default/production\MPPT_Charger.X.production.obj
 _OSCEN 891 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _T2CON 28E 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
@@ -992,12 +999,12 @@ _TRISB 12 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 _TRISC 13 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __Hram 0 0 ABS 0 ram -
 __Lram 0 0 ABS 0 ram -
-_cc_cv 6D 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
+_cc_cv 6C 0 BANK0 1 bssBANK0 dist/default/production\MPPT_Charger.X.production.obj
 _fonts 1000 0 STRCODE 0 stringtext1 dist/default/production\MPPT_Charger.X.production.obj
 __CFG_CPD$OFF 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __size_of_PIN_MANAGER_Initialize 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __HdataBANK1 0 0 ABS 0 dataBANK1 -
-__end_of_OSCILLATOR_Initialize 13E 0 CODE 0 text8 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_OSCILLATOR_Initialize 10E 0 CODE 0 text8 dist/default/production\MPPT_Charger.X.production.obj
 __CFG_PPS1WAY$ON 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 __initialization F9C 0 CODE 0 cinit dist/default/production\MPPT_Charger.X.production.obj
 __CFG_PWRTE$OFF 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
@@ -1009,13 +1016,13 @@ __CFG_WRT$OFF 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 ___wmul@product 74 0 COMMON 1 cstackCOMMON dist/default/production\MPPT_Charger.X.production.obj
 __size_of_LCDClear 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
 main@slowLoop 41 0 BANK0 1 cstackBANK0 dist/default/production\MPPT_Charger.X.production.obj
-__end_of_ADCRead 1A6 0 CODE 0 text3 dist/default/production\MPPT_Charger.X.production.obj
-__end_of_PWM6_LoadDutyValue 242 0 CODE 0 text14 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_ADCRead 176 0 CODE 0 text3 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_PWM6_LoadDutyValue 212 0 CODE 0 text14 dist/default/production\MPPT_Charger.X.production.obj
 __size_of_LCDWrite 0 0 ABS 0 - dist/default/production\MPPT_Charger.X.production.obj
-__end_of_LCDWriteCharacter 654 0 CODE 0 text18 dist/default/production\MPPT_Charger.X.production.obj
-__end_of_PWM_Initialize 216 0 CODE 0 text6 dist/default/production\MPPT_Charger.X.production.obj
-_OSCILLATOR_Initialize 12C 0 CODE 0 text8 dist/default/production\MPPT_Charger.X.production.obj
-__end_of_TMR2_Initialize 18A 0 CODE 0 text5 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_LCDWriteCharacter 624 0 CODE 0 text18 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_PWM_Initialize 1E6 0 CODE 0 text6 dist/default/production\MPPT_Charger.X.production.obj
+_OSCILLATOR_Initialize FC 0 CODE 0 text8 dist/default/production\MPPT_Charger.X.production.obj
+__end_of_TMR2_Initialize 15A 0 CODE 0 text5 dist/default/production\MPPT_Charger.X.production.obj
 # %SPLITSTAB Section
 # This section enumerates all the psect splits performed by the assembler.
 # The beginning of the section is indicated by %SPLITSTAB.
@@ -1048,33 +1055,33 @@ _samples 1 22B0 0
 # All other numeric quantities are in decimal.
 %SEGMENTS
 cinit 0 7CE F9C 32 2
-text1 0 465 8CA 138 2
-text2 0 32A 654 82 2
-text3 0 C5 18A E 2
-text4 0 1E8 3D0 2E 2
-text5 0 B7 16E E 2
-text6 0 F6 1EC 15 2
-text7 0 216 42C 34 2
-text8 0 96 12C 9 2
-text9 0 24A 494 3B 2
-text10 0 196 32C 26 2
-text11 0 E3 1C6 13 2
-text12 0 152 2A4 1F 2
-text13 0 121 242 16 2
-text14 0 10B 216 16 2
-text15 0 3AC 758 B9 2
-text16 0 1BC 378 2C 2
-text17 0 285 50A 51 2
-text18 0 2D6 5AC 54 2
-text19 0 137 26E 1B 2
-text20 0 171 2E2 25 2
-maintext 0 59D B3A 231 2
+text1 0 44D 89A 138 2
+text2 0 312 624 82 2
+text3 0 AD 15A E 2
+text4 0 1D0 3A0 2E 2
+text5 0 9F 13E E 2
+text6 0 DE 1BC 15 2
+text7 0 1FE 3FC 34 2
+text8 0 7E FC 9 2
+text9 0 232 464 3B 2
+text10 0 17E 2FC 26 2
+text11 0 CB 196 13 2
+text12 0 13A 274 1F 2
+text13 0 109 212 16 2
+text14 0 F3 1E6 16 2
+text15 0 394 728 B9 2
+text16 0 1A4 348 2C 2
+text17 0 26D 4DA 51 2
+text18 0 2BE 57C 54 2
+text19 0 11F 23E 1B 2
+text20 0 159 2B2 25 2
+maintext 0 585 B0A 249 2
 cstackCOMMON 1 70 70 E 1
-cstackBANK0 1 20 20 50 1
-inittext 0 AB 156 C 2
+cstackBANK0 1 20 20 4F 1
+inittext 0 93 126 C 2
 stringtext1 0 800 1000 12F 2
 reset_vec 0 0 0 4 2
-bssBANK1 1 A0 A0 45 1
-idataBANK1 0 D3 1A6 10 2
-clrtext 0 9F 13E C 2
+bssBANK1 1 A0 A0 4B 1
+idataBANK1 0 BB 176 10 2
+clrtext 0 87 10E C 2
 config 0 8007 1000E 5 2

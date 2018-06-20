@@ -17516,6 +17516,9 @@ void Battery_State_Machine(void);
 void cc_cv_mode();
 void pid(uint16_t feedback, uint16_t setpoint);
 
+# 12 "buttons.h"
+char readButton(void);
+
 # 19 "lcd.h"
 void gotoXY(uint8_t x, uint8_t y);
 
@@ -17554,7 +17557,7 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
-# 17 "system.h"
+# 18 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -17676,6 +17679,7 @@ if(slowLoop>1)
 # 179
 { gotoXY(0,1); LCDWriteInt(analogs[7],4, 0, 0);};
 { gotoXY(20,1); LCDWriteInt(analogs[6],4, 0, 0);};
+{ gotoXY(40,1); LCDWriteInt(ADCRead(11),5, 0, 0);};
 { gotoXY(0,2); LCDWriteInt(analogs[5],4, 0, 0);};
 { gotoXY(20,2); LCDWriteInt(analogs[4],4, 0, 0);};
 { gotoXY(40,2); LCDWriteInt(Vref,4, 0, 0);};
@@ -17686,7 +17690,7 @@ if(slowLoop>1)
 { gotoXY(0,5); LCDWriteInt(dutyCycle6,5, 0, 0);};
 { gotoXY(24,5); LCDWriteInt(dutyCycle7,5, 0, 0);};
 
-# 195
+# 196
 slowLoop=0;
 }
 }
