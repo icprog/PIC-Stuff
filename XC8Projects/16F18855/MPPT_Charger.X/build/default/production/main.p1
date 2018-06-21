@@ -13601,6 +13601,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 187: LCDClear();
 "187
 [e ( _LCDClear ..  ]
+[; ;main.c: 201: { gotoXY(0,0); LCDWriteInt(analogs[0],4, 0, 0);};
+"201
+{
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCDWriteInt (4 , , , *U + &U _analogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
+}
 [; ;main.c: 202: { gotoXY(0,1); LCDWriteInt(voltage[0],4, 2, 0);};
 "202
 {

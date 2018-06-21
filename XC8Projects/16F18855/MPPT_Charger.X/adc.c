@@ -63,7 +63,7 @@ int16_t readAnalog(uint16_t channel)
 int16_t calculateVoltage(uint8_t j)
 {
     float voltage;
-    voltage=analogs[j]/.247;
+    voltage=analogs[j]/.20885;
     
     return (int16_t)voltage;
 }
