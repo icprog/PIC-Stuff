@@ -16,7 +16,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _readButton `(uc ~T0 @X0 0 ef ]
 "38 lcd.h
 [v _LCDInit `(v ~T0 @X0 0 ef ]
-"19
+"64 battery_charger.h
+[v _Battery_State_Machine `(v ~T0 @X0 0 ef ]
+"19 lcd.h
 [v _gotoXY `(v ~T0 @X0 0 ef2`uc`uc ]
 "36
 [v _LCDWriteInt `(v ~T0 @X0 0 ef4`i`c`uc`uc ]
@@ -13601,6 +13603,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 187: LCDClear();
 "187
 [e ( _LCDClear ..  ]
+[; ;main.c: 188: Battery_State_Machine();
+"188
+[e ( _Battery_State_Machine ..  ]
 [; ;main.c: 201: { gotoXY(0,0); LCDWriteInt(analogs[0],4, 0, 0);};
 "201
 {
