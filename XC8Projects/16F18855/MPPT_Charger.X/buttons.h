@@ -9,6 +9,6 @@
 #define     Up      3
 
 
-char readButton(void);
+uint8_t readButton(void);
 
 #endif

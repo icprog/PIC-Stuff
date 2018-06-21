@@ -17429,7 +17429,9 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
 
-# 12 "adc.h"
+# 11 "adc.h"
+extern int16_t analogs[8];
+
 typedef enum
 {
 POT = 0x4,
@@ -17443,9 +17445,11 @@ int16_t readAnalog(uint16_t channel);
 
 int16_t ADCRead(adcc_channel_t channel);
 
+int16_t calculateVoltage(uint8_t j);
+
 void ADC_Initialize(void);
 
-# 31
+# 34
 bool ADCC_IsConversionDone();
 
 int16_t ADCC_GetConversionResult(void);
@@ -17472,37 +17476,37 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 79
+# 82
 uint16_t ADCC_GetPreviousResult(void);
 
-# 103
+# 106
 void ADCC_DefineSetPoint(uint16_t);
 
-# 128
+# 131
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 153
+# 156
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 176
+# 179
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 198
+# 201
 void ADCC_EnableDoubleSampling(void);
 
-# 220
+# 223
 void ADCC_EnableContinuousConversion(void);
 
-# 242
+# 245
 void ADCC_DisableContinuousConversion(void);
 
-# 264
+# 267
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 286
+# 289
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 308
+# 311
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 36 "battery_charger.h"
@@ -17517,7 +17521,7 @@ void cc_cv_mode();
 void pid(uint16_t feedback, uint16_t setpoint);
 
 # 12 "buttons.h"
-char readButton(void);
+uint8_t readButton(void);
 
 # 19 "lcd.h"
 void gotoXY(uint8_t x, uint8_t y);
@@ -17562,7 +17566,10 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 43 "main.c"
+# 48 "main.c"
+int16_t analogs[8] = {0,0,0,0,0,0,0,0};
+
+# 56
 void main(void)
 {
 int16_t VIn0_Old = 0;
@@ -17573,30 +17580,35 @@ int16_t power1OutOld = 0;
 uint16_t dutyCycle6 = 126;
 uint16_t dutyCycle7 = 126;
 
+int16_t voltage[4] = {0};
+
 uint8_t j = 0;
-int16_t analogs[8] = {0,0,0,0,0,0,0,0};
+
 uint8_t fastLoop = 0;
 uint8_t slowLoop = 200;
 extern int8_t Imode;
 extern uint16_t Vref;
+uint8_t menuButton = 0;
 
 
 SYSTEM_Initialize();
 
 LCDClear();
 
-# 76
+# 92
 while (1)
 {
 for(j=0;j<8;j++) analogs[j]=readAnalog(j);
 
-if(fastLoop>100)
+for(j=0;j<4;j++) voltage[j]=calculateVoltage(j);
+
+if(fastLoop>10)
 {
 if(Imode)
 {
-if(analogs[5]*analogs[4]>power0OutOld)
+if(voltage[1]*analogs[5]>power0OutOld)
 {
-if(analogs[7]>VIn0_Old)
+if(voltage[0]>VIn0_Old)
 {
 dutyCycle6+=1;
 }
@@ -17607,7 +17619,7 @@ dutyCycle6-=1;
 }
 else
 {
-if(analogs[7]>VIn0_Old)
+if(voltage[0]>VIn0_Old)
 {
 dutyCycle6-=1;
 }
@@ -17616,13 +17628,13 @@ else
 dutyCycle6+=1;
 }
 }
-power0OutOld=analogs[5]*analogs[4];
-VIn0_Old=analogs[7];
+power0OutOld=voltage[1]*analogs[5];
+VIn0_Old=voltage[0];
 
 
-if(analogs[1]*analogs[0]>power1OutOld)
+if(voltage[3]*analogs[7]>power1OutOld)
 {
-if(analogs[3]>VIn1_Old)
+if(voltage[2]>VIn1_Old)
 {
 dutyCycle7+=1;
 }
@@ -17633,7 +17645,7 @@ dutyCycle7-=1;
 }
 else
 {
-if(analogs[3]>VIn1_Old)
+if(voltage[2]>VIn1_Old)
 {
 dutyCycle7-=1;
 }
@@ -17642,13 +17654,13 @@ else
 dutyCycle7+=1;
 }
 }
-power1OutOld=analogs[1]*analogs[0];
-VIn1_Old=analogs[3];
+power1OutOld=voltage[3]*analogs[7];
+VIn1_Old=voltage[2];
 
 }
 else
 {
-if(analogs[5]>(int16_t)Vref)
+if(voltage[1]>(int16_t)Vref)
 {
 
 }
@@ -17657,40 +17669,54 @@ else
 
 }
 
-if(analogs[1]>(int16_t)Vref)
+if(voltage[3]>(int16_t)Vref)
 {
 if(dutyCycle7>0) dutyCycle7-=1;;
 }
 else
 {
-if(dutyCycle7<255) dutyCycle7+=1;
+if(dutyCycle7<252) dutyCycle7+=1;
 }
 }
 fastLoop=0;
 slowLoop+=1;
 PWM6_LoadDutyValue(dutyCycle6);
 PWM7_LoadDutyValue(dutyCycle7);
+menuButton = readButton();
+if(menuButton == 3) if(dutyCycle6<252) dutyCycle6+=1;
+if(menuButton == 2) if(dutyCycle6>0) dutyCycle6-=1;;
+if(menuButton == 1)LCDInit();
 }
 fastLoop+=1;
 
-if(slowLoop>1)
+if(slowLoop>10)
 {
+LCDClear();
 
-# 179
-{ gotoXY(0,1); LCDWriteInt(analogs[7],4, 0, 0);};
-{ gotoXY(20,1); LCDWriteInt(analogs[6],4, 0, 0);};
-{ gotoXY(40,1); LCDWriteInt(ADCRead(11),5, 0, 0);};
-{ gotoXY(0,2); LCDWriteInt(analogs[5],4, 0, 0);};
-{ gotoXY(20,2); LCDWriteInt(analogs[4],4, 0, 0);};
-{ gotoXY(40,2); LCDWriteInt(Vref,4, 0, 0);};
-{ gotoXY(0,3); LCDWriteInt(analogs[3],4, 0, 0);};
-{ gotoXY(20,3); LCDWriteInt(analogs[2],4, 0, 0);};
-{ gotoXY(0,4); LCDWriteInt(analogs[1],4, 0, 0);};
-{ gotoXY(20,4); LCDWriteInt(analogs[0],4, 0, 0);};
-{ gotoXY(0,5); LCDWriteInt(dutyCycle6,5, 0, 0);};
-{ gotoXY(24,5); LCDWriteInt(dutyCycle7,5, 0, 0);};
+# 202
+{ gotoXY(0,1); LCDWriteInt(voltage[0],4, 2, 0);};
+LCDWriteCharacter('V');
+{ gotoXY(28,1); LCDWriteInt(analogs[4],4, 0, 0);};
+{ gotoXY(48,1); LCDWriteInt(ADCRead(11),4, 0, 0);};
+{ gotoXY(0,2); LCDWriteInt(voltage[1],4, 2, 0);};
+LCDWriteCharacter('V');
+{ gotoXY(28,2); LCDWriteInt(analogs[5],4, 0, 0);};
+{ gotoXY(48,2); LCDWriteInt(Vref,4, 0, 0);};
+{ gotoXY(0,3); LCDWriteInt(voltage[2],4, 2, 0);};
+LCDWriteCharacter('V');
+{ gotoXY(28,3); LCDWriteInt(analogs[6],4, 0, 0);};
+{ gotoXY(0,4); LCDWriteInt(voltage[3],4, 2, 0);};
+LCDWriteCharacter('V');
+{ gotoXY(28,4); LCDWriteInt(analogs[7],4, 0, 0);};
+{ gotoXY(0,5); LCDWriteInt(dutyCycle6,3, 0, 0);};
+{ gotoXY(24,5); LCDWriteInt(dutyCycle7,3, 0, 0);};
 
-# 196
+{ gotoXY(40,5); LCDWriteInt(RB2,1, 0, 0);};
+
+if(battery_state > FINISHED)
+{
+cc_cv_mode();
+}
 slowLoop=0;
 }
 }

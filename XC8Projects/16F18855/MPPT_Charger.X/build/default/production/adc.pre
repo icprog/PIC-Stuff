@@ -17429,7 +17429,9 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
 
-# 12 "adc.h"
+# 11 "adc.h"
+extern int16_t analogs[8];
+
 typedef enum
 {
 POT = 0x4,
@@ -17443,9 +17445,11 @@ int16_t readAnalog(uint16_t channel);
 
 int16_t ADCRead(adcc_channel_t channel);
 
+int16_t calculateVoltage(uint8_t j);
+
 void ADC_Initialize(void);
 
-# 31
+# 34
 bool ADCC_IsConversionDone();
 
 int16_t ADCC_GetConversionResult(void);
@@ -17472,37 +17476,37 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 79
+# 82
 uint16_t ADCC_GetPreviousResult(void);
 
-# 103
+# 106
 void ADCC_DefineSetPoint(uint16_t);
 
-# 128
+# 131
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 153
+# 156
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 176
+# 179
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 198
+# 201
 void ADCC_EnableDoubleSampling(void);
 
-# 220
+# 223
 void ADCC_EnableContinuousConversion(void);
 
-# 242
+# 245
 void ADCC_DisableContinuousConversion(void);
 
-# 264
+# 267
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 286
+# 289
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 308
+# 311
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 7 "adc.c"
@@ -17512,9 +17516,9 @@ uint16_t sampleIndex = {0};
 
 int32_t totals[8] = {0};
 
-static uint16_t channels[8] = {16, 17, 18, 19, 20, 21, 22, 23};
+static uint16_t channels[8] = {23, 21, 19, 17, 22, 20, 18, 16};
 
-
+# 19
 int16_t ADCRead(adcc_channel_t channel)
 {
 ADPCH = channel;
@@ -17558,6 +17562,14 @@ value = totals[channel]/20;
 return value;
 }
 
+
+int16_t calculateVoltage(uint8_t j)
+{
+float voltage;
+voltage=analogs[j]/.247;
+
+return (int16_t)voltage;
+}
 
 void ADC_Initialize(void)
 {

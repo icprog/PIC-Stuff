@@ -1,9 +1,9 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "11 buttons.c
-[c E14258 4 60 61 62 63 .. ]
-[n E14258 . POT channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
-"23 adc.h
-[v _ADCRead `(i ~T0 @X0 0 ef1`E14258 ]
+[c E14259 4 60 61 62 63 .. ]
+[n E14259 . POT channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
+"24 adc.h
+[v _ADCRead `(i ~T0 @X0 0 ef1`E14259 ]
 [v F14219 `(v ~T0 @X0 1 tf1`ul ]
 "153 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic.h
 [v __delay `JF14219 ~T0 @X0 0 e ]
@@ -13116,48 +13116,50 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
-[; ;adc.h: 12: typedef enum
-[; ;adc.h: 13: {
-[; ;adc.h: 14: POT = 0x4,
-[; ;adc.h: 15: channel_VSS = 0x3C,
-[; ;adc.h: 16: channel_Temp = 0x3D,
-[; ;adc.h: 17: channel_DAC1 = 0x3E,
-[; ;adc.h: 18: channel_FVR = 0x3F
-[; ;adc.h: 19: } adcc_channel_t;
-[; ;adc.h: 21: int16_t readAnalog(uint16_t channel);
-[; ;adc.h: 23: int16_t ADCRead(adcc_channel_t channel);
-[; ;adc.h: 25: void ADC_Initialize(void);
-[; ;adc.h: 31: bool ADCC_IsConversionDone();
-[; ;adc.h: 33: int16_t ADCC_GetConversionResult(void);
-[; ;adc.h: 35: void ADCC_StopConversion(void);
-[; ;adc.h: 37: void ADCC_SetStopOnInterrupt(void);
-[; ;adc.h: 39: void ADCC_DischargeSampleCapacitor(void);
-[; ;adc.h: 41: void ADCC_LoadAcquisitionRegister(uint8_t);
-[; ;adc.h: 43: void ADCC_SetPrechargeTime(uint8_t);
-[; ;adc.h: 45: void ADCC_SetRepeatCount(uint8_t);
-[; ;adc.h: 47: uint8_t ADCC_GetCurrentCountofConversions(void);
-[; ;adc.h: 49: void ADCC_ClearAccumulator(void);
-[; ;adc.h: 51: uint16_t ADCC_GetAccumulatorValue(void);
-[; ;adc.h: 53: bool ADCC_HasAccumulatorOverflowed(void);
-[; ;adc.h: 55: uint16_t ADCC_GetFilterValue(void);
-[; ;adc.h: 79: uint16_t ADCC_GetPreviousResult(void);
-[; ;adc.h: 103: void ADCC_DefineSetPoint(uint16_t);
-[; ;adc.h: 128: void ADCC_SetUpperThreshold(uint16_t);
-[; ;adc.h: 153: void ADCC_SetLowerThreshold(uint16_t);
-[; ;adc.h: 176: uint16_t ADCC_GetErrorCalculation(void);
-[; ;adc.h: 198: void ADCC_EnableDoubleSampling(void);
-[; ;adc.h: 220: void ADCC_EnableContinuousConversion(void);
-[; ;adc.h: 242: void ADCC_DisableContinuousConversion(void);
-[; ;adc.h: 264: bool ADCC_HasErrorCrossedUpperThreshold(void);
-[; ;adc.h: 286: bool ADCC_HasErrorCrossedLowerThreshold(void);
-[; ;adc.h: 308: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;adc.h: 11: extern int16_t analogs[8];
+[; ;adc.h: 13: typedef enum
+[; ;adc.h: 14: {
+[; ;adc.h: 15: POT = 0x4,
+[; ;adc.h: 16: channel_VSS = 0x3C,
+[; ;adc.h: 17: channel_Temp = 0x3D,
+[; ;adc.h: 18: channel_DAC1 = 0x3E,
+[; ;adc.h: 19: channel_FVR = 0x3F
+[; ;adc.h: 20: } adcc_channel_t;
+[; ;adc.h: 22: int16_t readAnalog(uint16_t channel);
+[; ;adc.h: 24: int16_t ADCRead(adcc_channel_t channel);
+[; ;adc.h: 26: int16_t calculateVoltage(uint8_t j);
+[; ;adc.h: 28: void ADC_Initialize(void);
+[; ;adc.h: 34: bool ADCC_IsConversionDone();
+[; ;adc.h: 36: int16_t ADCC_GetConversionResult(void);
+[; ;adc.h: 38: void ADCC_StopConversion(void);
+[; ;adc.h: 40: void ADCC_SetStopOnInterrupt(void);
+[; ;adc.h: 42: void ADCC_DischargeSampleCapacitor(void);
+[; ;adc.h: 44: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adc.h: 46: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adc.h: 48: void ADCC_SetRepeatCount(uint8_t);
+[; ;adc.h: 50: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adc.h: 52: void ADCC_ClearAccumulator(void);
+[; ;adc.h: 54: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adc.h: 56: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adc.h: 58: uint16_t ADCC_GetFilterValue(void);
+[; ;adc.h: 82: uint16_t ADCC_GetPreviousResult(void);
+[; ;adc.h: 106: void ADCC_DefineSetPoint(uint16_t);
+[; ;adc.h: 131: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adc.h: 156: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adc.h: 179: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adc.h: 201: void ADCC_EnableDoubleSampling(void);
+[; ;adc.h: 223: void ADCC_EnableContinuousConversion(void);
+[; ;adc.h: 245: void ADCC_DisableContinuousConversion(void);
+[; ;adc.h: 267: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adc.h: 289: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adc.h: 311: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;battery_charger.h: 36: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 [; ;battery_charger.h: 61: extern uint8_t battery_state;
 [; ;battery_charger.h: 63: void Init_Battery_State_Machine(void);
 [; ;battery_charger.h: 64: void Battery_State_Machine(void);
 [; ;battery_charger.h: 65: void cc_cv_mode();
 [; ;battery_charger.h: 66: void pid(uint16_t feedback, uint16_t setpoint);
-[; ;buttons.h: 12: char readButton(void);
+[; ;buttons.h: 12: uint8_t readButton(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13201,16 +13203,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _readButton `(uc ~T0 @X0 1 ef ]
 "10
 {
-[; ;buttons.c: 9: char readButton(void)
+[; ;buttons.c: 9: uint8_t readButton(void)
 [; ;buttons.c: 10: {
 [e :U _readButton ]
 [f ]
-[; ;buttons.c: 11: readButtons = ADCRead(12);
+[; ;buttons.c: 11: readButtons = ADCRead(11);
 "11
-[e = _readButtons ( _ADCRead (1 -> -> 12 `i `E14258 ]
-[; ;buttons.c: 13: if(readButtons >= 2170 && readButtons < 2690)
+[e = _readButtons ( _ADCRead (1 -> -> 11 `i `E14259 ]
+[; ;buttons.c: 13: if(readButtons >= 375 && readButtons < 390)
 "13
-[e $ ! && >= _readButtons -> 2170 `i < _readButtons -> 2690 `i 1564  ]
+[e $ ! && >= _readButtons -> 375 `i < _readButtons -> 390 `i 1564  ]
 [; ;buttons.c: 14: {
 "14
 {
@@ -13223,8 +13225,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 1565  ]
 "18
 [e :U 1564 ]
-[; ;buttons.c: 18: else if(readButtons >= 2690 && readButtons < 3550)
-[e $ ! && >= _readButtons -> 2690 `i < _readButtons -> 3550 `i 1566  ]
+[; ;buttons.c: 18: else if(readButtons >= 525 && readButtons < 545)
+[e $ ! && >= _readButtons -> 525 `i < _readButtons -> 545 `i 1566  ]
 [; ;buttons.c: 19: {
 "19
 {
@@ -13237,8 +13239,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 1567  ]
 "23
 [e :U 1566 ]
-[; ;buttons.c: 23: else if(readButtons > 3550)
-[e $ ! > _readButtons -> 3550 `i 1568  ]
+[; ;buttons.c: 23: else if(readButtons > 700)
+[e $ ! > _readButtons -> 700 `i 1568  ]
 [; ;buttons.c: 24: {
 "24
 {

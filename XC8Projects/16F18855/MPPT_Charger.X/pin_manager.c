@@ -4,7 +4,7 @@
 
 void PIN_MANAGER_Initialize(void)
 {
-    LATA = 0x00;                    
+    LATA = 0x20;                    // LATA5 Must be turned on to provide power to Current Sensors                  
     LATB = 0x00;                       
     LATC = 0x00;                    
 

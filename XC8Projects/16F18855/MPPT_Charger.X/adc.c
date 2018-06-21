@@ -10,7 +10,10 @@ uint16_t sampleIndex                        =   {0};
 
 int32_t totals[numChannels]                 =   {0};
 
-static uint16_t channels[numChannels]       =   {16, 17, 18, 19, 20, 21, 22, 23};           // List all the Analog channel numbers here, must be same number listed as numChannels
+static uint16_t channels[numChannels]       =   {23, 21, 19, 17, 22, 20, 18, 16};           // List all the Analog channel numbers here, must be same number listed as numChannels
+//static uint16_t channels[numChannels]       =   {16, 17, 18, 19, 20, 21, 22, 23};           // List all the Analog channel numbers here, must be same number listed as numChannels
+
+//int16_t voltage[4]                           =   {0};
 
 // *************** ADC Read Individual Channel ****************************************************************************************************
 int16_t ADCRead(adcc_channel_t channel)
@@ -56,6 +59,14 @@ int16_t readAnalog(uint16_t channel)
     return value;   
 }
 
+// *************** Read Analogs from Analog channel Array ****************************************************************************************
+int16_t calculateVoltage(uint8_t j)
+{
+    float voltage;
+    voltage=analogs[j]/.247;
+    
+    return (int16_t)voltage;
+}
 // *************** ADC Initialization Routine *****************************************************************************************************
 void ADC_Initialize(void)
 {

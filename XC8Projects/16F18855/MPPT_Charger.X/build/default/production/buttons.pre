@@ -17429,7 +17429,9 @@ typedef uint16_t uintptr_t;
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
 
-# 12 "adc.h"
+# 11 "adc.h"
+extern int16_t analogs[8];
+
 typedef enum
 {
 POT = 0x4,
@@ -17443,9 +17445,11 @@ int16_t readAnalog(uint16_t channel);
 
 int16_t ADCRead(adcc_channel_t channel);
 
+int16_t calculateVoltage(uint8_t j);
+
 void ADC_Initialize(void);
 
-# 31
+# 34
 bool ADCC_IsConversionDone();
 
 int16_t ADCC_GetConversionResult(void);
@@ -17472,37 +17476,37 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 79
+# 82
 uint16_t ADCC_GetPreviousResult(void);
 
-# 103
+# 106
 void ADCC_DefineSetPoint(uint16_t);
 
-# 128
+# 131
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 153
+# 156
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 176
+# 179
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 198
+# 201
 void ADCC_EnableDoubleSampling(void);
 
-# 220
+# 223
 void ADCC_EnableContinuousConversion(void);
 
-# 242
+# 245
 void ADCC_DisableContinuousConversion(void);
 
-# 264
+# 267
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 286
+# 289
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 308
+# 311
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 36 "battery_charger.h"
@@ -17517,7 +17521,7 @@ void cc_cv_mode();
 void pid(uint16_t feedback, uint16_t setpoint);
 
 # 12 "buttons.h"
-char readButton(void);
+uint8_t readButton(void);
 
 # 19 "lcd.h"
 void gotoXY(uint8_t x, uint8_t y);
@@ -17568,21 +17572,21 @@ uint8_t button = 0;
 uint8_t lastButton = 0;
 int8_t j = 0;
 
-char readButton(void)
+uint8_t readButton(void)
 {
-readButtons = ADCRead(12);
+readButtons = ADCRead(11);
 
-if(readButtons >= 2170 && readButtons < 2690)
+if(readButtons >= 375 && readButtons < 390)
 {
 button = 1;
 }
 
-else if(readButtons >= 2690 && readButtons < 3550)
+else if(readButtons >= 525 && readButtons < 545)
 {
 button = 2;
 }
 
-else if(readButtons > 3550)
+else if(readButtons > 700)
 {
 button = 3;
 }
