@@ -17600,7 +17600,9 @@ while (1)
 {
 for(j=0;j<8;j++) analogs[j]=readAnalog(j);
 
-for(j=0;j<4;j++) voltage[j]=calculateVoltage(j);
+voltage[0]=analogs[0]/.20885;
+
+voltage[1]=analogs[1]/.666;
 
 if(fastLoop>10)
 {
@@ -17692,17 +17694,16 @@ fastLoop+=1;
 if(slowLoop>10)
 {
 LCDClear();
-Battery_State_Machine();
 
-# 201
-{ gotoXY(0,0); LCDWriteInt(analogs[0],4, 0, 0);};
+# 203
+{ gotoXY(0,0); LCDWriteInt(analogs[1],4, 0, 0);};
 { gotoXY(0,1); LCDWriteInt(voltage[0],4, 2, 0);};
 LCDWriteCharacter('V');
-{ gotoXY(28,1); LCDWriteInt(analogs[4],4, 0, 0);};
+{ gotoXY(28,1); LCDWriteInt(analogs[4]-594,4, 0, 0);};
 { gotoXY(48,1); LCDWriteInt(ADCRead(11),4, 0, 0);};
 { gotoXY(0,2); LCDWriteInt(voltage[1],4, 2, 0);};
 LCDWriteCharacter('V');
-{ gotoXY(28,2); LCDWriteInt(analogs[5],4, 0, 0);};
+{ gotoXY(28,2); LCDWriteInt(analogs[5]-582,4, 0, 0);};
 { gotoXY(48,2); LCDWriteInt(Vref,4, 0, 0);};
 { gotoXY(0,3); LCDWriteInt(voltage[2],4, 2, 0);};
 LCDWriteCharacter('V');

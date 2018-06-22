@@ -93,7 +93,9 @@ void main(void)
     {
         for(j=0;j<8;j++) analogs[j]=readAnalog(j);          // Read analogs
         
-        for(j=0;j<4;j++) voltage[j]=calculateVoltage(j);    // Calculate & Store Voltages
+        voltage[0]=analogs[0]/.20885;                       // Calculate VIn0
+        
+        voltage[1]=analogs[1]/.666;                         // Calculate VOut0
 
         if(fastLoop>10)
         {
@@ -185,7 +187,7 @@ void main(void)
         if(slowLoop>10)
         {
             LCDClear();
-            Battery_State_Machine();
+//            Battery_State_Machine();
 //            LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
   //          LCDWriteIntXY(20,0,ADCRead(22),4,0,0);
     //        LCDWriteIntXY(0,1,ADCRead(21),4,0,0);
@@ -198,14 +200,14 @@ void main(void)
 //            LCDWriteIntXY(0,2,ADCRead(22),4,0,0);
   //          LCDWriteIntXY(20,2,ADCRead(15),4,0,0);
             
-            LCDWriteIntXY(0,0,analogs[0],4,0,0);
+            LCDWriteIntXY(0,0,analogs[1],4,0,0);
             LCDWriteIntXY(0,1,VIn0,4,2,0);
             LCDWriteCharacter('V');
-            LCDWriteIntXY(28,1,IIn0,4,0,0);
+            LCDWriteIntXY(28,1,IIn0-594,4,0,0);
             LCDWriteIntXY(48,1,ADCRead(11),4,0,0);
             LCDWriteIntXY(0,2,VOut0,4,2,0);
             LCDWriteCharacter('V');
-            LCDWriteIntXY(28,2,IOut0,4,0,0);
+            LCDWriteIntXY(28,2,IOut0-582,4,0,0);
             LCDWriteIntXY(48,2,Vref,4,0,0);
             LCDWriteIntXY(0,3,VIn1,4,2,0);
             LCDWriteCharacter('V');
