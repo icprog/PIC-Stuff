@@ -81,9 +81,9 @@ void ADC_Initialize(void)
     ADSTAT = 0x00;  // ADAOV ACC or ADERR not Overflowed; 
 
     FVRCON = 0b11000011;    // FVREN = 1, FVRRDY = 1, Buffer Gain is 4X (4.096V)
-//    ADCLK = 0x3F;   //ADC CLK FOSC/128
+    ADCLK = 0x3F;   //ADC CLK FOSC/128
 //    ADCLK = 0x00;   //ADC CLK FOSC/2
-    ADCLK = 0X09;   // ADC Clock FOSC/20    
+//    ADCLK = 0X09;   // ADC Clock FOSC/20    
 //    FVREN = 1;
     
 //    ADFVR = 0x01;

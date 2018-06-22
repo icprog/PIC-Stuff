@@ -185,7 +185,7 @@ void main(void)
         if(slowLoop>10)
         {
             LCDClear();
-//            Battery_State_Machine();
+            Battery_State_Machine();
 //            LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
   //          LCDWriteIntXY(20,0,ADCRead(22),4,0,0);
     //        LCDWriteIntXY(0,1,ADCRead(21),4,0,0);
