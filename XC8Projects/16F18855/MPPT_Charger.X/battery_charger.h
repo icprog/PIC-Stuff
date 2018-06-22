@@ -1,14 +1,5 @@
 #include "system.h"
 
-//#define		VIN1				RC7 // was RA2
-//#define		IIN1        		RC6 // was RC2
-//#define		VOUT1				RC5 // was RC3
-//#define		IOUT1				RC4 // was RA1
-//#define     VIN2                RC3
-//#define     IIN2                RC2
-//#define     VOUT2               RC1
-//#define     IOUT2               RC0
-
 #define		SET_CURRENT(x)		{ Iref = x; }               // This is where we set Iref
 #define		SET_VOLTAGE(x)		{ Vref = x; }               // This is where Vref gets set
 #define		WARMUP_TIME			64
@@ -25,6 +16,8 @@
 #define		VSENSE              Vout
 #define		ISENSE              Iout
 
+#define 	IMIN_UPDATE			5
+#define		VBAT_DETECTION		1640
 
 #define		STOP_CONVERTER()	{ TRIS_PWM0Out = 1; TRIS_PWM1Out = 1; }   // NCO is Numerically controller oscillator, will now be PWM to Converter?
 //#define		STOP_CONVERTER()	{ increment = 0; set_NCO(); TRIS_CO1 = 1; TRIS_CO2 = 1; }   // NCO is Numerically controller oscillator, will now be PWM to Converter?
@@ -38,13 +31,14 @@
     
     
 
-#define		BATTERY_SLA
+//#define		BATTERY_SLA
+#define     BATTERY_AGM
 //#define		BATTERY_LIFEPO
 //#define		BATTERY_LICO
 
-#ifdef	BATTERY_SLA
-	#include "lead_acid.h"
-	#define 	ISTOP	IFLOAT
+#ifdef	BATTERY_AGM
+	#include "lead_acid_agm.h"
+//	#define 	IFLOAT
 #endif
 
 #ifdef	BATTERY_LIFEPO
@@ -55,8 +49,6 @@
 	#include "LiCo.h"
 #endif
 
-#define 	IMIN_UPDATE			5
-#define		VBAT_DETECTION		1640
 
 extern uint8_t  battery_state;
 

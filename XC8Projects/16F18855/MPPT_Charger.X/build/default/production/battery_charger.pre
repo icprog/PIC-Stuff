@@ -17509,10 +17509,10 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 311
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 36 "battery_charger.h"
+# 29 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 61
+# 53
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
@@ -17566,7 +17566,7 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 61 "battery_charger.h"
+# 53 "battery_charger.h"
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
@@ -17576,7 +17576,7 @@ void pid(uint16_t feedback, uint16_t setpoint);
 
 # 3 "battery_charger.c"
 uint8_t battery_state;
-uint8_t Imin_db;
+uint8_t IminCount;
 uint16_t Iflat_db;
 uint16_t state_counter;
 uint16_t Imin;
@@ -17595,11 +17595,11 @@ void Init_Battery_State_Machine()
 battery_state = PRECHARGE;
 state_counter = 600;
 
-{ Iref = 173; };
-{ Vref = 1474; };
+{ Iref = 1000; };
+{ Vref = 1440; };
 
-Imin = 347;
-Imin_db = 5;
+Imin = 9000;
+IminCount = 5;
 Iflat_db = 600;
 
 { warmup = 64; TRISA6 = 0; TRISA7 = 0; };
@@ -17623,7 +17623,7 @@ battery_state = FAULT;
 else
 {
 battery_state = CHARGE;
-{ Iref = 347; };
+{ Iref = 9000; };
 }
 }
 else if(battery_state == CHARGE)
@@ -17632,39 +17632,44 @@ if((!Imode))
 {
 if(Iout < Imin)
 {
-if(Imin_db) Imin_db--; else
+if(IminCount)
+{
+IminCount--;
+}
+else
 {
 Imin = Iout;
-Imin_db = 5;
+IminCount = 5;
 Iflat_db = 600;
 }
-} else
+}
+else
 {
-Imin_db = 5;
+IminCount = 5;
 if(Iflat_db) Iflat_db--;
 }
 }
 else
 {
-Imin_db = 5;
+IminCount = 5;
 Iflat_db = 600;
-Imin = 347;
+Imin = 9000;
 }
-if(Imin < 35 || !Iflat_db)
+if(Imin < ISTOP || !Iflat_db)
 {
 
 battery_state = FLOAT;
 
 
-{ Vref = 1382; };
+{ Vref = 1340; };
 
-# 92
+# 97
 }
 }
 else if(battery_state == FLOAT)
 {
 
-# 114
+# 119
 } else
 if(battery_state == FAULT)
 {
@@ -17675,27 +17680,9 @@ if(battery_state == FAULT)
 if(battery_state == FINISHED)
 {
 
-if(Vout < 1290 && Vout > 1640)
-{
-battery_state = CHARGE;
+# 149
+battery_state = IDLE;
 
-{ Iref = 347; };
-{ Vref = 1474; };
-
-Imin = 347;
-Imin_db = 5;
-Iflat_db = 600;
-
-{ warmup = 64; TRISA6 = 0; TRISA7 = 0; };
-} else
-{
-{ Vref = 0; };
-{ Iref = 0; };
-{ TRISA6 = 1; TRISA7 = 1; };
-if(Vout < 1640) battery_state = IDLE;
-}
-
-# 146
 }
 }
 

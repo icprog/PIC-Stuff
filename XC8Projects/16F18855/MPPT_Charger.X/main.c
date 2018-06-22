@@ -97,6 +97,10 @@ void main(void)
         
         voltage[1]=analogs[1]/.666;                         // Calculate VOut0
 
+        voltage[2]=analogs[2]/.20885;                       // Calculate VIn1
+        
+        voltage[3]=analogs[3]/.666;                         // Calculate VOut1
+
         if(fastLoop>10)
         {
             if(Imode)
@@ -125,7 +129,6 @@ void main(void)
                 }
                 power0OutOld=power0Out;
                 VIn0_Old=VIn0;
-//                PWM6_LoadDutyValue(PWM0);
                 
                 if(power1Out>power1OutOld)
                 {
@@ -151,26 +154,25 @@ void main(void)
                 }
                 power1OutOld=power1Out;
                 VIn1_Old=VIn1;
-//                PWM7_LoadDutyValue(PWM1);
             }
             else
             {
                 if(VOut0>(int16_t)Vref)
                 {
-//                    if(PWM0>0) PWM0-=1;;
+                    if(PWM0<252) PWM0+=1;
                 }
                 else
                 {
-  //                  if(PWM0<252) PWM0+=1;
+                    if(PWM0>0) PWM0-=1;;
                 }
  
                 if(VOut1>(int16_t)Vref)
                 {
-                    if(PWM1>0) PWM1-=1;;
+                    if(PWM1<252) PWM1+=1;
                 }
                 else
                 {
-                    if(PWM1<252) PWM1+=1;
+                    if(PWM1>0) PWM1-=1;;
                 }
             }
             fastLoop=0;
@@ -178,8 +180,8 @@ void main(void)
             PWM6_LoadDutyValue(PWM0);
             PWM7_LoadDutyValue(PWM1);
             menuButton = readButton();
-            if(menuButton == Up) if(PWM0<252) PWM0+=1;
-            if(menuButton == Down) if(PWM0>0) PWM0-=1;;
+            if(menuButton == Down) if(PWM0<252) PWM0+=1;
+            if(menuButton == Up) if(PWM0>0) PWM0-=1;;
             if(menuButton == Enter)LCDInit();
         }
         fastLoop+=1;

@@ -13194,12 +13194,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 267: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 289: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 311: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 36: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
-[; ;battery_charger.h: 61: extern uint8_t battery_state;
-[; ;battery_charger.h: 63: void Init_Battery_State_Machine(void);
-[; ;battery_charger.h: 64: void Battery_State_Machine(void);
-[; ;battery_charger.h: 65: void cc_cv_mode();
-[; ;battery_charger.h: 66: void pid(uint16_t feedback, uint16_t setpoint);
+[; ;battery_charger.h: 27: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;battery_charger.h: 53: extern uint8_t battery_state;
+[; ;battery_charger.h: 55: void Init_Battery_State_Machine(void);
+[; ;battery_charger.h: 56: void Battery_State_Machine(void);
+[; ;battery_charger.h: 57: void cc_cv_mode();
+[; ;battery_charger.h: 58: void pid(uint16_t feedback, uint16_t setpoint);
 [; ;buttons.h: 12: uint8_t readButton(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
@@ -13263,44 +13263,44 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pin_manager.c: 22: ANSELC = 0xFF;
 "22
 [e = _ANSELC -> -> 255 `i `uc ]
-[; ;pin_manager.c: 42: PIE0bits.IOCIE = 0;
-"42
+[; ;pin_manager.c: 25: PIE0bits.IOCIE = 0;
+"25
 [e = . . _PIE0bits 0 2 -> -> 0 `i `uc ]
-"43
+"26
 [v _state `c ~T0 @X0 1 a ]
-[; ;pin_manager.c: 43: signed char state = GIE;
+[; ;pin_manager.c: 26: int8_t state = GIE;
 [e = _state -> -> _GIE `i `c ]
-[; ;pin_manager.c: 44: GIE = 0;
-"44
+[; ;pin_manager.c: 27: GIE = 0;
+"27
 [e = _GIE -> -> 0 `i `b ]
-[; ;pin_manager.c: 45: PPSLOCK = 0x55;
-"45
+[; ;pin_manager.c: 28: PPSLOCK = 0x55;
+"28
 [e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 46: PPSLOCK = 0xAA;
-"46
+[; ;pin_manager.c: 29: PPSLOCK = 0xAA;
+"29
 [e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 47: PPSLOCKbits.PPSLOCKED = 0x00;
-"47
+[; ;pin_manager.c: 30: PPSLOCKbits.PPSLOCKED = 0x00;
+"30
 [e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
-[; ;pin_manager.c: 49: RA6PPS = 0x000E;
-"49
+[; ;pin_manager.c: 32: RA6PPS = 0x000E;
+"32
 [e = _RA6PPS -> -> 14 `i `uc ]
-[; ;pin_manager.c: 50: RA7PPS = 0x000F;
-"50
+[; ;pin_manager.c: 33: RA7PPS = 0x000F;
+"33
 [e = _RA7PPS -> -> 15 `i `uc ]
-[; ;pin_manager.c: 52: PPSLOCK = 0x55;
-"52
+[; ;pin_manager.c: 35: PPSLOCK = 0x55;
+"35
 [e = _PPSLOCK -> -> 85 `i `uc ]
-[; ;pin_manager.c: 53: PPSLOCK = 0xAA;
-"53
+[; ;pin_manager.c: 36: PPSLOCK = 0xAA;
+"36
 [e = _PPSLOCK -> -> 170 `i `uc ]
-[; ;pin_manager.c: 54: PPSLOCKbits.PPSLOCKED = 0x01;
-"54
+[; ;pin_manager.c: 37: PPSLOCKbits.PPSLOCKED = 0x01;
+"37
 [e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
-[; ;pin_manager.c: 55: GIE = state;
-"55
+[; ;pin_manager.c: 38: GIE = state;
+"38
 [e = _GIE -> _state `b ]
-[; ;pin_manager.c: 56: }
-"56
+[; ;pin_manager.c: 39: }
+"39
 [e :UE 1563 ]
 }

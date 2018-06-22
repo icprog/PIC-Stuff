@@ -21,26 +21,9 @@ void PIN_MANAGER_Initialize(void)
     ANSELB = 0x0B;                  // RB0, 1, and 3 as Analog Input
     ANSELC = 0xFF;                  // Port C as Analog Input
     
-    
-/*    LATA = 0x00;
-    LATB = 0x0;
-    LATC = 0x0;
 
-    WPUA = 0x00;
-    WPUB = 0x00;
-    WPUC = 0x00;
-    WPUE = 0x8;
-
-    TRISA = 0x00;
-    TRISB = 0x00;
-    TRISC = 0x10;
-
-    ANSELA = 0x00;
-    ANSELB = 0x00;
-    ANSELC = 0x00;
-*/    
     PIE0bits.IOCIE = 0;                 // interrupts-on-change are globally disabled
-    signed char state = GIE;
+    int8_t state = GIE;
     GIE = 0;
     PPSLOCK = 0x55;
     PPSLOCK = 0xAA;

@@ -1,7 +1,7 @@
 #include "battery_charger.h"
 
 uint8_t             battery_state;
-uint8_t             Imin_db;
+uint8_t             IminCount;
 uint16_t            Iflat_db;
 uint16_t            state_counter;
 uint16_t            Imin;
@@ -23,11 +23,11 @@ void Init_Battery_State_Machine()
 	battery_state = PRECHARGE;                          // Set to PRECHARGE on a system Reset
 	state_counter = PRECHARGE_TIME;                     // Set counter to PRECHARGE_TIME
 
-	SET_CURRENT(ILIM_PRECHARGE);                        // SET_CURRENT to ILIM_PRECHARGE (ILIM_PRECHARGE is in lead-acid.h)
-	SET_VOLTAGE(CHARGING_VOLTAGE);                      // SET_VOLTAGE to CHARGING_VOLTAGE (CHARGING_VOLTAGE is in lead-acid.h)
+	SET_CURRENT(ILIM_PRECHARGE);                        // SET_CURRENT to ILIM_PRECHARGE (ILIM_PRECHARGE is in lead-acid_agm.h)
+	SET_VOLTAGE(CHARGING_VOLTAGE);                      // SET_VOLTAGE to CHARGING_VOLTAGE (CHARGING_VOLTAGE is in lead-acid_agm.h) SET_VOLTAGE sets Vref value
 
-	Imin = ILIM;                                        // Set Imin to the Maximum Current Limit (found in lead_acid.h)
-	Imin_db = IMIN_UPDATE;
+	Imin = ILIM;                                        // Set Imin to the Maximum Current Limit (found in lead_acid_agm.h)
+	IminCount = IMIN_UPDATE;
 	Iflat_db = IFLAT_COUNT;
 
 	START_CONVERTER();
@@ -60,27 +60,32 @@ void Battery_State_Machine()
 		{
 			if(ISENSE < Imin)
 			{
-				if(Imin_db) Imin_db--; else
+				if(IminCount)
+                {
+                    IminCount--;
+                }
+                else
 				{
 					Imin = ISENSE;
-					Imin_db = IMIN_UPDATE;
+					IminCount = IMIN_UPDATE;
 					Iflat_db = IFLAT_COUNT;
 				}
-			} else
+			}
+            else
 			{
-				Imin_db = IMIN_UPDATE;
+				IminCount = IMIN_UPDATE;
 				if(Iflat_db) Iflat_db--;
 			}
 		}
         else
 		{
-			Imin_db = IMIN_UPDATE;
+			IminCount = IMIN_UPDATE;
 			Iflat_db = IFLAT_COUNT;
 			Imin = ILIM;
 		}
 		if(Imin < ISTOP || !Iflat_db)
 		{
-			#ifdef	BATTERY_SLA
+			#ifdef	BATTERY_AGM
 				battery_state = FLOAT;
 //				state_counter = FLOAT_TIME;
 
@@ -129,7 +134,7 @@ void Battery_State_Machine()
 				SET_VOLTAGE(CHARGING_VOLTAGE);
 
 				Imin = ILIM;
-				Imin_db = IMIN_UPDATE;
+				IminCount = IMIN_UPDATE;
 				Iflat_db = IFLAT_COUNT;
 
 				START_CONVERTER();
