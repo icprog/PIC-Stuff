@@ -1,14 +1,14 @@
 #include <xc.h>
 #include "adc.h"
 
-#define     numSamples                      20                                              // Number of Temperature readings to Average
+#define     numSamples                      50                                              // Number of Temperature readings to Average
 #define     numChannels                     8                                               // Number of Analog channels to read
 
-int16_t samples[numChannels][numSamples]   =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
+int16_t samples[numChannels][numSamples]    =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
 
-uint16_t sampleIndex                        =   {0};
+static uint16_t sampleIndex                 =   {0};
 
-int32_t totals[numChannels]                 =   {0};
+static int32_t totals[numChannels]          =   {0};
 
 static uint16_t channels[numChannels]       =   {23, 21, 19, 17, 22, 20, 18, 16};           // List all the Analog channel numbers here, must be same number listed as numChannels
 //static uint16_t channels[numChannels]       =   {16, 17, 18, 19, 20, 21, 22, 23};           // List all the Analog channel numbers here, must be same number listed as numChannels
@@ -59,14 +59,14 @@ int16_t readAnalog(uint16_t channel)
     return value;   
 }
 
-// *************** Read Analogs from Analog channel Array ****************************************************************************************
+/* // *************** Read Analogs from Analog channel Array ****************************************************************************************
 int16_t calculateVoltage(uint8_t j)
 {
     float voltage;
     voltage=analogs[j]/.20885;
     
     return (int16_t)voltage;
-}
+}*/
 // *************** ADC Initialization Routine *****************************************************************************************************
 void ADC_Initialize(void)
 {

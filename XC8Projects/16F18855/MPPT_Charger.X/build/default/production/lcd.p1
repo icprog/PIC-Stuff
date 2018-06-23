@@ -13136,7 +13136,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 20: } adcc_channel_t;
 [; ;adc.h: 22: int16_t readAnalog(uint16_t channel);
 [; ;adc.h: 24: int16_t ADCRead(adcc_channel_t channel);
-[; ;adc.h: 26: int16_t calculateVoltage(uint8_t j);
 [; ;adc.h: 28: void ADC_Initialize(void);
 [; ;adc.h: 34: bool ADCC_IsConversionDone();
 [; ;adc.h: 36: int16_t ADCC_GetConversionResult(void);
@@ -13162,7 +13161,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 267: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 289: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 311: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 27: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;battery_charger.h: 29: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 [; ;battery_charger.h: 53: extern uint8_t battery_state;
 [; ;battery_charger.h: 55: void Init_Battery_State_Machine(void);
 [; ;battery_charger.h: 56: void Battery_State_Machine(void);
@@ -13868,8 +13867,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `uc ~T0 @X0 1 r4 ]
 "191
 [f ]
-[v F14395 `uc ~T0 @X0 -> 5 `i s ]
-[i F14395
+[v F14393 `uc ~T0 @X0 -> 5 `i s ]
+[i F14393
 :U ..
 "192
 -> -> 0 `i `uc
@@ -13881,7 +13880,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _str `uc ~T0 @X0 -> 5 `i a ]
 [; ;lcd.c: 192: uint8_t str[5]={0,0,0,0,0};
-[e = _str F14395 ]
+[e = _str F14393 ]
 "193
 [v _i `uc ~T0 @X0 1 a ]
 [; ;lcd.c: 193: uint8_t i=4,j=0;

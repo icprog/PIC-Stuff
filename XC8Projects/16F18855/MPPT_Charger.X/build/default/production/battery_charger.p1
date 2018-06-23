@@ -1,71 +1,11 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"20 adc.c
-[c E14259 4 60 61 62 63 .. ]
-[n E14259 . POT channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
-"2568 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
-[v _ADPCH `Vuc ~T0 @X0 0 e@158 ]
-"1863
-[s S86 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S86 . ADGO . ADFM ADCS . ADCONT ADON ]
-"1872
-[s S87 :1 `uc 1 :1 `uc 1 :2 `uc 1 ]
-[n S87 . DONE . ADFRM ]
-"1877
-[s S88 :1 `uc 1 ]
-[n S88 . nDONE ]
-"1880
-[s S89 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S89 . GO . ADFM0 ADFM1 ]
-"1886
-[s S90 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S90 . GO_nDONE . ADFRM0 ADFRM1 ]
-"1862
-[u S85 `S86 1 `S87 1 `S88 1 `S89 1 `S90 1 ]
-[n S85 . . . . . . ]
-"1893
-[v _ADCON0bits `VS85 ~T0 @X0 0 e@147 ]
-"1556
-[v _ADRESH `Vuc ~T0 @X0 0 e@141 ]
-"1536
-[v _ADRESL `Vuc ~T0 @X0 0 e@140 ]
-"1968
-[v _ADCON1 `Vuc ~T0 @X0 0 e@148 ]
-"2007
-[v _ADCON2 `Vuc ~T0 @X0 0 e@149 ]
-"2084
-[v _ADCON3 `Vuc ~T0 @X0 0 e@150 ]
-"2283
-[v _ADACT `Vuc ~T0 @X0 0 e@153 ]
-"2155
-[v _ADSTAT `Vuc ~T0 @X0 0 e@151 ]
-"24044
-[v _FVRCON `Vuc ~T0 @X0 0 e@2316 ]
-"2225
-[v _ADCLK `Vuc ~T0 @X0 0 e@152 ]
-"2335
-[v _ADREF `Vuc ~T0 @X0 0 e@154 ]
-"2376
-[v _ADCAP `Vuc ~T0 @X0 0 e@155 ]
-"2428
-[v _ADPRE `Vuc ~T0 @X0 0 e@156 ]
-"2498
-[v _ADACQ `Vuc ~T0 @X0 0 e@157 ]
-"2696
-[v _ADRPT `Vuc ~T0 @X0 0 e@269 ]
-"2773
-[v _ADLTHL `Vuc ~T0 @X0 0 e@270 ]
-"2843
-[v _ADLTHH `Vuc ~T0 @X0 0 e@271 ]
-"2920
-[v _ADUTHL `Vuc ~T0 @X0 0 e@272 ]
-"2990
-[v _ADUTHH `Vuc ~T0 @X0 0 e@273 ]
-"3067
-[v _ADSTPTL `Vuc ~T0 @X0 0 e@274 ]
-"3137
-[v _ADSTPTH `Vuc ~T0 @X0 0 e@275 ]
-"1857
-[v _ADCON0 `Vuc ~T0 @X0 0 e@147 ]
+"23 battery_charger.c
+[c E14319 0 1 2 3 4 5 .. ]
+[n E14319 charge_states IDLE FAULT FINISHED PRECHARGE CHARGE FLOAT  ]
+"40239 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
+[v _TRISA6 `Vb ~T0 @X0 0 e@142 ]
+"40241
+[v _TRISA7 `Vb ~T0 @X0 0 e@143 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -13210,222 +13150,426 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 267: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 289: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 311: uint8_t ADCC_GetConversionStageStatus(void);
-[v F14320 `i ~T0 @X0 -> 50 `i t ]
-"7 adc.c
-[v _samples `F14320 ~T0 @X0 -> 8 `i e ]
-[i _samples
-:U ..
-:U ..
--> 0 `i
-..
-:U ..
--> 0 `i
-..
-..
-]
-[; ;adc.c: 7: int16_t samples[8][50] = {{0},{0}};
+[; ;battery_charger.h: 29: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;battery_charger.h: 53: extern uint8_t battery_state;
+[; ;battery_charger.h: 55: void Init_Battery_State_Machine(void);
+[; ;battery_charger.h: 56: void Battery_State_Machine(void);
+[; ;battery_charger.h: 57: void cc_cv_mode();
+[; ;battery_charger.h: 58: void pid(uint16_t feedback, uint16_t setpoint);
+[; ;buttons.h: 12: uint8_t readButton(void);
+[; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
+[; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
+[; ;lcd.h: 25: void LCDWriteCharacter(const char character);
+[; ;lcd.h: 29: void LCDWriteString(const char *characters);
+[; ;lcd.h: 32: void LCDClear(void);
+[; ;lcd.h: 36: void LCDWriteInt(int16_t value,int8_t fieldLength, uint8_t numPlaces, uint8_t sign);
+[; ;lcd.h: 38: void LCDInit(void);
+[; ;lcd.h: 41: void LCDWrite(uint8_t data_or_command, uint8_t data);
+[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
+[; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;pwm.h: 7: void PWM_Initialize(void);
+[; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
+[; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
+[; ;system.h: 18: void SYSTEM_Initialize(void);
+[; ;system.h: 20: void OSCILLATOR_Initialize(void);
+[; ;battery_charger.h: 53: extern uint8_t battery_state;
+[; ;battery_charger.h: 55: void Init_Battery_State_Machine(void);
+[; ;battery_charger.h: 56: void Battery_State_Machine(void);
+[; ;battery_charger.h: 57: void cc_cv_mode();
+[; ;battery_charger.h: 58: void pid(uint16_t feedback, uint16_t setpoint);
+"3 battery_charger.c
+[v _battery_state `uc ~T0 @X0 1 e ]
+[; ;battery_charger.c: 3: uint8_t battery_state;
+"4
+[v _IminCount `uc ~T0 @X0 1 e ]
+[; ;battery_charger.c: 4: uint8_t IminCount;
+"5
+[v _Iflat_db `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 5: uint16_t Iflat_db;
+"6
+[v _state_counter `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 6: uint16_t state_counter;
+"7
+[v _Imin `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 7: uint16_t Imin;
+"8
+[v _Iref `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 8: uint16_t Iref;
 "9
-[v _sampleIndex `ui ~T0 @X0 1 s ]
-[i _sampleIndex
--> -> 0 `i `ui
-]
-[; ;adc.c: 9: static uint16_t sampleIndex = {0};
+[v _Vref `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 9: uint16_t Vref;
+"10
+[v _warmup `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 10: uint16_t warmup;
 "11
-[v _totals `l ~T0 @X0 -> 8 `i s ]
-[i _totals
-:U ..
--> -> 0 `i `l
-..
-]
-[; ;adc.c: 11: static int32_t totals[8] = {0};
+[v _Iout `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 11: uint16_t Iout;
+"12
+[v _Vout `ui ~T0 @X0 1 e ]
+[; ;battery_charger.c: 12: uint16_t Vout;
 "13
-[v _channels `ui ~T0 @X0 -> 8 `i s ]
-[i _channels
-:U ..
--> -> 23 `i `ui
--> -> 21 `i `ui
--> -> 19 `i `ui
--> -> 17 `i `ui
--> -> 22 `i `ui
--> -> 20 `i `ui
--> -> 18 `i `ui
--> -> 16 `i `ui
-..
-]
-[; ;adc.c: 13: static uint16_t channels[8] = {23, 21, 19, 17, 22, 20, 18, 16};
-"19
-[v _ADCRead `(i ~T0 @X0 1 ef1`E14259 ]
-"20
-{
-[; ;adc.c: 19: int16_t ADCRead(adcc_channel_t channel)
-[; ;adc.c: 20: {
-[e :U _ADCRead ]
-"19
-[v _channel `E14259 ~T0 @X0 1 r1 ]
-"20
-[f ]
-[; ;adc.c: 21: ADPCH = channel;
+[v _Imode `c ~T0 @X0 1 e ]
+[; ;battery_charger.c: 13: int8_t Imode;
+"15
+[v _cc_cv `uc ~T0 @X0 1 e ]
+[; ;battery_charger.c: 15: uint8_t cc_cv;
 "21
-[e = _ADPCH -> _channel `uc ]
-[; ;adc.c: 23: ADCON0bits.ADON = 1;
-"23
-[e = . . _ADCON0bits 0 6 -> -> 1 `i `uc ]
-[; ;adc.c: 25: ADCON0bits.ADCONT = 0;
-"25
-[e = . . _ADCON0bits 0 5 -> -> 0 `i `uc ]
-[; ;adc.c: 27: ADCON0bits.ADGO = 1;
-"27
-[e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
-[; ;adc.c: 29: while(ADCON0bits.ADGO)
-"29
-[e $U 1564  ]
-[e :U 1565 ]
-[; ;adc.c: 30: {
-"30
+[v _Init_Battery_State_Machine `(v ~T0 @X0 1 ef ]
+"22
 {
-"31
+[; ;battery_charger.c: 21: void Init_Battery_State_Machine()
+[; ;battery_charger.c: 22: {
+[e :U _Init_Battery_State_Machine ]
+[f ]
+[; ;battery_charger.c: 23: battery_state = PRECHARGE;
+"23
+[e = _battery_state -> . `E14319 3 `uc ]
+[; ;battery_charger.c: 24: state_counter = 600;
+"24
+[e = _state_counter -> -> 600 `i `ui ]
+[; ;battery_charger.c: 26: { Iref = 1000; };
+"26
+{
+[e = _Iref -> -> 1000 `i `ui ]
 }
-[e :U 1564 ]
+[; ;battery_charger.c: 27: { Vref = 1440; };
+"27
+{
+[e = _Vref -> -> 1440 `i `ui ]
+}
+[; ;battery_charger.c: 29: Imin = 9000;
 "29
-[e $ != -> . . _ADCON0bits 0 0 `i -> -> -> 0 `i `Vuc `i 1565  ]
-[e :U 1566 ]
-[; ;adc.c: 31: }
-[; ;adc.c: 33: return ((ADRESH<<8)+ADRESL);
+[e = _Imin -> -> 9000 `i `ui ]
+[; ;battery_charger.c: 30: IminCount = 5;
+"30
+[e = _IminCount -> -> 5 `i `uc ]
+[; ;battery_charger.c: 31: Iflat_db = 600;
+"31
+[e = _Iflat_db -> -> 600 `i `ui ]
+[; ;battery_charger.c: 33: { warmup = 64; TRISA6 = 0; TRISA7 = 0; };
 "33
-[e ) + << -> _ADRESH `i -> 8 `i -> _ADRESL `i ]
-[e $UE 1563  ]
-[; ;adc.c: 34: }
+{
+[e = _warmup -> -> 64 `i `ui ]
+[e = _TRISA6 -> -> 0 `i `b ]
+[e = _TRISA7 -> -> 0 `i `b ]
+}
+[; ;battery_charger.c: 34: }
 "34
 [e :UE 1563 ]
 }
+"36
+[v _Battery_State_Machine `(v ~T0 @X0 1 ef ]
 "37
-[v _readAnalog `(i ~T0 @X0 1 ef1`ui ]
-"38
 {
-[; ;adc.c: 37: int16_t readAnalog(uint16_t channel)
-[; ;adc.c: 38: {
-[e :U _readAnalog ]
-"37
-[v _channel `ui ~T0 @X0 1 r1 ]
-"38
+[; ;battery_charger.c: 36: void Battery_State_Machine()
+[; ;battery_charger.c: 37: {
+[e :U _Battery_State_Machine ]
 [f ]
+[; ;battery_charger.c: 38: if(battery_state == PRECHARGE)
+"38
+[e $ ! == -> _battery_state `i -> . `E14319 3 `i 1565  ]
+[; ;battery_charger.c: 39: {
 "39
-[v _value `i ~T0 @X0 1 a ]
-"41
-[v _analog_channel `ui ~T0 @X0 1 a ]
-[; ;adc.c: 39: int16_t value;
-[; ;adc.c: 41: uint16_t analog_channel = channels[channel];
-[e = _analog_channel *U + &U _channels * -> _channel `ux -> -> # *U &U _channels `ui `ux ]
-[; ;adc.c: 43: value = ADCRead(analog_channel);
-"43
-[e = _value ( _ADCRead (1 -> _analog_channel `E14259 ]
-[; ;adc.c: 45: totals[channel] = totals[channel]-samples[channel][sampleIndex];
-"45
-[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux - *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux `ui `ux `l ]
-[; ;adc.c: 47: samples[channel][sampleIndex] = value;
-"47
-[e = *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux `ui `ux _value ]
-[; ;adc.c: 49: totals[channel] = totals[channel]+samples[channel][sampleIndex];
-"49
-[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux + *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux `ui `ux `l ]
-[; ;adc.c: 51: if(channel>=(8-1))
-"51
-[e $ ! >= _channel -> - -> 8 `i -> 1 `i `ui 1568  ]
-[; ;adc.c: 52: {
-"52
 {
-[; ;adc.c: 53: sampleIndex+=1;
-"53
-[e =+ _sampleIndex -> -> 1 `i `ui ]
-[; ;adc.c: 54: if(sampleIndex >= 50)sampleIndex = 0;
-"54
-[e $ ! >= _sampleIndex -> -> 50 `i `ui 1569  ]
-[e = _sampleIndex -> -> 0 `i `ui ]
-[e :U 1569 ]
-"55
+[; ;battery_charger.c: 40: if(Vout < 1075)
+"40
+[e $ ! < _Vout -> -> 1075 `i `ui 1566  ]
+[; ;battery_charger.c: 41: {
+"41
+{
+[; ;battery_charger.c: 42: if(state_counter)
+"42
+[e $ ! != _state_counter -> -> 0 `i `ui 1567  ]
+[; ;battery_charger.c: 43: {
+"43
+{
+[; ;battery_charger.c: 44: state_counter-=1;
+"44
+[e =- _state_counter -> -> 1 `i `ui ]
+"45
+}
+[; ;battery_charger.c: 45: }
+[e $U 1568  ]
+"46
+[e :U 1567 ]
+[; ;battery_charger.c: 46: else
+[; ;battery_charger.c: 47: {
+"47
+{
+[; ;battery_charger.c: 48: battery_state = FAULT;
+"48
+[e = _battery_state -> . `E14319 1 `uc ]
+"49
 }
 [e :U 1568 ]
-[; ;adc.c: 55: }
-[; ;adc.c: 57: value = totals[channel]/50;
-"57
-[e = _value -> / *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> -> 50 `i `l `i ]
-[; ;adc.c: 59: return value;
-"59
-[e ) _value ]
-[e $UE 1567  ]
-[; ;adc.c: 60: }
-"60
-[e :UE 1567 ]
+"50
 }
-"71
-[v _ADC_Initialize `(v ~T0 @X0 1 ef ]
-"72
+[; ;battery_charger.c: 49: }
+[; ;battery_charger.c: 50: }
+[e $U 1569  ]
+"51
+[e :U 1566 ]
+[; ;battery_charger.c: 51: else
+[; ;battery_charger.c: 52: {
+"52
 {
-[; ;adc.c: 71: void ADC_Initialize(void)
-[; ;adc.c: 72: {
-[e :U _ADC_Initialize ]
-[f ]
-[; ;adc.c: 73: ADCON1 = 0x00;
+[; ;battery_charger.c: 53: battery_state = CHARGE;
+"53
+[e = _battery_state -> . `E14319 4 `uc ]
+[; ;battery_charger.c: 54: { Iref = 9000; };
+"54
+{
+[e = _Iref -> -> 9000 `i `ui ]
+}
+"55
+}
+[e :U 1569 ]
+"56
+}
+[; ;battery_charger.c: 55: }
+[; ;battery_charger.c: 56: }
+[e $U 1570  ]
+"57
+[e :U 1565 ]
+[; ;battery_charger.c: 57: else if(battery_state == CHARGE)
+[e $ ! == -> _battery_state `i -> . `E14319 4 `i 1571  ]
+[; ;battery_charger.c: 58: {
+"58
+{
+[; ;battery_charger.c: 59: if((!Imode))
+"59
+[e $ ! ! != -> _Imode `i -> -> -> 0 `i `c `i 1572  ]
+[; ;battery_charger.c: 60: {
+"60
+{
+[; ;battery_charger.c: 61: if(Iout < Imin)
+"61
+[e $ ! < _Iout _Imin 1573  ]
+[; ;battery_charger.c: 62: {
+"62
+{
+[; ;battery_charger.c: 63: if(IminCount)
+"63
+[e $ ! != -> _IminCount `i -> -> -> 0 `i `uc `i 1574  ]
+[; ;battery_charger.c: 64: {
+"64
+{
+[; ;battery_charger.c: 65: IminCount--;
+"65
+[e -- _IminCount -> -> 1 `i `uc ]
+"66
+}
+[; ;battery_charger.c: 66: }
+[e $U 1575  ]
+"67
+[e :U 1574 ]
+[; ;battery_charger.c: 67: else
+[; ;battery_charger.c: 68: {
+"68
+{
+[; ;battery_charger.c: 69: Imin = Iout;
+"69
+[e = _Imin _Iout ]
+[; ;battery_charger.c: 70: IminCount = 5;
+"70
+[e = _IminCount -> -> 5 `i `uc ]
+[; ;battery_charger.c: 71: Iflat_db = 600;
+"71
+[e = _Iflat_db -> -> 600 `i `ui ]
+"72
+}
+[e :U 1575 ]
 "73
-[e = _ADCON1 -> -> 0 `i `uc ]
-[; ;adc.c: 75: ADCON2 = 0x00;
+}
+[; ;battery_charger.c: 72: }
+[; ;battery_charger.c: 73: }
+[e $U 1576  ]
+"74
+[e :U 1573 ]
+[; ;battery_charger.c: 74: else
+[; ;battery_charger.c: 75: {
 "75
-[e = _ADCON2 -> -> 0 `i `uc ]
-[; ;adc.c: 77: ADCON3 = 0x00;
+{
+[; ;battery_charger.c: 76: IminCount = 5;
+"76
+[e = _IminCount -> -> 5 `i `uc ]
+[; ;battery_charger.c: 77: if(Iflat_db) Iflat_db--;
 "77
-[e = _ADCON3 -> -> 0 `i `uc ]
-[; ;adc.c: 79: ADACT = 0x00;
+[e $ ! != _Iflat_db -> -> 0 `i `ui 1577  ]
+[e -- _Iflat_db -> -> 1 `i `ui ]
+[e :U 1577 ]
+"78
+}
+[e :U 1576 ]
 "79
-[e = _ADACT -> -> 0 `i `uc ]
-[; ;adc.c: 81: ADSTAT = 0x00;
+}
+[; ;battery_charger.c: 78: }
+[; ;battery_charger.c: 79: }
+[e $U 1578  ]
+"80
+[e :U 1572 ]
+[; ;battery_charger.c: 80: else
+[; ;battery_charger.c: 81: {
 "81
-[e = _ADSTAT -> -> 0 `i `uc ]
-[; ;adc.c: 83: FVRCON = 0b11000011;
+{
+[; ;battery_charger.c: 82: IminCount = 5;
+"82
+[e = _IminCount -> -> 5 `i `uc ]
+[; ;battery_charger.c: 83: Iflat_db = 600;
 "83
-[e = _FVRCON -> -> 195 `i `uc ]
-[; ;adc.c: 84: ADCLK = 0x3F;
+[e = _Iflat_db -> -> 600 `i `ui ]
+[; ;battery_charger.c: 84: Imin = 9000;
 "84
-[e = _ADCLK -> -> 63 `i `uc ]
-[; ;adc.c: 91: ADREF = 0x03;
-"91
-[e = _ADREF -> -> 3 `i `uc ]
-[; ;adc.c: 94: ADCAP = 0x00;
-"94
-[e = _ADCAP -> -> 0 `i `uc ]
-[; ;adc.c: 97: ADPRE = 0x07;
-"97
-[e = _ADPRE -> -> 7 `i `uc ]
-[; ;adc.c: 99: ADACQ = 0x00;
+[e = _Imin -> -> 9000 `i `ui ]
+"85
+}
+[e :U 1578 ]
+"98
+}
+[; ;battery_charger.c: 85: }
+[; ;battery_charger.c: 98: }
+[e $U 1579  ]
 "99
-[e = _ADACQ -> -> 0 `i `uc ]
-[; ;adc.c: 101: ADPCH = 0x00;
-"101
-[e = _ADPCH -> -> 0 `i `uc ]
-[; ;adc.c: 103: ADRPT = 0x00;
-"103
-[e = _ADRPT -> -> 0 `i `uc ]
-[; ;adc.c: 105: ADLTHL = 0x00;
-"105
-[e = _ADLTHL -> -> 0 `i `uc ]
-[; ;adc.c: 107: ADLTHH = 0x00;
-"107
-[e = _ADLTHH -> -> 0 `i `uc ]
-[; ;adc.c: 109: ADUTHL = 0x00;
-"109
-[e = _ADUTHL -> -> 0 `i `uc ]
-[; ;adc.c: 111: ADUTHH = 0x00;
-"111
-[e = _ADUTHH -> -> 0 `i `uc ]
-[; ;adc.c: 113: ADSTPTL = 0x00;
-"113
-[e = _ADSTPTL -> -> 0 `i `uc ]
-[; ;adc.c: 115: ADSTPTH = 0x00;
-"115
-[e = _ADSTPTH -> -> 0 `i `uc ]
-[; ;adc.c: 117: ADCON0 = 0x84;
-"117
-[e = _ADCON0 -> -> 132 `i `uc ]
-[; ;adc.c: 118: }
-"118
-[e :UE 1570 ]
+[e :U 1571 ]
+[; ;battery_charger.c: 99: else if(battery_state == FLOAT)
+[e $ ! == -> _battery_state `i -> . `E14319 5 `i 1580  ]
+[; ;battery_charger.c: 100: {
+"100
+{
+"119
+}
+[; ;battery_charger.c: 119: } else
+[e $U 1581  ]
+[e :U 1580 ]
+[; ;battery_charger.c: 120: if(battery_state == FAULT)
+"120
+[e $ ! == -> _battery_state `i -> . `E14319 1 `i 1582  ]
+[; ;battery_charger.c: 121: {
+"121
+{
+[; ;battery_charger.c: 122: { Vref = 0; };
+"122
+{
+[e = _Vref -> -> 0 `i `ui ]
+}
+[; ;battery_charger.c: 123: { Iref = 0; };
+"123
+{
+[e = _Iref -> -> 0 `i `ui ]
+}
+[; ;battery_charger.c: 124: { TRISA6 = 1; TRISA7 = 1; };
+"124
+{
+[e = _TRISA6 -> -> 1 `i `b ]
+[e = _TRISA7 -> -> 1 `i `b ]
+}
+"125
+}
+[; ;battery_charger.c: 125: } else
+[e $U 1583  ]
+[e :U 1582 ]
+[; ;battery_charger.c: 126: if(battery_state == FINISHED)
+"126
+[e $ ! == -> _battery_state `i -> . `E14319 2 `i 1584  ]
+[; ;battery_charger.c: 127: {
+"127
+{
+[; ;battery_charger.c: 149: battery_state = IDLE;
+"149
+[e = _battery_state -> . `E14319 0 `uc ]
+"151
+}
+[e :U 1584 ]
+"152
+[e :U 1583 ]
+[e :U 1581 ]
+[e :U 1579 ]
+[e :U 1570 ]
+[; ;battery_charger.c: 151: }
+[; ;battery_charger.c: 152: }
+[e :UE 1564 ]
+}
+"154
+[v _cc_cv_mode `(v ~T0 @X0 1 ef ]
+"155
+{
+[; ;battery_charger.c: 154: void cc_cv_mode()
+[; ;battery_charger.c: 155: {
+[e :U _cc_cv_mode ]
+[f ]
+[; ;battery_charger.c: 156: if(Vout > Vref)
+"156
+[e $ ! > _Vout _Vref 1586  ]
+[; ;battery_charger.c: 157: {
+"157
+{
+[; ;battery_charger.c: 158: if(cc_cv)
+"158
+[e $ ! != -> _cc_cv `i -> -> -> 0 `i `uc `i 1587  ]
+[; ;battery_charger.c: 159: {
+"159
+{
+[; ;battery_charger.c: 160: cc_cv-=1;
+"160
+[e =- _cc_cv -> -> 1 `i `uc ]
+"161
+}
+[; ;battery_charger.c: 161: }
+[e $U 1588  ]
+"162
+[e :U 1587 ]
+[; ;battery_charger.c: 162: else
+[; ;battery_charger.c: 163: {
+"163
+{
+[; ;battery_charger.c: 164: if(Imode)
+"164
+[e $ ! != -> _Imode `i -> -> -> 0 `i `c `i 1589  ]
+[; ;battery_charger.c: 165: {
+"165
+{
+[; ;battery_charger.c: 166: Imode = 0;
+"166
+[e = _Imode -> -> 0 `i `c ]
+"167
+}
+[e :U 1589 ]
+"168
+}
+[e :U 1588 ]
+"169
+}
+[; ;battery_charger.c: 167: }
+[; ;battery_charger.c: 168: }
+[; ;battery_charger.c: 169: }
+[e $U 1590  ]
+"170
+[e :U 1586 ]
+[; ;battery_charger.c: 170: else
+[; ;battery_charger.c: 172: {
+"172
+{
+[; ;battery_charger.c: 173: if(!Imode)
+"173
+[e $ ! ! != -> _Imode `i -> -> -> 0 `i `c `i 1591  ]
+[; ;battery_charger.c: 174: {
+"174
+{
+[; ;battery_charger.c: 175: Imode = 1;
+"175
+[e = _Imode -> -> 1 `i `c ]
+[; ;battery_charger.c: 176: cc_cv = 10;
+"176
+[e = _cc_cv -> -> 10 `i `uc ]
+"177
+}
+[e :U 1591 ]
+"178
+}
+[e :U 1590 ]
+[; ;battery_charger.c: 177: }
+[; ;battery_charger.c: 178: }
+[; ;battery_charger.c: 179: }
+"179
+[e :UE 1585 ]
 }

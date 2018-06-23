@@ -17445,7 +17445,7 @@ int16_t readAnalog(uint16_t channel);
 
 int16_t ADCRead(adcc_channel_t channel);
 
-int16_t calculateVoltage(uint8_t j);
+
 
 void ADC_Initialize(void);
 
@@ -17655,16 +17655,8 @@ IminCount = 5;
 Iflat_db = 600;
 Imin = 9000;
 }
-if(Imin < ISTOP || !Iflat_db)
-{
 
-battery_state = FLOAT;
-
-
-{ Vref = 1340; };
-
-# 97
-}
+# 98
 }
 else if(battery_state == FLOAT)
 {

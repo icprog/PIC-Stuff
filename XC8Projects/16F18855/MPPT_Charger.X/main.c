@@ -9,32 +9,12 @@
 #define VOut1           voltage[3]    
 
 
-#define IIn0            analogs[4]
-#define IOut0           analogs[5]
+#define IIn0            current[0]
+#define IOut0           current[1]
 #define IIn1            analogs[6]
 #define IOut1           analogs[7]
-/*
-#define VIn0            analogs[0]
-#define VOut0           analogs[1]
-#define VIn1            analogs[2]
-#define VOut1           analogs[3]    
-
-
-#define IIn0            analogs[4]
-#define IOut0           analogs[5]
-#define IIn1            analogs[6]
-#define IOut1           analogs[7]
-*/    
-//#define		VIN1				RC7 // was RA2
-//#define		IIN1        		RC6 // was RC2
-//#define		VOUT1				RC5 // was RC3
-//#define		IOUT1				RC4 // was RA1
-//#define     VIN2                RC3
-//#define     IIN2                RC2
-//#define     VOUT2               RC1
-//#define     IOUT2               RC0
     
-#define     Fault       RB2
+#define     Fault       !RB2
 #define     PWM0        dutyCycle6
 #define     PWM1        dutyCycle7
 
@@ -43,8 +23,9 @@
 #define     power1In    VIn1*IIn1
 #define     power1Out   VOut1*IOut1
 
+
+
 // *************** Externally available Variables ******************************    
-//uint16_t samples[2][numSamples] = {0};
 int16_t         analogs[8]      =   {0,0,0,0,0,0,0,0};
 
 // </editor-fold>
@@ -60,10 +41,12 @@ void main(void)
     int16_t         power0OutOld    =   0;
     int16_t         power1OutOld    =   0;
     
-    uint16_t        dutyCycle6      =   126;                    // 126 is midpoint, allow adjusting up or down
+    uint16_t        dutyCycle6      =   172;                    // 126 is midpoint, allow adjusting up or down
+//    uint16_t        dutyCycle6      =   197;                    // 126 is midpoint, allow adjusting up or down
     uint16_t        dutyCycle7      =   126;                    // 126 is midpoint, allow adjusting up or down
     
     int16_t         voltage[4]      =   {0};                    // Store calculated Voltage values
+    int16_t         current[4]      =   {0};                    // Store Calculated Current Values
 
     uint8_t         j               =   0;
 
@@ -72,7 +55,6 @@ void main(void)
     extern int8_t   Imode;
     extern uint16_t Vref;                                       // setpoint for voltage output
     uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
-
     
     SYSTEM_Initialize();
     
@@ -95,11 +77,15 @@ void main(void)
         
         voltage[0]=analogs[0]/.20885;                       // Calculate VIn0
         
-        voltage[1]=analogs[1]/.666;                         // Calculate VOut0
+        voltage[1]=analogs[1]/.54503;                         // Calculate VOut0
 
-        voltage[2]=analogs[2]/.20885;                       // Calculate VIn1
+//        voltage[2]=analogs[2]/.20885;                       // Calculate VIn1
         
-        voltage[3]=analogs[3]/.666;                         // Calculate VOut1
+  //      voltage[3]=analogs[3]/.666;                         // Calculate VOut1
+        
+        current[0]=(analogs[4]-589)/.013165;
+        
+        current[1]=(analogs[5]-578)/.03232;
 
         if(fastLoop>10)
         {
@@ -159,11 +145,11 @@ void main(void)
             {
                 if(VOut0>(int16_t)Vref)
                 {
-                    if(PWM0<252) PWM0+=1;
+//                    if(PWM0<197) PWM0+=1;
                 }
                 else
                 {
-                    if(PWM0>0) PWM0-=1;;
+  //                  if(PWM0>0) PWM0-=1;;
                 }
  
                 if(VOut1>(int16_t)Vref)
@@ -180,7 +166,7 @@ void main(void)
             PWM6_LoadDutyValue(PWM0);
             PWM7_LoadDutyValue(PWM1);
             menuButton = readButton();
-            if(menuButton == Down) if(PWM0<252) PWM0+=1;
+            if(menuButton == Down) if(PWM0<197) PWM0+=1;
             if(menuButton == Up) if(PWM0>0) PWM0-=1;;
             if(menuButton == Enter)LCDInit();
         }
@@ -203,13 +189,15 @@ void main(void)
   //          LCDWriteIntXY(20,2,ADCRead(15),4,0,0);
             
             LCDWriteIntXY(0,0,analogs[1],4,0,0);
+            LCDWriteIntXY(28,0,analogs[4],4,0,0);
+            LCDWriteIntXY(48,0,analogs[5],4,0,0);
             LCDWriteIntXY(0,1,VIn0,4,2,0);
             LCDWriteCharacter('V');
-            LCDWriteIntXY(28,1,IIn0-594,4,0,0);
+            LCDWriteIntXY(28,1,IIn0,4,0,0);
             LCDWriteIntXY(48,1,ADCRead(11),4,0,0);
             LCDWriteIntXY(0,2,VOut0,4,2,0);
             LCDWriteCharacter('V');
-            LCDWriteIntXY(28,2,IOut0-582,4,0,0);
+            LCDWriteIntXY(28,2,IOut0,4,0,0);
             LCDWriteIntXY(48,2,Vref,4,0,0);
             LCDWriteIntXY(0,3,VIn1,4,2,0);
             LCDWriteCharacter('V');

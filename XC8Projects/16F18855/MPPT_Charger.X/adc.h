@@ -23,7 +23,7 @@ int16_t readAnalog(uint16_t channel);
 
 int16_t ADCRead(adcc_channel_t channel);
 
-int16_t calculateVoltage(uint8_t j);
+//int16_t calculateVoltage(uint8_t j);
 
 void ADC_Initialize(void);
 

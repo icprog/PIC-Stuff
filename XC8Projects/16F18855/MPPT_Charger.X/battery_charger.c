@@ -83,18 +83,18 @@ void Battery_State_Machine()
 			Iflat_db = IFLAT_COUNT;
 			Imin = ILIM;
 		}
-		if(Imin < ISTOP || !Iflat_db)
-		{
-			#ifdef	BATTERY_AGM
-				battery_state = FLOAT;
+//		if(Imin < ISTOP || !Iflat_db)
+//		{
+//			#ifdef	BATTERY_AGM
+//				battery_state = FLOAT;
 //				state_counter = FLOAT_TIME;
 
-				SET_VOLTAGE(FLOATING_VOLTAGE);
-			#else
-				battery_state = FINISHED;
-				if(Imin < I_BAT_DETECT) battery_state = IDLE;
-			#endif
-		}
+//				SET_VOLTAGE(FLOATING_VOLTAGE);
+//			#else
+//				battery_state = FINISHED;
+//				if(Imin < I_BAT_DETECT) battery_state = IDLE;
+//			#endif
+//		}
 	} 
     else if(battery_state == FLOAT)
 	{
