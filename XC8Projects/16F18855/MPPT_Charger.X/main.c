@@ -18,8 +18,8 @@
 #define     PWM0        dutyCycle6
 #define     PWM1        dutyCycle7
 
-#define     power0In    VIn0*IIn0
-#define     power0Out   VOut0*IOut0
+#define     power0In    VIn0/100*IIn0/10
+#define     power0Out   VOut0/100*IOut0/10
 #define     power1In    VIn1*IIn1
 #define     power1Out   VOut1*IOut1
 
@@ -27,6 +27,8 @@
 
 // *************** Externally available Variables ******************************    
 int16_t         analogs[8]      =   {0,0,0,0,0,0,0,0};
+extern int16_t  voltage[4];                    // Store calculated Voltage values
+extern int16_t  current[4];                    // Store Calculated Current Values
 
 // </editor-fold>
 
@@ -41,24 +43,24 @@ void main(void)
     int16_t         power0OutOld    =   0;
     int16_t         power1OutOld    =   0;
     
-    uint16_t        dutyCycle6      =   172;                    // 126 is midpoint, allow adjusting up or down
-//    uint16_t        dutyCycle6      =   197;                    // 126 is midpoint, allow adjusting up or down
+    uint16_t        dutyCycle6      =   252;                    // 126 is midpoint, allow adjusting up or down
     uint16_t        dutyCycle7      =   126;                    // 126 is midpoint, allow adjusting up or down
     
-    int16_t         voltage[4]      =   {0};                    // Store calculated Voltage values
-    int16_t         current[4]      =   {0};                    // Store Calculated Current Values
-
     uint8_t         j               =   0;
 
     uint8_t         fastLoop        =   0;
     uint8_t         slowLoop        =   200;
-    extern int8_t   Imode;
-    extern uint16_t Vref;                                       // setpoint for voltage output
+    extern int8_t   Imode0;
+    extern int16_t  Vref;                                       // setpoint for voltage output
     uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
     
     SYSTEM_Initialize();
     
     LCDClear();
+    
+    void calculateCurrent0(void);
+    void calculateCurrent1(void);
+    
     // </editor-fold>
 /*    
 //    volatile unsigned char value = 0x09;
@@ -83,36 +85,57 @@ void main(void)
         
   //      voltage[3]=analogs[3]/.666;                         // Calculate VOut1
         
-        current[0]=(analogs[4]-589)/.013165;
+        calculateCurrent0();
+//        current[0]=(analogs[4]-589)/1.3165;
         
-        current[1]=(analogs[5]-578)/.03232;
+        calculateCurrent1();
+//        current[1]=(analogs[5]-578)/3.232;
 
         if(fastLoop>10)
         {
-            if(Imode)
+            if(Imode0)
             {
-                if(power0Out>power0OutOld)
+                if(VIn0<3164)
                 {
-                    if(VIn0>VIn0_Old)
-                    {
-                        PWM0+=1;
-                    }
-                    else
-                    {
-                        PWM0-=1;
-                    }
-                }
-                else
-                {
-                    if(VIn0>VIn0_Old)
-                    {
-                        PWM0-=1;
-                    }
-                    else
+                    if(PWM0<252)
                     {
                         PWM0+=1;
                     }
                 }
+                else if(PWM0>0)
+                {
+                    PWM0-=1;
+                }
+//                if(power0Out>power0OutOld)
+  //              {
+    //                if(VIn0>VIn0_Old)
+      //              {
+        //                if(PWM0>0) PWM0-=1;;
+//                        if(PWM0<252) PWM0+=1;
+//                        PWM0+=1;
+          //          }
+            //        else
+              //      {
+                //        if(PWM0<252) PWM0+=1;
+  //                      if(PWM0>0) PWM0-=1;;
+//                        PWM0-=1;
+                  //  }
+//                }
+  //              else
+    //            {
+      //              if(VIn0>VIn0_Old)
+        //            {
+          //              if(PWM0<252) PWM0+=1;
+//                        if(PWM0>0) PWM0-=1;;
+//                        PWM0-=1;
+            //        }
+              //      else
+                //    {
+                  //      if(PWM0>0) PWM0-=1;;
+//                        if(PWM0<252) PWM0+=1;
+//                        PWM0+=1;
+                    //}
+                //}
                 power0OutOld=power0Out;
                 VIn0_Old=VIn0;
                 
@@ -145,11 +168,11 @@ void main(void)
             {
                 if(VOut0>(int16_t)Vref)
                 {
-//                    if(PWM0<197) PWM0+=1;
+                    if(PWM0<252) PWM0+=1;
                 }
                 else
                 {
-  //                  if(PWM0>0) PWM0-=1;;
+                    if(PWM0>0) PWM0-=1;;
                 }
  
                 if(VOut1>(int16_t)Vref)
@@ -175,7 +198,7 @@ void main(void)
         if(slowLoop>10)
         {
             LCDClear();
-//            Battery_State_Machine();
+            Battery_State_Machine();
 //            LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
   //          LCDWriteIntXY(20,0,ADCRead(22),4,0,0);
     //        LCDWriteIntXY(0,1,ADCRead(21),4,0,0);
@@ -193,20 +216,26 @@ void main(void)
             LCDWriteIntXY(48,0,analogs[5],4,0,0);
             LCDWriteIntXY(0,1,VIn0,4,2,0);
             LCDWriteCharacter('V');
-            LCDWriteIntXY(28,1,IIn0,4,0,0);
+            LCDWriteIntXY(28,1,IIn0,3,1,0);
             LCDWriteIntXY(48,1,ADCRead(11),4,0,0);
             LCDWriteIntXY(0,2,VOut0,4,2,0);
             LCDWriteCharacter('V');
-            LCDWriteIntXY(28,2,IOut0,4,0,0);
+            LCDWriteIntXY(28,2,IOut0,3,1,0);
             LCDWriteIntXY(48,2,Vref,4,0,0);
-            LCDWriteIntXY(0,3,VIn1,4,2,0);
-            LCDWriteCharacter('V');
-            LCDWriteIntXY(28,3,IIn1,4,0,0);
-            LCDWriteIntXY(0,4,VOut1,4,2,0);
-            LCDWriteCharacter('V');
-            LCDWriteIntXY(28,4,IOut1,4,0,0);
+            
+            LCDWriteIntXY(0,3,power0In,5,0,0);
+ 
+            LCDWriteIntXY(0,4,power0Out,5,0,0);
+            LCDWriteIntXY(28,4,power0OutOld,5,0,0);
+            
+//            LCDWriteIntXY(0,3,VIn1,4,2,0);
+  //          LCDWriteCharacter('V');
+    //        LCDWriteIntXY(28,3,IIn1,4,0,0);
+      //      LCDWriteIntXY(0,4,VOut1,4,2,0);
+        //    LCDWriteCharacter('V');
+          //  LCDWriteIntXY(28,4,IOut1,4,0,0);
             LCDWriteIntXY(0,5,PWM0,3,0,0);
-            LCDWriteIntXY(24,5,PWM1,3,0,0);
+            //LCDWriteIntXY(24,5,PWM1,3,0,0);
             
             LCDWriteIntXY(40,5,Fault,1,0,0);
             
@@ -216,5 +245,29 @@ void main(void)
             }
             slowLoop=0;
         }
+    }
+}
+
+void calculateCurrent0(void)
+{
+    if(analogs[4]-589<=0)
+    {
+        current[0]=0;
+    }
+    else
+    {
+        current[0]=(analogs[4]-589)/1.3165;
+    }
+}
+
+void calculateCurrent1(void)
+{
+    if(analogs[5]-578<=0)
+    {
+        current[1]=0;
+    }
+    else
+    {
+        current[1]=(analogs[5]-578)/3.232;
     }
 }

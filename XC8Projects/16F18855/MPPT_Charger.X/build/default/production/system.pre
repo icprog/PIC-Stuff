@@ -17541,10 +17541,10 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 311
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 29 "battery_charger.h"
+# 30 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 53
+# 54
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
@@ -17608,7 +17608,7 @@ ADC_Initialize();
 PWM_Initialize();
 
 TMR2_Initialize();
-
+Init_Battery_State_Machine();
 LCDInit();
 _delay((unsigned long)((200)*(32000000/4000.0)));
 LCDClear();

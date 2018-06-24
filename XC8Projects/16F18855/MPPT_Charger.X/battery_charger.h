@@ -1,9 +1,10 @@
 #include "system.h"
 
+
 #define		SET_CURRENT(x)		{ Iref = x; }               // This is where we set Iref
 #define		SET_VOLTAGE(x)		{ Vref = x; }               // This is where Vref gets set
 #define		WARMUP_TIME			64
-#define		CONSTANT_VOLTAGE	(!Imode)
+#define		CONSTANT_VOLTAGE0	(!Imode0)
 #define		I_BAT_DETECT		16 
 #define		CURRENT_MODE		10                          // Number of slowLoop cycles Voltage is over Vref before we drop back to "Voltage Mode" from "Current Mode"
 //#define		ERR_MAX				4095
@@ -13,8 +14,8 @@
 //#define		CO2					RA7
 #define		TRIS_PWM0Out        TRISA6
 #define		TRIS_PWM1Out       	TRISA7
-#define		VSENSE              Vout
-#define		ISENSE              Iout
+#define		VSENSE0             voltage[1]                  // VOut0
+#define		ISENSE0             current[1]                  // IOut0
 
 #define 	IMIN_UPDATE			5
 #define		VBAT_DETECTION		1640

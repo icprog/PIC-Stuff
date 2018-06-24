@@ -4,16 +4,18 @@ uint8_t             battery_state;
 uint8_t             IminCount;
 uint16_t            Iflat_db;
 uint16_t            state_counter;
-uint16_t            Imin;
-uint16_t            Iref;                                       // setpoint for current output
-uint16_t            Vref;                                       // setpoint for voltage output
+int16_t             Imin;
+int16_t             Iref;                                       // setpoint for current output
+int16_t             Vref;                                       // setpoint for voltage output
 uint16_t            warmup;
-uint16_t            Iout;
-uint16_t            Vout;
-int8_t              Imode;
-//int16_t     increment;
+int16_t             Iout;
+//uint16_t            Vout;
+int8_t              Imode0          =   1;
 uint8_t             cc_cv;
+uint16_t            count           =   0;
 
+int16_t             voltage[4]      =   {0};                    // Store calculated Voltage values
+int16_t             current[4]      =   {0};                    // Store Calculated Current Values
 
 
 
@@ -37,7 +39,7 @@ void Battery_State_Machine()
 {
 	if(battery_state == PRECHARGE)
 	{
-		if(VSENSE < CUTOFF_VOLTAGE)                     // If Battery Voltage is below CUTOFF_VOLTAGE
+		if(VSENSE0 < CUTOFF_VOLTAGE)                     // If Battery Voltage is below CUTOFF_VOLTAGE
 		{
 			if(state_counter)                           // If state_counter > 0
             {
@@ -56,17 +58,19 @@ void Battery_State_Machine()
 	}
     else if(battery_state == CHARGE)
 	{
-		if(CONSTANT_VOLTAGE)                            // Mode is "Voltage Mode", not "Current Mode"
+		if(CONSTANT_VOLTAGE0)                           // Mode is "Voltage Mode", not "Current Mode"
 		{
-			if(ISENSE < Imin)
+			if(ISENSE0 < Imin)
 			{
-				if(IminCount)
+                count+=1;
+                if(count>3600)
                 {
-                    IminCount--;
+                    battery_state = FLOAT;
+                    count = 0;
                 }
                 else
 				{
-					Imin = ISENSE;
+					Imin = ISENSE0;
 					IminCount = IMIN_UPDATE;
 					Iflat_db = IFLAT_COUNT;
 				}
@@ -79,9 +83,6 @@ void Battery_State_Machine()
 		}
         else
 		{
-			IminCount = IMIN_UPDATE;
-			Iflat_db = IFLAT_COUNT;
-			Imin = ILIM;
 		}
 //		if(Imin < ISTOP || !Iflat_db)
 //		{
@@ -122,57 +123,31 @@ void Battery_State_Machine()
 		SET_VOLTAGE(0);
 		SET_CURRENT(0);
 		STOP_CONVERTER();	
-	} else
-	if(battery_state == FINISHED)
-	{
-		#ifdef BATTERY_STANDBY_MODE
-			if(VSENSE < TOPPING_VOLTAGE && VSENSE > VBAT_DETECTION)
-			{
-				battery_state = CHARGE;
-
-				SET_CURRENT(ILIM);
-				SET_VOLTAGE(CHARGING_VOLTAGE);
-
-				Imin = ILIM;
-				IminCount = IMIN_UPDATE;
-				Iflat_db = IFLAT_COUNT;
-
-				START_CONVERTER();
-			} else
-			{
-				SET_VOLTAGE(0);
-				SET_CURRENT(0);
-				STOP_CONVERTER();	
-				if(VSENSE < VBAT_DETECTION) battery_state = IDLE;
-			}
-		#else
-			battery_state = IDLE;	
-		#endif
 	}
 }
 
 void cc_cv_mode()
 {
-	if(Vout > Vref)                                     // Vref is set by SET_VOLTAGE()
+	if(VSENSE0 > Vref)                                  // Vref is set by SET_VOLTAGE()
 	{
-		if(cc_cv)                                       // Set to "cc_cv" Value at last switch into "Current Mode"
+		if(cc_cv)                                       // cc_cv is the number of slowLoop cycles to complete before switching to Voltage Mode
         {
             cc_cv-=1;                                   // Decrement it by 1,
         }
         else
 		{
-			if(Imode)                                   // until it is zero, 
+			if(Imode0)                                  // until it is zero, 
             {
-                Imode = 0;                              // then, switch to "Voltage Mode"
+                Imode0 = 0;                             // then, switch to "Voltage Mode"
             }
 		}
 	}
     else
-//	if(Iout > Iref)                                     // Iref is set by "SET_CURRENT(some Value here)"
+	if(ISENSE0 > Iref)                                  // Iref is set by "SET_CURRENT(some Value here)"
 	{
-		if(!Imode)                                      // If not "CURRENT Mode",
+		if(!Imode0)                                     // If not "CURRENT Mode",
         {
-            Imode = 1;                                  // switch to "Current Mode"
+            Imode0 = 1;                                 // switch to "Current Mode"
             cc_cv = CURRENT_MODE;                       // and, set the cc_cv to count "CURRENT_MODE" number of slowLoop iterations, before allowing a return to "VOLTAGE Mode"
         }
 	}

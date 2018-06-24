@@ -16,9 +16,9 @@
 	#define	FLOATING_VOLTAGE		1340	//13.40V
 	#define	CUTOFF_VOLTAGE			1075	//10.75V
 
-	#define	ILIM_PRECHARGE			1000	//1000mA, Small current set at PRECHARGE stage
-	#define	ILIM					9000	//9000mA, Limit of Buck Converter
-	#define IFLOAT					1500	//1500mA, minimum charging current				
+	#define	ILIM_PRECHARGE			10      //1A, Small current set at PRECHARGE stage
+	#define	ILIM					100     //10A, Limit of Buck Converter
+	#define IFLOAT					15      //1.5A, minimum charging current				
 
 #endif
 

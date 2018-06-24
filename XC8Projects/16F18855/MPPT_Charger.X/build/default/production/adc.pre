@@ -17521,6 +17521,18 @@ static uint16_t channels[8] = {23, 21, 19, 17, 22, 20, 18, 16};
 # 19
 int16_t ADCRead(adcc_channel_t channel)
 {
+ADPCH = channel_VSS;
+
+ADCON0bits.ADON = 1;
+
+ADCON0bits.ADCONT = 0;
+
+ADCON0bits.ADGO = 1;
+
+while(ADCON0bits.ADGO)
+{
+}
+
 ADPCH = channel;
 
 ADCON0bits.ADON = 1;
@@ -17562,7 +17574,7 @@ value = totals[channel]/50;
 return value;
 }
 
-# 71
+# 83
 void ADC_Initialize(void)
 {
 ADCON1 = 0x00;
@@ -17578,7 +17590,7 @@ ADSTAT = 0x00;
 FVRCON = 0b11000011;
 ADCLK = 0x3F;
 
-# 91
+# 103
 ADREF = 0x03;
 
 

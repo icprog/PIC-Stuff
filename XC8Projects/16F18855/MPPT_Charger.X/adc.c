@@ -18,6 +18,18 @@ static uint16_t channels[numChannels]       =   {23, 21, 19, 17, 22, 20, 18, 16}
 // *************** ADC Read Individual Channel ****************************************************************************************************
 int16_t ADCRead(adcc_channel_t channel)
 {
+    ADPCH                                   =   channel_VSS;                                  // select the A/D channel_VSS
+
+    ADCON0bits.ADON                         =   1;                                            // Turn on the ADC module
+
+    ADCON0bits.ADCONT                       =   0;                                            //Disable the continuous mode.
+
+    ADCON0bits.ADGO                         =   1;                                            // Start the conversion
+
+    while(ADCON0bits.ADGO)                                              // Wait for the conversion to finish
+    {
+    }                       
+
     ADPCH                                   =   channel;                                      // select the A/D channel
 
     ADCON0bits.ADON                         =   1;                                            // Turn on the ADC module
