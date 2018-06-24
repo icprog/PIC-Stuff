@@ -12,12 +12,13 @@
 
 #ifdef PRESET1
 
-    #define CHARGING_VOLTAGE		1440	//14.40V
+    #define CHARGING_VOLTAGE		1400	//14.00V
+//    #define CHARGING_VOLTAGE		1350	//14.40V
 	#define	FLOATING_VOLTAGE		1340	//13.40V
 	#define	CUTOFF_VOLTAGE			1075	//10.75V
 
 	#define	ILIM_PRECHARGE			10      //1A, Small current set at PRECHARGE stage
-	#define	ILIM					100     //10A, Limit of Buck Converter
+	#define	ILIM					35      //3.5A Point Where we switch back to MPPT, or Current Mode
 	#define IFLOAT					15      //1.5A, minimum charging current				
 
 #endif

@@ -17509,10 +17509,10 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 311
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 30 "battery_charger.h"
+# 26 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 54
+# 50
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
@@ -17566,7 +17566,7 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 54 "battery_charger.h"
+# 50 "battery_charger.h"
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
@@ -17576,7 +17576,7 @@ void pid(uint16_t feedback, uint16_t setpoint);
 
 # 3 "battery_charger.c"
 uint8_t battery_state;
-uint8_t IminCount;
+uint16_t IminCount;
 uint16_t Iflat_db;
 uint16_t state_counter;
 int16_t Imin;
@@ -17587,7 +17587,6 @@ int16_t Iout;
 
 int8_t Imode0 = 1;
 uint8_t cc_cv;
-uint16_t count = 0;
 
 int16_t voltage[4] = {0};
 int16_t current[4] = {0};
@@ -17601,13 +17600,10 @@ battery_state = PRECHARGE;
 state_counter = 600;
 
 { Iref = 10; };
-{ Vref = 1440; };
+{ Vref = 1400; };
 
-Imin = 100;
-IminCount = 5;
-Iflat_db = 600;
-
-{ warmup = 64; TRISA6 = 0; TRISA7 = 0; };
+Imin = 15;
+IminCount = 10;
 }
 
 void Battery_State_Machine()
@@ -17628,7 +17624,7 @@ battery_state = FAULT;
 else
 {
 battery_state = CHARGE;
-{ Iref = 100; };
+{ Iref = 35; };
 }
 }
 else if(battery_state == CHARGE)
@@ -17637,41 +17633,29 @@ if((!Imode0))
 {
 if(current[1] < Imin)
 {
-count+=1;
-if(count>3600)
+IminCount-=1;
+if(!IminCount)
 {
 battery_state = FLOAT;
-count = 0;
-}
-else
-{
-Imin = current[1];
-IminCount = 5;
-Iflat_db = 600;
 }
 }
 else
 {
-IminCount = 5;
-if(Iflat_db) Iflat_db--;
+if(IminCount<10)IminCount += 2;
 }
 }
-else
-{
-}
-
-# 99
 }
 else if(battery_state == FLOAT)
 {
-
-# 120
-} else
+{ Vref = 1340; };
+{ Iref = 15; };
+}
+else
 if(battery_state == FAULT)
 {
-{ Vref = 0; };
-{ Iref = 0; };
-{ TRISA6 = 1; TRISA7 = 1; };
+
+
+
 }
 }
 
@@ -17691,13 +17675,18 @@ Imode0 = 0;
 }
 }
 }
-else
-if(current[1] > Iref)
+else if(current[1] > Iref)
 {
 if(!Imode0)
 {
+if(battery_state == FLOAT)
+{
+battery_state=CHARGE;
+{ Vref = 1400; };
+{ Iref = 35; };
+}
 Imode0 = 1;
-cc_cv = 10;
+cc_cv = 3;
 }
 }
 }

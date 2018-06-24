@@ -6,23 +6,19 @@
 #define		WARMUP_TIME			64
 #define		CONSTANT_VOLTAGE0	(!Imode0)
 #define		I_BAT_DETECT		16 
-#define		CURRENT_MODE		10                          // Number of slowLoop cycles Voltage is over Vref before we drop back to "Voltage Mode" from "Current Mode"
-//#define		ERR_MAX				4095
-//#define		ERR_MIN				-4095
+#define		CURRENT_MODE		3                           // Number of slowLoop cycles Voltage is over Vref before we drop back to "Voltage Mode" from "Current Mode"
 
-//#define		CO1					RA6
-//#define		CO2					RA7
 #define		TRIS_PWM0Out        TRISA6
 #define		TRIS_PWM1Out       	TRISA7
 #define		VSENSE0             voltage[1]                  // VOut0
 #define		ISENSE0             current[1]                  // IOut0
 
-#define 	IMIN_UPDATE			5
+#define 	IminUpdate			10
 #define		VBAT_DETECTION		1640
 
-#define		STOP_CONVERTER()	{ TRIS_PWM0Out = 1; TRIS_PWM1Out = 1; }   // NCO is Numerically controller oscillator, will now be PWM to Converter?
+//#define		STOP_CONVERTER()	{ TRIS_PWM0Out = 1; TRIS_PWM1Out = 1; }   // NCO is Numerically controller oscillator, will now be PWM to Converter?
 //#define		STOP_CONVERTER()	{ increment = 0; set_NCO(); TRIS_CO1 = 1; TRIS_CO2 = 1; }   // NCO is Numerically controller oscillator, will now be PWM to Converter?
-#define  	START_CONVERTER()	{ warmup = WARMUP_TIME; TRIS_PWM0Out = 0; TRIS_PWM1Out = 0; }       // NCO is PWM to Converter?
+//#define  	START_CONVERTER()	{ warmup = WARMUP_TIME; TRIS_PWM0Out = 0; TRIS_PWM1Out = 0; }       // NCO is PWM to Converter?
 
 
 #ifndef BATTERY_CHARGER_H

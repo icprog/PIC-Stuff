@@ -14,11 +14,11 @@ void PIN_MANAGER_Initialize(void)
     WPUE = 0x8;
 
     TRISA = 0x00;
-    TRISB = 0x0F;                   // RB0, 1, 2, and 3 as Input
+    TRISB = 0x0E;                   // RB0, 1, 2, and 3 as Input
     TRISC = 0xFF;                   // Port C as Input
 
     ANSELA = 0x00;
-    ANSELB = 0x0B;                  // RB0, 1, and 3 as Analog Input
+    ANSELB = 0x0A;                  // RB0, 1, and 3 as Analog Input
     ANSELC = 0xFF;                  // Port C as Analog Input
     
 

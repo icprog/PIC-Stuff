@@ -52,6 +52,7 @@ void main(void)
     uint8_t         slowLoop        =   200;
     extern int8_t   Imode0;
     extern int16_t  Vref;                                       // setpoint for voltage output
+    extern int16_t  Iref;
     uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
     
     SYSTEM_Initialize();
@@ -77,6 +78,7 @@ void main(void)
     {
         for(j=0;j<8;j++) analogs[j]=readAnalog(j);          // Read analogs
         
+        
         voltage[0]=analogs[0]/.20885;                       // Calculate VIn0
         
         voltage[1]=analogs[1]/.54503;                         // Calculate VOut0
@@ -91,11 +93,12 @@ void main(void)
         calculateCurrent1();
 //        current[1]=(analogs[5]-578)/3.232;
 
-        if(fastLoop>10)
+        if(fastLoop>25)
         {
             if(Imode0)
             {
-                if(VIn0<3164)
+//                if(VIn0<3164)
+                if(VIn0<2300)
                 {
                     if(PWM0<252)
                     {
@@ -106,7 +109,7 @@ void main(void)
                 {
                     PWM0-=1;
                 }
-//                if(power0Out>power0OutOld)
+/* //                if(power0Out>power0OutOld)
   //              {
     //                if(VIn0>VIn0_Old)
       //              {
@@ -136,7 +139,7 @@ void main(void)
 //                        PWM0+=1;
                     //}
                 //}
-                power0OutOld=power0Out;
+*/                power0OutOld=power0Out;
                 VIn0_Old=VIn0;
                 
                 if(power1Out>power1OutOld)
@@ -189,13 +192,14 @@ void main(void)
             PWM6_LoadDutyValue(PWM0);
             PWM7_LoadDutyValue(PWM1);
             menuButton = readButton();
-            if(menuButton == Down) if(PWM0<197) PWM0+=1;
+            if(menuButton == Down) if(PWM0<252) PWM0+=1;
             if(menuButton == Up) if(PWM0>0) PWM0-=1;;
             if(menuButton == Enter)LCDInit();
+            LATB0=1-LATB0;
         }
         fastLoop+=1;
         
-        if(slowLoop>10)
+        if(slowLoop>4)
         {
             LCDClear();
             Battery_State_Machine();
@@ -224,6 +228,10 @@ void main(void)
             LCDWriteIntXY(48,2,Vref,4,0,0);
             
             LCDWriteIntXY(0,3,power0In,5,0,0);
+            LCDWriteIntXY(28,3,battery_state,1,0,0);
+            LCDWriteIntXY(36,3,Imode0,1,0,0);
+            LCDWriteIntXY(48,3,Iref,4,0,0);
+            
  
             LCDWriteIntXY(0,4,power0Out,5,0,0);
             LCDWriteIntXY(28,4,power0OutOld,5,0,0);
@@ -238,7 +246,7 @@ void main(void)
             //LCDWriteIntXY(24,5,PWM1,3,0,0);
             
             LCDWriteIntXY(40,5,Fault,1,0,0);
-            
+
             if(battery_state > FINISHED)
             {
             	cc_cv_mode();

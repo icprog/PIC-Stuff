@@ -1,7 +1,7 @@
 #include "battery_charger.h"
 
 uint8_t             battery_state;
-uint8_t             IminCount;
+uint16_t            IminCount;
 uint16_t            Iflat_db;
 uint16_t            state_counter;
 int16_t             Imin;
@@ -12,7 +12,6 @@ int16_t             Iout;
 //uint16_t            Vout;
 int8_t              Imode0          =   1;
 uint8_t             cc_cv;
-uint16_t            count           =   0;
 
 int16_t             voltage[4]      =   {0};                    // Store calculated Voltage values
 int16_t             current[4]      =   {0};                    // Store Calculated Current Values
@@ -28,11 +27,8 @@ void Init_Battery_State_Machine()
 	SET_CURRENT(ILIM_PRECHARGE);                        // SET_CURRENT to ILIM_PRECHARGE (ILIM_PRECHARGE is in lead-acid_agm.h)
 	SET_VOLTAGE(CHARGING_VOLTAGE);                      // SET_VOLTAGE to CHARGING_VOLTAGE (CHARGING_VOLTAGE is in lead-acid_agm.h) SET_VOLTAGE sets Vref value
 
-	Imin = ILIM;                                        // Set Imin to the Maximum Current Limit (found in lead_acid_agm.h)
-	IminCount = IMIN_UPDATE;
-	Iflat_db = IFLAT_COUNT;
-
-	START_CONVERTER();
+	Imin = IFLOAT;                                      // Set Imin to the IFLOAT Current Limit (found in lead_acid_agm.h)
+	IminCount = IminUpdate;
 }
 
 void Battery_State_Machine()
@@ -52,77 +48,39 @@ void Battery_State_Machine()
 		} 
         else                                            // VSENSE is >= CUTOFF_VOLTAGE
 		{
-			battery_state = CHARGE;                       // Set CHARGE mode
-			SET_CURRENT(ILIM);                          // Set Current to Maximum limit
+			battery_state = CHARGE;                     // Set CHARGE mode
+			SET_CURRENT(ILIM);                          // Set Current sets IRef value
 		}
 	}
     else if(battery_state == CHARGE)
 	{
-		if(CONSTANT_VOLTAGE0)                           // Mode is "Voltage Mode", not "Current Mode"
+		if(CONSTANT_VOLTAGE0)                           // Mode is "Voltage Mode", not "Current Mode", So we are applying Topping current
 		{
 			if(ISENSE0 < Imin)
 			{
-                count+=1;
-                if(count>3600)
+                IminCount-=1;
+                if(!IminCount)                          // Current has been low for at least IminCount cycles (600 cycles, or about 10 minutes)
                 {
-                    battery_state = FLOAT;
-                    count = 0;
+                    battery_state = FLOAT;              // Switch to Float Charging Mode    
                 }
-                else
-				{
-					Imin = ISENSE0;
-					IminCount = IMIN_UPDATE;
-					Iflat_db = IFLAT_COUNT;
-				}
 			}
             else
 			{
-				IminCount = IMIN_UPDATE;
-				if(Iflat_db) Iflat_db--;
+				if(IminCount<IminUpdate)IminCount += 2; // Keep us from going into Float because of sporadic sun
 			}
 		}
-        else
-		{
-		}
-//		if(Imin < ISTOP || !Iflat_db)
-//		{
-//			#ifdef	BATTERY_AGM
-//				battery_state = FLOAT;
-//				state_counter = FLOAT_TIME;
-
-//				SET_VOLTAGE(FLOATING_VOLTAGE);
-//			#else
-//				battery_state = FINISHED;
-//				if(Imin < I_BAT_DETECT) battery_state = IDLE;
-//			#endif
-//		}
 	} 
     else if(battery_state == FLOAT)
 	{
-//        if(state_counter)
-  //      {
-    //        state_counter-=1;
-      //  }
-        //else
-//		{
-//			battery_state = FINISHED;
-//		}
-//		#ifdef BATTERY_SLA
-//			if(state_counter < FLOAT_RELAX_TIME && ISENSE < I_BAT_DETECT)
-//			battery_state = IDLE;
-//		#endif
-//	} else
-//	if(battery_state == IDLE)
-//	{
-//		SET_VOLTAGE(0);
-//		SET_CURRENT(0);
-//		STOP_CONVERTER();
-	} else
+        SET_VOLTAGE(FLOATING_VOLTAGE);
+    	SET_CURRENT(IFLOAT);                            // Set Current sets IRef value
+    }
+	else
 	if(battery_state == FAULT)
 	{
-		SET_VOLTAGE(0);
-		SET_CURRENT(0);
-		STOP_CONVERTER();	
+//		SET_VOLTAGE(0);
+//		SET_CURRENT(0);
+//		STOP_CONVERTER();	
 	}
 }
 
@@ -142,11 +100,16 @@ void cc_cv_mode()
             }
 		}
 	}
-    else
-	if(ISENSE0 > Iref)                                  // Iref is set by "SET_CURRENT(some Value here)"
+    else if(ISENSE0 > Iref)                             // Iref is set by "SET_CURRENT(some Value here)" Use this to come back out of FLOAT Mode
 	{
 		if(!Imode0)                                     // If not "CURRENT Mode",
         {
+            if(battery_state == FLOAT)
+            {
+                battery_state=CHARGE;                   // Set CHARGE mode
+                SET_VOLTAGE(CHARGING_VOLTAGE);          // Set Vref back to CHARGING_VOLTAGE
+                SET_CURRENT(ILIM);                      // Set Iref back to ILIM
+            }
             Imode0 = 1;                                 // switch to "Current Mode"
             cc_cv = CURRENT_MODE;                       // and, set the cc_cv to count "CURRENT_MODE" number of slowLoop iterations, before allowing a return to "VOLTAGE Mode"
         }
