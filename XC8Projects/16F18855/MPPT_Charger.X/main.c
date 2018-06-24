@@ -50,6 +50,7 @@ void main(void)
 
     uint8_t         fastLoop        =   0;
     uint8_t         slowLoop        =   200;
+    uint8_t         displayRefresh  =   0;
     extern int8_t   Imode0;
     extern int16_t  Vref;                                       // setpoint for voltage output
     extern int16_t  Iref;
@@ -93,12 +94,13 @@ void main(void)
         calculateCurrent1();
 //        current[1]=(analogs[5]-578)/3.232;
 
-        if(fastLoop>25)
+        if(fastLoop>12)
         {
             if(Imode0)
             {
-//                if(VIn0<3164)
-                if(VIn0<2300)
+                if(VIn0<3150)
+//                if(VIn0<3164)                             // 3164 is actual MPPT of Panel
+//                if(VIn0<2300)
                 {
                     if(PWM0<252)
                     {
@@ -195,13 +197,17 @@ void main(void)
             if(menuButton == Down) if(PWM0<252) PWM0+=1;
             if(menuButton == Up) if(PWM0>0) PWM0-=1;;
             if(menuButton == Enter)LCDInit();
-            LATB0=1-LATB0;
         }
         fastLoop+=1;
         
-        if(slowLoop>4)
+        if(slowLoop>10)
         {
-            LCDClear();
+            displayRefresh+=1;
+            if(displayRefresh>60)
+            {
+                LCDClear();
+                displayRefresh=0;
+            }
             Battery_State_Machine();
 //            LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
   //          LCDWriteIntXY(20,0,ADCRead(22),4,0,0);
@@ -276,6 +282,6 @@ void calculateCurrent1(void)
     }
     else
     {
-        current[1]=(analogs[5]-578)/3.232;
+        current[1]=(analogs[5]-578)/3.2323;
     }
 }
