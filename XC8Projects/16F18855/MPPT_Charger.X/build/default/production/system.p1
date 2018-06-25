@@ -7,8 +7,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADC_Initialize `(v ~T0 @X0 0 ef ]
 "7 pwm.h
 [v _PWM_Initialize `(v ~T0 @X0 0 ef ]
-"262 tmr2.h
+"17 tmr.h
 [v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
+"19
+[v _TMR4_Initialize `(v ~T0 @X0 0 ef ]
 "52 battery_charger.h
 [v _Init_Battery_State_Machine `(v ~T0 @X0 0 ef ]
 "38 lcd.h
@@ -13233,7 +13235,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 38: void LCDInit(void);
 [; ;lcd.h: 41: void LCDWrite(uint8_t data_or_command, uint8_t data);
 [; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
-[; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;tmr.h: 17: void TMR2_Initialize(void);
+[; ;tmr.h: 19: void TMR4_Initialize(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
@@ -13262,49 +13265,52 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 79: TMR2_Initialize();
 "79
 [e ( _TMR2_Initialize ..  ]
-[; ;system.c: 80: Init_Battery_State_Machine();
+[; ;system.c: 80: TMR4_Initialize();
 "80
-[e ( _Init_Battery_State_Machine ..  ]
-[; ;system.c: 81: LCDInit();
+[e ( _TMR4_Initialize ..  ]
+[; ;system.c: 81: Init_Battery_State_Machine();
 "81
-[e ( _LCDInit ..  ]
-[; ;system.c: 82: _delay((unsigned long)((200)*(32000000/4000.0)));
+[e ( _Init_Battery_State_Machine ..  ]
+[; ;system.c: 82: LCDInit();
 "82
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;system.c: 83: LCDClear();
+[e ( _LCDInit ..  ]
+[; ;system.c: 83: _delay((unsigned long)((200)*(32000000/4000.0)));
 "83
-[e ( _LCDClear ..  ]
-[; ;system.c: 84: _delay((unsigned long)((200)*(32000000/4000.0)));
-"84
 [e ( __delay (1 -> * -> -> 200 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;system.c: 85: }
+[; ;system.c: 84: LCDClear();
+"84
+[e ( _LCDClear ..  ]
+[; ;system.c: 85: _delay((unsigned long)((200)*(32000000/4000.0)));
 "85
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[; ;system.c: 86: }
+"86
 [e :UE 1563 ]
 }
-"87
-[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
 "88
+[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
+"89
 {
-[; ;system.c: 87: void OSCILLATOR_Initialize(void)
-[; ;system.c: 88: {
+[; ;system.c: 88: void OSCILLATOR_Initialize(void)
+[; ;system.c: 89: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;system.c: 89: OSCCON1 = 0x60;
-"89
-[e = _OSCCON1 -> -> 96 `i `uc ]
-[; ;system.c: 90: OSCCON3 = 0x00;
+[; ;system.c: 90: OSCCON1 = 0x60;
 "90
-[e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 91: OSCEN = 0x00;
+[e = _OSCCON1 -> -> 96 `i `uc ]
+[; ;system.c: 91: OSCCON3 = 0x00;
 "91
-[e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 92: OSCFRQ = 0x06;
+[e = _OSCCON3 -> -> 0 `i `uc ]
+[; ;system.c: 92: OSCEN = 0x00;
 "92
-[e = _OSCFRQ -> -> 6 `i `uc ]
-[; ;system.c: 93: OSCTUNE = 0x00;
+[e = _OSCEN -> -> 0 `i `uc ]
+[; ;system.c: 93: OSCFRQ = 0x06;
 "93
-[e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 94: }
+[e = _OSCFRQ -> -> 6 `i `uc ]
+[; ;system.c: 94: OSCTUNE = 0x00;
 "94
+[e = _OSCTUNE -> -> 0 `i `uc ]
+[; ;system.c: 95: }
+"95
 [e :UE 1564 ]
 }

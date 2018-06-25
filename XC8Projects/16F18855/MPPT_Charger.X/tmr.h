@@ -1,5 +1,5 @@
-#ifndef _TMR2_H
-#define _TMR2_H
+#ifndef _TMR_H
+#define _TMR_H
 
 #include "system.h"
 /**
@@ -13,6 +13,10 @@
 	HLT extension. The modes can be set in a control register associated
 	with the timer
 */
+
+void TMR2_Initialize(void);
+
+void TMR4_Initialize(void);
 
 //typedef enum
 //{
@@ -259,7 +263,7 @@
     }
     </code>
 */
-void TMR2_Initialize(void);
+//void TMR2_Initialize(void);
 
 /**
   @Summary

@@ -1,5 +1,5 @@
 
-# 1 "tmr2.c"
+# 1 "tmr.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -17563,10 +17563,12 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 262 "tmr2.h"
+# 17 "tmr.h"
 void TMR2_Initialize(void);
 
-# 3 "tmr2.c"
+void TMR4_Initialize(void);
+
+# 3 "tmr.c"
 void TMR2_Initialize(void)
 {
 T2CON = 0x00;
@@ -17586,5 +17588,26 @@ T2TMR = 0x00;
 PIR4bits.TMR2IF = 0;
 
 T2CONbits.TMR2ON = 1;
+}
+
+void TMR4_Initialize(void)
+{
+T4CON = 0x00;
+
+T4CLKCON = 0x01;
+
+T4HLT = 0x00;
+
+T4RST = 0x00;
+
+T4PR = 0xFE;
+
+
+
+T4TMR = 0x00;
+
+PIR4bits.TMR4IF = 0;
+
+T4CONbits.TMR4ON = 1;
 }
 

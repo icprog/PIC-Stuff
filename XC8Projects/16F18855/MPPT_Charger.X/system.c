@@ -77,6 +77,7 @@ void SYSTEM_Initialize(void)
     PWM_Initialize();
   //  TMR0_Initialize();
     TMR2_Initialize();
+    TMR4_Initialize();
     Init_Battery_State_Machine();
     LCDInit();
     __delay_ms(200);

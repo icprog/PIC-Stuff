@@ -1,6 +1,6 @@
- build/default/production/pin_manager.d  \
- build/default/production/pin_manager.p1:  \
- pin_manager.c  \
+ build/default/production/tmr.d  \
+ build/default/production/tmr.p1:  \
+ tmr.c  \
 pwm.h  \
 tmr.h  \
 lcd.h  \

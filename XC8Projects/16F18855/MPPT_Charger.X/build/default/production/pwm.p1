@@ -13182,7 +13182,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 38: void LCDInit(void);
 [; ;lcd.h: 41: void LCDWrite(uint8_t data_or_command, uint8_t data);
 [; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
-[; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;tmr.h: 17: void TMR2_Initialize(void);
+[; ;tmr.h: 19: void TMR4_Initialize(void);
 [; ;system.h: 18: void SYSTEM_Initialize(void);
 [; ;system.h: 20: void OSCILLATOR_Initialize(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
@@ -13217,9 +13218,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.c: 18: PWM7DCL = 0x00;
 "18
 [e = _PWM7DCL -> -> 0 `i `uc ]
-[; ;pwm.c: 20: CCPTMRS1bits.P7TSEL = 0x1;
+[; ;pwm.c: 20: CCPTMRS1bits.P7TSEL = 0x2;
 "20
-[e = . . _CCPTMRS1bits 0 2 -> -> 1 `i `uc ]
+[e = . . _CCPTMRS1bits 0 2 -> -> 2 `i `uc ]
 [; ;pwm.c: 22: }
 "22
 [e :UE 1563 ]

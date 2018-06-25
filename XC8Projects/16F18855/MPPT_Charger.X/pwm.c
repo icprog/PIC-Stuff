@@ -17,7 +17,7 @@ void PWM_Initialize(void)
      
     PWM7DCL             = 0x00;         //0x40;                     // Pg 288, Duty Cycle Low 1;
      
-    CCPTMRS1bits.P7TSEL = 0x1;          //Pg 456, PWM7 Timer Selection 0X1 = TMR2
+    CCPTMRS1bits.P7TSEL = 0x2;          //Pg 456, PWM7 Timer Selection 0X2 = TMR4
 
 }
 

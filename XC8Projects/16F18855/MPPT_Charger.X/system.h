@@ -9,7 +9,7 @@
 #include "lead_acid_agm.h"
 #include "pin_manager.h"
 #include <stdint.h>
-#include "tmr2.h"
+#include "tmr.h"
 #include "pwm.h"
 
 #define _XTAL_FREQ  32000000         // Define clock freq for __delay_ms();

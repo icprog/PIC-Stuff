@@ -38,6 +38,8 @@ extern int16_t  current[4];                    // Store Calculated Current Value
 
 void main(void)
 {
+    int16_t         MPPT0           =   3164;
+    int16_t         MPPT1           =   3164;
     int16_t         VIn0_Old        =   0;
     int16_t         VIn1_Old        =   0;
     int16_t         power0OutOld    =   0;
@@ -77,16 +79,16 @@ void main(void)
 
     while (1)
     {
-        for(j=0;j<8;j++) analogs[j]=readAnalog(j);          // Read analogs
+        for(j=0;j<8;j++) analogs[j]=readAnalog(j);              // Read analogs
         
         
-        voltage[0]=analogs[0]/.20885;                       // Calculate VIn0
+        voltage[0]=(int16_t)(analogs[0]/.20885);                // Calculate VIn0
         
-        voltage[1]=analogs[1]/.54503;                         // Calculate VOut0
+        voltage[1]=(int16_t)(analogs[1]/.54503);                // Calculate VOut0
 
-//        voltage[2]=analogs[2]/.20885;                       // Calculate VIn1
+//        voltage[2]=(int16_t)(analogs[2]/.20885);                // Calculate VIn1
         
-  //      voltage[3]=analogs[3]/.666;                         // Calculate VOut1
+  //      voltage[3]=(int16_t)(analogs[3]/.666);                  // Calculate VOut1
         
         calculateCurrent0();
 //        current[0]=(analogs[4]-589)/1.3165;
@@ -98,7 +100,8 @@ void main(void)
         {
             if(Imode0)
             {
-                if(VIn0<3150)
+                if(VIn0<MPPT0)
+//                if(VIn0<3150)
 //                if(VIn0<3164)                             // 3164 is actual MPPT of Panel
 //                if(VIn0<2300)
                 {
@@ -111,6 +114,21 @@ void main(void)
                 {
                     PWM0-=1;
                 }
+                
+                if(VIn1<MPPT1)
+//                if(VIn0<3164)                             // 3164 is actual MPPT of Panel
+//                if(VIn0<2300)
+                {
+                    if(PWM1<252)
+                    {
+//                        PWM1+=1;
+                    }
+                }
+                else if(PWM1>0)
+                {
+  //                  PWM1-=1;
+                }
+                
 /* //                if(power0Out>power0OutOld)
   //              {
     //                if(VIn0>VIn0_Old)
@@ -141,10 +159,11 @@ void main(void)
 //                        PWM0+=1;
                     //}
                 //}
-*/                power0OutOld=power0Out;
+*/                
+                power0OutOld=power0Out;
                 VIn0_Old=VIn0;
                 
-                if(power1Out>power1OutOld)
+/*                if(power1Out>power1OutOld)
                 {
                     if(VIn1>VIn1_Old)
                     {
@@ -188,14 +207,15 @@ void main(void)
                 {
                     if(PWM1>0) PWM1-=1;;
                 }
+*/
             }
             fastLoop=0;
             slowLoop+=1;
             PWM6_LoadDutyValue(PWM0);
             PWM7_LoadDutyValue(PWM1);
             menuButton = readButton();
-            if(menuButton == Down) if(PWM0<252) PWM0+=1;
-            if(menuButton == Up) if(PWM0>0) PWM0-=1;;
+            if(menuButton == Down) if(MPPT0>2000) MPPT0-=10;
+            if(menuButton == Up) if(MPPT0<3500) MPPT0+=10;;
             if(menuButton == Enter)LCDInit();
         }
         fastLoop+=1;
@@ -270,7 +290,7 @@ void calculateCurrent0(void)
     }
     else
     {
-        current[0]=(analogs[4]-589)/1.3165;
+        current[0]=(int16_t)((analogs[4]-589)/1.3165);
     }
 }
 
@@ -282,6 +302,6 @@ void calculateCurrent1(void)
     }
     else
     {
-        current[1]=(analogs[5]-578)/3.2323;
+        current[1]=(int16_t)((analogs[5]-578)/3.2323);
     }
 }
