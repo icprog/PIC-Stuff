@@ -10,7 +10,8 @@ void TMR2_Initialize(void)
                                     // Setup as freerunning software gated
     T2RST = 0x00;                   // Pg 443, External Reset Source, T2RSEL T2CKIPPS pin;
 
-    T2PR = 0x3E;                    // Period register, PR2 255 
+    T2PR = 0xFE;                    // Period register, PR2 255 
+//   T2PR = 0x3E;                    // Period register, PR2 255 
     
 //    PR2 =   0X3F;
 

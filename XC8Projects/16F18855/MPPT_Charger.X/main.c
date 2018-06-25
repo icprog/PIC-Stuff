@@ -45,8 +45,8 @@ void main(void)
     int16_t         power0OutOld    =   0;
     int16_t         power1OutOld    =   0;
     
-    uint16_t        dutyCycle6      =   252;                    // 126 is midpoint, allow adjusting up or down
-    uint16_t        dutyCycle7      =   126;                    // 126 is midpoint, allow adjusting up or down
+    uint16_t        dutyCycle6      =   1023;                   // 126 is midpoint, allow adjusting up or down
+    uint16_t        dutyCycle7      =   512;                    // 126 is midpoint, allow adjusting up or down
     
     uint8_t         j               =   0;
 
@@ -96,7 +96,7 @@ void main(void)
         calculateCurrent1();
 //        current[1]=(analogs[5]-578)/3.232;
 
-        if(fastLoop>12)
+        if(fastLoop>4)
         {
             if(Imode0)
             {
@@ -105,7 +105,7 @@ void main(void)
 //                if(VIn0<3164)                             // 3164 is actual MPPT of Panel
 //                if(VIn0<2300)
                 {
-                    if(PWM0<252)
+                    if(PWM0<1023)
                     {
                         PWM0+=1;
                     }
@@ -129,7 +129,7 @@ void main(void)
   //                  PWM1-=1;
                 }
                 
-/* //                if(power0Out>power0OutOld)
+ //                if(power0Out>power0OutOld)
   //              {
     //                if(VIn0>VIn0_Old)
       //              {
@@ -159,7 +159,7 @@ void main(void)
 //                        PWM0+=1;
                     //}
                 //}
-*/                
+                
                 power0OutOld=power0Out;
                 VIn0_Old=VIn0;
                 
@@ -185,6 +185,7 @@ void main(void)
                         PWM1+=1;
                     }
                 }
+  */
                 power1OutOld=power1Out;
                 VIn1_Old=VIn1;
             }
@@ -192,7 +193,7 @@ void main(void)
             {
                 if(VOut0>(int16_t)Vref)
                 {
-                    if(PWM0<252) PWM0+=1;
+                    if(PWM0<1023) PWM0+=1;
                 }
                 else
                 {
@@ -201,21 +202,21 @@ void main(void)
  
                 if(VOut1>(int16_t)Vref)
                 {
-                    if(PWM1<252) PWM1+=1;
+//                    if(PWM1<1023) PWM1+=1;
                 }
                 else
                 {
-                    if(PWM1>0) PWM1-=1;;
+  //                  if(PWM1>0) PWM1-=1;;
                 }
-*/
+
             }
             fastLoop=0;
             slowLoop+=1;
             PWM6_LoadDutyValue(PWM0);
             PWM7_LoadDutyValue(PWM1);
             menuButton = readButton();
-            if(menuButton == Down) if(MPPT0>2000) MPPT0-=10;
-            if(menuButton == Up) if(MPPT0<3500) MPPT0+=10;;
+            if(menuButton == Down) if(MPPT0>2800)MPPT0-=10;
+            if(menuButton == Up)if(MPPT0<3400)MPPT0+=10;
             if(menuButton == Enter)LCDInit();
         }
         fastLoop+=1;
@@ -259,7 +260,7 @@ void main(void)
             LCDWriteIntXY(48,3,Iref,4,0,0);
             
  
-            LCDWriteIntXY(0,4,power0Out,5,0,0);
+            LCDWriteIntXY(0,4,MPPT0,5,0,0);
             LCDWriteIntXY(28,4,power0OutOld,5,0,0);
             
 //            LCDWriteIntXY(0,3,VIn1,4,2,0);
@@ -268,8 +269,8 @@ void main(void)
       //      LCDWriteIntXY(0,4,VOut1,4,2,0);
         //    LCDWriteCharacter('V');
           //  LCDWriteIntXY(28,4,IOut1,4,0,0);
-            LCDWriteIntXY(0,5,PWM0,3,0,0);
-            //LCDWriteIntXY(24,5,PWM1,3,0,0);
+            LCDWriteIntXY(0,5,PWM0,4,0,0);
+            LCDWriteIntXY(24,5,PWM1,3,0,0);
             
             LCDWriteIntXY(40,5,Fault,1,0,0);
 
