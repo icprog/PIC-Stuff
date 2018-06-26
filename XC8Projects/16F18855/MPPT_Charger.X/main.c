@@ -63,7 +63,6 @@ void main(void)
     extern int16_t  Vref;                                       // setpoint for voltage output
     extern int16_t  Iref;
     uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
-    int8_t          toggle          =   1;
     
     SYSTEM_Initialize();
     
@@ -216,24 +215,14 @@ void main(void)
             }
             fastLoop=0;
             slowLoop+=1;
+
             PWM1_LoadDutyValue(PWM2);
             PWM6_LoadDutyValue(PWM0);
             PWM7_LoadDutyValue(PWM1);
+
             menuButton = readButton();
-//            if(menuButton == Down) if(MPPT0>2800)MPPT0-=10;
-  //          if(menuButton == Up)if(MPPT0<3400)MPPT0+=10;
-            
-/*            if(PWM2<500)
-            {
-                PWM2+=toggle;
-            }
-            if(PWM2<10 || PWM2 >475)
-            {
-                toggle=0-toggle;
-            }
-  */          
-            if(menuButton == Down) if(PWM2<600)PWM2+=1;
-            if(menuButton == Up)if(PWM2>10)PWM2-=11;
+            if(menuButton == Down) if(MPPT0>2800)MPPT0-=10;
+            if(menuButton == Up)if(MPPT0<3400)MPPT0+=10;
             if(menuButton == Enter)LCDInit();
         }
         fastLoop+=1;
