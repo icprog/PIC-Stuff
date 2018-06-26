@@ -53,6 +53,8 @@ void main(void)
     uint8_t         fastLoop        =   0;
     uint8_t         slowLoop        =   200;
     uint8_t         displayRefresh  =   0;
+    int16_t         batteryTemp     =   250;
+    float           efficiency      =   0;
     extern int8_t   Imode0;
     extern int16_t  Vref;                                       // setpoint for voltage output
     extern int16_t  Iref;
@@ -96,7 +98,7 @@ void main(void)
         calculateCurrent1();
 //        current[1]=(analogs[5]-578)/3.232;
 
-        if(fastLoop>4)
+        if(fastLoop>2)
         {
             if(Imode0)
             {
@@ -221,15 +223,22 @@ void main(void)
         }
         fastLoop+=1;
         
-        if(slowLoop>10)
+        if(slowLoop>50)
         {
             displayRefresh+=1;
             if(displayRefresh>60)
             {
                 LCDClear();
                 displayRefresh=0;
+                batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB2
             }
             Battery_State_Machine();
+            efficiency=(float)power0Out;
+            efficiency/=(float)power0In;
+            efficiency*=100;
+            
+            LCDWriteCharacter(' ');
+//            efficiency*=100;
 //            LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
   //          LCDWriteIntXY(20,0,ADCRead(22),4,0,0);
     //        LCDWriteIntXY(0,1,ADCRead(21),4,0,0);
@@ -242,26 +251,34 @@ void main(void)
 //            LCDWriteIntXY(0,2,ADCRead(22),4,0,0);
   //          LCDWriteIntXY(20,2,ADCRead(15),4,0,0);
             
-            LCDWriteIntXY(0,0,analogs[1],4,0,0);
-            LCDWriteIntXY(28,0,analogs[4],4,0,0);
-            LCDWriteIntXY(48,0,analogs[5],4,0,0);
+            LCDWriteIntXY(0,0,batteryTemp,4,1,0);
+            LCDWriteStringXY(24,0,"Eff:");
+            LCDWriteIntXY(60,0,efficiency,5,0,0);
+//            LCDWriteIntXY(28,0,analogs[4],4,0,0);
+  //          LCDWriteIntXY(48,0,analogs[5],4,0,0);
             LCDWriteIntXY(0,1,VIn0,4,2,0);
             LCDWriteCharacter('V');
             LCDWriteIntXY(28,1,IIn0,3,1,0);
-            LCDWriteIntXY(48,1,ADCRead(11),4,0,0);
+            LCDWriteCharacter('A');
+            LCDWriteIntXY(56,1,ADCRead(11),4,0,0);                              // Read Buttons
             LCDWriteIntXY(0,2,VOut0,4,2,0);
             LCDWriteCharacter('V');
             LCDWriteIntXY(28,2,IOut0,3,1,0);
-            LCDWriteIntXY(48,2,Vref,4,0,0);
+            LCDWriteCharacter('A');
+            LCDWriteIntXY(56,2,Vref,4,2,0);
+            LCDWriteCharacter('V');
             
-            LCDWriteIntXY(0,3,power0In,5,0,0);
+            LCDWriteIntXY(0,3,power0In,3,0,0);
+            LCDWriteCharacter('W');
             LCDWriteIntXY(28,3,battery_state,1,0,0);
             LCDWriteIntXY(36,3,Imode0,1,0,0);
-            LCDWriteIntXY(48,3,Iref,4,0,0);
+            LCDWriteIntXY(48,3,Iref,3,1,0);
+            LCDWriteCharacter('A');
             
- 
-            LCDWriteIntXY(0,4,MPPT0,5,0,0);
-            LCDWriteIntXY(28,4,power0OutOld,5,0,0);
+            LCDWriteIntXY(0,4,power0Out,3,0,0);
+            LCDWriteCharacter('W');
+            LCDWriteIntXY(32,4,power0OutOld,3,0,0);
+            LCDWriteCharacter('W');
             
 //            LCDWriteIntXY(0,3,VIn1,4,2,0);
   //          LCDWriteCharacter('V');
@@ -270,9 +287,9 @@ void main(void)
         //    LCDWriteCharacter('V');
           //  LCDWriteIntXY(28,4,IOut1,4,0,0);
             LCDWriteIntXY(0,5,PWM0,4,0,0);
-            LCDWriteIntXY(24,5,PWM1,3,0,0);
-            
-            LCDWriteIntXY(40,5,Fault,1,0,0);
+            LCDWriteIntXY(24,5,PWM1,4,0,0);
+            LCDWriteIntXY(48,5,MPPT0,4,0,0);
+            LCDWriteIntXY(74,5,Fault,1,0,0);
 
             if(battery_state > FINISHED)
             {

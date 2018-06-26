@@ -17551,11 +17551,6 @@ void LCDWrite(uint8_t data_or_command, uint8_t data);
 # 16 "pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
-# 17 "tmr.h"
-void TMR2_Initialize(void);
-
-void TMR4_Initialize(void);
-
 # 7 "pwm.h"
 void PWM_Initialize(void);
 
@@ -17563,7 +17558,15 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
-# 18 "system.h"
+# 6 "tempCalc.h"
+int tempCalc(int analogValue);
+
+# 17 "tmr.h"
+void TMR2_Initialize(void);
+
+void TMR4_Initialize(void);
+
+# 19 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -17604,7 +17607,7 @@ state_counter = 600;
 { Iref = 10; };
 { Vref = 1400; };
 
-Imin = 15;
+Imin = 20;
 IminCount = 10;
 }
 
@@ -17626,7 +17629,7 @@ battery_state = FAULT;
 else
 {
 battery_state = CHARGE;
-{ Iref = 35; };
+{ Iref = 40; };
 }
 }
 else if(battery_state == CHARGE)
@@ -17650,7 +17653,7 @@ if(IminCount<10)IminCount += 2;
 else if(battery_state == FLOAT)
 {
 { Vref = 1340; };
-{ Iref = 15; };
+{ Iref = 20; };
 }
 else
 if(battery_state == FAULT)
@@ -17685,7 +17688,7 @@ if(battery_state == FLOAT)
 {
 battery_state=CHARGE;
 { Vref = 1400; };
-{ Iref = 35; };
+{ Iref = 40; };
 }
 Imode0 = 1;
 cc_cv = 3;

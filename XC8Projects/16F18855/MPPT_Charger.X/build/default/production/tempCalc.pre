@@ -1,5 +1,5 @@
 
-# 1 "pwm.c"
+# 1 "tempCalc.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -17551,8 +17551,12 @@ void LCDWrite(uint8_t data_or_command, uint8_t data);
 # 16 "pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
-# 6 "tempCalc.h"
-int tempCalc(int analogValue);
+# 7 "pwm.h"
+void PWM_Initialize(void);
+
+void PWM6_LoadDutyValue(uint16_t dutyCycle);
+
+void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
 # 17 "tmr.h"
 void TMR2_Initialize(void);
@@ -17564,46 +17568,56 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 7 "pwm.h"
-void PWM_Initialize(void);
+# 6 "tempCalc.h"
+int tempCalc(int analogValue);
 
-void PWM6_LoadDutyValue(uint16_t dutyCycle);
+# 30 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\math.h"
+extern double fabs(double);
+extern double floor(double);
+extern double ceil(double);
+extern double modf(double, double *);
+extern double sqrt(double);
+extern double atof(const char *);
+extern double sin(double) ;
+extern double cos(double) ;
+extern double tan(double) ;
+extern double asin(double) ;
+extern double acos(double) ;
+extern double atan(double);
+extern double atan2(double, double) ;
+extern double log(double);
+extern double log10(double);
+extern double pow(double, double) ;
+extern double exp(double) ;
+extern double sinh(double) ;
+extern double cosh(double) ;
+extern double tanh(double);
+extern double eval_poly(double, const double *, int);
+extern double frexp(double, int *);
+extern double ldexp(double, int);
+extern double fmod(double, double);
+extern double trunc(double);
+extern double round(double);
 
-void PWM7_LoadDutyValue(uint16_t dutyCycle);
-
-# 3 "pwm.c"
-void PWM_Initialize(void)
+# 4 "tempCalc.c"
+int tempCalc(int analogValue)
 {
-PWM6CON = 0x80;
+float R, steinhart;
 
-PWM6DCH = 0x00;
+R = 9890/(1023/(float)analogValue - 1);
 
-PWM6DCL = 0x00;
-
-CCPTMRS1bits.P6TSEL = 0x01;
-
-
-PWM7CON = 0x80;
-
-PWM7DCH = 0x00;
-
-PWM7DCL = 0x00;
-
-CCPTMRS1bits.P7TSEL = 0x02;
-
-}
+steinhart = R /9990;
+steinhart = log(steinhart);
+steinhart /= 4030;
 
 
-void PWM6_LoadDutyValue(uint16_t dutyCycle6)
-{
-PWM6DCH = (dutyCycle6 & 0x03FC)>>2;
+steinhart += 1.0 / (25 + 273.15);
+steinhart = 1.0 / steinhart;
+steinhart -= 273.15;
 
-PWM6DCL = (dutyCycle6 & 0x0003)<<6;
-}
+steinhart*=10;
 
-void PWM7_LoadDutyValue(uint16_t dutyCycle7)
-{
-PWM7DCH = (dutyCycle7 & 0x03FC)>>2;
+steinhart = steinhart*9/5+320;
 
-PWM7DCL = (dutyCycle7 & 0x0003)<<6;
+return (int)steinhart;
 }

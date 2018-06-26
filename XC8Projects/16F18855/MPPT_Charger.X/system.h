@@ -8,9 +8,10 @@
 #include "lcd.h"
 #include "lead_acid_agm.h"
 #include "pin_manager.h"
-#include <stdint.h>
-#include "tmr.h"
 #include "pwm.h"
+#include <stdint.h>
+#include "tempCalc.h"
+#include "tmr.h"
 
 #define _XTAL_FREQ  32000000         // Define clock freq for __delay_ms();
 

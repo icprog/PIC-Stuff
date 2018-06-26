@@ -17583,11 +17583,6 @@ void LCDWrite(uint8_t data_or_command, uint8_t data);
 # 16 "pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
-# 17 "tmr.h"
-void TMR2_Initialize(void);
-
-void TMR4_Initialize(void);
-
 # 7 "pwm.h"
 void PWM_Initialize(void);
 
@@ -17595,7 +17590,15 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
-# 18 "system.h"
+# 6 "tempCalc.h"
+int tempCalc(int analogValue);
+
+# 17 "tmr.h"
+void TMR2_Initialize(void);
+
+void TMR4_Initialize(void);
+
+# 19 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);

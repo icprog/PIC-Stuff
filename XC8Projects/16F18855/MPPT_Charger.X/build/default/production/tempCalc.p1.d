@@ -1,6 +1,6 @@
- build/default/production/system.d  \
- build/default/production/system.p1:  \
- system.c  \
+ build/default/production/tempCalc.d  \
+ build/default/production/tempCalc.p1:  \
+ tempCalc.c  \
 pwm.h  \
 tmr.h  \
 lcd.h  \
