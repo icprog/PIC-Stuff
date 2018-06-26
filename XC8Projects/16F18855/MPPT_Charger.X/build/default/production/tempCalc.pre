@@ -17509,16 +17509,15 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 311
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 26 "battery_charger.h"
+# 29 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 50
+# 53
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
 void cc_cv_mode();
-void pid(uint16_t feedback, uint16_t setpoint);
 
 # 12 "buttons.h"
 uint8_t readButton(void);
@@ -17558,6 +17557,8 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
+void PWM1_LoadDutyValue(uint16_t dutyCycle1);
+
 # 17 "tmr.h"
 void TMR2_Initialize(void);
 
@@ -17569,7 +17570,7 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 
 # 6 "tempCalc.h"
-int tempCalc(int analogValue);
+int16_t tempCalc(int16_t analogValue);
 
 # 30 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\math.h"
 extern double fabs(double);
@@ -17600,7 +17601,7 @@ extern double trunc(double);
 extern double round(double);
 
 # 4 "tempCalc.c"
-int tempCalc(int analogValue)
+int16_t tempCalc(int16_t analogValue)
 {
 float R, steinhart;
 
@@ -17619,5 +17620,5 @@ steinhart*=10;
 
 steinhart = steinhart*9/5+320;
 
-return (int)steinhart;
+return (int16_t)steinhart;
 }

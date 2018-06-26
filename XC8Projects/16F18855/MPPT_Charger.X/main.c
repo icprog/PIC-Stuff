@@ -11,12 +11,15 @@
 
 #define IIn0            current[0]
 #define IOut0           current[1]
-#define IIn1            analogs[6]
-#define IOut1           analogs[7]
+#define IIn1            current[2]
+#define IOut1           current[3]
+
+#define IOutTotal       IOut0+IOut1
     
 #define     Fault       !RB2
 #define     PWM0        dutyCycle6
 #define     PWM1        dutyCycle7
+#define     PWM2        dutyCycle1
 
 #define     power0In    VIn0/100*IIn0/10
 #define     power0Out   VOut0/100*IOut0/10
@@ -46,7 +49,8 @@ void main(void)
     int16_t         power1OutOld    =   0;
     
     uint16_t        dutyCycle6      =   1023;                   // 126 is midpoint, allow adjusting up or down
-    uint16_t        dutyCycle7      =   512;                    // 126 is midpoint, allow adjusting up or down
+    uint16_t        dutyCycle7      =   256;                    // 126 is midpoint, allow adjusting up or down
+    uint16_t        dutyCycle1      =   60;                     // 30 is required for minimum speed
     
     uint8_t         j               =   0;
 
@@ -59,6 +63,7 @@ void main(void)
     extern int16_t  Vref;                                       // setpoint for voltage output
     extern int16_t  Iref;
     uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
+    int8_t          toggle          =   1;
     
     SYSTEM_Initialize();
     
@@ -66,6 +71,8 @@ void main(void)
     
     void calculateCurrent0(void);
     void calculateCurrent1(void);
+    void calculateCurrent2(void);
+    void calculateCurrent3(void);
     
     // </editor-fold>
 /*    
@@ -102,10 +109,7 @@ void main(void)
         {
             if(Imode0)
             {
-                if(VIn0<MPPT0)
-//                if(VIn0<3150)
-//                if(VIn0<3164)                             // 3164 is actual MPPT of Panel
-//                if(VIn0<2300)
+                if(VIn0<MPPT0)                             // 3164 is actual MPPT of Panel
                 {
                     if(PWM0<1023)
                     {
@@ -117,9 +121,7 @@ void main(void)
                     PWM0-=1;
                 }
                 
-                if(VIn1<MPPT1)
-//                if(VIn0<3164)                             // 3164 is actual MPPT of Panel
-//                if(VIn0<2300)
+                if(VIn1<MPPT1)                             // 3164 is actual MPPT of Panel
                 {
                     if(PWM1<252)
                     {
@@ -214,19 +216,49 @@ void main(void)
             }
             fastLoop=0;
             slowLoop+=1;
+            PWM1_LoadDutyValue(PWM2);
             PWM6_LoadDutyValue(PWM0);
             PWM7_LoadDutyValue(PWM1);
             menuButton = readButton();
-            if(menuButton == Down) if(MPPT0>2800)MPPT0-=10;
-            if(menuButton == Up)if(MPPT0<3400)MPPT0+=10;
+//            if(menuButton == Down) if(MPPT0>2800)MPPT0-=10;
+  //          if(menuButton == Up)if(MPPT0<3400)MPPT0+=10;
+            
+/*            if(PWM2<500)
+            {
+                PWM2+=toggle;
+            }
+            if(PWM2<10 || PWM2 >475)
+            {
+                toggle=0-toggle;
+            }
+  */          
+            if(menuButton == Down) if(PWM2<600)PWM2+=1;
+            if(menuButton == Up)if(PWM2>10)PWM2-=11;
             if(menuButton == Enter)LCDInit();
         }
         fastLoop+=1;
         
         if(slowLoop>50)
         {
+            if(IOutTotal>70)
+            {
+                PWM2=40;
+            }
+            else if(IOutTotal>30)
+            {
+                if(PWM2==0)
+                {
+                    PWM2=35;
+                }
+                else
+                {
+                    PWM2=25;
+                }
+            }
+            else PWM2 = 0;
+                        
             displayRefresh+=1;
-            if(displayRefresh>60)
+            if(displayRefresh>80)
             {
                 LCDClear();
                 displayRefresh=0;
@@ -236,9 +268,7 @@ void main(void)
             efficiency=(float)power0Out;
             efficiency/=(float)power0In;
             efficiency*=100;
-            
             LCDWriteCharacter(' ');
-//            efficiency*=100;
 //            LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
   //          LCDWriteIntXY(20,0,ADCRead(22),4,0,0);
     //        LCDWriteIntXY(0,1,ADCRead(21),4,0,0);
@@ -253,7 +283,7 @@ void main(void)
             
             LCDWriteIntXY(0,0,batteryTemp,4,1,0);
             LCDWriteStringXY(24,0,"Eff:");
-            LCDWriteIntXY(60,0,efficiency,5,0,0);
+            LCDWriteIntXY(60,0,(int16_t)efficiency,5,0,0);
 //            LCDWriteIntXY(28,0,analogs[4],4,0,0);
   //          LCDWriteIntXY(48,0,analogs[5],4,0,0);
             LCDWriteIntXY(0,1,VIn0,4,2,0);
@@ -277,8 +307,9 @@ void main(void)
             
             LCDWriteIntXY(0,4,power0Out,3,0,0);
             LCDWriteCharacter('W');
-            LCDWriteIntXY(32,4,power0OutOld,3,0,0);
+            LCDWriteIntXY(24,4,power0OutOld,3,0,0);
             LCDWriteCharacter('W');
+            LCDWriteIntXY(48,5,MPPT0,4,0,0);
             
 //            LCDWriteIntXY(0,3,VIn1,4,2,0);
   //          LCDWriteCharacter('V');
@@ -288,7 +319,7 @@ void main(void)
           //  LCDWriteIntXY(28,4,IOut1,4,0,0);
             LCDWriteIntXY(0,5,PWM0,4,0,0);
             LCDWriteIntXY(24,5,PWM1,4,0,0);
-            LCDWriteIntXY(48,5,MPPT0,4,0,0);
+            LCDWriteIntXY(48,5,PWM2,4,0,0);
             LCDWriteIntXY(74,5,Fault,1,0,0);
 
             if(battery_state > FINISHED)
@@ -323,3 +354,28 @@ void calculateCurrent1(void)
         current[1]=(int16_t)((analogs[5]-578)/3.2323);
     }
 }
+
+void calculateCurrent2(void)
+{
+    if(analogs[6]-589<=0)
+    {
+        current[2]=0;
+    }
+    else
+    {
+        current[0]=(int16_t)((analogs[4]-589)/1.3165);
+    }
+}
+
+void calculateCurrent3(void)
+{
+    if(analogs[7]-578<=0)
+    {
+        current[3]=0;
+    }
+    else
+    {
+        current[1]=(int16_t)((analogs[5]-578)/3.2323);
+    }
+}
+

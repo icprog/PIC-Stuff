@@ -12,9 +12,9 @@
 
 #ifdef PRESET1
 
-    #define CHARGING_VOLTAGE		1400	//14.00V
-//    #define CHARGING_VOLTAGE		1350	//14.40V
-	#define	FLOATING_VOLTAGE		1340	//13.40V
+    #define CHARGING_VOLTAGE		1425	//14.25V
+//    #define CHARGING_VOLTAGE		1440	//14.40V
+	#define	FLOATING_VOLTAGE		1380	//13.80V
 	#define	CUTOFF_VOLTAGE			1075	//10.75V
 
 	#define	ILIM_PRECHARGE			10      //1A, Small current set at PRECHARGE stage

@@ -17509,16 +17509,15 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 311
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 26 "battery_charger.h"
+# 29 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 50
+# 53
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
 void cc_cv_mode();
-void pid(uint16_t feedback, uint16_t setpoint);
 
 # 12 "buttons.h"
 uint8_t readButton(void);
@@ -17558,8 +17557,10 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
+void PWM1_LoadDutyValue(uint16_t dutyCycle1);
+
 # 6 "tempCalc.h"
-int tempCalc(int analogValue);
+int16_t tempCalc(int16_t analogValue);
 
 # 17 "tmr.h"
 void TMR2_Initialize(void);
@@ -17571,13 +17572,12 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 50 "battery_charger.h"
+# 53 "battery_charger.h"
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
 void cc_cv_mode();
-void pid(uint16_t feedback, uint16_t setpoint);
 
 # 3 "battery_charger.c"
 uint8_t battery_state;
@@ -17591,6 +17591,7 @@ uint16_t warmup;
 int16_t Iout;
 
 int8_t Imode0 = 1;
+int8_t Imode1 = 1;
 uint8_t cc_cv;
 
 int16_t voltage[4] = {0};
@@ -17605,7 +17606,7 @@ battery_state = PRECHARGE;
 state_counter = 600;
 
 { Iref = 10; };
-{ Vref = 1400; };
+{ Vref = 1425; };
 
 Imin = 20;
 IminCount = 10;
@@ -17638,21 +17639,21 @@ if((!Imode0))
 {
 if(current[1] < Imin)
 {
-IminCount-=1;
-if(!IminCount)
+IminCount-=2;
+if(IminCount<2)
 {
 battery_state = FLOAT;
 }
 }
 else
 {
-if(IminCount<10)IminCount += 2;
+if(IminCount<10)IminCount+=1;
 }
 }
 }
 else if(battery_state == FLOAT)
 {
-{ Vref = 1340; };
+{ Vref = 1380; };
 { Iref = 20; };
 }
 else
@@ -17687,11 +17688,11 @@ if(!Imode0)
 if(battery_state == FLOAT)
 {
 battery_state=CHARGE;
-{ Vref = 1400; };
+{ Vref = 1425; };
 { Iref = 40; };
 }
 Imode0 = 1;
-cc_cv = 3;
+cc_cv = 30;
 }
 }
 }

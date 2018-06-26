@@ -13145,12 +13145,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 267: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 289: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 311: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 26: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
-[; ;battery_charger.h: 50: extern uint8_t battery_state;
-[; ;battery_charger.h: 52: void Init_Battery_State_Machine(void);
-[; ;battery_charger.h: 53: void Battery_State_Machine(void);
-[; ;battery_charger.h: 54: void cc_cv_mode();
-[; ;battery_charger.h: 55: void pid(uint16_t feedback, uint16_t setpoint);
+[; ;battery_charger.h: 29: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;battery_charger.h: 53: extern uint8_t battery_state;
+[; ;battery_charger.h: 55: void Init_Battery_State_Machine(void);
+[; ;battery_charger.h: 56: void Battery_State_Machine(void);
+[; ;battery_charger.h: 57: void cc_cv_mode();
 [; ;buttons.h: 12: uint8_t readButton(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
@@ -13164,11 +13163,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
+[; ;pwm.h: 13: void PWM1_LoadDutyValue(uint16_t dutyCycle1);
 [; ;tmr.h: 17: void TMR2_Initialize(void);
 [; ;tmr.h: 19: void TMR4_Initialize(void);
 [; ;system.h: 19: void SYSTEM_Initialize(void);
 [; ;system.h: 21: void OSCILLATOR_Initialize(void);
-[; ;tempCalc.h: 6: int tempCalc(int analogValue);
+[; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
 [; ;math.h: 30: extern double fabs(double);
 [; ;math.h: 31: extern double floor(double);
 [; ;math.h: 32: extern double ceil(double);
@@ -13199,7 +13199,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _tempCalc `(i ~T0 @X0 1 ef1`i ]
 "5
 {
-[; ;tempCalc.c: 4: int tempCalc(int analogValue)
+[; ;tempCalc.c: 4: int16_t tempCalc(int16_t analogValue)
 [; ;tempCalc.c: 5: {
 [e :U _tempCalc ]
 "4
@@ -13237,7 +13237,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tempCalc.c: 21: steinhart = steinhart*9/5+320;
 "21
 [e = _steinhart + / * _steinhart -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
-[; ;tempCalc.c: 23: return (int)steinhart;
+[; ;tempCalc.c: 23: return (int16_t)steinhart;
 "23
 [e ) -> _steinhart `i ]
 [e $UE 1563  ]

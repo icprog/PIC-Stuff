@@ -17509,16 +17509,15 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 311
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 26 "battery_charger.h"
+# 29 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 50
+# 53
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
 void cc_cv_mode();
-void pid(uint16_t feedback, uint16_t setpoint);
 
 # 12 "buttons.h"
 uint8_t readButton(void);
@@ -17552,7 +17551,7 @@ void LCDWrite(uint8_t data_or_command, uint8_t data);
 void PIN_MANAGER_Initialize (void);
 
 # 6 "tempCalc.h"
-int tempCalc(int analogValue);
+int16_t tempCalc(int16_t analogValue);
 
 # 17 "tmr.h"
 void TMR2_Initialize(void);
@@ -17570,6 +17569,8 @@ void PWM_Initialize(void);
 void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
+
+void PWM1_LoadDutyValue(uint16_t dutyCycle1);
 
 # 3 "pwm.c"
 void PWM_Initialize(void)
@@ -17591,6 +17592,11 @@ PWM7DCL = 0x00;
 
 CCPTMRS1bits.P7TSEL = 0x02;
 
+
+CCP1CONbits.CCP1EN = 1;
+CCP1CONbits.CCP1FMT = 1;
+CCP1CONbits.CCP1MODE = 0xF;
+CCPTMRS0bits.C1TSEL = 0x1;
 }
 
 
@@ -17606,4 +17612,10 @@ void PWM7_LoadDutyValue(uint16_t dutyCycle7)
 PWM7DCH = (dutyCycle7 & 0x03FC)>>2;
 
 PWM7DCL = (dutyCycle7 & 0x0003)<<6;
+}
+
+void PWM1_LoadDutyValue(uint16_t dutyCycle1)
+{
+CCPR1H = (dutyCycle1& 0x03FC)>>2;
+CCPR1L = (dutyCycle1 & 0x0003)<<6;
 }

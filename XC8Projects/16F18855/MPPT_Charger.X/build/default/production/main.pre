@@ -17509,16 +17509,15 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 311
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 26 "battery_charger.h"
+# 29 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 50
+# 53
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
 void cc_cv_mode();
-void pid(uint16_t feedback, uint16_t setpoint);
 
 # 12 "buttons.h"
 uint8_t readButton(void);
@@ -17558,8 +17557,10 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
+void PWM1_LoadDutyValue(uint16_t dutyCycle1);
+
 # 6 "tempCalc.h"
-int tempCalc(int analogValue);
+int16_t tempCalc(int16_t analogValue);
 
 # 17 "tmr.h"
 void TMR2_Initialize(void);
@@ -17571,12 +17572,12 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 29 "main.c"
+# 32 "main.c"
 int16_t analogs[8] = {0,0,0,0,0,0,0,0};
 extern int16_t voltage[4];
 extern int16_t current[4];
 
-# 39
+# 42
 void main(void)
 {
 int16_t MPPT0 = 3164;
@@ -17587,7 +17588,8 @@ int16_t power0OutOld = 0;
 int16_t power1OutOld = 0;
 
 uint16_t dutyCycle6 = 1023;
-uint16_t dutyCycle7 = 512;
+uint16_t dutyCycle7 = 256;
+uint16_t dutyCycle1 = 60;
 
 uint8_t j = 0;
 
@@ -17600,6 +17602,7 @@ extern int8_t Imode0;
 extern int16_t Vref;
 extern int16_t Iref;
 uint8_t menuButton = 0;
+int8_t toggle = 1;
 
 SYSTEM_Initialize();
 
@@ -17607,8 +17610,10 @@ LCDClear();
 
 void calculateCurrent0(void);
 void calculateCurrent1(void);
+void calculateCurrent2(void);
+void calculateCurrent3(void);
 
-# 82
+# 89
 while (1)
 {
 for(j=0;j<8;j++) analogs[j]=readAnalog(j);
@@ -17618,7 +17623,7 @@ voltage[0]=(int16_t)(analogs[0]/.20885);
 
 voltage[1]=(int16_t)(analogs[1]/.54503);
 
-# 95
+# 102
 calculateCurrent0();
 
 
@@ -17630,9 +17635,6 @@ if(fastLoop>2)
 if(Imode0)
 {
 if(voltage[0]<MPPT0)
-
-
-
 {
 if(dutyCycle6<1023)
 {
@@ -17645,8 +17647,6 @@ dutyCycle6-=1;
 }
 
 if(voltage[2]<MPPT1)
-
-
 {
 if(dutyCycle7<252)
 {
@@ -17658,12 +17658,12 @@ else if(dutyCycle7>0)
 
 }
 
-# 165
+# 167
 power0OutOld=voltage[1]/100*current[1]/10;
 VIn0_Old=voltage[0];
 
-# 191
-power1OutOld=voltage[3]*analogs[7];
+# 193
+power1OutOld=voltage[3]*current[3];
 VIn1_Old=voltage[2];
 }
 else
@@ -17689,19 +17689,39 @@ else
 }
 fastLoop=0;
 slowLoop+=1;
+PWM1_LoadDutyValue(dutyCycle1);
 PWM6_LoadDutyValue(dutyCycle6);
 PWM7_LoadDutyValue(dutyCycle7);
 menuButton = readButton();
-if(menuButton == 2) if(MPPT0>2800)MPPT0-=10;
-if(menuButton == 3)if(MPPT0<3400)MPPT0+=10;
+
+# 235
+if(menuButton == 2) if(dutyCycle1<600)dutyCycle1+=1;
+if(menuButton == 3)if(dutyCycle1>10)dutyCycle1-=11;
 if(menuButton == 1)LCDInit();
 }
 fastLoop+=1;
 
 if(slowLoop>50)
 {
+if(current[1]+current[3]>70)
+{
+dutyCycle1=40;
+}
+else if(current[1]+current[3]>30)
+{
+if(dutyCycle1==0)
+{
+dutyCycle1=35;
+}
+else
+{
+dutyCycle1=25;
+}
+}
+else dutyCycle1 = 0;
+
 displayRefresh+=1;
-if(displayRefresh>60)
+if(displayRefresh>80)
 {
 LCDClear();
 displayRefresh=0;
@@ -17711,13 +17731,12 @@ Battery_State_Machine();
 efficiency=(float)voltage[1]/100*current[1]/10;
 efficiency/=(float)voltage[0]/100*current[0]/10;
 efficiency*=100;
-
 LCDWriteCharacter(' ');
 
-# 254
+# 284
 { gotoXY(0,0); LCDWriteInt(batteryTemp,4, 1, 0);};
 { gotoXY(24,0); LCDWriteString("Eff:");};
-{ gotoXY(60,0); LCDWriteInt(efficiency,5, 0, 0);};
+{ gotoXY(60,0); LCDWriteInt((int16_t)efficiency,5, 0, 0);};
 
 
 { gotoXY(0,1); LCDWriteInt(voltage[0],4, 2, 0);};
@@ -17741,13 +17760,14 @@ LCDWriteCharacter('A');
 
 { gotoXY(0,4); LCDWriteInt(voltage[1]/100*current[1]/10,3, 0, 0);};
 LCDWriteCharacter('W');
-{ gotoXY(32,4); LCDWriteInt(power0OutOld,3, 0, 0);};
+{ gotoXY(24,4); LCDWriteInt(power0OutOld,3, 0, 0);};
 LCDWriteCharacter('W');
+{ gotoXY(48,5); LCDWriteInt(MPPT0,4, 0, 0);};
 
-# 289
+# 320
 { gotoXY(0,5); LCDWriteInt(dutyCycle6,4, 0, 0);};
 { gotoXY(24,5); LCDWriteInt(dutyCycle7,4, 0, 0);};
-{ gotoXY(48,5); LCDWriteInt(MPPT0,4, 0, 0);};
+{ gotoXY(48,5); LCDWriteInt(dutyCycle1,4, 0, 0);};
 { gotoXY(74,5); LCDWriteInt(!RB2,1, 0, 0);};
 
 if(battery_state > FINISHED)
@@ -17782,3 +17802,28 @@ else
 current[1]=(int16_t)((analogs[5]-578)/3.2323);
 }
 }
+
+void calculateCurrent2(void)
+{
+if(analogs[6]-589<=0)
+{
+current[2]=0;
+}
+else
+{
+current[0]=(int16_t)((analogs[4]-589)/1.3165);
+}
+}
+
+void calculateCurrent3(void)
+{
+if(analogs[7]-578<=0)
+{
+current[3]=0;
+}
+else
+{
+current[1]=(int16_t)((analogs[5]-578)/3.2323);
+}
+}
+

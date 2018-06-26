@@ -11,6 +11,7 @@ uint16_t            warmup;
 int16_t             Iout;
 //uint16_t            Vout;
 int8_t              Imode0          =   1;
+int8_t              Imode1          =   1;
 uint8_t             cc_cv;
 
 int16_t             voltage[4]      =   {0};                    // Store calculated Voltage values
@@ -56,17 +57,17 @@ void Battery_State_Machine()
 	{
 		if(CONSTANT_VOLTAGE0)                           // Mode is "Voltage Mode", not "Current Mode", So we are applying Topping current
 		{
-			if(ISENSE0 < Imin)
+			if(ISENSE0 < Imin)      // || ISENSE1 < Imin)
 			{
-                IminCount-=1;
-                if(!IminCount)                          // Current has been low for at least IminCount cycles (600 cycles, or about 10 minutes)
+                IminCount-=2;
+                if(IminCount<2)                          // Current has been low for at least IminCount cycles (600 cycles, or about 10 minutes)
                 {
                     battery_state = FLOAT;              // Switch to Float Charging Mode    
                 }
 			}
             else
 			{
-				if(IminCount<IminUpdate)IminCount += 2; // Keep us from going into Float because of sporadic sun
+				if(IminCount<IminUpdate)IminCount+=1; // Keep us from going into Float because of sporadic sun
 			}
 		}
 	} 
