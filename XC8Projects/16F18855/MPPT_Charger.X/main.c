@@ -14,8 +14,6 @@
 #define IIn1            current[2]
 #define IOut1           current[3]
 
-#define IOutTotal       IOut0+IOut1
-    
 #define     Fault       !RB2
 #define     PWM0        dutyCycle6
 #define     PWM1        dutyCycle7
@@ -41,17 +39,14 @@ extern int16_t  current[4];                    // Store Calculated Current Value
 
 void main(void)
 {
-    int16_t         MPPT0           =   3164;
-    int16_t         MPPT1           =   3164;
-    int16_t         VIn0_Old        =   0;
-    int16_t         VIn1_Old        =   0;
-    int16_t         power0OutOld    =   0;
-    int16_t         power1OutOld    =   0;
+    int16_t         MPPT0           =   3144;
+    int16_t         MPPT1           =   3144;
     
     uint16_t        dutyCycle6      =   1023;                   // 126 is midpoint, allow adjusting up or down
     uint16_t        dutyCycle7      =   256;                    // 126 is midpoint, allow adjusting up or down
     uint16_t        dutyCycle1      =   60;                     // 30 is required for minimum speed
-    
+    int16_t         IOutTotal       =   0;
+
     uint8_t         j               =   0;
 
     uint8_t         fastLoop        =   0;
@@ -63,6 +58,7 @@ void main(void)
     extern int16_t  Vref;                                       // setpoint for voltage output
     extern int16_t  Iref;
     uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
+    uint8_t         faultReset      =   0;                      // Automatically Reset Current Fault latch
     
     SYSTEM_Initialize();
     
@@ -131,67 +127,7 @@ void main(void)
                 {
   //                  PWM1-=1;
                 }
-                
- //                if(power0Out>power0OutOld)
-  //              {
-    //                if(VIn0>VIn0_Old)
-      //              {
-        //                if(PWM0>0) PWM0-=1;;
-//                        if(PWM0<252) PWM0+=1;
-//                        PWM0+=1;
-          //          }
-            //        else
-              //      {
-                //        if(PWM0<252) PWM0+=1;
-  //                      if(PWM0>0) PWM0-=1;;
-//                        PWM0-=1;
-                  //  }
-//                }
-  //              else
-    //            {
-      //              if(VIn0>VIn0_Old)
-        //            {
-          //              if(PWM0<252) PWM0+=1;
-//                        if(PWM0>0) PWM0-=1;;
-//                        PWM0-=1;
-            //        }
-              //      else
-                //    {
-                  //      if(PWM0>0) PWM0-=1;;
-//                        if(PWM0<252) PWM0+=1;
-//                        PWM0+=1;
-                    //}
-                //}
-                
-                power0OutOld=power0Out;
-                VIn0_Old=VIn0;
-                
-/*                if(power1Out>power1OutOld)
-                {
-                    if(VIn1>VIn1_Old)
-                    {
-                        PWM1+=1;
-                    }
-                    else
-                    {
-                        PWM1-=1;
-                    }
-                }
-                else
-                {
-                    if(VIn1>VIn1_Old)
-                    {
-                        PWM1-=1;
-                    }
-                    else
-                    {
-                        PWM1+=1;
-                    }
-                }
-  */
-                power1OutOld=power1Out;
-                VIn1_Old=VIn1;
-            }
+           }
             else
             {
                 if(VOut0>(int16_t)Vref)
@@ -229,29 +165,32 @@ void main(void)
         
         if(slowLoop>50)
         {
-            if(IOutTotal>70)
+            
+            IOutTotal=IOut0+IOut1;
+            
+            if(IOutTotal>20)
             {
-                PWM2=40;
+                PWM2=(uint16_t)IOutTotal/2+10;
             }
-            else if(IOutTotal>30)
+            else
             {
-                if(PWM2==0)
-                {
-                    PWM2=35;
-                }
-                else
-                {
-                    PWM2=25;
-                }
+                PWM2=0;
             }
-            else PWM2 = 0;
-                        
+            if(Fault==1)PWM2=55;                                                // Fault is the current sensors,can only be reset by resetting Processor
+//            if(Fault==1)RESET();                                                // Fault is the current sensors,can only be reset by resetting Processor
+                         
             displayRefresh+=1;
             if(displayRefresh>80)
             {
                 LCDClear();
                 displayRefresh=0;
                 batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB2
+                faultReset+=1;
+                if(faultReset>29)
+                {
+                    RESET();
+                    faultReset=0;
+                }
             }
             Battery_State_Machine();
             efficiency=(float)power0Out;
@@ -271,15 +210,15 @@ void main(void)
   //          LCDWriteIntXY(20,2,ADCRead(15),4,0,0);
             
             LCDWriteIntXY(0,0,batteryTemp,4,1,0);
-            LCDWriteStringXY(24,0,"Eff:");
-            LCDWriteIntXY(60,0,(int16_t)efficiency,5,0,0);
-//            LCDWriteIntXY(28,0,analogs[4],4,0,0);
-  //          LCDWriteIntXY(48,0,analogs[5],4,0,0);
+  //          LCDWriteStringXY(24,0,"Eff:");
+//            LCDWriteIntXY(60,0,(int16_t)efficiency,5,0,0);
+            LCDWriteIntXY(28,0,analogs[4],4,0,0);
+            LCDWriteIntXY(48,0,analogs[5],4,0,0);
             LCDWriteIntXY(0,1,VIn0,4,2,0);
             LCDWriteCharacter('V');
             LCDWriteIntXY(28,1,IIn0,3,1,0);
             LCDWriteCharacter('A');
-            LCDWriteIntXY(56,1,ADCRead(11),4,0,0);                              // Read Buttons
+//            LCDWriteIntXY(56,1,ADCRead(11),4,0,0);                              // Read Buttons
             LCDWriteIntXY(0,2,VOut0,4,2,0);
             LCDWriteCharacter('V');
             LCDWriteIntXY(28,2,IOut0,3,1,0);
@@ -296,9 +235,9 @@ void main(void)
             
             LCDWriteIntXY(0,4,power0Out,3,0,0);
             LCDWriteCharacter('W');
-            LCDWriteIntXY(24,4,power0OutOld,3,0,0);
+//            LCDWriteIntXY(24,4,power0OutOld,3,0,0);
             LCDWriteCharacter('W');
-            LCDWriteIntXY(48,5,MPPT0,4,0,0);
+            LCDWriteIntXY(48,4,MPPT0,4,0,0);
             
 //            LCDWriteIntXY(0,3,VIn1,4,2,0);
   //          LCDWriteCharacter('V');

@@ -7,7 +7,7 @@
 #define		CONSTANT_VOLTAGE0	(!Imode0)
 #define		CONSTANT_VOLTAGE1	(!Imode1)
 //#define		I_BAT_DETECT		16 
-#define		CURRENT_MODE		30                           // Number of slowLoop cycles Voltage is over Vref before we drop back to "Voltage Mode" from "Current Mode"
+#define		CURRENT_MODE		10                           // Number of slowLoop cycles Voltage is over Vref before we drop back to "Voltage Mode" from "Current Mode"
 
 //#define		TRIS_PWM0Out        TRISA6
 //#define		TRIS_PWM1Out       	TRISA7
