@@ -2,7 +2,7 @@
 
 void TMR2_Initialize(void)
 {
-    T2CON = 0x00;                   // T2CKPS 1:64 Clock PreScaler; T2OUTPS 1:1 Out PostScaler; TMR2ON off; 4MHz/4=1MHz/256(PR2)=3906.25Hz/64=61Hz!!
+    T2CON = 0x00;                   // T2CKPS 1:1 Clock PreScaler; T2OUTPS 1:1 Out PostScaler; TMR2ON off; 
     
     T2CLKCON = 0x01;                // Pg 440, T2CS(T2 Clock Source) FOSC/4, MUST be FOSC/4 for PWM to function; 
     
@@ -18,6 +18,25 @@ void TMR2_Initialize(void)
 
     T2CONbits.TMR2ON = 1;           // Start the Timer by writing to TMRxON bit
 }
+/*void TMR4_Initialize(void)
+{
+//    T4CON = 0x7F;                   // T2CKPS 1:128 Clock PreScaler; T2OUTPS 1:16 Out PostScaler; TMR2ON off;
+    T4CON = 0x00;                   // T2CKPS 1:1Clock PreScaler; T2OUTPS 1:1 Out PostScaler; TMR2ON off;
+    
+    T4CLKCON = 0x01;                // Pg 440, T2CS(T2 Clock Source) FOSC/4, MUST be FOSC/4 for PWM to function; 
+    
+    T4HLT = 0x00;                   // Pg 442, Hardware Limit Cntrl, T2PSYNC Not Synchronized; T2MODE Software control; T2CKPOL Ris ing Edge; T2CKSYNC Not Synchronized;
+                                    // Setup as freerunning software gated
+    T4RST = 0x00;                   // Pg 443, External Reset Source, T2RSEL T2CKIPPS pin;
+
+    T4PR = 0xFF;                    // Period register, PR2 255 
+
+    T4TMR = 0x00;                   // TMR4 0; Timer4 Preset, resets to zero on a Timer overflow
+    
+    PIR4bits.TMR4IF = 0;            // Clearing IF flag.
+
+    T4CONbits.TMR4ON = 1;           // Start the Timer by writing to TMRxON bit
+}*/
 /*
 void TMR2_ModeSet(TMR2_HLT_MODE mode)
 {

@@ -18,7 +18,7 @@ typedef enum
     channel_FVR =   0x3F
 } adcc_channel_t;                                   //   This routine defines the channels that are available for the module to use.
 
-int readAnalog(int channel);
+int16_t readAnalog(uint8_t channel);
 
 void ADCC_Initialize(void);
 

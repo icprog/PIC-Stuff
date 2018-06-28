@@ -17429,7 +17429,7 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 262 "tmr2.h"
+# 6 "tmr2.h"
 void TMR2_Initialize(void);
 
 # 4 "menu.h"
@@ -17450,13 +17450,13 @@ int16_t PID_Calculate(int16_t setpoint, int16_t temp);
 # 38 "lcd.h"
 void InitCustomChars();
 
-void LCD_Port(char a);
+void LCD_Port(uint8_t a);
 
-void LCD_Cmd(char a);
+void LCD_Cmd(uint8_t a);
 
 void LCD_Clear();
 
-void LCD_Set_Cursor(char x, char y);
+void LCD_Set_Cursor(uint8_t x, uint8_t y);
 
 void LCD_Init(char style);
 
@@ -17464,7 +17464,7 @@ void LCD_Write_Char(const char a);
 
 void LCD_Write_String(const char *a);
 
-void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
 
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
@@ -17482,7 +17482,7 @@ channel_DAC1 = 0x3E,
 channel_FVR = 0x3F
 } adcc_channel_t;
 
-int readAnalog(int channel);
+int16_t readAnalog(uint8_t channel);
 
 void ADCC_Initialize(void);
 
@@ -17550,68 +17550,67 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 6 "tempCalc.h"
-int tempCalc(int analogValue);
+int16_t tempCalc(int16_t analogValue);
 
 # 19 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 29 "main.c"
+# 19 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
 
-uint16_t analogs[2] = {0};
+int16_t analogs[2] = {0};
 
-extern int16_t setpoint[2];
+extern uint16_t setpoint[2];
 
-# 43
-int output = 0;
+int16_t output = 0;
 
 int32_t outputTotal = 0;
 
-char outputIndex = 0;
+uint8_t outputIndex = 0;
 
-int16_t outputSamples[10]= {0};
+int16_t outputSamples[10] = {0};
 
-char holdOutput = 0;
+uint8_t holdOutput = 0;
 
-int currentTemperature = 750;
+int16_t currentTemperature = 750;
 
-int lastTemperature = 750;
+int16_t lastTemperature = 750;
 
-char lidOpenCount = 0;
+uint8_t lidOpenCount = 0;
 
+uint8_t j = 0;
 
+uint8_t x = 0;
 
-char j = 0;
+extern uint8_t loop;
 
-char x = 0;
-
-int pidPeriodCounter = 0;
-
-extern int pidMaxOutput;
-
-extern unsigned char loop;
-
-# 84
 uint16_t viperFanOut = 0;
 
-# 90
+extern int16_t errorValue;
+
+extern int16_t integralValue;
+
+extern int16_t oldError;
+
+extern int16_t derivativeValue;
+
+
+
+PWM6_LoadDutyValue(viperFanOut);
+
 PWM7_LoadDutyValue(setpoint[1]);
 
 _delay((unsigned long)((300)*(32000000/4000.0)));
 
 LCD_Clear();
 
-# 107
+# 79
 while (1)
 {
-extern int16_t errorValue;
-extern int16_t integralValue;
-extern int16_t derivativeValue;
-
 if(loop>253)
 {
 PWM6_LoadDutyValue(viperFanOut);
@@ -17624,26 +17623,26 @@ LCD_Write_Char(' ');
 LCD_Write_Char(' ');
 LCD_Write_Char(' ');
 
-{ LCD_Set_Cursor(0,1); LCD_Write_Int(derivativeValue,5, 0, 0);};
+{ LCD_Set_Cursor(0,1); LCD_Write_Int(derivativeValue,4, 0, 0);};
+
 LCD_Write_Char(' ');
 { LCD_Set_Cursor(6,1); LCD_Write_Int(analogs[1],4, 1, 0);};
 { LCD_Set_Cursor(12,1); LCD_Write_Int(viperFanOut,4, 0, 0);};
 
-# 144
+# 113
 if(holdOutput==0)
 {
 output = PID_Calculate(setpoint[0],analogs[1]);
 outputTotal = outputTotal - outputSamples[outputIndex];
 outputSamples[outputIndex] = output;
 outputTotal = outputTotal + outputSamples[outputIndex];
-viperFanOut = outputTotal/10;
-
+viperFanOut = (uint16_t)(outputTotal/10);
+if(viperFanOut<25)viperFanOut=0;
 outputIndex+=1;
 if(outputIndex >= 10)outputIndex = 0;
 }
 else
 {
-
 holdOutput-=1;
 }
 
@@ -17662,15 +17661,11 @@ lidOpenCount=0;
 if(lastTemperature-currentTemperature>100 || lastTemperature-currentTemperature<-100)
 {
 viperFanOut=0;
-holdOutput=5;
+holdOutput=30;
 }
-
-if(viperFanOut<50)viperFanOut=0;
-
 loop=0;
 }
 
-# 189
 for(j=0;j<2;j++) analogs[j]=readAnalog(j);
 
 analogs[0]=tempCalc(analogs[0]);
@@ -17689,8 +17684,6 @@ LCD_Clear();
 menuChoice();
 _delay((unsigned long)((500)*(32000000/4000.0)));
 }
-
-# 442
 loop+=1;
 }
 }

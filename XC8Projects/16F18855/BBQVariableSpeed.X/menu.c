@@ -12,11 +12,11 @@
 #define enterKey                RB2
 #define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay
 
-int lowRangeSet[2]              =   {750,0};               // lowrangeSet[0] is Pit Temp setpoint lower limit, lowrangeSet[1] is backlight intensity
+uint16_t lowRangeSet[2]         =   {750,0};               // lowrangeSet[0] is Pit Temp setpoint lower limit, lowrangeSet[1] is backlight intensity
 
-int highRangeSet[2]             =   {2750,1023};           // highRangeSet[0] is Pit Temp setpoint upper limit, highRangeSet[1] is backlight intensity
+uint16_t highRangeSet[2]        =   {2750,1023};           // highRangeSet[0] is Pit Temp setpoint upper limit, highRangeSet[1] is backlight intensity
 
-int16_t setpoint[2]             =   {2150,523};            // default startup setpoints for Pit temp & backlight
+uint16_t setpoint[2]            =   {750,523};            // default startup setpoints for Pit temp & backlight
 
 char const *desc[]              =   {" Pit Temp:","BackLight:"};
 

@@ -9,7 +9,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCC_Initialize `(v ~T0 @X0 0 ef ]
 "7 pwm.h
 [v _PWM_Initialize `(v ~T0 @X0 0 ef ]
-"262 tmr2.h
+"6 tmr2.h
 [v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
 "48 lcd.h
 [v _LCD_Init `(v ~T0 @X0 0 ef1`uc ]
@@ -13183,7 +13183,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
-[; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;tmr2.h: 6: void TMR2_Initialize(void);
 [; ;menu.h: 4: void menuChoice(void);
 [; ;menu.h: 6: char readKey(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
@@ -13191,14 +13191,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
 [; ;pid.h: 14: int16_t PID_Calculate(int16_t setpoint, int16_t temp);
 [; ;lcd.h: 38: void InitCustomChars();
-[; ;lcd.h: 40: void LCD_Port(char a);
-[; ;lcd.h: 42: void LCD_Cmd(char a);
+[; ;lcd.h: 40: void LCD_Port(uint8_t a);
+[; ;lcd.h: 42: void LCD_Cmd(uint8_t a);
 [; ;lcd.h: 44: void LCD_Clear();
-[; ;lcd.h: 46: void LCD_Set_Cursor(char x, char y);
+[; ;lcd.h: 46: void LCD_Set_Cursor(uint8_t x, uint8_t y);
 [; ;lcd.h: 48: void LCD_Init(char style);
 [; ;lcd.h: 50: void LCD_Write_Char(const char a);
 [; ;lcd.h: 52: void LCD_Write_String(const char *a);
-[; ;lcd.h: 54: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+[; ;lcd.h: 54: void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
 [; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;adc.h: 9: typedef uint16_t adc_result_t;
 [; ;adc.h: 12: typedef enum
@@ -13208,7 +13208,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 17: channel_DAC1 = 0x3E,
 [; ;adc.h: 18: channel_FVR = 0x3F
 [; ;adc.h: 19: } adcc_channel_t;
-[; ;adc.h: 21: int readAnalog(int channel);
+[; ;adc.h: 21: int16_t readAnalog(uint8_t channel);
 [; ;adc.h: 23: void ADCC_Initialize(void);
 [; ;adc.h: 25: void ADCC_StartConversion(adcc_channel_t channel);
 [; ;adc.h: 27: bool ADCC_IsConversionDone();
@@ -13236,7 +13236,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 262: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 284: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;tempCalc.h: 6: int tempCalc(int analogValue);
+[; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
 [; ;system.h: 19: void SYSTEM_Initialize(void);
 [; ;system.h: 21: void OSCILLATOR_Initialize(void);
 "71 system.c
@@ -13265,52 +13265,52 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 79: TMR2_Initialize();
 "79
 [e ( _TMR2_Initialize ..  ]
-[; ;system.c: 80: LCD_Init(0X00);
-"80
-[e ( _LCD_Init (1 -> -> 0 `i `uc ]
-[; ;system.c: 81: _delay((unsigned long)((200)*(32000000/4000.0)));
+[; ;system.c: 81: LCD_Init(0X00);
 "81
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;system.c: 82: LCD_Clear();
+[e ( _LCD_Init (1 -> -> 0 `i `uc ]
+[; ;system.c: 82: _delay((unsigned long)((200)*(32000000/4000.0)));
 "82
-[e ( _LCD_Clear ..  ]
-[; ;system.c: 83: _delay((unsigned long)((100)*(32000000/4000.0)));
-"83
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;system.c: 84: InitCustomChars();
-"84
-[e ( _InitCustomChars ..  ]
-[; ;system.c: 85: _delay((unsigned long)((200)*(32000000/4000.0)));
-"85
 [e ( __delay (1 -> * -> -> 200 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;system.c: 87: }
-"87
+[; ;system.c: 83: LCD_Clear();
+"83
+[e ( _LCD_Clear ..  ]
+[; ;system.c: 84: _delay((unsigned long)((100)*(32000000/4000.0)));
+"84
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[; ;system.c: 85: InitCustomChars();
+"85
+[e ( _InitCustomChars ..  ]
+[; ;system.c: 86: _delay((unsigned long)((200)*(32000000/4000.0)));
+"86
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[; ;system.c: 88: }
+"88
 [e :UE 1563 ]
 }
-"89
-[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
 "90
+[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
+"91
 {
-[; ;system.c: 89: void OSCILLATOR_Initialize(void)
-[; ;system.c: 90: {
+[; ;system.c: 90: void OSCILLATOR_Initialize(void)
+[; ;system.c: 91: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;system.c: 91: OSCCON1 = 0x60;
-"91
-[e = _OSCCON1 -> -> 96 `i `uc ]
-[; ;system.c: 92: OSCCON3 = 0x00;
+[; ;system.c: 92: OSCCON1 = 0x60;
 "92
-[e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 93: OSCEN = 0x00;
+[e = _OSCCON1 -> -> 96 `i `uc ]
+[; ;system.c: 93: OSCCON3 = 0x00;
 "93
-[e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 94: OSCFRQ = 0x06;
+[e = _OSCCON3 -> -> 0 `i `uc ]
+[; ;system.c: 94: OSCEN = 0x00;
 "94
-[e = _OSCFRQ -> -> 6 `i `uc ]
-[; ;system.c: 95: OSCTUNE = 0x00;
+[e = _OSCEN -> -> 0 `i `uc ]
+[; ;system.c: 95: OSCFRQ = 0x06;
 "95
-[e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 96: }
+[e = _OSCFRQ -> -> 6 `i `uc ]
+[; ;system.c: 96: OSCTUNE = 0x00;
 "96
+[e = _OSCTUNE -> -> 0 `i `uc ]
+[; ;system.c: 97: }
+"97
 [e :UE 1564 ]
 }

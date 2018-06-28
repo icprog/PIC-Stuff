@@ -38,7 +38,7 @@ void InitCustomChars()
 }
 
 // ***************************************************************************************************************************************************************
-void LCD_Port(char a)
+void LCD_Port(uint8_t a)
 {
 	if(a & 1)
 		D4 = 1;
@@ -62,7 +62,7 @@ void LCD_Port(char a)
 }
 
 // ***************************************************************************************************************************************************************
-void LCD_Cmd(char a)
+void LCD_Cmd(uint8_t a)
 {
 	RS = 0;             // => RS = 0
 	LCD_Port(a);
@@ -79,11 +79,12 @@ void LCD_Clear()
 }
 
 // ***************************************************************************************************************************************************************
-void LCD_Set_Cursor(char x, char y)
+void LCD_Set_Cursor(uint8_t x, uint8_t y)
 {
 #ifdef LCD_TYPE_2_LINE
 
-    char temp,z,w;
+    uint8_t temp;
+    uint8_t z,w;
     
 	if(y == 0)
 	{                
@@ -243,7 +244,7 @@ void LCD_Write_String(const char *a)
 	   LCD_Write_Char(a[i]);
 }
 // ***************************************************************************************************************************************************************
-void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign)     //writes a integer type value to LCD module
+void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign)     //writes a integer type value to LCD module
 {
 	char str[5]={0,0,0,0,0};            // Integer can be up to 5 characters long
 	int i=4,j=0;

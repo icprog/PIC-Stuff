@@ -13109,7 +13109,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
-[; ;tmr2.h: 262: void TMR2_Initialize(void);
+[; ;tmr2.h: 6: void TMR2_Initialize(void);
 [; ;menu.h: 4: void menuChoice(void);
 [; ;menu.h: 6: char readKey(void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
@@ -13117,14 +13117,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
 [; ;pid.h: 14: int16_t PID_Calculate(int16_t setpoint, int16_t temp);
 [; ;lcd.h: 38: void InitCustomChars();
-[; ;lcd.h: 40: void LCD_Port(char a);
-[; ;lcd.h: 42: void LCD_Cmd(char a);
+[; ;lcd.h: 40: void LCD_Port(uint8_t a);
+[; ;lcd.h: 42: void LCD_Cmd(uint8_t a);
 [; ;lcd.h: 44: void LCD_Clear();
-[; ;lcd.h: 46: void LCD_Set_Cursor(char x, char y);
+[; ;lcd.h: 46: void LCD_Set_Cursor(uint8_t x, uint8_t y);
 [; ;lcd.h: 48: void LCD_Init(char style);
 [; ;lcd.h: 50: void LCD_Write_Char(const char a);
 [; ;lcd.h: 52: void LCD_Write_String(const char *a);
-[; ;lcd.h: 54: void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+[; ;lcd.h: 54: void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
 [; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;adc.h: 9: typedef uint16_t adc_result_t;
 [; ;adc.h: 12: typedef enum
@@ -13134,7 +13134,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 17: channel_DAC1 = 0x3E,
 [; ;adc.h: 18: channel_FVR = 0x3F
 [; ;adc.h: 19: } adcc_channel_t;
-[; ;adc.h: 21: int readAnalog(int channel);
+[; ;adc.h: 21: int16_t readAnalog(uint8_t channel);
 [; ;adc.h: 23: void ADCC_Initialize(void);
 [; ;adc.h: 25: void ADCC_StartConversion(adcc_channel_t channel);
 [; ;adc.h: 27: bool ADCC_IsConversionDone();
@@ -13164,7 +13164,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 306: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;system.h: 19: void SYSTEM_Initialize(void);
 [; ;system.h: 21: void OSCILLATOR_Initialize(void);
-[; ;tempCalc.h: 6: int tempCalc(int analogValue);
+[; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
 [; ;math.h: 30: extern double fabs(double);
 [; ;math.h: 31: extern double floor(double);
 [; ;math.h: 32: extern double ceil(double);
@@ -13195,7 +13195,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _tempCalc `(i ~T0 @X0 1 ef1`i ]
 "5
 {
-[; ;tempCalc.c: 4: int tempCalc(int analogValue)
+[; ;tempCalc.c: 4: int16_t tempCalc(int16_t analogValue)
 [; ;tempCalc.c: 5: {
 [e :U _tempCalc ]
 "4
@@ -13233,7 +13233,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tempCalc.c: 21: steinhart = steinhart*9/5+320;
 "21
 [e = _steinhart + / * _steinhart -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
-[; ;tempCalc.c: 23: return (int)steinhart;
+[; ;tempCalc.c: 23: return (int16_t)steinhart;
 "23
 [e ) -> _steinhart `i ]
 [e $UE 1563  ]

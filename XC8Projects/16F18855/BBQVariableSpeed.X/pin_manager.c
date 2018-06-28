@@ -28,7 +28,7 @@ void PIN_MANAGER_Initialize(void)
     PPSLOCK = 0xAA;
     PPSLOCKbits.PPSLOCKED = 0x00;       // unlock PPS
 
-    RC2PPS = 0x0E;                      //RC2->PWM6:PWM6OUT;
+    RC2PPS = 0x0E;                      // RC2->PWM6:PWM6OUT;
     RC3PPS = 0X0F;                      // PWM7Out Re-mapped to RC3
 
     PPSLOCK = 0x55;
@@ -36,8 +36,3 @@ void PIN_MANAGER_Initialize(void)
     PPSLOCKbits.PPSLOCKED = 0x01; // lock PPS
     GIE = state;
 }
-
-
-//void PIN_MANAGER_IOC(void)
-//{    
-//}

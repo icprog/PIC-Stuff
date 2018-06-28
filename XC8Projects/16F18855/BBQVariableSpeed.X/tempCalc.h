@@ -3,6 +3,6 @@
 
 #include    "system.h"
 
-int tempCalc(int analogValue);
+int16_t tempCalc(int16_t analogValue);
 
 #endif

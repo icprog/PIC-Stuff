@@ -2,6 +2,11 @@
 #define _TMR2_H
 
 #include "system.h"
+
+void TMR2_Initialize(void);
+
+//void TMR4_Initialize(void);
+
 /**
   HLT Mode Setting Enumeration
 
@@ -259,7 +264,7 @@
     }
     </code>
 */
-void TMR2_Initialize(void);
+//void TMR2_Initialize(void);
 
 /**
   @Summary

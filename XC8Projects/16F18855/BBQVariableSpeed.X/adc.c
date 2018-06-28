@@ -4,18 +4,18 @@
 #define     numSamples                      20                                              // Number of Temperature readings to Average
 #define     numChannels                     2                                               // Number of Analog channels to read
 
-uint16_t samples[numChannels][numSamples]   =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
+int16_t samples[numChannels][numSamples]    =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
 
 uint16_t sampleIndex                        =   {0};
 
 int32_t totals[numChannels]                 =   {0};
 
-static int channels[numChannels]            =   {1,3};                                      // List all the Analog channel numbers here, must be same number listed as numChannels
+const uint8_t channels[numChannels]            =   {1,3};                                      // List all the Analog channel numbers here, must be same number listed as numChannels
 
 // *************** ADC Read Individual Channel ****************************************************************************************************
 adc_result_t ADCRead(adcc_channel_t channel)
 {
-    ADPCH                                   =   channel;                                      // select the A/D channel
+    ADPCH                                   =   channel_VSS;                                  // select the A/D channel VSS, to Discharge the Hold Cap
 
     ADCON0bits.ADON                         =   1;                                            // Turn on the ADC module
 
@@ -27,15 +27,27 @@ adc_result_t ADCRead(adcc_channel_t channel)
     {
     }                       
 
-    return ((ADRESH<<8)+ADRESL);                                        // Conversion finished, return the result
+    ADPCH                                   =   channel;                                      // select the A/D channel to be sampled
+
+    ADCON0bits.ADON                         =   1;                                            // Turn on the ADC module
+
+    ADCON0bits.ADCONT                       =   0;                                            // Disable continuous mode.
+
+    ADCON0bits.ADGO                         =   1;                                            // Start the conversion
+
+    while(ADCON0bits.ADGO)                                              // Wait for the conversion to finish
+    {
+    }                       
+
+    return (adc_result_t)((ADRESH<<8)+ADRESL);                                        // Conversion finished, return the result
 }
 
 // *************** Read Analogs from Analog channel Array ****************************************************************************************
-int readAnalog(int channel)
+int16_t readAnalog(uint8_t channel)
 {
-    int value;
+    int16_t value;
     
-    int analog_channel = channels[channel];
+    uint8_t analog_channel = channels[channel];
     
     value = ADCRead(analog_channel);
             

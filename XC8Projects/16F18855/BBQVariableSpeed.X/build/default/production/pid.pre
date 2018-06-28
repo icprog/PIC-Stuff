@@ -17429,7 +17429,7 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 262 "tmr2.h"
+# 6 "tmr2.h"
 void TMR2_Initialize(void);
 
 # 4 "menu.h"
@@ -17447,13 +17447,13 @@ void PWM7_LoadDutyValue(uint16_t dutyCycle);
 # 38 "lcd.h"
 void InitCustomChars();
 
-void LCD_Port(char a);
+void LCD_Port(uint8_t a);
 
-void LCD_Cmd(char a);
+void LCD_Cmd(uint8_t a);
 
 void LCD_Clear();
 
-void LCD_Set_Cursor(char x, char y);
+void LCD_Set_Cursor(uint8_t x, uint8_t y);
 
 void LCD_Init(char style);
 
@@ -17461,7 +17461,7 @@ void LCD_Write_Char(const char a);
 
 void LCD_Write_String(const char *a);
 
-void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
 
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
@@ -17479,7 +17479,7 @@ channel_DAC1 = 0x3E,
 channel_FVR = 0x3F
 } adcc_channel_t;
 
-int readAnalog(int channel);
+int16_t readAnalog(uint8_t channel);
 
 void ADCC_Initialize(void);
 
@@ -17547,7 +17547,7 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 6 "tempCalc.h"
-int tempCalc(int analogValue);
+int16_t tempCalc(int16_t analogValue);
 
 # 19 "system.h"
 void SYSTEM_Initialize(void);
@@ -17563,64 +17563,75 @@ static int16_t lastError = 0;
 int16_t errorValue = 0;
 int16_t derivativeValue = 0;
 int16_t Result = 0;
-int Kp = 10;
-int Ki = 1;
-int Kd = 2;
+int16_t Kp = 10;
+int16_t Ki = 1;
+int16_t Kd = 40;
 int16_t integralValue = 0;
-static int16_t pidIntegrated= 0;
-static int D_PrevError = 0;
-int pidMinOutput = 0;
-int pidMaxOutput = 2047;
+int16_t oldError = 0;
+static int16_t pidIntegrated = 0;
+static int16_t D_PrevError = 0;
+int16_t pidMinOutput = 0;
+int16_t pidMaxOutput = 1023;
+static uint8_t loop = 0;
 
 
 int16_t PID_Calculate(int16_t setpoint, int16_t temp)
 {
+loop+=1;
 
 error = setpoint - temp;
 
 errorValue = error * Kp;
+
+if(errorValue>pidMaxOutput)errorValue=pidMaxOutput;
+if(errorValue<-1023)errorValue=-1023;
+
+
+derivativeValue=(error-D_PrevError)*Kd;
+D_PrevError = error;
+
+
+
+if(loop>2)
+{
+if(error>=2)error=2;
+if(error<=-2)error=-2;
 
 
 if(error>=0)
 {
 if(error>=lastError)
 {
-if(pidIntegrated<2047)pidIntegrated = pidIntegrated + (error * Ki/4);
+if(pidIntegrated<pidMaxOutput)pidIntegrated = pidIntegrated + (error * Ki);
 }
 else
 {
-if(pidIntegrated>0)pidIntegrated = pidIntegrated - (error * Ki/8);
+if(pidIntegrated>-1023)pidIntegrated = pidIntegrated - (error * Ki);
 }
 }
 else
 {
-if(error>lastError)
-{
-if(pidIntegrated<2047)pidIntegrated = pidIntegrated - (error * Ki/16);
-}
-else
-{
-if(pidIntegrated>0)pidIntegrated = pidIntegrated + (error * Ki/2);
-}
-}
+if(error>=lastError)
 
-if (pidIntegrated< pidMinOutput)
 {
-pidIntegrated= pidMinOutput;
+if(pidIntegrated<pidMaxOutput)pidIntegrated = pidIntegrated - (error * Ki);
 }
+else
+{
+if(pidIntegrated>-1023)pidIntegrated = pidIntegrated + (error * Ki);
+}
+if(pidIntegrated>0)pidIntegrated=0;
 
-if (pidIntegrated> pidMaxOutput)
-{
-pidIntegrated= pidMaxOutput;
+# 78
 }
+oldError = lastError;
 
 integralValue = pidIntegrated;
 
 lastError=error;
 
-
-derivativeValue=(error-D_PrevError)*Kd;
-D_PrevError = error;
+loop=0;
+}
 
 
 Result = errorValue+integralValue+derivativeValue;

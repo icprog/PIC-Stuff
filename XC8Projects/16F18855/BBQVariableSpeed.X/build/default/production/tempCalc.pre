@@ -17429,7 +17429,7 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 262 "tmr2.h"
+# 6 "tmr2.h"
 void TMR2_Initialize(void);
 
 # 4 "menu.h"
@@ -17450,13 +17450,13 @@ int16_t PID_Calculate(int16_t setpoint, int16_t temp);
 # 38 "lcd.h"
 void InitCustomChars();
 
-void LCD_Port(char a);
+void LCD_Port(uint8_t a);
 
-void LCD_Cmd(char a);
+void LCD_Cmd(uint8_t a);
 
 void LCD_Clear();
 
-void LCD_Set_Cursor(char x, char y);
+void LCD_Set_Cursor(uint8_t x, uint8_t y);
 
 void LCD_Init(char style);
 
@@ -17464,7 +17464,7 @@ void LCD_Write_Char(const char a);
 
 void LCD_Write_String(const char *a);
 
-void LCD_Write_Int(int value,signed char fieldLength, signed char numPlaces, signed char sign);
+void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
 
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
@@ -17482,7 +17482,7 @@ channel_DAC1 = 0x3E,
 channel_FVR = 0x3F
 } adcc_channel_t;
 
-int readAnalog(int channel);
+int16_t readAnalog(uint8_t channel);
 
 void ADCC_Initialize(void);
 
@@ -17555,7 +17555,7 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 
 # 6 "tempCalc.h"
-int tempCalc(int analogValue);
+int16_t tempCalc(int16_t analogValue);
 
 # 30 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\math.h"
 extern double fabs(double);
@@ -17586,7 +17586,7 @@ extern double trunc(double);
 extern double round(double);
 
 # 4 "tempCalc.c"
-int tempCalc(int analogValue)
+int16_t tempCalc(int16_t analogValue)
 {
 float R, steinhart;
 
@@ -17605,5 +17605,5 @@ steinhart*=10;
 
 steinhart = steinhart*9/5+320;
 
-return (int)steinhart;
+return (int16_t)steinhart;
 }
