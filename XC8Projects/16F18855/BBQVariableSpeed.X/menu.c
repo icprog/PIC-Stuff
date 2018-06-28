@@ -12,11 +12,11 @@
 #define enterKey                RB2
 #define delayNumber             30                              // Number of cycles for keypress delay at 200ms, before switch to 10ms delay
 
-uint16_t lowRangeSet[2]         =   {750,0};               // lowrangeSet[0] is Pit Temp setpoint lower limit, lowrangeSet[1] is backlight intensity
+uint16_t lowRangeSet[2]         =   {750,10};               // lowrangeSet[0] is Pit Temp setpoint lower limit, lowrangeSet[1] is backlight intensity
 
 uint16_t highRangeSet[2]        =   {2750,1023};           // highRangeSet[0] is Pit Temp setpoint upper limit, highRangeSet[1] is backlight intensity
 
-uint16_t setpoint[2]            =   {750,523};            // default startup setpoints for Pit temp & backlight
+uint16_t setpoint[2]            =   {2150,523};            // default startup setpoints for Pit temp & backlight
 
 char const *desc[]              =   {" Pit Temp:","BackLight:"};
 
@@ -40,12 +40,12 @@ char timer2                         =   0;
 
 char readKey(void)
 {
-    if(downKey==1)
+    if(downKey)
     {
         if(key>0)key-=1;
     }
     
-    if(upKey==1)
+    if(upKey)
     {
         if(key<1)key+=1;
     }
@@ -95,7 +95,7 @@ void menuChoice(void)
         __delay_ms(2);
         timer+=1;
                     
-        if(upKey==1)
+        if(upKey)
         {
             delayCount+=2;
 //            if(delayCount==2)setpoint[choice]+=1;
@@ -114,11 +114,11 @@ void menuChoice(void)
         }
         
         
-        if(downKey==1)
+        if(downKey)
         {
             delayCount+=2;
             setpoint[choice]-=1;
-            if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
+            if(setpoint[choice]<=lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
             if(choice==0)LCDWriteIntXY(10,1,setpoint[choice],-1,1,0)else LCDWriteIntXY(10,1,setpoint[choice],-1,0,0);
             LCD_Write_Char(' ');
             menuDelay=1255;

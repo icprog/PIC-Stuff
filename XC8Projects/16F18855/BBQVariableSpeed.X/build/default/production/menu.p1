@@ -13192,10 +13192,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [i _lowRangeSet
 :U ..
 -> -> 750 `i `ui
--> -> 0 `i `ui
+-> -> 10 `i `ui
 ..
 ]
-[; ;menu.c: 15: uint16_t lowRangeSet[2] = {750,0};
+[; ;menu.c: 15: uint16_t lowRangeSet[2] = {750,10};
 "17
 [v _highRangeSet `ui ~T0 @X0 -> 2 `i e ]
 [i _highRangeSet
@@ -13209,11 +13209,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _setpoint `ui ~T0 @X0 -> 2 `i e ]
 [i _setpoint
 :U ..
--> -> 750 `i `ui
+-> -> 2150 `i `ui
 -> -> 523 `i `ui
 ..
 ]
-[; ;menu.c: 19: uint16_t setpoint[2] = {750,523};
+[; ;menu.c: 19: uint16_t setpoint[2] = {2150,523};
 "21
 [v _desc `*Cuc ~T0 @X0 -> 0 `x e ]
 [i _desc
@@ -13279,9 +13279,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;menu.c: 42: {
 [e :U _readKey ]
 [f ]
-[; ;menu.c: 43: if(RB1==1)
+[; ;menu.c: 43: if(RB1)
 "43
-[e $ ! == -> _RB1 `i -> 1 `i 1564  ]
+[e $ ! _RB1 1564  ]
 [; ;menu.c: 44: {
 "44
 {
@@ -13294,9 +13294,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e :U 1564 ]
 [; ;menu.c: 46: }
-[; ;menu.c: 48: if(RB0==1)
+[; ;menu.c: 48: if(RB0)
 "48
-[e $ ! == -> _RB0 `i -> 1 `i 1566  ]
+[e $ ! _RB0 1566  ]
 [; ;menu.c: 49: {
 "49
 {
@@ -13453,9 +13453,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;menu.c: 96: timer+=1;
 "96
 [e =+ _timer -> 1 `i ]
-[; ;menu.c: 98: if(RB0==1)
+[; ;menu.c: 98: if(RB0)
 "98
-[e $ ! == -> _RB0 `i -> 1 `i 1583  ]
+[e $ ! _RB0 1583  ]
 [; ;menu.c: 99: {
 "99
 {
@@ -13515,9 +13515,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e :U 1583 ]
 [; ;menu.c: 114: }
-[; ;menu.c: 117: if(RB1==1)
+[; ;menu.c: 117: if(RB1)
 "117
-[e $ ! == -> _RB1 `i -> 1 `i 1589  ]
+[e $ ! _RB1 1589  ]
 [; ;menu.c: 118: {
 "118
 {
@@ -13527,9 +13527,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;menu.c: 120: setpoint[choice]-=1;
 "120
 [e =- *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux -> -> 1 `i `ui ]
-[; ;menu.c: 121: if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
+[; ;menu.c: 121: if(setpoint[choice]<=lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
 "121
-[e $ ! < *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _lowRangeSet * -> _choice `ux -> -> # *U &U _lowRangeSet `ui `ux 1590  ]
+[e $ ! <= *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _lowRangeSet * -> _choice `ux -> -> # *U &U _lowRangeSet `ui `ux 1590  ]
 [e = *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux *U + &U _lowRangeSet * -> _choice `ux -> -> # *U &U _lowRangeSet `ui `ux ]
 [e :U 1590 ]
 [; ;menu.c: 122: if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};

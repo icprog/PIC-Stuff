@@ -17558,11 +17558,11 @@ void LCD_Write_String(const char *a);
 void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
 
 # 15 "menu.c"
-uint16_t lowRangeSet[2] = {750,0};
+uint16_t lowRangeSet[2] = {750,10};
 
 uint16_t highRangeSet[2] = {2750,1023};
 
-uint16_t setpoint[2] = {750,523};
+uint16_t setpoint[2] = {2150,523};
 
 char const *desc[] = {" Pit Temp:","BackLight:"};
 
@@ -17586,12 +17586,12 @@ char timer2 = 0;
 
 char readKey(void)
 {
-if(RB1==1)
+if(RB1)
 {
 if(key>0)key-=1;
 }
 
-if(RB0==1)
+if(RB0)
 {
 if(key<1)key+=1;
 }
@@ -17641,7 +17641,7 @@ goto Exit;
 _delay((unsigned long)((2)*(32000000/4000.0)));
 timer+=1;
 
-if(RB0==1)
+if(RB0)
 {
 delayCount+=2;
 
@@ -17660,11 +17660,11 @@ timer=0;
 }
 
 
-if(RB1==1)
+if(RB1)
 {
 delayCount+=2;
 setpoint[choice]-=1;
-if(setpoint[choice]<lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
+if(setpoint[choice]<=lowRangeSet[choice])setpoint[choice]=lowRangeSet[choice];
 if(choice==0){ LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 1, 0);}else { LCD_Set_Cursor(10,1); LCD_Write_Int(setpoint[choice],-1, 0, 0);};
 LCD_Write_Char(' ');
 menuDelay=1255;

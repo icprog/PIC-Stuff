@@ -88,18 +88,18 @@ void LCD_Set_Cursor(uint8_t x, uint8_t y)
     
 	if(y == 0)
 	{                
-        temp = 0x80 + x;
-		z = temp>>4;
-		w = temp & 0x0F;
+        temp = (uint8_t)(0x80 + x);
+		z = (uint8_t)(temp>>4);
+		w = (uint8_t)(temp & 0x0F);
 		LCD_Cmd(z);
 		LCD_Cmd(w);
 	}
 
 	else if(y == 1)
 	{
-		temp = 0xC0 + x;
-		z = temp>>4;
-		w = temp & 0x0F;
+		temp = (uint8_t)(0xC0 + x);
+		z = (uint8_t)(temp>>4);
+		w = (uint8_t)(temp & 0x0F);
 		LCD_Cmd(z);
 		LCD_Cmd(w);
 	}
@@ -200,7 +200,7 @@ void LCD_Init(char style)
     
     LCD_Cmd(0x0);               //Enable Display ON with style selected (BLINK, ULINE, BLUL, or NONE)
     
-    LCD_Cmd(0xc|style);         //We are sending 0x0c|style, usually NONE (or 0),which hides the cursor
+    LCD_Cmd((uint8_t)(0xc|style));         //We are sending 0x0c|style, usually NONE (or 0),which hides the cursor
     
     __delay_us(120);
 /*
@@ -223,11 +223,11 @@ void LCD_Init(char style)
 // ***************************************************************************************************************************************************************
 void LCD_Write_Char(const char a)
 {
-   char temp,y;
+   uint8_t temp,y;
    temp = a&0x0F;
    y = a&0xF0;
    RS = 1;                  // => RS = 1
-   LCD_Port(y>>4);          //Data transfer
+   LCD_Port((uint8_t)(y>>4));          //Data transfer
    EN = 1;
    EN = 0;
    __delay_us(40);
@@ -246,12 +246,12 @@ void LCD_Write_String(const char *a)
 // ***************************************************************************************************************************************************************
 void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign)     //writes a integer type value to LCD module
 {
-	char str[5]={0,0,0,0,0};            // Integer can be up to 5 characters long
-	int i=4,j=0;
+	int16_t str[5]={0,0,0,0,0};         // Integer can be up to 5 characters long
+	int16_t i=4,j=0;
 
     if(value<0)                         // Handle negative integers
     {
-        LCD_Write_Char('-');              // Write Negative sign to the LCD
+        LCD_Write_Char('-');            // Write Negative sign to the LCD
         value=value*-1;                 // convert negative value to a positive value
     }
     

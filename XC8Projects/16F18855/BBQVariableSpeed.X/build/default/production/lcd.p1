@@ -13400,13 +13400,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 90: {
 "90
 {
-[; ;lcd.c: 91: temp = 0x80 + x;
+[; ;lcd.c: 91: temp = (uint8_t)(0x80 + x);
 "91
 [e = _temp -> + -> 128 `i -> _x `i `uc ]
-[; ;lcd.c: 92: z = temp>>4;
+[; ;lcd.c: 92: z = (uint8_t)(temp>>4);
 "92
 [e = _z -> >> -> _temp `i -> 4 `i `uc ]
-[; ;lcd.c: 93: w = temp & 0x0F;
+[; ;lcd.c: 93: w = (uint8_t)(temp & 0x0F);
 "93
 [e = _w -> & -> _temp `i -> 15 `i `uc ]
 [; ;lcd.c: 94: LCD_Cmd(z);
@@ -13426,13 +13426,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 99: {
 "99
 {
-[; ;lcd.c: 100: temp = 0xC0 + x;
+[; ;lcd.c: 100: temp = (uint8_t)(0xC0 + x);
 "100
 [e = _temp -> + -> 192 `i -> _x `i `uc ]
-[; ;lcd.c: 101: z = temp>>4;
+[; ;lcd.c: 101: z = (uint8_t)(temp>>4);
 "101
 [e = _z -> >> -> _temp `i -> 4 `i `uc ]
-[; ;lcd.c: 102: w = temp & 0x0F;
+[; ;lcd.c: 102: w = (uint8_t)(temp & 0x0F);
 "102
 [e = _w -> & -> _temp `i -> 15 `i `uc ]
 [; ;lcd.c: 103: LCD_Cmd(z);
@@ -13530,7 +13530,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 201: LCD_Cmd(0x0);
 "201
 [e ( _LCD_Cmd (1 -> -> 0 `i `uc ]
-[; ;lcd.c: 203: LCD_Cmd(0xc|style);
+[; ;lcd.c: 203: LCD_Cmd((uint8_t)(0xc|style));
 "203
 [e ( _LCD_Cmd (1 -> | -> 12 `i -> _style `i `uc ]
 [; ;lcd.c: 205: _delay((unsigned long)((120)*(32000000/4000000.0)));
@@ -13554,7 +13554,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "226
 [v _temp `uc ~T0 @X0 1 a ]
 [v _y `uc ~T0 @X0 1 a ]
-[; ;lcd.c: 226: char temp,y;
+[; ;lcd.c: 226: uint8_t temp,y;
 [; ;lcd.c: 227: temp = a&0x0F;
 "227
 [e = _temp -> & -> _a `i -> 15 `i `uc ]
@@ -13564,7 +13564,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 229: RA0 = 1;
 "229
 [e = _RA0 -> -> 1 `i `b ]
-[; ;lcd.c: 230: LCD_Port(y>>4);
+[; ;lcd.c: 230: LCD_Port((uint8_t)(y>>4));
 "230
 [e ( _LCD_Port (1 -> >> -> _y `i -> 4 `i `uc ]
 [; ;lcd.c: 231: RA2 = 1;
@@ -13640,23 +13640,23 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `c ~T0 @X0 1 r4 ]
 "248
 [f ]
-[v F14396 `uc ~T0 @X0 -> 5 `i s ]
-[i F14396
+[v F14404 `i ~T0 @X0 -> 5 `i s ]
+[i F14404
 :U ..
 "249
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
+-> 0 `i
+-> 0 `i
+-> 0 `i
+-> 0 `i
+-> 0 `i
 ..
 ]
-[v _str `uc ~T0 @X0 -> 5 `i a ]
-[; ;lcd.c: 249: char str[5]={0,0,0,0,0};
-[e = _str F14396 ]
+[v _str `i ~T0 @X0 -> 5 `i a ]
+[; ;lcd.c: 249: int16_t str[5]={0,0,0,0,0};
+[e = _str F14404 ]
 "250
 [v _i `i ~T0 @X0 1 a ]
-[; ;lcd.c: 250: int i=4,j=0;
+[; ;lcd.c: 250: int16_t i=4,j=0;
 [e = _i -> 4 `i ]
 [v _j `i ~T0 @X0 1 a ]
 [e = _j -> 0 `i ]
@@ -13708,7 +13708,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;lcd.c: 268: str[i]=value%10;
 "268
-[e = *U + &U _str * -> -> _i `ui `ux -> -> # *U &U _str `ui `ux -> % _value -> 10 `i `uc ]
+[e = *U + &U _str * -> -> _i `ui `ux -> -> # *U &U _str `ui `ux % _value -> 10 `i ]
 [; ;lcd.c: 269: value=value/10;
 "269
 [e = _value / _value -> 10 `i ]
@@ -13742,7 +13742,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e :U 1597 ]
 "274
-[e $ == -> *U + &U _str * -> -> _j `ui `ux -> -> # *U &U _str `ui `ux `i -> 0 `i 1598  ]
+[e $ == *U + &U _str * -> -> _j `ui `ux -> -> # *U &U _str `ui `ux -> 0 `i 1598  ]
 [e :U 1599 ]
 "278
 }
@@ -13773,7 +13773,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;lcd.c: 286: LCD_Write_Char(48+str[i]);
 "286
-[e ( _LCD_Write_Char (1 -> + -> 48 `i -> *U + &U _str * -> -> _i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
+[e ( _LCD_Write_Char (1 -> + -> 48 `i *U + &U _str * -> -> _i `ui `ux -> -> # *U &U _str `ui `ux `uc ]
 "287
 }
 "284
@@ -13795,7 +13795,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCD_Write_Char (1 -> -> 46 `i `uc ]
 [; ;lcd.c: 292: LCD_Write_Char(48+str[4]);
 "292
-[e ( _LCD_Write_Char (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
+[e ( _LCD_Write_Char (1 -> + -> 48 `i *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `uc ]
 "293
 }
 [e :U 1605 ]
@@ -13811,10 +13811,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _LCD_Write_Char (1 -> -> 46 `i `uc ]
 [; ;lcd.c: 298: LCD_Write_Char(48+str[3]);
 "298
-[e ( _LCD_Write_Char (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 3 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
+[e ( _LCD_Write_Char (1 -> + -> 48 `i *U + &U _str * -> -> -> 3 `i `ui `ux -> -> # *U &U _str `ui `ux `uc ]
 [; ;lcd.c: 299: LCD_Write_Char(48+str[4]);
 "299
-[e ( _LCD_Write_Char (1 -> + -> 48 `i -> *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `i `uc ]
+[e ( _LCD_Write_Char (1 -> + -> 48 `i *U + &U _str * -> -> -> 4 `i `ui `ux -> -> # *U &U _str `ui `ux `uc ]
 "300
 }
 [e :U 1606 ]
