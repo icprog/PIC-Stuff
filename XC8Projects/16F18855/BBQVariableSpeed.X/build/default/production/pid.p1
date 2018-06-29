@@ -13208,9 +13208,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "12
 [v _Kd `i ~T0 @X0 1 e ]
 [i _Kd
--> 40 `i
+-> 20 `i
 ]
-[; ;pid.c: 12: int16_t Kd = 40;
+[; ;pid.c: 12: int16_t Kd = 20;
 "13
 [v _integralValue `i ~T0 @X0 1 e ]
 [i _integralValue
@@ -13290,157 +13290,162 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pid.c: 35: D_PrevError = error;
 "35
 [e = _D_PrevError _error ]
-[; ;pid.c: 39: if(loop>2)
-"39
-[e $ ! > -> _loop `i -> 2 `i 1566  ]
-[; ;pid.c: 40: {
+[; ;pid.c: 36: if(derivativeValue>20)derivativeValue=20;
+"36
+[e $ ! > _derivativeValue -> 20 `i 1566  ]
+[e = _derivativeValue -> 20 `i ]
+[e :U 1566 ]
+[; ;pid.c: 40: if(loop>2)
 "40
-{
-[; ;pid.c: 41: if(error>=2)error=2;
+[e $ ! > -> _loop `i -> 2 `i 1567  ]
+[; ;pid.c: 41: {
 "41
-[e $ ! >= _error -> 2 `i 1567  ]
-[e = _error -> 2 `i ]
-[e :U 1567 ]
-[; ;pid.c: 42: if(error<=-2)error=-2;
+{
+[; ;pid.c: 42: if(error>=2)error=2;
 "42
-[e $ ! <= _error -U -> 2 `i 1568  ]
-[e = _error -U -> 2 `i ]
+[e $ ! >= _error -> 2 `i 1568  ]
+[e = _error -> 2 `i ]
 [e :U 1568 ]
-[; ;pid.c: 45: if(error>=0)
-"45
-[e $ ! >= _error -> 0 `i 1569  ]
-[; ;pid.c: 46: {
+[; ;pid.c: 43: if(error<=-2)error=-2;
+"43
+[e $ ! <= _error -U -> 2 `i 1569  ]
+[e = _error -U -> 2 `i ]
+[e :U 1569 ]
+[; ;pid.c: 46: if(error>=0)
 "46
-{
-[; ;pid.c: 47: if(error>=lastError)
+[e $ ! >= _error -> 0 `i 1570  ]
+[; ;pid.c: 47: {
 "47
-[e $ ! >= _error _lastError 1570  ]
-[; ;pid.c: 48: {
+{
+[; ;pid.c: 48: if(error>=lastError)
 "48
-{
-[; ;pid.c: 49: if(pidIntegrated<pidMaxOutput)pidIntegrated = pidIntegrated + (error * Ki);
+[e $ ! >= _error _lastError 1571  ]
+[; ;pid.c: 49: {
 "49
-[e $ ! < _pidIntegrated _pidMaxOutput 1571  ]
-[e = _pidIntegrated + _pidIntegrated * _error _Ki ]
-[e :U 1571 ]
-"50
-}
-[; ;pid.c: 50: }
-[e $U 1572  ]
-"51
-[e :U 1570 ]
-[; ;pid.c: 51: else
-[; ;pid.c: 52: {
-"52
 {
-[; ;pid.c: 53: if(pidIntegrated>-1023)pidIntegrated = pidIntegrated - (error * Ki);
-"53
-[e $ ! > _pidIntegrated -U -> 1023 `i 1573  ]
-[e = _pidIntegrated - _pidIntegrated * _error _Ki ]
-[e :U 1573 ]
-"54
-}
+[; ;pid.c: 50: if(pidIntegrated<pidMaxOutput)pidIntegrated = pidIntegrated + (error * Ki);
+"50
+[e $ ! < _pidIntegrated _pidMaxOutput 1572  ]
+[e = _pidIntegrated + _pidIntegrated * _error _Ki ]
 [e :U 1572 ]
+"51
+}
+[; ;pid.c: 51: }
+[e $U 1573  ]
+"52
+[e :U 1571 ]
+[; ;pid.c: 52: else
+[; ;pid.c: 53: {
+"53
+{
+[; ;pid.c: 54: if(pidIntegrated>-1023)pidIntegrated = pidIntegrated - (error * Ki);
+"54
+[e $ ! > _pidIntegrated -U -> 1023 `i 1574  ]
+[e = _pidIntegrated - _pidIntegrated * _error _Ki ]
+[e :U 1574 ]
 "55
 }
-[; ;pid.c: 54: }
-[; ;pid.c: 55: }
-[e $U 1574  ]
+[e :U 1573 ]
 "56
-[e :U 1569 ]
-[; ;pid.c: 56: else
-[; ;pid.c: 57: {
+}
+[; ;pid.c: 55: }
+[; ;pid.c: 56: }
+[e $U 1575  ]
 "57
-{
-[; ;pid.c: 58: if(error>=lastError)
+[e :U 1570 ]
+[; ;pid.c: 57: else
+[; ;pid.c: 58: {
 "58
-[e $ ! >= _error _lastError 1575  ]
-[; ;pid.c: 60: {
-"60
 {
-[; ;pid.c: 61: if(pidIntegrated<pidMaxOutput)pidIntegrated = pidIntegrated - (error * Ki);
+[; ;pid.c: 59: if(error>=lastError)
+"59
+[e $ ! >= _error _lastError 1576  ]
+[; ;pid.c: 61: {
 "61
-[e $ ! < _pidIntegrated _pidMaxOutput 1576  ]
-[e = _pidIntegrated - _pidIntegrated * _error _Ki ]
-[e :U 1576 ]
+{
+[; ;pid.c: 62: if(pidIntegrated<pidMaxOutput)pidIntegrated = pidIntegrated - (error * Ki);
 "62
-}
-[; ;pid.c: 62: }
-[e $U 1577  ]
-"63
-[e :U 1575 ]
-[; ;pid.c: 63: else
-[; ;pid.c: 64: {
-"64
-{
-[; ;pid.c: 65: if(pidIntegrated>-1023)pidIntegrated = pidIntegrated + (error * Ki);
-"65
-[e $ ! > _pidIntegrated -U -> 1023 `i 1578  ]
-[e = _pidIntegrated + _pidIntegrated * _error _Ki ]
-[e :U 1578 ]
-"66
-}
+[e $ ! < _pidIntegrated _pidMaxOutput 1577  ]
+[e = _pidIntegrated - _pidIntegrated * _error _Ki ]
 [e :U 1577 ]
-[; ;pid.c: 66: }
-[; ;pid.c: 67: if(pidIntegrated>0)pidIntegrated=0;
-"67
-[e $ ! > _pidIntegrated -> 0 `i 1579  ]
-[e = _pidIntegrated -> 0 `i ]
+"63
+}
+[; ;pid.c: 63: }
+[e $U 1578  ]
+"64
+[e :U 1576 ]
+[; ;pid.c: 64: else
+[; ;pid.c: 65: {
+"65
+{
+[; ;pid.c: 66: if(pidIntegrated>-1023)pidIntegrated = pidIntegrated + (error * Ki);
+"66
+[e $ ! > _pidIntegrated -U -> 1023 `i 1579  ]
+[e = _pidIntegrated + _pidIntegrated * _error _Ki ]
 [e :U 1579 ]
-"78
+"67
 }
-[e :U 1574 ]
-[; ;pid.c: 78: }
-[; ;pid.c: 79: oldError = lastError;
-"79
-[e = _oldError _lastError ]
-[; ;pid.c: 81: integralValue = pidIntegrated;
-"81
-[e = _integralValue _pidIntegrated ]
-[; ;pid.c: 83: lastError=error;
-"83
-[e = _lastError _error ]
-[; ;pid.c: 85: loop=0;
-"85
-[e = _loop -> -> 0 `i `uc ]
-"86
-}
-[e :U 1566 ]
-[; ;pid.c: 86: }
-[; ;pid.c: 89: Result = errorValue+integralValue+derivativeValue;
-"89
-[e = _Result + + _errorValue _integralValue _derivativeValue ]
-[; ;pid.c: 91: if (Result < pidMinOutput)
-"91
-[e $ ! < _Result _pidMinOutput 1580  ]
-[; ;pid.c: 92: {
-"92
-{
-[; ;pid.c: 93: Result = pidMinOutput;
-"93
-[e = _Result _pidMinOutput ]
-"94
-}
+[e :U 1578 ]
+[; ;pid.c: 67: }
+[; ;pid.c: 68: if(pidIntegrated>0)pidIntegrated=0;
+"68
+[e $ ! > _pidIntegrated -> 0 `i 1580  ]
+[e = _pidIntegrated -> 0 `i ]
 [e :U 1580 ]
-[; ;pid.c: 94: }
-[; ;pid.c: 96: if (Result > pidMaxOutput)
-"96
-[e $ ! > _Result _pidMaxOutput 1581  ]
-[; ;pid.c: 97: {
-"97
+"79
+}
+[e :U 1575 ]
+[; ;pid.c: 79: }
+[; ;pid.c: 80: oldError = lastError;
+"80
+[e = _oldError _lastError ]
+[; ;pid.c: 82: integralValue = pidIntegrated;
+"82
+[e = _integralValue _pidIntegrated ]
+[; ;pid.c: 84: lastError=error;
+"84
+[e = _lastError _error ]
+[; ;pid.c: 86: loop=0;
+"86
+[e = _loop -> -> 0 `i `uc ]
+"87
+}
+[e :U 1567 ]
+[; ;pid.c: 87: }
+[; ;pid.c: 90: Result = errorValue+integralValue+derivativeValue;
+"90
+[e = _Result + + _errorValue _integralValue _derivativeValue ]
+[; ;pid.c: 92: if (Result < pidMinOutput)
+"92
+[e $ ! < _Result _pidMinOutput 1581  ]
+[; ;pid.c: 93: {
+"93
 {
-[; ;pid.c: 98: Result = pidMaxOutput;
-"98
-[e = _Result _pidMaxOutput ]
-"99
+[; ;pid.c: 94: Result = pidMinOutput;
+"94
+[e = _Result _pidMinOutput ]
+"95
 }
 [e :U 1581 ]
-[; ;pid.c: 99: }
-[; ;pid.c: 101: return (Result);
-"101
+[; ;pid.c: 95: }
+[; ;pid.c: 97: if (Result > pidMaxOutput)
+"97
+[e $ ! > _Result _pidMaxOutput 1582  ]
+[; ;pid.c: 98: {
+"98
+{
+[; ;pid.c: 99: Result = pidMaxOutput;
+"99
+[e = _Result _pidMaxOutput ]
+"100
+}
+[e :U 1582 ]
+[; ;pid.c: 100: }
+[; ;pid.c: 102: return (Result);
+"102
 [e ) _Result ]
 [e $UE 1563  ]
-[; ;pid.c: 102: }
-"102
+[; ;pid.c: 103: }
+"103
 [e :UE 1563 ]
 }

@@ -9,7 +9,7 @@ int16_t         derivativeValue = 0;
 int16_t         Result          = 0;
 int16_t         Kp              = 3;    // Controller Gain      (inverse of Proportional Band)
 int16_t         Ki              = 1;    // Controller Integral Reset/Unit Time, determined by how often PID is calculated
-int16_t         Kd              = 40;   // Controller Derivative (or Rate))
+int16_t         Kd              = 20;   // Controller Derivative (or Rate))
 int16_t         integralValue   = 0;
 int16_t         oldError        = 0;
 static int16_t pidIntegrated    = 0;
@@ -33,6 +33,7 @@ int16_t PID_Calculate(int16_t setpoint, int16_t temp)
 // *************** Calculate Derivative ****************************************    
     derivativeValue=(error-D_PrevError)*Kd;
     D_PrevError = error;
+    if(derivativeValue>20)derivativeValue=20;
   
     
 // **************** Calculate Integral Action ********************************** 

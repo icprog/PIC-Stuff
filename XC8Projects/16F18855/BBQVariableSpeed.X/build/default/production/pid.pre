@@ -17565,7 +17565,7 @@ int16_t derivativeValue = 0;
 int16_t Result = 0;
 int16_t Kp = 3;
 int16_t Ki = 1;
-int16_t Kd = 40;
+int16_t Kd = 20;
 int16_t integralValue = 0;
 int16_t oldError = 0;
 static int16_t pidIntegrated = 0;
@@ -17589,6 +17589,7 @@ if(errorValue<-1023)errorValue=-1023;
 
 derivativeValue=(error-D_PrevError)*Kd;
 D_PrevError = error;
+if(derivativeValue>20)derivativeValue=20;
 
 
 
@@ -17622,7 +17623,7 @@ if(pidIntegrated>-1023)pidIntegrated = pidIntegrated + (error * Ki);
 }
 if(pidIntegrated>0)pidIntegrated=0;
 
-# 78
+# 79
 }
 oldError = lastError;
 
