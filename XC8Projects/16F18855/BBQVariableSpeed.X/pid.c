@@ -33,7 +33,7 @@ int16_t PID_Calculate(int16_t setpoint, int16_t temp)
 // *************** Calculate Derivative ****************************************    
     derivativeValue=(error-D_PrevError)*Kd;
     D_PrevError = error;
-    if(derivativeValue>35)derivativeValue=35;
+    if(derivativeValue>120)derivativeValue=120;
   
     
 // **************** Calculate Integral Action ********************************** 

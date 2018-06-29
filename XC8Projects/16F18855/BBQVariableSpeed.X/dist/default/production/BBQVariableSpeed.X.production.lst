@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.45 build -152302408 
-                                                                                               Fri Jun 29 02:36:47 2018
+                                                                                               Fri Jun 29 02:48:51 2018
 
 Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160504
      1                           	processor	16F18855
@@ -13237,7 +13237,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13021  01F0  0022               	movlb	2	; select bank2
  13022  01F1  00D8               	movwf	_D_PrevError^(0+256)
  13023                           
- 13024                           ;pid.c: 36: if(derivativeValue>35)derivativeValue=35;
+ 13024                           ;pid.c: 36: if(derivativeValue>120)derivativeValue=120;
  13025  01F2  0021               	movlb	1	; select bank1
  13026  01F3  085A               	movf	(_derivativeValue+1)^(0+128),w
  13027  01F4  3A80               	xorlw	128
@@ -13246,12 +13246,12 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13030  01F7  027A               	subwf	??_PID_Calculate,w
  13031  01F8  1D03               	skipz
  13032  01F9  29FC               	goto	u3715
- 13033  01FA  3024               	movlw	36
+ 13033  01FA  3079               	movlw	121
  13034  01FB  0259               	subwf	_derivativeValue^(0+128),w
  13035  01FC                     u3715:	
  13036  01FC  1C03               	skipc
  13037  01FD  2A03               	goto	l270
- 13038  01FE  3023               	movlw	35
+ 13038  01FE  3078               	movlw	120
  13039  01FF  0021               	movlb	1	; select bank1
  13040  0200  00D9               	movwf	_derivativeValue^(0+128)
  13041  0201  3000               	movlw	0
@@ -14348,7 +14348,7 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.45 build -152302408 
-Symbol Table                                                                                   Fri Jun 29 02:36:47 2018
+Symbol Table                                                                                   Fri Jun 29 02:48:51 2018
 
                  ___bmul@product 0072          __size_of_PWM_Initialize 0015                      __CFG_CP$OFF 0000  
                              l55 1626                               l58 162D                               l97 1666  
