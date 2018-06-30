@@ -13121,7 +13121,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 48: void LCD_Init(char style);
 [; ;lcd.h: 50: void LCD_Write_Char(const char a);
 [; ;lcd.h: 52: void LCD_Write_String(const char *a);
-[; ;lcd.h: 54: void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
+[; ;lcd.h: 54: void LCD_Write_Int(int16_t value,uint8_t fieldLength, uint8_t numPlaces, uint8_t sign);
 [; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;adc.h: 9: typedef uint16_t adc_result_t;
 [; ;adc.h: 12: typedef enum
@@ -13290,111 +13290,106 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pid.c: 35: D_PrevError = error;
 "35
 [e = _D_PrevError _error ]
-[; ;pid.c: 36: if(derivativeValue>120)derivativeValue=120;
-"36
-[e $ ! > _derivativeValue -> 120 `i 1566  ]
-[e = _derivativeValue -> 120 `i ]
-[e :U 1566 ]
 [; ;pid.c: 40: if(loop>2)
 "40
-[e $ ! > -> _loop `i -> 2 `i 1567  ]
+[e $ ! > -> _loop `i -> 2 `i 1566  ]
 [; ;pid.c: 41: {
 "41
 {
 [; ;pid.c: 42: if(error>=2)error=2;
 "42
-[e $ ! >= _error -> 2 `i 1568  ]
+[e $ ! >= _error -> 2 `i 1567  ]
 [e = _error -> 2 `i ]
-[e :U 1568 ]
+[e :U 1567 ]
 [; ;pid.c: 43: if(error<=-2)error=-2;
 "43
-[e $ ! <= _error -U -> 2 `i 1569  ]
+[e $ ! <= _error -U -> 2 `i 1568  ]
 [e = _error -U -> 2 `i ]
-[e :U 1569 ]
+[e :U 1568 ]
 [; ;pid.c: 46: if(error>=0)
 "46
-[e $ ! >= _error -> 0 `i 1570  ]
+[e $ ! >= _error -> 0 `i 1569  ]
 [; ;pid.c: 47: {
 "47
 {
 [; ;pid.c: 48: if(error>=lastError)
 "48
-[e $ ! >= _error _lastError 1571  ]
+[e $ ! >= _error _lastError 1570  ]
 [; ;pid.c: 49: {
 "49
 {
 [; ;pid.c: 50: if(pidIntegrated<pidMaxOutput)pidIntegrated = pidIntegrated + (error * Ki);
 "50
-[e $ ! < _pidIntegrated _pidMaxOutput 1572  ]
+[e $ ! < _pidIntegrated _pidMaxOutput 1571  ]
 [e = _pidIntegrated + _pidIntegrated * _error _Ki ]
-[e :U 1572 ]
+[e :U 1571 ]
 "51
 }
 [; ;pid.c: 51: }
-[e $U 1573  ]
+[e $U 1572  ]
 "52
-[e :U 1571 ]
+[e :U 1570 ]
 [; ;pid.c: 52: else
 [; ;pid.c: 53: {
 "53
 {
 [; ;pid.c: 54: if(pidIntegrated>-1023)pidIntegrated = pidIntegrated - (error * Ki);
 "54
-[e $ ! > _pidIntegrated -U -> 1023 `i 1574  ]
+[e $ ! > _pidIntegrated -U -> 1023 `i 1573  ]
 [e = _pidIntegrated - _pidIntegrated * _error _Ki ]
-[e :U 1574 ]
+[e :U 1573 ]
 "55
 }
-[e :U 1573 ]
+[e :U 1572 ]
 "56
 }
 [; ;pid.c: 55: }
 [; ;pid.c: 56: }
-[e $U 1575  ]
+[e $U 1574  ]
 "57
-[e :U 1570 ]
+[e :U 1569 ]
 [; ;pid.c: 57: else
 [; ;pid.c: 58: {
 "58
 {
 [; ;pid.c: 59: if(error>=lastError)
 "59
-[e $ ! >= _error _lastError 1576  ]
+[e $ ! >= _error _lastError 1575  ]
 [; ;pid.c: 61: {
 "61
 {
 [; ;pid.c: 62: if(pidIntegrated<pidMaxOutput)pidIntegrated = pidIntegrated - (error * Ki);
 "62
-[e $ ! < _pidIntegrated _pidMaxOutput 1577  ]
+[e $ ! < _pidIntegrated _pidMaxOutput 1576  ]
 [e = _pidIntegrated - _pidIntegrated * _error _Ki ]
-[e :U 1577 ]
+[e :U 1576 ]
 "63
 }
 [; ;pid.c: 63: }
-[e $U 1578  ]
+[e $U 1577  ]
 "64
-[e :U 1576 ]
+[e :U 1575 ]
 [; ;pid.c: 64: else
 [; ;pid.c: 65: {
 "65
 {
 [; ;pid.c: 66: if(pidIntegrated>-1023)pidIntegrated = pidIntegrated + (error * Ki);
 "66
-[e $ ! > _pidIntegrated -U -> 1023 `i 1579  ]
+[e $ ! > _pidIntegrated -U -> 1023 `i 1578  ]
 [e = _pidIntegrated + _pidIntegrated * _error _Ki ]
-[e :U 1579 ]
+[e :U 1578 ]
 "67
 }
-[e :U 1578 ]
+[e :U 1577 ]
 [; ;pid.c: 67: }
 [; ;pid.c: 68: if(pidIntegrated>0)pidIntegrated=0;
 "68
-[e $ ! > _pidIntegrated -> 0 `i 1580  ]
+[e $ ! > _pidIntegrated -> 0 `i 1579  ]
 [e = _pidIntegrated -> 0 `i ]
-[e :U 1580 ]
+[e :U 1579 ]
 "79
 }
-[e :U 1575 ]
+[e :U 1574 ]
 [; ;pid.c: 79: }
 [; ;pid.c: 80: oldError = lastError;
 "80
@@ -13410,14 +13405,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _loop -> -> 0 `i `uc ]
 "87
 }
-[e :U 1567 ]
+[e :U 1566 ]
 [; ;pid.c: 87: }
 [; ;pid.c: 90: Result = errorValue+integralValue+derivativeValue;
 "90
 [e = _Result + + _errorValue _integralValue _derivativeValue ]
 [; ;pid.c: 92: if (Result < pidMinOutput)
 "92
-[e $ ! < _Result _pidMinOutput 1581  ]
+[e $ ! < _Result _pidMinOutput 1580  ]
 [; ;pid.c: 93: {
 "93
 {
@@ -13426,11 +13421,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _Result _pidMinOutput ]
 "95
 }
-[e :U 1581 ]
+[e :U 1580 ]
 [; ;pid.c: 95: }
 [; ;pid.c: 97: if (Result > pidMaxOutput)
 "97
-[e $ ! > _Result _pidMaxOutput 1582  ]
+[e $ ! > _Result _pidMaxOutput 1581  ]
 [; ;pid.c: 98: {
 "98
 {
@@ -13439,7 +13434,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _Result _pidMaxOutput ]
 "100
 }
-[e :U 1582 ]
+[e :U 1581 ]
 [; ;pid.c: 100: }
 [; ;pid.c: 102: return (Result);
 "102

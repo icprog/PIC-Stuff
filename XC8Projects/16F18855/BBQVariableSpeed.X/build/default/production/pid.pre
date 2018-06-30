@@ -17461,7 +17461,7 @@ void LCD_Write_Char(const char a);
 
 void LCD_Write_String(const char *a);
 
-void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
+void LCD_Write_Int(int16_t value,uint8_t fieldLength, uint8_t numPlaces, uint8_t sign);
 
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
@@ -17589,7 +17589,7 @@ if(errorValue<-1023)errorValue=-1023;
 
 derivativeValue=(error-D_PrevError)*Kd;
 D_PrevError = error;
-if(derivativeValue>120)derivativeValue=120;
+
 
 
 

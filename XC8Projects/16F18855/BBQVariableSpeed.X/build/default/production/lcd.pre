@@ -17555,7 +17555,7 @@ void LCD_Write_Char(const char a);
 
 void LCD_Write_String(const char *a);
 
-void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
+void LCD_Write_Int(int16_t value,int8_t fieldLength, uint8_t numPlaces, uint8_t sign);
 
 # 5 "lcd.c"
 uint8_t __cgram[] =
@@ -17727,10 +17727,10 @@ for(i=0;a[i]!='\0';i++)
 LCD_Write_Char(a[i]);
 }
 
-void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign)
+void LCD_Write_Int(int16_t value,int8_t fieldLength, uint8_t numPlaces, uint8_t sign)
 {
-int16_t str[5]={0,0,0,0,0};
-int16_t i=4,j=0;
+uint8_t str[5]={0,0,0,0,0};
+uint8_t i=4,j=0;
 
 if(value<0)
 {

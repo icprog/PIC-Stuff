@@ -17464,7 +17464,7 @@ void LCD_Write_Char(const char a);
 
 void LCD_Write_String(const char *a);
 
-void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
+void LCD_Write_Int(int16_t value,uint8_t fieldLength, uint8_t numPlaces, uint8_t sign);
 
 # 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
 typedef unsigned char bool;
@@ -17572,7 +17572,7 @@ int32_t outputTotal = 0;
 
 uint8_t outputIndex = 0;
 
-int16_t outputSamples[10] = {0};
+int16_t outputSamples[5] = {0};
 
 uint8_t holdOutput = 0;
 
@@ -17636,10 +17636,10 @@ output = PID_Calculate(setpoint[0],analogs[1]);
 outputTotal = outputTotal - outputSamples[outputIndex];
 outputSamples[outputIndex] = output;
 outputTotal = outputTotal + outputSamples[outputIndex];
-viperFanOut = (uint16_t)(outputTotal/10);
+viperFanOut = (uint16_t)(outputTotal/5);
 if(viperFanOut<25)viperFanOut=0;
 outputIndex+=1;
-if(outputIndex >= 10)outputIndex = 0;
+if(outputIndex >= 5)outputIndex = 0;
 }
 else
 {
@@ -17675,7 +17675,7 @@ analogs[1]=tempCalc(analogs[1]);
 
 if(RB2)
 {
-TRISC2 = 1;
+
 LCD_Clear();
 { LCD_Set_Cursor(0,0); LCD_Write_String("Alter with Up/Dn");};
 { LCD_Set_Cursor(0,1); LCD_Write_String("Enter Key to Set");};
@@ -17683,6 +17683,10 @@ _delay((unsigned long)((1500)*(32000000/4000.0)));
 LCD_Clear();
 menuChoice();
 _delay((unsigned long)((500)*(32000000/4000.0)));
+viperFanOut=0;
+PWM6_LoadDutyValue(viperFanOut);
+
+
 }
 loop+=1;
 }

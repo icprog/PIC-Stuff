@@ -150,5 +150,5 @@ void menuChoice(void)
     timer=0;
     loop=254;
     LCD_Clear();
-    TRISC2      =   0;    
+//    PWM6MD      =   0;                                                          // Re-enable PWM6 Module (viperFanOut) 
 }

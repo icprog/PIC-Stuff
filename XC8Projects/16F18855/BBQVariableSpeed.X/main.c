@@ -9,7 +9,7 @@
 #define ambientTemperature      analogs[0]                                      // Analog Chanell 1,  Pin 3
 #define pitTemperature          analogs[1]                                      // Analog Chanell 3,  Pin 5
 #define enterKey                RB2
-#define numOutSamples           10                                              // Number of Output samples to be Averaged into Output
+#define numOutSamples           5                                               // Number of Output samples to be Averaged into Output
 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Variables">
@@ -155,7 +155,7 @@ void main(void)
 
         if(enterKey)
         {
-            TRISC2      =   1;                                                  // Disable Pit Fan Output while in Menu
+//            PWM6MD      =   1;                                                  // Disable Pit Fan Output while in Menu
             LCD_Clear();
             LCDWriteStringXY(0,0,"Alter with Up/Dn");
             LCDWriteStringXY(0,1,"Enter Key to Set");
@@ -163,6 +163,10 @@ void main(void)
             LCD_Clear();
             menuChoice();
             __delay_ms(500);
+            viperFanOut=0;
+            PWM6_LoadDutyValue(viperFanOut);
+//            PWM6MD      =   0;                                                  // Re-enable PWM6 Module (viperFanOut) 
+
         }
         loop+=1;
     }

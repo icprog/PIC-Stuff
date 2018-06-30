@@ -244,10 +244,10 @@ void LCD_Write_String(const char *a)
 	   LCD_Write_Char(a[i]);
 }
 // ***************************************************************************************************************************************************************
-void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign)     //writes a integer type value to LCD module
+void LCD_Write_Int(int16_t value,int8_t fieldLength, uint8_t numPlaces, uint8_t sign)     //writes a integer type value to LCD module
 {
-	int16_t str[5]={0,0,0,0,0};         // Integer can be up to 5 characters long
-	int16_t i=4,j=0;
+	uint8_t str[5]={0,0,0,0,0};          // Integer can be up to 5 characters long
+	uint8_t i=4,j=0;
 
     if(value<0)                         // Handle negative integers
     {

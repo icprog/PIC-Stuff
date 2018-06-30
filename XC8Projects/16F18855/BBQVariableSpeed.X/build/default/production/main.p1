@@ -15,7 +15,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "46
 [v _LCD_Set_Cursor `(v ~T0 @X0 0 ef2`uc`uc ]
 "54
-[v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
+[v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`uc`uc`uc ]
 "50
 [v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
 "14 pid.h
@@ -26,8 +26,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _tempCalc `(i ~T0 @X0 0 ef1`i ]
 "38413 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
 [v _RB2 `Vb ~T0 @X0 0 e@106 ]
-"40263
-[v _TRISC2 `Vb ~T0 @X0 0 e@154 ]
 "52 lcd.h
 [v _LCD_Write_String `(v ~T0 @X0 0 ef1`*Cuc ]
 "4 menu.h
@@ -13155,7 +13153,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 48: void LCD_Init(char style);
 [; ;lcd.h: 50: void LCD_Write_Char(const char a);
 [; ;lcd.h: 52: void LCD_Write_String(const char *a);
-[; ;lcd.h: 54: void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
+[; ;lcd.h: 54: void LCD_Write_Int(int16_t value,uint8_t fieldLength, uint8_t numPlaces, uint8_t sign);
 [; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;adc.h: 9: typedef uint16_t adc_result_t;
 [; ;adc.h: 12: typedef enum
@@ -13233,15 +13231,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _outputIndex `uc ~T0 @X0 1 a ]
 [; ;main.c: 31: uint8_t outputIndex = 0;
 [e = _outputIndex -> -> 0 `i `uc ]
-[v F14372 `i ~T0 @X0 -> 10 `i s ]
+[v F14372 `i ~T0 @X0 -> 5 `i s ]
 [i F14372
 :U ..
 "33
 -> 0 `i
 ..
 ]
-[v _outputSamples `i ~T0 @X0 -> 10 `i a ]
-[; ;main.c: 33: int16_t outputSamples[10] = {0};
+[v _outputSamples `i ~T0 @X0 -> 5 `i a ]
+[; ;main.c: 33: int16_t outputSamples[5] = {0};
 [e = _outputSamples F14372 ]
 "35
 [v _holdOutput `uc ~T0 @X0 1 a ]
@@ -13320,7 +13318,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "86
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , _errorValue -> -> 5 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , _errorValue -> -> 5 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
 [; ;main.c: 87: LCD_Write_Char(' ');
 "87
@@ -13332,7 +13330,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "89
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 8 `i `uc -> -> 0 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , _integralValue -> -> 5 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , _integralValue -> -> 5 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
 [; ;main.c: 90: LCD_Write_Char(' ');
 "90
@@ -13344,7 +13342,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "93
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , _derivativeValue -> -> 4 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , _derivativeValue -> -> 4 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
 [; ;main.c: 95: LCD_Write_Char(' ');
 "95
@@ -13353,13 +13351,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 "96
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 6 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , *U + &U _analogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , *U + &U _analogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _analogs `ui `ux -> -> 4 `i `uc -> -> 1 `i `uc -> -> 0 `i `uc ]
 }
 [; ;main.c: 97: { LCD_Set_Cursor(12,1); LCD_Write_Int(viperFanOut,4, 0, 0);};
 "97
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 12 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> _viperFanOut `i -> -> 4 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> _viperFanOut `i -> -> 4 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
 [; ;main.c: 113: if(holdOutput==0)
 "113
@@ -13379,9 +13377,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 118: outputTotal = outputTotal + outputSamples[outputIndex];
 "118
 [e = _outputTotal + _outputTotal -> *U + &U _outputSamples * -> _outputIndex `ux -> -> # *U &U _outputSamples `ui `ux `l ]
-[; ;main.c: 119: viperFanOut = (uint16_t)(outputTotal/10);
+[; ;main.c: 119: viperFanOut = (uint16_t)(outputTotal/5);
 "119
-[e = _viperFanOut -> / _outputTotal -> -> 10 `i `l `ui ]
+[e = _viperFanOut -> / _outputTotal -> -> 5 `i `l `ui ]
 [; ;main.c: 120: if(viperFanOut<25)viperFanOut=0;
 "120
 [e $ ! < _viperFanOut -> -> 25 `i `ui 1569  ]
@@ -13390,9 +13388,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 121: outputIndex+=1;
 "121
 [e =+ _outputIndex -> -> 1 `i `uc ]
-[; ;main.c: 122: if(outputIndex >= 10)outputIndex = 0;
+[; ;main.c: 122: if(outputIndex >= 5)outputIndex = 0;
 "122
-[e $ ! >= -> _outputIndex `i -> 10 `i 1570  ]
+[e $ ! >= -> _outputIndex `i -> 5 `i 1570  ]
 [e = _outputIndex -> -> 0 `i `uc ]
 [e :U 1570 ]
 "123
@@ -13491,9 +13489,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 157: {
 "157
 {
-[; ;main.c: 158: TRISC2 = 1;
-"158
-[e = _TRISC2 -> -> 1 `i `b ]
 [; ;main.c: 159: LCD_Clear();
 "159
 [e ( _LCD_Clear ..  ]
@@ -13521,22 +13516,28 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 165: _delay((unsigned long)((500)*(32000000/4000.0)));
 "165
 [e ( __delay (1 -> * -> -> 500 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[; ;main.c: 166: viperFanOut=0;
 "166
+[e = _viperFanOut -> -> 0 `i `ui ]
+[; ;main.c: 167: PWM6_LoadDutyValue(viperFanOut);
+"167
+[e ( _PWM6_LoadDutyValue (1 _viperFanOut ]
+"170
 }
 [e :U 1578 ]
-[; ;main.c: 166: }
-[; ;main.c: 167: loop+=1;
-"167
+[; ;main.c: 170: }
+[; ;main.c: 171: loop+=1;
+"171
 [e =+ _loop -> -> 1 `i `uc ]
-"168
+"172
 }
 [e :U 1564 ]
 "79
 [e $U 1565  ]
 [e :U 1566 ]
-[; ;main.c: 168: }
-[; ;main.c: 169: }
-"169
+[; ;main.c: 172: }
+[; ;main.c: 173: }
+"173
 [e :UE 1563 ]
 }
 [a 2C 69 110 116 101 114 32 75 101 121 32 116 111 32 83 101 116 0 ]

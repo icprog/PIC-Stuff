@@ -17555,7 +17555,7 @@ void LCD_Write_Char(const char a);
 
 void LCD_Write_String(const char *a);
 
-void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
+void LCD_Write_Int(int16_t value,uint8_t fieldLength, uint8_t numPlaces, uint8_t sign);
 
 # 15 "menu.c"
 uint16_t lowRangeSet[2] = {750,10};
@@ -17696,5 +17696,5 @@ Exit:
 timer=0;
 loop=254;
 LCD_Clear();
-TRISC2 = 0;
+
 }

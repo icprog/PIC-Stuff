@@ -14,15 +14,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v __delay `JF14223 ~T0 @X0 0 e ]
 [p i __delay ]
 "54 lcd.h
-[v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`c`c`c ]
+[v _LCD_Write_Int `(v ~T0 @X0 0 ef4`i`uc`uc`uc ]
 "50
 [v _LCD_Write_Char `(v ~T0 @X0 0 ef1`Cuc ]
 "11 pwm.h
 [v _PWM7_LoadDutyValue `(v ~T0 @X0 0 ef1`ui ]
 "44 lcd.h
 [v _LCD_Clear `(v ~T0 @X0 0 ef ]
-"40263 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
-[v _TRISC2 `Vb ~T0 @X0 0 e@154 ]
 [; ;menu.h: 4: void menuChoice(void);
 [; ;menu.h: 6: char readKey(void);
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
@@ -13186,7 +13184,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 48: void LCD_Init(char style);
 [; ;lcd.h: 50: void LCD_Write_Char(const char a);
 [; ;lcd.h: 52: void LCD_Write_String(const char *a);
-[; ;lcd.h: 54: void LCD_Write_Int(int16_t value,int8_t fieldLength, int8_t numPlaces, int8_t sign);
+[; ;lcd.h: 54: void LCD_Write_Int(int16_t value,uint8_t fieldLength, uint8_t numPlaces, uint8_t sign);
 "15 menu.c
 [v _lowRangeSet `ui ~T0 @X0 -> 2 `i e ]
 [i _lowRangeSet
@@ -13403,13 +13401,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ ! == -> _choice `i -> 0 `i 1577  ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `uc -> -> 1 `i `uc -> -> 0 `i `uc ]
 }
 [e $U 1578  ]
 [e :U 1577 ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
 [e :U 1578 ]
 [; ;menu.c: 84: _delay((unsigned long)((2000)*(32000000/4000.0)));
@@ -13475,13 +13473,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ ! == -> _choice `i -> 0 `i 1585  ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `uc -> -> 1 `i `uc -> -> 0 `i `uc ]
 }
 [e $U 1586  ]
 [e :U 1585 ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
 [e :U 1586 ]
 [; ;menu.c: 105: LCD_Write_Char(' ');
@@ -13537,13 +13535,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ ! == -> _choice `i -> 0 `i 1591  ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `c -> -> 1 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `uc -> -> 1 `i `uc -> -> 0 `i `uc ]
 }
 [e $U 1592  ]
 [e :U 1591 ]
 {
 [e ( _LCD_Set_Cursor (2 , -> -> 10 `i `uc -> -> 1 `i `uc ]
-[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `c -> -> 0 `i `c -> -> 0 `i `c ]
+[e ( _LCD_Write_Int (4 , , , -> *U + &U _setpoint * -> _choice `ux -> -> # *U &U _setpoint `ui `ux `i -> -U -> 1 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
 [e :U 1592 ]
 [; ;menu.c: 123: LCD_Write_Char(' ');
@@ -13627,9 +13625,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;menu.c: 152: LCD_Clear();
 "152
 [e ( _LCD_Clear ..  ]
-[; ;menu.c: 153: TRISC2 = 0;
-"153
-[e = _TRISC2 -> -> 0 `i `b ]
 [; ;menu.c: 154: }
 "154
 [e :UE 1568 ]
