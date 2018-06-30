@@ -3,26 +3,27 @@
 // *************** Includes ****************************************************    
 #include "system.h"
 
-#define VIn0            voltage[0]
-#define VOut0           voltage[1]
-#define VIn1            voltage[2]
-#define VOut1           voltage[3]    
+#define VIn0                voltage[0]
+#define VOut0               voltage[1]
+#define VIn1                voltage[2]
+#define VOut1               voltage[3]    
 
 
-#define IIn0            current[0]
-#define IOut0           current[1]
-#define IIn1            current[2]
-#define IOut1           current[3]
+#define IIn0                current[0]
+#define IOut0               current[1]
+#define IIn1                current[2]
+#define IOut1               current[3]
 
-#define     Fault       !RB2
-#define     Buck0Output dutyCycle6
-#define     Buck1Output dutyCycle7
-#define     FanOutput   dutyCycle1
+#define     Fault           !(RB2)
+#define     Buck0Output     dutyCycle6
+#define     Buck1Output     dutyCycle7
+#define     FanOutput       dutyCycle1
+#define     NewFanOutput    (uint16_t)IOutTotal/2+10
 
-#define     Power0In    VIn0/100*IIn0/10
-#define     Power0Out   VOut0/100*IOut0/10
-#define     Power1In    VIn1*IIn1
-#define     Power1Out   VOut1*IOut1
+#define     Power0In        VIn0/100*IIn0/10
+#define     Power0Out       VOut0/100*IOut0/10
+#define     Power1In        VIn1*IIn1
+#define     Power1Out       VOut1*IOut1
 
 
 
@@ -87,16 +88,13 @@ void main(void)
         if(Fault)
         {
             LATA5=0;
-            __delay_us(200);
+            __delay_us(400);
             faultCount+=1;
-            if(Fault)
-            {
-                faultNotReset+=1;
-            }
             LATA5=1;
         }
         for(j=0;j<8;j++) analogs[j]=readAnalog(j);              // Read analogs
         
+        if(Fault)faultNotReset+=1;
         
         voltage[0]=(int16_t)(analogs[0]/.20885);                // Calculate VIn0
         
@@ -112,8 +110,8 @@ void main(void)
         calculateCurrent1();
 //        current[1]=(analogs[5]-578)/3.232;
 
-//        if(fastLoop>2)
-  //      {
+        if(fastLoop>11)
+        {
             if(Imode0)
             {
                 if(VIn0<MPPT0)                             // 3164 is actual MPPT of Panel
@@ -161,9 +159,9 @@ void main(void)
                 }
 
             }
-//            fastLoop=0;
+            fastLoop=0;
             slowLoop+=1;
-
+   
             PWM1_LoadDutyValue(FanOutput);
             PWM6_LoadDutyValue(Buck0Output);
             PWM7_LoadDutyValue(Buck1Output);
@@ -172,44 +170,42 @@ void main(void)
             if(menuButton == Down) if(MPPT0>2800)MPPT0-=10;
             if(menuButton == Up)if(MPPT0<3400)MPPT0+=10;
             if(menuButton == Enter)LCDInit();
-    //    }
-      //  fastLoop+=1;
+        }
+        fastLoop+=1;
         
-        if(slowLoop>50)
+        if(slowLoop>20)
         {
             
             IOutTotal=IOut0+IOut1;
             
             if(IOutTotal>20)
             {
-                FanOutput=(uint16_t)IOutTotal/2+10;
+                if(NewFanOutput>FanOutput)FanOutput+=1;else FanOutput-=1;
+//                FanOutput=(uint16_t)IOutTotal/2+10;
             }
             else
             {
                 FanOutput=0;
             }
-            if(Fault==1)FanOutput=55;                                                // Fault is the current sensors,can only be reset by resetting Processor
-//            if(Fault==1)RESET();                                                // Fault is the current sensors,can only be reset by resetting Processor
-                         
+            if(Fault)
+            {
+                FanOutput=55;
+                battery_state=CHARGE;
+            }
+            
             displayRefresh+=1;
             if(displayRefresh>80)
             {
                 LCDClear();
                 displayRefresh=0;
                 batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB2
-//                faultReset+=1;
-  //              if(faultReset>29)
-    //            {
-      //              RESET();
-        //            faultReset=0;
-          //      }
             }
             Battery_State_Machine();
             efficiency=(float)Power0Out;
             efficiency/=(float)Power0In;
             efficiency*=100;
-            LCDWriteCharacter(' ');
-//            LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
+
+            //            LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
   //          LCDWriteIntXY(20,0,ADCRead(22),4,0,0);
     //        LCDWriteIntXY(0,1,ADCRead(21),4,0,0);
       //      LCDWriteIntXY(20,1,ADCRead(20),4,0,0);
@@ -223,9 +219,10 @@ void main(void)
             
 //            LCDWriteIntXY(0,0,batteryTemp,4,1,0);
             LCDWriteIntXY(0,0,faultCount,5,0,0);
-  //          LCDWriteStringXY(24,0,"Eff:");
-//            LCDWriteIntXY(60,0,(int16_t)efficiency,5,0,0);
-            LCDWriteIntXY(32,0,faultNotReset,5,0,0);
+            LCDWriteIntXY(24,0,faultNotReset,5,0,0);
+            LCDWriteStringXY(48,0,"Eff:");
+            LCDWriteInt((int16_t)efficiency,3,0,0);
+            LCDWriteCharacter(' ');
 
 //            LCDWriteIntXY(32,0,analogs[4],4,0,0);
   //          LCDWriteIntXY(52,0,analogs[5],4,0,0);

@@ -13,6 +13,7 @@ int16_t             Iout;
 int8_t              Imode0          =   1;
 int8_t              Imode1          =   1;
 uint8_t             cc_cv;
+int8_t              VHoldMode       =   0;
 
 int16_t             voltage[4]      =   {0};                    // Store calculated Voltage values
 int16_t             current[4]      =   {0};                    // Store Calculated Current Values
@@ -89,6 +90,8 @@ void cc_cv_mode()
 {
 	if(VSENSE0 > Vref)                                  // Vref is set by SET_VOLTAGE()
 	{
+        VHoldMode+=1;
+        
 		if(cc_cv)                                       // cc_cv is the number of slowLoop cycles to complete before switching to Voltage Mode
         {
             cc_cv-=1;                                   // Decrement it by 1,
@@ -101,7 +104,18 @@ void cc_cv_mode()
             }
 		}
 	}
-    else if(ISENSE0 > Iref)                             // Iref is set by "SET_CURRENT(some Value here)" Use this to come back out of FLOAT Mode
+    else
+    {
+        VHoldMode-=1;
+        if(VHoldMode<(CURRENT_MODE*-1))
+        {
+            Imode0 = 1;                                 // switch to "Current Mode"
+            cc_cv = CURRENT_MODE;                       // and, set the cc_cv to count "CURRENT_MODE" number of slowLoop iterations, before allowing a return to "VOLTAGE Mode"
+            VHoldMode=(CURRENT_MODE*-1);
+        }
+    }
+    
+    if(ISENSE0 > Iref)                             // Iref is set by "SET_CURRENT(some Value here)" Use this to come back out of FLOAT Mode
 	{
 		if(!Imode0)                                     // If not "CURRENT Mode",
         {
@@ -110,9 +124,9 @@ void cc_cv_mode()
                 battery_state=CHARGE;                   // Set CHARGE mode
                 SET_VOLTAGE(CHARGING_VOLTAGE);          // Set Vref back to CHARGING_VOLTAGE
                 SET_CURRENT(ILIM);                      // Set Iref back to ILIM
+                Imode0 = 1;                             // switch to "Current Mode"
+                cc_cv = CURRENT_MODE;                   // and, set the cc_cv to count "CURRENT_MODE" number of slowLoop iterations, before allowing a return to "VOLTAGE Mode"
             }
-            Imode0 = 1;                                 // switch to "Current Mode"
-            cc_cv = CURRENT_MODE;                       // and, set the cc_cv to count "CURRENT_MODE" number of slowLoop iterations, before allowing a return to "VOLTAGE Mode"
         }
 	}
 }
