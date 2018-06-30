@@ -17599,7 +17599,8 @@ extern int8_t Imode0;
 extern int16_t Vref;
 extern int16_t Iref;
 uint8_t menuButton = 0;
-uint8_t faultReset = 0;
+uint16_t faultCount = 0;
+uint16_t faultNotReset = 0;
 
 SYSTEM_Initialize();
 
@@ -17610,9 +17611,20 @@ void calculateCurrent1(void);
 void calculateCurrent2(void);
 void calculateCurrent3(void);
 
-# 84
+# 85
 while (1)
 {
+if(!RB2)
+{
+LATA5=0;
+_delay((unsigned long)((200)*(32000000/4000000.0)));
+faultCount+=1;
+if(!RB2)
+{
+faultNotReset+=1;
+}
+LATA5=1;
+}
 for(j=0;j<8;j++) analogs[j]=readAnalog(j);
 
 
@@ -17620,15 +17632,15 @@ voltage[0]=(int16_t)(analogs[0]/.20885);
 
 voltage[1]=(int16_t)(analogs[1]/.54503);
 
-# 97
+# 109
 calculateCurrent0();
 
 
 calculateCurrent1();
 
 
-if(fastLoop>2)
-{
+
+
 if(Imode0)
 {
 if(voltage[0]<MPPT0)
@@ -17676,7 +17688,7 @@ else
 }
 
 }
-fastLoop=0;
+
 slowLoop+=1;
 
 PWM1_LoadDutyValue(dutyCycle1);
@@ -17687,8 +17699,8 @@ menuButton = readButton();
 if(menuButton == 2) if(MPPT0>2800)MPPT0-=10;
 if(menuButton == 3)if(MPPT0<3400)MPPT0+=10;
 if(menuButton == 1)LCDInit();
-}
-fastLoop+=1;
+
+
 
 if(slowLoop>50)
 {
@@ -17712,12 +17724,8 @@ if(displayRefresh>80)
 LCDClear();
 displayRefresh=0;
 batteryTemp=tempCalc(ADCRead(9));
-faultReset+=1;
-if(faultReset>29)
-{
-asm("reset");
-faultReset=0;
-}
+
+# 206
 }
 Battery_State_Machine();
 efficiency=(float)voltage[1]/100*current[1]/10;
@@ -17725,12 +17733,14 @@ efficiency/=(float)voltage[0]/100*current[0]/10;
 efficiency*=100;
 LCDWriteCharacter(' ');
 
-# 212
-{ gotoXY(0,0); LCDWriteInt(batteryTemp,4, 1, 0);};
+# 225
+{ gotoXY(0,0); LCDWriteInt(faultCount,5, 0, 0);};
 
 
-{ gotoXY(28,0); LCDWriteInt(analogs[4],4, 0, 0);};
-{ gotoXY(48,0); LCDWriteInt(analogs[5],4, 0, 0);};
+{ gotoXY(32,0); LCDWriteInt(faultNotReset,5, 0, 0);};
+
+
+
 { gotoXY(0,1); LCDWriteInt(voltage[0],4, 2, 0);};
 LCDWriteCharacter('V');
 { gotoXY(28,1); LCDWriteInt(current[0],3, 1, 0);};
@@ -17753,10 +17763,10 @@ LCDWriteCharacter('A');
 { gotoXY(0,4); LCDWriteInt(voltage[1]/100*current[1]/10,3, 0, 0);};
 LCDWriteCharacter('W');
 
-LCDWriteCharacter('W');
+
 { gotoXY(48,4); LCDWriteInt(MPPT0,4, 0, 0);};
 
-# 248
+# 263
 { gotoXY(0,5); LCDWriteInt(dutyCycle6,4, 0, 0);};
 { gotoXY(24,5); LCDWriteInt(dutyCycle7,4, 0, 0);};
 { gotoXY(48,5); LCDWriteInt(dutyCycle1,4, 0, 0);};

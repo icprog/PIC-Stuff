@@ -15,14 +15,14 @@
 #define IOut1           current[3]
 
 #define     Fault       !RB2
-#define     PWM0        dutyCycle6
-#define     PWM1        dutyCycle7
-#define     PWM2        dutyCycle1
+#define     Buck0Output dutyCycle6
+#define     Buck1Output dutyCycle7
+#define     FanOutput   dutyCycle1
 
-#define     power0In    VIn0/100*IIn0/10
-#define     power0Out   VOut0/100*IOut0/10
-#define     power1In    VIn1*IIn1
-#define     power1Out   VOut1*IOut1
+#define     Power0In    VIn0/100*IIn0/10
+#define     Power0Out   VOut0/100*IOut0/10
+#define     Power1In    VIn1*IIn1
+#define     Power1Out   VOut1*IOut1
 
 
 
@@ -58,7 +58,8 @@ void main(void)
     extern int16_t  Vref;                                       // setpoint for voltage output
     extern int16_t  Iref;
     uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
-    uint8_t         faultReset      =   0;                      // Automatically Reset Current Fault latch
+    uint16_t        faultCount      =   0;                      // Keep Count of Current Fault latches/Resets
+    uint16_t        faultNotReset   =   0;
     
     SYSTEM_Initialize();
     
@@ -83,6 +84,17 @@ void main(void)
 
     while (1)
     {
+        if(Fault)
+        {
+            LATA5=0;
+            __delay_us(200);
+            faultCount+=1;
+            if(Fault)
+            {
+                faultNotReset+=1;
+            }
+            LATA5=1;
+        }
         for(j=0;j<8;j++) analogs[j]=readAnalog(j);              // Read analogs
         
         
@@ -100,68 +112,68 @@ void main(void)
         calculateCurrent1();
 //        current[1]=(analogs[5]-578)/3.232;
 
-        if(fastLoop>2)
-        {
+//        if(fastLoop>2)
+  //      {
             if(Imode0)
             {
                 if(VIn0<MPPT0)                             // 3164 is actual MPPT of Panel
                 {
-                    if(PWM0<1023)
+                    if(Buck0Output<1023)
                     {
-                        PWM0+=1;
+                        Buck0Output+=1;
                     }
                 }
-                else if(PWM0>0)
+                else if(Buck0Output>0)
                 {
-                    PWM0-=1;
+                    Buck0Output-=1;
                 }
                 
                 if(VIn1<MPPT1)                             // 3164 is actual MPPT of Panel
                 {
-                    if(PWM1<252)
+                    if(Buck1Output<252)
                     {
-//                        PWM1+=1;
+//                        Buck1Output+=1;
                     }
                 }
-                else if(PWM1>0)
+                else if(Buck1Output>0)
                 {
-  //                  PWM1-=1;
+  //                  Buck1Output-=1;
                 }
            }
             else
             {
                 if(VOut0>(int16_t)Vref)
                 {
-                    if(PWM0<1023) PWM0+=1;
+                    if(Buck0Output<1023) Buck0Output+=1;
                 }
                 else
                 {
-                    if(PWM0>0) PWM0-=1;;
+                    if(Buck0Output>0) Buck0Output-=1;;
                 }
  
                 if(VOut1>(int16_t)Vref)
                 {
-//                    if(PWM1<1023) PWM1+=1;
+//                    if(Buck1Output<1023) Buck1Output+=1;
                 }
                 else
                 {
-  //                  if(PWM1>0) PWM1-=1;;
+  //                  if(Buck1Output>0) Buck1Output-=1;;
                 }
 
             }
-            fastLoop=0;
+//            fastLoop=0;
             slowLoop+=1;
 
-            PWM1_LoadDutyValue(PWM2);
-            PWM6_LoadDutyValue(PWM0);
-            PWM7_LoadDutyValue(PWM1);
+            PWM1_LoadDutyValue(FanOutput);
+            PWM6_LoadDutyValue(Buck0Output);
+            PWM7_LoadDutyValue(Buck1Output);
 
             menuButton = readButton();
             if(menuButton == Down) if(MPPT0>2800)MPPT0-=10;
             if(menuButton == Up)if(MPPT0<3400)MPPT0+=10;
             if(menuButton == Enter)LCDInit();
-        }
-        fastLoop+=1;
+    //    }
+      //  fastLoop+=1;
         
         if(slowLoop>50)
         {
@@ -170,13 +182,13 @@ void main(void)
             
             if(IOutTotal>20)
             {
-                PWM2=(uint16_t)IOutTotal/2+10;
+                FanOutput=(uint16_t)IOutTotal/2+10;
             }
             else
             {
-                PWM2=0;
+                FanOutput=0;
             }
-            if(Fault==1)PWM2=55;                                                // Fault is the current sensors,can only be reset by resetting Processor
+            if(Fault==1)FanOutput=55;                                                // Fault is the current sensors,can only be reset by resetting Processor
 //            if(Fault==1)RESET();                                                // Fault is the current sensors,can only be reset by resetting Processor
                          
             displayRefresh+=1;
@@ -185,16 +197,16 @@ void main(void)
                 LCDClear();
                 displayRefresh=0;
                 batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB2
-                faultReset+=1;
-                if(faultReset>29)
-                {
-                    RESET();
-                    faultReset=0;
-                }
+//                faultReset+=1;
+  //              if(faultReset>29)
+    //            {
+      //              RESET();
+        //            faultReset=0;
+          //      }
             }
             Battery_State_Machine();
-            efficiency=(float)power0Out;
-            efficiency/=(float)power0In;
+            efficiency=(float)Power0Out;
+            efficiency/=(float)Power0In;
             efficiency*=100;
             LCDWriteCharacter(' ');
 //            LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
@@ -209,11 +221,14 @@ void main(void)
 //            LCDWriteIntXY(0,2,ADCRead(22),4,0,0);
   //          LCDWriteIntXY(20,2,ADCRead(15),4,0,0);
             
-            LCDWriteIntXY(0,0,batteryTemp,4,1,0);
+//            LCDWriteIntXY(0,0,batteryTemp,4,1,0);
+            LCDWriteIntXY(0,0,faultCount,5,0,0);
   //          LCDWriteStringXY(24,0,"Eff:");
 //            LCDWriteIntXY(60,0,(int16_t)efficiency,5,0,0);
-            LCDWriteIntXY(28,0,analogs[4],4,0,0);
-            LCDWriteIntXY(48,0,analogs[5],4,0,0);
+            LCDWriteIntXY(32,0,faultNotReset,5,0,0);
+
+//            LCDWriteIntXY(32,0,analogs[4],4,0,0);
+  //          LCDWriteIntXY(52,0,analogs[5],4,0,0);
             LCDWriteIntXY(0,1,VIn0,4,2,0);
             LCDWriteCharacter('V');
             LCDWriteIntXY(28,1,IIn0,3,1,0);
@@ -226,17 +241,17 @@ void main(void)
             LCDWriteIntXY(56,2,Vref,4,2,0);
             LCDWriteCharacter('V');
             
-            LCDWriteIntXY(0,3,power0In,3,0,0);
+            LCDWriteIntXY(0,3,Power0In,3,0,0);
             LCDWriteCharacter('W');
             LCDWriteIntXY(28,3,battery_state,1,0,0);
             LCDWriteIntXY(36,3,Imode0,1,0,0);
             LCDWriteIntXY(48,3,Iref,3,1,0);
             LCDWriteCharacter('A');
             
-            LCDWriteIntXY(0,4,power0Out,3,0,0);
+            LCDWriteIntXY(0,4,Power0Out,3,0,0);
             LCDWriteCharacter('W');
 //            LCDWriteIntXY(24,4,power0OutOld,3,0,0);
-            LCDWriteCharacter('W');
+  //          LCDWriteCharacter('W');
             LCDWriteIntXY(48,4,MPPT0,4,0,0);
             
 //            LCDWriteIntXY(0,3,VIn1,4,2,0);
@@ -245,9 +260,9 @@ void main(void)
       //      LCDWriteIntXY(0,4,VOut1,4,2,0);
         //    LCDWriteCharacter('V');
           //  LCDWriteIntXY(28,4,IOut1,4,0,0);
-            LCDWriteIntXY(0,5,PWM0,4,0,0);
-            LCDWriteIntXY(24,5,PWM1,4,0,0);
-            LCDWriteIntXY(48,5,PWM2,4,0,0);
+            LCDWriteIntXY(0,5,Buck0Output,4,0,0);
+            LCDWriteIntXY(24,5,Buck1Output,4,0,0);
+            LCDWriteIntXY(48,5,FanOutput,4,0,0);
             LCDWriteIntXY(74,5,Fault,1,0,0);
 
             if(battery_state > FINISHED)
