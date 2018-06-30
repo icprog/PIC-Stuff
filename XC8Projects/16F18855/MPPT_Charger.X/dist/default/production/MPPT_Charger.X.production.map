@@ -5,9 +5,9 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.45\dat\en_msgs.txt -cs \
   -h+dist/default/production\MPPT_Charger.X.production.sym \
   --cmf=dist/default/production\MPPT_Charger.X.production.cmf -z -Q16F18855 \
-  -oC:\Users\DANNY\AppData\Local\Temp\s6v0.2 \
+  -oC:\Users\DANNY\AppData\Local\Temp\s29c.2 \
   -Mdist/default/production/MPPT_Charger.X.production.map -E1 -ver=XC8 \
-  --acfsm=1493 -ASTACK=02110h-0216fh -pstack=STACK -ACODE=00h-07FFhx4 \
+  --acfsm=1493 -ASTACK=02110h-0211fh -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
   -AENTRY=00h-0FFhx32 -ACOMMON=070h-07Fh -ABANK0=020h-06Fh \
   -ABANK1=0A0h-0EFh -ABANK2=0120h-016Fh -ABANK3=01A0h-01EFh \
@@ -32,7 +32,7 @@ Linker command line:
   -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 \
   -AEEDATA=00h-0FFh/0F000h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
-  C:\Users\DANNY\AppData\Local\Temp\s6v0.obj \
+  C:\Users\DANNY\AppData\Local\Temp\s29c.obj \
   dist/default/production\MPPT_Charger.X.production.obj 
 
 Object code version is 3.11
@@ -42,7 +42,7 @@ Machine type is 16F18855
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\DANNY\AppData\Local\Temp\s6v0.obj
+C:\Users\DANNY\AppData\Local\Temp\s29c.obj
                 end_init                              2        2        2        0       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5    1000E       0
@@ -211,7 +211,8 @@ TOTAL           Name                               Link     Load   Length     Sp
 
         CLASS   ABS1           
                 abs_s1                               7E       7E        2         1
-                abs_s1                              250      250       20         1
+                abs_s1                              1D0      1D0       20         1
+                abs_s1                              220      220       50         1
                 abs_s1                              2A0      2A0       50         1
                 abs_s1                              320      320       50         1
                 abs_s1                              3A0      3A0       50         1
@@ -220,7 +221,7 @@ TOTAL           Name                               Link     Load   Length     Sp
                 abs_s1                              520      520       50         1
                 abs_s1                              5A0      5A0       50         1
                 abs_s1                              620      620       30         1
-                abs_s1                             2170     2170        0         1
+                abs_s1                             2120     2120        0         1
 
         CLASS   SFR0           
 
@@ -397,8 +398,7 @@ UNUSED ADDRESS RANGES
         Name                Unused          Largest block    Delta
         BANK1            000EF-000EF               1           1
         BANK2            0016F-0016F               1           1
-        BANK3            001C0-001EF              30           1
-        BANK4            00220-0024F              30           1
+        BANK3            001C0-001CF              10           1
         BIGRAM           02000-023EF             3F0           1
         CODE             00004-00008               5           2
                          00800-00800               1
@@ -413,8 +413,7 @@ UNUSED ADDRESS RANGES
         IDLOC            08000-08003               4           2
         RAM              000EF-000EF               1           1
                          0016F-0016F               1
-                         001C0-001EF              30
-                         00220-0024F              30
+                         001C0-001CF              10
         SFR0             00000-0001F              20           1
         SFR1             00080-0009F              20           1
         SFR10            00500-0051F              20           1
@@ -447,7 +446,7 @@ UNUSED ADDRESS RANGES
         SFR7             00380-0039F              20           1
         SFR8             00400-0041F              20           1
         SFR9             00480-0049F              20           1
-        STACK            02110-0216F              60           1
+        STACK            02110-0211F              10           1
         STRCODE          00004-00008               5           2
                          00800-00800               1
                          01824-01E44             621
@@ -941,7 +940,7 @@ __initialization                     cinit        007C8
 __pbssBANK1                          bssBANK1     000EC
 __pbssBANK2                          bssBANK2     00120
 __pbssBANK3                          bssBANK3     001A0
-__pbssBIGRAM                         (abs)        02170
+__pbssBIGRAM                         (abs)        02120
 __pcstackBANK0                       cstackBANK0  00020
 __pcstackBANK1                       cstackBANK1  000A0
 __pcstackCOMMON                      cstackCOMMON 00070
@@ -1060,7 +1059,7 @@ _readAnalog                          text11       00940
 _readButton                          text10       014FB
 _readButtons                         bssBANK2     00147
 _sampleIndex                         bssBANK2     0014F
-_samples                             (abs)        02170
+_samples                             (abs)        02120
 _state_counter                       nvBANK2      0016A
 _tempCalc                            text1        00C1B
 _tempCalc$1351                       cstackBANK1  000BB
@@ -1106,7 +1105,7 @@ readAnalog@analog_channel            cstackBANK0  0003A
 readAnalog@channel                   cstackBANK0  00026
 readAnalog@value                     cstackBANK0  0003C
 reset_vec                            reset_vec    00000
-stackhi                              (abs)        0216F
+stackhi                              (abs)        0211F
 stacklo                              (abs)        02110
 start                                init         00002
 start_initialization                 cinit        007C8
