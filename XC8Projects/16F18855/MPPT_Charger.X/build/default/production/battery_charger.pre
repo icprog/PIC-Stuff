@@ -17525,10 +17525,7 @@ uint8_t readButton(void);
 # 19 "lcd.h"
 void gotoXY(uint8_t x, uint8_t y);
 
-
-void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
-
-
+# 25
 void LCDWriteCharacter(const char character);
 
 
@@ -17582,19 +17579,18 @@ void cc_cv_mode();
 # 3 "battery_charger.c"
 uint8_t battery_state;
 uint16_t IminCount;
-uint16_t Iflat_db;
+
 uint16_t state_counter;
 int16_t Imin;
 int16_t Iref;
 int16_t Vref;
-uint16_t warmup;
+
 int16_t Iout;
 
 int8_t Imode0 = 1;
 int8_t Imode1 = 1;
 uint8_t cc_cv;
 int8_t VHoldMode = 0;
-
 int16_t voltage[4] = {0};
 int16_t current[4] = {0};
 
@@ -17670,7 +17666,7 @@ void cc_cv_mode()
 {
 if(voltage[1] > Vref)
 {
-VHoldMode+=1;
+if(VHoldMode<12)VHoldMode+=1;
 
 if(cc_cv)
 {

@@ -17525,10 +17525,7 @@ uint8_t readButton(void);
 # 19 "lcd.h"
 void gotoXY(uint8_t x, uint8_t y);
 
-
-void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
-
-
+# 25
 void LCDWriteCharacter(const char character);
 
 
@@ -17601,6 +17598,8 @@ extern int16_t Iref;
 uint8_t menuButton = 0;
 uint16_t faultCount = 0;
 uint16_t faultNotReset = 0;
+extern int8_t VHoldMode;
+
 
 SYSTEM_Initialize();
 
@@ -17608,10 +17607,8 @@ LCDClear();
 
 void calculateCurrent0(void);
 void calculateCurrent1(void);
-void calculateCurrent2(void);
-void calculateCurrent3(void);
 
-# 86
+# 88
 while (1)
 {
 if(!(RB2))
@@ -17629,11 +17626,12 @@ voltage[0]=(int16_t)(analogs[0]/.20885);
 
 voltage[1]=(int16_t)(analogs[1]/.54503);
 
-# 107
+# 109
 calculateCurrent0();
 
 
 calculateCurrent1();
+
 
 
 if(fastLoop>11)
@@ -17708,6 +17706,8 @@ if(IOutTotal>20)
 {
 if((uint16_t)IOutTotal/2+10>dutyCycle1)dutyCycle1+=1;else dutyCycle1-=1;
 
+
+
 }
 else
 {
@@ -17731,11 +17731,12 @@ efficiency=(float)voltage[1]/100*current[1]/10;
 efficiency/=(float)voltage[0]/100*current[0]/10;
 efficiency*=100;
 
-# 221
+# 226
 { gotoXY(0,0); LCDWriteInt(faultCount,5, 0, 0);};
 { gotoXY(24,0); LCDWriteInt(faultNotReset,5, 0, 0);};
-{ gotoXY(48,0); LCDWriteString("Eff:");};
-LCDWriteInt((int16_t)efficiency,3,0,0);
+{ gotoXY(48,0); LCDWriteInt(VHoldMode,3, 0, 0);};
+
+
 LCDWriteCharacter(' ');
 
 
@@ -17765,7 +17766,7 @@ LCDWriteCharacter('W');
 
 { gotoXY(48,4); LCDWriteInt(MPPT0,4, 0, 0);};
 
-# 260
+# 266
 { gotoXY(0,5); LCDWriteInt(dutyCycle6,4, 0, 0);};
 { gotoXY(24,5); LCDWriteInt(dutyCycle7,4, 0, 0);};
 { gotoXY(48,5); LCDWriteInt(dutyCycle1,4, 0, 0);};
@@ -17797,30 +17798,6 @@ void calculateCurrent1(void)
 if(analogs[5]-578<=0)
 {
 current[1]=0;
-}
-else
-{
-current[1]=(int16_t)((analogs[5]-578)/3.2323);
-}
-}
-
-void calculateCurrent2(void)
-{
-if(analogs[6]-589<=0)
-{
-current[2]=0;
-}
-else
-{
-current[0]=(int16_t)((analogs[4]-589)/1.3165);
-}
-}
-
-void calculateCurrent3(void)
-{
-if(analogs[7]-578<=0)
-{
-current[3]=0;
 }
 else
 {

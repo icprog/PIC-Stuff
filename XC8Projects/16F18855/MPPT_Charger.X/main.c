@@ -43,7 +43,7 @@ void main(void)
     int16_t         MPPT0           =   3144;
     int16_t         MPPT1           =   3144;
     
-    uint16_t        dutyCycle6      =   1023;                   // 126 is midpoint, allow adjusting up or down
+    uint16_t        dutyCycle6      =   1023;                   // 1023 is as Low as can go
     uint16_t        dutyCycle7      =   256;                    // 126 is midpoint, allow adjusting up or down
     uint16_t        dutyCycle1      =   60;                     // 30 is required for minimum speed
     int16_t         IOutTotal       =   0;
@@ -61,6 +61,8 @@ void main(void)
     uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
     uint16_t        faultCount      =   0;                      // Keep Count of Current Fault latches/Resets
     uint16_t        faultNotReset   =   0;
+    extern int8_t   VHoldMode;
+//    uint8_t         tempFanOutput   =   0;
     
     SYSTEM_Initialize();
     
@@ -68,8 +70,8 @@ void main(void)
     
     void calculateCurrent0(void);
     void calculateCurrent1(void);
-    void calculateCurrent2(void);
-    void calculateCurrent3(void);
+  //  void calculateCurrent2(void);
+//    void calculateCurrent3(void);
     
     // </editor-fold>
 /*    
@@ -110,6 +112,7 @@ void main(void)
         calculateCurrent1();
 //        current[1]=(analogs[5]-578)/3.232;
 
+        
         if(fastLoop>11)
         {
             if(Imode0)
@@ -181,7 +184,9 @@ void main(void)
             if(IOutTotal>20)
             {
                 if(NewFanOutput>FanOutput)FanOutput+=1;else FanOutput-=1;
-//                FanOutput=(uint16_t)IOutTotal/2+10;
+    //            if(NewFanOutput>tempFanOutput)if(tempFanOutput<75)tempFanOutput+=1;else if(tempFanOutput>0)tempFanOutput-=1;
+  //              FanOutput=tempFanOutput;
+//                if(FanOutput<19)FanOutput=0;
             }
             else
             {
@@ -220,8 +225,9 @@ void main(void)
 //            LCDWriteIntXY(0,0,batteryTemp,4,1,0);
             LCDWriteIntXY(0,0,faultCount,5,0,0);
             LCDWriteIntXY(24,0,faultNotReset,5,0,0);
-            LCDWriteStringXY(48,0,"Eff:");
-            LCDWriteInt((int16_t)efficiency,3,0,0);
+            LCDWriteIntXY(48,0,VHoldMode,3,0,0);
+//            LCDWriteStringXY(48,0,"Eff:");
+//            LCDWriteInt((int16_t)efficiency,3,0,0);
             LCDWriteCharacter(' ');
 
 //            LCDWriteIntXY(32,0,analogs[4],4,0,0);
@@ -295,7 +301,7 @@ void calculateCurrent1(void)
     }
 }
 
-void calculateCurrent2(void)
+/*void calculateCurrent2(void)
 {
     if(analogs[6]-589<=0)
     {
@@ -317,5 +323,4 @@ void calculateCurrent3(void)
     {
         current[1]=(int16_t)((analogs[5]-578)/3.2323);
     }
-}
-
+}*/

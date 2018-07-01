@@ -17550,10 +17550,7 @@ void OSCILLATOR_Initialize(void);
 # 19 "lcd.h"
 void gotoXY(uint8_t x, uint8_t y);
 
-
-void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
-
-
+# 25
 void LCDWriteCharacter(const char character);
 
 
@@ -17686,16 +17683,7 @@ LCDWrite(0,(uint8_t)(0x80 | x));
 LCDWrite(0,(uint8_t)(0x40 | y));
 }
 
-
-void LCDBitmap(const char my_array[], uint8_t startPosition, uint16_t len)
-{
-uint16_t index;
-gotoXY(0,startPosition);
-for (index = 0 ; index < len ; index++)
-LCDWrite(1, my_array[index]);
-}
-
-
+# 140
 void LCDWriteCharacter(const char character)
 {
 uint16_t base;

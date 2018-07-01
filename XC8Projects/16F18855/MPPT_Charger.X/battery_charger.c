@@ -2,19 +2,18 @@
 
 uint8_t             battery_state;
 uint16_t            IminCount;
-uint16_t            Iflat_db;
+//uint16_t            Iflat_db;
 uint16_t            state_counter;
 int16_t             Imin;
 int16_t             Iref;                                       // setpoint for current output
 int16_t             Vref;                                       // setpoint for voltage output
-uint16_t            warmup;
+//uint16_t            warmup;
 int16_t             Iout;
 //uint16_t            Vout;
 int8_t              Imode0          =   1;
 int8_t              Imode1          =   1;
 uint8_t             cc_cv;
 int8_t              VHoldMode       =   0;
-
 int16_t             voltage[4]      =   {0};                    // Store calculated Voltage values
 int16_t             current[4]      =   {0};                    // Store Calculated Current Values
 
@@ -90,7 +89,7 @@ void cc_cv_mode()
 {
 	if(VSENSE0 > Vref)                                  // Vref is set by SET_VOLTAGE()
 	{
-        VHoldMode+=1;
+        if(VHoldMode<12)VHoldMode+=1;
         
 		if(cc_cv)                                       // cc_cv is the number of slowLoop cycles to complete before switching to Voltage Mode
         {

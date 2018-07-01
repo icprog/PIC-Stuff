@@ -1,5 +1,5 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"26 battery_charger.c
+"25 battery_charger.c
 [c E14319 0 1 2 3 4 5 .. ]
 [n E14319 charge_states IDLE FAULT FINISHED PRECHARGE CHARGE FLOAT  ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
@@ -13153,7 +13153,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.h: 54: void cc_cv_mode();
 [; ;buttons.h: 12: uint8_t readButton(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
-[; ;lcd.h: 22: void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
 [; ;lcd.h: 29: void LCDWriteString(const char *characters);
 [; ;lcd.h: 32: void LCDClear(void);
@@ -13180,9 +13179,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 "4
 [v _IminCount `ui ~T0 @X0 1 e ]
 [; ;battery_charger.c: 4: uint16_t IminCount;
-"5
-[v _Iflat_db `ui ~T0 @X0 1 e ]
-[; ;battery_charger.c: 5: uint16_t Iflat_db;
 "6
 [v _state_counter `ui ~T0 @X0 1 e ]
 [; ;battery_charger.c: 6: uint16_t state_counter;
@@ -13195,9 +13191,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 "9
 [v _Vref `i ~T0 @X0 1 e ]
 [; ;battery_charger.c: 9: int16_t Vref;
-"10
-[v _warmup `ui ~T0 @X0 1 e ]
-[; ;battery_charger.c: 10: uint16_t warmup;
 "11
 [v _Iout `i ~T0 @X0 1 e ]
 [; ;battery_charger.c: 11: int16_t Iout;
@@ -13222,370 +13215,372 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `c
 ]
 [; ;battery_charger.c: 16: int8_t VHoldMode = 0;
-"18
+"17
 [v _voltage `i ~T0 @X0 -> 4 `i e ]
 [i _voltage
 :U ..
 -> 0 `i
 ..
 ]
-[; ;battery_charger.c: 18: int16_t voltage[4] = {0};
-"19
+[; ;battery_charger.c: 17: int16_t voltage[4] = {0};
+"18
 [v _current `i ~T0 @X0 -> 4 `i e ]
 [i _current
 :U ..
 -> 0 `i
 ..
 ]
-[; ;battery_charger.c: 19: int16_t current[4] = {0};
-"24
+[; ;battery_charger.c: 18: int16_t current[4] = {0};
+"23
 [v _Init_Battery_State_Machine `(v ~T0 @X0 1 ef ]
-"25
+"24
 {
-[; ;battery_charger.c: 24: void Init_Battery_State_Machine()
-[; ;battery_charger.c: 25: {
+[; ;battery_charger.c: 23: void Init_Battery_State_Machine()
+[; ;battery_charger.c: 24: {
 [e :U _Init_Battery_State_Machine ]
 [f ]
-[; ;battery_charger.c: 26: battery_state = PRECHARGE;
-"26
+[; ;battery_charger.c: 25: battery_state = PRECHARGE;
+"25
 [e = _battery_state -> . `E14319 3 `uc ]
-[; ;battery_charger.c: 27: state_counter = 600;
-"27
+[; ;battery_charger.c: 26: state_counter = 600;
+"26
 [e = _state_counter -> -> 600 `i `ui ]
-[; ;battery_charger.c: 29: { Iref = 10; };
-"29
+[; ;battery_charger.c: 28: { Iref = 10; };
+"28
 {
 [e = _Iref -> 10 `i ]
 }
-[; ;battery_charger.c: 30: { Vref = 1445; };
-"30
+[; ;battery_charger.c: 29: { Vref = 1445; };
+"29
 {
 [e = _Vref -> 1445 `i ]
 }
-[; ;battery_charger.c: 32: Imin = 25;
-"32
+[; ;battery_charger.c: 31: Imin = 25;
+"31
 [e = _Imin -> 25 `i ]
-[; ;battery_charger.c: 33: IminCount = 10;
-"33
+[; ;battery_charger.c: 32: IminCount = 10;
+"32
 [e = _IminCount -> -> 10 `i `ui ]
-[; ;battery_charger.c: 34: }
-"34
+[; ;battery_charger.c: 33: }
+"33
 [e :UE 1563 ]
 }
-"36
+"35
 [v _Battery_State_Machine `(v ~T0 @X0 1 ef ]
-"37
+"36
 {
-[; ;battery_charger.c: 36: void Battery_State_Machine()
-[; ;battery_charger.c: 37: {
+[; ;battery_charger.c: 35: void Battery_State_Machine()
+[; ;battery_charger.c: 36: {
 [e :U _Battery_State_Machine ]
 [f ]
-[; ;battery_charger.c: 38: if(battery_state == PRECHARGE)
-"38
+[; ;battery_charger.c: 37: if(battery_state == PRECHARGE)
+"37
 [e $ ! == -> _battery_state `i -> . `E14319 3 `i 1565  ]
-[; ;battery_charger.c: 39: {
+[; ;battery_charger.c: 38: {
+"38
+{
+[; ;battery_charger.c: 39: if(voltage[1] < 1075)
 "39
-{
-[; ;battery_charger.c: 40: if(voltage[1] < 1075)
-"40
 [e $ ! < *U + &U _voltage * -> -> -> 1 `i `ui `ux -> -> # *U &U _voltage `ui `ux -> 1075 `i 1566  ]
-[; ;battery_charger.c: 41: {
+[; ;battery_charger.c: 40: {
+"40
+{
+[; ;battery_charger.c: 41: if(state_counter)
 "41
-{
-[; ;battery_charger.c: 42: if(state_counter)
-"42
 [e $ ! != _state_counter -> -> 0 `i `ui 1567  ]
-[; ;battery_charger.c: 43: {
+[; ;battery_charger.c: 42: {
+"42
+{
+[; ;battery_charger.c: 43: state_counter-=1;
 "43
-{
-[; ;battery_charger.c: 44: state_counter-=1;
-"44
 [e =- _state_counter -> -> 1 `i `ui ]
-"45
+"44
 }
-[; ;battery_charger.c: 45: }
+[; ;battery_charger.c: 44: }
 [e $U 1568  ]
-"46
+"45
 [e :U 1567 ]
-[; ;battery_charger.c: 46: else
-[; ;battery_charger.c: 47: {
-"47
+[; ;battery_charger.c: 45: else
+[; ;battery_charger.c: 46: {
+"46
 {
-[; ;battery_charger.c: 48: battery_state = FAULT;
-"48
+[; ;battery_charger.c: 47: battery_state = FAULT;
+"47
 [e = _battery_state -> . `E14319 1 `uc ]
-"49
+"48
 }
 [e :U 1568 ]
-"50
+"49
 }
+[; ;battery_charger.c: 48: }
 [; ;battery_charger.c: 49: }
-[; ;battery_charger.c: 50: }
 [e $U 1569  ]
-"51
+"50
 [e :U 1566 ]
-[; ;battery_charger.c: 51: else
-[; ;battery_charger.c: 52: {
-"52
+[; ;battery_charger.c: 50: else
+[; ;battery_charger.c: 51: {
+"51
 {
-[; ;battery_charger.c: 53: battery_state = CHARGE;
-"53
+[; ;battery_charger.c: 52: battery_state = CHARGE;
+"52
 [e = _battery_state -> . `E14319 4 `uc ]
-[; ;battery_charger.c: 54: { Iref = 55; };
-"54
+[; ;battery_charger.c: 53: { Iref = 55; };
+"53
 {
 [e = _Iref -> 55 `i ]
 }
-"55
+"54
 }
 [e :U 1569 ]
-"56
+"55
 }
+[; ;battery_charger.c: 54: }
 [; ;battery_charger.c: 55: }
-[; ;battery_charger.c: 56: }
 [e $U 1570  ]
-"57
+"56
 [e :U 1565 ]
-[; ;battery_charger.c: 57: else if(battery_state == CHARGE)
+[; ;battery_charger.c: 56: else if(battery_state == CHARGE)
 [e $ ! == -> _battery_state `i -> . `E14319 4 `i 1571  ]
-[; ;battery_charger.c: 58: {
+[; ;battery_charger.c: 57: {
+"57
+{
+[; ;battery_charger.c: 58: if((!Imode0))
 "58
-{
-[; ;battery_charger.c: 59: if((!Imode0))
-"59
 [e $ ! ! != -> _Imode0 `i -> -> -> 0 `i `c `i 1572  ]
-[; ;battery_charger.c: 60: {
+[; ;battery_charger.c: 59: {
+"59
+{
+[; ;battery_charger.c: 60: if(current[1] < Imin)
 "60
-{
-[; ;battery_charger.c: 61: if(current[1] < Imin)
-"61
 [e $ ! < *U + &U _current * -> -> -> 1 `i `ui `ux -> -> # *U &U _current `ui `ux _Imin 1573  ]
-[; ;battery_charger.c: 62: {
+[; ;battery_charger.c: 61: {
+"61
+{
+[; ;battery_charger.c: 62: IminCount-=2;
 "62
-{
-[; ;battery_charger.c: 63: IminCount-=2;
-"63
 [e =- _IminCount -> -> 2 `i `ui ]
-[; ;battery_charger.c: 64: if(IminCount<2)
-"64
+[; ;battery_charger.c: 63: if(IminCount<2)
+"63
 [e $ ! < _IminCount -> -> 2 `i `ui 1574  ]
-[; ;battery_charger.c: 65: {
-"65
+[; ;battery_charger.c: 64: {
+"64
 {
-[; ;battery_charger.c: 66: battery_state = FLOAT;
-"66
+[; ;battery_charger.c: 65: battery_state = FLOAT;
+"65
 [e = _battery_state -> . `E14319 5 `uc ]
-"67
+"66
 }
 [e :U 1574 ]
-"68
+"67
 }
+[; ;battery_charger.c: 66: }
 [; ;battery_charger.c: 67: }
-[; ;battery_charger.c: 68: }
 [e $U 1575  ]
-"69
+"68
 [e :U 1573 ]
-[; ;battery_charger.c: 69: else
-[; ;battery_charger.c: 70: {
-"70
+[; ;battery_charger.c: 68: else
+[; ;battery_charger.c: 69: {
+"69
 {
-[; ;battery_charger.c: 71: if(IminCount<10)IminCount+=1;
-"71
+[; ;battery_charger.c: 70: if(IminCount<10)IminCount+=1;
+"70
 [e $ ! < _IminCount -> -> 10 `i `ui 1576  ]
 [e =+ _IminCount -> -> 1 `i `ui ]
 [e :U 1576 ]
-"72
+"71
 }
 [e :U 1575 ]
-"73
+"72
 }
 [e :U 1572 ]
-"74
+"73
 }
+[; ;battery_charger.c: 71: }
 [; ;battery_charger.c: 72: }
 [; ;battery_charger.c: 73: }
-[; ;battery_charger.c: 74: }
 [e $U 1577  ]
-"75
+"74
 [e :U 1571 ]
-[; ;battery_charger.c: 75: else if(battery_state == FLOAT)
+[; ;battery_charger.c: 74: else if(battery_state == FLOAT)
 [e $ ! == -> _battery_state `i -> . `E14319 5 `i 1578  ]
-[; ;battery_charger.c: 76: {
-"76
+[; ;battery_charger.c: 75: {
+"75
 {
-[; ;battery_charger.c: 77: { Vref = 1380; };
-"77
+[; ;battery_charger.c: 76: { Vref = 1380; };
+"76
 {
 [e = _Vref -> 1380 `i ]
 }
-[; ;battery_charger.c: 78: { Iref = 25; };
-"78
+[; ;battery_charger.c: 77: { Iref = 25; };
+"77
 {
 [e = _Iref -> 25 `i ]
 }
-"79
+"78
 }
-[; ;battery_charger.c: 79: }
+[; ;battery_charger.c: 78: }
 [e $U 1579  ]
-"80
+"79
 [e :U 1578 ]
-[; ;battery_charger.c: 80: else
-[; ;battery_charger.c: 81: if(battery_state == FAULT)
-"81
+[; ;battery_charger.c: 79: else
+[; ;battery_charger.c: 80: if(battery_state == FAULT)
+"80
 [e $ ! == -> _battery_state `i -> . `E14319 1 `i 1580  ]
-[; ;battery_charger.c: 82: {
-"82
+[; ;battery_charger.c: 81: {
+"81
 {
-"86
+"85
 }
 [e :U 1580 ]
-"87
+"86
 [e :U 1579 ]
 [e :U 1577 ]
 [e :U 1570 ]
+[; ;battery_charger.c: 85: }
 [; ;battery_charger.c: 86: }
-[; ;battery_charger.c: 87: }
 [e :UE 1564 ]
 }
-"89
+"88
 [v _cc_cv_mode `(v ~T0 @X0 1 ef ]
-"90
+"89
 {
-[; ;battery_charger.c: 89: void cc_cv_mode()
-[; ;battery_charger.c: 90: {
+[; ;battery_charger.c: 88: void cc_cv_mode()
+[; ;battery_charger.c: 89: {
 [e :U _cc_cv_mode ]
 [f ]
-[; ;battery_charger.c: 91: if(voltage[1] > Vref)
-"91
+[; ;battery_charger.c: 90: if(voltage[1] > Vref)
+"90
 [e $ ! > *U + &U _voltage * -> -> -> 1 `i `ui `ux -> -> # *U &U _voltage `ui `ux _Vref 1582  ]
-[; ;battery_charger.c: 92: {
+[; ;battery_charger.c: 91: {
+"91
+{
+[; ;battery_charger.c: 92: if(VHoldMode<12)VHoldMode+=1;
 "92
-{
-[; ;battery_charger.c: 93: VHoldMode+=1;
-"93
+[e $ ! < -> _VHoldMode `i -> 12 `i 1583  ]
 [e =+ _VHoldMode -> -> 1 `i `c ]
-[; ;battery_charger.c: 95: if(cc_cv)
-"95
-[e $ ! != -> _cc_cv `i -> -> -> 0 `i `uc `i 1583  ]
-[; ;battery_charger.c: 96: {
-"96
-{
-[; ;battery_charger.c: 97: cc_cv-=1;
-"97
-[e =- _cc_cv -> -> 1 `i `uc ]
-"98
-}
-[; ;battery_charger.c: 98: }
-[e $U 1584  ]
-"99
 [e :U 1583 ]
-[; ;battery_charger.c: 99: else
-[; ;battery_charger.c: 100: {
+[; ;battery_charger.c: 94: if(cc_cv)
+"94
+[e $ ! != -> _cc_cv `i -> -> -> 0 `i `uc `i 1584  ]
+[; ;battery_charger.c: 95: {
+"95
+{
+[; ;battery_charger.c: 96: cc_cv-=1;
+"96
+[e =- _cc_cv -> -> 1 `i `uc ]
+"97
+}
+[; ;battery_charger.c: 97: }
+[e $U 1585  ]
+"98
+[e :U 1584 ]
+[; ;battery_charger.c: 98: else
+[; ;battery_charger.c: 99: {
+"99
+{
+[; ;battery_charger.c: 100: if(Imode0)
 "100
-{
-[; ;battery_charger.c: 101: if(Imode0)
+[e $ ! != -> _Imode0 `i -> -> -> 0 `i `c `i 1586  ]
+[; ;battery_charger.c: 101: {
 "101
-[e $ ! != -> _Imode0 `i -> -> -> 0 `i `c `i 1585  ]
-[; ;battery_charger.c: 102: {
-"102
 {
-[; ;battery_charger.c: 103: Imode0 = 0;
-"103
+[; ;battery_charger.c: 102: Imode0 = 0;
+"102
 [e = _Imode0 -> -> 0 `i `c ]
+"103
+}
+[e :U 1586 ]
 "104
 }
 [e :U 1585 ]
 "105
 }
-[e :U 1584 ]
-"106
-}
+[; ;battery_charger.c: 103: }
 [; ;battery_charger.c: 104: }
 [; ;battery_charger.c: 105: }
-[; ;battery_charger.c: 106: }
-[e $U 1586  ]
-"107
+[e $U 1587  ]
+"106
 [e :U 1582 ]
-[; ;battery_charger.c: 107: else
-[; ;battery_charger.c: 108: {
+[; ;battery_charger.c: 106: else
+[; ;battery_charger.c: 107: {
+"107
+{
+[; ;battery_charger.c: 108: VHoldMode-=1;
 "108
-{
-[; ;battery_charger.c: 109: VHoldMode-=1;
-"109
 [e =- _VHoldMode -> -> 1 `i `c ]
-[; ;battery_charger.c: 110: if(VHoldMode<(10*-1))
+[; ;battery_charger.c: 109: if(VHoldMode<(10*-1))
+"109
+[e $ ! < -> _VHoldMode `i * -> 10 `i -U -> 1 `i 1588  ]
+[; ;battery_charger.c: 110: {
 "110
-[e $ ! < -> _VHoldMode `i * -> 10 `i -U -> 1 `i 1587  ]
-[; ;battery_charger.c: 111: {
-"111
 {
-[; ;battery_charger.c: 112: Imode0 = 1;
-"112
+[; ;battery_charger.c: 111: Imode0 = 1;
+"111
 [e = _Imode0 -> -> 1 `i `c ]
-[; ;battery_charger.c: 113: cc_cv = 10;
-"113
+[; ;battery_charger.c: 112: cc_cv = 10;
+"112
 [e = _cc_cv -> -> 10 `i `uc ]
-[; ;battery_charger.c: 114: VHoldMode=(10*-1);
-"114
+[; ;battery_charger.c: 113: VHoldMode=(10*-1);
+"113
 [e = _VHoldMode -> * -> 10 `i -U -> 1 `i `c ]
+"114
+}
+[e :U 1588 ]
 "115
 }
 [e :U 1587 ]
-"116
-}
-[e :U 1586 ]
+[; ;battery_charger.c: 114: }
 [; ;battery_charger.c: 115: }
-[; ;battery_charger.c: 116: }
-[; ;battery_charger.c: 118: if(current[1] > Iref)
+[; ;battery_charger.c: 117: if(current[1] > Iref)
+"117
+[e $ ! > *U + &U _current * -> -> -> 1 `i `ui `ux -> -> # *U &U _current `ui `ux _Iref 1589  ]
+[; ;battery_charger.c: 118: {
 "118
-[e $ ! > *U + &U _current * -> -> -> 1 `i `ui `ux -> -> # *U &U _current `ui `ux _Iref 1588  ]
-[; ;battery_charger.c: 119: {
+{
+[; ;battery_charger.c: 119: if(!Imode0)
 "119
-{
-[; ;battery_charger.c: 120: if(!Imode0)
+[e $ ! ! != -> _Imode0 `i -> -> -> 0 `i `c `i 1590  ]
+[; ;battery_charger.c: 120: {
 "120
-[e $ ! ! != -> _Imode0 `i -> -> -> 0 `i `c `i 1589  ]
-[; ;battery_charger.c: 121: {
+{
+[; ;battery_charger.c: 121: if(battery_state == FLOAT)
 "121
-{
-[; ;battery_charger.c: 122: if(battery_state == FLOAT)
+[e $ ! == -> _battery_state `i -> . `E14319 5 `i 1591  ]
+[; ;battery_charger.c: 122: {
 "122
-[e $ ! == -> _battery_state `i -> . `E14319 5 `i 1590  ]
-[; ;battery_charger.c: 123: {
-"123
 {
-[; ;battery_charger.c: 124: battery_state=CHARGE;
-"124
+[; ;battery_charger.c: 123: battery_state=CHARGE;
+"123
 [e = _battery_state -> . `E14319 4 `uc ]
-[; ;battery_charger.c: 125: { Vref = 1445; };
-"125
+[; ;battery_charger.c: 124: { Vref = 1445; };
+"124
 {
 [e = _Vref -> 1445 `i ]
 }
-[; ;battery_charger.c: 126: { Iref = 55; };
-"126
+[; ;battery_charger.c: 125: { Iref = 55; };
+"125
 {
 [e = _Iref -> 55 `i ]
 }
-[; ;battery_charger.c: 127: Imode0 = 1;
-"127
+[; ;battery_charger.c: 126: Imode0 = 1;
+"126
 [e = _Imode0 -> -> 1 `i `c ]
-[; ;battery_charger.c: 128: cc_cv = 10;
-"128
+[; ;battery_charger.c: 127: cc_cv = 10;
+"127
 [e = _cc_cv -> -> 10 `i `uc ]
+"128
+}
+[e :U 1591 ]
 "129
 }
 [e :U 1590 ]
 "130
 }
 [e :U 1589 ]
-"131
-}
-[e :U 1588 ]
+[; ;battery_charger.c: 128: }
 [; ;battery_charger.c: 129: }
 [; ;battery_charger.c: 130: }
 [; ;battery_charger.c: 131: }
-[; ;battery_charger.c: 132: }
-"132
+"131
 [e :UE 1581 ]
 }

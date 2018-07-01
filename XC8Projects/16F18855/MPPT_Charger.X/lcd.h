@@ -19,7 +19,7 @@
 void gotoXY(uint8_t x, uint8_t y);
 //void gotoXY(signed char x, signed char y);
 // ***** Display BitMap Image on Display ***************************************
-void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
+//void LCDBitmap(const char my_array[], uint8_t startLine, uint16_t len);
 
 // ***** Write Single Character to Display *************************************
 void LCDWriteCharacter(const char character);

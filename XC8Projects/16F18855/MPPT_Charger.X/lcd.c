@@ -128,13 +128,13 @@ void gotoXY(uint8_t x, uint8_t y)
 }
 
 
-void LCDBitmap(const char my_array[], uint8_t startPosition, uint16_t len)
+/*void LCDBitmap(const char my_array[], uint8_t startPosition, uint16_t len)
 {
     uint16_t index;
     gotoXY(0,startPosition);    
     for (index = 0 ; index < len ; index++)
     LCDWrite(LCD_DATA, my_array[index]);
-}
+}*/
 
 
 void LCDWriteCharacter(const char character)
