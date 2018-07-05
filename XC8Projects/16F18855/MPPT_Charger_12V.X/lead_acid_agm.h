@@ -23,6 +23,6 @@
 
 #endif
 
-#define	PRECHARGE_TIME		600
+#define	PRECHARGE_TIME              3
 
 #endif

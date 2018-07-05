@@ -2,6 +2,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 "25 battery_charger.c
 [c E14319 0 1 2 3 4 5 .. ]
 [n E14319 charge_states IDLE FAULT FINISHED PRECHARGE CHARGE FLOAT  ]
+"19 lcd.h
+[v _gotoXY `(v ~T0 @X0 0 ef2`uc`uc ]
+"29
+[v _LCDWriteString `(v ~T0 @X0 0 ef1`*Cuc ]
+[v F14219 `(v ~T0 @X0 1 tf1`ul ]
+"153 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic.h
+[v __delay `JF14219 ~T0 @X0 0 e ]
+[p i __delay ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -13180,8 +13188,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _IminCount `ui ~T0 @X0 1 e ]
 [; ;battery_charger.c: 4: uint16_t IminCount;
 "6
-[v _state_counter `ui ~T0 @X0 1 e ]
-[; ;battery_charger.c: 6: uint16_t state_counter;
+[v _state_counter `i ~T0 @X0 1 e ]
+[; ;battery_charger.c: 6: int16_t state_counter;
 "7
 [v _Imin `i ~T0 @X0 1 e ]
 [; ;battery_charger.c: 7: int16_t Imin;
@@ -13242,9 +13250,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.c: 25: battery_state = PRECHARGE;
 "25
 [e = _battery_state -> . `E14319 3 `uc ]
-[; ;battery_charger.c: 26: state_counter = 600;
+[; ;battery_charger.c: 26: state_counter = 3;
 "26
-[e = _state_counter -> -> 600 `i `ui ]
+[e = _state_counter -> 3 `i ]
 [; ;battery_charger.c: 28: { Iref = 10; };
 "28
 {
@@ -13285,15 +13293,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.c: 40: {
 "40
 {
-[; ;battery_charger.c: 41: if(state_counter)
+[; ;battery_charger.c: 41: if(state_counter>0)
 "41
-[e $ ! != _state_counter -> -> 0 `i `ui 1567  ]
+[e $ ! > _state_counter -> 0 `i 1567  ]
 [; ;battery_charger.c: 42: {
 "42
 {
 [; ;battery_charger.c: 43: state_counter-=1;
 "43
-[e =- _state_counter -> -> 1 `i `ui ]
+[e =- _state_counter -> 1 `i ]
 "44
 }
 [; ;battery_charger.c: 44: }
@@ -13429,158 +13437,175 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.c: 81: {
 "81
 {
+[; ;battery_charger.c: 82: { gotoXY(0,0); LCDWriteString("BATTERY FAULT");};
+"82
+{
+[e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCDWriteString (1 :s 1C ]
+}
+[; ;battery_charger.c: 83: Imode0=0;
+"83
+[e = _Imode0 -> -> 0 `i `c ]
+[; ;battery_charger.c: 84: Imode1=0;
+"84
+[e = _Imode1 -> -> 0 `i `c ]
+[; ;battery_charger.c: 85: _delay((unsigned long)((2000)*(32000000/4000.0)));
 "85
+[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+"89
 }
 [e :U 1580 ]
-"86
+"90
 [e :U 1579 ]
 [e :U 1577 ]
 [e :U 1570 ]
-[; ;battery_charger.c: 85: }
-[; ;battery_charger.c: 86: }
+[; ;battery_charger.c: 89: }
+[; ;battery_charger.c: 90: }
 [e :UE 1564 ]
 }
-"88
+"92
 [v _cc_cv_mode `(v ~T0 @X0 1 ef ]
-"89
+"93
 {
-[; ;battery_charger.c: 88: void cc_cv_mode()
-[; ;battery_charger.c: 89: {
+[; ;battery_charger.c: 92: void cc_cv_mode()
+[; ;battery_charger.c: 93: {
 [e :U _cc_cv_mode ]
 [f ]
-[; ;battery_charger.c: 90: if(voltage[1] > Vref)
-"90
-[e $ ! > *U + &U _voltage * -> -> -> 1 `i `ui `ux -> -> # *U &U _voltage `ui `ux _Vref 1582  ]
-[; ;battery_charger.c: 91: {
-"91
-{
-[; ;battery_charger.c: 92: if(VHoldMode<12)VHoldMode+=1;
-"92
-[e $ ! < -> _VHoldMode `i -> 12 `i 1583  ]
-[e =+ _VHoldMode -> -> 1 `i `c ]
-[e :U 1583 ]
-[; ;battery_charger.c: 94: if(cc_cv)
+[; ;battery_charger.c: 94: if(voltage[1] > Vref)
 "94
-[e $ ! != -> _cc_cv `i -> -> -> 0 `i `uc `i 1584  ]
+[e $ ! > *U + &U _voltage * -> -> -> 1 `i `ui `ux -> -> # *U &U _voltage `ui `ux _Vref 1582  ]
 [; ;battery_charger.c: 95: {
 "95
 {
-[; ;battery_charger.c: 96: cc_cv-=1;
+[; ;battery_charger.c: 96: if(VHoldMode<12)VHoldMode+=1;
 "96
-[e =- _cc_cv -> -> 1 `i `uc ]
-"97
-}
-[; ;battery_charger.c: 97: }
-[e $U 1585  ]
+[e $ ! < -> _VHoldMode `i -> 12 `i 1583  ]
+[e =+ _VHoldMode -> -> 1 `i `c ]
+[e :U 1583 ]
+[; ;battery_charger.c: 98: if(cc_cv)
 "98
-[e :U 1584 ]
-[; ;battery_charger.c: 98: else
+[e $ ! != -> _cc_cv `i -> -> -> 0 `i `uc `i 1584  ]
 [; ;battery_charger.c: 99: {
 "99
 {
-[; ;battery_charger.c: 100: if(Imode0)
+[; ;battery_charger.c: 100: cc_cv-=1;
 "100
-[e $ ! != -> _Imode0 `i -> -> -> 0 `i `c `i 1586  ]
-[; ;battery_charger.c: 101: {
+[e =- _cc_cv -> -> 1 `i `uc ]
 "101
-{
-[; ;battery_charger.c: 102: Imode0 = 0;
+}
+[; ;battery_charger.c: 101: }
+[e $U 1585  ]
 "102
-[e = _Imode0 -> -> 0 `i `c ]
+[e :U 1584 ]
+[; ;battery_charger.c: 102: else
+[; ;battery_charger.c: 103: {
 "103
+{
+[; ;battery_charger.c: 104: if(Imode0)
+"104
+[e $ ! != -> _Imode0 `i -> -> -> 0 `i `c `i 1586  ]
+[; ;battery_charger.c: 105: {
+"105
+{
+[; ;battery_charger.c: 106: Imode0 = 0;
+"106
+[e = _Imode0 -> -> 0 `i `c ]
+"107
 }
 [e :U 1586 ]
-"104
+"108
 }
 [e :U 1585 ]
-"105
-}
-[; ;battery_charger.c: 103: }
-[; ;battery_charger.c: 104: }
-[; ;battery_charger.c: 105: }
-[e $U 1587  ]
-"106
-[e :U 1582 ]
-[; ;battery_charger.c: 106: else
-[; ;battery_charger.c: 107: {
-"107
-{
-[; ;battery_charger.c: 108: VHoldMode-=1;
-"108
-[e =- _VHoldMode -> -> 1 `i `c ]
-[; ;battery_charger.c: 109: if(VHoldMode<(10*-1))
 "109
-[e $ ! < -> _VHoldMode `i * -> 10 `i -U -> 1 `i 1588  ]
-[; ;battery_charger.c: 110: {
+}
+[; ;battery_charger.c: 107: }
+[; ;battery_charger.c: 108: }
+[; ;battery_charger.c: 109: }
+[e $U 1587  ]
 "110
-{
-[; ;battery_charger.c: 111: Imode0 = 1;
+[e :U 1582 ]
+[; ;battery_charger.c: 110: else
+[; ;battery_charger.c: 111: {
 "111
-[e = _Imode0 -> -> 1 `i `c ]
-[; ;battery_charger.c: 112: cc_cv = 10;
+{
+[; ;battery_charger.c: 112: VHoldMode-=1;
 "112
-[e = _cc_cv -> -> 10 `i `uc ]
-[; ;battery_charger.c: 113: VHoldMode=(10*-1);
+[e =- _VHoldMode -> -> 1 `i `c ]
+[; ;battery_charger.c: 113: if(VHoldMode<(10*-1))
 "113
-[e = _VHoldMode -> * -> 10 `i -U -> 1 `i `c ]
+[e $ ! < -> _VHoldMode `i * -> 10 `i -U -> 1 `i 1588  ]
+[; ;battery_charger.c: 114: {
 "114
+{
+[; ;battery_charger.c: 115: Imode0 = 1;
+"115
+[e = _Imode0 -> -> 1 `i `c ]
+[; ;battery_charger.c: 116: cc_cv = 10;
+"116
+[e = _cc_cv -> -> 10 `i `uc ]
+[; ;battery_charger.c: 117: VHoldMode=(10*-1);
+"117
+[e = _VHoldMode -> * -> 10 `i -U -> 1 `i `c ]
+"118
 }
 [e :U 1588 ]
-"115
+"119
 }
 [e :U 1587 ]
-[; ;battery_charger.c: 114: }
-[; ;battery_charger.c: 115: }
-[; ;battery_charger.c: 117: if(current[1] > Iref)
-"117
-[e $ ! > *U + &U _current * -> -> -> 1 `i `ui `ux -> -> # *U &U _current `ui `ux _Iref 1589  ]
-[; ;battery_charger.c: 118: {
-"118
-{
-[; ;battery_charger.c: 119: if(!Imode0)
-"119
-[e $ ! ! != -> _Imode0 `i -> -> -> 0 `i `c `i 1590  ]
-[; ;battery_charger.c: 120: {
-"120
-{
-[; ;battery_charger.c: 121: if(battery_state == FLOAT)
+[; ;battery_charger.c: 118: }
+[; ;battery_charger.c: 119: }
+[; ;battery_charger.c: 121: if(current[1] > Iref)
 "121
-[e $ ! == -> _battery_state `i -> . `E14319 5 `i 1591  ]
+[e $ ! > *U + &U _current * -> -> -> 1 `i `ui `ux -> -> # *U &U _current `ui `ux _Iref 1589  ]
 [; ;battery_charger.c: 122: {
 "122
 {
-[; ;battery_charger.c: 123: battery_state=CHARGE;
+[; ;battery_charger.c: 123: if(!Imode0)
 "123
-[e = _battery_state -> . `E14319 4 `uc ]
-[; ;battery_charger.c: 124: { Vref = 1445; };
+[e $ ! ! != -> _Imode0 `i -> -> -> 0 `i `c `i 1590  ]
+[; ;battery_charger.c: 124: {
 "124
+{
+[; ;battery_charger.c: 125: if(battery_state == FLOAT)
+"125
+[e $ ! == -> _battery_state `i -> . `E14319 5 `i 1591  ]
+[; ;battery_charger.c: 126: {
+"126
+{
+[; ;battery_charger.c: 127: battery_state=CHARGE;
+"127
+[e = _battery_state -> . `E14319 4 `uc ]
+[; ;battery_charger.c: 128: { Vref = 1445; };
+"128
 {
 [e = _Vref -> 1445 `i ]
 }
-[; ;battery_charger.c: 125: { Iref = 55; };
-"125
+[; ;battery_charger.c: 129: { Iref = 55; };
+"129
 {
 [e = _Iref -> 55 `i ]
 }
-[; ;battery_charger.c: 126: Imode0 = 1;
-"126
+[; ;battery_charger.c: 130: Imode0 = 1;
+"130
 [e = _Imode0 -> -> 1 `i `c ]
-[; ;battery_charger.c: 127: cc_cv = 10;
-"127
+[; ;battery_charger.c: 131: cc_cv = 10;
+"131
 [e = _cc_cv -> -> 10 `i `uc ]
-"128
+"132
 }
 [e :U 1591 ]
-"129
+"133
 }
 [e :U 1590 ]
-"130
+"134
 }
 [e :U 1589 ]
-[; ;battery_charger.c: 128: }
-[; ;battery_charger.c: 129: }
-[; ;battery_charger.c: 130: }
-[; ;battery_charger.c: 131: }
-"131
+[; ;battery_charger.c: 132: }
+[; ;battery_charger.c: 133: }
+[; ;battery_charger.c: 134: }
+[; ;battery_charger.c: 135: }
+"135
 [e :UE 1581 ]
 }
+[a 1C 66 65 84 84 69 82 89 32 70 65 85 76 84 0 ]
+

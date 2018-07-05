@@ -265,7 +265,8 @@ void LCDInit(void)
 //then send the contrast byte, then send byte 0x20 which returns to the basic instruction set. You do not need to reset the panel or anything like that.
 //The acceptable range is between 0x80 (being a contrast value of 0) and 0xFF (being a contrast value of 127)
     
-    LCDWrite(LCD_COMMAND, 0XB7);                //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
+//    LCDWrite(LCD_COMMAND, 0XB7);                //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
+    LCDWrite(LCD_COMMAND, 0XB9);                //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
 
     LCDWrite(LCD_COMMAND, 0x04);                //Set Temp coefficent
 

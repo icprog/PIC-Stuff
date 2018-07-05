@@ -3,7 +3,7 @@
 uint8_t             battery_state;
 uint16_t            IminCount;
 //uint16_t            Iflat_db;
-uint16_t            state_counter;
+int16_t             state_counter;
 int16_t             Imin;
 int16_t             Iref;                                       // setpoint for current output
 int16_t             Vref;                                       // setpoint for voltage output
@@ -36,9 +36,9 @@ void Battery_State_Machine()
 {
 	if(battery_state == PRECHARGE)
 	{
-		if(VSENSE0 < CUTOFF_VOLTAGE)                     // If Battery Voltage is below CUTOFF_VOLTAGE
+		if(VSENSE0 < CUTOFF_VOLTAGE)                    // If Battery Voltage is below CUTOFF_VOLTAGE
 		{
-			if(state_counter)                           // If state_counter > 0
+			if(state_counter>0)                         // If state_counter > 0
             {
                 state_counter-=1;                       // decrement it
             }
@@ -79,6 +79,10 @@ void Battery_State_Machine()
 	else
 	if(battery_state == FAULT)
 	{
+        LCDWriteStringXY(0,0,"BATTERY FAULT");
+        Imode0=0;
+        Imode1=0;
+        __delay_ms(2000);
 //		SET_VOLTAGE(0);
 //		SET_CURRENT(0);
 //		STOP_CONVERTER();	

@@ -17580,7 +17580,7 @@ void cc_cv_mode();
 uint8_t battery_state;
 uint16_t IminCount;
 
-uint16_t state_counter;
+int16_t state_counter;
 int16_t Imin;
 int16_t Iref;
 int16_t Vref;
@@ -17600,7 +17600,7 @@ int16_t current[4] = {0};
 void Init_Battery_State_Machine()
 {
 battery_state = PRECHARGE;
-state_counter = 600;
+state_counter = 3;
 
 { Iref = 10; };
 { Vref = 1445; };
@@ -17615,7 +17615,7 @@ if(battery_state == PRECHARGE)
 {
 if(voltage[1] < 1075)
 {
-if(state_counter)
+if(state_counter>0)
 {
 state_counter-=1;
 }
@@ -17656,6 +17656,10 @@ else if(battery_state == FLOAT)
 else
 if(battery_state == FAULT)
 {
+{ gotoXY(0,0); LCDWriteString("BATTERY FAULT");};
+Imode0=0;
+Imode1=0;
+_delay((unsigned long)((2000)*(32000000/4000.0)));
 
 
 

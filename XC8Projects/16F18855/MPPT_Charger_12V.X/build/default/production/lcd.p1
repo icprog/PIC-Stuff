@@ -14053,121 +14053,121 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 261: LCDWrite(0, 0x21);
 "261
 [e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 33 `i `uc ]
-[; ;lcd.c: 268: LCDWrite(0, 0XB7);
-"268
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 183 `i `uc ]
-[; ;lcd.c: 270: LCDWrite(0, 0x04);
-"270
+[; ;lcd.c: 269: LCDWrite(0, 0XB9);
+"269
+[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 185 `i `uc ]
+[; ;lcd.c: 271: LCDWrite(0, 0x04);
+"271
 [e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 4 `i `uc ]
-[; ;lcd.c: 272: LCDWrite(0, 0x14);
-"272
+[; ;lcd.c: 273: LCDWrite(0, 0x14);
+"273
 [e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 20 `i `uc ]
-[; ;lcd.c: 274: LCDWrite(0, 0x20);
-"274
+[; ;lcd.c: 275: LCDWrite(0, 0x20);
+"275
 [e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 32 `i `uc ]
-[; ;lcd.c: 276: LCDWrite(0, 0x0C);
-"276
-[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 12 `i `uc ]
-[; ;lcd.c: 277: }
+[; ;lcd.c: 277: LCDWrite(0, 0x0C);
 "277
+[e ( _LCDWrite (2 , -> -> 0 `i `uc -> -> 12 `i `uc ]
+[; ;lcd.c: 278: }
+"278
 [e :UE 1591 ]
 }
-"280
-[v _LCDWrite `(v ~T0 @X0 1 ef2`uc`uc ]
 "281
+[v _LCDWrite `(v ~T0 @X0 1 ef2`uc`uc ]
+"282
 {
-[; ;lcd.c: 280: void LCDWrite(uint8_t data_or_command, uint8_t data)
-[; ;lcd.c: 281: {
+[; ;lcd.c: 281: void LCDWrite(uint8_t data_or_command, uint8_t data)
+[; ;lcd.c: 282: {
 [e :U _LCDWrite ]
-"280
+"281
 [v _data_or_command `uc ~T0 @X0 1 r1 ]
 [v _data `uc ~T0 @X0 1 r2 ]
-"281
-[f ]
 "282
+[f ]
+"283
 [v _i `uc ~T0 @X0 1 a ]
 [v _d `uc ~T0 @X0 1 a ]
-[; ;lcd.c: 282: uint8_t i,d;
-[; ;lcd.c: 284: d=data;
-"284
+[; ;lcd.c: 283: uint8_t i,d;
+[; ;lcd.c: 285: d=data;
+"285
 [e = _d _data ]
-[; ;lcd.c: 286: if(data_or_command == 0)
-"286
-[e $ ! == -> _data_or_command `i -> 0 `i 1593  ]
-[; ;lcd.c: 287: {
+[; ;lcd.c: 287: if(data_or_command == 0)
 "287
-{
-[; ;lcd.c: 288: LATAbits.LATA2 = 0;
+[e $ ! == -> _data_or_command `i -> 0 `i 1593  ]
+[; ;lcd.c: 288: {
 "288
-[e = . . _LATAbits 0 2 -> -> 0 `i `uc ]
-"289
-}
-[; ;lcd.c: 289: }
-[e $U 1594  ]
-"290
-[e :U 1593 ]
-[; ;lcd.c: 290: else
-[; ;lcd.c: 291: {
-"291
 {
-[; ;lcd.c: 292: LATAbits.LATA2 = 1;
+[; ;lcd.c: 289: LATAbits.LATA2 = 0;
+"289
+[e = . . _LATAbits 0 2 -> -> 0 `i `uc ]
+"290
+}
+[; ;lcd.c: 290: }
+[e $U 1594  ]
+"291
+[e :U 1593 ]
+[; ;lcd.c: 291: else
+[; ;lcd.c: 292: {
 "292
-[e = . . _LATAbits 0 2 -> -> 1 `i `uc ]
+{
+[; ;lcd.c: 293: LATAbits.LATA2 = 1;
 "293
+[e = . . _LATAbits 0 2 -> -> 1 `i `uc ]
+"294
 }
 [e :U 1594 ]
-[; ;lcd.c: 293: }
-[; ;lcd.c: 295: LATAbits.LATA1 = 0;
-"295
+[; ;lcd.c: 294: }
+[; ;lcd.c: 296: LATAbits.LATA1 = 0;
+"296
 [e = . . _LATAbits 0 1 -> -> 0 `i `uc ]
-[; ;lcd.c: 297: for(i=0;i<8;i++)
-"297
+[; ;lcd.c: 298: for(i=0;i<8;i++)
+"298
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 8 `i 1595  ]
 [e $U 1596  ]
-"298
-[e :U 1595 ]
-[; ;lcd.c: 298: {
-{
-[; ;lcd.c: 299: LATAbits.LATA3 = 0;
 "299
-[e = . . _LATAbits 0 3 -> -> 0 `i `uc ]
-[; ;lcd.c: 301: if(d&0x80)
-"301
-[e $ ! != & -> _d `i -> 128 `i -> 0 `i 1598  ]
-[; ;lcd.c: 302: {
-"302
+[e :U 1595 ]
+[; ;lcd.c: 299: {
 {
-[; ;lcd.c: 303: LATAbits.LATA3 = 1;
+[; ;lcd.c: 300: LATAbits.LATA3 = 0;
+"300
+[e = . . _LATAbits 0 3 -> -> 0 `i `uc ]
+[; ;lcd.c: 302: if(d&0x80)
+"302
+[e $ ! != & -> _d `i -> 128 `i -> 0 `i 1598  ]
+[; ;lcd.c: 303: {
 "303
-[e = . . _LATAbits 0 3 -> -> 1 `i `uc ]
+{
+[; ;lcd.c: 304: LATAbits.LATA3 = 1;
 "304
+[e = . . _LATAbits 0 3 -> -> 1 `i `uc ]
+"305
 }
 [e :U 1598 ]
-[; ;lcd.c: 304: }
-[; ;lcd.c: 306: LATAbits.LATA4 = 1;
-"306
+[; ;lcd.c: 305: }
+[; ;lcd.c: 307: LATAbits.LATA4 = 1;
+"307
 [e = . . _LATAbits 0 4 -> -> 1 `i `uc ]
-[; ;lcd.c: 308: d<<=1;
-"308
+[; ;lcd.c: 309: d<<=1;
+"309
 [e =<< _d -> 1 `i ]
-[; ;lcd.c: 310: LATAbits.LATA4=0;
-"310
-[e = . . _LATAbits 0 4 -> -> 0 `i `uc ]
+[; ;lcd.c: 311: LATAbits.LATA4=0;
 "311
+[e = . . _LATAbits 0 4 -> -> 0 `i `uc ]
+"312
 }
-"297
+"298
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 8 `i 1595  ]
 [e :U 1596 ]
-"311
+"312
 }
-[; ;lcd.c: 311: }
-[; ;lcd.c: 313: LATAbits.LATA1 = 1;
-"313
-[e = . . _LATAbits 0 1 -> -> 1 `i `uc ]
-[; ;lcd.c: 314: }
+[; ;lcd.c: 312: }
+[; ;lcd.c: 314: LATAbits.LATA1 = 1;
 "314
+[e = . . _LATAbits 0 1 -> -> 1 `i `uc ]
+[; ;lcd.c: 315: }
+"315
 [e :UE 1592 ]
 }
