@@ -58,12 +58,14 @@ void main(void)
     float           efficiency      =   0;
     extern int8_t   Imode0;
     extern int8_t   Imode1;
-    extern int16_t  Vref;                                       // setpoint for voltage output
-    extern int16_t  Iref;
+    extern int16_t  Vref0;                                       // setpoint for voltage output
+    extern int16_t  Iref0;
+    extern int16_t  Vref1;                                       // setpoint for voltage output
+    extern int16_t  Iref1;
     uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
     uint16_t        faultCount      =   0;                      // Keep Count of Current Fault latches/Resets
     uint16_t        faultNotReset   =   0;
-    extern int8_t   VHoldMode;
+    extern int8_t   V0HoldMode;
 //    uint8_t         tempFanOutput   =   0;
     
     SYSTEM_Initialize();
@@ -96,7 +98,7 @@ void main(void)
             faultCount+=1;
             LATA5=1;
         }
-        for(j=0;j<4;j++) Ianalogs[j]=readIAnalog(j);              // Read analogs
+        for(j=0;j<4;j++) Ianalogs[j]=readIAnalog(j);                // Read analogs
         
         Vanalogs[0]=ADCRead(23);
         
@@ -108,76 +110,77 @@ void main(void)
 
         if(Fault)faultNotReset+=1;
         
-        voltage[0]=(int16_t)(Vanalogs[0]/.405775);               // Calculate VIn0
+        voltage[0]=(int16_t)(Vanalogs[0]/.405775);                  // Calculate VIn0
         
-        voltage[1]=(int16_t)(Vanalogs[1]/.54503);                // Calculate VOut0
+        voltage[1]=(int16_t)(Vanalogs[1]/.54503);                   // Calculate VOut0
 
-//        voltage[2]=(int16_t)(Vanalogs[2]/.20885);                // Calculate VIn1
+        voltage[2]=(int16_t)(Vanalogs[2]/.405775);                  // Calculate VIn1
         
-  //      voltage[3]=(int16_t)(Vanalogs[3]/.666);                  // Calculate VOut1
+        voltage[3]=(int16_t)(Vanalogs[3]/.54503);                   // Calculate VOut1
         
         calculateCurrent0();
-//        current[0]=(Ianalogs[0]-589)/1.3165;
-        
+
         calculateCurrent1();
-//        current[1]=(Ianalogs[1]-578)/3.232;
-
         
-//        if(fastLoop>0)
-  //      {
-            if(Imode0)
+        if(Imode0)
+        {
+            if(VIn0<MPPT0)                             // actual MPPT of Panel
             {
-                if(VIn0<MPPT0)                             // actual MPPT of Panel
+                if(Buck0Output<1023)
                 {
-                    if(Buck0Output<1023)
-                    {
-                        Buck0Output=1023;
-//                        Buck0Output+=1;
-                    }
+                    Buck0Output+=1;
                 }
-                else if(Buck0Output>0)
-                {
-//                    Buck0Output-=1;
-                    Buck0Output=1023;
-                }
-                
-                if(VIn1<MPPT1)                             // 3164 is actual MPPT of Panel
-                {
-                    if(Buck1Output<252)
-                    {
-//                        Buck1Output+=1;
-                    }
-                }
-                else if(Buck1Output>0)
-                {
-  //                  Buck1Output-=1;
-                }
-           }
-            else
-            {
-                if(VOut0>(int16_t)Vref)
-                {
-//                    if(Buck0Output<1023) Buck0Output+=1;
-                    if(Buck0Output<1023) Buck0Output=1023;
-                }
-                else
-                {
-//                    if(Buck0Output>0) Buck0Output-=1;
-                    if(Buck0Output>0) Buck0Output=1023;
-                }
- 
-                if(VOut1>(int16_t)Vref)
-                {
-//                    if(Buck1Output<1023) Buck1Output+=1;
-                }
-                else
-                {
-  //                  if(Buck1Output>0) Buck1Output-=1;;
-                }
-
             }
-//            fastLoop=0;
-            slowLoop+=1;
+            else if(VIn0>MPPT0)                             // actual MPPT of Panel
+            {
+                if(Buck0Output>0)
+                {
+                    Buck0Output-=1;
+                }
+            }
+            else Buck0Output=Buck0Output;
+        }
+        else
+        {
+            if(VOut0>(int16_t)Vref0)
+            {
+                if(Buck0Output<1023) Buck0Output+=1;
+            }
+            else if(VOut0<(int16_t)Vref0)
+            {
+                if(Buck0Output>0) Buck0Output-=1;;
+            }
+            else Buck0Output=Buck0Output;
+        }
+ 
+        if(Imode1)
+        {
+            if(VIn1<MPPT1)                             // 3164 is actual MPPT of Panel
+            {
+                if(Buck1Output<1023)
+                {
+                    Buck1Output+=1;
+                }
+            }
+            else if(Buck1Output>0)
+            {
+                Buck1Output-=1;
+            }
+        }
+        else
+        {
+            if(VOut1>(int16_t)Vref1)
+            {
+                if(Buck1Output<1023) Buck1Output+=1;
+            }
+            else if(VOut1<(int16_t)Vref1)
+            {
+                if(Buck1Output>0) Buck1Output-=1;;
+            }
+            else Buck1Output=Buck1Output;
+        }
+
+        slowLoop+=1;
    
             PWM1_LoadDutyValue(FanOutput);
             PWM6_LoadDutyValue(Buck0Output);
@@ -209,7 +212,7 @@ void main(void)
             if(Fault)
             {
                 FanOutput=55;
-                battery_state=CHARGE;
+                battery_state0=CHARGE;
             }
             
             displayRefresh+=1;
@@ -225,9 +228,11 @@ void main(void)
             efficiency*=100;
 
 //                        LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
-            LCDWriteIntXY(0,0,ADCRead(22),4,0,0);
+//            LCDWriteIntXY(0,0,ADCRead(22),4,0,0);
+  //          LCDWriteIntXY(20,0,Ianalogs[0],4,0,0);
   //          LCDWriteIntXY(28,0,ADCRead(21),4,0,0);
-            LCDWriteIntXY(28,0,ADCRead(20),4,0,0);
+    //        LCDWriteIntXY(40,0,ADCRead(20),4,0,0);
+      //      LCDWriteIntXY(60,0,Ianalogs[1],4,0,0);
         //    LCDWriteIntXY(0,3,ADCRead(19),4,0,0);
           //  LCDWriteIntXY(20,3,ADCRead(18),4,0,0);
             //LCDWriteIntXY(0,4,ADCRead(17),4,0,0);
@@ -237,11 +242,12 @@ void main(void)
   //          LCDWriteIntXY(20,2,ADCRead(15),4,0,0);
             
 //            LCDWriteIntXY(0,0,batteryTemp,4,1,0);
-//            LCDWriteIntXY(0,0,faultCount,5,0,0);
-//            LCDWriteIntXY(24,0,faultNotReset,5,0,0);
-//            LCDWriteIntXY(48,0,VHoldMode,3,0,0);
+            LCDWriteIntXY(0,0,faultCount,5,0,0);
+            LCDWriteIntXY(24,0,faultNotReset,5,0,0);
+            LCDWriteIntXY(48,0,V0HoldMode,2,0,0);
+            LCDWriteCharacter(' ');
 //            LCDWriteStringXY(48,0,"Eff:");
-//            LCDWriteInt((int16_t)efficiency,3,0,0);
+            LCDWriteIntXY(64,0,(int16_t)efficiency,3,0,0);
             LCDWriteCharacter(' ');
 
 //            LCDWriteIntXY(32,0,Ianalogs[0],4,0,0);
@@ -255,14 +261,14 @@ void main(void)
             LCDWriteCharacter('V');
             LCDWriteIntXY(28,2,IOut0,3,1,0);
             LCDWriteCharacter('A');
-//            LCDWriteIntXY(56,2,Vref,4,2,0);
-  //          LCDWriteCharacter('V');
+            LCDWriteIntXY(56,2,Vref0,4,2,0);
+            LCDWriteCharacter('V');
             
             LCDWriteIntXY(0,3,Power0In,3,0,0);
             LCDWriteCharacter('W');
-            LCDWriteIntXY(28,3,battery_state,1,0,0);
+            LCDWriteIntXY(28,3,battery_state0,1,0,0);
             LCDWriteIntXY(36,3,Imode0,1,0,0);
-            LCDWriteIntXY(48,3,Iref,3,1,0);
+            LCDWriteIntXY(48,3,Iref0,3,1,0);
             LCDWriteCharacter('A');
             
             LCDWriteIntXY(0,4,Power0Out,3,0,0);
@@ -282,7 +288,7 @@ void main(void)
             LCDWriteIntXY(48,5,FanOutput,4,0,0);
             LCDWriteIntXY(74,5,Fault,1,0,0);
 
-            if(battery_state > FINISHED)
+            if(battery_state0 > FINISHED)
             {
             	cc_cv_mode();
             }
@@ -293,13 +299,13 @@ void main(void)
 
 void calculateCurrent0(void)
 {
-    if(Ianalogs[0]-568<=0)
+    if(Ianalogs[0]-565<=0)
     {
         current[0]=0;
     }
     else
     {
-        current[0]=(int16_t)((Ianalogs[0]-568)/1.3165);
+        current[0]=(int16_t)((Ianalogs[0]-565)/3.12);
     }
 }
 
@@ -311,7 +317,7 @@ void calculateCurrent1(void)
     }
     else
     {
-        current[1]=(int16_t)((Ianalogs[1]-580)/3.2323);
+        current[1]=(int16_t)((Ianalogs[1]-580)/3.22);
     }
 }
 

@@ -17543,11 +17543,11 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 313
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 27 "battery_charger.h"
+# 29 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 50
-extern uint8_t battery_state;
+# 52
+extern uint8_t battery_state0;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);

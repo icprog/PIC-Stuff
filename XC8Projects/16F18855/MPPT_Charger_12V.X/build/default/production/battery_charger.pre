@@ -17511,11 +17511,11 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 313
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 27 "battery_charger.h"
+# 29 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 50
-extern uint8_t battery_state;
+# 52
+extern uint8_t battery_state0;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
@@ -17571,28 +17571,36 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 50 "battery_charger.h"
-extern uint8_t battery_state;
+# 52 "battery_charger.h"
+extern uint8_t battery_state0;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
 void cc_cv_mode();
 
 # 3 "battery_charger.c"
-uint8_t battery_state;
-uint16_t IminCount;
+uint8_t battery_state0;
+uint8_t battery_state1;
+uint16_t Imin0Count;
+uint16_t Imin1Count;
 
-int16_t state_counter;
-int16_t Imin;
-int16_t Iref;
-int16_t Vref;
+int16_t state_counter0;
+int16_t state_counter1;
+int16_t Imin0;
+int16_t Imin1;
+int16_t Iref0;
+int16_t Vref0;
+int16_t Iref1;
+int16_t Vref1;
 
 int16_t Iout;
 
 int8_t Imode0 = 1;
 int8_t Imode1 = 1;
-uint8_t cc_cv;
-int8_t VHoldMode = 0;
+uint8_t cc_cv0 = 0;
+uint8_t cc_cv1 = 0;
+int8_t V0HoldMode = 0;
+int8_t V1HoldMode = 0;
 int16_t voltage[4] = {0};
 int16_t current[4] = {0};
 
@@ -17601,62 +17609,62 @@ int16_t current[4] = {0};
 
 void Init_Battery_State_Machine()
 {
-battery_state = PRECHARGE;
-state_counter = 3;
+battery_state0 = PRECHARGE;
+state_counter0 = 3;
 
-{ Iref = 10; };
-{ Vref = 1445; };
+{ Iref0 = 10; };
+{ Vref0 = 1425; };
 
-Imin = 20;
-IminCount = 10;
+Imin0 = 20;
+Imin0Count = 10;
 }
 
 void Battery_State_Machine()
 {
-if(battery_state == PRECHARGE)
+if(battery_state0 == PRECHARGE)
 {
 if(voltage[1] < 1075)
 {
-if(state_counter>0)
+if(state_counter0>0)
 {
-state_counter-=1;
+state_counter0-=1;
 }
 else
 {
-battery_state = FAULT;
+battery_state0 = FAULT;
 }
 }
 else
 {
-battery_state = CHARGE;
-{ Iref = 35; };
+battery_state0 = CHARGE;
+{ Iref0 = 35; };
 }
 }
-else if(battery_state == CHARGE)
+else if(battery_state0 == CHARGE)
 {
 if((!Imode0))
 {
-if(current[1] < Imin)
+if(current[1] < Imin0)
 {
-IminCount-=2;
-if(IminCount<2)
+Imin0Count-=2;
+if(Imin0Count<2)
 {
-battery_state = FLOAT;
+battery_state0 = FLOAT;
 }
 }
 else
 {
-if(IminCount<10)IminCount+=1;
+if(Imin0Count<10)Imin0Count+=1;
 }
 }
 }
-else if(battery_state == FLOAT)
+else if(battery_state0 == FLOAT)
 {
-{ Vref = 1380; };
-{ Iref = 20; };
+{ Vref0 = 1379; };
+{ Iref0 = 20; };
 }
 else
-if(battery_state == FAULT)
+if(battery_state0 == FAULT)
 {
 { gotoXY(0,0); LCDWriteString("BATTERY FAULT");};
 Imode0=0;
@@ -17670,13 +17678,13 @@ _delay((unsigned long)((2000)*(32000000/4000.0)));
 
 void cc_cv_mode()
 {
-if(voltage[1] > Vref)
+if(voltage[1]>Vref0)
 {
-if(VHoldMode<12)VHoldMode+=1;
+if(V0HoldMode<12)V0HoldMode+=1;
 
-if(cc_cv)
+if(cc_cv0)
 {
-cc_cv-=1;
+cc_cv0-=1;
 }
 else
 {
@@ -17686,28 +17694,75 @@ Imode0 = 0;
 }
 }
 }
-else
+else if(voltage[1]<Vref0)
 {
-VHoldMode-=1;
-if(VHoldMode<(10*-1))
+V0HoldMode-=1;
+if(V0HoldMode<(10*-1))
 {
 Imode0 = 1;
-cc_cv = 10;
-VHoldMode=(10*-1);
+cc_cv0 = (10*2);
+V0HoldMode=(10*-1);
 }
 }
+else V0HoldMode=V0HoldMode;
 
-if(current[1] > Iref)
+if(current[1]>Iref0)
 {
 if(!Imode0)
 {
-if(battery_state == FLOAT)
+if(battery_state0 == FLOAT)
 {
-battery_state=CHARGE;
-{ Vref = 1445; };
-{ Iref = 35; };
+battery_state0=CHARGE;
+{ Vref0 = 1425; };
+{ Iref0 = 35; };
 Imode0 = 1;
-cc_cv = 10;
+cc_cv0 = 10;
+}
+}
+}
+
+
+
+
+if(voltage[3]>Vref1)
+{
+if(V1HoldMode<12)V1HoldMode+=1;
+
+if(cc_cv1)
+{
+cc_cv1-=1;
+}
+else
+{
+if(Imode1)
+{
+Imode1 = 0;
+}
+}
+}
+else if(voltage[3]<Vref1)
+{
+V1HoldMode-=1;
+if(V1HoldMode<(10*-1))
+{
+Imode1 = 1;
+cc_cv1 = (10*2);
+V1HoldMode=(10*-1);
+}
+}
+else V1HoldMode=V1HoldMode;
+
+if(current[3]>Iref1)
+{
+if(!Imode1)
+{
+if(battery_state1 == FLOAT)
+{
+battery_state1=CHARGE;
+{ Vref1 = 1425; };
+{ Iref1 = 35; };
+Imode1 = 1;
+cc_cv1 = 10;
 }
 }
 }

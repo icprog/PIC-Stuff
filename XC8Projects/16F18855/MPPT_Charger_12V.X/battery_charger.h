@@ -1,8 +1,10 @@
 #include "system.h"
 
 
-#define		SET_CURRENT(x)		{ Iref = x; }               // This is where we set Iref
-#define		SET_VOLTAGE(x)		{ Vref = x; }               // This is where Vref gets set
+#define		SET_CURRENT0(x)		{ Iref0 = x; }               // This is where we set Iref
+#define		SET_VOLTAGE0(x)		{ Vref0 = x; }               // This is where Vref gets set
+#define		SET_CURRENT1(x)		{ Iref1 = x; }               // This is where we set Iref
+#define		SET_VOLTAGE1(x)		{ Vref1 = x; }               // This is where Vref gets set
 //#define		WARMUP_TIME			64
 #define		CONSTANT_VOLTAGE0	(!Imode0)
 #define		CONSTANT_VOLTAGE1	(!Imode1)
@@ -47,7 +49,7 @@
 #endif
 
 
-extern uint8_t  battery_state;
+extern uint8_t  battery_state0;
 
 void Init_Battery_State_Machine(void);
 void Battery_State_Machine(void);
