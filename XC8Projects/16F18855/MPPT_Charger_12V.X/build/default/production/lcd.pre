@@ -17441,15 +17441,17 @@ channel_DAC1 = 0x3E,
 channel_FVR = 0x3F
 } adcc_channel_t;
 
-int16_t readAnalog(uint16_t channel);
-
 int16_t ADCRead(adcc_channel_t channel);
+
+
+
+int16_t readIAnalog(uint16_t channel);
 
 
 
 void ADC_Initialize(void);
 
-# 34
+# 36
 bool ADCC_IsConversionDone();
 
 int16_t ADCC_GetConversionResult(void);
@@ -17476,37 +17478,37 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 82
+# 84
 uint16_t ADCC_GetPreviousResult(void);
 
-# 106
+# 108
 void ADCC_DefineSetPoint(uint16_t);
 
-# 131
+# 133
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 156
+# 158
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 179
+# 181
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 201
+# 203
 void ADCC_EnableDoubleSampling(void);
 
-# 223
+# 225
 void ADCC_EnableContinuousConversion(void);
 
-# 245
+# 247
 void ADCC_DisableContinuousConversion(void);
 
-# 267
+# 269
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 289
+# 291
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 311
+# 313
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 27 "battery_charger.h"

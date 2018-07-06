@@ -18,8 +18,8 @@
 	#define	CUTOFF_VOLTAGE			1075	// 10.75V
 
 	#define	ILIM_PRECHARGE			10      // 1A, Small current set at PRECHARGE stage
-	#define	ILIM					55      // 5.5A Point where we switch back to MPPT, or Current Mode
-	#define IFLOAT					25      // 2.5A, minimum charging current				
+	#define	ILIM					35      // 5.5A Point where we switch back to MPPT, or Current Mode
+	#define IFLOAT					20      // 2.5A, minimum charging current				
 
 #endif
 

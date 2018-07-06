@@ -10,17 +10,17 @@ uint8_t readButton(void)
 {
     readButtons = ADCRead(11);                           // Read AN7 (_RC1) Value to determine which button is pushed Pin 26
     
-    if(readButtons >= 365 && readButtons < 405)
+    if(readButtons >= 425 && readButtons < 485)
     {
         button = Enter;                                 // Enter Button has been pressed
     }
     
-    else if(readButtons >= 535 && readButtons < 590)
+    else if(readButtons >= 615 && readButtons < 690)
     {
         button = Down;                                  // Down Button has been pressed
     }
     
-    else if(readButtons > 745)
+    else if(readButtons > 800)
     {
         button = Up;                                    // Up Button has been pressed
     }

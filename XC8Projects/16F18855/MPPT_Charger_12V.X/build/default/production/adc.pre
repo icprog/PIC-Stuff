@@ -17441,15 +17441,17 @@ channel_DAC1 = 0x3E,
 channel_FVR = 0x3F
 } adcc_channel_t;
 
-int16_t readAnalog(uint16_t channel);
-
 int16_t ADCRead(adcc_channel_t channel);
+
+
+
+int16_t readIAnalog(uint16_t channel);
 
 
 
 void ADC_Initialize(void);
 
-# 34
+# 36
 bool ADCC_IsConversionDone();
 
 int16_t ADCC_GetConversionResult(void);
@@ -17476,49 +17478,49 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 82
+# 84
 uint16_t ADCC_GetPreviousResult(void);
 
-# 106
+# 108
 void ADCC_DefineSetPoint(uint16_t);
 
-# 131
+# 133
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 156
+# 158
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 179
+# 181
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 201
+# 203
 void ADCC_EnableDoubleSampling(void);
 
-# 223
+# 225
 void ADCC_EnableContinuousConversion(void);
 
-# 245
+# 247
 void ADCC_DisableContinuousConversion(void);
 
-# 267
+# 269
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 289
+# 291
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 311
+# 313
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 7 "adc.c"
-int16_t samples[8][12] = {{0},{0}};
+int16_t samples[4][75] = {{0},{0}};
 
 static uint16_t sampleIndex = {0};
 
-static int32_t totals[8] = {0};
+static int32_t totals[4] = {0};
 
-static uint16_t channels[8] = {23, 21, 19, 17, 22, 20, 18, 16};
+static uint16_t channels[4] = {22, 20, 18, 16};
 
-# 19
+# 21
 int16_t ADCRead(adcc_channel_t channel)
 {
 ADPCH = channel_VSS;
@@ -17548,8 +17550,8 @@ while(ADCON0bits.ADGO)
 return ((ADRESH<<8)+ADRESL);
 }
 
-
-int16_t readAnalog(uint16_t channel)
+# 77
+int16_t readIAnalog(uint16_t channel)
 {
 int16_t value;
 
@@ -17563,18 +17565,18 @@ samples[channel][sampleIndex] = value;
 
 totals[channel] = totals[channel]+samples[channel][sampleIndex];
 
-if(channel>=(8-1))
+if(channel>=(4-1))
 {
 sampleIndex+=1;
-if(sampleIndex >= 12)sampleIndex = 0;
+if(sampleIndex >= 75)sampleIndex = 0;
 }
 
-value = totals[channel]/12;
+value = totals[channel]/75;
 
 return value;
 }
 
-# 83
+# 111
 void ADC_Initialize(void)
 {
 ADCON1 = 0x00;
@@ -17590,7 +17592,7 @@ ADSTAT = 0x00;
 FVRCON = 0b11000011;
 ADCLK = 0x3F;
 
-# 103
+# 131
 ADREF = 0x03;
 
 

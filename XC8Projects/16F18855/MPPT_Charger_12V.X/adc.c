@@ -1,16 +1,18 @@
 #include <xc.h>
 #include "adc.h"
 
-#define     numSamples                      12                                              // Number of Temperature readings to Average
-#define     numChannels                     8                                               // Number of Analog channels to read
+#define     numISamples                     75                                              // Number of Current readings to Average
+#define     numIChannels                    4                                               // Number of Analog channels to read
 
-int16_t samples[numChannels][numSamples]    =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
+int16_t samples[numIChannels][numISamples]  =   {{0},{0}};                                  // Was left initialized like this, but following is correct?
 
 static uint16_t sampleIndex                 =   {0};
 
-static int32_t totals[numChannels]          =   {0};
+static int32_t totals[numIChannels]         =   {0};
 
-static uint16_t channels[numChannels]       =   {23, 21, 19, 17, 22, 20, 18, 16};           // List all the Analog channel numbers here, must be same number listed as numChannels
+static uint16_t channels[numIChannels]      =   {22, 20, 18, 16};                           // List all the I Analog channel numbers here, must be same number listed as numChannels
+
+//static uint16_t channels[numChannels]       =   {23, 21, 19, 17, 22, 20, 18, 16};           // List all the Analog channel numbers here, must be same number listed as numChannels
 //static uint16_t channels[numChannels]       =   {16, 17, 18, 19, 20, 21, 22, 23};           // List all the Analog channel numbers here, must be same number listed as numChannels
 
 //int16_t voltage[4]                           =   {0};
@@ -46,7 +48,7 @@ int16_t ADCRead(adcc_channel_t channel)
 }
 
 // *************** Read Analogs from Analog channel Array ****************************************************************************************
-int16_t readAnalog(uint16_t channel)
+/*int16_t readAnalog(uint16_t channel)
 {
     int16_t value;
     
@@ -67,6 +69,32 @@ int16_t readAnalog(uint16_t channel)
     }
             
     value = totals[channel]/numSamples;                                 // assign the average value of total to the readTemperature variable
+        
+    return value;   
+}
+*/
+// *************** Read I Analogs from Analog channel Array ****************************************************************************************
+int16_t readIAnalog(uint16_t channel)
+{
+    int16_t value;
+    
+    uint16_t analog_channel = channels[channel];
+    
+    value = ADCRead(analog_channel);
+            
+    totals[channel] = totals[channel]-samples[channel][sampleIndex];    // Subtract the oldest sample data from the total
+
+    samples[channel][sampleIndex] = value;                              // Assign the just read temperature to the location of the current oldest data
+
+    totals[channel] = totals[channel]+samples[channel][sampleIndex];    // Add that new sample to the total
+            
+    if(channel>=(numIChannels-1))
+    {
+        sampleIndex+=1;                                                 // and move to the next index location
+        if(sampleIndex >= numISamples)sampleIndex = 0;
+    }
+            
+    value = totals[channel]/numISamples;                                 // assign the average value of total to the readTemperature variable
         
     return value;   
 }

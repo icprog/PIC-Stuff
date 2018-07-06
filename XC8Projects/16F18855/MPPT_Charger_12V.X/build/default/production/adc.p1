@@ -1,5 +1,5 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"20 adc.c
+"22 adc.c
 [c E14259 4 60 61 62 63 .. ]
 [n E14259 . POT channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
 "2568 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
@@ -13183,36 +13183,36 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 18: channel_DAC1 = 0x3E,
 [; ;adc.h: 19: channel_FVR = 0x3F
 [; ;adc.h: 20: } adcc_channel_t;
-[; ;adc.h: 22: int16_t readAnalog(uint16_t channel);
-[; ;adc.h: 24: int16_t ADCRead(adcc_channel_t channel);
-[; ;adc.h: 28: void ADC_Initialize(void);
-[; ;adc.h: 34: bool ADCC_IsConversionDone();
-[; ;adc.h: 36: int16_t ADCC_GetConversionResult(void);
-[; ;adc.h: 38: void ADCC_StopConversion(void);
-[; ;adc.h: 40: void ADCC_SetStopOnInterrupt(void);
-[; ;adc.h: 42: void ADCC_DischargeSampleCapacitor(void);
-[; ;adc.h: 44: void ADCC_LoadAcquisitionRegister(uint8_t);
-[; ;adc.h: 46: void ADCC_SetPrechargeTime(uint8_t);
-[; ;adc.h: 48: void ADCC_SetRepeatCount(uint8_t);
-[; ;adc.h: 50: uint8_t ADCC_GetCurrentCountofConversions(void);
-[; ;adc.h: 52: void ADCC_ClearAccumulator(void);
-[; ;adc.h: 54: uint16_t ADCC_GetAccumulatorValue(void);
-[; ;adc.h: 56: bool ADCC_HasAccumulatorOverflowed(void);
-[; ;adc.h: 58: uint16_t ADCC_GetFilterValue(void);
-[; ;adc.h: 82: uint16_t ADCC_GetPreviousResult(void);
-[; ;adc.h: 106: void ADCC_DefineSetPoint(uint16_t);
-[; ;adc.h: 131: void ADCC_SetUpperThreshold(uint16_t);
-[; ;adc.h: 156: void ADCC_SetLowerThreshold(uint16_t);
-[; ;adc.h: 179: uint16_t ADCC_GetErrorCalculation(void);
-[; ;adc.h: 201: void ADCC_EnableDoubleSampling(void);
-[; ;adc.h: 223: void ADCC_EnableContinuousConversion(void);
-[; ;adc.h: 245: void ADCC_DisableContinuousConversion(void);
-[; ;adc.h: 267: bool ADCC_HasErrorCrossedUpperThreshold(void);
-[; ;adc.h: 289: bool ADCC_HasErrorCrossedLowerThreshold(void);
-[; ;adc.h: 311: uint8_t ADCC_GetConversionStageStatus(void);
-[v F14320 `i ~T0 @X0 -> 12 `i t ]
+[; ;adc.h: 22: int16_t ADCRead(adcc_channel_t channel);
+[; ;adc.h: 26: int16_t readIAnalog(uint16_t channel);
+[; ;adc.h: 30: void ADC_Initialize(void);
+[; ;adc.h: 36: bool ADCC_IsConversionDone();
+[; ;adc.h: 38: int16_t ADCC_GetConversionResult(void);
+[; ;adc.h: 40: void ADCC_StopConversion(void);
+[; ;adc.h: 42: void ADCC_SetStopOnInterrupt(void);
+[; ;adc.h: 44: void ADCC_DischargeSampleCapacitor(void);
+[; ;adc.h: 46: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adc.h: 48: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adc.h: 50: void ADCC_SetRepeatCount(uint8_t);
+[; ;adc.h: 52: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adc.h: 54: void ADCC_ClearAccumulator(void);
+[; ;adc.h: 56: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adc.h: 58: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adc.h: 60: uint16_t ADCC_GetFilterValue(void);
+[; ;adc.h: 84: uint16_t ADCC_GetPreviousResult(void);
+[; ;adc.h: 108: void ADCC_DefineSetPoint(uint16_t);
+[; ;adc.h: 133: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adc.h: 158: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adc.h: 181: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adc.h: 203: void ADCC_EnableDoubleSampling(void);
+[; ;adc.h: 225: void ADCC_EnableContinuousConversion(void);
+[; ;adc.h: 247: void ADCC_DisableContinuousConversion(void);
+[; ;adc.h: 269: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adc.h: 291: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adc.h: 313: uint8_t ADCC_GetConversionStageStatus(void);
+[v F14320 `i ~T0 @X0 -> 75 `i t ]
 "7 adc.c
-[v _samples `F14320 ~T0 @X0 -> 8 `i e ]
+[v _samples `F14320 ~T0 @X0 -> 4 `i e ]
 [i _samples
 :U ..
 :U ..
@@ -13223,7 +13223,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-[; ;adc.c: 7: int16_t samples[8][12] = {{0},{0}};
+[; ;adc.c: 7: int16_t samples[4][75] = {{0},{0}};
 "9
 [v _sampleIndex `ui ~T0 @X0 1 s ]
 [i _sampleIndex
@@ -13231,227 +13231,223 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [; ;adc.c: 9: static uint16_t sampleIndex = {0};
 "11
-[v _totals `l ~T0 @X0 -> 8 `i s ]
+[v _totals `l ~T0 @X0 -> 4 `i s ]
 [i _totals
 :U ..
 -> -> 0 `i `l
 ..
 ]
-[; ;adc.c: 11: static int32_t totals[8] = {0};
+[; ;adc.c: 11: static int32_t totals[4] = {0};
 "13
-[v _channels `ui ~T0 @X0 -> 8 `i s ]
+[v _channels `ui ~T0 @X0 -> 4 `i s ]
 [i _channels
 :U ..
--> -> 23 `i `ui
--> -> 21 `i `ui
--> -> 19 `i `ui
--> -> 17 `i `ui
 -> -> 22 `i `ui
 -> -> 20 `i `ui
 -> -> 18 `i `ui
 -> -> 16 `i `ui
 ..
 ]
-[; ;adc.c: 13: static uint16_t channels[8] = {23, 21, 19, 17, 22, 20, 18, 16};
-"19
-[v _ADCRead `(i ~T0 @X0 1 ef1`E14259 ]
-"20
-{
-[; ;adc.c: 19: int16_t ADCRead(adcc_channel_t channel)
-[; ;adc.c: 20: {
-[e :U _ADCRead ]
-"19
-[v _channel `E14259 ~T0 @X0 1 r1 ]
-"20
-[f ]
-[; ;adc.c: 21: ADPCH = channel_VSS;
+[; ;adc.c: 13: static uint16_t channels[4] = {22, 20, 18, 16};
 "21
-[e = _ADPCH -> . `E14259 1 `uc ]
-[; ;adc.c: 23: ADCON0bits.ADON = 1;
+[v _ADCRead `(i ~T0 @X0 1 ef1`E14259 ]
+"22
+{
+[; ;adc.c: 21: int16_t ADCRead(adcc_channel_t channel)
+[; ;adc.c: 22: {
+[e :U _ADCRead ]
+"21
+[v _channel `E14259 ~T0 @X0 1 r1 ]
+"22
+[f ]
+[; ;adc.c: 23: ADPCH = channel_VSS;
 "23
-[e = . . _ADCON0bits 0 6 -> -> 1 `i `uc ]
-[; ;adc.c: 25: ADCON0bits.ADCONT = 0;
+[e = _ADPCH -> . `E14259 1 `uc ]
+[; ;adc.c: 25: ADCON0bits.ADON = 1;
 "25
-[e = . . _ADCON0bits 0 5 -> -> 0 `i `uc ]
-[; ;adc.c: 27: ADCON0bits.ADGO = 1;
+[e = . . _ADCON0bits 0 6 -> -> 1 `i `uc ]
+[; ;adc.c: 27: ADCON0bits.ADCONT = 0;
 "27
-[e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
-[; ;adc.c: 29: while(ADCON0bits.ADGO)
+[e = . . _ADCON0bits 0 5 -> -> 0 `i `uc ]
+[; ;adc.c: 29: ADCON0bits.ADGO = 1;
 "29
+[e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
+[; ;adc.c: 31: while(ADCON0bits.ADGO)
+"31
 [e $U 1564  ]
 [e :U 1565 ]
-[; ;adc.c: 30: {
-"30
+[; ;adc.c: 32: {
+"32
 {
-"31
+"33
 }
 [e :U 1564 ]
-"29
+"31
 [e $ != -> . . _ADCON0bits 0 0 `i -> -> -> 0 `i `Vuc `i 1565  ]
 [e :U 1566 ]
-[; ;adc.c: 31: }
-[; ;adc.c: 33: ADPCH = channel;
-"33
-[e = _ADPCH -> _channel `uc ]
-[; ;adc.c: 35: ADCON0bits.ADON = 1;
+[; ;adc.c: 33: }
+[; ;adc.c: 35: ADPCH = channel;
 "35
-[e = . . _ADCON0bits 0 6 -> -> 1 `i `uc ]
-[; ;adc.c: 37: ADCON0bits.ADCONT = 0;
+[e = _ADPCH -> _channel `uc ]
+[; ;adc.c: 37: ADCON0bits.ADON = 1;
 "37
-[e = . . _ADCON0bits 0 5 -> -> 0 `i `uc ]
-[; ;adc.c: 39: ADCON0bits.ADGO = 1;
+[e = . . _ADCON0bits 0 6 -> -> 1 `i `uc ]
+[; ;adc.c: 39: ADCON0bits.ADCONT = 0;
 "39
-[e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
-[; ;adc.c: 41: while(ADCON0bits.ADGO)
+[e = . . _ADCON0bits 0 5 -> -> 0 `i `uc ]
+[; ;adc.c: 41: ADCON0bits.ADGO = 1;
 "41
+[e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
+[; ;adc.c: 43: while(ADCON0bits.ADGO)
+"43
 [e $U 1567  ]
 [e :U 1568 ]
-[; ;adc.c: 42: {
-"42
+[; ;adc.c: 44: {
+"44
 {
-"43
+"45
 }
 [e :U 1567 ]
-"41
+"43
 [e $ != -> . . _ADCON0bits 0 0 `i -> -> -> 0 `i `Vuc `i 1568  ]
 [e :U 1569 ]
-[; ;adc.c: 43: }
-[; ;adc.c: 45: return ((ADRESH<<8)+ADRESL);
-"45
+[; ;adc.c: 45: }
+[; ;adc.c: 47: return ((ADRESH<<8)+ADRESL);
+"47
 [e ) + << -> _ADRESH `i -> 8 `i -> _ADRESL `i ]
 [e $UE 1563  ]
-[; ;adc.c: 46: }
-"46
+[; ;adc.c: 48: }
+"48
 [e :UE 1563 ]
 }
-"49
-[v _readAnalog `(i ~T0 @X0 1 ef1`ui ]
-"50
+"77
+[v _readIAnalog `(i ~T0 @X0 1 ef1`ui ]
+"78
 {
-[; ;adc.c: 49: int16_t readAnalog(uint16_t channel)
-[; ;adc.c: 50: {
-[e :U _readAnalog ]
-"49
+[; ;adc.c: 77: int16_t readIAnalog(uint16_t channel)
+[; ;adc.c: 78: {
+[e :U _readIAnalog ]
+"77
 [v _channel `ui ~T0 @X0 1 r1 ]
-"50
+"78
 [f ]
-"51
+"79
 [v _value `i ~T0 @X0 1 a ]
-"53
+"81
 [v _analog_channel `ui ~T0 @X0 1 a ]
-[; ;adc.c: 51: int16_t value;
-[; ;adc.c: 53: uint16_t analog_channel = channels[channel];
+[; ;adc.c: 79: int16_t value;
+[; ;adc.c: 81: uint16_t analog_channel = channels[channel];
 [e = _analog_channel *U + &U _channels * -> _channel `ux -> -> # *U &U _channels `ui `ux ]
-[; ;adc.c: 55: value = ADCRead(analog_channel);
-"55
+[; ;adc.c: 83: value = ADCRead(analog_channel);
+"83
 [e = _value ( _ADCRead (1 -> _analog_channel `E14259 ]
-[; ;adc.c: 57: totals[channel] = totals[channel]-samples[channel][sampleIndex];
-"57
-[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux - *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 12 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 12 `i `ui `ux `ui `ux `l ]
-[; ;adc.c: 59: samples[channel][sampleIndex] = value;
-"59
-[e = *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 12 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 12 `i `ui `ux `ui `ux _value ]
-[; ;adc.c: 61: totals[channel] = totals[channel]+samples[channel][sampleIndex];
-"61
-[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux + *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 12 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 12 `i `ui `ux `ui `ux `l ]
-[; ;adc.c: 63: if(channel>=(8-1))
-"63
-[e $ ! >= _channel -> - -> 8 `i -> 1 `i `ui 1571  ]
-[; ;adc.c: 64: {
-"64
+[; ;adc.c: 85: totals[channel] = totals[channel]-samples[channel][sampleIndex];
+"85
+[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux - *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux `ui `ux `l ]
+[; ;adc.c: 87: samples[channel][sampleIndex] = value;
+"87
+[e = *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux `ui `ux _value ]
+[; ;adc.c: 89: totals[channel] = totals[channel]+samples[channel][sampleIndex];
+"89
+[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux + *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux `ui `ux `l ]
+[; ;adc.c: 91: if(channel>=(4-1))
+"91
+[e $ ! >= _channel -> - -> 4 `i -> 1 `i `ui 1571  ]
+[; ;adc.c: 92: {
+"92
 {
-[; ;adc.c: 65: sampleIndex+=1;
-"65
+[; ;adc.c: 93: sampleIndex+=1;
+"93
 [e =+ _sampleIndex -> -> 1 `i `ui ]
-[; ;adc.c: 66: if(sampleIndex >= 12)sampleIndex = 0;
-"66
-[e $ ! >= _sampleIndex -> -> 12 `i `ui 1572  ]
+[; ;adc.c: 94: if(sampleIndex >= 75)sampleIndex = 0;
+"94
+[e $ ! >= _sampleIndex -> -> 75 `i `ui 1572  ]
 [e = _sampleIndex -> -> 0 `i `ui ]
 [e :U 1572 ]
-"67
+"95
 }
 [e :U 1571 ]
-[; ;adc.c: 67: }
-[; ;adc.c: 69: value = totals[channel]/12;
-"69
-[e = _value -> / *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> -> 12 `i `l `i ]
-[; ;adc.c: 71: return value;
-"71
+[; ;adc.c: 95: }
+[; ;adc.c: 97: value = totals[channel]/75;
+"97
+[e = _value -> / *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> -> 75 `i `l `i ]
+[; ;adc.c: 99: return value;
+"99
 [e ) _value ]
 [e $UE 1570  ]
-[; ;adc.c: 72: }
-"72
+[; ;adc.c: 100: }
+"100
 [e :UE 1570 ]
 }
-"83
+"111
 [v _ADC_Initialize `(v ~T0 @X0 1 ef ]
-"84
+"112
 {
-[; ;adc.c: 83: void ADC_Initialize(void)
-[; ;adc.c: 84: {
+[; ;adc.c: 111: void ADC_Initialize(void)
+[; ;adc.c: 112: {
 [e :U _ADC_Initialize ]
 [f ]
-[; ;adc.c: 85: ADCON1 = 0x00;
-"85
-[e = _ADCON1 -> -> 0 `i `uc ]
-[; ;adc.c: 87: ADCON2 = 0x00;
-"87
-[e = _ADCON2 -> -> 0 `i `uc ]
-[; ;adc.c: 89: ADCON3 = 0x00;
-"89
-[e = _ADCON3 -> -> 0 `i `uc ]
-[; ;adc.c: 91: ADACT = 0x00;
-"91
-[e = _ADACT -> -> 0 `i `uc ]
-[; ;adc.c: 93: ADSTAT = 0x00;
-"93
-[e = _ADSTAT -> -> 0 `i `uc ]
-[; ;adc.c: 95: FVRCON = 0b11000011;
-"95
-[e = _FVRCON -> -> 195 `i `uc ]
-[; ;adc.c: 96: ADCLK = 0x3F;
-"96
-[e = _ADCLK -> -> 63 `i `uc ]
-[; ;adc.c: 103: ADREF = 0x03;
-"103
-[e = _ADREF -> -> 3 `i `uc ]
-[; ;adc.c: 106: ADCAP = 0x00;
-"106
-[e = _ADCAP -> -> 0 `i `uc ]
-[; ;adc.c: 109: ADPRE = 0x07;
-"109
-[e = _ADPRE -> -> 7 `i `uc ]
-[; ;adc.c: 111: ADACQ = 0x00;
-"111
-[e = _ADACQ -> -> 0 `i `uc ]
-[; ;adc.c: 113: ADPCH = 0x00;
+[; ;adc.c: 113: ADCON1 = 0x00;
 "113
-[e = _ADPCH -> -> 0 `i `uc ]
-[; ;adc.c: 115: ADRPT = 0x00;
+[e = _ADCON1 -> -> 0 `i `uc ]
+[; ;adc.c: 115: ADCON2 = 0x00;
 "115
-[e = _ADRPT -> -> 0 `i `uc ]
-[; ;adc.c: 117: ADLTHL = 0x00;
+[e = _ADCON2 -> -> 0 `i `uc ]
+[; ;adc.c: 117: ADCON3 = 0x00;
 "117
-[e = _ADLTHL -> -> 0 `i `uc ]
-[; ;adc.c: 119: ADLTHH = 0x00;
+[e = _ADCON3 -> -> 0 `i `uc ]
+[; ;adc.c: 119: ADACT = 0x00;
 "119
-[e = _ADLTHH -> -> 0 `i `uc ]
-[; ;adc.c: 121: ADUTHL = 0x00;
+[e = _ADACT -> -> 0 `i `uc ]
+[; ;adc.c: 121: ADSTAT = 0x00;
 "121
-[e = _ADUTHL -> -> 0 `i `uc ]
-[; ;adc.c: 123: ADUTHH = 0x00;
+[e = _ADSTAT -> -> 0 `i `uc ]
+[; ;adc.c: 123: FVRCON = 0b11000011;
 "123
+[e = _FVRCON -> -> 195 `i `uc ]
+[; ;adc.c: 124: ADCLK = 0x3F;
+"124
+[e = _ADCLK -> -> 63 `i `uc ]
+[; ;adc.c: 131: ADREF = 0x03;
+"131
+[e = _ADREF -> -> 3 `i `uc ]
+[; ;adc.c: 134: ADCAP = 0x00;
+"134
+[e = _ADCAP -> -> 0 `i `uc ]
+[; ;adc.c: 137: ADPRE = 0x07;
+"137
+[e = _ADPRE -> -> 7 `i `uc ]
+[; ;adc.c: 139: ADACQ = 0x00;
+"139
+[e = _ADACQ -> -> 0 `i `uc ]
+[; ;adc.c: 141: ADPCH = 0x00;
+"141
+[e = _ADPCH -> -> 0 `i `uc ]
+[; ;adc.c: 143: ADRPT = 0x00;
+"143
+[e = _ADRPT -> -> 0 `i `uc ]
+[; ;adc.c: 145: ADLTHL = 0x00;
+"145
+[e = _ADLTHL -> -> 0 `i `uc ]
+[; ;adc.c: 147: ADLTHH = 0x00;
+"147
+[e = _ADLTHH -> -> 0 `i `uc ]
+[; ;adc.c: 149: ADUTHL = 0x00;
+"149
+[e = _ADUTHL -> -> 0 `i `uc ]
+[; ;adc.c: 151: ADUTHH = 0x00;
+"151
 [e = _ADUTHH -> -> 0 `i `uc ]
-[; ;adc.c: 125: ADSTPTL = 0x00;
-"125
+[; ;adc.c: 153: ADSTPTL = 0x00;
+"153
 [e = _ADSTPTL -> -> 0 `i `uc ]
-[; ;adc.c: 127: ADSTPTH = 0x00;
-"127
+[; ;adc.c: 155: ADSTPTH = 0x00;
+"155
 [e = _ADSTPTH -> -> 0 `i `uc ]
-[; ;adc.c: 129: ADCON0 = 0x84;
-"129
+[; ;adc.c: 157: ADCON0 = 0x84;
+"157
 [e = _ADCON0 -> -> 132 `i `uc ]
-[; ;adc.c: 130: }
-"130
+[; ;adc.c: 158: }
+"158
 [e :UE 1573 ]
 }
