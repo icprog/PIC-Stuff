@@ -13247,8 +13247,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 "43
 [v _MPPT0 `i ~T0 @X0 1 a ]
-[; ;main.c: 43: int16_t MPPT0 = 1750;
-[e = _MPPT0 -> 1750 `i ]
+[; ;main.c: 43: int16_t MPPT0 = 1550;
+[e = _MPPT0 -> 1550 `i ]
 "44
 [v _MPPT1 `i ~T0 @X0 1 a ]
 [; ;main.c: 44: int16_t MPPT1 = 1760;
@@ -13635,18 +13635,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 200: menuButton = readButton();
 "200
 [e = _menuButton ( _readButton ..  ]
-[; ;main.c: 201: if(menuButton == 2) if(MPPT0>1550)MPPT0-=10;
+[; ;main.c: 201: if(menuButton == 2) if(MPPT0>1375)MPPT0-=1;
 "201
 [e $ ! == -> _menuButton `i -> 2 `i 1598  ]
-[e $ ! > _MPPT0 -> 1550 `i 1599  ]
-[e =- _MPPT0 -> 10 `i ]
+[e $ ! > _MPPT0 -> 1375 `i 1599  ]
+[e =- _MPPT0 -> 1 `i ]
 [e :U 1599 ]
 "202
 [e :U 1598 ]
-[; ;main.c: 202: if(menuButton == 3)if(MPPT0<2200)MPPT0+=10;
+[; ;main.c: 202: if(menuButton == 3)if(MPPT0<2200)MPPT0+=1;
 [e $ ! == -> _menuButton `i -> 3 `i 1600  ]
 [e $ ! < _MPPT0 -> 2200 `i 1601  ]
-[e =+ _MPPT0 -> 10 `i ]
+[e =+ _MPPT0 -> 1 `i ]
 [e :U 1601 ]
 "203
 [e :U 1600 ]
@@ -13654,9 +13654,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ ! == -> _menuButton `i -> 1 `i 1602  ]
 [e ( _LCDInit ..  ]
 [e :U 1602 ]
-[; ;main.c: 207: if(slowLoop>200)
+[; ;main.c: 207: if(slowLoop>250)
 "207
-[e $ ! > -> _slowLoop `i -> 200 `i 1603  ]
+[e $ ! > -> _slowLoop `i -> 250 `i 1603  ]
 [; ;main.c: 208: {
 "208
 {

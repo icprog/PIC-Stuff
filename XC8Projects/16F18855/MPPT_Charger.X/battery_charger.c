@@ -16,6 +16,7 @@ uint8_t             cc_cv;
 int8_t              VHoldMode       =   0;
 int16_t             voltage[4]      =   {0};                    // Store calculated Voltage values
 int16_t             current[4]      =   {0};                    // Store Calculated Current Values
+uint8_t             x               =   0;
 
 
 
@@ -67,6 +68,12 @@ void Battery_State_Machine()
 			}
             else
 			{
+                x+=1;
+                if(x>25)
+                {
+                    if(Vref>FLOATING_VOLTAGE)Vref-=1;
+                    x=0;
+                }
 				if(IminCount<IminUpdate)IminCount+=1; // Keep us from going into Float because of sporadic sun
 			}
 		}

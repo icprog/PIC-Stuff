@@ -40,7 +40,7 @@ extern int16_t  current[4];                    // Store Calculated Current Value
 
 void main(void)
 {
-    int16_t         MPPT0           =   1750;                   // Need to tune to correct value    
+    int16_t         MPPT0           =   1550;                   // Need to tune to correct value    
     int16_t         MPPT1           =   1760;                   // Change one vs the other, to see where MPPT is at.
     
     uint16_t        dutyCycle6      =   1023;                   // 1023 is as Low as can go
@@ -198,13 +198,13 @@ void main(void)
             PWM7_LoadDutyValue(Buck1Output);
 
             menuButton = readButton();
-            if(menuButton == Down) if(MPPT0>1550)MPPT0-=10;
-            if(menuButton == Up)if(MPPT0<2200)MPPT0+=10;
+            if(menuButton == Down) if(MPPT0>1375)MPPT0-=1;
+            if(menuButton == Up)if(MPPT0<2200)MPPT0+=1;
             if(menuButton == Enter)LCDInit();
 //        }
   //      fastLoop+=1;
         
-        if(slowLoop>200)
+        if(slowLoop>250)
         {
             
             IOutTotal=IOut0+IOut1;

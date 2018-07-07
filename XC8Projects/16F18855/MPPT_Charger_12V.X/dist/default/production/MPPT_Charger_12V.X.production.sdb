@@ -19,6 +19,15 @@ channel_Temp 61
 channel_DAC1 62
 channel_FVR 63
 ]
+"22 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
+[e E14319 charge_states `uc
+IDLE 0
+FAULT 1
+FINISHED 2
+PRECHARGE 3
+CHARGE 4
+FLOAT 5
+]
 "102 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\main.c
 [e E14259 . `uc
 POT 4
@@ -36,26 +45,17 @@ PRECHARGE 3
 CHARGE 4
 FLOAT 5
 ]
-"21 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
-[e E14319 charge_states `uc
-IDLE 0
-FAULT 1
-FINISHED 2
-PRECHARGE 3
-CHARGE 4
-FLOAT 5
-]
 "21 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\adc.c
 [v _ADCRead ADCRead `(i  1 e 2 0 ]
 "77
 [v _readIAnalog readIAnalog `(i  1 e 2 0 ]
 "111
 [v _ADC_Initialize ADC_Initialize `(v  1 e 1 0 ]
-"19 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
+"20 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
 [v _Init_Battery_State_Machine Init_Battery_State_Machine `(v  1 e 1 0 ]
-"31
+"32
 [v _Battery_State_Machine Battery_State_Machine `(v  1 e 1 0 ]
-"90
+"97
 [v _cc_cv_mode cc_cv_mode `(v  1 e 1 0 ]
 "9 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\buttons.c
 [v _readButton readButton `(uc  1 e 1 0 ]
@@ -165,6 +165,8 @@ FLOAT 5
 [v _voltage voltage `[4]i  1 e 8 0 ]
 "14
 [v _current current `[4]i  1 e 8 0 ]
+"15
+[v _x x `uc  1 e 1 0 ]
 "4 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\buttons.c
 [v _readButtons readButtons `i  1 e 2 0 ]
 "5
@@ -479,9 +481,9 @@ FLOAT 5
 "61
 [v main@menuButton menuButton `uc  1 a 1 27 ]
 "55
-[v main@displayRefresh displayRefresh `uc  1 a 1 23 ]
+[v main@displayRefresh displayRefresh `uc  1 a 1 16 ]
 "54
-[v main@slowLoop slowLoop `uc  1 a 1 22 ]
+[v main@slowLoop slowLoop `uc  1 a 1 15 ]
 "316
 } 0
 "4 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\tempCalc.c
@@ -601,14 +603,14 @@ FLOAT 5
 [v ADCRead@channel channel `E14259  1 a 1 3 ]
 "48
 } 0
-"90 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
+"97 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
 [v _cc_cv_mode cc_cv_mode `(v  1 e 1 0 ]
 {
 [v cc_cv_mode@z z `uc  1 a 1 wreg ]
 [v cc_cv_mode@z z `uc  1 a 1 wreg ]
-"92
+"99
 [v cc_cv_mode@z z `uc  1 a 1 5 ]
-"134
+"141
 } 0
 "405 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\main.c
 [v _calculateCurrent3 calculateCurrent3 `(v  1 e 1 0 ]
@@ -717,14 +719,14 @@ FLOAT 5
 [v LCDClear@index index `i  1 a 2 9 ]
 "188
 } 0
-"19 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
+"20 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
 [v _Init_Battery_State_Machine Init_Battery_State_Machine `(v  1 e 1 0 ]
 {
 [v Init_Battery_State_Machine@z z `uc  1 a 1 wreg ]
 [v Init_Battery_State_Machine@z z `uc  1 a 1 wreg ]
-"21
+"22
 [v Init_Battery_State_Machine@z z `uc  1 a 1 1 ]
-"29
+"30
 } 0
 "111 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\adc.c
 [v _ADC_Initialize ADC_Initialize `(v  1 e 1 0 ]
@@ -783,14 +785,14 @@ FLOAT 5
 [v ___awdiv@dividend dividend `i  1 p 2 2 ]
 "42
 } 0
-"31 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
+"32 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
 [v _Battery_State_Machine Battery_State_Machine `(v  1 e 1 0 ]
 {
 [v Battery_State_Machine@z z `uc  1 a 1 wreg ]
 [v Battery_State_Machine@z z `uc  1 a 1 wreg ]
-"33
+"34
 [v Battery_State_Machine@z z `uc  1 a 1 15 ]
-"88
+"95
 } 0
 "124 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\lcd.c
 [v _gotoXY gotoXY `(v  1 e 1 0 ]

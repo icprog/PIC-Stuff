@@ -17578,7 +17578,7 @@ extern int16_t current[4];
 # 41
 void main(void)
 {
-int16_t MPPT0 = 1750;
+int16_t MPPT0 = 1550;
 int16_t MPPT1 = 1760;
 
 uint16_t dutyCycle6 = 1023;
@@ -17718,13 +17718,13 @@ PWM6_LoadDutyValue(dutyCycle6);
 PWM7_LoadDutyValue(dutyCycle7);
 
 menuButton = readButton();
-if(menuButton == 2) if(MPPT0>1550)MPPT0-=10;
-if(menuButton == 3)if(MPPT0<2200)MPPT0+=10;
+if(menuButton == 2) if(MPPT0>1375)MPPT0-=1;
+if(menuButton == 3)if(MPPT0<2200)MPPT0+=1;
 if(menuButton == 1)LCDInit();
 
 
 
-if(slowLoop>200)
+if(slowLoop>250)
 {
 
 IOutTotal=current[0]+current[1];

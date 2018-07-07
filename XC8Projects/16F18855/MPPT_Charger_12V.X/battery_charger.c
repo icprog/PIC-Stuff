@@ -12,6 +12,7 @@ uint8_t             cc_cv[2]        =   0;
 int8_t              VHoldMode[2]    =   0;
 int16_t             voltage[4]      =   {0};                    // Store calculated Voltage values
 int16_t             current[4]      =   {0};                    // Store Calculated Current Values
+uint8_t             x               =   0;                      // Counter for lowering Charge Voltage
 
 
 
@@ -64,6 +65,12 @@ void Battery_State_Machine(uint8_t z)
 			}
             else
 			{
+                x+=1;
+                if(x>25)
+                {
+                    if(Vref[z]>FLOATING_VOLTAGE)Vref[z]-=1;
+                    x=0;
+                }
 				if(IminCount[z]<IminUpdate)IminCount[z]+=1; // Keep us from going into Float because of sporadic sun
 			}
 		}

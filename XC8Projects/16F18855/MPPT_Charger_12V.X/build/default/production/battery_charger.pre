@@ -17589,6 +17589,7 @@ uint8_t cc_cv[2] = 0;
 int8_t VHoldMode[2] = 0;
 int16_t voltage[4] = {0};
 int16_t current[4] = {0};
+uint8_t x = 0;
 
 
 
@@ -17599,7 +17600,7 @@ batteryState[z] = PRECHARGE;
 stateCounter[z] = 3;
 
 Iref[z]=10;
-Vref[z]=1445;
+Vref[z]=1425;
 
 Imin[z]=17;
 IminCount[z] = 100;
@@ -17641,6 +17642,12 @@ IminCount[z]=10;
 }
 else
 {
+x+=1;
+if(x>25)
+{
+if(Vref[z]>1379)Vref[z]-=1;
+x=0;
+}
 if(IminCount[z]<100)IminCount[z]+=1;
 }
 }
@@ -17701,7 +17708,7 @@ if(!Imode[z])
 if(batteryState[z]==FLOAT)
 {
 batteryState[z]=CHARGE;
-Vref[z]=1445;
+Vref[z]=1425;
 Iref[z]=35;
 Imode[z]=1;
 cc_cv[z]=10;
