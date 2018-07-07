@@ -11,8 +11,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
 "19
 [v _TMR4_Initialize `(v ~T0 @X0 0 ef ]
-"54 battery_charger.h
-[v _Init_Battery_State_Machine `(v ~T0 @X0 0 ef ]
+"33 battery_charger.h
+[v _Init_Battery_State_Machine `(v ~T0 @X0 0 ef1`uc ]
 "38 lcd.h
 [v _LCDInit `(v ~T0 @X0 0 ef ]
 [v F14219 `(v ~T0 @X0 1 tf1`ul ]
@@ -13219,11 +13219,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 269: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 291: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 313: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 29: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
-[; ;battery_charger.h: 52: extern uint8_t battery_state0;
-[; ;battery_charger.h: 54: void Init_Battery_State_Machine(void);
-[; ;battery_charger.h: 55: void Battery_State_Machine(void);
-[; ;battery_charger.h: 56: void cc_cv_mode();
+[; ;battery_charger.h: 8: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;battery_charger.h: 31: extern uint8_t battery_state[2];
+[; ;battery_charger.h: 33: void Init_Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 34: void Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 35: void cc_cv_mode(uint8_t z);
 [; ;buttons.h: 12: uint8_t readButton(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13236,7 +13236,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
-[; ;pwm.h: 13: void PWM1_LoadDutyValue(uint16_t dutyCycle1);
 [; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
 [; ;tmr.h: 17: void TMR2_Initialize(void);
 [; ;tmr.h: 19: void TMR4_Initialize(void);
@@ -13268,49 +13267,52 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system.c: 80: TMR4_Initialize();
 "80
 [e ( _TMR4_Initialize ..  ]
-[; ;system.c: 81: Init_Battery_State_Machine();
+[; ;system.c: 81: Init_Battery_State_Machine(0);
 "81
-[e ( _Init_Battery_State_Machine ..  ]
-[; ;system.c: 82: LCDInit();
+[e ( _Init_Battery_State_Machine (1 -> -> 0 `i `uc ]
+[; ;system.c: 82: Init_Battery_State_Machine(1);
 "82
-[e ( _LCDInit ..  ]
-[; ;system.c: 83: _delay((unsigned long)((200)*(32000000/4000.0)));
+[e ( _Init_Battery_State_Machine (1 -> -> 1 `i `uc ]
+[; ;system.c: 83: LCDInit();
 "83
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;system.c: 84: LCDClear();
+[e ( _LCDInit ..  ]
+[; ;system.c: 84: _delay((unsigned long)((200)*(32000000/4000.0)));
 "84
-[e ( _LCDClear ..  ]
-[; ;system.c: 85: _delay((unsigned long)((200)*(32000000/4000.0)));
-"85
 [e ( __delay (1 -> * -> -> 200 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;system.c: 86: }
+[; ;system.c: 85: LCDClear();
+"85
+[e ( _LCDClear ..  ]
+[; ;system.c: 86: _delay((unsigned long)((200)*(32000000/4000.0)));
 "86
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[; ;system.c: 87: }
+"87
 [e :UE 1563 ]
 }
-"88
-[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
 "89
+[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
+"90
 {
-[; ;system.c: 88: void OSCILLATOR_Initialize(void)
-[; ;system.c: 89: {
+[; ;system.c: 89: void OSCILLATOR_Initialize(void)
+[; ;system.c: 90: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;system.c: 90: OSCCON1 = 0x60;
-"90
-[e = _OSCCON1 -> -> 96 `i `uc ]
-[; ;system.c: 91: OSCCON3 = 0x00;
+[; ;system.c: 91: OSCCON1 = 0x60;
 "91
-[e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 92: OSCEN = 0x00;
+[e = _OSCCON1 -> -> 96 `i `uc ]
+[; ;system.c: 92: OSCCON3 = 0x00;
 "92
-[e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 93: OSCFRQ = 0x06;
+[e = _OSCCON3 -> -> 0 `i `uc ]
+[; ;system.c: 93: OSCEN = 0x00;
 "93
-[e = _OSCFRQ -> -> 6 `i `uc ]
-[; ;system.c: 94: OSCTUNE = 0x00;
+[e = _OSCEN -> -> 0 `i `uc ]
+[; ;system.c: 94: OSCFRQ = 0x06;
 "94
-[e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 95: }
+[e = _OSCFRQ -> -> 6 `i `uc ]
+[; ;system.c: 95: OSCTUNE = 0x00;
 "95
+[e = _OSCTUNE -> -> 0 `i `uc ]
+[; ;system.c: 96: }
+"96
 [e :UE 1564 ]
 }

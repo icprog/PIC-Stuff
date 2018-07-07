@@ -17511,15 +17511,15 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 313
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 29 "battery_charger.h"
+# 8 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 52
-extern uint8_t battery_state0;
+# 31
+extern uint8_t battery_state[2];
 
-void Init_Battery_State_Machine(void);
-void Battery_State_Machine(void);
-void cc_cv_mode();
+void Init_Battery_State_Machine(uint8_t z);
+void Battery_State_Machine(uint8_t z);
+void cc_cv_mode(uint8_t z);
 
 # 12 "buttons.h"
 uint8_t readButton(void);
@@ -17569,8 +17569,6 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
-void PWM1_LoadDutyValue(uint16_t dutyCycle1);
-
 # 3 "pwm.c"
 void PWM_Initialize(void)
 {
@@ -17591,11 +17589,7 @@ PWM7DCL = 0x00;
 
 CCPTMRS1bits.P7TSEL = 0x02;
 
-
-CCP1CONbits.CCP1EN = 1;
-CCP1CONbits.CCP1FMT = 1;
-CCP1CONbits.CCP1MODE = 0xF;
-CCPTMRS0bits.C1TSEL = 0x1;
+# 27
 }
 
 
@@ -17613,8 +17607,3 @@ PWM7DCH = (dutyCycle7 & 0x03FC)>>2;
 PWM7DCL = (dutyCycle7 & 0x0003)<<6;
 }
 
-void PWM1_LoadDutyValue(uint16_t dutyCycle1)
-{
-CCPR1H = (dutyCycle1& 0x03FC)>>2;
-CCPR1L = (dutyCycle1 & 0x0003)<<6;
-}

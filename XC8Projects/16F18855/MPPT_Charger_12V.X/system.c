@@ -78,7 +78,8 @@ void SYSTEM_Initialize(void)
   //  TMR0_Initialize();
     TMR2_Initialize();
     TMR4_Initialize();
-    Init_Battery_State_Machine();
+    Init_Battery_State_Machine(0);
+    Init_Battery_State_Machine(1);
     LCDInit();
     __delay_ms(200);
     LCDClear();

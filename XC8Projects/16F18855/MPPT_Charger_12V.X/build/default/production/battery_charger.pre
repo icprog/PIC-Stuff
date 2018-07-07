@@ -17511,15 +17511,15 @@ bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 313
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 29 "battery_charger.h"
+# 8 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 52
-extern uint8_t battery_state0;
+# 31
+extern uint8_t battery_state[2];
 
-void Init_Battery_State_Machine(void);
-void Battery_State_Machine(void);
-void cc_cv_mode();
+void Init_Battery_State_Machine(uint8_t z);
+void Battery_State_Machine(uint8_t z);
+void cc_cv_mode(uint8_t z);
 
 # 12 "buttons.h"
 uint8_t readButton(void);
@@ -17556,8 +17556,6 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
-void PWM1_LoadDutyValue(uint16_t dutyCycle1);
-
 # 6 "tempCalc.h"
 int16_t tempCalc(int16_t analogValue);
 
@@ -17571,104 +17569,94 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 52 "battery_charger.h"
-extern uint8_t battery_state0;
+# 31 "battery_charger.h"
+extern uint8_t battery_state[2];
 
-void Init_Battery_State_Machine(void);
-void Battery_State_Machine(void);
-void cc_cv_mode();
+void Init_Battery_State_Machine(uint8_t z);
+void Battery_State_Machine(uint8_t z);
+void cc_cv_mode(uint8_t z);
 
 # 3 "battery_charger.c"
-uint8_t battery_state0;
-uint8_t battery_state1;
-uint16_t Imin0Count;
-uint16_t Imin1Count;
-
-int16_t state_counter0;
-int16_t state_counter1;
-int16_t Imin0;
-int16_t Imin1;
-int16_t Iref0;
-int16_t Vref0;
-int16_t Iref1;
-int16_t Vref1;
-
+uint8_t batteryState[2];
+uint16_t IminCount[2];
+int16_t stateCounter[2];
+int16_t Imin[2];
+int16_t Iref[2];
+int16_t Vref[2];
 int16_t Iout;
-
-int8_t Imode0 = 1;
-int8_t Imode1 = 1;
-uint8_t cc_cv0 = 0;
-uint8_t cc_cv1 = 0;
-int8_t V0HoldMode = 0;
-int8_t V1HoldMode = 0;
+int8_t Imode[2] = 1;
+uint8_t cc_cv[2] = 0;
+int8_t VHoldMode[2] = 0;
 int16_t voltage[4] = {0};
 int16_t current[4] = {0};
 
 
 
 
-void Init_Battery_State_Machine()
+void Init_Battery_State_Machine(uint8_t z)
 {
-battery_state0 = PRECHARGE;
-state_counter0 = 3;
+batteryState[z] = PRECHARGE;
+stateCounter[z] = 3;
 
-{ Iref0 = 10; };
-{ Vref0 = 1425; };
+Iref[z]=10;
+Vref[z]=1445;
 
-Imin0 = 20;
-Imin0Count = 10;
+Imin[z]=17;
+IminCount[z] = 100;
 }
 
-void Battery_State_Machine()
+void Battery_State_Machine(uint8_t z)
 {
-if(battery_state0 == PRECHARGE)
+if(batteryState[z]==PRECHARGE)
 {
-if(voltage[1] < 1075)
+if(voltage[z]<1075)
 {
-if(state_counter0>0)
+if(stateCounter[z]>0)
 {
-state_counter0-=1;
+stateCounter[z]-=1;
 }
 else
 {
-battery_state0 = FAULT;
-}
-}
-else
-{
-battery_state0 = CHARGE;
-{ Iref0 = 35; };
-}
-}
-else if(battery_state0 == CHARGE)
-{
-if((!Imode0))
-{
-if(current[1] < Imin0)
-{
-Imin0Count-=2;
-if(Imin0Count<2)
-{
-battery_state0 = FLOAT;
+batteryState[z]=FAULT;
 }
 }
 else
 {
-if(Imin0Count<10)Imin0Count+=1;
+batteryState[z]=CHARGE;
+Iref[z]=35;
 }
 }
-}
-else if(battery_state0 == FLOAT)
+else if(batteryState[z]==CHARGE)
 {
-{ Vref0 = 1379; };
-{ Iref0 = 20; };
+if(!Imode[z])
+{
+if(current[z] < Imin[z])
+{
+IminCount[z]-=2;
+if(IminCount[z]<10)
+{
+batteryState[z] = FLOAT;
+IminCount[z]=10;
+}
 }
 else
-if(battery_state0 == FAULT)
+{
+if(IminCount[z]<100)IminCount[z]+=1;
+}
+}
+else if(IminCount[z]<100)IminCount[z]+=1;
+}
+else if(batteryState[z] == FLOAT)
+{
+Vref[z]=1379;
+Iref[z]=17;
+}
+else
+if(batteryState[z] == FAULT)
 {
 { gotoXY(0,0); LCDWriteString("BATTERY FAULT");};
-Imode0=0;
-Imode1=0;
+Imode[z]=0;
+
 _delay((unsigned long)((2000)*(32000000/4000.0)));
 
 
@@ -17676,94 +17664,49 @@ _delay((unsigned long)((2000)*(32000000/4000.0)));
 }
 }
 
-void cc_cv_mode()
+void cc_cv_mode(uint8_t z)
 {
-if(voltage[1]>Vref0)
+if(voltage[z]>Vref[z])
 {
-if(V0HoldMode<12)V0HoldMode+=1;
+if(VHoldMode[z]<12)VHoldMode[z]+=1;
 
-if(cc_cv0)
+if(cc_cv[z])
 {
-cc_cv0-=1;
+cc_cv[z]-=1;
 }
 else
 {
-if(Imode0)
+if(Imode[z])
 {
-Imode0 = 0;
+Imode[z]=0;
 }
 }
 }
-else if(voltage[1]<Vref0)
+else if(voltage[z]<Vref[z])
 {
-V0HoldMode-=1;
-if(V0HoldMode<(10*-1))
+VHoldMode[z]-=1;
+if(VHoldMode[z]<(10*-1))
 {
-Imode0 = 1;
-cc_cv0 = (10*2);
-V0HoldMode=(10*-1);
+Imode[z]=1;
+cc_cv[z]=(10*2);
+VHoldMode[z]=(10*-1);
 }
 }
-else V0HoldMode=V0HoldMode;
+else VHoldMode[z]=VHoldMode[z];
 
-if(current[1]>Iref0)
+if(current[z]>Iref[z])
 {
-if(!Imode0)
+if(!Imode[z])
 {
-if(battery_state0 == FLOAT)
+if(batteryState[z]==FLOAT)
 {
-battery_state0=CHARGE;
-{ Vref0 = 1425; };
-{ Iref0 = 35; };
-Imode0 = 1;
-cc_cv0 = 10;
+batteryState[z]=CHARGE;
+Vref[z]=1445;
+Iref[z]=35;
+Imode[z]=1;
+cc_cv[z]=10;
+}
 }
 }
 }
 
-
-
-
-if(voltage[3]>Vref1)
-{
-if(V1HoldMode<12)V1HoldMode+=1;
-
-if(cc_cv1)
-{
-cc_cv1-=1;
-}
-else
-{
-if(Imode1)
-{
-Imode1 = 0;
-}
-}
-}
-else if(voltage[3]<Vref1)
-{
-V1HoldMode-=1;
-if(V1HoldMode<(10*-1))
-{
-Imode1 = 1;
-cc_cv1 = (10*2);
-V1HoldMode=(10*-1);
-}
-}
-else V1HoldMode=V1HoldMode;
-
-if(current[3]>Iref1)
-{
-if(!Imode1)
-{
-if(battery_state1 == FLOAT)
-{
-battery_state1=CHARGE;
-{ Vref1 = 1425; };
-{ Iref1 = 35; };
-Imode1 = 1;
-cc_cv1 = 10;
-}
-}
-}
-}

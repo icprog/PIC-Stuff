@@ -13152,11 +13152,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 269: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 291: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 313: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 29: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
-[; ;battery_charger.h: 52: extern uint8_t battery_state0;
-[; ;battery_charger.h: 54: void Init_Battery_State_Machine(void);
-[; ;battery_charger.h: 55: void Battery_State_Machine(void);
-[; ;battery_charger.h: 56: void cc_cv_mode();
+[; ;battery_charger.h: 8: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;battery_charger.h: 31: extern uint8_t battery_state[2];
+[; ;battery_charger.h: 33: void Init_Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 34: void Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 35: void cc_cv_mode(uint8_t z);
 [; ;buttons.h: 12: uint8_t readButton(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13169,7 +13169,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
-[; ;pwm.h: 13: void PWM1_LoadDutyValue(uint16_t dutyCycle1);
 [; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
 [; ;tmr.h: 17: void TMR2_Initialize(void);
 [; ;tmr.h: 19: void TMR4_Initialize(void);

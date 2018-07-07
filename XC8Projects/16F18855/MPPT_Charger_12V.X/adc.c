@@ -10,7 +10,7 @@ static uint16_t sampleIndex                 =   {0};
 
 static int32_t totals[numIChannels]         =   {0};
 
-static uint16_t channels[numIChannels]      =   {22, 20, 18, 16};                           // List all the I Analog channel numbers here, must be same number listed as numChannels
+static uint16_t channels[numIChannels]      =   {20, 16, 22, 18};                           // List all the I Analog channel numbers here, must be same number listed as numChannels
 
 //static uint16_t channels[numChannels]       =   {23, 21, 19, 17, 22, 20, 18, 16};           // List all the Analog channel numbers here, must be same number listed as numChannels
 //static uint16_t channels[numChannels]       =   {16, 17, 18, 19, 20, 21, 22, 23};           // List all the Analog channel numbers here, must be same number listed as numChannels

@@ -22,41 +22,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PWM7DCH `Vuc ~T0 @X0 0 e@913 ]
 "12473
 [v _PWM7DCL `Vuc ~T0 @X0 0 e@912 ]
-"10934
-[s S505 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S505 . MODE FMT OUT OE EN ]
-"10941
-[s S506 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S506 . MODE0 MODE1 MODE2 MODE3 ]
-"10947
-[s S507 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S507 . CCP1MODE CCP1FMT CCP1OUT CCP1OE CCP1EN ]
-"10954
-[s S508 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S508 . CCP1MODE0 CCP1MODE1 CCP1MODE2 CCP1MODE3 ]
-"10960
-[s S509 :6 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S509 . . P1M0 P1M1 ]
-"10933
-[u S504 `S505 1 `S506 1 `S507 1 `S508 1 `S509 1 ]
-[n S504 . . . . . . ]
-"10966
-[v _CCP1CONbits `VS504 ~T0 @X0 0 e@782 ]
-"8929
-[s S396 :2 `uc 1 :2 `uc 1 :2 `uc 1 :2 `uc 1 ]
-[n S396 . C1TSEL C2TSEL C3TSEL C4TSEL ]
-"8935
-[s S397 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S397 . C1TSEL0 C1TSEL1 C2TSEL0 C2TSEL1 C3TSEL0 C3TSEL1 C4TSEL0 C4TSEL1 ]
-"8928
-[u S395 `S396 1 `S397 1 ]
-[n S395 . . . ]
-"8946
-[v _CCPTMRS0bits `VS395 ~T0 @X0 0 e@542 ]
-"10908
-[v _CCPR1H `Vuc ~T0 @X0 0 e@781 ]
-"10888
-[v _CCPR1L `Vuc ~T0 @X0 0 e@780 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -13201,11 +13166,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 269: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 291: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 313: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 29: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
-[; ;battery_charger.h: 52: extern uint8_t battery_state0;
-[; ;battery_charger.h: 54: void Init_Battery_State_Machine(void);
-[; ;battery_charger.h: 55: void Battery_State_Machine(void);
-[; ;battery_charger.h: 56: void cc_cv_mode();
+[; ;battery_charger.h: 8: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;battery_charger.h: 31: extern uint8_t battery_state[2];
+[; ;battery_charger.h: 33: void Init_Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 34: void Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 35: void cc_cv_mode(uint8_t z);
 [; ;buttons.h: 12: uint8_t readButton(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13223,7 +13188,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
-[; ;pwm.h: 13: void PWM1_LoadDutyValue(uint16_t dutyCycle1);
 "3 pwm.c
 [v _PWM_Initialize `(v ~T0 @X0 1 ef ]
 "4
@@ -13256,18 +13220,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.c: 20: CCPTMRS1bits.P7TSEL = 0x02;
 "20
 [e = . . _CCPTMRS1bits 0 2 -> -> 2 `i `uc ]
-[; ;pwm.c: 23: CCP1CONbits.CCP1EN = 1;
-"23
-[e = . . _CCP1CONbits 2 4 -> -> 1 `i `uc ]
-[; ;pwm.c: 24: CCP1CONbits.CCP1FMT = 1;
-"24
-[e = . . _CCP1CONbits 2 1 -> -> 1 `i `uc ]
-[; ;pwm.c: 25: CCP1CONbits.CCP1MODE = 0xF;
-"25
-[e = . . _CCP1CONbits 2 0 -> -> 15 `i `uc ]
-[; ;pwm.c: 26: CCPTMRS0bits.C1TSEL = 0x1;
-"26
-[e = . . _CCPTMRS0bits 0 0 -> -> 1 `i `uc ]
 [; ;pwm.c: 27: }
 "27
 [e :UE 1563 ]
@@ -13313,25 +13265,4 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.c: 42: }
 "42
 [e :UE 1565 ]
-}
-"44
-[v _PWM1_LoadDutyValue `(v ~T0 @X0 1 ef1`ui ]
-"45
-{
-[; ;pwm.c: 44: void PWM1_LoadDutyValue(uint16_t dutyCycle1)
-[; ;pwm.c: 45: {
-[e :U _PWM1_LoadDutyValue ]
-"44
-[v _dutyCycle1 `ui ~T0 @X0 1 r1 ]
-"45
-[f ]
-[; ;pwm.c: 46: CCPR1H = (dutyCycle1& 0x03FC)>>2;
-"46
-[e = _CCPR1H -> >> & _dutyCycle1 -> -> 1020 `i `ui -> 2 `i `uc ]
-[; ;pwm.c: 47: CCPR1L = (dutyCycle1 & 0x0003)<<6;
-"47
-[e = _CCPR1L -> << & _dutyCycle1 -> -> 3 `i `ui -> 6 `i `uc ]
-[; ;pwm.c: 48: }
-"48
-[e :UE 1566 ]
 }
