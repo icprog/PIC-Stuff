@@ -15,7 +15,7 @@
     #define CHARGING_VOLTAGE		1425	// 14.45V
 //    #define CHARGING_VOLTAGE		1440	// 14.40V
 	#define	FLOATING_VOLTAGE		1379	// 13.79V
-	#define	CUTOFF_VOLTAGE			1075	// 10.75V
+	#define	CUTOFF_VOLTAGE			675	// 10.75V
 
 	#define	ILIM_PRECHARGE			10      // 1A, Small current set at PRECHARGE stage
 	#define	ILIM					35      // 3.5A Point where we switch back to MPPT, or Current Mode

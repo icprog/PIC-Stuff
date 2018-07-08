@@ -10,8 +10,8 @@
 
 #define IOut0               current[0]
 #define IOut1               current[1]
-#define IIn1                current[3]
 #define IIn0                current[2]
+#define IIn1                current[3]
 
 #define     Fault           !(RB2)
 #define     Buck0Output     dutyCycle6
@@ -41,10 +41,10 @@ extern int16_t  current[4];                    // Store Calculated Current Value
 void main(void)
 {
     int16_t         MPPT0           =   1550;                   // Need to tune to correct value    
-    int16_t         MPPT1           =   1760;                   // Change one vs the other, to see where MPPT is at.
+    int16_t         MPPT1           =   1550;                   // Change one vs the other, to see where MPPT is at.
     
     uint16_t        dutyCycle6      =   1023;                   // 1023 is as Low as can go
-    uint16_t        dutyCycle7      =   256;                    // 126 is midpoint, allow adjusting up or down
+    uint16_t        dutyCycle7      =   1023;                    // 126 is midpoint, allow adjusting up or down
     uint16_t        dutyCycle1      =   60;                     // 30 is required for minimum speed
     int16_t         IOutTotal       =   0;
 
@@ -119,11 +119,11 @@ void main(void)
         
         voltage[0]=(int16_t)(Vanalogs[0]/.5448);                    // Calculate VOut0
         
-        voltage[1]=(int16_t)(Vanalogs[1]/.54503);                   // Calculate VOut1
+        voltage[1]=(int16_t)(Vanalogs[1]/.540757);                   // Calculate VOut1
 
         voltage[2]=(int16_t)(Vanalogs[2]/.405775);                  // Calculate VIn0
         
-        voltage[3]=(int16_t)(Vanalogs[3]/.405775);                   // Calculate VIn1
+        voltage[3]=(int16_t)(Vanalogs[3]/.406788);                   // Calculate VIn1
         
         calculateCurrent0();
 
@@ -198,8 +198,8 @@ void main(void)
             PWM7_LoadDutyValue(Buck1Output);
 
             menuButton = readButton();
-            if(menuButton == Down) if(MPPT0>1375)MPPT0-=1;
-            if(menuButton == Up)if(MPPT0<2200)MPPT0+=1;
+            if(menuButton == Down) if(MPPT1>1375)MPPT1-=1;
+            if(menuButton == Up)if(MPPT1<2200)MPPT1+=1;
             if(menuButton == Enter)LCDInit();
 //        }
   //      fastLoop+=1;
@@ -235,65 +235,67 @@ void main(void)
                 batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB2
             }
             Battery_State_Machine(0);
-//            Battery_State_Machine(1);
+            Battery_State_Machine(1);
             efficiency=(float)Power0Out;
             efficiency/=(float)Power0In;
             efficiency*=100;
 
-//                        LCDWriteIntXY(0,0,ADCRead(23),4,0,0);
-//            LCDWriteIntXY(0,0,ADCRead(22),4,0,0);
-            LCDWriteIntXY(24,0,IminCount[0],4,0,0);
-  //          LCDWriteIntXY(20,0,Ianalogs[0],4,0,0);
+            LCDWriteIntXY(0,0,ADCRead(19),4,0,0);
+            LCDWriteIntXY(22,0,ADCRead(17),4,0,0);
+//            LCDWriteIntXY(24,0,IminCount[1],4,0,0);
+            LCDWriteIntXY(44,0,Ianalogs[1],4,0,0);
   //          LCDWriteIntXY(28,0,ADCRead(21),4,0,0);
     //        LCDWriteIntXY(40,0,ADCRead(20),4,0,0);
-      //      LCDWriteIntXY(60,0,Ianalogs[1],4,0,0);
-        //    LCDWriteIntXY(0,3,ADCRead(19),4,0,0);
-          //  LCDWriteIntXY(20,3,ADCRead(18),4,0,0);
-            //LCDWriteIntXY(0,4,ADCRead(17),4,0,0);
-            //LCDWriteIntXY(20,4,ADCRead(16),4,0,0);
-
-//            LCDWriteIntXY(0,2,ADCRead(22),4,0,0);
-  //          LCDWriteIntXY(20,2,ADCRead(15),4,0,0);
-            
+            LCDWriteIntXY(66,0,Ianalogs[3],4,0,0);
 //            LCDWriteIntXY(0,0,batteryTemp,4,1,0);
-            LCDWriteIntXY(0,0,faultCount,5,0,0);
+//            LCDWriteIntXY(0,0,faultCount,5,0,0);
   //          LCDWriteIntXY(24,0,faultNotReset,5,0,0);
-            LCDWriteIntXY(58,0,VHoldMode[0],2,0,0);
-            LCDWriteCharacter(' ');
+//            LCDWriteIntXY(58,0,VHoldMode[1],2,0,0);
+//            LCDWriteCharacter(' ');
 //            LCDWriteStringXY(48,0,"Eff:");
 //            LCDWriteIntXY(64,0,(int16_t)efficiency,3,0,0);
-            LCDWriteCharacter(' ');
+//            LCDWriteCharacter(' ');
 
-//            LCDWriteIntXY(32,0,Ianalogs[0],4,0,0);
-  //          LCDWriteIntXY(52,0,Ianalogs[1],4,0,0);
-            LCDWriteIntXY(0,1,VIn0,4,2,0);
+
+
+            
+            LCDWriteIntXY(0,1,VIn1,4,2,0);
             LCDWriteCharacter('V');
-            LCDWriteIntXY(28,1,IIn0,3,1,0);
+            LCDWriteIntXY(28,1,IIn1,3,1,0);
             LCDWriteCharacter('A');
             LCDWriteIntXY(56,1,ADCRead(11),4,0,0);                              // Read Buttons
-            LCDWriteIntXY(0,2,VOut0,4,2,0);
+
+            
+            //            LCDWriteIntXY(0,2,ADCRead(22),4,0,0);
+  //          LCDWriteIntXY(20,2,ADCRead(15),4,0,0);
+            LCDWriteIntXY(0,2,VOut1,4,2,0);
             LCDWriteCharacter('V');
-            LCDWriteIntXY(28,2,IOut0,3,1,0);
+            LCDWriteIntXY(28,2,IOut1,3,1,0);
             LCDWriteCharacter('A');
-            LCDWriteIntXY(56,2,Vref[0],4,2,0);
+            LCDWriteIntXY(56,2,Vref[1],4,2,0);
             LCDWriteCharacter('V');
             
-            LCDWriteIntXY(0,3,Power0In,3,0,0);
+
+            LCDWriteIntXY(0,3,Power1In,3,0,0);
             LCDWriteCharacter('W');
-            LCDWriteIntXY(28,3,batteryState[0],1,0,0);
-            LCDWriteIntXY(36,3,Imode[0],1,0,0);
-            LCDWriteIntXY(48,3,Iref[0],3,1,0);
+            LCDWriteIntXY(28,3,batteryState[1],1,0,0);
+            LCDWriteIntXY(36,3,Imode[1],1,0,0);
+            LCDWriteIntXY(48,3,Iref[1],3,1,0);
             LCDWriteCharacter('A');
-            
-            LCDWriteIntXY(0,4,Power0Out,3,0,0);
-            LCDWriteCharacter('W');
-//            LCDWriteIntXY(24,4,power0OutOld,3,0,0);
-  //          LCDWriteCharacter('W');
-            LCDWriteIntXY(48,4,MPPT0,4,0,0);
-            
+        //    LCDWriteIntXY(0,3,ADCRead(19),4,0,0);
+          //  LCDWriteIntXY(20,3,ADCRead(18),4,0,0);
 //            LCDWriteIntXY(0,3,VIn1,4,2,0);
   //          LCDWriteCharacter('V');
     //        LCDWriteIntXY(28,3,IIn1,4,0,0);
+
+
+            //LCDWriteIntXY(0,4,ADCRead(17),4,0,0);
+            //LCDWriteIntXY(20,4,ADCRead(16),4,0,0);
+            LCDWriteIntXY(0,4,Power1Out,3,0,0);
+            LCDWriteCharacter('W');
+//            LCDWriteIntXY(24,4,power0OutOld,3,0,0);
+  //          LCDWriteCharacter('W');
+            LCDWriteIntXY(48,4,MPPT1,4,0,0);
       //      LCDWriteIntXY(0,4,VOut1,4,2,0);
         //    LCDWriteCharacter('V');
           //  LCDWriteIntXY(28,4,IOut1,4,0,0);
@@ -379,13 +381,13 @@ void calculateCurrent0(void)                                                    
 
 void calculateCurrent1(void)                                                    // I1 Out
 {
-    if(Ianalogs[1]-580<=0)
+    if(Ianalogs[1]-561<=0)
     {
         current[1]=0;
     }
     else
     {
-        current[1]=(int16_t)((Ianalogs[1]-580)/3.22);                           // Do not Know yet What this is
+        current[1]=(int16_t)((Ianalogs[1]-561)/1.99055);                           // Do not Know yet What this is
     }
 }
 
@@ -404,12 +406,12 @@ void calculateCurrent2(void)                                                    
 
 void calculateCurrent3(void)                                                    // I1 In
 {
-    if(Ianalogs[3]-578<=0)
+    if(Ianalogs[3]-559<=0)
     {
         current[3]=0;
     }
     else
     {
-        current[3]=(int16_t)((Ianalogs[3]-578)/3.2323);
+        current[3]=(int16_t)((Ianalogs[3]-559)/1.60575);
     }
 }
