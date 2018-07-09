@@ -7,7 +7,7 @@ int16_t             Imin[2];
 int16_t             Iref[2];                                       // setpoint for current output
 int16_t             Vref[2];                                       // setpoint for voltage output
 int16_t             Iout;
-int8_t              Imode[2]        =   1;
+int8_t              Imode[2]        =   0;
 uint8_t             cc_cv[2]        =   0;
 int8_t              VHoldMode[2]    =   0;
 int16_t             voltage[4]      =   {0};                    // Store calculated Voltage values
@@ -84,10 +84,10 @@ void Battery_State_Machine(uint8_t z)
 	else
 	if(batteryState[z] == FAULT)
 	{
-        LCDWriteStringXY(0,0,"BATTERY FAULT");
-        Imode[z]=0;
+//        LCDWriteStringXY(0,0,"BATTERY FAULT");
+  //      Imode[z]=0;
 //        Imode1=0;
-        __delay_ms(2000);
+    //    __delay_ms(2000);
 //		SET_VOLTAGE(0);
 //		SET_CURRENT(0);
 //		STOP_CONVERTER();	
@@ -96,9 +96,9 @@ void Battery_State_Machine(uint8_t z)
 
 void cc_cv_mode(uint8_t z)
 {
-	if(voltage[z]>Vref[z])                                  // Vref is set by SET_VOLTAGE()
+	if(voltage[z]>=Vref[z])                                  // Vref is set by SET_VOLTAGE()
 	{
-        if(VHoldMode[z]<12)VHoldMode[z]+=1;
+        if(VHoldMode[z]<10)VHoldMode[z]+=1;
         
 		if(cc_cv[z])                                       // cc_cv is the number of slowLoop cycles to complete before switching to Voltage Mode
         {
@@ -112,7 +112,7 @@ void cc_cv_mode(uint8_t z)
             }
 		}
 	}
-    else if(voltage[z]<Vref[z])
+    else //if(voltage[z]<Vref[z])
     {
         VHoldMode[z]-=1;
         if(VHoldMode[z]<(CURRENT_MODE*-1))
@@ -122,7 +122,6 @@ void cc_cv_mode(uint8_t z)
             VHoldMode[z]=(CURRENT_MODE*-1);
         }
     }
-    else VHoldMode[z]=VHoldMode[z];
     
     if(current[z]>Iref[z])                                  // Iref is set by "SET_CURRENT(some Value here)" Use this to come back out of FLOAT Mode
 	{

@@ -17584,7 +17584,7 @@ int16_t Imin[2];
 int16_t Iref[2];
 int16_t Vref[2];
 int16_t Iout;
-int8_t Imode[2] = 1;
+int8_t Imode[2] = 0;
 uint8_t cc_cv[2] = 0;
 int8_t VHoldMode[2] = 0;
 int16_t voltage[4] = {0};
@@ -17597,12 +17597,12 @@ uint8_t x = 0;
 void Init_Battery_State_Machine(uint8_t z)
 {
 batteryState[z] = PRECHARGE;
-stateCounter[z] = 3;
+stateCounter[z] = 5;
 
 Iref[z]=10;
 Vref[z]=1425;
 
-Imin[z]=17;
+Imin[z]=15;
 IminCount[z] = 100;
 }
 
@@ -17610,7 +17610,7 @@ void Battery_State_Machine(uint8_t z)
 {
 if(batteryState[z]==PRECHARGE)
 {
-if(voltage[z]<675)
+if(voltage[z]<1075)
 {
 if(stateCounter[z]>0)
 {
@@ -17645,7 +17645,7 @@ else
 x+=1;
 if(x>25)
 {
-if(Vref[z]>1379)Vref[z]-=1;
+if(Vref[z]>1378)Vref[z]-=1;
 x=0;
 }
 if(IminCount[z]<100)IminCount[z]+=1;
@@ -17655,27 +17655,22 @@ else if(IminCount[z]<100)IminCount[z]+=1;
 }
 else if(batteryState[z] == FLOAT)
 {
-Vref[z]=1379;
-Iref[z]=17;
+Vref[z]=1378;
+Iref[z]=15;
 }
 else
 if(batteryState[z] == FAULT)
 {
-{ gotoXY(0,0); LCDWriteString("BATTERY FAULT");};
-Imode[z]=0;
 
-_delay((unsigned long)((2000)*(32000000/4000.0)));
-
-
-
+# 94
 }
 }
 
 void cc_cv_mode(uint8_t z)
 {
-if(voltage[z]>Vref[z])
+if(voltage[z]>=Vref[z])
 {
-if(VHoldMode[z]<12)VHoldMode[z]+=1;
+if(VHoldMode[z]<10)VHoldMode[z]+=1;
 
 if(cc_cv[z])
 {
@@ -17689,7 +17684,7 @@ Imode[z]=0;
 }
 }
 }
-else if(voltage[z]<Vref[z])
+else
 {
 VHoldMode[z]-=1;
 if(VHoldMode[z]<(10*-1))
@@ -17699,7 +17694,6 @@ cc_cv[z]=(10*2);
 VHoldMode[z]=(10*-1);
 }
 }
-else VHoldMode[z]=VHoldMode[z];
 
 if(current[z]>Iref[z])
 {

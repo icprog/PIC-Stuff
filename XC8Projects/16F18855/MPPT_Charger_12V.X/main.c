@@ -109,14 +109,6 @@ void main(void)
 
         if(Fault)faultNotReset+=1;
         
-//        voltage[0]=(int16_t)(Vanalogs[0]/.405775);                  // Calculate VIn0
-        
-  //      voltage[1]=(int16_t)(Vanalogs[1]/.54503);                   // Calculate VOut0
-
-    //    voltage[2]=(int16_t)(Vanalogs[2]/.405775);                  // Calculate VIn1
-        
-      //  voltage[3]=(int16_t)(Vanalogs[3]/.54503);                   // Calculate VOut1
-        
         voltage[0]=(int16_t)(Vanalogs[0]/.5448);                    // Calculate VOut0
         
         voltage[1]=(int16_t)(Vanalogs[1]/.540757);                   // Calculate VOut1
@@ -236,7 +228,64 @@ void main(void)
             }
             Battery_State_Machine(0);
             Battery_State_Machine(1);
-            efficiency=(float)Power0Out;
+            
+            
+            LCDWriteStringXY(0,0,"In:");
+            LCDWriteStringXY(26,0,"Out:");
+            LCDWriteStringXY(52,0,"Ref:");
+            
+            LCDWriteIntXY(0,1,VIn0,4,2,0);
+            LCDWriteCharacter('V');
+      //      LCDWriteCharacter(' ');
+            LCDWriteIntXY(26,1,VOut0,4,2,0);
+            LCDWriteCharacter('V');
+    //        LCDWriteCharacter(' ');
+            LCDWriteIntXY(52,1,Vref[0],4,2,0);
+            LCDWriteCharacter('V');
+  //          LCDWriteCharacter(' ');
+            LCDWriteIntXY(80,1,Imode[0],1,0,0);
+
+            LCDWriteIntXY(0,2,IIn0,3,1,0);
+            LCDWriteCharacter('A');
+//            LCDWriteCharacter(' ');
+            LCDWriteIntXY(26,2,IOut0,3,1,0);
+            LCDWriteCharacter('A');
+//            LCDWriteCharacter(' ');
+            LCDWriteIntXY(52,2,Iref[0],3,1,0);
+            LCDWriteCharacter('A');
+            //LCDWriteCharacter(' ');
+            LCDWriteIntXY(80,2,batteryState[0],1,0,0);
+
+            LCDWriteIntXY(0,3,VIn1,4,2,0);
+            LCDWriteCharacter('V');
+          //  LCDWriteCharacter(' ');
+            LCDWriteIntXY(26,3,VOut1,4,2,0);
+            LCDWriteCharacter('V');
+        //    LCDWriteCharacter(' ');
+            LCDWriteIntXY(52,3,Vref[1],4,2,0);
+            LCDWriteCharacter('V');
+      //      LCDWriteCharacter(' ');
+            LCDWriteIntXY(80,3,Imode[1],1,0,0);
+            
+            LCDWriteIntXY(0,4,IIn1,3,1,0);
+            LCDWriteCharacter('A');
+    //        LCDWriteCharacter(' ');
+            LCDWriteIntXY(26,4,IOut1,3,1,0);
+            LCDWriteCharacter('A');
+  //          LCDWriteCharacter(' ');
+            LCDWriteIntXY(52,4,Iref[1],3,1,0);
+            LCDWriteCharacter('A');
+//            LCDWriteCharacter(' ');
+            LCDWriteIntXY(80,4,batteryState[1],1,0,0);
+            
+            LCDWriteIntXY(0,5,Buck0Output,4,0,0);
+            LCDWriteIntXY(20,5,VHoldMode[0],2,0,0);
+            LCDWriteCharacter(' ');
+            LCDWriteIntXY(32,5,Buck1Output,4,0,0);
+            LCDWriteIntXY(52,5,VHoldMode[1],2,0,0);    
+            LCDWriteCharacter(' ');
+
+/*            efficiency=(float)Power0Out;
             efficiency/=(float)Power0In;
             efficiency*=100;
 
@@ -303,7 +352,7 @@ void main(void)
             LCDWriteIntXY(24,5,Buck1Output,4,0,0);
             LCDWriteIntXY(48,5,FanOutput,4,0,0);
             LCDWriteIntXY(74,5,Fault,1,0,0);
-
+*/
             if(batteryState[0] > FINISHED)
             {
             	cc_cv_mode(0);
@@ -316,54 +365,6 @@ void main(void)
         }
     }
 }
-
-/*void calculateCurrent0(void)
-{
-    if(Ianalogs[0]-565<=0)
-    {
-        current[0]=0;
-    }
-    else
-    {
-        current[0]=(int16_t)((Ianalogs[0]-565)/3.12);
-    }
-}
-
-void calculateCurrent1(void)
-{
-    if(Ianalogs[1]-580<=0)
-    {
-        current[1]=0;
-    }
-    else
-    {
-        current[1]=(int16_t)((Ianalogs[1]-580)/3.22);
-    }
-}
-
-void calculateCurrent2(void)
-{
-    if(Ianalogs[2]-589<=0)
-    {
-        current[2]=0;
-    }
-    else
-    {
-        current[0]=(int16_t)((Ianalogs[2]-589)/1.3165);
-    }
-}
-
-void calculateCurrent3(void)
-{
-    if(Ianalogs[3]-578<=0)
-    {
-        current[3]=0;
-    }
-    else
-    {
-        current[1]=(int16_t)((Ianalogs[3]-578)/3.2323);
-    }
-}*/
 
 
 void calculateCurrent0(void)                                                    // I0 Out
@@ -387,7 +388,7 @@ void calculateCurrent1(void)                                                    
     }
     else
     {
-        current[1]=(int16_t)((Ianalogs[1]-561)/1.99055);                           // Do not Know yet What this is
+        current[1]=(int16_t)((Ianalogs[1]-561)/1.99055);                        
     }
 }
 
