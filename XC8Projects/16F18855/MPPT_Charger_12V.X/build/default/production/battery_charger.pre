@@ -17514,7 +17514,13 @@ uint8_t ADCC_GetConversionStageStatus(void);
 # 8 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 31
+# 6 "tempCalc.h"
+int16_t tempCalc(int16_t analogValue);
+
+# 17 "lead_acid_agm.h"
+extern int16_t batteryTemp;
+
+# 31 "battery_charger.h"
 extern uint8_t battery_state[2];
 
 void Init_Battery_State_Machine(uint8_t z);
@@ -17556,9 +17562,6 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
-# 6 "tempCalc.h"
-int16_t tempCalc(int16_t analogValue);
-
 # 17 "tmr.h"
 void TMR2_Initialize(void);
 
@@ -17592,15 +17595,13 @@ int16_t current[4] = {0};
 uint8_t x = 0;
 
 
-
-
 void Init_Battery_State_Machine(uint8_t z)
 {
 batteryState[z] = PRECHARGE;
 stateCounter[z] = 5;
 
 Iref[z]=10;
-Vref[z]=1425;
+Vref[z]=1425+(int16_t)((250-batteryTemp)*.24);
 
 Imin[z]=15;
 IminCount[z] = 100;
@@ -17645,7 +17646,7 @@ else
 x+=1;
 if(x>25)
 {
-if(Vref[z]>1378)Vref[z]-=1;
+if(Vref[z]>1350+(int16_t)((250-batteryTemp)*.24))Vref[z]-=1;
 x=0;
 }
 if(IminCount[z]<100)IminCount[z]+=1;
@@ -17655,14 +17656,14 @@ else if(IminCount[z]<100)IminCount[z]+=1;
 }
 else if(batteryState[z] == FLOAT)
 {
-Vref[z]=1378;
+Vref[z]=1350+(int16_t)((250-batteryTemp)*.24);
 Iref[z]=15;
+Imode[z]=0;
 }
 else
 if(batteryState[z] == FAULT)
 {
-
-# 94
+batteryState[z]=PRECHARGE;
 }
 }
 
@@ -17701,8 +17702,10 @@ if(!Imode[z])
 {
 if(batteryState[z]==FLOAT)
 {
+if(voltage[z]<1350+(int16_t)((250-batteryTemp)*.24)-100)
+{
 batteryState[z]=CHARGE;
-Vref[z]=1425;
+Vref[z]=1425+(int16_t)((250-batteryTemp)*.24);
 Iref[z]=35;
 Imode[z]=1;
 cc_cv[z]=10;
@@ -17710,4 +17713,4 @@ cc_cv[z]=10;
 }
 }
 }
-
+}

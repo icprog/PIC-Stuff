@@ -17514,7 +17514,13 @@ uint8_t ADCC_GetConversionStageStatus(void);
 # 8 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 31
+# 6 "tempCalc.h"
+int16_t tempCalc(int16_t analogValue);
+
+# 17 "lead_acid_agm.h"
+extern int16_t batteryTemp;
+
+# 31 "battery_charger.h"
 extern uint8_t battery_state[2];
 
 void Init_Battery_State_Machine(uint8_t z);
@@ -17556,9 +17562,6 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
-# 6 "tempCalc.h"
-int16_t tempCalc(int16_t analogValue);
-
 # 17 "tmr.h"
 void TMR2_Initialize(void);
 
@@ -17574,8 +17577,9 @@ int16_t Vanalogs[4] = {0,0,0,0};
 int16_t Ianalogs[4] = {0,0,0,0};
 extern int16_t voltage[4];
 extern int16_t current[4];
+int16_t batteryTemp = 300;
 
-# 41
+# 42
 void main(void)
 {
 int16_t MPPT0 = 1550;
@@ -17591,7 +17595,7 @@ uint8_t j = 0;
 
 uint8_t slowLoop = 200;
 uint8_t displayRefresh = 0;
-int16_t batteryTemp = 250;
+
 float efficiency = 0;
 extern int8_t Imode[2];
 extern int16_t Vref[2];
@@ -17614,7 +17618,7 @@ void calculateCurrent1(void);
 void calculateCurrent2(void);
 void calculateCurrent3(void);
 
-# 91
+# 92
 while (1)
 {
 if(!(RB2))
@@ -17728,7 +17732,7 @@ if(slowLoop>250)
 
 IOutTotal=current[0]+current[1];
 
-# 222
+# 223
 displayRefresh+=1;
 if(displayRefresh>80)
 {
@@ -17794,8 +17798,9 @@ LCDWriteCharacter(' ');
 { gotoXY(32,5); LCDWriteInt(dutyCycle7,4, 0, 0);};
 { gotoXY(52,5); LCDWriteInt(VHoldMode[1],2, 0, 0);};
 LCDWriteCharacter(' ');
+{ gotoXY(64,5); LCDWriteInt(batteryTemp,3, 1, 0);};
 
-# 356
+# 358
 if(batteryState[0] > FINISHED)
 {
 cc_cv_mode(0);

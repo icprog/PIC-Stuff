@@ -17544,7 +17544,10 @@ uint8_t ADCC_GetConversionStageStatus(void);
 # 27 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 50
+# 15 "lead_acid_agm.h"
+extern int16_t batteryTemp;
+
+# 50 "battery_charger.h"
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);

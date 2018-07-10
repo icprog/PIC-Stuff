@@ -13146,6 +13146,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 291: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 313: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;battery_charger.h: 8: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;lead_acid_agm.h: 17: extern int16_t batteryTemp;
 [; ;battery_charger.h: 31: extern uint8_t battery_state[2];
 [; ;battery_charger.h: 33: void Init_Battery_State_Machine(uint8_t z);
 [; ;battery_charger.h: 34: void Battery_State_Machine(uint8_t z);
@@ -13232,9 +13233,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tempCalc.c: 19: steinhart*=10;
 "19
 [e =* _steinhart -> -> 10 `i `f ]
-[; ;tempCalc.c: 21: steinhart = steinhart*9/5+320;
-"21
-[e = _steinhart + / * _steinhart -> -> 9 `i `f -> -> 5 `i `f -> -> 320 `i `f ]
 [; ;tempCalc.c: 23: return (int16_t)steinhart;
 "23
 [e ) -> _steinhart `i ]

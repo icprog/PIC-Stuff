@@ -12,14 +12,15 @@
 
 #ifdef PRESET1
 
-    #define CHARGING_VOLTAGE		1425	// 14.25V
-//    #define CHARGING_VOLTAGE		1440	// 14.40V
-	#define	FLOATING_VOLTAGE		1380	// 13.80V
-	#define	CUTOFF_VOLTAGE			1075	// 10.75V
+    extern int16_t  batteryTemp;
+    #define CHARGING_VOLTAGE		1425+(int16_t)((250-batteryTemp)*.24)   // 14.25V @25C + Temperature compensation of 4mV/cell(24mV/monoblock))
+//    #define CHARGING_VOLTAGE		1440                                      // 14.40V
+	#define	FLOATING_VOLTAGE		1350+(int16_t)((250-batteryTemp)*.24)   // 13.50V @25C + Temperature compensation of 4mV/cell(24mV/monoblock))
+#define	CUTOFF_VOLTAGE              1075                                    // 10.75V
 
-	#define	ILIM_PRECHARGE			10      // 1A, Small current set at PRECHARGE stage
-	#define	ILIM					55      // 5.5A Point where we switch back to MPPT, or Current Mode
-	#define IFLOAT					25      // 2.5A, minimum charging current				
+	#define	ILIM_PRECHARGE			10                                      // 1A, Small current set at PRECHARGE stage
+	#define	ILIM					55                                      // 5.5A Point where we switch back to MPPT, or Current Mode
+	#define IFLOAT					25                                      // 2.5A, minimum charging current				
 
 #endif
 

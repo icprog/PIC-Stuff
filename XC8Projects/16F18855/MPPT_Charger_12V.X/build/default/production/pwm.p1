@@ -13167,6 +13167,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 291: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 313: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;battery_charger.h: 8: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
+[; ;lead_acid_agm.h: 17: extern int16_t batteryTemp;
 [; ;battery_charger.h: 31: extern uint8_t battery_state[2];
 [; ;battery_charger.h: 33: void Init_Battery_State_Machine(uint8_t z);
 [; ;battery_charger.h: 34: void Battery_State_Machine(uint8_t z);
@@ -13180,7 +13182,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 38: void LCDInit(void);
 [; ;lcd.h: 41: void LCDWrite(uint8_t data_or_command, uint8_t data);
 [; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
-[; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
 [; ;tmr.h: 17: void TMR2_Initialize(void);
 [; ;tmr.h: 19: void TMR4_Initialize(void);
 [; ;system.h: 19: void SYSTEM_Initialize(void);

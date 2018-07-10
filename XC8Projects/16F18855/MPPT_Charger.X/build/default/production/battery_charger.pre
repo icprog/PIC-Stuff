@@ -17512,7 +17512,10 @@ uint8_t ADCC_GetConversionStageStatus(void);
 # 27 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 50
+# 15 "lead_acid_agm.h"
+extern int16_t batteryTemp;
+
+# 50 "battery_charger.h"
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
@@ -17584,11 +17587,9 @@ uint16_t state_counter;
 int16_t Imin;
 int16_t Iref;
 int16_t Vref;
-
 int16_t Iout;
-
-int8_t Imode0 = 1;
-int8_t Imode1 = 1;
+int8_t Imode0 = 0;
+int8_t Imode1 = 0;
 uint8_t cc_cv;
 int8_t VHoldMode = 0;
 int16_t voltage[4] = {0};
@@ -17604,7 +17605,7 @@ battery_state = PRECHARGE;
 state_counter = 600;
 
 { Iref = 10; };
-{ Vref = 1425; };
+{ Vref = 1425+(int16_t)((250-batteryTemp)*.24); };
 
 Imin = 25;
 IminCount = 10;
@@ -17648,7 +17649,7 @@ else
 x+=1;
 if(x>25)
 {
-if(Vref>1380)Vref-=1;
+if(Vref>1350+(int16_t)((250-batteryTemp)*.24))Vref-=1;
 x=0;
 }
 if(IminCount<10)IminCount+=1;
@@ -17657,8 +17658,9 @@ if(IminCount<10)IminCount+=1;
 }
 else if(battery_state == FLOAT)
 {
-{ Vref = 1380; };
+{ Vref = 1350+(int16_t)((250-batteryTemp)*.24); };
 { Iref = 25; };
+Imode0=0;
 }
 else
 if(battery_state == FAULT)
@@ -17673,7 +17675,7 @@ void cc_cv_mode()
 {
 if(voltage[1] > Vref)
 {
-if(VHoldMode<12)VHoldMode+=1;
+if(VHoldMode<10)VHoldMode+=1;
 
 if(cc_cv)
 {
@@ -17704,11 +17706,14 @@ if(!Imode0)
 {
 if(battery_state == FLOAT)
 {
+if(voltage[1]<1350+(int16_t)((250-batteryTemp)*.24)-100)
+{
 battery_state=CHARGE;
-{ Vref = 1425; };
+{ Vref = 1425+(int16_t)((250-batteryTemp)*.24); };
 { Iref = 55; };
 Imode0 = 1;
 cc_cv = 10;
+}
 }
 }
 }

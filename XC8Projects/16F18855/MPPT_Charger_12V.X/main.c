@@ -27,10 +27,11 @@
 
 
 // *************** Externally available Variables ******************************    
-int16_t         Vanalogs[4]      =   {0,0,0,0};
-int16_t         Ianalogs[4]      =   {0,0,0,0};
+int16_t         Vanalogs[4]         =   {0,0,0,0};
+int16_t         Ianalogs[4]         =   {0,0,0,0};
 extern int16_t  voltage[4];                    // Store calculated Voltage values
 extern int16_t  current[4];                    // Store Calculated Current Values
+int16_t         batteryTemp         =   300;
 
 // </editor-fold>
 
@@ -53,7 +54,7 @@ void main(void)
 //    uint8_t         fastLoop        =   0;
     uint8_t         slowLoop        =   200;
     uint8_t         displayRefresh  =   0;
-    int16_t         batteryTemp     =   250;
+//    int16_t         batteryTemp     =   250;
     float           efficiency      =   0;
     extern int8_t   Imode[2];
     extern int16_t  Vref[2];                                       // setpoint for voltage output
@@ -284,6 +285,7 @@ void main(void)
             LCDWriteIntXY(32,5,Buck1Output,4,0,0);
             LCDWriteIntXY(52,5,VHoldMode[1],2,0,0);    
             LCDWriteCharacter(' ');
+            LCDWriteIntXY(64,5,batteryTemp,3,1,0);
 
 /*            efficiency=(float)Power0Out;
             efficiency/=(float)Power0In;

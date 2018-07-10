@@ -17512,7 +17512,10 @@ uint8_t ADCC_GetConversionStageStatus(void);
 # 27 "battery_charger.h"
 enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 50
+# 15 "lead_acid_agm.h"
+extern int16_t batteryTemp;
+
+# 50 "battery_charger.h"
 extern uint8_t battery_state;
 
 void Init_Battery_State_Machine(void);
@@ -17573,8 +17576,9 @@ void OSCILLATOR_Initialize(void);
 int16_t analogs[8] = {0,0,0,0,0,0,0,0};
 extern int16_t voltage[4];
 extern int16_t current[4];
+int16_t batteryTemp = 250;
 
-# 41
+# 43
 void main(void)
 {
 int16_t MPPT0 = 3144;
@@ -17590,7 +17594,6 @@ uint8_t j = 0;
 uint8_t fastLoop = 0;
 uint8_t slowLoop = 200;
 uint8_t displayRefresh = 0;
-int16_t batteryTemp = 250;
 float efficiency = 0;
 extern int8_t Imode0;
 extern int16_t Vref;
@@ -17608,7 +17611,7 @@ LCDClear();
 void calculateCurrent0(void);
 void calculateCurrent1(void);
 
-# 88
+# 89
 while (1)
 {
 if(!(RB2))
@@ -17626,7 +17629,7 @@ voltage[0]=(int16_t)(analogs[0]/.20885);
 
 voltage[1]=(int16_t)(analogs[1]/.54503);
 
-# 109
+# 110
 calculateCurrent0();
 
 
@@ -17731,7 +17734,7 @@ efficiency=(float)voltage[1]/100*current[1]/10;
 efficiency/=(float)voltage[0]/100*current[0]/10;
 efficiency*=100;
 
-# 226
+# 227
 { gotoXY(0,0); LCDWriteInt(faultCount,5, 0, 0);};
 { gotoXY(24,0); LCDWriteInt(faultNotReset,5, 0, 0);};
 { gotoXY(48,0); LCDWriteInt(VHoldMode,3, 0, 0);};
@@ -17766,7 +17769,7 @@ LCDWriteCharacter('W');
 
 { gotoXY(48,4); LCDWriteInt(MPPT0,4, 0, 0);};
 
-# 266
+# 267
 { gotoXY(0,5); LCDWriteInt(dutyCycle6,4, 0, 0);};
 { gotoXY(24,5); LCDWriteInt(dutyCycle7,4, 0, 0);};
 { gotoXY(48,5); LCDWriteInt(dutyCycle1,4, 0, 0);};

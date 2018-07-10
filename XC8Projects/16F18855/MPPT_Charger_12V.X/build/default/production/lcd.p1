@@ -13162,6 +13162,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 291: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 313: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;battery_charger.h: 8: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
+[; ;lead_acid_agm.h: 17: extern int16_t batteryTemp;
 [; ;battery_charger.h: 31: extern uint8_t battery_state[2];
 [; ;battery_charger.h: 33: void Init_Battery_State_Machine(uint8_t z);
 [; ;battery_charger.h: 34: void Battery_State_Machine(uint8_t z);
@@ -13171,7 +13173,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
-[; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
 [; ;tmr.h: 17: void TMR2_Initialize(void);
 [; ;tmr.h: 19: void TMR4_Initialize(void);
 [; ;system.h: 19: void SYSTEM_Initialize(void);
@@ -13828,8 +13829,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sign `uc ~T0 @X0 1 r4 ]
 "191
 [f ]
-[v F14387 `uc ~T0 @X0 -> 5 `i s ]
-[i F14387
+[v F14388 `uc ~T0 @X0 -> 5 `i s ]
+[i F14388
 :U ..
 "192
 -> -> 0 `i `uc
@@ -13841,7 +13842,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [v _str `uc ~T0 @X0 -> 5 `i a ]
 [; ;lcd.c: 192: uint8_t str[5]={0,0,0,0,0};
-[e = _str F14387 ]
+[e = _str F14388 ]
 "193
 [v _i `uc ~T0 @X0 1 a ]
 [; ;lcd.c: 193: uint8_t i=4,j=0;

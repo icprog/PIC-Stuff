@@ -31,6 +31,8 @@
 int16_t         analogs[8]      =   {0,0,0,0,0,0,0,0};
 extern int16_t  voltage[4];                    // Store calculated Voltage values
 extern int16_t  current[4];                    // Store Calculated Current Values
+int16_t         batteryTemp     =   250;
+
 
 // </editor-fold>
 
@@ -53,7 +55,6 @@ void main(void)
     uint8_t         fastLoop        =   0;
     uint8_t         slowLoop        =   200;
     uint8_t         displayRefresh  =   0;
-    int16_t         batteryTemp     =   250;
     float           efficiency      =   0;
     extern int8_t   Imode0;
     extern int16_t  Vref;                                       // setpoint for voltage output
