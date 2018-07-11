@@ -13570,7 +13570,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.c: 124: {
 "124
 {
-[; ;battery_charger.c: 125: if(!Imode0)
+[; ;battery_charger.c: 125: if(!(Imode0))
 "125
 [e $ ! ! != -> _Imode0 `i -> -> -> 0 `i `c `i 1592  ]
 [; ;battery_charger.c: 126: {
@@ -13582,9 +13582,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.c: 128: {
 "128
 {
-[; ;battery_charger.c: 129: if(voltage[1]<1350+(int16_t)((250-batteryTemp)*.24)-100)
+[; ;battery_charger.c: 129: if(voltage[1]<1350+(int16_t)((250-batteryTemp)*.24)-40)
 "129
-[e $ ! < *U + &U _voltage * -> -> -> 1 `i `ui `ux -> -> # *U &U _voltage `ui `ux - + -> 1350 `i -> * -> - -> 250 `i _batteryTemp `d .0.24 `i -> 100 `i 1594  ]
+[e $ ! < *U + &U _voltage * -> -> -> 1 `i `ui `ux -> -> # *U &U _voltage `ui `ux - + -> 1350 `i -> * -> - -> 250 `i _batteryTemp `d .0.24 `i -> 40 `i 1594  ]
 [; ;battery_charger.c: 130: {
 "130
 {

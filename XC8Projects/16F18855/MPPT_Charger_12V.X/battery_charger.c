@@ -118,7 +118,7 @@ void cc_cv_mode(uint8_t z)
     
     if(current[z]>Iref[z])                                      // Iref is set by "SET_CURRENT(some Value here)" Use this to come back out of FLOAT Mode
 	{
-		if(!Imode[z])                                           // If not "CURRENT Mode",
+		if(!(Imode[z]))                                           // If not "CURRENT Mode",
         {
             if(batteryState[z]==FLOAT)
             {

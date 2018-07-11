@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.45 build -152302408 
-                                                                                               Tue Jul 10 16:57:54 2018
+                                                                                               Tue Jul 10 21:01:35 2018
 
 Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160504
      1                           	processor	16F18855
@@ -5830,23 +5830,23 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   5816  005A                     __pbssBANK0:	
   5817  005A                     _Vref:	
   5818  005A                     	ds	4
-  5819  005E                     _readButtons:	
+  5819  005E                     _VHoldMode:	
   5820  005E                     	ds	2
-  5821  0060                     _VHoldMode:	
+  5821  0060                     _Imode:	
   5822  0060                     	ds	2
-  5823  0062                     _Imode:	
+  5823  0062                     _batteryState:	
   5824  0062                     	ds	2
-  5825  0064                     _batteryState:	
+  5825  0064                     _readButtons:	
   5826  0064                     	ds	2
   5827  0066                     _sampleIndex:	
   5828  0066                     	ds	2
-  5829  0068                     _j:	
+  5829  0068                     _x:	
   5830  0068                     	ds	1
-  5831  0069                     _lastButton:	
+  5831  0069                     _j:	
   5832  0069                     	ds	1
-  5833  006A                     _button:	
+  5833  006A                     _lastButton:	
   5834  006A                     	ds	1
-  5835  006B                     _x:	
+  5835  006B                     _button:	
   5836  006B                     	ds	1
   5837                           
   5838                           	psect	dataBANK0
@@ -5989,64 +5989,64 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   5975  0070                     ??_TMR4_Initialize:	
   5976                           ; 1 bytes @ 0x0
   5977                           
-  5978  0070                     ?_calculateCurrent0:	
+  5978  0070                     ?_Init_Battery_State_Machine:	
   5979                           ; 1 bytes @ 0x0
   5980                           
-  5981  0070                     ?_calculateCurrent1:	
+  5981  0070                     ?_calculateCurrent0:	
   5982                           ; 1 bytes @ 0x0
   5983                           
-  5984  0070                     ?_calculateCurrent2:	
+  5984  0070                     ?_calculateCurrent1:	
   5985                           ; 1 bytes @ 0x0
   5986                           
-  5987  0070                     ?_calculateCurrent3:	
+  5987  0070                     ?_calculateCurrent2:	
   5988                           ; 1 bytes @ 0x0
   5989                           
-  5990  0070                     ?_ADC_Initialize:	
+  5990  0070                     ?_calculateCurrent3:	
   5991                           ; 1 bytes @ 0x0
   5992                           
-  5993  0070                     ??_ADC_Initialize:	
+  5993  0070                     ?_ADC_Initialize:	
   5994                           ; 1 bytes @ 0x0
   5995                           
-  5996  0070                     ?_Init_Battery_State_Machine:	
+  5996  0070                     ??_ADC_Initialize:	
   5997                           ; 1 bytes @ 0x0
   5998                           
-  5999  0070                     ?_Battery_State_Machine:	
+  5999  0070                     ?_readButton:	
   6000                           ; 1 bytes @ 0x0
   6001                           
-  6002  0070                     ?_cc_cv_mode:	
+  6002  0070                     ?_LCDWriteCharacter:	
   6003                           ; 1 bytes @ 0x0
   6004                           
-  6005  0070                     ?_readButton:	
+  6005  0070                     ?_LCDClear:	
   6006                           ; 1 bytes @ 0x0
   6007                           
-  6008  0070                     ?_LCDWriteCharacter:	
+  6008  0070                     ?_LCDInit:	
   6009                           ; 1 bytes @ 0x0
   6010                           
-  6011  0070                     ?_LCDClear:	
+  6011  0070                     ?_PIN_MANAGER_Initialize:	
   6012                           ; 1 bytes @ 0x0
   6013                           
-  6014  0070                     ?_LCDInit:	
+  6014  0070                     ??_PIN_MANAGER_Initialize:	
   6015                           ; 1 bytes @ 0x0
   6016                           
-  6017  0070                     ?_PIN_MANAGER_Initialize:	
+  6017  0070                     ?_PWM_Initialize:	
   6018                           ; 1 bytes @ 0x0
   6019                           
-  6020  0070                     ??_PIN_MANAGER_Initialize:	
+  6020  0070                     ??_PWM_Initialize:	
   6021                           ; 1 bytes @ 0x0
   6022                           
-  6023  0070                     ?_PWM_Initialize:	
+  6023  0070                     ?_PWM6_LoadDutyValue:	
   6024                           ; 1 bytes @ 0x0
   6025                           
-  6026  0070                     ??_PWM_Initialize:	
+  6026  0070                     ?_PWM7_LoadDutyValue:	
   6027                           ; 1 bytes @ 0x0
   6028                           
-  6029  0070                     ?_PWM6_LoadDutyValue:	
+  6029  0070                     ?_SYSTEM_Initialize:	
   6030                           ; 1 bytes @ 0x0
   6031                           
-  6032  0070                     ?_PWM7_LoadDutyValue:	
+  6032  0070                     ?_Battery_State_Machine:	
   6033                           ; 1 bytes @ 0x0
   6034                           
-  6035  0070                     ?_SYSTEM_Initialize:	
+  6035  0070                     ?_cc_cv_mode:	
   6036                           ; 1 bytes @ 0x0
   6037                           
   6038  0070                     ?_main:	
@@ -6445,17 +6445,17 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   6431                           
   6432                           ; 3 bytes @ 0x1D
   6433  003D                     	ds	1
-  6434  003E                     ??_calculateCurrent0:	
-  6435  003E                     ??_calculateCurrent1:	
+  6434  003E                     ??_Init_Battery_State_Machine:	
+  6435  003E                     ??_calculateCurrent0:	
   6436                           ; 1 bytes @ 0x1E
   6437                           
-  6438  003E                     ??_calculateCurrent2:	
+  6438  003E                     ??_calculateCurrent1:	
   6439                           ; 1 bytes @ 0x1E
   6440                           
-  6441  003E                     ??_calculateCurrent3:	
+  6441  003E                     ??_calculateCurrent2:	
   6442                           ; 1 bytes @ 0x1E
   6443                           
-  6444  003E                     ??_Init_Battery_State_Machine:	
+  6444  003E                     ??_calculateCurrent3:	
   6445                           ; 1 bytes @ 0x1E
   6446                           
   6447  003E                     ??_Battery_State_Machine:	
@@ -6522,7 +6522,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   6508                           
   6509                           ; 3 bytes @ 0x2F
   6510  004F                     	ds	3
-  6511  0052                     _tempCalc$1187:	
+  6511  0052                     _tempCalc$1188:	
   6512                           
   6513                           ; 3 bytes @ 0x32
   6514  0052                     	ds	3
@@ -6984,7 +6984,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   6965                           
   6966                           ;main.c: 129: if(Imode[0])
   6967  0403  0020               	movlb	0	; select bank0
-  6968  0404  0862               	movf	_Imode,w
+  6968  0404  0860               	movf	_Imode,w
   6969  0405  1903               	btfsc	3,2
   6970  0406  2C28               	goto	l3171
   6971                           
@@ -7126,7 +7126,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   7107                           ;main.c: 158: }
   7108                           ;main.c: 160: if(Imode[1])
   7109  045E  0020               	movlb	0	; select bank0
-  7110  045F  0863               	movf	_Imode+1,w
+  7110  045F  0861               	movf	_Imode+1,w
   7111  0460  1903               	btfsc	3,2
   7112  0461  2C74               	goto	l3195
   7113                           
@@ -7519,7 +7519,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   7500  05AB  3050               	movlw	80
   7501  05AC  3193  2302  3182   	fcall	_gotoXY
   7502  05AF  0020               	movlb	0	; select bank0
-  7503  05B0  0862               	movf	_Imode,w
+  7503  05B0  0860               	movf	_Imode,w
   7504  05B1  00A0               	movwf	LCDWriteInt@value
   7505  05B2  01A1               	clrf	LCDWriteInt@value+1
   7506  05B3  1BA0               	btfsc	LCDWriteInt@value,7
@@ -7626,7 +7626,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   7607  061E  3050               	movlw	80
   7608  061F  3193  2302  3182   	fcall	_gotoXY
   7609  0622  0020               	movlb	0	; select bank0
-  7610  0623  0864               	movf	_batteryState,w
+  7610  0623  0862               	movf	_batteryState,w
   7611  0624  00D8               	movwf	??_main
   7612  0625  01D9               	clrf	??_main+1
   7613  0626  0858               	movf	??_main,w
@@ -7738,7 +7738,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   7719  0696  3050               	movlw	80
   7720  0697  3193  2302  3182   	fcall	_gotoXY
   7721  069A  0020               	movlb	0	; select bank0
-  7722  069B  0863               	movf	_Imode+1,w
+  7722  069B  0861               	movf	_Imode+1,w
   7723  069C  00A0               	movwf	LCDWriteInt@value
   7724  069D  01A1               	clrf	LCDWriteInt@value+1
   7725  069E  1BA0               	btfsc	LCDWriteInt@value,7
@@ -7845,7 +7845,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   7826  0709  3050               	movlw	80
   7827  070A  3193  2302  3182   	fcall	_gotoXY
   7828  070D  0020               	movlb	0	; select bank0
-  7829  070E  0865               	movf	_batteryState+1,w
+  7829  070E  0863               	movf	_batteryState+1,w
   7830  070F  00D8               	movwf	??_main
   7831  0710  01D9               	clrf	??_main+1
   7832  0711  0858               	movf	??_main,w
@@ -7891,7 +7891,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   7872  073B  3014               	movlw	20
   7873  073C  3193  2302  3182   	fcall	_gotoXY
   7874  073F  0020               	movlb	0	; select bank0
-  7875  0740  0860               	movf	_VHoldMode,w
+  7875  0740  085E               	movf	_VHoldMode,w
   7876  0741  00A0               	movwf	LCDWriteInt@value
   7877  0742  01A1               	clrf	LCDWriteInt@value+1
   7878  0743  1BA0               	btfsc	LCDWriteInt@value,7
@@ -7941,7 +7941,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   7922  0771  3034               	movlw	52
   7923  0772  3193  2302  3182   	fcall	_gotoXY
   7924  0775  0020               	movlb	0	; select bank0
-  7925  0776  0861               	movf	_VHoldMode+1,w
+  7925  0776  085F               	movf	_VHoldMode+1,w
   7926  0777  00A0               	movwf	LCDWriteInt@value
   7927  0778  01A1               	clrf	LCDWriteInt@value+1
   7928  0779  1BA0               	btfsc	LCDWriteInt@value,7
@@ -7983,7 +7983,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   7964                           ;main.c: 358: if(batteryState[0] > FINISHED)
   7965  07A0  3003               	movlw	3
   7966  07A1  0020               	movlb	0	; select bank0
-  7967  07A2  0264               	subwf	_batteryState,w
+  7967  07A2  0262               	subwf	_batteryState,w
   7968  07A3  1C03               	skipc
   7969  07A4  2FA9               	goto	l3375
   7970                           
@@ -7997,7 +7997,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   7978                           ;main.c: 362: if(batteryState[1] > FINISHED)
   7979  07A9  3003               	movlw	3
   7980  07AA  0020               	movlb	0	; select bank0
-  7981  07AB  0265               	subwf	_batteryState+1,w
+  7981  07AB  0263               	subwf	_batteryState+1,w
   7982  07AC  1C03               	skipc
   7983  07AD  2FB2               	goto	l3379
   7984                           
@@ -8103,19 +8103,19 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   8079  0CC4  3180  2030  318C   	fcall	___ftadd
   8080  0CC7  0020               	movlb	0	; select bank0
   8081  0CC8  0830               	movf	?___ftadd,w
-  8082  0CC9  00D2               	movwf	_tempCalc$1187
+  8082  0CC9  00D2               	movwf	_tempCalc$1188
   8083  0CCA  0831               	movf	?___ftadd+1,w
-  8084  0CCB  00D3               	movwf	_tempCalc$1187+1
+  8084  0CCB  00D3               	movwf	_tempCalc$1188+1
   8085  0CCC  0832               	movf	?___ftadd+2,w
-  8086  0CCD  00D4               	movwf	_tempCalc$1187+2
+  8086  0CCD  00D4               	movwf	_tempCalc$1188+2
   8087                           
   8088                           ;tempCalc.c: 6: float R, steinhart;
   8089                           ;tempCalc.c: 8: R = 9890/(1023/(float)analogValue - 1);
-  8090  0CCE  0852               	movf	_tempCalc$1187,w
+  8090  0CCE  0852               	movf	_tempCalc$1188,w
   8091  0CCF  00A0               	movwf	___ftdiv@f2
-  8092  0CD0  0853               	movf	_tempCalc$1187+1,w
+  8092  0CD0  0853               	movf	_tempCalc$1188+1,w
   8093  0CD1  00A1               	movwf	___ftdiv@f2+1
-  8094  0CD2  0854               	movf	_tempCalc$1187+2,w
+  8094  0CD2  0854               	movf	_tempCalc$1188+2,w
   8095  0CD3  00A2               	movwf	___ftdiv@f2+2
   8096  0CD4  3088               	movlw	136
   8097  0CD5  00A3               	movwf	___ftdiv@f1
@@ -9874,97 +9874,97 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9805  084F  3193  233E  3188   	fcall	_ADCRead
   9806  0852  0871               	movf	?_ADCRead+1,w
   9807  0853  0020               	movlb	0	; select bank0
-  9808  0854  00DF               	movwf	_readButtons+1
+  9808  0854  00E5               	movwf	_readButtons+1
   9809  0855  0870               	movf	?_ADCRead,w
-  9810  0856  00DE               	movwf	_readButtons
+  9810  0856  00E4               	movwf	_readButtons
   9811                           
   9812                           ;buttons.c: 13: if(readButtons >= 425 && readButtons < 485)
-  9813  0857  085F               	movf	_readButtons+1,w
+  9813  0857  0865               	movf	_readButtons+1,w
   9814  0858  3A80               	xorlw	128
   9815  0859  00F4               	movwf	??_readButton
   9816  085A  3081               	movlw	129
   9817  085B  0274               	subwf	??_readButton,w
   9818  085C  1D03               	skipz
-  9819  085D  2860               	goto	u3405
+  9819  085D  2860               	goto	u3185
   9820  085E  30A9               	movlw	169
-  9821  085F  025E               	subwf	_readButtons,w
-  9822  0860                     u3405:	
+  9821  085F  0264               	subwf	_readButtons,w
+  9822  0860                     u3185:	
   9823  0860  1C03               	skipc
-  9824  0861  2872               	goto	l2949
+  9824  0861  2872               	goto	l2865
   9825  0862  0020               	movlb	0	; select bank0
-  9826  0863  085F               	movf	_readButtons+1,w
+  9826  0863  0865               	movf	_readButtons+1,w
   9827  0864  3A80               	xorlw	128
   9828  0865  00F4               	movwf	??_readButton
   9829  0866  3081               	movlw	129
   9830  0867  0274               	subwf	??_readButton,w
   9831  0868  1D03               	skipz
-  9832  0869  286C               	goto	u3415
+  9832  0869  286C               	goto	u3195
   9833  086A  30E5               	movlw	229
-  9834  086B  025E               	subwf	_readButtons,w
-  9835  086C                     u3415:	
+  9834  086B  0264               	subwf	_readButtons,w
+  9835  086C                     u3195:	
   9836  086C  1803               	skipnc
-  9837  086D  2872               	goto	l2949
+  9837  086D  2872               	goto	l2865
   9838                           
   9839                           ;buttons.c: 14: {
   9840                           ;buttons.c: 15: button = 1;
   9841  086E  0020               	movlb	0	; select bank0
-  9842  086F  01EA               	clrf	_button
-  9843  0870  0AEA               	incf	_button,f
+  9842  086F  01EB               	clrf	_button
+  9843  0870  0AEB               	incf	_button,f
   9844                           
   9845                           ;buttons.c: 16: }
-  9846  0871  28A0               	goto	l2961
-  9847  0872                     l2949:	
+  9846  0871  28A0               	goto	l2877
+  9847  0872                     l2865:	
   9848                           
   9849                           ;buttons.c: 18: else if(readButtons >= 615 && readButtons < 690)
   9850  0872  0020               	movlb	0	; select bank0
-  9851  0873  085F               	movf	_readButtons+1,w
+  9851  0873  0865               	movf	_readButtons+1,w
   9852  0874  3A80               	xorlw	128
   9853  0875  00F4               	movwf	??_readButton
   9854  0876  3082               	movlw	130
   9855  0877  0274               	subwf	??_readButton,w
   9856  0878  1D03               	skipz
-  9857  0879  287C               	goto	u3425
+  9857  0879  287C               	goto	u3205
   9858  087A  3067               	movlw	103
-  9859  087B  025E               	subwf	_readButtons,w
-  9860  087C                     u3425:	
+  9859  087B  0264               	subwf	_readButtons,w
+  9860  087C                     u3205:	
   9861  087C  1C03               	skipc
-  9862  087D  288C               	goto	l2955
+  9862  087D  288C               	goto	l2871
   9863  087E  0020               	movlb	0	; select bank0
-  9864  087F  085F               	movf	_readButtons+1,w
+  9864  087F  0865               	movf	_readButtons+1,w
   9865  0880  3A80               	xorlw	128
   9866  0881  00F4               	movwf	??_readButton
   9867  0882  3082               	movlw	130
   9868  0883  0274               	subwf	??_readButton,w
   9869  0884  1D03               	skipz
-  9870  0885  2888               	goto	u3435
+  9870  0885  2888               	goto	u3215
   9871  0886  30B2               	movlw	178
-  9872  0887  025E               	subwf	_readButtons,w
-  9873  0888                     u3435:	
+  9872  0887  0264               	subwf	_readButtons,w
+  9873  0888                     u3215:	
   9874  0888  1803               	skipnc
-  9875  0889  288C               	goto	l2955
+  9875  0889  288C               	goto	l2871
   9876                           
   9877                           ;buttons.c: 19: {
   9878                           ;buttons.c: 20: button = 2;
   9879  088A  3002               	movlw	2
   9880  088B  2899               	goto	L6
-  9881  088C                     l2955:	
+  9881  088C                     l2871:	
   9882                           ;buttons.c: 21: }
   9883                           
   9884                           
   9885                           ;buttons.c: 23: else if(readButtons > 800)
   9886  088C  0020               	movlb	0	; select bank0
-  9887  088D  085F               	movf	_readButtons+1,w
+  9887  088D  0865               	movf	_readButtons+1,w
   9888  088E  3A80               	xorlw	128
   9889  088F  00F4               	movwf	??_readButton
   9890  0890  3083               	movlw	131
   9891  0891  0274               	subwf	??_readButton,w
   9892  0892  1D03               	skipz
-  9893  0893  2896               	goto	u3445
+  9893  0893  2896               	goto	u3225
   9894  0894  3021               	movlw	33
-  9895  0895  025E               	subwf	_readButtons,w
-  9896  0896                     u3445:	
+  9895  0895  0264               	subwf	_readButtons,w
+  9896  0896                     u3225:	
   9897  0896  1C03               	skipc
-  9898  0897  289E               	goto	l2959
+  9898  0897  289E               	goto	l2875
   9899                           
   9900                           ;buttons.c: 24: {
   9901                           ;buttons.c: 25: button = 3;
@@ -9973,40 +9973,40 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9904  0899  00F4               	movwf	??_readButton
   9905  089A  0874               	movf	??_readButton,w
   9906  089B  0020               	movlb	0	; select bank0
-  9907  089C  00EA               	movwf	_button
+  9907  089C  00EB               	movwf	_button
   9908                           
   9909                           ;buttons.c: 26: }
-  9910  089D  28A0               	goto	l2961
-  9911  089E                     l2959:	
+  9910  089D  28A0               	goto	l2877
+  9911  089E                     l2875:	
   9912                           
   9913                           ;buttons.c: 28: else
   9914                           ;buttons.c: 29: {
   9915                           ;buttons.c: 30: button = 0;
   9916  089E  0020               	movlb	0	; select bank0
-  9917  089F  01EA               	clrf	_button
-  9918  08A0                     l2961:	
+  9917  089F  01EB               	clrf	_button
+  9918  08A0                     l2877:	
   9919                           
   9920                           ;buttons.c: 31: }
   9921                           ;buttons.c: 33: if (button != 0)
-  9922  08A0  086A               	movf	_button,w
+  9922  08A0  086B               	movf	_button,w
   9923  08A1  1903               	btfsc	3,2
-  9924  08A2  28CD               	goto	l2981
+  9924  08A2  28CD               	goto	l2897
   9925                           
   9926                           ;buttons.c: 34: {
   9927                           ;buttons.c: 35: if (button != lastButton)
-  9928  08A3  086A               	movf	_button,w
-  9929  08A4  0669               	xorwf	_lastButton,w
+  9928  08A3  086B               	movf	_button,w
+  9929  08A4  066A               	xorwf	_lastButton,w
   9930  08A5  1903               	skipnz
-  9931  08A6  28AC               	goto	l2969
+  9931  08A6  28AC               	goto	l2885
   9932                           
   9933                           ;buttons.c: 36: {
   9934                           ;buttons.c: 37: lastButton = button;
-  9935  08A7  086A               	movf	_button,w
+  9935  08A7  086B               	movf	_button,w
   9936  08A8  00F4               	movwf	??_readButton
   9937  08A9  0874               	movf	??_readButton,w
-  9938  08AA  00E9               	movwf	_lastButton
-  9939  08AB  28CD               	goto	l2981
-  9940  08AC                     l2969:	
+  9938  08AA  00EA               	movwf	_lastButton
+  9939  08AB  28CD               	goto	l2897
+  9940  08AC                     l2885:	
   9941                           ;buttons.c: 39: }
   9942                           
   9943                           ;buttons.c: 38: j = 0;
@@ -10018,26 +10018,26 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9949  08AC  3001               	movlw	1
   9950  08AD  00F4               	movwf	??_readButton
   9951  08AE  0874               	movf	??_readButton,w
-  9952  08AF  07E8               	addwf	_j,f
+  9952  08AF  07E9               	addwf	_j,f
   9953                           
   9954                           ;buttons.c: 44: if(j == 1)
-  9955  08B0  0368               	decf	_j,w
+  9955  08B0  0369               	decf	_j,w
   9956  08B1  1D03               	btfss	3,2
-  9957  08B2  28B5               	goto	l2975
+  9957  08B2  28B5               	goto	l2891
   9958                           
   9959                           ;buttons.c: 45: {
   9960                           ;buttons.c: 46: return (lastButton);
-  9961  08B3  0869               	movf	_lastButton,w
+  9961  08B3  086A               	movf	_lastButton,w
   9962  08B4  0008               	return
-  9963  08B5                     l2975:	
+  9963  08B5                     l2891:	
   9964                           
   9965                           ;buttons.c: 47: }
   9966                           ;buttons.c: 49: if (j >10)
-  9967  08B5  0868               	movf	_j,w
+  9967  08B5  0869               	movf	_j,w
   9968  08B6  3A80               	xorlw	128
   9969  08B7  3E75               	addlw	-139
   9970  08B8  1C03               	skipc
-  9971  08B9  28CE               	goto	l2983
+  9971  08B9  28CE               	goto	l2899
   9972                           
   9973                           ;buttons.c: 50: {
   9974                           ;buttons.c: 51: _delay((unsigned long)((25)*(32000000/4000.0)));
@@ -10060,12 +10060,12 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9991  08C7  00F4               	movwf	??_readButton
   9992  08C8  0874               	movf	??_readButton,w
   9993  08C9  0020               	movlb	0	; select bank0
-  9994  08CA  00E8               	movwf	_j
+  9994  08CA  00E9               	movwf	_j
   9995                           
   9996                           ;buttons.c: 53: return (lastButton);
-  9997  08CB  0869               	movf	_lastButton,w
+  9997  08CB  086A               	movf	_lastButton,w
   9998  08CC  0008               	return
-  9999  08CD                     l2981:	
+  9999  08CD                     l2897:	
  10000                           ;buttons.c: 54: }
  10001                           ;buttons.c: 55: }
  10002                           ;buttons.c: 56: goto end;
@@ -10073,8 +10073,8 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10004                           
  10005                           ;buttons.c: 57: }
  10006                           ;buttons.c: 59: j = 0;
- 10007  08CD  01E8               	clrf	_j
- 10008  08CE                     l2983:	
+ 10007  08CD  01E9               	clrf	_j
+ 10008  08CE                     l2899:	
  10009                           ;buttons.c: 61: end:
  10010                           
  10011                           
@@ -10254,34 +10254,34 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10175  0D9C  3A80               	xorlw	128
  10176  0D9D  0242               	subwf	??_cc_cv_mode+4,w
  10177  0D9E  1D03               	skipz
- 10178  0D9F  2DA2               	goto	u3315
+ 10178  0D9F  2DA2               	goto	u3525
  10179  0DA0  083E               	movf	??_cc_cv_mode,w
  10180  0DA1  0240               	subwf	??_cc_cv_mode+2,w
- 10181  0DA2                     u3315:	
+ 10181  0DA2                     u3525:	
  10182  0DA2  1C03               	skipc
- 10183  0DA3  2DD1               	goto	l2921
+ 10183  0DA3  2DD1               	goto	l3057
  10184                           
  10185                           ;battery_charger.c: 93: {
  10186                           ;battery_charger.c: 94: if(VHoldMode[z]<10)VHoldMode[z]+=1;
  10187  0DA4  0020               	movlb	0	; select bank0
  10188  0DA5  0845               	movf	cc_cv_mode@z,w
- 10189  0DA6  3E60               	addlw	(low (_VHoldMode| 0))& (0+255)
+ 10189  0DA6  3E5E               	addlw	(low (_VHoldMode| 0))& (0+255)
  10190  0DA7  0086               	movwf	6
  10191  0DA8  0187               	clrf	7
  10192  0DA9  0801               	movf	1,w
  10193  0DAA  3A80               	xorlw	128
  10194  0DAB  3E76               	addlw	-138
  10195  0DAC  1803               	skipnc
- 10196  0DAD  2DB6               	goto	l129
+ 10196  0DAD  2DB6               	goto	l356
  10197  0DAE  3001               	movlw	1
  10198  0DAF  00BE               	movwf	??_cc_cv_mode
  10199  0DB0  0845               	movf	cc_cv_mode@z,w
- 10200  0DB1  3E60               	addlw	(low (_VHoldMode| 0))& (0+255)
+ 10200  0DB1  3E5E               	addlw	(low (_VHoldMode| 0))& (0+255)
  10201  0DB2  0086               	movwf	6
  10202  0DB3  0187               	clrf	7
  10203  0DB4  083E               	movf	??_cc_cv_mode,w
  10204  0DB5  0781               	addwf	1,f
- 10205  0DB6                     l129:	
+ 10205  0DB6                     l356:	
  10206                           
  10207                           ;battery_charger.c: 96: if(cc_cv[z])
  10208  0DB6  0845               	movf	cc_cv_mode@z,w
@@ -10290,7 +10290,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10211  0DB9  0187               	clrf	7
  10212  0DBA  0801               	movf	1,w
  10213  0DBB  1903               	btfsc	3,2
- 10214  0DBC  2DC4               	goto	l2917
+ 10214  0DBC  2DC4               	goto	l3053
  10215                           
  10216                           ;battery_charger.c: 97: {
  10217                           ;battery_charger.c: 98: cc_cv[z]-=1;
@@ -10302,24 +10302,24 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10223  0DC2  0281               	subwf	1,f
  10224                           
  10225                           ;battery_charger.c: 99: }
- 10226  0DC3  2DF9               	goto	l133
- 10227  0DC4                     l2917:	
+ 10226  0DC3  2DF9               	goto	l360
+ 10227  0DC4                     l3053:	
  10228                           
  10229                           ;battery_charger.c: 100: else
  10230                           ;battery_charger.c: 101: {
  10231                           ;battery_charger.c: 102: if(Imode[z])
  10232  0DC4  0845               	movf	cc_cv_mode@z,w
- 10233  0DC5  3E62               	addlw	(low (_Imode| 0))& (0+255)
+ 10233  0DC5  3E60               	addlw	(low (_Imode| 0))& (0+255)
  10234  0DC6  0086               	movwf	6
  10235  0DC7  0187               	clrf	7
  10236  0DC8  0801               	movf	1,w
  10237  0DC9  1903               	btfsc	3,2
- 10238  0DCA  2DF9               	goto	l133
+ 10238  0DCA  2DF9               	goto	l360
  10239                           
  10240                           ;battery_charger.c: 103: {
  10241                           ;battery_charger.c: 104: Imode[z]=0;
  10242  0DCB  0845               	movf	cc_cv_mode@z,w
- 10243  0DCC  3E62               	addlw	(low (_Imode| 0))& (0+255)
+ 10243  0DCC  3E60               	addlw	(low (_Imode| 0))& (0+255)
  10244  0DCD  0086               	movwf	6
  10245  0DCE  0187               	clrf	7
  10246  0DCF  0181               	clrf	1
@@ -10327,8 +10327,8 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10248                           ;battery_charger.c: 105: }
  10249                           ;battery_charger.c: 106: }
  10250                           ;battery_charger.c: 107: }
- 10251  0DD0  2DF9               	goto	l133
- 10252  0DD1                     l2921:	
+ 10251  0DD0  2DF9               	goto	l360
+ 10252  0DD1                     l3057:	
  10253                           
  10254                           ;battery_charger.c: 108: else
  10255                           ;battery_charger.c: 109: {
@@ -10337,7 +10337,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10258  0DD2  0020               	movlb	0	; select bank0
  10259  0DD3  00BE               	movwf	??_cc_cv_mode
  10260  0DD4  0845               	movf	cc_cv_mode@z,w
- 10261  0DD5  3E60               	addlw	(low (_VHoldMode| 0))& (0+255)
+ 10261  0DD5  3E5E               	addlw	(low (_VHoldMode| 0))& (0+255)
  10262  0DD6  0086               	movwf	6
  10263  0DD7  0187               	clrf	7
  10264  0DD8  083E               	movf	??_cc_cv_mode,w
@@ -10345,19 +10345,19 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10266                           
  10267                           ;battery_charger.c: 111: if(VHoldMode[z]<(10*-1))
  10268  0DDA  0845               	movf	cc_cv_mode@z,w
- 10269  0DDB  3E60               	addlw	(low (_VHoldMode| 0))& (0+255)
+ 10269  0DDB  3E5E               	addlw	(low (_VHoldMode| 0))& (0+255)
  10270  0DDC  0086               	movwf	6
  10271  0DDD  0187               	clrf	7
  10272  0DDE  0801               	movf	1,w
  10273  0DDF  3A80               	xorlw	128
  10274  0DE0  3E8A               	addlw	138
  10275  0DE1  1803               	skipnc
- 10276  0DE2  2DF9               	goto	l133
+ 10276  0DE2  2DF9               	goto	l360
  10277                           
  10278                           ;battery_charger.c: 112: {
  10279                           ;battery_charger.c: 113: Imode[z]=1;
  10280  0DE3  0845               	movf	cc_cv_mode@z,w
- 10281  0DE4  3E62               	addlw	(low (_Imode| 0))& (0+255)
+ 10281  0DE4  3E60               	addlw	(low (_Imode| 0))& (0+255)
  10282  0DE5  0086               	movwf	6
  10283  0DE6  0187               	clrf	7
  10284  0DE7  0181               	clrf	1
@@ -10377,12 +10377,12 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10298  0DF1  30F6               	movlw	246
  10299  0DF2  00BE               	movwf	??_cc_cv_mode
  10300  0DF3  0845               	movf	cc_cv_mode@z,w
- 10301  0DF4  3E60               	addlw	(low (_VHoldMode| 0))& (0+255)
+ 10301  0DF4  3E5E               	addlw	(low (_VHoldMode| 0))& (0+255)
  10302  0DF5  0086               	movwf	6
  10303  0DF6  0187               	clrf	7
  10304  0DF7  083E               	movf	??_cc_cv_mode,w
  10305  0DF8  0081               	movwf	1
- 10306  0DF9                     l133:	
+ 10306  0DF9                     l360:	
  10307                           
  10308                           ;battery_charger.c: 116: }
  10309                           ;battery_charger.c: 117: }
@@ -10410,18 +10410,18 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10331  0E0D  3A80               	xorlw	128
  10332  0E0E  0242               	subwf	??_cc_cv_mode+4,w
  10333  0E0F  1D03               	skipz
- 10334  0E10  2E13               	goto	u3365
+ 10334  0E10  2E13               	goto	u3575
  10335  0E11  083E               	movf	??_cc_cv_mode,w
  10336  0E12  0240               	subwf	??_cc_cv_mode+2,w
- 10337  0E13                     u3365:	
+ 10337  0E13                     u3575:	
  10338  0E13  1803               	skipnc
  10339  0E14  0008               	return
  10340                           
  10341                           ;battery_charger.c: 120: {
- 10342                           ;battery_charger.c: 121: if(!Imode[z])
+ 10342                           ;battery_charger.c: 121: if(!(Imode[z]))
  10343  0E15  0020               	movlb	0	; select bank0
  10344  0E16  0845               	movf	cc_cv_mode@z,w
- 10345  0E17  3E62               	addlw	(low (_Imode| 0))& (0+255)
+ 10345  0E17  3E60               	addlw	(low (_Imode| 0))& (0+255)
  10346  0E18  0086               	movwf	6
  10347  0E19  0187               	clrf	7
  10348  0E1A  0801               	movf	1,w
@@ -10431,7 +10431,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10352                           ;battery_charger.c: 122: {
  10353                           ;battery_charger.c: 123: if(batteryState[z]==FLOAT)
  10354  0E1D  0845               	movf	cc_cv_mode@z,w
- 10355  0E1E  3E64               	addlw	(low (_batteryState| 0))& (0+255)
+ 10355  0E1E  3E62               	addlw	(low (_batteryState| 0))& (0+255)
  10356  0E1F  0086               	movwf	6
  10357  0E20  0187               	clrf	7
  10358  0E21  3005               	movlw	5
@@ -10499,10 +10499,10 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10420  0E62  3A80               	xorlw	128
  10421  0E63  0244               	subwf	??_cc_cv_mode+6,w
  10422  0E64  1D03               	skipz
- 10423  0E65  2E68               	goto	u3395
+ 10423  0E65  2E68               	goto	u3605
  10424  0E66  0840               	movf	??_cc_cv_mode+2,w
  10425  0E67  0242               	subwf	??_cc_cv_mode+4,w
- 10426  0E68                     u3395:	
+ 10426  0E68                     u3605:	
  10427  0E68  1803               	skipnc
  10428  0E69  0008               	return
  10429                           
@@ -10512,7 +10512,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10433  0E6B  0020               	movlb	0	; select bank0
  10434  0E6C  00BE               	movwf	??_cc_cv_mode
  10435  0E6D  0845               	movf	cc_cv_mode@z,w
- 10436  0E6E  3E64               	addlw	(low (_batteryState| 0))& (0+255)
+ 10436  0E6E  3E62               	addlw	(low (_batteryState| 0))& (0+255)
  10437  0E6F  0086               	movwf	6
  10438  0E70  0187               	clrf	7
  10439  0E71  083E               	movf	??_cc_cv_mode,w
@@ -10583,7 +10583,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10504                           
  10505                           ;battery_charger.c: 130: Imode[z]=1;
  10506  0EB3  0845               	movf	cc_cv_mode@z,w
- 10507  0EB4  3E62               	addlw	(low (_Imode| 0))& (0+255)
+ 10507  0EB4  3E60               	addlw	(low (_Imode| 0))& (0+255)
  10508  0EB5  0086               	movwf	6
  10509  0EB6  0187               	clrf	7
  10510  0EB7  0181               	clrf	1
@@ -12077,8 +12077,8 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  11933  1426  0279               	subwf	LCDClear@index,w
  11934  1427                     u2705:	
  11935  1427  1803               	btfsc	3,0
- 11936  1428  2C3D               	goto	l2569
- 11937  1429                     l2563:	
+ 11936  1428  2C3D               	goto	l2561
+ 11937  1429                     l2555:	
  11938                           
  11939                           ;lcd.c: 186: LCDWrite(1, 0x00);
  11940  1429  01F0               	clrf	LCDWrite@data
@@ -12099,8 +12099,8 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  11955  143A  0279               	subwf	LCDClear@index,w
  11956  143B                     u2715:	
  11957  143B  1C03               	skipc
- 11958  143C  2C29               	goto	l2563
- 11959  143D                     l2569:	
+ 11958  143C  2C29               	goto	l2555
+ 11959  143D                     l2561:	
  11960                           
  11961                           ;lcd.c: 187: gotoXY(0, 0);
  11962  143D  01F5               	clrf	gotoXY@y
@@ -12231,7 +12231,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12076  173B  3003               	movlw	3
  12077  173C  00BE               	movwf	??_Init_Battery_State_Machine
  12078  173D  0842               	movf	Init_Battery_State_Machine@z,w
- 12079  173E  3E64               	addlw	(low (_batteryState| 0))& (0+255)
+ 12079  173E  3E62               	addlw	(low (_batteryState| 0))& (0+255)
  12080  173F  0086               	movwf	6
  12081  1740  0187               	clrf	7
  12082  1741  083E               	movf	??_Init_Battery_State_Machine,w
@@ -12508,11 +12508,11 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12343  1375  3903               	andlw	3
  12344  1376  00F2               	movwf	??_PWM7_LoadDutyValue
  12345  1377  3005               	movlw	5
- 12346  1378                     u3605:	
+ 12346  1378                     u3385:	
  12347  1378  35F2               	lslf	??_PWM7_LoadDutyValue,f
  12348  1379  3EFF               	addlw	-1
  12349  137A  1D03               	skipz
- 12350  137B  2B78               	goto	u3605
+ 12350  137B  2B78               	goto	u3385
  12351  137C  3572               	lslf	??_PWM7_LoadDutyValue,w
  12352  137D  0090               	movwf	16	;volatile
  12353  137E  0008               	return
@@ -12579,11 +12579,11 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12409  135F  3903               	andlw	3
  12410  1360  00F2               	movwf	??_PWM6_LoadDutyValue
  12411  1361  3005               	movlw	5
- 12412  1362                     u3595:	
+ 12412  1362                     u3375:	
  12413  1362  35F2               	lslf	??_PWM6_LoadDutyValue,f
  12414  1363  3EFF               	addlw	-1
  12415  1364  1D03               	skipz
- 12416  1365  2B62               	goto	u3595
+ 12416  1365  2B62               	goto	u3375
  12417  1366  3572               	lslf	??_PWM6_LoadDutyValue,w
  12418  1367  008C               	movwf	12	;volatile
  12419  1368  0008               	return
@@ -12630,7 +12630,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12455                           
  12456                           ;psect for function _LCDWriteString
  12457  1315                     _LCDWriteString:	
- 12458  1315                     l2993:	
+ 12458  1315                     l2909:	
  12459                           ;lcd.c: 178: while (*characters)
  12460                           
  12461                           ;incstack = 0
@@ -12655,7 +12655,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12480  1325  07FC               	addwf	LCDWriteString@characters,f
  12481  1326  3000               	movlw	0
  12482  1327  3DFD               	addwfc	LCDWriteString@characters+1,f
- 12483  1328  2B15               	goto	l2993
+ 12483  1328  2B15               	goto	l2909
  12484  1329                     __end_of_LCDWriteString:	
  12485                           
  12486                           	psect	text32
@@ -12721,11 +12721,11 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12541  0BEE  3005               	movlw	5
  12542  0BEF  0020               	movlb	0	; select bank0
  12543  0BF0  00A5               	movwf	??_LCDWriteInt
- 12544  0BF1                     u3500:	
+ 12544  0BF1                     u3280:	
  12545  0BF1  0016               	moviw fsr1++
  12546  0BF2  001A               	movwi fsr0++
  12547  0BF3  0BA5               	decfsz	??_LCDWriteInt,f
- 12548  0BF4  2BF1               	goto	u3500
+ 12548  0BF4  2BF1               	goto	u3280
  12549                           
  12550                           ;lcd.c: 193: uint8_t i=4,j=0;
  12551  0BF5  3004               	movlw	4
@@ -12736,7 +12736,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12556                           
  12557                           ;lcd.c: 195: if(value<0)
  12558  0BFA  1FA1               	btfss	LCDWriteInt@value+1,7
- 12559  0BFB  2C07               	goto	l3007
+ 12559  0BFB  2C07               	goto	l2923
  12560                           
  12561                           ;lcd.c: 196: {
  12562                           ;lcd.c: 197: LCDWriteCharacter('-');
@@ -12752,21 +12752,21 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12572  0C05  0AA1               	incf	LCDWriteInt@value+1,f
  12573                           
  12574                           ;lcd.c: 199: }
- 12575  0C06  2C0E               	goto	l3017
- 12576  0C07                     l3007:	
+ 12575  0C06  2C0E               	goto	l2933
+ 12576  0C07                     l2923:	
  12577                           
  12578                           ;lcd.c: 201: else
  12579                           ;lcd.c: 202: {
  12580                           ;lcd.c: 203: if(sign == 1)
  12581  0C07  0324               	decf	LCDWriteInt@sign,w
  12582  0C08  1D03               	btfss	3,2
- 12583  0C09  2C0E               	goto	l3017
+ 12583  0C09  2C0E               	goto	l2933
  12584                           
  12585                           ;lcd.c: 204: {
  12586                           ;lcd.c: 205: LCDWriteCharacter('+');
  12587  0C0A  302B               	movlw	43
  12588  0C0B  3196  2685  318B   	fcall	_LCDWriteCharacter
- 12589  0C0E                     l3017:	
+ 12589  0C0E                     l2933:	
  12590                           ;lcd.c: 206: }
  12591                           ;lcd.c: 207: }
  12592                           ;lcd.c: 209: while(value)
@@ -12775,7 +12775,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12595  0C0F  0820               	movf	LCDWriteInt@value,w
  12596  0C10  0421               	iorwf	LCDWriteInt@value+1,w
  12597  0C11  1903               	btfsc	3,2
- 12598  0C12  2C3B               	goto	l3019
+ 12598  0C12  2C3B               	goto	l2935
  12599                           
  12600                           ;lcd.c: 210: {
  12601                           ;lcd.c: 211: str[i]=(uint16_t)value%10;
@@ -12818,16 +12818,16 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12638                           ;lcd.c: 213: i--;
  12639  0C38  3001               	movlw	1
  12640  0C39  02AF               	subwf	LCDWriteInt@i,f
- 12641  0C3A  2C0E               	goto	l3017
- 12642  0C3B                     l3019:	
+ 12641  0C3A  2C0E               	goto	l2933
+ 12642  0C3B                     l2935:	
  12643                           
  12644                           ;lcd.c: 214: }
  12645                           ;lcd.c: 215: if(fieldLength==-1)
  12646  0C3B  0A22               	incf	LCDWriteInt@fieldLength,w
  12647  0C3C  1903               	btfsc	3,2
- 12648  0C3D  2C43               	goto	l3025
- 12649  0C3E  2C4B               	goto	l3027
- 12650  0C3F                     l3023:	
+ 12648  0C3D  2C43               	goto	l2941
+ 12649  0C3E  2C4B               	goto	l2943
+ 12650  0C3F                     l2939:	
  12651                           ;lcd.c: 216: {
  12652                           ;lcd.c: 217: while(str[j]==0)
  12653                           
@@ -12838,16 +12838,16 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12658  0C40  00A5               	movwf	??_LCDWriteInt
  12659  0C41  0825               	movf	??_LCDWriteInt,w
  12660  0C42  07AE               	addwf	LCDWriteInt@j,f
- 12661  0C43                     l3025:	
+ 12661  0C43                     l2941:	
  12662  0C43  082E               	movf	LCDWriteInt@j,w
  12663  0C44  3E29               	addlw	(low (LCDWriteInt@str| 0))& (0+255)
  12664  0C45  0086               	movwf	6
  12665  0C46  0187               	clrf	7
  12666  0C47  0801               	movf	1,w
  12667  0C48  1D03               	btfss	3,2
- 12668  0C49  2C51               	goto	l3029
- 12669  0C4A  2C3F               	goto	l3023
- 12670  0C4B                     l3027:	
+ 12668  0C49  2C51               	goto	l2945
+ 12669  0C4A  2C3F               	goto	l2939
+ 12670  0C4B                     l2943:	
  12671                           ;lcd.c: 220: }
  12672                           ;lcd.c: 221: }
  12673                           
@@ -12861,7 +12861,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12681  0C4E  00A5               	movwf	??_LCDWriteInt
  12682  0C4F  0825               	movf	??_LCDWriteInt,w
  12683  0C50  00AE               	movwf	LCDWriteInt@j
- 12684  0C51                     l3029:	
+ 12684  0C51                     l2945:	
  12685                           
  12686                           ;lcd.c: 225: }
  12687                           ;lcd.c: 227: for(i=j;i<(5-numPlaces);i++)
@@ -12869,7 +12869,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12689  0C52  00A5               	movwf	??_LCDWriteInt
  12690  0C53  0825               	movf	??_LCDWriteInt,w
  12691  0C54  00AF               	movwf	LCDWriteInt@i
- 12692  0C55                     l3035:	
+ 12692  0C55                     l2951:	
  12693  0C55  0823               	movf	LCDWriteInt@numPlaces,w
  12694  0C56  00A5               	movwf	??_LCDWriteInt
  12695  0C57  01A6               	clrf	??_LCDWriteInt+1
@@ -12888,12 +12888,12 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12708  0C64  3A80               	xorlw	128
  12709  0C65  3C80               	sublw	128
  12710  0C66  1D03               	skipz
- 12711  0C67  2C6A               	goto	u3565
+ 12711  0C67  2C6A               	goto	u3345
  12712  0C68  0827               	movf	??_LCDWriteInt+2,w
  12713  0C69  022F               	subwf	LCDWriteInt@i,w
- 12714  0C6A                     u3565:	
+ 12714  0C6A                     u3345:	
  12715  0C6A  1803               	btfsc	3,0
- 12716  0C6B  2C7C               	goto	l3037
+ 12716  0C6B  2C7C               	goto	l2953
  12717                           
  12718                           ;lcd.c: 228: {
  12719                           ;lcd.c: 229: LCDWriteCharacter((uint8_t)(48+str[i]));
@@ -12910,15 +12910,15 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12730  0C78  00A5               	movwf	??_LCDWriteInt
  12731  0C79  0825               	movf	??_LCDWriteInt,w
  12732  0C7A  07AF               	addwf	LCDWriteInt@i,f
- 12733  0C7B  2C55               	goto	l3035
- 12734  0C7C                     l3037:	
+ 12733  0C7B  2C55               	goto	l2951
+ 12734  0C7C                     l2953:	
  12735                           
  12736                           ;lcd.c: 230: }
  12737                           ;lcd.c: 232: if(numPlaces == 1)
  12738  0C7C  0020               	movlb	0	; select bank0
  12739  0C7D  0323               	decf	LCDWriteInt@numPlaces,w
  12740  0C7E  1D03               	btfss	3,2
- 12741  0C7F  2C8A               	goto	l3041
+ 12741  0C7F  2C8A               	goto	l2957
  12742                           
  12743                           ;lcd.c: 233: {
  12744                           ;lcd.c: 234: LCDWriteCharacter(46);
@@ -12930,7 +12930,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  12750  0C85  082D               	movf	LCDWriteInt@str+4,w
  12751  0C86  3E30               	addlw	48
  12752  0C87  3196  2685  318B   	fcall	_LCDWriteCharacter
- 12753  0C8A                     l3041:	
+ 12753  0C8A                     l2957:	
  12754                           
  12755                           ;lcd.c: 236: }
  12756                           ;lcd.c: 238: if(numPlaces == 2)
@@ -13471,7 +13471,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13266                           ;lcd.c: 287: if(data_or_command == 0)
  13267  13FC  0872               	movf	LCDWrite@data_or_command,w
  13268  13FD  1D03               	btfss	3,2
- 13269  13FE  2C02               	goto	l218
+ 13269  13FE  2C02               	goto	l150
  13270                           
  13271                           ;lcd.c: 288: {
  13272                           ;lcd.c: 289: LATAbits.LATA2 = 0;
@@ -13479,15 +13479,15 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13274  1400  1116               	bcf	22,2	;volatile
  13275                           
  13276                           ;lcd.c: 290: }
- 13277  1401  2C04               	goto	l219
- 13278  1402                     l218:	
+ 13277  1401  2C04               	goto	l151
+ 13278  1402                     l150:	
  13279                           
  13280                           ;lcd.c: 291: else
  13281                           ;lcd.c: 292: {
  13282                           ;lcd.c: 293: LATAbits.LATA2 = 1;
  13283  1402  0020               	movlb	0	; select bank0
  13284  1403  1516               	bsf	22,2	;volatile
- 13285  1404                     l219:	
+ 13285  1404                     l151:	
  13286                           
  13287                           ;lcd.c: 294: }
  13288                           ;lcd.c: 296: LATAbits.LATA1 = 0;
@@ -13498,8 +13498,8 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13293  1406  3008               	movlw	8
  13294  1407  0274               	subwf	LCDWrite@i,w
  13295  1408  1803               	btfsc	3,0
- 13296  1409  2C1A               	goto	l221
- 13297  140A                     l220:	
+ 13296  1409  2C1A               	goto	l153
+ 13297  140A                     l152:	
  13298                           
  13299                           ;lcd.c: 299: {
  13300                           ;lcd.c: 300: LATAbits.LATA3 = 0;
@@ -13507,12 +13507,12 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13302                           
  13303                           ;lcd.c: 302: if(d&0x80)
  13304  140B  1FF3               	btfss	LCDWrite@d,7
- 13305  140C  2C0E               	goto	l222
+ 13305  140C  2C0E               	goto	l154
  13306                           
  13307                           ;lcd.c: 303: {
  13308                           ;lcd.c: 304: LATAbits.LATA3 = 1;
  13309  140D  1596               	bsf	22,3	;volatile
- 13310  140E                     l222:	
+ 13310  140E                     l154:	
  13311                           
  13312                           ;lcd.c: 305: }
  13313                           ;lcd.c: 307: LATAbits.LATA4 = 1;
@@ -13531,8 +13531,8 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13326  1416  3008               	movlw	8
  13327  1417  0274               	subwf	LCDWrite@i,w
  13328  1418  1C03               	skipc
- 13329  1419  2C0A               	goto	l220
- 13330  141A                     l221:	
+ 13329  1419  2C0A               	goto	l152
+ 13330  141A                     l153:	
  13331                           
  13332                           ;lcd.c: 312: }
  13333                           ;lcd.c: 314: LATAbits.LATA1 = 1;
@@ -13592,13 +13592,13 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13381                           
  13382                           ;battery_charger.c: 32: if(batteryState[z]==PRECHARGE)
  13383  0128  0845               	movf	Battery_State_Machine@z,w
- 13384  0129  3E64               	addlw	(low (_batteryState| 0))& (0+255)
+ 13384  0129  3E62               	addlw	(low (_batteryState| 0))& (0+255)
  13385  012A  0086               	movwf	6
  13386  012B  0187               	clrf	7
  13387  012C  3003               	movlw	3
  13388  012D  0601               	xorwf	1,w
  13389  012E  1D03               	btfss	3,2
- 13390  012F  297D               	goto	l2869
+ 13390  012F  297D               	goto	l3005
  13391                           
  13392                           ;battery_charger.c: 33: {
  13393                           ;battery_charger.c: 34: if(voltage[z]<1075)
@@ -13616,12 +13616,12 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13405  013B  3084               	movlw	132
  13406  013C  0240               	subwf	??_Battery_State_Machine+2,w
  13407  013D  1D03               	skipz
- 13408  013E  2941               	goto	u3195
+ 13408  013E  2941               	goto	u3405
  13409  013F  3033               	movlw	51
  13410  0140  023E               	subwf	??_Battery_State_Machine,w
- 13411  0141                     u3195:	
+ 13411  0141                     u3405:	
  13412  0141  1803               	skipnc
- 13413  0142  296B               	goto	l2867
+ 13413  0142  296B               	goto	l3003
  13414                           
  13415                           ;battery_charger.c: 35: {
  13416                           ;battery_charger.c: 36: if(stateCounter[z]>0)
@@ -13640,12 +13640,12 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13429  014F  3080               	movlw	128
  13430  0150  0240               	subwf	??_Battery_State_Machine+2,w
  13431  0151  1D03               	skipz
- 13432  0152  2955               	goto	u3205
+ 13432  0152  2955               	goto	u3415
  13433  0153  3001               	movlw	1
  13434  0154  023E               	subwf	??_Battery_State_Machine,w
- 13435  0155                     u3205:	
+ 13435  0155                     u3415:	
  13436  0155  1C03               	skipc
- 13437  0156  2963               	goto	l2865
+ 13437  0156  2963               	goto	l3001
  13438                           
  13439                           ;battery_charger.c: 37: {
  13440                           ;battery_charger.c: 38: stateCounter[z]-=1;
@@ -13663,14 +13663,14 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13452                           
  13453                           ;battery_charger.c: 39: }
  13454  0162  0008               	return
- 13455  0163                     l2865:	
+ 13455  0163                     l3001:	
  13456                           
  13457                           ;battery_charger.c: 40: else
  13458                           ;battery_charger.c: 41: {
  13459                           ;battery_charger.c: 42: batteryState[z]=FAULT;
  13460  0163  0020               	movlb	0	; select bank0
  13461  0164  0845               	movf	Battery_State_Machine@z,w
- 13462  0165  3E64               	addlw	(low (_batteryState| 0))& (0+255)
+ 13462  0165  3E62               	addlw	(low (_batteryState| 0))& (0+255)
  13463  0166  0086               	movwf	6
  13464  0167  0187               	clrf	7
  13465  0168  0181               	clrf	1
@@ -13679,7 +13679,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13468                           ;battery_charger.c: 43: }
  13469                           ;battery_charger.c: 44: }
  13470  016A  0008               	return
- 13471  016B                     l2867:	
+ 13471  016B                     l3003:	
  13472                           
  13473                           ;battery_charger.c: 45: else
  13474                           ;battery_charger.c: 46: {
@@ -13688,7 +13688,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13477  016C  0020               	movlb	0	; select bank0
  13478  016D  00BE               	movwf	??_Battery_State_Machine
  13479  016E  0845               	movf	Battery_State_Machine@z,w
- 13480  016F  3E64               	addlw	(low (_batteryState| 0))& (0+255)
+ 13480  016F  3E62               	addlw	(low (_batteryState| 0))& (0+255)
  13481  0170  0086               	movwf	6
  13482  0171  0187               	clrf	7
  13483  0172  083E               	movf	??_Battery_State_Machine,w
@@ -13707,27 +13707,27 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13496                           ;battery_charger.c: 49: }
  13497                           ;battery_charger.c: 50: }
  13498  017C  0008               	return
- 13499  017D                     l2869:	
+ 13499  017D                     l3005:	
  13500                           
  13501                           ;battery_charger.c: 51: else if(batteryState[z]==CHARGE)
  13502  017D  0845               	movf	Battery_State_Machine@z,w
- 13503  017E  3E64               	addlw	(low (_batteryState| 0))& (0+255)
+ 13503  017E  3E62               	addlw	(low (_batteryState| 0))& (0+255)
  13504  017F  0086               	movwf	6
  13505  0180  0187               	clrf	7
  13506  0181  3004               	movlw	4
  13507  0182  0601               	xorwf	1,w
  13508  0183  1D03               	btfss	3,2
- 13509  0184  2A60               	goto	l2897
+ 13509  0184  2A60               	goto	l3033
  13510                           
  13511                           ;battery_charger.c: 52: {
  13512                           ;battery_charger.c: 53: if(!Imode[z])
  13513  0185  0845               	movf	Battery_State_Machine@z,w
- 13514  0186  3E62               	addlw	(low (_Imode| 0))& (0+255)
+ 13514  0186  3E60               	addlw	(low (_Imode| 0))& (0+255)
  13515  0187  0086               	movwf	6
  13516  0188  0187               	clrf	7
  13517  0189  0801               	movf	1,w
  13518  018A  1D03               	btfss	3,2
- 13519  018B  2A47               	goto	l2893
+ 13519  018B  2A47               	goto	l3029
  13520                           
  13521                           ;battery_charger.c: 54: {
  13522                           ;battery_charger.c: 55: if(current[z] < Imin[z])
@@ -13754,12 +13754,12 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13543  01A0  3A80               	xorlw	128
  13544  01A1  0242               	subwf	??_Battery_State_Machine+4,w
  13545  01A2  1D03               	skipz
- 13546  01A3  29A6               	goto	u3235
+ 13546  01A3  29A6               	goto	u3445
  13547  01A4  083E               	movf	??_Battery_State_Machine,w
  13548  01A5  0240               	subwf	??_Battery_State_Machine+2,w
- 13549  01A6                     u3235:	
+ 13549  01A6                     u3445:	
  13550  01A6  1803               	skipnc
- 13551  01A7  29D3               	goto	l2879
+ 13551  01A7  29D3               	goto	l3015
  13552                           
  13553                           ;battery_charger.c: 56: {
  13554                           ;battery_charger.c: 57: IminCount[z]-=2;
@@ -13797,7 +13797,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13586  01C2  3005               	movlw	5
  13587  01C3  00BE               	movwf	??_Battery_State_Machine
  13588  01C4  0845               	movf	Battery_State_Machine@z,w
- 13589  01C5  3E64               	addlw	(low (_batteryState| 0))& (0+255)
+ 13589  01C5  3E62               	addlw	(low (_batteryState| 0))& (0+255)
  13590  01C6  0086               	movwf	6
  13591  01C7  0187               	clrf	7
  13592  01C8  083E               	movf	??_Battery_State_Machine,w
@@ -13816,7 +13816,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13605                           ;battery_charger.c: 62: }
  13606                           ;battery_charger.c: 63: }
  13607  01D2  0008               	return
- 13608  01D3                     l2879:	
+ 13608  01D3                     l3015:	
  13609                           
  13610                           ;battery_charger.c: 64: else
  13611                           ;battery_charger.c: 65: {
@@ -13825,13 +13825,13 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13614  01D4  0020               	movlb	0	; select bank0
  13615  01D5  00BE               	movwf	??_Battery_State_Machine
  13616  01D6  083E               	movf	??_Battery_State_Machine,w
- 13617  01D7  07EB               	addwf	_x,f
+ 13617  01D7  07E8               	addwf	_x,f
  13618                           
  13619                           ;battery_charger.c: 67: if(x>25)
  13620  01D8  301A               	movlw	26
- 13621  01D9  026B               	subwf	_x,w
+ 13621  01D9  0268               	subwf	_x,w
  13622  01DA  1C03               	skipc
- 13623  01DB  2A2E               	goto	l2889
+ 13623  01DB  2A2E               	goto	l3025
  13624                           
  13625                           ;battery_charger.c: 68: {
  13626                           ;battery_charger.c: 69: if(Vref[z]>1350+(int16_t)((250-batteryTemp)*.24))Vref[z]-=1;
@@ -13893,12 +13893,12 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13682  0219  3A80               	xorlw	128
  13683  021A  0244               	subwf	??_Battery_State_Machine+6,w
  13684  021B  1D03               	skipz
- 13685  021C  2A1F               	goto	u3265
+ 13685  021C  2A1F               	goto	u3475
  13686  021D  083E               	movf	??_Battery_State_Machine,w
  13687  021E  0242               	subwf	??_Battery_State_Machine+4,w
- 13688  021F                     u3265:	
+ 13688  021F                     u3475:	
  13689  021F  1803               	skipnc
- 13690  0220  2A2C               	goto	l2887
+ 13690  0220  2A2C               	goto	l3023
  13691  0221  0020               	movlb	0	; select bank0
  13692  0222  3545               	lslf	Battery_State_Machine@z,w
  13693  0223  3E5A               	addlw	(low (_Vref| 0))& (0+255)
@@ -13910,12 +13910,12 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13699  0229  30FF               	movlw	255
  13700  022A  3D81               	addwfc	1,f
  13701  022B  317F               	addfsr 1,-1
- 13702  022C                     l2887:	
+ 13702  022C                     l3023:	
  13703                           
  13704                           ;battery_charger.c: 70: x=0;
  13705  022C  0020               	movlb	0	; select bank0
- 13706  022D  01EB               	clrf	_x
- 13707  022E                     l2889:	
+ 13706  022D  01E8               	clrf	_x
+ 13707  022E                     l3025:	
  13708                           
  13709                           ;battery_charger.c: 71: }
  13710                           ;battery_charger.c: 72: if(IminCount[z]<100)IminCount[z]+=1;
@@ -13947,7 +13947,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13736                           ;battery_charger.c: 73: }
  13737                           ;battery_charger.c: 74: }
  13738  0246  0008               	return
- 13739  0247                     l2893:	
+ 13739  0247                     l3029:	
  13740                           
  13741                           ;battery_charger.c: 75: else if(IminCount[z]<100)IminCount[z]+=1;
  13742  0247  3545               	lslf	Battery_State_Machine@z,w
@@ -13977,17 +13977,17 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13766                           
  13767                           ;battery_charger.c: 76: }
  13768  025F  0008               	return
- 13769  0260                     l2897:	
+ 13769  0260                     l3033:	
  13770                           
  13771                           ;battery_charger.c: 77: else if(batteryState[z] == FLOAT)
  13772  0260  0845               	movf	Battery_State_Machine@z,w
- 13773  0261  3E64               	addlw	(low (_batteryState| 0))& (0+255)
+ 13773  0261  3E62               	addlw	(low (_batteryState| 0))& (0+255)
  13774  0262  0086               	movwf	6
  13775  0263  0187               	clrf	7
  13776  0264  3005               	movlw	5
  13777  0265  0601               	xorwf	1,w
  13778  0266  1D03               	btfss	3,2
- 13779  0267  2AAE               	goto	l2905
+ 13779  0267  2AAE               	goto	l3041
  13780                           
  13781                           ;battery_charger.c: 78: {
  13782                           ;battery_charger.c: 79: Vref[z]=1350+(int16_t)((250-batteryTemp)*.24);
@@ -14055,19 +14055,19 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13844                           
  13845                           ;battery_charger.c: 81: Imode[z]=0;
  13846  02A8  0845               	movf	Battery_State_Machine@z,w
- 13847  02A9  3E62               	addlw	(low (_Imode| 0))& (0+255)
+ 13847  02A9  3E60               	addlw	(low (_Imode| 0))& (0+255)
  13848  02AA  0086               	movwf	6
  13849  02AB  0187               	clrf	7
  13850  02AC  0181               	clrf	1
  13851                           
  13852                           ;battery_charger.c: 82: }
  13853  02AD  0008               	return
- 13854  02AE                     l2905:	
+ 13854  02AE                     l3041:	
  13855                           
  13856                           ;battery_charger.c: 83: else
  13857                           ;battery_charger.c: 84: if(batteryState[z] == FAULT)
  13858  02AE  0845               	movf	Battery_State_Machine@z,w
- 13859  02AF  3E64               	addlw	(low (_batteryState| 0))& (0+255)
+ 13859  02AF  3E62               	addlw	(low (_batteryState| 0))& (0+255)
  13860  02B0  0086               	movwf	6
  13861  02B1  0187               	clrf	7
  13862  02B2  0301               	decf	1,w
@@ -14079,7 +14079,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  13868  02B5  3003               	movlw	3
  13869  02B6  00BE               	movwf	??_Battery_State_Machine
  13870  02B7  0845               	movf	Battery_State_Machine@z,w
- 13871  02B8  3E64               	addlw	(low (_batteryState| 0))& (0+255)
+ 13871  02B8  3E62               	addlw	(low (_batteryState| 0))& (0+255)
  13872  02B9  0086               	movwf	6
  13873  02BA  0187               	clrf	7
  13874  02BB  083E               	movf	??_Battery_State_Machine,w
@@ -14323,10 +14323,10 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  14102 ;; This function calls:
  14103 ;;		___ftpack
  14104 ;; This function is called by:
- 14105 ;;		_Init_Battery_State_Machine
- 14106 ;;		_Battery_State_Machine
- 14107 ;;		_cc_cv_mode
- 14108 ;;		_tempCalc
+ 14105 ;;		_tempCalc
+ 14106 ;;		_Init_Battery_State_Machine
+ 14107 ;;		_Battery_State_Machine
+ 14108 ;;		_cc_cv_mode
  14109 ;;		_log
  14110 ;;		_eval_poly
  14111 ;; This function uses a non-reentrant model
@@ -14564,10 +14564,10 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  14338 ;; This function calls:
  14339 ;;		___ftpack
  14340 ;; This function is called by:
- 14341 ;;		_Init_Battery_State_Machine
- 14342 ;;		_Battery_State_Machine
- 14343 ;;		_cc_cv_mode
- 14344 ;;		_tempCalc
+ 14341 ;;		_tempCalc
+ 14342 ;;		_Init_Battery_State_Machine
+ 14343 ;;		_Battery_State_Machine
+ 14344 ;;		_cc_cv_mode
  14345 ;;		_main
  14346 ;;		_calculateCurrent0
  14347 ;;		_calculateCurrent1
@@ -15578,19 +15578,19 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.45 build -152302408 
-Symbol Table                                                                                   Tue Jul 10 16:57:54 2018
+Symbol Table                                                                                   Tue Jul 10 21:01:35 2018
 
-                       _stateCounter 00C8                                    _j 0068  
-                                  _x 006B               LCDWriteInt@fieldLength 0022  
+                       _stateCounter 00C8                                    _j 0069  
+                                  _x 0068               LCDWriteInt@fieldLength 0022  
             __size_of_PWM_Initialize 0015                          __CFG_CP$OFF 0000  
                                  l60 134C                                   l57 1345  
                        ___awdiv@sign 0076                  ___wmul@multiplicand 0072  
         __size_of_PWM6_LoadDutyValue 0016                         ___ftadd@exp1 003C  
                        ___ftadd@exp2 003B                          __CFG_LVP$ON 0000  
-                       ___ftadd@sign 003A                                  l220 140A  
-                                l221 141A                                  l133 0DF9  
-                                l222 140E                                  l129 0DB6  
-                                l218 1402                                  l219 1404  
+                       ___ftadd@sign 003A                                  l150 1402  
+                                l151 1404                                  l152 140A  
+                                l153 141A                                  l154 140E  
+                                l360 0DF9                                  l356 0DB6  
                       LCDClear@index 0079                                  l636 08E1  
                                 l581 1387                                  l750 17E9  
                                 l742 17CE                                  l833 09BF  
@@ -15602,17 +15602,17 @@ Symbol Table                                                                    
                     __end_of_LCDInit 14B4                         ?_LCDWriteInt 0020  
                        __CFG_ZCD$OFF 0000                         ___ftdiv@cntr 002A  
                        ___ftdiv@sign 002F                                 l2201 17AB  
-                               l2211 17D3                                 l2203 17B5  
+                               l3001 0163                                 l2211 17D3  
+                               l2203 17B5                                 l3003 016B  
                                l2213 17DB                                 l2205 17BA  
-                               l2301 00AE                                 l3023 0C3F  
-                               l3007 0C07                                 l3041 0C8A  
-                               l3025 0C43                                 l3017 0C0E  
-                               l2313 00E1                                 l3201 0492  
-                               l3035 0C55                                 l3027 0C4B  
-                               l3019 0C3B                                 l2307 00C1  
+                               l3005 017D                                 l2301 00AE  
+                               l3023 022C                                 l3015 01D3  
+                               l3041 02AE                                 l3025 022E  
+                               l3033 0260                                 l2313 00E1  
+                               l3201 0492                                 l2307 00C1  
                                l2403 151B                                 l3123 0302  
                                l3115 02EE                                 l2421 096B  
-                               l3037 0C7C                                 l3029 0C51  
+                               l3029 0247                                 l3053 0DC4  
                                l2317 00F3                                 l2309 00CB  
                                l3221 04DD                                 l3141 0352  
                                l2343 0B5F                                 l2327 010E  
@@ -15620,45 +15620,45 @@ Symbol Table                                                                    
                                l3207 04AA                                 l3135 0326  
                                l2337 0B49                                 l2441 09A9  
                                l2249 1381                                 l3081 157E  
-                               l3129 0308                                 l2371 0BBE  
-                               l2355 0B9A                                 l2267 0058  
-                               l3243 0526                                 l3227 04F4  
-                               l3171 0428                                 l2197 17A4  
-                               l2453 09D0                                 l3093 1608  
-                               l2701 0910                                 l2277 006E  
-                               l2391 13E1                                 l2367 0BB6  
-                               l2359 0BA2                                 l2447 09B6  
-                               l2439 099B                                 l3087 15C3  
-                               l2295 009B                                 l3183 045E  
-                               l2449 09C2                                 l2713 093B  
+                               l3057 0DD1                                 l3129 0308  
+                               l2371 0BBE                                 l2355 0B9A  
+                               l2267 0058                                 l3243 0526  
+                               l3227 04F4                                 l3171 0428  
+                               l2197 17A4                                 l2453 09D0  
+                               l3093 1608                                 l2701 0910  
+                               l2277 006E                                 l2391 13E1  
+                               l2367 0BB6                                 l2359 0BA2  
+                               l2447 09B6                                 l2439 099B  
+                               l3087 15C3                                 l2295 009B  
+                               l3183 045E                                 l2449 09C2  
+                               l2561 143D                                 l2713 093B  
                                l2297 00A5                                 l2289 0088  
                                l2465 153C                                 l3177 0446  
-                               l2563 1429                                 l3099 0822  
+                               l2555 1429                                 l3099 0822  
                                l2299 00AA                                 l2811 13A2  
                                l2483 1732                                 l3195 0474  
                                l2717 0949                                 l2709 0930  
                                l2735 1649                                 l2823 000A  
                                l2399 1505                                 l2671 0AB4  
-                               l3375 07A9                                 l2905 02AE  
-                               l2761 1680                                 l2753 166F  
-                               l2745 1651                                 l2729 163E  
-                               l2825 0016                                 l2833 002B  
-                               l2569 143D                                 l2921 0DD1  
-                               l2665 0AA1                                 l2747 165D  
+                               l3375 07A9                                 l2761 1680  
+                               l2753 166F                                 l2745 1651  
+                               l2729 163E                                 l2825 0016  
+                               l2833 002B                                 l2665 0AA1  
+                               l2747 165D                                 l2923 0C07  
                                l2771 09F0                                 l2691 08F2  
                                l2851 0FD8                                 l3379 07B2  
                                l2757 1678                                 l2829 0022  
-                               l2917 0DC4                                 l2791 0A47  
-                               l2865 0163                                 l2777 0A06  
-                               l2961 08A0                                 l2867 016B  
-                               l2955 088C                                 l2699 0902  
-                               l2893 0247                                 l2869 017D  
-                               l2981 08CD                                 l2949 0872  
-                               l2887 022C                                 l2879 01D3  
-                               l2799 0A60                                 l2975 08B5  
-                               l2983 08CE                                 l2959 089E  
-                               l2889 022E                                 l2897 0260  
-                               l2993 1315                                 l2969 08AC  
+                               l2941 0C43                                 l2933 0C0E  
+                               l2909 1315                                 l2951 0C55  
+                               l2943 0C4B                                 l2935 0C3B  
+                               l2791 0A47                                 l2871 088C  
+                               l2953 0C7C                                 l2945 0C51  
+                               l2777 0A06                                 l2865 0872  
+                               l2939 0C3F                                 l2891 08B5  
+                               l2875 089E                                 l2699 0902  
+                               l2957 0C8A                                 l2885 08AC  
+                               l2877 08A0                                 l2799 0A60  
+                               l2897 08CD                                 l2899 08CE  
                                ?_log 0047                                 STR_1 1825  
                                STR_2 1820                                 STR_3 181B  
                                u2015 17C9                                 u2035 17D6  
@@ -15667,34 +15667,34 @@ Symbol Table                                                                    
                                _LATC 0018                                 u2145 1388  
                                u3025 0A61                                 u2075 17F0  
                                u2155 138D                                 u3115 0ED8  
-                               u3205 0155                                 u3125 0F2E  
-                               u2325 00AF                                 u3135 0F68  
-                               u2505 0BC5                                 u2425 0B6B  
-                               u3065 000D                                 u3145 0FB3  
+                               u3205 087C                                 u3125 0F2E  
+                               u2325 00AF                                 u3215 0888  
+                               u3135 0F68                                 u2505 0BC5  
+                               u2425 0B6B                                 u3065 000D  
+                               u3225 0896                                 u3145 0FB3  
                                u2265 0089                                 _T2PR 028D  
-                               u2435 0B7B                                 u3235 01A6  
-                               u3315 0DA2                                 u2355 00C2  
-                               u3500 0BF1                                 u2605 099C  
-                               u3085 001C                                 u3405 0860  
-                               u2455 0BA3                                 u3095 0023  
-                               u3415 086C                                 u3175 0FE3  
-                               u2295 009C                                 u2720 1477  
-                               u2465 0BA9                                 u3265 021F  
-                               u2705 1427                                 u3425 087C  
+                               u2435 0B7B                                 u2355 00C2  
+                               u2605 099C                                 u3405 0141  
+                               u3085 001C                                 u2455 0BA3  
+                               u3415 0155                                 u3095 0023  
+                               u3175 0FE3                                 u2295 009C  
+                               u3280 0BF1                                 u2720 1477  
+                               u2465 0BA9                                 u3345 0C6A  
+                               u2705 1427                                 u3185 0860  
                                _T4PR 0293                                 u2635 09B7  
-                               u3195 0141                                 u2715 143B  
-                               u3435 0888                                 u3605 1378  
-                               u3365 0E13                                 u3445 0896  
-                               u2495 0BBF                                 u2575 0972  
+                               u2715 143B                                 u3195 086C  
+                               u3445 01A6                                 u3605 0E68  
+                               u3525 0DA2                                 u2495 0BBF  
+                               u2575 0972                                 u3375 1362  
                                u3615 1578                                 u2815 0911  
-                               u3625 15BD                                 u2825 0925  
-                               u3705 0416                                 u2915 165E  
-                               u3635 1602                                 u3395 0E68  
-                               u2835 0931                                 u2925 1668  
-                               u3565 0C6A                                 u3645 081C  
-                               u2935 1670                                 u3825 0483  
-                               u3745 0437                                 u1995 17B0  
-                               u3595 1362                                 u2795 0905  
+                               u3385 1378                                 u3625 15BD  
+                               u2825 0925                                 u3705 0416  
+                               u3475 021F                                 u2915 165E  
+                               u3635 1602                                 u2835 0931  
+                               u2925 1668                                 u3645 081C  
+                               u2935 1670                                 u3575 0E13  
+                               u3825 0483                                 u3745 0437  
+                               u1995 17B0                                 u2795 0905  
                                u3845 049F                                 u3765 0453  
                                u2895 1654                                 u2985 0A18  
                                u2995 0A28                                 u3875 04D6  
@@ -15736,7 +15736,7 @@ Symbol Table                                                                    
                               _T4RST 0297                      ___awdiv@counter 0075  
                               _OSCEN 0891                                _TRISA 0011  
                               _TRISB 0012                                _TRISC 0013  
-                    _TMR4_Initialize 12F4                                _Imode 0062  
+                    _TMR4_Initialize 12F4                                _Imode 0060  
              ?_Battery_State_Machine 0070                                _cc_cv 00D2  
                       ___awtoft@sign 007D                                _frexp 152A  
                               _fonts 1000                                _errno 00D0  
@@ -15767,7 +15767,7 @@ Symbol Table                                                                    
                      _PWM_Initialize 1329                            ??___ftdiv 0026  
                           ??___ftmul 0026                            ??___ftsub 007E  
                           ??___fttol 0034                            ??___lwmod 0074  
-                             _gotoXY 1302                               _button 006A  
+                             _gotoXY 1302                               _button 006B  
             __end_of_TMR4_Initialize 1302                     ___awdiv@quotient 0077  
                              _totals 0120                ___ftmul@f3_as_product 002B  
                    __end_of_tempCalc 0D86                         LCDWrite@data 0070  
@@ -15797,7 +15797,7 @@ Symbol Table                                                                    
                          __pbssBANK1 00A0                           __pbssBANK2 0120  
                  ?_calculateCurrent0 0070                   ?_calculateCurrent1 0070  
                  ?_calculateCurrent2 0070                   ?_calculateCurrent3 0070  
-                       _batteryState 0064                   __size_of_eval_poly 0060  
+                       _batteryState 0062                   __size_of_eval_poly 0060  
                          ??_LCDClear 0078                       main@faultCount 00DD  
                          ??_LCDWrite 0071                      ?_LCDWriteString 007C  
                 ??_calculateCurrent0 003E                  ??_calculateCurrent1 003E  
@@ -15820,7 +15820,7 @@ Symbol Table                                                                    
                             _PWM7CON 0392                              _PPSLOCK 0E8F  
                      main@menuButton 00E7                       main@dutyCycle1 00D9  
                      main@dutyCycle6 00E9                       main@dutyCycle7 00EB  
-                         _lastButton 0069                            ?_tempCalc 004D  
+                         _lastButton 006A                            ?_tempCalc 004D  
                             ___aldiv 08D0                      __size_of___ftge 003B  
                             ___awdiv 1634                              ___ftadd 0030  
                          _readButton 084E                              ___ftdiv 09D9  
@@ -15853,7 +15853,7 @@ Symbol Table                                                                    
          LCDWriteCharacter@character 0079                    __size_of_LCDWrite 0025  
                         ___ftmul@exp 002A            __end_of_LCDWriteCharacter 16D9  
                         ?_readButton 0070            readIAnalog@analog_channel 0079  
-                     __end_of___ftge 152A                            _VHoldMode 0060  
+                     __end_of___ftge 152A                            _VHoldMode 005E  
                      __end_of___wmul 139A                       _ADC_Initialize 13B8  
                      __end_of_gotoXY 1315               ?_OSCILLATOR_Initialize 0070  
                           _IminCount 00CC                  start_initialization 07B5  
@@ -15865,7 +15865,7 @@ Symbol Table                                                                    
                       ??_readIAnalog 0028                     __CFG_LPBOREN$OFF 0000  
                            ??___ftge 0076                    tempCalc@steinhart 0055  
                            ??___wmul 0074               __end_of_ADC_Initialize 13D7  
-                      _tempCalc$1187 0052                          __pdataBANK0 006C  
+                      _tempCalc$1188 0052                          __pdataBANK0 006C  
                         __pdataBANK2 0135           __end_of_PWM7_LoadDutyValue 137F  
                            ??_gotoXY 0076                             ?_ADCRead 0070  
        PWM7_LoadDutyValue@dutyCycle7 0070                    __size_of___awtoft 0020  
@@ -15906,7 +15906,7 @@ Symbol Table                                                                    
                    __size_of___ftadd 00F6                     __size_of___ftdiv 00A9  
                    __size_of___ftmul 00B4                     __size_of___ftsub 001E  
                    __size_of___fttol 0087                     __size_of___lwmod 002C  
-                        _readButtons 005E                             ___awtoft 13D7  
+                        _readButtons 0064                             ___awtoft 13D7  
                            ___ftpack 179C                             _channels 0135  
                            __ptext10 084E                             __ptext11 133E  
                            __ptext20 12E6                             __ptext12 0D86  

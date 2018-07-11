@@ -17702,11 +17702,11 @@ VHoldMode=(10*-1);
 
 if(current[1] > Iref)
 {
-if(!Imode0)
+if(!(Imode0))
 {
 if(battery_state == FLOAT)
 {
-if(voltage[1]<1350+(int16_t)((250-batteryTemp)*.24)-100)
+if(voltage[1]<1350+(int16_t)((250-batteryTemp)*.24)-40)
 {
 battery_state=CHARGE;
 { Vref = 1425+(int16_t)((250-batteryTemp)*.24); };

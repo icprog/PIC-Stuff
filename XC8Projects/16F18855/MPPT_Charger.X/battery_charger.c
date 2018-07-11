@@ -122,11 +122,11 @@ void cc_cv_mode()
     
     if(ISENSE0 > Iref)                             // Iref is set by "SET_CURRENT(some Value here)" Use this to come back out of FLOAT Mode
 	{
-		if(!Imode0)                                     // If not "CURRENT Mode",
+		if(!(Imode0))                                     // If not "CURRENT Mode",
         {
             if(battery_state == FLOAT)
             {
-                if(VSENSE0<FLOATING_VOLTAGE-100)
+                if(VSENSE0<FLOATING_VOLTAGE-40)
                 {
                     battery_state=CHARGE;                   // Set CHARGE mode
                     SET_VOLTAGE(CHARGING_VOLTAGE);          // Set Vref back to CHARGING_VOLTAGE
