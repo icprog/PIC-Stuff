@@ -17589,13 +17589,9 @@ uint16_t dutyCycle6 = 1023;
 uint16_t dutyCycle7 = 1023;
 uint16_t dutyCycle1 = 60;
 int16_t IOutTotal = 0;
-
 uint8_t j = 0;
-
-
 uint8_t slowLoop = 200;
 uint8_t displayRefresh = 0;
-
 float efficiency = 0;
 extern int8_t Imode[2];
 extern int16_t Vref[2];
@@ -17618,7 +17614,7 @@ void calculateCurrent1(void);
 void calculateCurrent2(void);
 void calculateCurrent3(void);
 
-# 92
+# 88
 while (1)
 {
 if(!(RB2))
@@ -17732,13 +17728,17 @@ if(slowLoop>250)
 
 IOutTotal=current[0]+current[1];
 
-# 223
+# 219
+ADREF = 0x00;
+batteryTemp=tempCalc(ADCRead(9));
+ADREF = 0x03;
+
 displayRefresh+=1;
 if(displayRefresh>80)
 {
 LCDClear();
 displayRefresh=0;
-batteryTemp=tempCalc(ADCRead(9));
+
 }
 Battery_State_Machine(0);
 Battery_State_Machine(1);

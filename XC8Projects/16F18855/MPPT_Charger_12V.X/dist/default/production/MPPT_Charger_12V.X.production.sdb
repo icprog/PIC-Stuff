@@ -11,14 +11,6 @@ channel_Temp 61
 channel_DAC1 62
 channel_FVR 63
 ]
-"11 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\buttons.c
-[e E14259 . `uc
-POT 4
-channel_VSS 60
-channel_Temp 61
-channel_DAC1 62
-channel_FVR 63
-]
 "20 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
 [e E14319 charge_states `uc
 IDLE 0
@@ -28,7 +20,15 @@ PRECHARGE 3
 CHARGE 4
 FLOAT 5
 ]
-"103 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\main.c
+"11 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\buttons.c
+[e E14259 . `uc
+POT 4
+channel_VSS 60
+channel_Temp 61
+channel_DAC1 62
+channel_FVR 63
+]
+"99 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\main.c
 [e E14259 . `uc
 POT 4
 channel_VSS 60
@@ -55,7 +55,7 @@ FLOAT 5
 [v _Init_Battery_State_Machine Init_Battery_State_Machine `(v  1 e 1 0 ]
 "30
 [v _Battery_State_Machine Battery_State_Machine `(v  1 e 1 0 ]
-"90
+"91
 [v _cc_cv_mode cc_cv_mode `(v  1 e 1 0 ]
 "9 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\buttons.c
 [v _readButton readButton `(uc  1 e 1 0 ]
@@ -136,7 +136,7 @@ FLOAT 5
 "25
 [v _TMR4_Initialize TMR4_Initialize `(v  1 e 1 0 ]
 "7 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\adc.c
-[v _samples samples `[4][75]i  1 e 600 @8600 ]
+[v _samples samples `[4][50]i  1 e 400 @8800 ]
 "9
 [v _sampleIndex sampleIndex `ui  1 s 2 sampleIndex ]
 "11
@@ -165,8 +165,6 @@ FLOAT 5
 [v _voltage voltage `[4]i  1 e 8 0 ]
 "14
 [v _current current `[4]i  1 e 8 0 ]
-"15
-[v _x x `uc  1 e 1 0 ]
 "4 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\buttons.c
 [v _readButtons readButtons `i  1 e 2 0 ]
 "5
@@ -177,7 +175,7 @@ FLOAT 5
 [v _j j `c  1 e 1 0 ]
 "589 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
-[s S146 . 1 `uc 1 TRISA0 1 0 :1:0 
+[s S173 . 1 `uc 1 TRISA0 1 0 :1:0 
 `uc 1 TRISA1 1 0 :1:1 
 `uc 1 TRISA2 1 0 :1:2 
 `uc 1 TRISA3 1 0 :1:3 
@@ -187,15 +185,15 @@ FLOAT 5
 `uc 1 TRISA7 1 0 :1:7 
 ]
 "606
-[u S155 . 1 `S146 1 . 1 0 ]
-[v _TRISAbits TRISAbits `VES155  1 e 1 @17 ]
+[u S182 . 1 `S173 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES182  1 e 1 @17 ]
 "651
 [v _TRISB TRISB `VEuc  1 e 1 @18 ]
 "713
 [v _TRISC TRISC `VEuc  1 e 1 @19 ]
 "775
 [v _LATA LATA `VEuc  1 e 1 @22 ]
-[s S167 . 1 `uc 1 LATA0 1 0 :1:0 
+[s S194 . 1 `uc 1 LATA0 1 0 :1:0 
 `uc 1 LATA1 1 0 :1:1 
 `uc 1 LATA2 1 0 :1:2 
 `uc 1 LATA3 1 0 :1:3 
@@ -205,8 +203,8 @@ FLOAT 5
 `uc 1 LATA7 1 0 :1:7 
 ]
 "792
-[u S176 . 1 `S167 1 . 1 0 ]
-[v _LATAbits LATAbits `VES176  1 e 1 @22 ]
+[u S203 . 1 `S194 1 . 1 0 ]
+[v _LATAbits LATAbits `VES203  1 e 1 @22 ]
 "837
 [v _LATB LATB `VEuc  1 e 1 @23 ]
 "899
@@ -280,36 +278,36 @@ FLOAT 5
 [v _ADSTPTL ADSTPTL `VEuc  1 e 1 @274 ]
 "3137
 [v _ADSTPTH ADSTPTH `VEuc  1 e 1 @275 ]
-[s S280 . 1 `uc 1 C5TSEL 1 0 :2:0 
+[s S307 . 1 `uc 1 C5TSEL 1 0 :2:0 
 `uc 1 P6TSEL 1 0 :2:2 
 `uc 1 P7TSEL 1 0 :2:4 
 ]
 "9031
-[s S284 . 1 `uc 1 C5TSEL0 1 0 :1:0 
+[s S311 . 1 `uc 1 C5TSEL0 1 0 :1:0 
 `uc 1 C5TSEL1 1 0 :1:1 
 `uc 1 P6TSEL0 1 0 :1:2 
 `uc 1 P6TSEL1 1 0 :1:3 
 `uc 1 P7TSEL0 1 0 :1:4 
 `uc 1 P7TSEL1 1 0 :1:5 
 ]
-[u S291 . 1 `S280 1 . 1 0 `S284 1 . 1 0 ]
-[v _CCPTMRS1bits CCPTMRS1bits `VES291  1 e 1 @543 ]
+[u S318 . 1 `S307 1 . 1 0 `S311 1 . 1 0 ]
+[v _CCPTMRS1bits CCPTMRS1bits `VES318  1 e 1 @543 ]
 "9081
 [v _T2TMR T2TMR `VEuc  1 e 1 @652 ]
 "9119
 [v _T2PR T2PR `VEuc  1 e 1 @653 ]
 "9157
 [v _T2CON T2CON `VEuc  1 e 1 @654 ]
-[s S385 . 1 `uc 1 OUTPS 1 0 :4:0 
+[s S409 . 1 `uc 1 OUTPS 1 0 :4:0 
 `uc 1 CKPS 1 0 :3:4 
 `uc 1 ON 1 0 :1:7 
 ]
 "9193
-[s S389 . 1 `uc 1 T2OUTPS 1 0 :4:0 
+[s S413 . 1 `uc 1 T2OUTPS 1 0 :4:0 
 `uc 1 T2CKPS 1 0 :3:4 
 `uc 1 T2ON 1 0 :1:7 
 ]
-[s S393 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
+[s S417 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
 `uc 1 T2OUTPS1 1 0 :1:1 
 `uc 1 T2OUTPS2 1 0 :1:2 
 `uc 1 T2OUTPS3 1 0 :1:3 
@@ -317,7 +315,7 @@ FLOAT 5
 `uc 1 T2CKPS1 1 0 :1:5 
 `uc 1 T2CKPS2 1 0 :1:6 
 ]
-[s S401 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S425 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -326,8 +324,8 @@ FLOAT 5
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR2ON 1 0 :1:7 
 ]
-[u S410 . 1 `S385 1 . 1 0 `S389 1 . 1 0 `S393 1 . 1 0 `S401 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES410  1 e 1 @654 ]
+[u S434 . 1 `S409 1 . 1 0 `S413 1 . 1 0 `S417 1 . 1 0 `S425 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES434  1 e 1 @654 ]
 "9303
 [v _T2HLT T2HLT `VEuc  1 e 1 @655 ]
 "9431
@@ -341,11 +339,11 @@ FLOAT 5
 "9757
 [v _T4CON T4CON `VEuc  1 e 1 @660 ]
 "9793
-[s S451 . 1 `uc 1 T4OUTPS 1 0 :4:0 
+[s S475 . 1 `uc 1 T4OUTPS 1 0 :4:0 
 `uc 1 T4CKPS 1 0 :3:4 
 `uc 1 T4ON 1 0 :1:7 
 ]
-[s S455 . 1 `uc 1 T4OUTPS0 1 0 :1:0 
+[s S479 . 1 `uc 1 T4OUTPS0 1 0 :1:0 
 `uc 1 T4OUTPS1 1 0 :1:1 
 `uc 1 T4OUTPS2 1 0 :1:2 
 `uc 1 T4OUTPS3 1 0 :1:3 
@@ -353,7 +351,7 @@ FLOAT 5
 `uc 1 T4CKPS1 1 0 :1:5 
 `uc 1 T4CKPS2 1 0 :1:6 
 ]
-[s S463 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S487 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -362,8 +360,8 @@ FLOAT 5
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR4ON 1 0 :1:7 
 ]
-[u S472 . 1 `S385 1 . 1 0 `S451 1 . 1 0 `S455 1 . 1 0 `S463 1 . 1 0 ]
-[v _T4CONbits T4CONbits `VES472  1 e 1 @660 ]
+[u S496 . 1 `S409 1 . 1 0 `S475 1 . 1 0 `S479 1 . 1 0 `S487 1 . 1 0 ]
+[v _T4CONbits T4CONbits `VES496  1 e 1 @660 ]
 "9903
 [v _T4HLT T4HLT `VEuc  1 e 1 @661 ]
 "10031
@@ -382,7 +380,7 @@ FLOAT 5
 [v _PWM7DCH PWM7DCH `VEuc  1 e 1 @913 ]
 "12709
 [v _PWM7CON PWM7CON `VEuc  1 e 1 @914 ]
-[s S368 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[s S392 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 TMR3IF 1 0 :1:2 
 `uc 1 TMR4IF 1 0 :1:3 
@@ -390,16 +388,16 @@ FLOAT 5
 `uc 1 TMR6IF 1 0 :1:5 
 ]
 "21299
-[u S375 . 1 `S368 1 . 1 0 ]
-[v _PIR4bits PIR4bits `VES375  1 e 1 @1808 ]
-[s S245 . 1 `uc 1 INTE 1 0 :1:0 
+[u S399 . 1 `S392 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES399  1 e 1 @1808 ]
+[s S272 . 1 `uc 1 INTE 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIE 1 0 :1:4 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
 "21564
-[u S250 . 1 `S245 1 . 1 0 ]
-[v _PIE0bits PIE0bits `VES250  1 e 1 @1814 ]
+[u S277 . 1 `S272 1 . 1 0 ]
+[v _PIE0bits PIE0bits `VES277  1 e 1 @1814 ]
 "23324
 [v _OSCCON1 OSCCON1 `VEuc  1 e 1 @2189 ]
 "23464
@@ -414,11 +412,11 @@ FLOAT 5
 [v _FVRCON FVRCON `VEuc  1 e 1 @2316 ]
 "29763
 [v _PPSLOCK PPSLOCK `VEuc  1 e 1 @3727 ]
-[s S260 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
+[s S287 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
 ]
 "29773
-[u S262 . 1 `S260 1 . 1 0 ]
-[v _PPSLOCKbits PPSLOCKbits `VES262  1 e 1 @3727 ]
+[u S289 . 1 `S287 1 . 1 0 ]
+[v _PPSLOCKbits PPSLOCKbits `VES289  1 e 1 @3727 ]
 "32091
 [v _RA6PPS RA6PPS `VEuc  1 e 1 @3862 ]
 "32141
@@ -458,7 +456,7 @@ FLOAT 5
 "42
 [v _main main `(v  1 e 1 0 ]
 {
-"58
+"54
 [v main@efficiency efficiency `f  1 a 3 0 ]
 "48
 [v main@dutyCycle7 dutyCycle7 `ui  1 a 2 21 ]
@@ -468,21 +466,21 @@ FLOAT 5
 [v main@MPPT1 MPPT1 `i  1 a 2 15 ]
 "44
 [v main@MPPT0 MPPT0 `i  1 a 2 13 ]
-"64
+"60
 [v main@faultNotReset faultNotReset `ui  1 a 2 9 ]
-"63
+"59
 [v main@faultCount faultCount `ui  1 a 2 7 ]
 "50
 [v main@IOutTotal IOutTotal `i  1 a 2 5 ]
 "49
 [v main@dutyCycle1 dutyCycle1 `ui  1 a 2 3 ]
-"52
+"51
 [v main@j j `uc  1 a 1 18 ]
-"62
+"58
 [v main@menuButton menuButton `uc  1 a 1 17 ]
-"56
+"53
 [v main@displayRefresh displayRefresh `uc  1 a 1 12 ]
-"55
+"52
 [v main@slowLoop slowLoop `uc  1 a 1 11 ]
 "369
 } 0
@@ -589,14 +587,14 @@ FLOAT 5
 [v ADCRead@channel channel `E14259  1 a 1 3 ]
 "48
 } 0
-"90 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
+"91 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
 [v _cc_cv_mode cc_cv_mode `(v  1 e 1 0 ]
 {
 [v cc_cv_mode@z z `uc  1 a 1 wreg ]
 [v cc_cv_mode@z z `uc  1 a 1 wreg ]
-"92
+"93
 [v cc_cv_mode@z z `uc  1 a 1 37 ]
-"136
+"137
 } 0
 "410 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\main.c
 [v _calculateCurrent3 calculateCurrent3 `(v  1 e 1 0 ]
@@ -800,8 +798,8 @@ FLOAT 5
 [v Battery_State_Machine@z z `uc  1 a 1 wreg ]
 [v Battery_State_Machine@z z `uc  1 a 1 wreg ]
 "32
-[v Battery_State_Machine@z z `uc  1 a 1 37 ]
-"88
+[v Battery_State_Machine@z z `uc  1 a 1 35 ]
+"89
 } 0
 "44 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\fttol.c
 [v ___fttol __fttol `(l  1 e 4 0 ]

@@ -13210,7 +13210,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.h: 269: bool ADCC_HasErrorCrossedUpperThreshold(void);
 [; ;adc.h: 291: bool ADCC_HasErrorCrossedLowerThreshold(void);
 [; ;adc.h: 313: uint8_t ADCC_GetConversionStageStatus(void);
-[v F14320 `i ~T0 @X0 -> 75 `i t ]
+[v F14320 `i ~T0 @X0 -> 50 `i t ]
 "7 adc.c
 [v _samples `F14320 ~T0 @X0 -> 4 `i e ]
 [i _samples
@@ -13223,7 +13223,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-[; ;adc.c: 7: int16_t samples[4][75] = {{0},{0}};
+[; ;adc.c: 7: int16_t samples[4][50] = {{0},{0}};
 "9
 [v _sampleIndex `ui ~T0 @X0 1 s ]
 [i _sampleIndex
@@ -13343,13 +13343,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _value ( _ADCRead (1 -> _analog_channel `E14259 ]
 [; ;adc.c: 85: totals[channel] = totals[channel]-samples[channel][sampleIndex];
 "85
-[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux - *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux `ui `ux `l ]
+[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux - *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux `ui `ux `l ]
 [; ;adc.c: 87: samples[channel][sampleIndex] = value;
 "87
-[e = *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux `ui `ux _value ]
+[e = *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux `ui `ux _value ]
 [; ;adc.c: 89: totals[channel] = totals[channel]+samples[channel][sampleIndex];
 "89
-[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux + *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 75 `i `ui `ux `ui `ux `l ]
+[e = *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux + *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> *U + &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux * -> _sampleIndex `ux -> -> # *U &U *U + &U _samples * -> _channel `ux -> * -> # *U &U *U &U _samples `ui -> -> 50 `i `ui `ux `ui `ux `l ]
 [; ;adc.c: 91: if(channel>=(4-1))
 "91
 [e $ ! >= _channel -> - -> 4 `i -> 1 `i `ui 1571  ]
@@ -13359,18 +13359,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.c: 93: sampleIndex+=1;
 "93
 [e =+ _sampleIndex -> -> 1 `i `ui ]
-[; ;adc.c: 94: if(sampleIndex >= 75)sampleIndex = 0;
+[; ;adc.c: 94: if(sampleIndex >= 50)sampleIndex = 0;
 "94
-[e $ ! >= _sampleIndex -> -> 75 `i `ui 1572  ]
+[e $ ! >= _sampleIndex -> -> 50 `i `ui 1572  ]
 [e = _sampleIndex -> -> 0 `i `ui ]
 [e :U 1572 ]
 "95
 }
 [e :U 1571 ]
 [; ;adc.c: 95: }
-[; ;adc.c: 97: value = totals[channel]/75;
+[; ;adc.c: 97: value = totals[channel]/50;
 "97
-[e = _value -> / *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> -> 75 `i `l `i ]
+[e = _value -> / *U + &U _totals * -> _channel `ux -> -> # *U &U _totals `ui `ux -> -> 50 `i `l `i ]
 [; ;adc.c: 99: return value;
 "99
 [e ) _value ]

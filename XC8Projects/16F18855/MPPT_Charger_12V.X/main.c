@@ -48,13 +48,9 @@ void main(void)
     uint16_t        dutyCycle7      =   1023;                    // 126 is midpoint, allow adjusting up or down
     uint16_t        dutyCycle1      =   60;                     // 30 is required for minimum speed
     int16_t         IOutTotal       =   0;
-
     uint8_t         j               =   0;
-
-//    uint8_t         fastLoop        =   0;
     uint8_t         slowLoop        =   200;
     uint8_t         displayRefresh  =   0;
-//    int16_t         batteryTemp     =   250;
     float           efficiency      =   0;
     extern int8_t   Imode[2];
     extern int16_t  Vref[2];                                       // setpoint for voltage output
@@ -220,12 +216,16 @@ void main(void)
               //  batteryState[1]=CHARGE;
             //}
             
+            ADREF = 0x00;                                               // ADNREF VSS; ADPREF VDD;
+            batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB2
+            ADREF = 0x03;                                               // ADNREF VSS; ADPREF FVR;
+            
             displayRefresh+=1;
             if(displayRefresh>80)
             {
                 LCDClear();
                 displayRefresh=0;
-                batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB2
+//                batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB2
             }
             Battery_State_Machine(0);
             Battery_State_Machine(1);

@@ -5,7 +5,7 @@ int16_t tempCalc(int16_t analogValue)
 {
     float R, steinhart;                         // Calculate R of Thermistor, and Temp using SteinHart/Hart equation
 
-    R = 9890/(1023/(float)analogValue - 1);     // Resistance of Thermistor (R Reference/1023/readTemp -1)
+    R = 10030/(1023/(float)analogValue - 1);    // Resistance of Thermistor (R Reference/1023/readTemp -1)
         
     steinhart = R /9990;                        // (R/Ro) R/R Standard (resistance of Thermistor at 25C)
     steinhart = log(steinhart);                 // ln(R/Ro)

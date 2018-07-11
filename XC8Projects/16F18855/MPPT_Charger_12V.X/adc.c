@@ -1,7 +1,7 @@
 #include <xc.h>
 #include "adc.h"
 
-#define     numISamples                     75                                              // Number of Current readings to Average
+#define     numISamples                     50                                              // Number of Current readings to Average
 #define     numIChannels                    4                                               // Number of Analog channels to read
 
 int16_t samples[numIChannels][numISamples]  =   {{0},{0}};                                  // Was left initialized like this, but following is correct?

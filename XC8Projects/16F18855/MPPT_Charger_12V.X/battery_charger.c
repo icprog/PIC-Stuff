@@ -50,11 +50,12 @@ void Battery_State_Machine(uint8_t z)
 	}
     else if(batteryState[z]==CHARGE)
 	{
-		if(!Imode[z])                                           // Mode is "Voltage Mode", not "Current Mode", So we are applying Topping current
+        Vref[z]=CHARGING_VOLTAGE;
+		if(!(Imode[z]))                                         // Mode is "Voltage Mode", not "Current Mode", So we are applying Topping current
 		{
-			if(current[z] < Imin[z])                            // || ISENSE1 < Imin)
+			if(current[z] < Imin[z])                            // if Current is less than min current
 			{
-                IminCount[z]-=2;
+                IminCount[z]-=2;                                // decrement IminCount by 2
                 if(IminCount[z]<10)                             // Current has been low for at least IminCount cycles (600 cycles, or about 10 minutes)
                 {
                     batteryState[z] = FLOAT;                    // Switch to Float Charging Mode  
@@ -63,12 +64,12 @@ void Battery_State_Machine(uint8_t z)
 			}
             else
 			{
-                x+=1;
-                if(x>25)
-                {
-                    if(Vref[z]>FLOATING_VOLTAGE)Vref[z]-=1;
-                    x=0;
-                }
+//                x+=1;
+  //              if(x>25)
+    //            {
+      //              if(Vref[z]>FLOATING_VOLTAGE)Vref[z]-=1;
+        //            x=0;
+          //      }
 				if(IminCount[z]<IminUpdate)IminCount[z]+=1;     // Keep us from going into Float because of sporadic sun
 			}
 		}
@@ -122,7 +123,7 @@ void cc_cv_mode(uint8_t z)
         {
             if(batteryState[z]==FLOAT)
             {
-                if(voltage[z]<FLOATING_VOLTAGE-100)
+                if(voltage[z]<FLOATING_VOLTAGE-70)
                 {
                     batteryState[z]=CHARGE;                     // Set CHARGE mode
                     Vref[z]=CHARGING_VOLTAGE;                   // Set Vref back to CHARGING_VOLTAGE
