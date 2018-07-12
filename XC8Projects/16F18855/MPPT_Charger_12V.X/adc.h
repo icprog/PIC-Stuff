@@ -1,5 +1,5 @@
-#ifndef _ADC_H
-#define _ADC_H
+#ifndef ADC_H
+#define ADC_H
 
 #include <xc.h>
 #include <stdint.h>

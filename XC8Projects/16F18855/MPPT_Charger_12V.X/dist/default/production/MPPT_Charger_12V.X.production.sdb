@@ -36,7 +36,7 @@ channel_Temp 61
 channel_DAC1 62
 channel_FVR 63
 ]
-"358
+"362
 [e E14319 charge_states `uc
 IDLE 0
 FAULT 1
@@ -53,9 +53,9 @@ FLOAT 5
 [v _ADC_Initialize ADC_Initialize `(v  1 e 1 0 ]
 "18 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
 [v _Init_Battery_State_Machine Init_Battery_State_Machine `(v  1 e 1 0 ]
-"30
+"28
 [v _Battery_State_Machine Battery_State_Machine `(v  1 e 1 0 ]
-"91
+"83
 [v _cc_cv_mode cc_cv_mode `(v  1 e 1 0 ]
 "9 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\buttons.c
 [v _readButton readButton `(uc  1 e 1 0 ]
@@ -109,13 +109,13 @@ FLOAT 5
 [v _LCDWrite LCDWrite `(v  1 e 1 0 ]
 "42 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\main.c
 [v _main main `(v  1 e 1 0 ]
-"372
+"376
 [v _calculateCurrent0 calculateCurrent0 `(v  1 e 1 0 ]
-"385
+"389
 [v _calculateCurrent1 calculateCurrent1 `(v  1 e 1 0 ]
-"397
+"401
 [v _calculateCurrent2 calculateCurrent2 `(v  1 e 1 0 ]
-"410
+"414
 [v _calculateCurrent3 calculateCurrent3 `(v  1 e 1 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
@@ -146,25 +146,25 @@ FLOAT 5
 "3 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
 [v _batteryState batteryState `[2]uc  1 e 2 0 ]
 "4
-[v _IminCount IminCount `[2]ui  1 e 4 0 ]
+[v _cc_cv cc_cv `[2]uc  1 e 2 0 ]
 "5
-[v _stateCounter stateCounter `[2]i  1 e 4 0 ]
+[v _current current `[4]i  1 e 8 0 ]
 "6
 [v _Imin Imin `[2]i  1 e 4 0 ]
 "7
-[v _Iref Iref `[2]i  1 e 4 0 ]
+[v _IminCount IminCount `[2]ui  1 e 4 0 ]
 "8
-[v _Vref Vref `[2]i  1 e 4 0 ]
-"10
 [v _Imode Imode `[2]c  1 e 2 0 ]
+"10
+[v _Iref Iref `[2]i  1 e 4 0 ]
 "11
-[v _cc_cv cc_cv `[2]uc  1 e 2 0 ]
+[v _stateCounter stateCounter `[2]i  1 e 4 0 ]
 "12
 [v _VHoldMode VHoldMode `[2]c  1 e 2 0 ]
 "13
 [v _voltage voltage `[4]i  1 e 8 0 ]
 "14
-[v _current current `[4]i  1 e 8 0 ]
+[v _Vref Vref `[2]i  1 e 4 0 ]
 "4 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\buttons.c
 [v _readButtons readButtons `i  1 e 2 0 ]
 "5
@@ -482,7 +482,7 @@ FLOAT 5
 [v main@displayRefresh displayRefresh `uc  1 a 1 12 ]
 "52
 [v main@slowLoop slowLoop `uc  1 a 1 11 ]
-"369
+"373
 } 0
 "4 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\tempCalc.c
 [v _tempCalc tempCalc `(i  1 e 2 0 ]
@@ -492,7 +492,7 @@ FLOAT 5
 [v tempCalc@R R `f  1 a 3 47 ]
 "4
 [v tempCalc@analogValue analogValue `i  1 p 2 45 ]
-"24
+"25
 } 0
 "5 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\log.c
 [v _log log `(d  1 e 3 0 ]
@@ -587,34 +587,34 @@ FLOAT 5
 [v ADCRead@channel channel `E14259  1 a 1 3 ]
 "48
 } 0
-"91 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
+"83 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
 [v _cc_cv_mode cc_cv_mode `(v  1 e 1 0 ]
 {
 [v cc_cv_mode@z z `uc  1 a 1 wreg ]
 [v cc_cv_mode@z z `uc  1 a 1 wreg ]
-"93
+"85
 [v cc_cv_mode@z z `uc  1 a 1 37 ]
-"137
+"130
 } 0
-"410 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\main.c
+"414 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\main.c
 [v _calculateCurrent3 calculateCurrent3 `(v  1 e 1 0 ]
 {
-"420
+"424
 } 0
-"397
+"401
 [v _calculateCurrent2 calculateCurrent2 `(v  1 e 1 0 ]
 {
-"408
+"412
 } 0
-"385
+"389
 [v _calculateCurrent1 calculateCurrent1 `(v  1 e 1 0 ]
 {
-"395
+"399
 } 0
-"372
+"376
 [v _calculateCurrent0 calculateCurrent0 `(v  1 e 1 0 ]
 {
-"383
+"387
 } 0
 "56 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\ftdiv.c
 [v ___ftdiv __ftdiv `(f  1 e 3 0 ]
@@ -691,7 +691,7 @@ FLOAT 5
 [v Init_Battery_State_Machine@z z `uc  1 a 1 wreg ]
 "20
 [v Init_Battery_State_Machine@z z `uc  1 a 1 34 ]
-"28
+"26
 } 0
 "111 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\adc.c
 [v _ADC_Initialize ADC_Initialize `(v  1 e 1 0 ]
@@ -792,14 +792,14 @@ FLOAT 5
 [v LCDWrite@data_or_command data_or_command `uc  1 a 1 2 ]
 "315
 } 0
-"30 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
+"28 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_12V.X\battery_charger.c
 [v _Battery_State_Machine Battery_State_Machine `(v  1 e 1 0 ]
 {
 [v Battery_State_Machine@z z `uc  1 a 1 wreg ]
 [v Battery_State_Machine@z z `uc  1 a 1 wreg ]
-"32
+"30
 [v Battery_State_Machine@z z `uc  1 a 1 35 ]
-"89
+"81
 } 0
 "44 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\fttol.c
 [v ___fttol __fttol `(l  1 e 4 0 ]

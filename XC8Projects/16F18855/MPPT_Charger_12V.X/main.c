@@ -279,13 +279,17 @@ void main(void)
 //            LCDWriteCharacter(' ');
             LCDWriteIntXY(80,4,batteryState[1],1,0,0);
             
-            LCDWriteIntXY(0,5,Buck0Output,4,0,0);
-            LCDWriteIntXY(20,5,VHoldMode[0],2,0,0);
+//           LCDWriteIntXY(0,5,Ianalogs[0],4,0,0);
+
+           LCDWriteIntXY(0,5,Buck0Output,4,0,0);
+            LCDWriteIntXY(18,5,VHoldMode[0],1,0,0);
             LCDWriteCharacter(' ');
-            LCDWriteIntXY(32,5,Buck1Output,4,0,0);
-            LCDWriteIntXY(52,5,VHoldMode[1],2,0,0);    
+            LCDWriteIntXY(28,5,Buck1Output,4,0,0);
+            LCDWriteIntXY(46,5,VHoldMode[1],1,0,0);    
             LCDWriteCharacter(' ');
-            LCDWriteIntXY(64,5,batteryTemp,3,1,0);
+            LCDWriteIntXY(56,5,batteryTemp,3,1,0);
+            LCDWriteCharacter(123);
+            LCDWriteCharacter('C');
 
 /*            efficiency=(float)Power0Out;
             efficiency/=(float)Power0In;
@@ -371,14 +375,14 @@ void main(void)
 
 void calculateCurrent0(void)                                                    // I0 Out
 {
-    if(Ianalogs[0]-580<=0)
+    if(Ianalogs[0]-559<=0)
     {
         current[0]=0;
     }
     else
     {
 //        current[0]=(int16_t)((Ianalogs[0]-580)/3.22);
-        current[0]=(int16_t)((Ianalogs[0]-580)/3.15);
+        current[0]=(int16_t)((Ianalogs[0]-559)/3.09);
     }
 }
 

@@ -17792,15 +17792,19 @@ LCDWriteCharacter('A');
 
 { gotoXY(80,4); LCDWriteInt(batteryState[1],1, 0, 0);};
 
-{ gotoXY(0,5); LCDWriteInt(dutyCycle6,4, 0, 0);};
-{ gotoXY(20,5); LCDWriteInt(VHoldMode[0],2, 0, 0);};
-LCDWriteCharacter(' ');
-{ gotoXY(32,5); LCDWriteInt(dutyCycle7,4, 0, 0);};
-{ gotoXY(52,5); LCDWriteInt(VHoldMode[1],2, 0, 0);};
-LCDWriteCharacter(' ');
-{ gotoXY(64,5); LCDWriteInt(batteryTemp,3, 1, 0);};
 
-# 358
+
+{ gotoXY(0,5); LCDWriteInt(dutyCycle6,4, 0, 0);};
+{ gotoXY(18,5); LCDWriteInt(VHoldMode[0],1, 0, 0);};
+LCDWriteCharacter(' ');
+{ gotoXY(28,5); LCDWriteInt(dutyCycle7,4, 0, 0);};
+{ gotoXY(46,5); LCDWriteInt(VHoldMode[1],1, 0, 0);};
+LCDWriteCharacter(' ');
+{ gotoXY(56,5); LCDWriteInt(batteryTemp,3, 1, 0);};
+LCDWriteCharacter(123);
+LCDWriteCharacter('C');
+
+# 362
 if(batteryState[0] > FINISHED)
 {
 cc_cv_mode(0);
@@ -17817,14 +17821,14 @@ slowLoop=0;
 
 void calculateCurrent0(void)
 {
-if(Ianalogs[0]-580<=0)
+if(Ianalogs[0]-559<=0)
 {
 current[0]=0;
 }
 else
 {
 
-current[0]=(int16_t)((Ianalogs[0]-580)/3.15);
+current[0]=(int16_t)((Ianalogs[0]-559)/3.09);
 }
 }
 

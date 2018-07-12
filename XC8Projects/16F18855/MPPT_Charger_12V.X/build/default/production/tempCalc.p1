@@ -13209,35 +13209,35 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _R `f ~T0 @X0 1 a ]
 [v _steinhart `f ~T0 @X0 1 a ]
 [; ;tempCalc.c: 6: float R, steinhart;
-[; ;tempCalc.c: 8: R = 10030/(1023/(float)analogValue - 1);
+[; ;tempCalc.c: 8: R=10030/(1023/(float)analogValue-1);
 "8
 [e = _R / -> -> 10030 `i `f - / -> -> 1023 `i `f -> _analogValue `f -> -> 1 `i `f ]
-[; ;tempCalc.c: 10: steinhart = R /9990;
+[; ;tempCalc.c: 10: steinhart=R/10010;
 "10
-[e = _steinhart / _R -> -> 9990 `i `f ]
-[; ;tempCalc.c: 11: steinhart = log(steinhart);
+[e = _steinhart / _R -> -> 10010 `i `f ]
+[; ;tempCalc.c: 11: steinhart=log(steinhart);
 "11
 [e = _steinhart -> ( _log (1 -> _steinhart `d `f ]
-[; ;tempCalc.c: 12: steinhart /= 4030;
+[; ;tempCalc.c: 12: steinhart/=3795.3;
 "12
-[e =/ _steinhart -> -> 4030 `us `f ]
-[; ;tempCalc.c: 15: steinhart += 1.0 / (25 + 273.15);
-"15
-[e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]
-[; ;tempCalc.c: 16: steinhart = 1.0 / steinhart;
+[e =/ _steinhart .3795.3 ]
+[; ;tempCalc.c: 16: steinhart+=1.0/(25+273.15);
 "16
-[e = _steinhart -> / .1.0 -> _steinhart `d `f ]
-[; ;tempCalc.c: 17: steinhart -= 273.15;
+[e =+ _steinhart -> / .1.0 + -> -> 25 `i `d .273.15 `f ]
+[; ;tempCalc.c: 17: steinhart=1.0/steinhart;
 "17
+[e = _steinhart -> / .1.0 -> _steinhart `d `f ]
+[; ;tempCalc.c: 18: steinhart-=273.15;
+"18
 [e =- _steinhart -> .273.15 `f ]
-[; ;tempCalc.c: 19: steinhart*=10;
-"19
+[; ;tempCalc.c: 20: steinhart*=10;
+"20
 [e =* _steinhart -> -> 10 `i `f ]
-[; ;tempCalc.c: 23: return (int16_t)steinhart;
-"23
+[; ;tempCalc.c: 24: return (int16_t)steinhart;
+"24
 [e ) -> _steinhart `i ]
 [e $UE 1563  ]
-[; ;tempCalc.c: 24: }
-"24
+[; ;tempCalc.c: 25: }
+"25
 [e :UE 1563 ]
 }
