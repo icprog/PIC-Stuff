@@ -17580,55 +17580,55 @@ int8_t j = 0;
 
 uint8_t readButton(void)
 {
-readButtons = ADCRead(11);
+readButtons=ADCRead(11);
 
-if(readButtons >= 425 && readButtons < 485)
+if(readButtons>=365&&readButtons<405)
 {
-button = 1;
+button=1;
 }
 
-else if(readButtons >= 615 && readButtons < 690)
+else if(readButtons>=535&&readButtons<590)
 {
-button = 2;
+button=2;
 }
 
-else if(readButtons > 800)
+else if(readButtons>745)
 {
-button = 3;
+button=3;
 }
 
 else
 {
-button = 0;
+button=0;
 }
 
-if (button != 0)
+if (button!=0)
 {
-if (button != lastButton)
+if (button!=lastButton)
 {
-lastButton = button;
-j = 0;
+lastButton=button;
+j=0;
 }
 else
 {
-j += 1;
+j+=1;
 
-if(j == 1)
+if(j==1)
 {
 return (lastButton);
 }
 
-if (j >10)
+if (j>10)
 {
 _delay((unsigned long)((25)*(32000000/4000.0)));
-j = 10;
+j=10;
 return (lastButton);
 }
 }
 goto end;
 }
 
-j = 0;
+j=0;
 
 end:
 

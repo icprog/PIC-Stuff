@@ -13401,18 +13401,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ ! ! _RB2 1571  ]
 [e =+ _faultNotReset -> -> 1 `i `ui ]
 [e :U 1571 ]
-[; ;main.c: 109: voltage[0]=(int16_t)(Vanalogs[0]/.5448);
+[; ;main.c: 109: voltage[0]=(int16_t)(Vanalogs[0]/.54503);
 "109
-[e = *U + &U _voltage * -> -> -> 0 `i `ui `ux -> -> # *U &U _voltage `ui `ux -> / -> *U + &U _Vanalogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _Vanalogs `ui `ux `d .0.5448 `i ]
-[; ;main.c: 111: voltage[1]=(int16_t)(Vanalogs[1]/.540757);
+[e = *U + &U _voltage * -> -> -> 0 `i `ui `ux -> -> # *U &U _voltage `ui `ux -> / -> *U + &U _Vanalogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _Vanalogs `ui `ux `d .0.54503 `i ]
+[; ;main.c: 111: voltage[1]=(int16_t)(Vanalogs[1]/.54503);
 "111
-[e = *U + &U _voltage * -> -> -> 1 `i `ui `ux -> -> # *U &U _voltage `ui `ux -> / -> *U + &U _Vanalogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _Vanalogs `ui `ux `d .0.540757 `i ]
-[; ;main.c: 113: voltage[2]=(int16_t)(Vanalogs[2]/.405775);
+[e = *U + &U _voltage * -> -> -> 1 `i `ui `ux -> -> # *U &U _voltage `ui `ux -> / -> *U + &U _Vanalogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _Vanalogs `ui `ux `d .0.54503 `i ]
+[; ;main.c: 113: voltage[2]=(int16_t)(Vanalogs[2]/.20885);
 "113
-[e = *U + &U _voltage * -> -> -> 2 `i `ui `ux -> -> # *U &U _voltage `ui `ux -> / -> *U + &U _Vanalogs * -> -> -> 2 `i `ui `ux -> -> # *U &U _Vanalogs `ui `ux `d .0.405775 `i ]
-[; ;main.c: 115: voltage[3]=(int16_t)(Vanalogs[3]/.406788);
+[e = *U + &U _voltage * -> -> -> 2 `i `ui `ux -> -> # *U &U _voltage `ui `ux -> / -> *U + &U _Vanalogs * -> -> -> 2 `i `ui `ux -> -> # *U &U _Vanalogs `ui `ux `d .0.20885 `i ]
+[; ;main.c: 115: voltage[3]=(int16_t)(Vanalogs[3]/.20885);
 "115
-[e = *U + &U _voltage * -> -> -> 3 `i `ui `ux -> -> # *U &U _voltage `ui `ux -> / -> *U + &U _Vanalogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _Vanalogs `ui `ux `d .0.406788 `i ]
+[e = *U + &U _voltage * -> -> -> 3 `i `ui `ux -> -> # *U &U _voltage `ui `ux -> / -> *U + &U _Vanalogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _Vanalogs `ui `ux `d .0.20885 `i ]
 [; ;main.c: 117: calculateCurrent0();
 "117
 [e ( _calculateCurrent0 ..  ]
@@ -13948,9 +13948,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 377: {
 [e :U _calculateCurrent0 ]
 [f ]
-[; ;main.c: 378: if(Ianalogs[0]-559<=0)
+[; ;main.c: 378: if(Ianalogs[0]-578<=0)
 "378
-[e $ ! <= - *U + &U _Ianalogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 559 `i -> 0 `i 1608  ]
+[e $ ! <= - *U + &U _Ianalogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 578 `i -> 0 `i 1608  ]
 [; ;main.c: 379: {
 "379
 {
@@ -13967,129 +13967,129 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 383: {
 "383
 {
-[; ;main.c: 385: current[0]=(int16_t)((Ianalogs[0]-559)/3.09);
+[; ;main.c: 384: current[0]=(int16_t)((Ianalogs[0]-578)/3.2323);
+"384
+[e = *U + &U _current * -> -> -> 0 `i `ui `ux -> -> # *U &U _current `ui `ux -> / -> - *U + &U _Ianalogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 578 `i `d .3.2323 `i ]
 "385
-[e = *U + &U _current * -> -> -> 0 `i `ui `ux -> -> # *U &U _current `ui `ux -> / -> - *U + &U _Ianalogs * -> -> -> 0 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 559 `i `d .3.09 `i ]
-"386
 }
 [e :U 1609 ]
+[; ;main.c: 385: }
 [; ;main.c: 386: }
-[; ;main.c: 387: }
-"387
+"386
 [e :UE 1607 ]
 }
-"389
+"388
 [v _calculateCurrent1 `(v ~T0 @X0 1 ef ]
-"390
+"389
 {
-[; ;main.c: 389: void calculateCurrent1(void)
-[; ;main.c: 390: {
+[; ;main.c: 388: void calculateCurrent1(void)
+[; ;main.c: 389: {
 [e :U _calculateCurrent1 ]
 [f ]
-[; ;main.c: 391: if(Ianalogs[1]-561<=0)
-"391
+[; ;main.c: 390: if(Ianalogs[1]-561<=0)
+"390
 [e $ ! <= - *U + &U _Ianalogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 561 `i -> 0 `i 1611  ]
-[; ;main.c: 392: {
+[; ;main.c: 391: {
+"391
+{
+[; ;main.c: 392: current[1]=0;
 "392
-{
-[; ;main.c: 393: current[1]=0;
-"393
 [e = *U + &U _current * -> -> -> 1 `i `ui `ux -> -> # *U &U _current `ui `ux -> 0 `i ]
-"394
+"393
 }
-[; ;main.c: 394: }
+[; ;main.c: 393: }
 [e $U 1612  ]
-"395
+"394
 [e :U 1611 ]
-[; ;main.c: 395: else
-[; ;main.c: 396: {
-"396
+[; ;main.c: 394: else
+[; ;main.c: 395: {
+"395
 {
-[; ;main.c: 397: current[1]=(int16_t)((Ianalogs[1]-561)/1.99055);
-"397
+[; ;main.c: 396: current[1]=(int16_t)((Ianalogs[1]-561)/1.99055);
+"396
 [e = *U + &U _current * -> -> -> 1 `i `ui `ux -> -> # *U &U _current `ui `ux -> / -> - *U + &U _Ianalogs * -> -> -> 1 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 561 `i `d .1.99055 `i ]
-"398
+"397
 }
 [e :U 1612 ]
+[; ;main.c: 397: }
 [; ;main.c: 398: }
-[; ;main.c: 399: }
-"399
+"398
 [e :UE 1610 ]
 }
-"401
+"400
 [v _calculateCurrent2 `(v ~T0 @X0 1 ef ]
-"402
+"401
 {
-[; ;main.c: 401: void calculateCurrent2(void)
-[; ;main.c: 402: {
+[; ;main.c: 400: void calculateCurrent2(void)
+[; ;main.c: 401: {
 [e :U _calculateCurrent2 ]
 [f ]
-[; ;main.c: 403: if(Ianalogs[2]-565<=0)
+[; ;main.c: 402: if(Ianalogs[2]-589<=0)
+"402
+[e $ ! <= - *U + &U _Ianalogs * -> -> -> 2 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 589 `i -> 0 `i 1614  ]
+[; ;main.c: 403: {
 "403
-[e $ ! <= - *U + &U _Ianalogs * -> -> -> 2 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 565 `i -> 0 `i 1614  ]
-[; ;main.c: 404: {
+{
+[; ;main.c: 404: current[2]=0;
 "404
-{
-[; ;main.c: 405: current[2]=0;
-"405
 [e = *U + &U _current * -> -> -> 2 `i `ui `ux -> -> # *U &U _current `ui `ux -> 0 `i ]
-"406
+"405
 }
-[; ;main.c: 406: }
+[; ;main.c: 405: }
 [e $U 1615  ]
-"407
+"406
 [e :U 1614 ]
-[; ;main.c: 407: else
-[; ;main.c: 408: {
-"408
+[; ;main.c: 406: else
+[; ;main.c: 407: {
+"407
 {
-[; ;main.c: 410: current[2]=(int16_t)((Ianalogs[2]-565)/3.05);
-"410
-[e = *U + &U _current * -> -> -> 2 `i `ui `ux -> -> # *U &U _current `ui `ux -> / -> - *U + &U _Ianalogs * -> -> -> 2 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 565 `i `d .3.05 `i ]
-"411
+[; ;main.c: 408: current[2]=(int16_t)((Ianalogs[2]-589)/1.3165);
+"408
+[e = *U + &U _current * -> -> -> 2 `i `ui `ux -> -> # *U &U _current `ui `ux -> / -> - *U + &U _Ianalogs * -> -> -> 2 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 589 `i `d .1.3165 `i ]
+"409
 }
 [e :U 1615 ]
-[; ;main.c: 411: }
-[; ;main.c: 412: }
-"412
+[; ;main.c: 409: }
+[; ;main.c: 410: }
+"410
 [e :UE 1613 ]
 }
-"414
+"412
 [v _calculateCurrent3 `(v ~T0 @X0 1 ef ]
-"415
+"413
 {
-[; ;main.c: 414: void calculateCurrent3(void)
-[; ;main.c: 415: {
+[; ;main.c: 412: void calculateCurrent3(void)
+[; ;main.c: 413: {
 [e :U _calculateCurrent3 ]
 [f ]
-[; ;main.c: 416: if(Ianalogs[3]-559<=0)
-"416
+[; ;main.c: 414: if(Ianalogs[3]-559<=0)
+"414
 [e $ ! <= - *U + &U _Ianalogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 559 `i -> 0 `i 1617  ]
-[; ;main.c: 417: {
-"417
+[; ;main.c: 415: {
+"415
 {
-[; ;main.c: 418: current[3]=0;
-"418
+[; ;main.c: 416: current[3]=0;
+"416
 [e = *U + &U _current * -> -> -> 3 `i `ui `ux -> -> # *U &U _current `ui `ux -> 0 `i ]
-"419
+"417
 }
-[; ;main.c: 419: }
+[; ;main.c: 417: }
 [e $U 1618  ]
-"420
+"418
 [e :U 1617 ]
-[; ;main.c: 420: else
-[; ;main.c: 421: {
-"421
+[; ;main.c: 418: else
+[; ;main.c: 419: {
+"419
 {
-[; ;main.c: 422: current[3]=(int16_t)((Ianalogs[3]-559)/1.60575);
-"422
+[; ;main.c: 420: current[3]=(int16_t)((Ianalogs[3]-559)/1.60575);
+"420
 [e = *U + &U _current * -> -> -> 3 `i `ui `ux -> -> # *U &U _current `ui `ux -> / -> - *U + &U _Ianalogs * -> -> -> 3 `i `ui `ux -> -> # *U &U _Ianalogs `ui `ux -> 559 `i `d .1.60575 `i ]
-"423
+"421
 }
 [e :U 1618 ]
-[; ;main.c: 423: }
-[; ;main.c: 424: }
-"424
+[; ;main.c: 421: }
+[; ;main.c: 422: }
+"422
 [e :UE 1616 ]
 }
 [a 2C 79 117 116 58 0 ]

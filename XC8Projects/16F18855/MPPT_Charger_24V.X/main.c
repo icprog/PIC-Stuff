@@ -106,13 +106,13 @@ void main(void)
 
         if(Fault)faultNotReset+=1;
         
-        voltage[0]=(int16_t)(Vanalogs[0]/.5448);                    // Calculate VOut0
+        voltage[0]=(int16_t)(Vanalogs[0]/.54503);                    // Calculate VOut0
         
-        voltage[1]=(int16_t)(Vanalogs[1]/.540757);                   // Calculate VOut1
+        voltage[1]=(int16_t)(Vanalogs[1]/.54503);                   // Calculate VOut1
 
-        voltage[2]=(int16_t)(Vanalogs[2]/.405775);                  // Calculate VIn0
+        voltage[2]=(int16_t)(Vanalogs[2]/.20885);                  // Calculate VIn0
         
-        voltage[3]=(int16_t)(Vanalogs[3]/.406788);                   // Calculate VIn1
+        voltage[3]=(int16_t)(Vanalogs[3]/.20885);                   // Calculate VIn1
         
         calculateCurrent0();
 
@@ -375,14 +375,13 @@ void main(void)
 
 void calculateCurrent0(void)                                                    // I0 Out
 {
-    if(Ianalogs[0]-559<=0)
+    if(Ianalogs[0]-578<=0)
     {
         current[0]=0;
     }
     else
     {
-//        current[0]=(int16_t)((Ianalogs[0]-580)/3.22);
-        current[0]=(int16_t)((Ianalogs[0]-559)/3.09);
+        current[0]=(int16_t)((Ianalogs[0]-578)/3.2323);
     }
 }
 
@@ -400,14 +399,13 @@ void calculateCurrent1(void)                                                    
 
 void calculateCurrent2(void)                                                    // I0 In
 {
-    if(Ianalogs[2]-565<=0)
+    if(Ianalogs[2]-589<=0)
     {
         current[2]=0;
     }
     else
     {
-//        current[2]=(int16_t)((Ianalogs[2]-565)/3.12);
-        current[2]=(int16_t)((Ianalogs[2]-565)/3.05);
+        current[2]=(int16_t)((Ianalogs[2]-589)/1.3165);
     }
 }
 

@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.45 build -152302408 
-                                                                                               Thu Jul 12 16:24:01 2018
+                                                                                               Thu Jul 12 23:07:49 2018
 
 Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160504
      1                           	processor	16F18855
@@ -6819,7 +6819,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   6800  0349  3DE0               	addwfc	(main@faultNotReset+1)^(0+128),f
   6801  034A                     l3136:	
   6802                           
-  6803                           ;main.c: 109: voltage[0]=(int16_t)(Vanalogs[0]/.5448);
+  6803                           ;main.c: 109: voltage[0]=(int16_t)(Vanalogs[0]/.54503);
   6804  034A  0021               	movlb	1	; select bank1
   6805  034B  0829               	movf	(_Vanalogs+1)^(0+128),w
   6806  034C  00F9               	movwf	___awtoft@c+1
@@ -6833,7 +6833,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   6814  0356  00A4               	movwf	___ftdiv@f1+1
   6815  0357  087A               	movf	?___awtoft+2,w
   6816  0358  00A5               	movwf	___ftdiv@f1+2
-  6817  0359  3078               	movlw	120
+  6817  0359  3087               	movlw	135
   6818  035A  00A0               	movwf	___ftdiv@f2
   6819  035B  300B               	movlw	11
   6820  035C  00A1               	movwf	___ftdiv@f2+1
@@ -6857,7 +6857,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   6838  0372  0021               	movlb	1	; select bank1
   6839  0373  00B0               	movwf	_voltage^(0+128)
   6840                           
-  6841                           ;main.c: 111: voltage[1]=(int16_t)(Vanalogs[1]/.540757);
+  6841                           ;main.c: 111: voltage[1]=(int16_t)(Vanalogs[1]/.54503);
   6842  0374  082B               	movf	((_Vanalogs+1)^(0+128)+2),w
   6843  0375  00F9               	movwf	___awtoft@c+1
   6844  0376  082A               	movf	(_Vanalogs^(0+128)+2),w
@@ -6870,9 +6870,9 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   6851  037F  00A4               	movwf	___ftdiv@f1+1
   6852  0380  087A               	movf	?___awtoft+2,w
   6853  0381  00A5               	movwf	___ftdiv@f1+2
-  6854  0382  306F               	movlw	111
+  6854  0382  3087               	movlw	135
   6855  0383  00A0               	movwf	___ftdiv@f2
-  6856  0384  300A               	movlw	10
+  6856  0384  300B               	movlw	11
   6857  0385  00A1               	movwf	___ftdiv@f2+1
   6858  0386  303F               	movlw	63
   6859  0387  00A2               	movwf	___ftdiv@f2+2
@@ -6894,7 +6894,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   6875  039B  0021               	movlb	1	; select bank1
   6876  039C  00B2               	movwf	(_voltage^(0+128)+2)
   6877                           
-  6878                           ;main.c: 113: voltage[2]=(int16_t)(Vanalogs[2]/.405775);
+  6878                           ;main.c: 113: voltage[2]=(int16_t)(Vanalogs[2]/.20885);
   6879  039D  082D               	movf	((_Vanalogs+1)^(0+128)+4),w
   6880  039E  00F9               	movwf	___awtoft@c+1
   6881  039F  082C               	movf	(_Vanalogs^(0+128)+4),w
@@ -6907,9 +6907,9 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   6888  03A8  00A4               	movwf	___ftdiv@f1+1
   6889  03A9  087A               	movf	?___awtoft+2,w
   6890  03AA  00A5               	movwf	___ftdiv@f1+2
-  6891  03AB  30C2               	movlw	194
+  6891  03AB  30DD               	movlw	221
   6892  03AC  00A0               	movwf	___ftdiv@f2
-  6893  03AD  30CF               	movlw	207
+  6893  03AD  3055               	movlw	85
   6894  03AE  00A1               	movwf	___ftdiv@f2+1
   6895  03AF  303E               	movlw	62
   6896  03B0  00A2               	movwf	___ftdiv@f2+2
@@ -6931,7 +6931,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   6912  03C4  0021               	movlb	1	; select bank1
   6913  03C5  00B4               	movwf	(_voltage^(0+128)+4)
   6914                           
-  6915                           ;main.c: 115: voltage[3]=(int16_t)(Vanalogs[3]/.406788);
+  6915                           ;main.c: 115: voltage[3]=(int16_t)(Vanalogs[3]/.20885);
   6916  03C6  082F               	movf	((_Vanalogs+1)^(0+128)+6),w
   6917  03C7  00F9               	movwf	___awtoft@c+1
   6918  03C8  082E               	movf	(_Vanalogs^(0+128)+6),w
@@ -6944,9 +6944,9 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   6925  03D1  00A4               	movwf	___ftdiv@f1+1
   6926  03D2  087A               	movf	?___awtoft+2,w
   6927  03D3  00A5               	movwf	___ftdiv@f1+2
-  6928  03D4  3047               	movlw	71
+  6928  03D4  30DD               	movlw	221
   6929  03D5  00A0               	movwf	___ftdiv@f2
-  6930  03D6  30D0               	movlw	208
+  6930  03D6  3055               	movlw	85
   6931  03D7  00A1               	movwf	___ftdiv@f2+1
   6932  03D8  303E               	movlw	62
   6933  03D9  00A2               	movwf	___ftdiv@f2+2
@@ -9876,7 +9876,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9807                           ;psect for function _readButton
   9808  084B                     _readButton:	
   9809                           
-  9810                           ;buttons.c: 11: readButtons = ADCRead(11);
+  9810                           ;buttons.c: 11: readButtons=ADCRead(11);
   9811                           
   9812                           ;incstack = 0
   9813                           ; Regs used in _readButton: [wreg+status,2+status,0+pclath+cstack]
@@ -9888,7 +9888,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9819  0852  0870               	movf	?_ADCRead,w
   9820  0853  00DE               	movwf	_readButtons
   9821                           
-  9822                           ;buttons.c: 13: if(readButtons >= 425 && readButtons < 485)
+  9822                           ;buttons.c: 13: if(readButtons>=365&&readButtons<405)
   9823  0854  085F               	movf	_readButtons+1,w
   9824  0855  3A80               	xorlw	128
   9825  0856  00F4               	movwf	??_readButton
@@ -9896,7 +9896,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9827  0858  0274               	subwf	??_readButton,w
   9828  0859  1D03               	skipz
   9829  085A  285D               	goto	u3395
-  9830  085B  30A9               	movlw	169
+  9830  085B  306D               	movlw	109
   9831  085C  025E               	subwf	_readButtons,w
   9832  085D                     u3395:	
   9833  085D  1C03               	skipc
@@ -9909,14 +9909,14 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9840  0864  0274               	subwf	??_readButton,w
   9841  0865  1D03               	skipz
   9842  0866  2869               	goto	u3405
-  9843  0867  30E5               	movlw	229
+  9843  0867  3095               	movlw	149
   9844  0868  025E               	subwf	_readButtons,w
   9845  0869                     u3405:	
   9846  0869  1803               	skipnc
   9847  086A  286F               	goto	l2944
   9848                           
   9849                           ;buttons.c: 14: {
-  9850                           ;buttons.c: 15: button = 1;
+  9850                           ;buttons.c: 15: button=1;
   9851  086B  0020               	movlb	0	; select bank0
   9852  086C  01EA               	clrf	_button
   9853  086D  0AEA               	incf	_button,f
@@ -9925,7 +9925,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9856  086E  289D               	goto	l2956
   9857  086F                     l2944:	
   9858                           
-  9859                           ;buttons.c: 18: else if(readButtons >= 615 && readButtons < 690)
+  9859                           ;buttons.c: 18: else if(readButtons>=535&&readButtons<590)
   9860  086F  0020               	movlb	0	; select bank0
   9861  0870  085F               	movf	_readButtons+1,w
   9862  0871  3A80               	xorlw	128
@@ -9934,7 +9934,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9865  0874  0274               	subwf	??_readButton,w
   9866  0875  1D03               	skipz
   9867  0876  2879               	goto	u3415
-  9868  0877  3067               	movlw	103
+  9868  0877  3017               	movlw	23
   9869  0878  025E               	subwf	_readButtons,w
   9870  0879                     u3415:	
   9871  0879  1C03               	skipc
@@ -9947,37 +9947,37 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9878  0880  0274               	subwf	??_readButton,w
   9879  0881  1D03               	skipz
   9880  0882  2885               	goto	u3425
-  9881  0883  30B2               	movlw	178
+  9881  0883  304E               	movlw	78
   9882  0884  025E               	subwf	_readButtons,w
   9883  0885                     u3425:	
   9884  0885  1803               	skipnc
   9885  0886  2889               	goto	l2950
   9886                           
   9887                           ;buttons.c: 19: {
-  9888                           ;buttons.c: 20: button = 2;
+  9888                           ;buttons.c: 20: button=2;
   9889  0887  3002               	movlw	2
   9890  0888  2896               	goto	L6
   9891  0889                     l2950:	
   9892                           ;buttons.c: 21: }
   9893                           
   9894                           
-  9895                           ;buttons.c: 23: else if(readButtons > 800)
+  9895                           ;buttons.c: 23: else if(readButtons>745)
   9896  0889  0020               	movlb	0	; select bank0
   9897  088A  085F               	movf	_readButtons+1,w
   9898  088B  3A80               	xorlw	128
   9899  088C  00F4               	movwf	??_readButton
-  9900  088D  3083               	movlw	131
+  9900  088D  3082               	movlw	130
   9901  088E  0274               	subwf	??_readButton,w
   9902  088F  1D03               	skipz
   9903  0890  2893               	goto	u3435
-  9904  0891  3021               	movlw	33
+  9904  0891  30EA               	movlw	234
   9905  0892  025E               	subwf	_readButtons,w
   9906  0893                     u3435:	
   9907  0893  1C03               	skipc
   9908  0894  289B               	goto	l2954
   9909                           
   9910                           ;buttons.c: 24: {
-  9911                           ;buttons.c: 25: button = 3;
+  9911                           ;buttons.c: 25: button=3;
   9912  0895  3003               	movlw	3
   9913  0896                     L6:	
   9914  0896  00F4               	movwf	??_readButton
@@ -9991,26 +9991,26 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9922                           
   9923                           ;buttons.c: 28: else
   9924                           ;buttons.c: 29: {
-  9925                           ;buttons.c: 30: button = 0;
+  9925                           ;buttons.c: 30: button=0;
   9926  089B  0020               	movlb	0	; select bank0
   9927  089C  01EA               	clrf	_button
   9928  089D                     l2956:	
   9929                           
   9930                           ;buttons.c: 31: }
-  9931                           ;buttons.c: 33: if (button != 0)
+  9931                           ;buttons.c: 33: if (button!=0)
   9932  089D  086A               	movf	_button,w
   9933  089E  1903               	btfsc	3,2
   9934  089F  28CA               	goto	l2976
   9935                           
   9936                           ;buttons.c: 34: {
-  9937                           ;buttons.c: 35: if (button != lastButton)
+  9937                           ;buttons.c: 35: if (button!=lastButton)
   9938  08A0  086A               	movf	_button,w
   9939  08A1  0669               	xorwf	_lastButton,w
   9940  08A2  1903               	skipnz
   9941  08A3  28A9               	goto	l2964
   9942                           
   9943                           ;buttons.c: 36: {
-  9944                           ;buttons.c: 37: lastButton = button;
+  9944                           ;buttons.c: 37: lastButton=button;
   9945  08A4  086A               	movf	_button,w
   9946  08A5  00F4               	movwf	??_readButton
   9947  08A6  0874               	movf	??_readButton,w
@@ -10019,18 +10019,18 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9950  08A9                     l2964:	
   9951                           ;buttons.c: 39: }
   9952                           
-  9953                           ;buttons.c: 38: j = 0;
+  9953                           ;buttons.c: 38: j=0;
   9954                           
   9955                           
   9956                           ;buttons.c: 40: else
   9957                           ;buttons.c: 41: {
-  9958                           ;buttons.c: 42: j += 1;
+  9958                           ;buttons.c: 42: j+=1;
   9959  08A9  3001               	movlw	1
   9960  08AA  00F4               	movwf	??_readButton
   9961  08AB  0874               	movf	??_readButton,w
   9962  08AC  07E8               	addwf	_j,f
   9963                           
-  9964                           ;buttons.c: 44: if(j == 1)
+  9964                           ;buttons.c: 44: if(j==1)
   9965  08AD  0368               	decf	_j,w
   9966  08AE  1D03               	btfss	3,2
   9967  08AF  28B2               	goto	l2970
@@ -10042,7 +10042,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9973  08B2                     l2970:	
   9974                           
   9975                           ;buttons.c: 47: }
-  9976                           ;buttons.c: 49: if (j >10)
+  9976                           ;buttons.c: 49: if (j>10)
   9977  08B2  0868               	movf	_j,w
   9978  08B3  3A80               	xorlw	128
   9979  08B4  3E75               	addlw	-139
@@ -10065,7 +10065,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
   9996  08C1  28BC               	goto	u3957
   9997  08C2  3200               	nop2
   9998                           
-  9999                           ;buttons.c: 52: j = 10;
+  9999                           ;buttons.c: 52: j=10;
  10000  08C3  300A               	movlw	10
  10001  08C4  00F4               	movwf	??_readButton
  10002  08C5  0874               	movf	??_readButton,w
@@ -10082,7 +10082,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10013                           
  10014                           
  10015                           ;buttons.c: 57: }
- 10016                           ;buttons.c: 59: j = 0;
+ 10016                           ;buttons.c: 59: j=0;
  10017  08CA  01E8               	clrf	_j
  10018  08CB                     l2978:	
  10019                           ;buttons.c: 61: end:
@@ -10617,7 +10617,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10538  0004                     __ptext13:	
  10539 ;; *************** function _calculateCurrent3 *****************
  10540 ;; Defined at:
- 10541 ;;		line 414 in file "main.c"
+ 10541 ;;		line 412 in file "main.c"
  10542 ;; Parameters:    Size  Location     Type
  10543 ;;		None
  10544 ;; Auto vars:     Size  Location     Type
@@ -10656,7 +10656,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10572                           ;psect for function _calculateCurrent3
  10573  0004                     _calculateCurrent3:	
  10574                           
- 10575                           ;main.c: 416: if(Ianalogs[3]-559<=0)
+ 10575                           ;main.c: 414: if(Ianalogs[3]-559<=0)
  10576                           
  10577                           ;incstack = 0
  10578                           ; Regs used in _calculateCurrent3: [wreg+status,2+status,0+pclath+cstack]
@@ -10683,19 +10683,19 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10599  0017  1803               	skipnc
  10600  0018  281D               	goto	l3094
  10601                           
- 10602                           ;main.c: 417: {
- 10603                           ;main.c: 418: current[3]=0;
+ 10602                           ;main.c: 415: {
+ 10603                           ;main.c: 416: current[3]=0;
  10604  0019  0021               	movlb	1	; select bank1
  10605  001A  01BE               	clrf	(_current^(0+128)+6)
  10606  001B  01BF               	clrf	((_current+1)^(0+128)+6)
  10607                           
- 10608                           ;main.c: 419: }
+ 10608                           ;main.c: 417: }
  10609  001C  0008               	return
  10610  001D                     l3094:	
  10611                           
- 10612                           ;main.c: 420: else
- 10613                           ;main.c: 421: {
- 10614                           ;main.c: 422: current[3]=(int16_t)((Ianalogs[3]-559)/1.60575);
+ 10612                           ;main.c: 418: else
+ 10613                           ;main.c: 419: {
+ 10614                           ;main.c: 420: current[3]=(int16_t)((Ianalogs[3]-559)/1.60575);
  10615  001D  0021               	movlb	1	; select bank1
  10616  001E  0826               	movf	(_Ianalogs^(0+128)+6),w
  10617  001F  3ED1               	addlw	209
@@ -10741,7 +10741,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10657  0806                     __ptext14:	
  10658 ;; *************** function _calculateCurrent2 *****************
  10659 ;; Defined at:
- 10660 ;;		line 401 in file "main.c"
+ 10660 ;;		line 400 in file "main.c"
  10661 ;; Parameters:    Size  Location     Type
  10662 ;;		None
  10663 ;; Auto vars:     Size  Location     Type
@@ -10780,13 +10780,13 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10691                           ;psect for function _calculateCurrent2
  10692  0806                     _calculateCurrent2:	
  10693                           
- 10694                           ;main.c: 403: if(Ianalogs[2]-565<=0)
+ 10694                           ;main.c: 402: if(Ianalogs[2]-589<=0)
  10695                           
  10696                           ;incstack = 0
  10697                           ; Regs used in _calculateCurrent2: [wreg+status,2+status,0+pclath+cstack]
  10698  0806  0021               	movlb	1	; select bank1
  10699  0807  0824               	movf	(_Ianalogs^(0+128)+4),w
- 10700  0808  3ECB               	addlw	203
+ 10700  0808  3EB3               	addlw	179
  10701  0809  0020               	movlb	0	; select bank0
  10702  080A  00BE               	movwf	??_calculateCurrent2
  10703  080B  30FD               	movlw	253
@@ -10807,22 +10807,22 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10718  0819  1803               	skipnc
  10719  081A  281F               	goto	l3088
  10720                           
- 10721                           ;main.c: 404: {
- 10722                           ;main.c: 405: current[2]=0;
+ 10721                           ;main.c: 403: {
+ 10722                           ;main.c: 404: current[2]=0;
  10723  081B  0021               	movlb	1	; select bank1
  10724  081C  01BC               	clrf	(_current^(0+128)+4)
  10725  081D  01BD               	clrf	((_current+1)^(0+128)+4)
  10726                           
- 10727                           ;main.c: 406: }
+ 10727                           ;main.c: 405: }
  10728  081E  0008               	return
  10729  081F                     l3088:	
  10730                           
- 10731                           ;main.c: 407: else
- 10732                           ;main.c: 408: {
- 10733                           ;main.c: 410: current[2]=(int16_t)((Ianalogs[2]-565)/3.05);
+ 10731                           ;main.c: 406: else
+ 10732                           ;main.c: 407: {
+ 10733                           ;main.c: 408: current[2]=(int16_t)((Ianalogs[2]-589)/1.3165);
  10734  081F  0021               	movlb	1	; select bank1
  10735  0820  0824               	movf	(_Ianalogs^(0+128)+4),w
- 10736  0821  3ECB               	addlw	203
+ 10736  0821  3EB3               	addlw	179
  10737  0822  00F8               	movwf	___awtoft@c
  10738  0823  30FD               	movlw	253
  10739  0824  3D25               	addwfc	((_Ianalogs+1)^(0+128)+4),w
@@ -10835,11 +10835,11 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10746  082D  00A4               	movwf	___ftdiv@f1+1
  10747  082E  087A               	movf	?___awtoft+2,w
  10748  082F  00A5               	movwf	___ftdiv@f1+2
- 10749  0830  3033               	movlw	51
+ 10749  0830  3083               	movlw	131
  10750  0831  00A0               	movwf	___ftdiv@f2
- 10751  0832  3043               	movlw	67
+ 10751  0832  30A8               	movlw	168
  10752  0833  00A1               	movwf	___ftdiv@f2+1
- 10753  0834  3040               	movlw	64
+ 10753  0834  303F               	movlw	63
  10754  0835  00A2               	movwf	___ftdiv@f2+2
  10755  0836  3189  21D6  3188   	fcall	___ftdiv
  10756  0839  0020               	movlb	0	; select bank0
@@ -10865,7 +10865,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10776  15EF                     __ptext15:	
  10777 ;; *************** function _calculateCurrent1 *****************
  10778 ;; Defined at:
- 10779 ;;		line 389 in file "main.c"
+ 10779 ;;		line 388 in file "main.c"
  10780 ;; Parameters:    Size  Location     Type
  10781 ;;		None
  10782 ;; Auto vars:     Size  Location     Type
@@ -10904,7 +10904,7 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10810                           ;psect for function _calculateCurrent1
  10811  15EF                     _calculateCurrent1:	
  10812                           
- 10813                           ;main.c: 391: if(Ianalogs[1]-561<=0)
+ 10813                           ;main.c: 390: if(Ianalogs[1]-561<=0)
  10814                           
  10815                           ;incstack = 0
  10816                           ; Regs used in _calculateCurrent1: [wreg+status,2+status,0+pclath+cstack]
@@ -10931,19 +10931,19 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10837  1602  1803               	skipnc
  10838  1603  2E08               	goto	l3082
  10839                           
- 10840                           ;main.c: 392: {
- 10841                           ;main.c: 393: current[1]=0;
+ 10840                           ;main.c: 391: {
+ 10841                           ;main.c: 392: current[1]=0;
  10842  1604  0021               	movlb	1	; select bank1
  10843  1605  01BA               	clrf	(_current^(0+128)+2)
  10844  1606  01BB               	clrf	((_current+1)^(0+128)+2)
  10845                           
- 10846                           ;main.c: 394: }
+ 10846                           ;main.c: 393: }
  10847  1607  0008               	return
  10848  1608                     l3082:	
  10849                           
- 10850                           ;main.c: 395: else
- 10851                           ;main.c: 396: {
- 10852                           ;main.c: 397: current[1]=(int16_t)((Ianalogs[1]-561)/1.99055);
+ 10850                           ;main.c: 394: else
+ 10851                           ;main.c: 395: {
+ 10852                           ;main.c: 396: current[1]=(int16_t)((Ianalogs[1]-561)/1.99055);
  10853  1608  0021               	movlb	1	; select bank1
  10854  1609  0822               	movf	(_Ianalogs^(0+128)+2),w
  10855  160A  3ECF               	addlw	207
@@ -11028,13 +11028,13 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10929                           ;psect for function _calculateCurrent0
  10930  15AA                     _calculateCurrent0:	
  10931                           
- 10932                           ;main.c: 378: if(Ianalogs[0]-559<=0)
+ 10932                           ;main.c: 378: if(Ianalogs[0]-578<=0)
  10933                           
  10934                           ;incstack = 0
  10935                           ; Regs used in _calculateCurrent0: [wreg+status,2+status,0+pclath+cstack]
  10936  15AA  0021               	movlb	1	; select bank1
  10937  15AB  0820               	movf	_Ianalogs^(0+128),w
- 10938  15AC  3ED1               	addlw	209
+ 10938  15AC  3EBE               	addlw	190
  10939  15AD  0020               	movlb	0	; select bank0
  10940  15AE  00BE               	movwf	??_calculateCurrent0
  10941  15AF  30FD               	movlw	253
@@ -11067,10 +11067,10 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10968                           
  10969                           ;main.c: 382: else
  10970                           ;main.c: 383: {
- 10971                           ;main.c: 385: current[0]=(int16_t)((Ianalogs[0]-559)/3.09);
+ 10971                           ;main.c: 384: current[0]=(int16_t)((Ianalogs[0]-578)/3.2323);
  10972  15C3  0021               	movlb	1	; select bank1
  10973  15C4  0820               	movf	_Ianalogs^(0+128),w
- 10974  15C5  3ED1               	addlw	209
+ 10974  15C5  3EBE               	addlw	190
  10975  15C6  00F8               	movwf	___awtoft@c
  10976  15C7  30FD               	movlw	253
  10977  15C8  3D21               	addwfc	(_Ianalogs+1)^(0+128),w
@@ -11083,9 +11083,9 @@ Microchip Technology Omniscient Code Generator v1.45 (Free mode) build 201711160
  10984  15D1  00A4               	movwf	___ftdiv@f1+1
  10985  15D2  087A               	movf	?___awtoft+2,w
  10986  15D3  00A5               	movwf	___ftdiv@f1+2
- 10987  15D4  30C3               	movlw	195
+ 10987  15D4  30DE               	movlw	222
  10988  15D5  00A0               	movwf	___ftdiv@f2
- 10989  15D6  3045               	movlw	69
+ 10989  15D6  304E               	movlw	78
  10990  15D7  00A1               	movwf	___ftdiv@f2+1
  10991  15D8  3040               	movlw	64
  10992  15D9  00A2               	movwf	___ftdiv@f2+2
@@ -15546,7 +15546,7 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.45 build -152302408 
-Symbol Table                                                                                   Thu Jul 12 16:24:01 2018
+Symbol Table                                                                                   Thu Jul 12 23:07:49 2018
 
                        _stateCounter 00C0                                    _j 0068  
                                   _x 006B               LCDWriteInt@fieldLength 0022  

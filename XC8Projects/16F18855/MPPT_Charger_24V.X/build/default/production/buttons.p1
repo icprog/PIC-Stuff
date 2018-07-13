@@ -13207,16 +13207,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;buttons.c: 10: {
 [e :U _readButton ]
 [f ]
-[; ;buttons.c: 11: readButtons = ADCRead(11);
+[; ;buttons.c: 11: readButtons=ADCRead(11);
 "11
 [e = _readButtons ( _ADCRead (1 -> -> 11 `i `E14259 ]
-[; ;buttons.c: 13: if(readButtons >= 425 && readButtons < 485)
+[; ;buttons.c: 13: if(readButtons>=365&&readButtons<405)
 "13
-[e $ ! && >= _readButtons -> 425 `i < _readButtons -> 485 `i 1564  ]
+[e $ ! && >= _readButtons -> 365 `i < _readButtons -> 405 `i 1564  ]
 [; ;buttons.c: 14: {
 "14
 {
-[; ;buttons.c: 15: button = 1;
+[; ;buttons.c: 15: button=1;
 "15
 [e = _button -> -> 1 `i `uc ]
 "16
@@ -13225,12 +13225,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 1565  ]
 "18
 [e :U 1564 ]
-[; ;buttons.c: 18: else if(readButtons >= 615 && readButtons < 690)
-[e $ ! && >= _readButtons -> 615 `i < _readButtons -> 690 `i 1566  ]
+[; ;buttons.c: 18: else if(readButtons>=535&&readButtons<590)
+[e $ ! && >= _readButtons -> 535 `i < _readButtons -> 590 `i 1566  ]
 [; ;buttons.c: 19: {
 "19
 {
-[; ;buttons.c: 20: button = 2;
+[; ;buttons.c: 20: button=2;
 "20
 [e = _button -> -> 2 `i `uc ]
 "21
@@ -13239,12 +13239,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 1567  ]
 "23
 [e :U 1566 ]
-[; ;buttons.c: 23: else if(readButtons > 800)
-[e $ ! > _readButtons -> 800 `i 1568  ]
+[; ;buttons.c: 23: else if(readButtons>745)
+[e $ ! > _readButtons -> 745 `i 1568  ]
 [; ;buttons.c: 24: {
 "24
 {
-[; ;buttons.c: 25: button = 3;
+[; ;buttons.c: 25: button=3;
 "25
 [e = _button -> -> 3 `i `uc ]
 "26
@@ -13257,7 +13257,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;buttons.c: 29: {
 "29
 {
-[; ;buttons.c: 30: button = 0;
+[; ;buttons.c: 30: button=0;
 "30
 [e = _button -> -> 0 `i `uc ]
 "31
@@ -13266,22 +13266,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 1567 ]
 [e :U 1565 ]
 [; ;buttons.c: 31: }
-[; ;buttons.c: 33: if (button != 0)
+[; ;buttons.c: 33: if (button!=0)
 "33
 [e $ ! != -> _button `i -> 0 `i 1570  ]
 [; ;buttons.c: 34: {
 "34
 {
-[; ;buttons.c: 35: if (button != lastButton)
+[; ;buttons.c: 35: if (button!=lastButton)
 "35
 [e $ ! != -> _button `i -> _lastButton `i 1571  ]
 [; ;buttons.c: 36: {
 "36
 {
-[; ;buttons.c: 37: lastButton = button;
+[; ;buttons.c: 37: lastButton=button;
 "37
 [e = _lastButton _button ]
-[; ;buttons.c: 38: j = 0;
+[; ;buttons.c: 38: j=0;
 "38
 [e = _j -> -> 0 `i `c ]
 "39
@@ -13294,10 +13294,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;buttons.c: 41: {
 "41
 {
-[; ;buttons.c: 42: j += 1;
+[; ;buttons.c: 42: j+=1;
 "42
 [e =+ _j -> -> 1 `i `c ]
-[; ;buttons.c: 44: if(j == 1)
+[; ;buttons.c: 44: if(j==1)
 "44
 [e $ ! == -> _j `i -> 1 `i 1573  ]
 [; ;buttons.c: 45: {
@@ -13311,7 +13311,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e :U 1573 ]
 [; ;buttons.c: 47: }
-[; ;buttons.c: 49: if (j >10)
+[; ;buttons.c: 49: if (j>10)
 "49
 [e $ ! > -> _j `i -> 10 `i 1574  ]
 [; ;buttons.c: 50: {
@@ -13320,7 +13320,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;buttons.c: 51: _delay((unsigned long)((25)*(32000000/4000.0)));
 "51
 [e ( __delay (1 -> * -> -> 25 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;buttons.c: 52: j = 10;
+[; ;buttons.c: 52: j=10;
 "52
 [e = _j -> -> 10 `i `c ]
 [; ;buttons.c: 53: return (lastButton);
@@ -13342,7 +13342,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e :U 1570 ]
 [; ;buttons.c: 57: }
-[; ;buttons.c: 59: j = 0;
+[; ;buttons.c: 59: j=0;
 "59
 [e = _j -> -> 0 `i `c ]
 [; ;buttons.c: 61: end:
