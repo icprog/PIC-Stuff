@@ -17562,6 +17562,8 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
+void PWM1_LoadDutyValue(uint16_t dutyCycle1);
+
 # 17 "tmr.h"
 void TMR2_Initialize(void);
 
@@ -17577,32 +17579,32 @@ int16_t Vanalogs[4] = {0,0,0,0};
 int16_t Ianalogs[4] = {0,0,0,0};
 extern int16_t voltage[4];
 extern int16_t current[4];
-int16_t batteryTemp = 300;
+int16_t batteryTemp = 250;
 
 # 42
 void main(void)
 {
-int16_t MPPT0 = 1550;
-int16_t MPPT1 = 1550;
+int16_t MPPT0 = 3144;
+int16_t MPPT1 = 3144;
 
+extern uint8_t batteryState[2];
+uint8_t displayRefresh = 0;
 uint16_t dutyCycle6 = 1023;
 uint16_t dutyCycle7 = 1023;
-uint16_t dutyCycle1 = 60;
-int16_t IOutTotal = 0;
-uint8_t j = 0;
-uint8_t slowLoop = 200;
-uint8_t displayRefresh = 0;
+uint16_t dutyCycle1 = 260;
 float efficiency = 0;
-extern int8_t Imode[2];
-extern int16_t Vref[2];
-extern int16_t Iref[2];
-uint8_t menuButton = 0;
 uint16_t faultCount = 0;
 uint16_t faultNotReset = 0;
-extern int8_t VHoldMode[2];
-extern uint8_t batteryState[2];
-
 extern uint16_t IminCount[2];
+extern int8_t Imode[2];
+int16_t IOutTotal = 0;
+extern int16_t Iref[2];
+uint8_t j = 0;
+uint8_t menuButton = 0;
+uint8_t slowLoop = 200;
+uint16_t tempFanOutput = 60;
+extern int8_t VHoldMode[2];
+extern int16_t Vref[2];
 
 
 SYSTEM_Initialize();
@@ -17712,13 +17714,16 @@ else dutyCycle7=dutyCycle7;
 
 slowLoop+=1;
 
+dutyCycle1=600;
 
+
+PWM1_LoadDutyValue(dutyCycle1);
 PWM6_LoadDutyValue(dutyCycle6);
 PWM7_LoadDutyValue(dutyCycle7);
 
 menuButton = readButton();
-if(menuButton == 2) if(MPPT1>1375)MPPT1-=1;
-if(menuButton == 3)if(MPPT1<2200)MPPT1+=1;
+if(menuButton == 2) if(MPPT0>2700)MPPT1-=1;
+if(menuButton == 3)if(MPPT1<3200)MPPT1+=1;
 if(menuButton == 1)LCDInit();
 
 
@@ -17728,7 +17733,14 @@ if(slowLoop>250)
 
 IOutTotal=current[0]+current[1];
 
-# 219
+# 216
+if(!(RB2))
+{
+dutyCycle1=550;
+batteryState[0]=CHARGE;
+batteryState[1]=CHARGE;
+}
+
 ADREF = 0x00;
 batteryTemp=tempCalc(ADCRead(9));
 ADREF = 0x03;
@@ -17770,16 +17782,13 @@ LCDWriteCharacter('A');
 
 { gotoXY(80,2); LCDWriteInt(batteryState[0],1, 0, 0);};
 
-{ gotoXY(0,3); LCDWriteInt(voltage[3],4, 2, 0);};
-LCDWriteCharacter('V');
+# 275
+{ gotoXY(0,3); LCDWriteInt(IOutTotal,4, 1, 0);};
+{ gotoXY(24,3); LCDWriteInt((uint16_t)IOutTotal*4+100,4, 0, 0);};
+{ gotoXY(44,3); LCDWriteInt(tempFanOutput,3, 0, 0);};
+{ gotoXY(64,3); LCDWriteInt(dutyCycle1,3, 0, 0);};
 
-{ gotoXY(26,3); LCDWriteInt(voltage[1],4, 2, 0);};
-LCDWriteCharacter('V');
 
-{ gotoXY(52,3); LCDWriteInt(Vref[1],4, 2, 0);};
-LCDWriteCharacter('V');
-
-{ gotoXY(80,3); LCDWriteInt(Imode[1],1, 0, 0);};
 
 { gotoXY(0,4); LCDWriteInt(current[3],3, 1, 0);};
 LCDWriteCharacter('A');
@@ -17804,7 +17813,7 @@ LCDWriteCharacter(' ');
 LCDWriteCharacter(123);
 LCDWriteCharacter('C');
 
-# 362
+# 373
 if(batteryState[0] > FINISHED)
 {
 cc_cv_mode(0);

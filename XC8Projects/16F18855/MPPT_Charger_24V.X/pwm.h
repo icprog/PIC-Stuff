@@ -10,6 +10,6 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
-//void PWM1_LoadDutyValue(uint16_t dutyCycle1);
+void PWM1_LoadDutyValue(uint16_t dutyCycle1);
 
 #endif

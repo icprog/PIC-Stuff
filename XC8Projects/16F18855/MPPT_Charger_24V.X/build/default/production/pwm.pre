@@ -17572,6 +17572,8 @@ void PWM6_LoadDutyValue(uint16_t dutyCycle);
 
 void PWM7_LoadDutyValue(uint16_t dutyCycle);
 
+void PWM1_LoadDutyValue(uint16_t dutyCycle1);
+
 # 3 "pwm.c"
 void PWM_Initialize(void)
 {
@@ -17592,7 +17594,11 @@ PWM7DCL = 0x00;
 
 CCPTMRS1bits.P7TSEL = 0x02;
 
-# 27
+
+CCP1CONbits.CCP1EN = 1;
+CCP1CONbits.CCP1FMT = 1;
+CCP1CONbits.CCP1MODE = 0xF;
+CCPTMRS0bits.C1TSEL = 0x1;
 }
 
 
@@ -17610,3 +17616,8 @@ PWM7DCH = (dutyCycle7 & 0x03FC)>>2;
 PWM7DCL = (dutyCycle7 & 0x0003)<<6;
 }
 
+void PWM1_LoadDutyValue(uint16_t dutyCycle1)
+{
+CCPR1H = (dutyCycle1& 0x03FC)>>2;
+CCPR1L = (dutyCycle1 & 0x0003)<<6;
+}

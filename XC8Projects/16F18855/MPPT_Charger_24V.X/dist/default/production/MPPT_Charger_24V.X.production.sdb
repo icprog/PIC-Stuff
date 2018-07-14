@@ -36,7 +36,7 @@ channel_Temp 61
 channel_DAC1 62
 channel_FVR 63
 ]
-"362
+"219
 [e E14319 charge_states `uc
 IDLE 0
 FAULT 1
@@ -109,13 +109,13 @@ FLOAT 5
 [v _LCDWrite LCDWrite `(v  1 e 1 0 ]
 "42 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_24V.X\main.c
 [v _main main `(v  1 e 1 0 ]
-"376
+"387
 [v _calculateCurrent0 calculateCurrent0 `(v  1 e 1 0 ]
-"388
+"399
 [v _calculateCurrent1 calculateCurrent1 `(v  1 e 1 0 ]
-"400
+"411
 [v _calculateCurrent2 calculateCurrent2 `(v  1 e 1 0 ]
-"412
+"423
 [v _calculateCurrent3 calculateCurrent3 `(v  1 e 1 0 ]
 "5 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_24V.X\pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
@@ -125,6 +125,8 @@ FLOAT 5
 [v _PWM6_LoadDutyValue PWM6_LoadDutyValue `(v  1 e 1 0 ]
 "37
 [v _PWM7_LoadDutyValue PWM7_LoadDutyValue `(v  1 e 1 0 ]
+"44
+[v _PWM1_LoadDutyValue PWM1_LoadDutyValue `(v  1 e 1 0 ]
 "71 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_24V.X\system.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
 "89
@@ -278,6 +280,23 @@ FLOAT 5
 [v _ADSTPTL ADSTPTL `VEuc  1 e 1 @274 ]
 "3137
 [v _ADSTPTH ADSTPTH `VEuc  1 e 1 @275 ]
+[s S395 . 1 `uc 1 C1TSEL 1 0 :2:0 
+`uc 1 C2TSEL 1 0 :2:2 
+`uc 1 C3TSEL 1 0 :2:4 
+`uc 1 C4TSEL 1 0 :2:6 
+]
+"8946
+[s S400 . 1 `uc 1 C1TSEL0 1 0 :1:0 
+`uc 1 C1TSEL1 1 0 :1:1 
+`uc 1 C2TSEL0 1 0 :1:2 
+`uc 1 C2TSEL1 1 0 :1:3 
+`uc 1 C3TSEL0 1 0 :1:4 
+`uc 1 C3TSEL1 1 0 :1:5 
+`uc 1 C4TSEL0 1 0 :1:6 
+`uc 1 C4TSEL1 1 0 :1:7 
+]
+[u S409 . 1 `S395 1 . 1 0 `S400 1 . 1 0 ]
+[v _CCPTMRS0bits CCPTMRS0bits `VES409  1 e 1 @542 ]
 [s S307 . 1 `uc 1 C5TSEL 1 0 :2:0 
 `uc 1 P6TSEL 1 0 :2:2 
 `uc 1 P7TSEL 1 0 :2:4 
@@ -298,16 +317,16 @@ FLOAT 5
 [v _T2PR T2PR `VEuc  1 e 1 @653 ]
 "9157
 [v _T2CON T2CON `VEuc  1 e 1 @654 ]
-[s S409 . 1 `uc 1 OUTPS 1 0 :4:0 
+[s S513 . 1 `uc 1 OUTPS 1 0 :4:0 
 `uc 1 CKPS 1 0 :3:4 
 `uc 1 ON 1 0 :1:7 
 ]
 "9193
-[s S413 . 1 `uc 1 T2OUTPS 1 0 :4:0 
+[s S517 . 1 `uc 1 T2OUTPS 1 0 :4:0 
 `uc 1 T2CKPS 1 0 :3:4 
 `uc 1 T2ON 1 0 :1:7 
 ]
-[s S417 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
+[s S521 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
 `uc 1 T2OUTPS1 1 0 :1:1 
 `uc 1 T2OUTPS2 1 0 :1:2 
 `uc 1 T2OUTPS3 1 0 :1:3 
@@ -315,7 +334,7 @@ FLOAT 5
 `uc 1 T2CKPS1 1 0 :1:5 
 `uc 1 T2CKPS2 1 0 :1:6 
 ]
-[s S425 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S529 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -324,8 +343,8 @@ FLOAT 5
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR2ON 1 0 :1:7 
 ]
-[u S434 . 1 `S409 1 . 1 0 `S413 1 . 1 0 `S417 1 . 1 0 `S425 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES434  1 e 1 @654 ]
+[u S538 . 1 `S513 1 . 1 0 `S517 1 . 1 0 `S521 1 . 1 0 `S529 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES538  1 e 1 @654 ]
 "9303
 [v _T2HLT T2HLT `VEuc  1 e 1 @655 ]
 "9431
@@ -339,11 +358,11 @@ FLOAT 5
 "9757
 [v _T4CON T4CON `VEuc  1 e 1 @660 ]
 "9793
-[s S475 . 1 `uc 1 T4OUTPS 1 0 :4:0 
+[s S579 . 1 `uc 1 T4OUTPS 1 0 :4:0 
 `uc 1 T4CKPS 1 0 :3:4 
 `uc 1 T4ON 1 0 :1:7 
 ]
-[s S479 . 1 `uc 1 T4OUTPS0 1 0 :1:0 
+[s S583 . 1 `uc 1 T4OUTPS0 1 0 :1:0 
 `uc 1 T4OUTPS1 1 0 :1:1 
 `uc 1 T4OUTPS2 1 0 :1:2 
 `uc 1 T4OUTPS3 1 0 :1:3 
@@ -351,7 +370,7 @@ FLOAT 5
 `uc 1 T4CKPS1 1 0 :1:5 
 `uc 1 T4CKPS2 1 0 :1:6 
 ]
-[s S487 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S591 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -360,14 +379,47 @@ FLOAT 5
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR4ON 1 0 :1:7 
 ]
-[u S496 . 1 `S409 1 . 1 0 `S475 1 . 1 0 `S479 1 . 1 0 `S487 1 . 1 0 ]
-[v _T4CONbits T4CONbits `VES496  1 e 1 @660 ]
+[u S600 . 1 `S513 1 . 1 0 `S579 1 . 1 0 `S583 1 . 1 0 `S591 1 . 1 0 ]
+[v _T4CONbits T4CONbits `VES600  1 e 1 @660 ]
 "9903
 [v _T4HLT T4HLT `VEuc  1 e 1 @661 ]
 "10031
 [v _T4CLKCON T4CLKCON `VEuc  1 e 1 @662 ]
 "10189
 [v _T4RST T4RST `VEuc  1 e 1 @663 ]
+"10888
+[v _CCPR1L CCPR1L `VEuc  1 e 1 @780 ]
+"10908
+[v _CCPR1H CCPR1H `VEuc  1 e 1 @781 ]
+[s S336 . 1 `uc 1 MODE 1 0 :4:0 
+`uc 1 FMT 1 0 :1:4 
+`uc 1 OUT 1 0 :1:5 
+`uc 1 OE 1 0 :1:6 
+`uc 1 EN 1 0 :1:7 
+]
+"10966
+[s S342 . 1 `uc 1 MODE0 1 0 :1:0 
+`uc 1 MODE1 1 0 :1:1 
+`uc 1 MODE2 1 0 :1:2 
+`uc 1 MODE3 1 0 :1:3 
+]
+[s S347 . 1 `uc 1 CCP1MODE 1 0 :4:0 
+`uc 1 CCP1FMT 1 0 :1:4 
+`uc 1 CCP1OUT 1 0 :1:5 
+`uc 1 CCP1OE 1 0 :1:6 
+`uc 1 CCP1EN 1 0 :1:7 
+]
+[s S353 . 1 `uc 1 CCP1MODE0 1 0 :1:0 
+`uc 1 CCP1MODE1 1 0 :1:1 
+`uc 1 CCP1MODE2 1 0 :1:2 
+`uc 1 CCP1MODE3 1 0 :1:3 
+]
+[s S358 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 P1M0 1 0 :1:6 
+`uc 1 P1M1 1 0 :1:7 
+]
+[u S362 . 1 `S336 1 . 1 0 `S342 1 . 1 0 `S347 1 . 1 0 `S353 1 . 1 0 `S358 1 . 1 0 ]
+[v _CCP1CONbits CCP1CONbits `VES362  1 e 1 @782 ]
 "12171
 [v _PWM6DCL PWM6DCL `VEuc  1 e 1 @908 ]
 "12237
@@ -380,7 +432,7 @@ FLOAT 5
 [v _PWM7DCH PWM7DCH `VEuc  1 e 1 @913 ]
 "12709
 [v _PWM7CON PWM7CON `VEuc  1 e 1 @914 ]
-[s S392 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[s S496 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 TMR3IF 1 0 :1:2 
 `uc 1 TMR4IF 1 0 :1:3 
@@ -388,8 +440,8 @@ FLOAT 5
 `uc 1 TMR6IF 1 0 :1:5 
 ]
 "21299
-[u S399 . 1 `S392 1 . 1 0 ]
-[v _PIR4bits PIR4bits `VES399  1 e 1 @1808 ]
+[u S503 . 1 `S496 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES503  1 e 1 @1808 ]
 [s S272 . 1 `uc 1 INTE 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIE 1 0 :1:4 
@@ -456,33 +508,35 @@ FLOAT 5
 "42
 [v _main main `(v  1 e 1 0 ]
 {
-"54
-[v main@efficiency efficiency `f  1 a 3 0 ]
-"48
-[v main@dutyCycle7 dutyCycle7 `ui  1 a 2 21 ]
-"47
-[v main@dutyCycle6 dutyCycle6 `ui  1 a 2 19 ]
-"45
-[v main@MPPT1 MPPT1 `i  1 a 2 15 ]
-"44
-[v main@MPPT0 MPPT0 `i  1 a 2 13 ]
-"60
-[v main@faultNotReset faultNotReset `ui  1 a 2 9 ]
-"59
-[v main@faultCount faultCount `ui  1 a 2 7 ]
-"50
-[v main@IOutTotal IOutTotal `i  1 a 2 5 ]
-"49
-[v main@dutyCycle1 dutyCycle1 `ui  1 a 2 3 ]
-"51
-[v main@j j `uc  1 a 1 18 ]
-"58
-[v main@menuButton menuButton `uc  1 a 1 17 ]
-"53
-[v main@displayRefresh displayRefresh `uc  1 a 1 12 ]
 "52
-[v main@slowLoop slowLoop `uc  1 a 1 11 ]
-"373
+[v main@efficiency efficiency `f  1 a 3 0 ]
+"50
+[v main@dutyCycle7 dutyCycle7 `ui  1 a 2 23 ]
+"49
+[v main@dutyCycle6 dutyCycle6 `ui  1 a 2 21 ]
+"44
+[v main@MPPT0 MPPT0 `i  1 a 2 17 ]
+"51
+[v main@dutyCycle1 dutyCycle1 `ui  1 a 2 15 ]
+"45
+[v main@MPPT1 MPPT1 `i  1 a 2 13 ]
+"57
+[v main@IOutTotal IOutTotal `i  1 a 2 11 ]
+"62
+[v main@tempFanOutput tempFanOutput `ui  1 a 2 7 ]
+"54
+[v main@faultNotReset faultNotReset `ui  1 a 2 5 ]
+"53
+[v main@faultCount faultCount `ui  1 a 2 3 ]
+"59
+[v main@j j `uc  1 a 1 20 ]
+"60
+[v main@menuButton menuButton `uc  1 a 1 19 ]
+"61
+[v main@slowLoop slowLoop `uc  1 a 1 10 ]
+"48
+[v main@displayRefresh displayRefresh `uc  1 a 1 9 ]
+"384
 } 0
 "4 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_24V.X\tempCalc.c
 [v _tempCalc tempCalc `(i  1 e 2 0 ]
@@ -596,25 +650,25 @@ FLOAT 5
 [v cc_cv_mode@z z `uc  1 a 1 37 ]
 "130
 } 0
-"412 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_24V.X\main.c
+"423 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_24V.X\main.c
 [v _calculateCurrent3 calculateCurrent3 `(v  1 e 1 0 ]
 {
-"422
+"433
 } 0
-"400
+"411
 [v _calculateCurrent2 calculateCurrent2 `(v  1 e 1 0 ]
 {
-"410
+"421
 } 0
-"388
+"399
 [v _calculateCurrent1 calculateCurrent1 `(v  1 e 1 0 ]
 {
-"398
+"409
 } 0
-"376
+"387
 [v _calculateCurrent0 calculateCurrent0 `(v  1 e 1 0 ]
 {
-"386
+"397
 } 0
 "56 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\ftdiv.c
 [v ___ftdiv __ftdiv `(f  1 e 3 0 ]
@@ -710,6 +764,12 @@ FLOAT 5
 [v PWM6_LoadDutyValue@dutyCycle6 dutyCycle6 `ui  1 p 2 0 ]
 "35
 } 0
+"44
+[v _PWM1_LoadDutyValue PWM1_LoadDutyValue `(v  1 e 1 0 ]
+{
+[v PWM1_LoadDutyValue@dutyCycle1 dutyCycle1 `ui  1 p 2 0 ]
+"48
+} 0
 "176 D:\PIC-Stuff\XC8Projects\16F18855\MPPT_Charger_24V.X\lcd.c
 [v _LCDWriteString LCDWriteString `(v  1 e 1 0 ]
 {
@@ -730,7 +790,7 @@ FLOAT 5
 [v LCDWriteInt@numPlaces numPlaces `uc  1 p 1 3 ]
 [v LCDWriteInt@sign sign `uc  1 p 1 4 ]
 "191
-[v LCDWriteInt@F14388 F14388 `[5]uc  1 s 5 F14388 ]
+[v LCDWriteInt@F14390 F14390 `[5]uc  1 s 5 F14390 ]
 "244
 } 0
 "6 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\lwmod.c

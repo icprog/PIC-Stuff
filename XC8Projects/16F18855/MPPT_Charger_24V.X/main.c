@@ -17,7 +17,7 @@
 #define     Buck0Output     dutyCycle6
 #define     Buck1Output     dutyCycle7
 #define     FanOutput       dutyCycle1
-#define     NewFanOutput    (uint16_t)IOutTotal/2+10
+#define     NewFanOutput    (uint16_t)IOutTotal*4+100
 
 #define     Power0In        VIn0/100*IIn0/10
 #define     Power0Out       VOut0/100*IOut0/10
@@ -31,7 +31,7 @@ int16_t         Vanalogs[4]         =   {0,0,0,0};
 int16_t         Ianalogs[4]         =   {0,0,0,0};
 extern int16_t  voltage[4];                    // Store calculated Voltage values
 extern int16_t  current[4];                    // Store Calculated Current Values
-int16_t         batteryTemp         =   300;
+int16_t         batteryTemp         =   250;
 
 // </editor-fold>
 
@@ -41,27 +41,27 @@ int16_t         batteryTemp         =   300;
 
 void main(void)
 {
-    int16_t         MPPT0           =   1550;                   // Need to tune to correct value    
-    int16_t         MPPT1           =   1550;                   // Change one vs the other, to see where MPPT is at.
+    int16_t         MPPT0           =   3144;                   // Need to tune to correct value    
+    int16_t         MPPT1           =   3144;                   // Change one vs the other, to see where MPPT is at.
     
+    extern uint8_t  batteryState[2];
+    uint8_t         displayRefresh  =   0;
     uint16_t        dutyCycle6      =   1023;                   // 1023 is as Low as can go
     uint16_t        dutyCycle7      =   1023;                    // 126 is midpoint, allow adjusting up or down
-    uint16_t        dutyCycle1      =   60;                     // 30 is required for minimum speed
-    int16_t         IOutTotal       =   0;
-    uint8_t         j               =   0;
-    uint8_t         slowLoop        =   200;
-    uint8_t         displayRefresh  =   0;
+    uint16_t        dutyCycle1      =   260;                     // 30 is required for minimum speed
     float           efficiency      =   0;
-    extern int8_t   Imode[2];
-    extern int16_t  Vref[2];                                       // setpoint for voltage output
-    extern int16_t  Iref[2];
-    uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
     uint16_t        faultCount      =   0;                      // Keep Count of Current Fault latches/Resets
     uint16_t        faultNotReset   =   0;
-    extern int8_t   VHoldMode[2];
-    extern uint8_t  batteryState[2];
-//    uint8_t         tempFanOutput   =   0;
     extern uint16_t IminCount[2];
+    extern int8_t   Imode[2];
+    int16_t         IOutTotal       =   0;
+    extern int16_t  Iref[2];
+    uint8_t         j               =   0;
+    uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
+    uint8_t         slowLoop        =   200;
+    uint16_t        tempFanOutput   =   60;
+    extern int8_t   VHoldMode[2];
+    extern int16_t  Vref[2];                                       // setpoint for voltage output
 
     
     SYSTEM_Initialize();
@@ -181,15 +181,18 @@ void main(void)
         }
 
         slowLoop+=1;
-   
-//            PWM1_LoadDutyValue(FanOutput);
-            PWM6_LoadDutyValue(Buck0Output);
-            PWM7_LoadDutyValue(Buck1Output);
+        
+        FanOutput=600;
 
-            menuButton = readButton();
-            if(menuButton == Down) if(MPPT1>1375)MPPT1-=1;
-            if(menuButton == Up)if(MPPT1<2200)MPPT1+=1;
-            if(menuButton == Enter)LCDInit();
+   
+        PWM1_LoadDutyValue(FanOutput);
+        PWM6_LoadDutyValue(Buck0Output);
+        PWM7_LoadDutyValue(Buck1Output);
+
+        menuButton = readButton();
+        if(menuButton == Down) if(MPPT0>2700)MPPT1-=1;
+        if(menuButton == Up)if(MPPT1<3200)MPPT1+=1;
+        if(menuButton == Enter)LCDInit();
 //        }
   //      fastLoop+=1;
         
@@ -197,24 +200,25 @@ void main(void)
         {
             
             IOutTotal=IOut0+IOut1;
+ //           FanOutput=600;
             
-//            if(IOutTotal>20)
+//            if(IOutTotal>40)
   //          {
-    //            if(NewFanOutput>FanOutput)FanOutput+=1;else FanOutput-=1;
-    //            if(NewFanOutput>tempFanOutput)if(tempFanOutput<75)tempFanOutput+=1;else if(tempFanOutput>0)tempFanOutput-=1;
-  //              FanOutput=tempFanOutput;
-//                if(FanOutput<19)FanOutput=0;
-      //      }
-        //    else
-//            {
-  //              FanOutput=0;
-    //        }
-      //      if(Fault)
-        //    {
-          //      FanOutput=55;
-            //    batteryState[0]=CHARGE;
-              //  batteryState[1]=CHARGE;
+    //            if(NewFanOutput>FanOutput)FanOutput+=5;else FanOutput-=5;
+      //          if(NewFanOutput>tempFanOutput)if(tempFanOutput<750)tempFanOutput+=5;else if(tempFanOutput>0)tempFanOutput-=5;
+        //        FanOutput=tempFanOutput;
+          //      if(FanOutput<190)FanOutput=0;
             //}
+//            else
+  //          {
+    //            FanOutput=0;
+      //      }
+            if(Fault)
+            {
+                FanOutput=550;
+                batteryState[0]=CHARGE;
+                batteryState[1]=CHARGE;
+            }
             
             ADREF = 0x00;                                               // ADNREF VSS; ADPREF VDD;
             batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB2
@@ -257,7 +261,7 @@ void main(void)
             //LCDWriteCharacter(' ');
             LCDWriteIntXY(80,2,batteryState[0],1,0,0);
 
-            LCDWriteIntXY(0,3,VIn1,4,2,0);
+/*            LCDWriteIntXY(0,3,VIn1,4,2,0);
             LCDWriteCharacter('V');
           //  LCDWriteCharacter(' ');
             LCDWriteIntXY(26,3,VOut1,4,2,0);
@@ -267,6 +271,13 @@ void main(void)
             LCDWriteCharacter('V');
       //      LCDWriteCharacter(' ');
             LCDWriteIntXY(80,3,Imode[1],1,0,0);
+  */ 
+            LCDWriteIntXY(0,3,IOutTotal,4,1,0);
+            LCDWriteIntXY(24,3,NewFanOutput,4,0,0);
+            LCDWriteIntXY(44,3,tempFanOutput,3,0,0);
+            LCDWriteIntXY(64,3,FanOutput,3,0,0);
+            
+
             
             LCDWriteIntXY(0,4,IIn1,3,1,0);
             LCDWriteCharacter('A');
