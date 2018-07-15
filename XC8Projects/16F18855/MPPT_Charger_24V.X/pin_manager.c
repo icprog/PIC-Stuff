@@ -31,7 +31,7 @@ void PIN_MANAGER_Initialize(void)
 
     RA6PPS = 0x0E;                      // RA6->PWM6:PWM6 OUT;
     RA7PPS = 0x0F;                      // RA7->PWM7:PWM7 OUT;
-    RB0PPS = 0x09;                      // RB0->CCP1:PWM1 Output
+//    RB0PPS = 0x09;                      // RB0->CCP1:PWM1 Output
     PPSLOCK = 0x55;
     PPSLOCK = 0xAA;
     PPSLOCKbits.PPSLOCKED = 0x01;       // lock PPS

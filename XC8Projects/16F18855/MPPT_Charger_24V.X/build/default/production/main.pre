@@ -17730,10 +17730,11 @@ if(menuButton == 1)LCDInit();
 
 if(slowLoop>250)
 {
+RB0=1-RB0;
 
 IOutTotal=current[0]+current[1];
 
-# 216
+# 217
 if(!(RB2))
 {
 dutyCycle1=550;
@@ -17782,7 +17783,7 @@ LCDWriteCharacter('A');
 
 { gotoXY(80,2); LCDWriteInt(batteryState[0],1, 0, 0);};
 
-# 275
+# 276
 { gotoXY(0,3); LCDWriteInt(IOutTotal,4, 1, 0);};
 { gotoXY(24,3); LCDWriteInt((uint16_t)IOutTotal*4+100,4, 0, 0);};
 { gotoXY(44,3); LCDWriteInt(tempFanOutput,3, 0, 0);};
@@ -17813,7 +17814,7 @@ LCDWriteCharacter(' ');
 LCDWriteCharacter(123);
 LCDWriteCharacter('C');
 
-# 373
+# 374
 if(batteryState[0] > FINISHED)
 {
 cc_cv_mode(0);

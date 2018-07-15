@@ -198,6 +198,7 @@ void main(void)
         
         if(slowLoop>250)
         {
+            RB0=1-RB0;
             
             IOutTotal=IOut0+IOut1;
  //           FanOutput=600;
