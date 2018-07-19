@@ -198,31 +198,29 @@ void main(void)
         
         if(slowLoop>250)
         {
-            RB0=1-RB0;
-            
             IOutTotal=IOut0+IOut1;
  //           FanOutput=600;
             
-//            if(IOutTotal>40)
-  //          {
-    //            if(NewFanOutput>FanOutput)FanOutput+=5;else FanOutput-=5;
-      //          if(NewFanOutput>tempFanOutput)if(tempFanOutput<750)tempFanOutput+=5;else if(tempFanOutput>0)tempFanOutput-=5;
-        //        FanOutput=tempFanOutput;
-          //      if(FanOutput<190)FanOutput=0;
-            //}
-//            else
-  //          {
-    //            FanOutput=0;
-      //      }
+            if(IOutTotal>0)
+            {
+                if(NewFanOutput>FanOutput)FanOutput+=1;else FanOutput-=1;
+                if(NewFanOutput>tempFanOutput)if(tempFanOutput<75)tempFanOutput+=1;else if(tempFanOutput>0)tempFanOutput-=1;
+                FanOutput=tempFanOutput;
+                if(FanOutput<1)FanOutput=0;
+            }
+            else
+            {
+                FanOutput=0;
+            }
             if(Fault)
             {
-                FanOutput=550;
+                FanOutput=55;
                 batteryState[0]=CHARGE;
                 batteryState[1]=CHARGE;
             }
             
             ADREF = 0x00;                                               // ADNREF VSS; ADPREF VDD;
-            batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB2
+            batteryTemp=tempCalc(ADCRead(8));                           // Read Thermistor on RB1
             ADREF = 0x03;                                               // ADNREF VSS; ADPREF FVR;
             
             displayRefresh+=1;
