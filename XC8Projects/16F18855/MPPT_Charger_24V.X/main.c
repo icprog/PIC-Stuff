@@ -17,7 +17,7 @@
 #define     Buck0Output     dutyCycle6
 #define     Buck1Output     dutyCycle7
 #define     FanOutput       dutyCycle1
-#define     NewFanOutput    (uint16_t)IOutTotal*4+100
+#define     NewFanOutput    (uint16_t)IOutTotal*4+10
 
 #define     Power0In        VIn0/100*IIn0/10
 #define     Power0Out       VOut0/100*IOut0/10
@@ -182,7 +182,7 @@ void main(void)
 
         slowLoop+=1;
         
-        FanOutput=600;
+//        FanOutput=600;
 
    
         PWM1_LoadDutyValue(FanOutput);
@@ -198,15 +198,15 @@ void main(void)
         
         if(slowLoop>250)
         {
-            IOutTotal=IOut0+IOut1;
+            IOutTotal=IOut0;
  //           FanOutput=600;
             
-            if(IOutTotal>0)
+            if(IOutTotal>2)
             {
                 if(NewFanOutput>FanOutput)FanOutput+=1;else FanOutput-=1;
                 if(NewFanOutput>tempFanOutput)if(tempFanOutput<75)tempFanOutput+=1;else if(tempFanOutput>0)tempFanOutput-=1;
                 FanOutput=tempFanOutput;
-                if(FanOutput<1)FanOutput=0;
+                if(FanOutput<19)FanOutput=0;
             }
             else
             {

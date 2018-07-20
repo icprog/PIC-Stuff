@@ -17714,7 +17714,7 @@ else dutyCycle7=dutyCycle7;
 
 slowLoop+=1;
 
-dutyCycle1=600;
+
 
 
 PWM1_LoadDutyValue(dutyCycle1);
@@ -17730,15 +17730,15 @@ if(menuButton == 1)LCDInit();
 
 if(slowLoop>250)
 {
-IOutTotal=current[0]+current[1];
+IOutTotal=current[0];
 
 
-if(IOutTotal>0)
+if(IOutTotal>2)
 {
-if((uint16_t)IOutTotal*4+100>dutyCycle1)dutyCycle1+=1;else dutyCycle1-=1;
-if((uint16_t)IOutTotal*4+100>tempFanOutput)if(tempFanOutput<75)tempFanOutput+=1;else if(tempFanOutput>0)tempFanOutput-=1;
+if((uint16_t)IOutTotal*4+10>dutyCycle1)dutyCycle1+=1;else dutyCycle1-=1;
+if((uint16_t)IOutTotal*4+10>tempFanOutput)if(tempFanOutput<75)tempFanOutput+=1;else if(tempFanOutput>0)tempFanOutput-=1;
 dutyCycle1=tempFanOutput;
-if(dutyCycle1<1)dutyCycle1=0;
+if(dutyCycle1<19)dutyCycle1=0;
 }
 else
 {
@@ -17794,7 +17794,7 @@ LCDWriteCharacter('A');
 
 # 274
 { gotoXY(0,3); LCDWriteInt(IOutTotal,4, 1, 0);};
-{ gotoXY(24,3); LCDWriteInt((uint16_t)IOutTotal*4+100,4, 0, 0);};
+{ gotoXY(24,3); LCDWriteInt((uint16_t)IOutTotal*4+10,4, 0, 0);};
 { gotoXY(44,3); LCDWriteInt(tempFanOutput,3, 0, 0);};
 { gotoXY(64,3); LCDWriteInt(dutyCycle1,3, 0, 0);};
 

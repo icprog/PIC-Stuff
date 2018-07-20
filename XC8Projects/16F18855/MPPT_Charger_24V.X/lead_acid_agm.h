@@ -16,9 +16,9 @@
 #ifdef PRESET1
     extern  int16_t                 batteryTemp;
 
-    #define CHARGING_VOLTAGE		1425+(int16_t)((250-batteryTemp)*.24)   // 14.45V @25C + Temperature compensation of 4mV/cell(24mV/monoblock))
+    #define CHARGING_VOLTAGE		1425 //+(int16_t)((250-batteryTemp)*.24)   // 14.45V @25C + Temperature compensation of 4mV/cell(24mV/monoblock))
 //    #define CHARGING_VOLTAGE		1440	// 14.40V
-	#define	FLOATING_VOLTAGE		1350+(int16_t)((250-batteryTemp)*.24)   // 13.50V @25C + Temperature compensation of 4mV/cell(24mV/monoblock))
+	#define	FLOATING_VOLTAGE		1350 //+(int16_t)((250-batteryTemp)*.24)   // 13.50V @25C + Temperature compensation of 4mV/cell(24mV/monoblock))
 	#define	CUTOFF_VOLTAGE			1075                                    // 10.75V
 
 	#define	ILIM_PRECHARGE			10                                      // 1A, Small current set at PRECHARGE stage

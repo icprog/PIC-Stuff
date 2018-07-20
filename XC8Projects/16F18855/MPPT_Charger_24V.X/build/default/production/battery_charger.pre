@@ -17602,7 +17602,7 @@ void Init_Battery_State_Machine(uint8_t z)
 batteryState[z] =PRECHARGE;
 stateCounter[z] =5;
 Iref[z] =10;
-Vref[z] =1425+(int16_t)((250-batteryTemp)*.24);
+Vref[z] =1425;
 Imin[z] =15;
 IminCount[z] = 60;
 }
@@ -17630,7 +17630,7 @@ Iref[z]=35;
 }
 else if(batteryState[z]==CHARGE)
 {
-Vref[z]=1425+(int16_t)((250-batteryTemp)*.24);
+Vref[z]=1425;
 if(!(Imode[z]))
 {
 if(current[z] < Imin[z])
@@ -17651,7 +17651,7 @@ else if(IminCount[z]<60)IminCount[z]+=1;
 }
 else if(batteryState[z] == FLOAT)
 {
-Vref[z]=1350+(int16_t)((250-batteryTemp)*.24);
+Vref[z]=1350;
 Iref[z]=15;
 Imode[z]=0;
 }
@@ -17698,10 +17698,10 @@ if(!(Imode[z]))
 {
 if(batteryState[z]==FLOAT)
 {
-if(voltage[z]<1350+(int16_t)((250-batteryTemp)*.24)-70)
+if(voltage[z]<1350-70)
 {
 batteryState[z]=CHARGE;
-Vref[z]=1425+(int16_t)((250-batteryTemp)*.24);
+Vref[z]=1425;
 Iref[z]=35;
 
 

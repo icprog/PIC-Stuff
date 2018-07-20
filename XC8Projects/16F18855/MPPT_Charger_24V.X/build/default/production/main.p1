@@ -13640,9 +13640,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 183: slowLoop+=1;
 "183
 [e =+ _slowLoop -> -> 1 `i `uc ]
-[; ;main.c: 185: dutyCycle1=600;
-"185
-[e = _dutyCycle1 -> -> 600 `i `ui ]
 [; ;main.c: 188: PWM1_LoadDutyValue(dutyCycle1);
 "188
 [e ( _PWM1_LoadDutyValue (1 _dutyCycle1 ]
@@ -13680,26 +13677,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 200: {
 "200
 {
-[; ;main.c: 201: IOutTotal=current[0]+current[1];
+[; ;main.c: 201: IOutTotal=current[0];
 "201
-[e = _IOutTotal + *U + &U _current * -> -> -> 0 `i `ui `ux -> -> # *U &U _current `ui `ux *U + &U _current * -> -> -> 1 `i `ui `ux -> -> # *U &U _current `ui `ux ]
-[; ;main.c: 204: if(IOutTotal>0)
+[e = _IOutTotal *U + &U _current * -> -> -> 0 `i `ui `ux -> -> # *U &U _current `ui `ux ]
+[; ;main.c: 204: if(IOutTotal>2)
 "204
-[e $ ! > _IOutTotal -> 0 `i 1604  ]
+[e $ ! > _IOutTotal -> 2 `i 1604  ]
 [; ;main.c: 205: {
 "205
 {
-[; ;main.c: 206: if((uint16_t)IOutTotal*4+100>dutyCycle1)dutyCycle1+=1;else dutyCycle1-=1;
+[; ;main.c: 206: if((uint16_t)IOutTotal*4+10>dutyCycle1)dutyCycle1+=1;else dutyCycle1-=1;
 "206
-[e $ ! > + * -> _IOutTotal `ui -> -> 4 `i `ui -> -> 100 `i `ui _dutyCycle1 1605  ]
+[e $ ! > + * -> _IOutTotal `ui -> -> 4 `i `ui -> -> 10 `i `ui _dutyCycle1 1605  ]
 [e =+ _dutyCycle1 -> -> 1 `i `ui ]
 [e $U 1606  ]
 [e :U 1605 ]
 [e =- _dutyCycle1 -> -> 1 `i `ui ]
 [e :U 1606 ]
-[; ;main.c: 207: if((uint16_t)IOutTotal*4+100>tempFanOutput)if(tempFanOutput<75)tempFanOutput+=1;else if(tempFanOutput>0)tempFanOutput-=1;
+[; ;main.c: 207: if((uint16_t)IOutTotal*4+10>tempFanOutput)if(tempFanOutput<75)tempFanOutput+=1;else if(tempFanOutput>0)tempFanOutput-=1;
 "207
-[e $ ! > + * -> _IOutTotal `ui -> -> 4 `i `ui -> -> 100 `i `ui _tempFanOutput 1607  ]
+[e $ ! > + * -> _IOutTotal `ui -> -> 4 `i `ui -> -> 10 `i `ui _tempFanOutput 1607  ]
 [e $ ! < _tempFanOutput -> -> 75 `i `ui 1608  ]
 [e =+ _tempFanOutput -> -> 1 `i `ui ]
 [e $U 1609  ]
@@ -13712,9 +13709,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 1607 ]
 [; ;main.c: 208: dutyCycle1=tempFanOutput;
 [e = _dutyCycle1 _tempFanOutput ]
-[; ;main.c: 209: if(dutyCycle1<1)dutyCycle1=0;
+[; ;main.c: 209: if(dutyCycle1<19)dutyCycle1=0;
 "209
-[e $ ! < _dutyCycle1 -> -> 1 `i `ui 1611  ]
+[e $ ! < _dutyCycle1 -> -> 19 `i `ui 1611  ]
 [e = _dutyCycle1 -> -> 0 `i `ui ]
 [e :U 1611 ]
 "210
@@ -13877,11 +13874,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _gotoXY (2 , -> -> 0 `i `uc -> -> 3 `i `uc ]
 [e ( _LCDWriteInt (4 , , , _IOutTotal -> -> 4 `i `c -> -> 1 `i `uc -> -> 0 `i `uc ]
 }
-[; ;main.c: 275: { gotoXY(24,3); LCDWriteInt((uint16_t)IOutTotal*4+100,4, 0, 0);};
+[; ;main.c: 275: { gotoXY(24,3); LCDWriteInt((uint16_t)IOutTotal*4+10,4, 0, 0);};
 "275
 {
 [e ( _gotoXY (2 , -> -> 24 `i `uc -> -> 3 `i `uc ]
-[e ( _LCDWriteInt (4 , , , -> + * -> _IOutTotal `ui -> -> 4 `i `ui -> -> 100 `i `ui `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _LCDWriteInt (4 , , , -> + * -> _IOutTotal `ui -> -> 4 `i `ui -> -> 10 `i `ui `i -> -> 4 `i `c -> -> 0 `i `uc -> -> 0 `i `uc ]
 }
 [; ;main.c: 276: { gotoXY(44,3); LCDWriteInt(tempFanOutput,3, 0, 0);};
 "276
