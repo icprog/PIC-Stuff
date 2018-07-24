@@ -17,7 +17,7 @@
 #define     Buck0Output     dutyCycle6
 #define     Buck1Output     dutyCycle7
 #define     FanOutput       dutyCycle1
-#define     NewFanOutput    (uint16_t)IOutTotal*4+10
+#define     NewFanOutput    (uint16_t)largerIOut+5
 
 #define     Power0In        VIn0/100*IIn0/10
 #define     Power0Out       VOut0/100*IOut0/10
@@ -54,7 +54,7 @@ void main(void)
     uint16_t        faultNotReset   =   0;
     extern uint16_t IminCount[2];
     extern int8_t   Imode[2];
-    int16_t         IOutTotal       =   0;
+    int16_t         largerIOut      =   0;
     extern int16_t  Iref[2];
     uint8_t         j               =   0;
     uint8_t         menuButton      =   0;                      // Holds value of which button is pressed
@@ -90,7 +90,7 @@ void main(void)
         if(Fault)
         {
             LATA5=0;
-            __delay_us(400);
+            __delay_us(1000);
             faultCount+=1;
             LATA5=1;
         }
@@ -106,11 +106,11 @@ void main(void)
 
         if(Fault)faultNotReset+=1;
         
-        voltage[0]=(int16_t)(Vanalogs[0]/.54503);                    // Calculate VOut0
+        voltage[0]=(int16_t)(Vanalogs[0]/.54503);                   // Calculate VOut0
         
         voltage[1]=(int16_t)(Vanalogs[1]/.54503);                   // Calculate VOut1
 
-        voltage[2]=(int16_t)(Vanalogs[2]/.20885);                  // Calculate VIn0
+        voltage[2]=(int16_t)(Vanalogs[2]/.20885);                   // Calculate VIn0
         
         voltage[3]=(int16_t)(Vanalogs[3]/.20885);                   // Calculate VIn1
         
@@ -124,14 +124,14 @@ void main(void)
         
         if(Imode[0])
         {
-            if(VIn0<MPPT0)                             // actual MPPT of Panel
+            if(VIn0<MPPT0)                                          // MPPT Voltage of Panel 0
             {
                 if(Buck0Output<1023)
                 {
                     Buck0Output+=1;
                 }
             }
-            else if(VIn0>MPPT0)                             // actual MPPT of Panel
+            else if(VIn0>MPPT0)                                     // MPPT Voltage of Panel 1
             {
                 if(Buck0Output>0)
                 {
@@ -181,9 +181,6 @@ void main(void)
         }
 
         slowLoop+=1;
-        
-//        FanOutput=600;
-
    
         PWM1_LoadDutyValue(FanOutput);
         PWM6_LoadDutyValue(Buck0Output);
@@ -193,18 +190,38 @@ void main(void)
         if(menuButton == Down) if(MPPT0>2700)MPPT1-=1;
         if(menuButton == Up)if(MPPT1<3200)MPPT1+=1;
         if(menuButton == Enter)LCDInit();
-//        }
-  //      fastLoop+=1;
         
         if(slowLoop>250)
         {
-            IOutTotal=IOut0;
- //           FanOutput=600;
+//            if(IOut0>IOut1)
+  //          {
+                largerIOut=IOut0;
+    //        }
+      //      else
+        //    {
+          //      largerIOut=IOut1;
+            //}
             
-            if(IOutTotal>2)
+            if(largerIOut>25)
             {
-                if(NewFanOutput>FanOutput)FanOutput+=1;else FanOutput-=1;
-                if(NewFanOutput>tempFanOutput)if(tempFanOutput<75)tempFanOutput+=1;else if(tempFanOutput>0)tempFanOutput-=1;
+                if(NewFanOutput>FanOutput)
+                {
+                    FanOutput+=1;
+                }
+                else FanOutput-=1;
+                
+                if(NewFanOutput>tempFanOutput)
+                {
+                    if(tempFanOutput<75)
+                    {
+                        tempFanOutput+=1;
+                    }
+                }
+                else 
+                {
+                    if(tempFanOutput>0)tempFanOutput-=1;
+                }
+                
                 FanOutput=tempFanOutput;
                 if(FanOutput<19)FanOutput=0;
             }
@@ -220,7 +237,7 @@ void main(void)
             }
             
             ADREF = 0x00;                                               // ADNREF VSS; ADPREF VDD;
-            batteryTemp=tempCalc(ADCRead(8));                           // Read Thermistor on RB1
+            batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB1
             ADREF = 0x03;                                               // ADNREF VSS; ADPREF FVR;
             
             displayRefresh+=1;
@@ -260,7 +277,7 @@ void main(void)
             //LCDWriteCharacter(' ');
             LCDWriteIntXY(80,2,batteryState[0],1,0,0);
 
-/*            LCDWriteIntXY(0,3,VIn1,4,2,0);
+            LCDWriteIntXY(0,3,VIn1,4,2,0);
             LCDWriteCharacter('V');
           //  LCDWriteCharacter(' ');
             LCDWriteIntXY(26,3,VOut1,4,2,0);
@@ -270,11 +287,11 @@ void main(void)
             LCDWriteCharacter('V');
       //      LCDWriteCharacter(' ');
             LCDWriteIntXY(80,3,Imode[1],1,0,0);
-  */ 
-            LCDWriteIntXY(0,3,IOutTotal,4,1,0);
-            LCDWriteIntXY(24,3,NewFanOutput,4,0,0);
-            LCDWriteIntXY(44,3,tempFanOutput,3,0,0);
-            LCDWriteIntXY(64,3,FanOutput,3,0,0);
+   
+//            LCDWriteIntXY(0,3,largerIOut,4,1,0);
+  //          LCDWriteIntXY(24,3,NewFanOutput,4,0,0);
+    //        LCDWriteIntXY(44,3,tempFanOutput,3,0,0);
+      //      LCDWriteIntXY(64,3,FanOutput,3,0,0);
             
 
             

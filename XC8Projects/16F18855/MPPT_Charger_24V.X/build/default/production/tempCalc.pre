@@ -17606,21 +17606,15 @@ extern double round(double);
 int16_t tempCalc(int16_t analogValue)
 {
 float R, steinhart;
-
 R=10030/(1023/(float)analogValue-1);
-
 steinhart=R/10010;
 steinhart=log(steinhart);
 steinhart/=3795.3;
-
-
-
 steinhart+=1.0/(25+273.15);
 steinhart=1.0/steinhart;
-steinhart-=273.15;
+steinhart-=273;
 
 steinhart*=10;
-
 
 
 return (int16_t)steinhart;
