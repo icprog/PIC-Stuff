@@ -17602,7 +17602,7 @@ stateCounter[z] =5;
 Iref[z] =10;
 Vref[z] =1425+(int16_t)((250-batteryTemp)*.24);
 Imin[z] =15;
-IminCount[z] = 60;
+IminCount[z] = 600;
 }
 
 void Battery_State_Machine(uint8_t z)
@@ -17642,10 +17642,10 @@ IminCount[z]=10;
 }
 else
 {
-if(IminCount[z]<60)IminCount[z]+=1;
+if(IminCount[z]<600)IminCount[z]+=1;
 }
 }
-else if(IminCount[z]<60)IminCount[z]+=1;
+else if(IminCount[z]<600)IminCount[z]+=1;
 }
 else if(batteryState[z] == FLOAT)
 {
@@ -17684,6 +17684,7 @@ else
 VHoldMode[z]-=1;
 if(VHoldMode[z]<(9*-1))
 {
+batteryState[z]=CHARGE;
 Imode[z]=1;
 cc_cv[z]=(9*2);
 VHoldMode[z]=(9*-1);

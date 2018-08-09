@@ -160,7 +160,7 @@ int main(void)
         
 
 // *************** Calculate Temperature Averages ******************************
-        shortTermTemp[0] = aTempCalc(ADCRead(9));       //Assign the ADC(9) Boiler Temp to a temporary variable
+        shortTermTemp[0] = aTempCalc(ADCRead(9));       // Assign the ADC(9) Boiler Temp to a temporary variable
         total[0] = total[0] - samples[0][sampleIndex];  // Subtract the oldest sample data from the total
         samples[0][sampleIndex] = shortTermTemp[0];     // Assign the just read temperature to the location of the current oldest data
         total[0] = total[0] + samples[0][sampleIndex];  // Add that new sample to the total
@@ -175,15 +175,15 @@ int main(void)
         steamTemperature = total[1] / numSamples;       // Assign the average value of total to the GroupHeadTemp variable
 
  
-        shortTermTemp[2] = tempCalc(ADCRead(4));        //Assign the ADC(4) Group Head Temp to a temporary variable
+        shortTermTemp[2] = tempCalc(ADCRead(4));        // Assign the ADC(4) Group Head Temp to a temporary variable
         total[2] = total[2] - samples[2][sampleIndex];  // Subtract the oldest sample data from the total
         samples[2][sampleIndex] = shortTermTemp[2];     // Assign the just read temperature to the location of the current oldest data
         total[2] = total[2] + samples[2][sampleIndex];  // Add that new sample to the total
 
         sampleIndex += 1;                               // and move to the next index location
-        if(sampleIndex >= numSamples)                   //If we have reached the max number of samples
+        if(sampleIndex >= numSamples)                   // If we have reached the max number of samples
         {
-            sampleIndex = 0;                            //Reset to zero
+            sampleIndex = 0;                            // Reset to zero
         }
         groupHeadTemp = total[2] / numSamples;          // Assign the average value of total to the GroupHeadTemp variable
 
@@ -404,7 +404,7 @@ int main(void)
                 if(steamSwitch)
                 {
                     steamSolenoid   =   1;
-                    OC3R            +=  6500;
+                    OC3R            +=  6000;
 //                    if(steamTemperature>3000)
   //                  {
     //                    OC3R        =   1;
@@ -475,7 +475,7 @@ int main(void)
                     {
                         count2+=1;
                         
-                        if(count2 >5)           // 13 gets us to !00% in 2.5 seconds (the current amount of StartRamp Time)
+                        if(count2 >5)           // 13 gets us to 100% in 2.5 seconds (the current amount of StartRamp Time)
                         {
                             if(pumpOutput<max) pumpOutput +=16;
                             count2 = 0;

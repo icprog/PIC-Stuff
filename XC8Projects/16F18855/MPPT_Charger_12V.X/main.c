@@ -41,12 +41,12 @@ int16_t         batteryTemp         =   300;
 
 void main(void)
 {
-    int16_t         MPPT0           =   1550;                   // Need to tune to correct value    
-    int16_t         MPPT1           =   1550;                   // Change one vs the other, to see where MPPT is at.
+    int16_t         MPPT0           =   1525;                   // Need to tune to correct value      Maybe 1700? 
+    int16_t         MPPT1           =   1525;                   // Change one vs the other, to see where MPPT is at.
     
     uint16_t        dutyCycle6      =   1023;                   // 1023 is as Low as can go
     uint16_t        dutyCycle7      =   1023;                    // 126 is midpoint, allow adjusting up or down
-    uint16_t        dutyCycle1      =   60;                     // 30 is required for minimum speed
+//    uint16_t        dutyCycle1      =   60;                     // 30 is required for minimum speed
     int16_t         IOutTotal       =   0;
     uint8_t         j               =   0;
     uint8_t         slowLoop        =   200;
@@ -108,7 +108,8 @@ void main(void)
         
         voltage[0]=(int16_t)(Vanalogs[0]/.5448);                    // Calculate VOut0
         
-        voltage[1]=(int16_t)(Vanalogs[1]/.540757);                   // Calculate VOut1
+//        voltage[1]=(int16_t)(Vanalogs[1]/.540757);                   // Calculate VOut1
+        voltage[1]=(int16_t)(Vanalogs[1]/.5448);                    // Calculate VOut1
 
         voltage[2]=(int16_t)(Vanalogs[2]/.405775);                  // Calculate VIn0
         
@@ -260,7 +261,8 @@ void main(void)
             LCDWriteIntXY(0,3,VIn1,4,2,0);
             LCDWriteCharacter('V');
           //  LCDWriteCharacter(' ');
-            LCDWriteIntXY(26,3,VOut1,4,2,0);
+//            LCDWriteIntXY(26,3,VOut1,4,2,0);
+            LCDWriteIntXY(26,3,voltage[1],4,2,0);
             LCDWriteCharacter('V');
         //    LCDWriteCharacter(' ');
             LCDWriteIntXY(52,3,Vref[1],4,2,0);
@@ -268,10 +270,12 @@ void main(void)
       //      LCDWriteCharacter(' ');
             LCDWriteIntXY(80,3,Imode[1],1,0,0);
             
-            LCDWriteIntXY(0,4,IIn1,3,1,0);
+//            LCDWriteIntXY(0,4,IIn1,3,1,0);
+            LCDWriteIntXY(0,4,Ianalogs[3],3,1,0);
             LCDWriteCharacter('A');
     //        LCDWriteCharacter(' ');
             LCDWriteIntXY(26,4,IOut1,3,1,0);
+//            LCDWriteIntXY(26,4,Ianalogs[1],3,1,0);
             LCDWriteCharacter('A');
   //          LCDWriteCharacter(' ');
             LCDWriteIntXY(52,4,Iref[1],3,1,0);
@@ -281,7 +285,7 @@ void main(void)
             
 //           LCDWriteIntXY(0,5,Ianalogs[0],4,0,0);
 
-           LCDWriteIntXY(0,5,Buck0Output,4,0,0);
+            LCDWriteIntXY(0,5,Buck0Output,4,0,0);
             LCDWriteIntXY(18,5,VHoldMode[0],1,0,0);
             LCDWriteCharacter(' ');
             LCDWriteIntXY(28,5,Buck1Output,4,0,0);
@@ -388,13 +392,13 @@ void calculateCurrent0(void)                                                    
 
 void calculateCurrent1(void)                                                    // I1 Out
 {
-    if(Ianalogs[1]-561<=0)
+    if(Ianalogs[1]-538<=0)
     {
         current[1]=0;
     }
     else
     {
-        current[1]=(int16_t)((Ianalogs[1]-561)/1.99055);                        
+        current[1]=(int16_t)((Ianalogs[1]-538)/1.55);                        
     }
 }
 

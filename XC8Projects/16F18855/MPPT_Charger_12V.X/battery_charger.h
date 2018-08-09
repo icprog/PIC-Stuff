@@ -1,7 +1,7 @@
 #include "system.h"
 
 #define		CURRENT_MODE		9                          // Number of slowLoop cycles Voltage is over Vref before we drop back to "Voltage Mode" from "Current Mode"
-#define 	IminUpdate			60
+#define 	IminUpdate			600
 
 #ifndef BATTERY_CHARGER_H
 	#define BATTERY_CHARGER_H

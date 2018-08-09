@@ -23,10 +23,19 @@ void ADCInit(void)
 int ADCRead(ADC_CHANNEL channel)
 {
     uint16_t result;
-    AD1CHS = channel;
-    if(AD1CHS == 0x1A)                                                          //If reading Internal Band Gap Voltage
+    AD1CHS = 0x1D;                                                              // Read VSS first
+    AD1CON1bits.SAMP = 1;
+    __delay_us(25);
+    AD1CON1bits.SAMP = 0;
+    while(!AD1CON1bits.DONE)
     {
-        _BGREQ = 1;                                                             //Enable Band Gap Reference
+         IFS0bits.AD1IF = 0;
+    }
+
+    AD1CHS = channel;                                                           // Now Read the channel passed to the function    
+    if(AD1CHS == 0x1A)                                                          // If reading Internal Band Gap Voltage
+    {
+        _BGREQ = 1;                                                             // Enable Band Gap Reference
         __delay_us(20);                                                 
     }
     AD1CON1bits.SAMP = 1;

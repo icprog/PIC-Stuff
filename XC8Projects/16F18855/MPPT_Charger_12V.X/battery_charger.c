@@ -104,6 +104,7 @@ void cc_cv_mode(uint8_t z)                                  // Function determin
         VHoldMode[z]-=1;                                    // VHoldMode switches us between Current or Voltage mode (Current mode at -VHoldMode)
         if(VHoldMode[z]<(CURRENT_MODE*-1))
         {
+            batteryState[z]=CHARGE;
             Imode[z]=1;                                     // switch to "Current Mode"
             cc_cv[z]=(CURRENT_MODE*2);                      // and, set the cc_cv to count "CURRENT_MODE" number of slowLoop iterations, before allowing a return to "VOLTAGE Mode"
             VHoldMode[z]=(CURRENT_MODE*-1);

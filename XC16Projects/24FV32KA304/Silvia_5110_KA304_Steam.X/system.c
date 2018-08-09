@@ -78,6 +78,14 @@
 
 void InitApp(void)                  // Setup analog functionality and port direction
 {
+    LATA  = 0X0000; 
+    LATB  = 0X0000;
+    LATC  = 0x0000;
+    
+//    PORTA = 0x0000;                 // Power up state of the Port Pins(ie as a 1 or a 0)
+  //  PORTB = 0x0000;
+    //PORTC = 0x0000;                 // Make sure Pin 13 always initialized low, is reset pin for LCD
+    
     TRISA = 0x0081;                 // RA0 & RA7 Set as Input, Data Direction 1 = input, 0 = Output
     TRISB = 0x8C04;                 // RB2, 10, 11, and 15 as Input, Data Direction 1 = input, 0 = Output
     TRISC = 0x0203;                 // RC0, 1, and 9 as Inputs, Data Direction 1 = input, 0 = Output
@@ -85,10 +93,6 @@ void InitApp(void)                  // Setup analog functionality and port direc
     ANSA =  0x0001;                 // RA0(AN0,Pin 19) as Analog, 1 = Analog, 0 = Digital
     ANSB =  0x8004;                 // RB2(AN4,Pin23), and RB15(AN9,Pin15) as Analog, Analog or Digital 1 = Analog, 0 = Digital
     ANSC =  0x0003;                 // RC0(AN6,Pin25) and 1(AN7,Pin26) as Analog, Analog or Digital 1 = Analog, 0 = Digital
-    
-    PORTA = 0x0000;                 // Power up state of the Port Pins(ie as a 1 or a 0)
-    PORTB = 0x0000;
-    PORTC = 0x0000;                 // Make sure Pin 13 always initialized low, is reset pin for LCD
     
     CNPU1 = 0x0200;                 // Enable Weak Pull-ups on CN9 (Pin 6)
     CNPU2 = 0x0009;                 // Enable Weak Pull-ups on CN16 & 19 (Pin 8 & 5)
