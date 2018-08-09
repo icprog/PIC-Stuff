@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.45\dat\en_msgs.txt -cs \
   -h+dist/default/production\MPPT_Charger_12V.X.production.sym \
   --cmf=dist/default/production\MPPT_Charger_12V.X.production.cmf -z \
-  -Q16F18855 -oC:\Users\DAVE\AppData\Local\Temp\s4pg.2 \
+  -Q16F18855 -oC:\Users\DAVE\AppData\Local\Temp\s4l0.2 \
   -Mdist/default/production/MPPT_Charger_12V.X.production.map -E1 -ver=XC8 \
   -ASTACK=020B8h-0225fh -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
@@ -32,7 +32,7 @@ Linker command line:
   -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 \
   -AEEDATA=00h-0FFh/0F000h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
-  C:\Users\DAVE\AppData\Local\Temp\s4pg.obj \
+  C:\Users\DAVE\AppData\Local\Temp\s4l0.obj \
   dist/default/production\MPPT_Charger_12V.X.production.obj 
 
 Object code version is 3.11
@@ -42,7 +42,7 @@ Machine type is 16F18855
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\DAVE\AppData\Local\Temp\s4pg.obj
+C:\Users\DAVE\AppData\Local\Temp\s4l0.obj
                 end_init                              2        2        2        0       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5    1000E       0
@@ -540,7 +540,7 @@ _GIE                                 (abs)        0005F
 _Ianalogs                            bssBANK1     000A0
 _Imin                                bssBANK1     000D5
 _IminCount                           bssBANK1     000D1
-_Imode                               bssBANK1     000DF
+_Imode                               bssBANK1     000E1
 _Init_Battery_State_Machine          text27       01799
 _Iref                                bssBANK1     000CD
 _LATA                                (abs)        00016
@@ -599,7 +599,7 @@ _TRISA                               (abs)        00011
 _TRISAbits                           (abs)        00011
 _TRISB                               (abs)        00012
 _TRISC                               (abs)        00013
-_VHoldMode                           bssBANK1     000DB
+_VHoldMode                           bssBANK1     000DD
 _Vanalogs                            bssBANK1     000A8
 _Vref                                bssBANK1     000C5
 _WPUA                                (abs)        00F39
@@ -1042,14 +1042,14 @@ __size_of_main                       (abs)        00000
 __size_of_readButton                 (abs)        00000
 __size_of_readIAnalog                (abs)        00000
 __size_of_tempCalc                   (abs)        00000
-_batteryState                        bssBANK1     000E3
+_batteryState                        bssBANK1     000E5
 _batteryTemp                         dataBANK1    000ED
-_button                              bssBANK1     000EC
+_button                              bssBANK1     000EB
 _calculateCurrent0                   text16       01561
 _calculateCurrent1                   text15       015A6
 _calculateCurrent2                   text14       015EB
 _calculateCurrent3                   text13       0000B
-_cc_cv                               bssBANK1     000E1
+_cc_cv                               bssBANK1     000E3
 _cc_cv_mode                          text12       00EB1
 _channels                            dataBANK2    00130
 _current                             bssBANK1     000B8
@@ -1058,18 +1058,18 @@ _eval_poly                           text4        016D5
 _fonts                               stringtext1  01000
 _frexp                               text3        01526
 _gotoXY                              text26       012FE
-_j                                   bssBANK1     000EA
-_lastButton                          bssBANK1     000EB
+_j                                   bssBANK1     000E9
+_lastButton                          bssBANK1     000EA
 _log                                 text2        00A61
 _main                                maintext     002C5
 _readButton                          text10       0082D
-_readButtons                         bssBANK1     000E5
+_readButtons                         bssBANK1     000DB
 _readIAnalog                         text8        00D65
 _sampleIndex                         bssBANK1     000E7
 _samples                             (abs)        02260
 _stateCounter                        bssBANK1     000C9
 _tempCalc                            text1        00C7E
-_tempCalc$1188                       cstackBANK0  00052
+_tempCalc$1187                       cstackBANK0  00052
 _totals                              bssBANK2     00120
 _voltage                             bssBANK1     000B0
 btemp                                (abs)        0007E
@@ -1577,7 +1577,7 @@ Total ram usage:        8 bytes
 
  *************** function _calculateCurrent3 *****************
  Defined at:
-		line 418 in file "main.c"
+		line 421 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1609,7 +1609,7 @@ Total ram usage:        3 bytes
 
  *************** function _calculateCurrent2 *****************
  Defined at:
-		line 405 in file "main.c"
+		line 408 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1641,7 +1641,7 @@ Total ram usage:        3 bytes
 
  *************** function _calculateCurrent1 *****************
  Defined at:
-		line 393 in file "main.c"
+		line 395 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1673,7 +1673,7 @@ Total ram usage:        3 bytes
 
  *************** function _calculateCurrent0 *****************
  Defined at:
-		line 380 in file "main.c"
+		line 382 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -2471,10 +2471,10 @@ Total ram usage:       16 bytes
  This function calls:
 		___ftpack
  This function is called by:
-		_tempCalc
 		_Init_Battery_State_Machine
 		_Battery_State_Machine
 		_cc_cv_mode
+		_tempCalc
 		_log
 		_eval_poly
  This function uses a non-reentrant model
@@ -2506,10 +2506,10 @@ Total ram usage:        6 bytes
  This function calls:
 		___ftpack
  This function is called by:
-		_tempCalc
 		_Init_Battery_State_Machine
 		_Battery_State_Machine
 		_cc_cv_mode
+		_tempCalc
 		_main
 		_calculateCurrent0
 		_calculateCurrent1
