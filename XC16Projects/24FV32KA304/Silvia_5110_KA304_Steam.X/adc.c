@@ -38,6 +38,15 @@ int ADCRead(ADC_CHANNEL channel)
         _BGREQ = 1;                                                             // Enable Band Gap Reference
         __delay_us(20);                                                 
     }
+    if(AD1CHS == 9)
+    {
+        _PVCFG=0X3;                                                             // Set Positive reference to Vbg x 4
+    }
+    else
+    {
+        _PVCFG=0X0;                                                             // Set Positive reference to Vdd
+    }
+    
     AD1CON1bits.SAMP = 1;
     __delay_us(25);
     AD1CON1bits.SAMP = 0;

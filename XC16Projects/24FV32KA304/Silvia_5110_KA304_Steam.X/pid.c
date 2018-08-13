@@ -5,15 +5,22 @@
 int internalKp[]                = {   50,   50,  50};   // Controller Gain      (inverse of Proportional Band)
 int internalKi[]                = {   15,   15,  15};   // Controller Integral Reset/Unit Time, determined by how often PID is calculated
 int internalKd[]                = {   25,   25,  25};   // Controller Derivative (or Rate))
-long pidIntegrated[3]           = {    0,    0,   0};
+static float pidIntegrated[3]   = {    0,    0,   0};
 long pidPrevError[3]            = {    0,    0,   0};
 long pidPrevInput[3]            = {    0,    0,   0};
-int integralMinOutput[3]        = { -100, -100,   0};
-int integralMaxOutput[3]        = {  100,  100,  20};   
-int pidMinOutput[3]             = {    0,    0,   0};   // Minimum output limit of Controller
-int pidMaxOutput[3]             = { 7811, 1312, 200};   // Maximum output limit of Controller
+int integralMinOutput[3]        = { -500, -275, -25};
+int integralMaxOutput[3]        = {  300,  200,  25};   
+int pMinOutput[3]               = {-7811, -275,-120};   // Minimum output limit of Proportional Action
+int pidMinOutput[3]             = { -275,    0,   0};   // Minimum output limit of Controller
+int pidMaxOutput[3]             = { 7811, 1312, 205};   // Maximum output limit of Controller
+int16_t bias[3]                 = {  275,    0,  21};   // Value summed onto Output(Should be Output required to maintain Setpoint with no external upsets) 
 extern char tuning;                                     // Set to a 1 when tuning    
 //extern int bits[7];                                     // steamPower Bit
+
+//    int result;
+  //  float  error, errorValue;
+    //long derivativeValue;
+    //int pidIntegral;
 
 void Init_PID(int8_t controller, int pidKp, int pidKi, int pidKd)
 {
@@ -29,17 +36,17 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
 {
 //    if(!bits[7]) pidMaxOutput[1]=500;                   // Limit steam PID Output until steam is at minimum setpoint(limit overshoot))
     int result;
-    long  error, errorValue;
+    float  error, errorValue;
     long derivativeValue;
         
 // **************** Calculate Gain *********************************************    
     error = (long)setpoint - temp;                                              // error calculation
  
-    errorValue  = (long)error * internalKp[controller];                           // Calculate proportional value
+    errorValue  = error * internalKp[controller]/10;                            // Calculate proportional value
     
-    if(errorValue<pidMinOutput[controller])
+    if(errorValue<pMinOutput[controller])
     {
-        errorValue=pidMinOutput[controller];
+        errorValue=pMinOutput[controller];
     }
     
     if(errorValue>pidMaxOutput[controller])
@@ -48,7 +55,7 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
     }
 
 // **************** Calculate Integral *****************************************    
-    pidIntegrated[controller] += ((long)error * internalKi[controller]);       // Calculate integral value
+    pidIntegrated[controller] += ((error * internalKi[controller])/60);         // Calculate integral value
 
     if (pidIntegrated[controller]< integralMinOutput[controller])               // limit output minimum value
     {
@@ -59,7 +66,7 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
     {
         pidIntegrated[controller]= integralMaxOutput[controller];
     }
-    
+//    pidIntegral=(int)pidIntegrated[controller];
 // *************** Calculate Derivative **************************************** 
         derivativeValue=((long)error-pidPrevError[controller])*internalKd[controller];
         
@@ -89,23 +96,33 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
         result = pidMaxOutput[controller];
     }
     
-    if(tuning==1)
+    if(result+bias[controller]<pidMaxOutput[controller])
     {
-        LCDWriteStringXY(0,0,"ERR");
-        LCDWriteIntXY(16,0,error,4,0,0);
+        result+=bias[controller];
+    }
+    else
+    {
+        result=pidMaxOutput[controller];
+    }
+
+/*    if(tuning==1)
+    {
+        LCDWriteStringXY(0,1,"ERR");
+        LCDWriteIntXY(16,1,error,4,0,0);
         LCDWriteCharacter(' ');
-        LCDWriteStringXY(40,0,"EV")
-        LCDWriteIntXY(52,0,errorValue,5,0,0);
+        LCDWriteStringXY(40,1,"P")
+        LCDWriteIntXY(52,1,errorValue,5,0,0);
         LCDWriteCharacter(' ');
-        LCDWriteStringXY(0,2,"PID I")
+        LCDWriteStringXY(0,2,"I")
         LCDWriteIntXY(0,3,pidIntegrated[controller],5,0,0);            
         LCDWriteCharacter(' ');
-        LCDWriteStringXY(32,2,"PID D")
+        LCDWriteStringXY(32,2,"D")
         LCDWriteIntXY(32,3,derivativeValue,5,0,0);
         LCDWriteCharacter(' ');
-        LCDWriteStringXY(58,2,"result")
+        LCDWriteStringXY(58,2,"Out")
         LCDWriteIntXY(58,3,result,5,0,0); 
         __delay_ms(950);
     }
+  */  
     return (result);
 }

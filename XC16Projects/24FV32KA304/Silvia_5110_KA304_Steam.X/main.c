@@ -40,13 +40,16 @@
 
 #define max                     256                     // Maximun Pump Output (256 = 100%)
 #define min                     26                      // Minimum Pump Output (0 = OFF)
-#define preInfusionDutyCycle    90              //FIX   // This needs to move to EEPROM & have a User Interface set up so user can change it
-#define preInfusionTime         25              //FIX   // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
+//#define preInfusionDutyCycle    90              //FIX   // This needs to move to EEPROM & have a User Interface set up so user can change it
+#define preInfusionDutyCycle    120              //FIX   // This needs to move to EEPROM & have a User Interface set up so user can change it
+//#define preInfusionTime         25              //FIX   // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
+#define preInfusionTime         30              //FIX   // length of time to run pump to preInfuse puck (also needs Interface & EEPROM location)
 #define soakTime                (preInfusionTime + 30)//FIX    // Length of time for wetted puck to soak EEPROM
 #define startRamp               (soakTime + 30)//FIX    // StartRamp starts pump and Ramps up to Max Pressure
 #define continuePull            (800 + 1)               // Shot duration, 80 seconds from Start of Cycle(801)
 #define warning                 (850 + 1)               // Turn on Warning Piezo, reminder to turn off switch (851)
-#define steamPumpPower          38                      // DutyCycle to run pump during steam cycle
+//#define steamPumpPower          38                      // DutyCycle to run pump during steam cycle
+#define steamPumpPower          45                      // DutyCycle to run pump during steam cycle
 
 #define waterSetpoint           eepromGetData(setpoint[0])
 #define steamSetpoint           eepromGetData(setpoint[1])
@@ -65,7 +68,7 @@
 #define groupPeriodCounter      counter[5]              // Group PID Period Counter
 #define lowWaterReminder        counter[6]              // Remind User level is Low when below 25%
 #define numSamples              20                      // Number of samples to average for temp[] readings 
-#define PIDDuration             200                     // Number of Program cycles (Period) for Group Head PID
+#define PIDDuration             205                     // Number of Program cycles (Period) for Group Head PID
     
 
 // *************** Global Variables ********************************************
@@ -87,7 +90,7 @@ int powerFail           =   1;                          //Setting powerFail to 1
 
 extern int run;
 
-char tuning             =   0;
+//char tuning             =   0;
 
 char pull               =   0;                          // pull a 25 second shot with a display key
 
@@ -117,7 +120,7 @@ int main(void)
 
     uint8_t count2          = 0;                        // count2 ramps pump pressure
     
-    int samples[3][numSamples]      ={[0 ... 2] = {0}}; //Used to average temp[] over "numSamples" of samples
+    static int samples[3][numSamples]      ={[0 ... 2] = {0}}; //Used to average temp[] over "numSamples" of samples
     
     static unsigned int temp[3]     = {0,0,0};
     
@@ -125,7 +128,7 @@ int main(void)
     
     uint8_t sampleIndex     = 0;                        // Used to calculate average sample of temp[]
     
-    uint32_t total[3]       = {0,0,0};                  // Running total of temp[] samples 
+    static uint32_t total[3]       = {0,0,0};                  // Running total of temp[] samples 
     
     unsigned char testKey   = 0;                        // Variable used for Storing Which Menu Key is Pressed
     
@@ -142,6 +145,13 @@ int main(void)
     uint16_t level          = 0;
     
     static char ONTimer     = 0;                        // Bit to enable Auto Start of Machine
+    
+//    extern int pidIntegral;
+    
+  //  extern int result;
+    //extern float  error, errorValue;
+    //extern long derivativeValue;
+
     
 // ******************************************************************************
 //    LCDBitmap(&menumain[0], 5, 59);                        //Draw Menu0
@@ -253,20 +263,31 @@ int main(void)
                 }
                 else
                 {
-                    if(tuning)
-                    {
-      //                  waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
-                        steamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
+//                    if(tuning)
+  //                  {
+//                        waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
+        //                steamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
         //                groupHeadPID    = PID_Calculate(2, groupHeadSetpoint, groupHeadTemp);// Calculate Group PID Value
-                        goto there;
-                    }
+        //                goto there;
+    //                }
 
                     waterPID        = PID_Calculate(0, waterSetpoint, boilerTemperature);// Calculate Water PID Value
                     steamPID        = PID_Calculate(1, steamSetpoint, steamTemperature); // Calculate Steam PID Value
                     groupHeadPID    = PID_Calculate(2, groupHeadSetpoint, groupHeadTemp);// Calculate Group PID Value
                     
                     displayTime();
-
+                    
+/*                    LCDWriteIntXY(0,0,error,3,0,0);
+                    LCDWriteCharacter(' ');
+                    LCDWriteIntXY(20,0,errorValue,4,0,0);
+                    LCDWriteCharacter(' '); 
+                    LCDWriteIntXY(42,0,pidIntegral,4,0,0);
+                    LCDWriteCharacter(' '); 
+                    LCDWriteIntXY(64,0,derivativeValue,4,0,0);
+                    LCDWriteCharacter(' '); 
+                    LCDWriteIntXY(2,1,result,4,0,0);
+                    LCDWriteCharacter(' '); 
+*/
                     LCDWriteStringXY(2,1,desc[0]);
                     LCDWriteIntXY(52,1,boilerTemperature,4,1,0);
                     LCDWriteCharacter(123);         // generate degree symbol in font list
@@ -354,14 +375,14 @@ int main(void)
             lastPowerState          = powerSwitch;
         }
         
-        there:
-        if(tuning)
-        {
-            LCDWriteStringXY(2,1,desc[1]);
-            LCDWriteIntXY(48,1,steamTemperature,4,1,0);
-            LCDWriteCharacter(123);         // generate degree symbol in font list
-            LCDWriteCharacter(70);
-        }            
+//        there:
+  //      if(tuning==1)
+    //    {
+//            LCDWriteStringXY(2,1,desc[0]);
+  //          LCDWriteIntXY(48,1,boilerTemperature,4,1,0);
+    //        LCDWriteCharacter(123);         // generate degree symbol in font list
+      //      LCDWriteCharacter(70);
+    //    }            
 // *************** Run Air Pump once an hour for Level transmitter *************
         if(powerSwitch)
         {
@@ -396,7 +417,7 @@ int main(void)
             {                                     
                 OC3R=steamPID;                          // Start Steam Boiler Output at beginning of cycle, can use up to 100% of cycle    
                     
-                if(steamTemperature>3000)
+                if(steamTemperature>2870)
                 {
                     OC3R        =   1;
                 }
@@ -404,11 +425,7 @@ int main(void)
                 if(steamSwitch)
                 {
                     steamSolenoid   =   1;
-                    OC3R            +=  6000;
-//                    if(steamTemperature>3000)
-  //                  {
-    //                    OC3R        =   1;
-      //              }
+                    OC3R            +=  6500;
                     pumpOutput      =   steamPumpPower;
                 }
                 else
@@ -475,9 +492,11 @@ int main(void)
                     {
                         count2+=1;
                         
-                        if(count2 >5)           // 13 gets us to 100% in 2.5 seconds (the current amount of StartRamp Time)
+//                        if(count2 >5)           // 13 gets us to 100% in 2.5 seconds (the current amount of StartRamp Time)
+                        if(count2 >4)           // 13 gets us to 100% in 2.5 seconds (the current amount of StartRamp Time)
                         {
-                            if(pumpOutput<max) pumpOutput +=16;
+//                            if(pumpOutput<max) pumpOutput +=16;
+                            if(pumpOutput<max) pumpOutput +=12;
                             count2 = 0;
                         }
                     }
@@ -489,9 +508,11 @@ int main(void)
                     {   
                         count2 +=1;
                         
-                        if(count2 > 15)
+//                        if(count2 > 15)
+                        if(count2 > 10)
                         {
-                            pumpOutput -=2;
+//                            pumpOutput -=2;
+                            pumpOutput -=1;
                             count2 = 0;
                         }
                     }

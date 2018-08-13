@@ -15,8 +15,8 @@ void userMenu(void)
 {
     char testKey2   =   None;
     int timer2      =   0;
-    int setRangeL[]         = {1800,2850,1850};         // Set Point Low Limits      
-    int setRangeH[]         = {2100,3000,2150};         // Set Point High Limits
+    int setRangeL[]         = {1800,2650,1850};         // Set Point Low Limits      
+    int setRangeH[]         = {2100,2850,2150};         // Set Point High Limits
     
     extern unsigned int setpoint[];                     //setpoint
     extern int const Kp[];

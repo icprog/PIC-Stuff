@@ -28,7 +28,7 @@ int aTempCalc(unsigned int a)
     }
     else
     {
-    return ((int)(((a - 820)/1.085)+500));               // Range of 0.0 to 50.0 C for Second production board, Blue LED's
+        return ((int)(((a - 820)/1.096)+500));               
     }
 }
 
