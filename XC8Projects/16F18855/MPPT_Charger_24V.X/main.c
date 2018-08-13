@@ -3,15 +3,15 @@
 // *************** Includes ****************************************************    
 #include "system.h"
 
-#define VOut0               voltage[0]
-#define VOut1               voltage[1]    
-#define VIn0                voltage[2]
-#define VIn1                voltage[3]
+#define     VOut0           voltage[0]
+#define     VOut1           voltage[1]    
+#define     VIn0            voltage[2]
+#define     VIn1            voltage[3]
 
-#define IOut0               current[0]
-#define IOut1               current[1]
-#define IIn0                current[2]
-#define IIn1                current[3]
+#define     IOut0           current[0]
+#define     IOut1           current[1]
+#define     IIn0            current[2]
+#define     IIn1            current[3]
 
 #define     Fault           !(RB2)
 #define     Buck0Output     dutyCycle6
@@ -23,8 +23,6 @@
 #define     Power0Out       VOut0/100*IOut0/10
 #define     Power1In        VIn1*IIn1
 #define     Power1Out       VOut1*IOut1
-
-
 
 // *************** Externally available Variables ******************************    
 int16_t         Vanalogs[4]         =   {0,0,0,0};
@@ -74,16 +72,6 @@ void main(void)
     void calculateCurrent3(void);
     
     // </editor-fold>
-/*    
-//    volatile unsigned char value = 0x09;
-  //  unsigned char address = 0xE5;
-    //eeprom_write(address, value);     // Writing value 0x9 to EEPROM address 0xE5        
-    //value = eeprom_read (address);    // Reading the value from address 0xE5
-    
-//    eeprom_write(Kp_offset,10);
-  //  eeprom_write(Ki_offset,4);
-    //eeprom_write(Kd_offset,2);
-  */  
 
     while (1)
     {
