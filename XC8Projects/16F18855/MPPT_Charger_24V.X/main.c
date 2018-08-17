@@ -1,5 +1,3 @@
-// <editor-fold defaultstate="collapsed" desc="Includes & Defines">
-
 // *************** Includes ****************************************************    
 #include "system.h"
 
@@ -31,12 +29,7 @@ extern int16_t  voltage[4];                    // Store calculated Voltage value
 extern int16_t  current[4];                    // Store Calculated Current Values
 int16_t         batteryTemp         =   250;
 
-// </editor-fold>
-
-// <editor-fold defaultstate="collapsed" desc=" Variables declared in Main">
 // *************** Main Routine ************************************************    
-
-
 void main(void)
 {
     int16_t         MPPT0           =   3144;                   // Need to tune to correct value    
@@ -71,7 +64,6 @@ void main(void)
     void calculateCurrent2(void);
     void calculateCurrent3(void);
     
-    // </editor-fold>
 
     while (1)
     {
