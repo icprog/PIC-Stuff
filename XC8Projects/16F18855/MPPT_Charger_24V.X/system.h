@@ -2,6 +2,9 @@
 #define	SYSTEM_H
 
 #include <xc.h>
+#include <stdbool.h>
+#include <stdint.h>
+
 #include "adc.h"
 #include "battery_charger.h"
 #include "buttons.h"
@@ -9,7 +12,6 @@
 #include "lead_acid_agm.h"
 #include "pin_manager.h"
 #include "pwm.h"
-#include <stdint.h>
 #include "tempCalc.h"
 #include "tmr.h"
 

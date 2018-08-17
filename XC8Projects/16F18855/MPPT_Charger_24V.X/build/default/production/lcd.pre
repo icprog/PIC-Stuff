@@ -17336,6 +17336,9 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
+typedef unsigned char bool;
+
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdint.h"
 typedef signed char int8_t;
 
@@ -17426,10 +17429,7 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
-typedef unsigned char bool;
-
-# 11 "adc.h"
+# 12 "adc.h"
 extern int16_t analogs[8];
 
 typedef enum
@@ -17447,11 +17447,13 @@ int16_t ADCRead(adcc_channel_t channel);
 
 int16_t readIAnalog(uint16_t channel);
 
+int16_t readVAnalog(uint16_t channel);
+
 
 
 void ADC_Initialize(void);
 
-# 36
+# 39
 bool ADCC_IsConversionDone();
 
 int16_t ADCC_GetConversionResult(void);
@@ -17478,37 +17480,37 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 84
+# 87
 uint16_t ADCC_GetPreviousResult(void);
 
-# 108
+# 111
 void ADCC_DefineSetPoint(uint16_t);
 
-# 133
+# 136
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 158
+# 161
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 181
+# 184
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 203
+# 206
 void ADCC_EnableDoubleSampling(void);
 
-# 225
+# 228
 void ADCC_EnableContinuousConversion(void);
 
-# 247
+# 250
 void ADCC_DisableContinuousConversion(void);
 
-# 269
+# 272
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 291
+# 294
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 313
+# 316
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 8 "battery_charger.h"
@@ -17547,7 +17549,7 @@ void TMR2_Initialize(void);
 
 void TMR4_Initialize(void);
 
-# 19 "system.h"
+# 21 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);

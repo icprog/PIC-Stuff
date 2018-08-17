@@ -1,9 +1,10 @@
 #ifndef ADC_H
 #define ADC_H
 
-#include <xc.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include    "system.h"
+//#include <xc.h>
+//#include <stdint.h>
+//#include <stdbool.h>
 
 
 //typedef int16_t adc_result_t;
@@ -24,6 +25,8 @@ int16_t ADCRead(adcc_channel_t channel);
 //int16_t readAnalog(uint16_t channel);
 
 int16_t readIAnalog(uint16_t channel);
+
+int16_t readVAnalog(uint16_t channel);
 
 //int16_t calculateVoltage(uint8_t j);
 

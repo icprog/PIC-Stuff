@@ -17336,6 +17336,9 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
+typedef unsigned char bool;
+
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdint.h"
 typedef signed char int8_t;
 
@@ -17426,10 +17429,70 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
-typedef unsigned char bool;
+# 8 "battery_charger.h"
+enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
-# 11 "adc.h"
+# 6 "tempCalc.h"
+int16_t tempCalc(int16_t analogValue);
+
+# 17 "lead_acid_agm.h"
+extern int16_t batteryTemp;
+
+# 31 "battery_charger.h"
+extern uint8_t battery_state[2];
+
+void Init_Battery_State_Machine(uint8_t z);
+void Battery_State_Machine(uint8_t z);
+void cc_cv_mode(uint8_t z);
+
+# 12 "buttons.h"
+uint8_t readButton(void);
+
+# 19 "lcd.h"
+void gotoXY(uint8_t x, uint8_t y);
+
+# 25
+void LCDWriteCharacter(const char character);
+
+
+
+void LCDWriteString(const char *characters);
+
+
+void LCDClear(void);
+
+
+
+void LCDWriteInt(int16_t value,int8_t fieldLength, uint8_t numPlaces, uint8_t sign);
+
+void LCDInit(void);
+
+
+void LCDWrite(uint8_t data_or_command, uint8_t data);
+
+# 16 "pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+
+# 7 "pwm.h"
+void PWM_Initialize(void);
+
+void PWM6_LoadDutyValue(uint16_t dutyCycle);
+
+void PWM7_LoadDutyValue(uint16_t dutyCycle);
+
+void PWM1_LoadDutyValue(uint16_t dutyCycle1);
+
+# 17 "tmr.h"
+void TMR2_Initialize(void);
+
+void TMR4_Initialize(void);
+
+# 21 "system.h"
+void SYSTEM_Initialize(void);
+
+void OSCILLATOR_Initialize(void);
+
+# 12 "adc.h"
 extern int16_t analogs[8];
 
 typedef enum
@@ -17447,11 +17510,13 @@ int16_t ADCRead(adcc_channel_t channel);
 
 int16_t readIAnalog(uint16_t channel);
 
+int16_t readVAnalog(uint16_t channel);
+
 
 
 void ADC_Initialize(void);
 
-# 36
+# 39
 bool ADCC_IsConversionDone();
 
 int16_t ADCC_GetConversionResult(void);
@@ -17478,49 +17543,53 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 84
+# 87
 uint16_t ADCC_GetPreviousResult(void);
 
-# 108
+# 111
 void ADCC_DefineSetPoint(uint16_t);
 
-# 133
+# 136
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 158
+# 161
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 181
+# 184
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 203
+# 206
 void ADCC_EnableDoubleSampling(void);
 
-# 225
+# 228
 void ADCC_EnableContinuousConversion(void);
 
-# 247
+# 250
 void ADCC_DisableContinuousConversion(void);
 
-# 269
+# 272
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 291
+# 294
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 313
+# 316
 uint8_t ADCC_GetConversionStageStatus(void);
 
-# 7 "adc.c"
-int16_t samples[4][50] = {{0},{0}};
+# 9 "adc.c"
+int16_t Isamples[4][50] = {{0},{0}};
+int16_t Vsamples[4][15] = {{0},{0}};
 
-static uint16_t sampleIndex = {0};
+static uint16_t IsampleIndex = {0};
+static uint16_t VsampleIndex = {0};
 
-static int32_t totals[4] = {0};
+static int32_t Itotals[4] = {0};
+static int32_t Vtotals[4] = {0};
 
-static uint16_t channels[4] = {20, 16, 22, 18};
+static uint16_t Ichannels[4] = {20, 16, 22, 18};
+static uint16_t Vchannels[4] = {21, 17, 23, 19};
 
-# 21
+
 int16_t ADCRead(adcc_channel_t channel)
 {
 ADPCH = channel_VSS;
@@ -17550,33 +17619,59 @@ while(ADCON0bits.ADGO)
 return ((ADRESH<<8)+ADRESL);
 }
 
-# 77
+# 78
 int16_t readIAnalog(uint16_t channel)
 {
 int16_t value;
 
-uint16_t analog_channel = channels[channel];
+uint16_t analog_channel = Ichannels[channel];
 
 value = ADCRead(analog_channel);
 
-totals[channel] = totals[channel]-samples[channel][sampleIndex];
+Itotals[channel] = Itotals[channel]-Isamples[channel][IsampleIndex];
 
-samples[channel][sampleIndex] = value;
+Isamples[channel][IsampleIndex] = value;
 
-totals[channel] = totals[channel]+samples[channel][sampleIndex];
+Itotals[channel] = Itotals[channel]+Isamples[channel][IsampleIndex];
 
 if(channel>=(4-1))
 {
-sampleIndex+=1;
-if(sampleIndex >= 50)sampleIndex = 0;
+IsampleIndex+=1;
+if(IsampleIndex >= 50)IsampleIndex = 0;
 }
 
-value = totals[channel]/50;
+value = Itotals[channel]/50;
 
 return value;
 }
 
-# 111
+
+int16_t readVAnalog(uint16_t channel)
+{
+int16_t value;
+
+uint16_t analog_channel = Vchannels[channel];
+
+value = ADCRead(analog_channel);
+
+Vtotals[channel] = Vtotals[channel]-Vsamples[channel][VsampleIndex];
+
+Vsamples[channel][VsampleIndex] = value;
+
+Vtotals[channel] = Vtotals[channel]+Vsamples[channel][VsampleIndex];
+
+if(channel>=(4-1))
+{
+VsampleIndex+=1;
+if(VsampleIndex >= 15)VsampleIndex = 0;
+}
+
+value = Vtotals[channel]/15;
+
+return value;
+}
+
+# 139
 void ADC_Initialize(void)
 {
 ADCON1 = 0x00;
@@ -17592,7 +17687,7 @@ ADSTAT = 0x00;
 FVRCON = 0b11000011;
 ADCLK = 0x3F;
 
-# 131
+# 159
 ADREF = 0x03;
 
 

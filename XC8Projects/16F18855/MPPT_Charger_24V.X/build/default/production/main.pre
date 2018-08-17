@@ -17336,6 +17336,9 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
+typedef unsigned char bool;
+
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdint.h"
 typedef signed char int8_t;
 
@@ -17426,10 +17429,7 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 12 "C:\Program Files (x86)\Microchip\xc8\v1.45\include\stdbool.h"
-typedef unsigned char bool;
-
-# 11 "adc.h"
+# 12 "adc.h"
 extern int16_t analogs[8];
 
 typedef enum
@@ -17447,11 +17447,13 @@ int16_t ADCRead(adcc_channel_t channel);
 
 int16_t readIAnalog(uint16_t channel);
 
+int16_t readVAnalog(uint16_t channel);
+
 
 
 void ADC_Initialize(void);
 
-# 36
+# 39
 bool ADCC_IsConversionDone();
 
 int16_t ADCC_GetConversionResult(void);
@@ -17478,37 +17480,37 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 84
+# 87
 uint16_t ADCC_GetPreviousResult(void);
 
-# 108
+# 111
 void ADCC_DefineSetPoint(uint16_t);
 
-# 133
+# 136
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 158
+# 161
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 181
+# 184
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 203
+# 206
 void ADCC_EnableDoubleSampling(void);
 
-# 225
+# 228
 void ADCC_EnableContinuousConversion(void);
 
-# 247
+# 250
 void ADCC_DisableContinuousConversion(void);
 
-# 269
+# 272
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 291
+# 294
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 313
+# 316
 uint8_t ADCC_GetConversionStageStatus(void);
 
 # 8 "battery_charger.h"
@@ -17569,7 +17571,7 @@ void TMR2_Initialize(void);
 
 void TMR4_Initialize(void);
 
-# 19 "system.h"
+# 21 "system.h"
 void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
@@ -17601,6 +17603,7 @@ int16_t largerIOut = 0;
 extern int16_t Iref[2];
 uint8_t j = 0;
 uint8_t menuButton = 0;
+uint8_t fastLoop = 0;
 uint8_t slowLoop = 200;
 uint16_t tempFanOutput = 60;
 extern int8_t VHoldMode[2];
@@ -17628,23 +17631,20 @@ LATA5=1;
 }
 for(j=0;j<4;j++) Ianalogs[j]=readIAnalog(j);
 
-Vanalogs[0]=ADCRead(21);
+for(j=0;j<4;j++) Vanalogs[j]=readVAnalog(j);
 
-Vanalogs[1]=ADCRead(17);
-
-Vanalogs[2]=ADCRead(23);
-
-Vanalogs[3]=ADCRead(19);
-
+# 89
 if(!(RB2))faultNotReset+=1;
 
-voltage[0]=(int16_t)(Vanalogs[0]/.54503);
+if(fastLoop>5)
+{
+voltage[0]=(int16_t)(Vanalogs[0]/.54245);
 
-voltage[1]=(int16_t)(Vanalogs[1]/.54503);
+voltage[1]=(int16_t)(Vanalogs[1]/.54395);
 
-voltage[2]=(int16_t)(Vanalogs[2]/.20885);
+voltage[2]=(int16_t)(Vanalogs[2]/.208100558);
 
-voltage[3]=(int16_t)(Vanalogs[3]/.20885);
+voltage[3]=(int16_t)(Vanalogs[3]/.207755);
 
 calculateCurrent0();
 
@@ -17711,7 +17711,10 @@ if(dutyCycle7>0) dutyCycle7-=1;;
 }
 else dutyCycle7=dutyCycle7;
 }
+fastLoop=0;
+}
 
+fastLoop+=1;
 slowLoop+=1;
 
 PWM1_LoadDutyValue(dutyCycle1);
@@ -17725,11 +17728,15 @@ if(menuButton == 1)LCDInit();
 
 if(slowLoop>250)
 {
-
-
+if(current[0]>current[1])
+{
 largerIOut=current[0];
+}
+else
+{
+largerIOut=current[1];
+}
 
-# 185
 if(largerIOut>25)
 {
 if((uint16_t)largerIOut+5>dutyCycle1)
@@ -17784,9 +17791,11 @@ Battery_State_Machine(1);
 { gotoXY(52,0); LCDWriteString("Ref:");};
 
 { gotoXY(0,1); LCDWriteInt(voltage[2],4, 2, 0);};
+
 LCDWriteCharacter('V');
 
 { gotoXY(26,1); LCDWriteInt(voltage[0],4, 2, 0);};
+
 LCDWriteCharacter('V');
 
 { gotoXY(52,1); LCDWriteInt(Vref[0],4, 2, 0);};
@@ -17806,9 +17815,11 @@ LCDWriteCharacter('A');
 { gotoXY(80,2); LCDWriteInt(batteryState[0],1, 0, 0);};
 
 { gotoXY(0,3); LCDWriteInt(voltage[3],4, 2, 0);};
+
 LCDWriteCharacter('V');
 
 { gotoXY(26,3); LCDWriteInt(voltage[1],4, 2, 0);};
+
 LCDWriteCharacter('V');
 
 { gotoXY(52,3); LCDWriteInt(Vref[1],4, 2, 0);};
@@ -17816,7 +17827,7 @@ LCDWriteCharacter('V');
 
 { gotoXY(80,3); LCDWriteInt(Imode[1],1, 0, 0);};
 
-# 278
+# 289
 { gotoXY(0,4); LCDWriteInt(current[3],3, 1, 0);};
 LCDWriteCharacter('A');
 
@@ -17840,7 +17851,7 @@ LCDWriteCharacter(' ');
 LCDWriteCharacter(123);
 LCDWriteCharacter('C');
 
-# 369
+# 380
 if(batteryState[0] > FINISHED)
 {
 cc_cv_mode(0);
