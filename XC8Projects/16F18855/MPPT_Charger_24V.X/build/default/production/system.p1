@@ -1,9 +1,9 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"16 pin_manager.h
+"6 pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
 "23 system.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
-"33 adc.h
+"27 adc.h
 [v _ADC_Initialize `(v ~T0 @X0 0 ef ]
 "7 pwm.h
 [v _PWM_Initialize `(v ~T0 @X0 0 ef ]
@@ -11,7 +11,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
 "19
 [v _TMR4_Initialize `(v ~T0 @X0 0 ef ]
-"33 battery_charger.h
+"15 battery_charger.h
 [v _Init_Battery_State_Machine `(v ~T0 @X0 0 ef1`uc ]
 "38 lcd.h
 [v _LCDInit `(v ~T0 @X0 0 ef ]
@@ -31,49 +31,49 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _OSCFRQ `Vuc ~T0 @X0 0 e@2195 ]
 "23612
 [v _OSCTUNE `Vuc ~T0 @X0 0 e@2194 ]
-"3 system.c
+"2 system.c
 [p x FEXTOSC=OFF ]
-"4
+"3
 [p x RSTOSC=HFINT32 ]
-"5
+"4
 [p x CLKOUTEN=OFF ]
-"6
+"5
 [p x CSWEN=ON ]
-"7
+"6
 [p x FCMEN=ON ]
-"10
+"9
 [p x MCLRE=ON ]
-"11
+"10
 [p x PWRTE=OFF ]
-"12
+"11
 [p x LPBOREN=OFF ]
-"13
+"12
 [p x BOREN=ON ]
-"14
+"13
 [p x BORV=LO ]
-"15
+"14
 [p x ZCD=OFF ]
-"16
+"15
 [p x PPS1WAY=ON ]
-"17
+"16
 [p x STVREN=ON ]
-"20
+"19
 [p x WDTCPS=WDTCPS_31 ]
-"21
+"20
 [p x WDTE=OFF ]
-"22
+"21
 [p x WDTCWS=WDTCWS_7 ]
-"23
+"22
 [p x WDTCCS=SC ]
-"26
+"25
 [p x WRT=OFF ]
-"27
+"26
 [p x SCANE=not_available ]
-"28
+"27
 [p x LVP=ON ]
-"31
+"30
 [p x CP=OFF ]
-"32
+"31
 [p x CPD=OFF ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -13183,50 +13183,50 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
-[; ;adc.h: 12: extern int16_t analogs[8];
-[; ;adc.h: 14: typedef enum
-[; ;adc.h: 15: {
-[; ;adc.h: 16: POT = 0x4,
-[; ;adc.h: 17: channel_VSS = 0x3C,
-[; ;adc.h: 18: channel_Temp = 0x3D,
-[; ;adc.h: 19: channel_DAC1 = 0x3E,
-[; ;adc.h: 20: channel_FVR = 0x3F
-[; ;adc.h: 21: } adcc_channel_t;
-[; ;adc.h: 23: int16_t ADCRead(adcc_channel_t channel);
-[; ;adc.h: 27: int16_t readIAnalog(uint16_t channel);
-[; ;adc.h: 29: int16_t readVAnalog(uint16_t channel);
-[; ;adc.h: 33: void ADC_Initialize(void);
-[; ;adc.h: 39: bool ADCC_IsConversionDone();
-[; ;adc.h: 41: int16_t ADCC_GetConversionResult(void);
-[; ;adc.h: 43: void ADCC_StopConversion(void);
-[; ;adc.h: 45: void ADCC_SetStopOnInterrupt(void);
-[; ;adc.h: 47: void ADCC_DischargeSampleCapacitor(void);
-[; ;adc.h: 49: void ADCC_LoadAcquisitionRegister(uint8_t);
-[; ;adc.h: 51: void ADCC_SetPrechargeTime(uint8_t);
-[; ;adc.h: 53: void ADCC_SetRepeatCount(uint8_t);
-[; ;adc.h: 55: uint8_t ADCC_GetCurrentCountofConversions(void);
-[; ;adc.h: 57: void ADCC_ClearAccumulator(void);
-[; ;adc.h: 59: uint16_t ADCC_GetAccumulatorValue(void);
-[; ;adc.h: 61: bool ADCC_HasAccumulatorOverflowed(void);
-[; ;adc.h: 63: uint16_t ADCC_GetFilterValue(void);
-[; ;adc.h: 87: uint16_t ADCC_GetPreviousResult(void);
-[; ;adc.h: 111: void ADCC_DefineSetPoint(uint16_t);
-[; ;adc.h: 136: void ADCC_SetUpperThreshold(uint16_t);
-[; ;adc.h: 161: void ADCC_SetLowerThreshold(uint16_t);
-[; ;adc.h: 184: uint16_t ADCC_GetErrorCalculation(void);
-[; ;adc.h: 206: void ADCC_EnableDoubleSampling(void);
-[; ;adc.h: 228: void ADCC_EnableContinuousConversion(void);
-[; ;adc.h: 250: void ADCC_DisableContinuousConversion(void);
-[; ;adc.h: 272: bool ADCC_HasErrorCrossedUpperThreshold(void);
-[; ;adc.h: 294: bool ADCC_HasErrorCrossedLowerThreshold(void);
-[; ;adc.h: 316: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 8: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;adc.h: 6: extern int16_t analogs[8];
+[; ;adc.h: 8: typedef enum
+[; ;adc.h: 9: {
+[; ;adc.h: 10: POT = 0x4,
+[; ;adc.h: 11: channel_VSS = 0x3C,
+[; ;adc.h: 12: channel_Temp = 0x3D,
+[; ;adc.h: 13: channel_DAC1 = 0x3E,
+[; ;adc.h: 14: channel_FVR = 0x3F
+[; ;adc.h: 15: } adcc_channel_t;
+[; ;adc.h: 17: int16_t ADCRead(adcc_channel_t channel);
+[; ;adc.h: 21: int16_t readIAnalog(uint16_t channel);
+[; ;adc.h: 23: int16_t readVAnalog(uint16_t channel);
+[; ;adc.h: 27: void ADC_Initialize(void);
+[; ;adc.h: 33: bool ADCC_IsConversionDone();
+[; ;adc.h: 35: int16_t ADCC_GetConversionResult(void);
+[; ;adc.h: 37: void ADCC_StopConversion(void);
+[; ;adc.h: 39: void ADCC_SetStopOnInterrupt(void);
+[; ;adc.h: 41: void ADCC_DischargeSampleCapacitor(void);
+[; ;adc.h: 43: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adc.h: 45: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adc.h: 47: void ADCC_SetRepeatCount(uint8_t);
+[; ;adc.h: 49: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adc.h: 51: void ADCC_ClearAccumulator(void);
+[; ;adc.h: 53: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adc.h: 55: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adc.h: 57: uint16_t ADCC_GetFilterValue(void);
+[; ;adc.h: 81: uint16_t ADCC_GetPreviousResult(void);
+[; ;adc.h: 105: void ADCC_DefineSetPoint(uint16_t);
+[; ;adc.h: 130: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adc.h: 155: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adc.h: 178: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adc.h: 200: void ADCC_EnableDoubleSampling(void);
+[; ;adc.h: 222: void ADCC_EnableContinuousConversion(void);
+[; ;adc.h: 244: void ADCC_DisableContinuousConversion(void);
+[; ;adc.h: 266: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adc.h: 288: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adc.h: 310: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
-[; ;lead_acid_agm.h: 17: extern int16_t batteryTemp;
-[; ;battery_charger.h: 31: extern uint8_t battery_state[2];
-[; ;battery_charger.h: 33: void Init_Battery_State_Machine(uint8_t z);
-[; ;battery_charger.h: 34: void Battery_State_Machine(uint8_t z);
-[; ;battery_charger.h: 35: void cc_cv_mode(uint8_t z);
+[; ;lead_acid.h: 12: extern int16_t batteryTemp;
+[; ;battery_charger.h: 9: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;battery_charger.h: 13: extern uint8_t battery_state[2];
+[; ;battery_charger.h: 15: void Init_Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 16: void Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 17: void cc_cv_mode(uint8_t z);
 [; ;buttons.h: 12: uint8_t readButton(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13235,7 +13235,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 36: void LCDWriteInt(int16_t value,int8_t fieldLength, uint8_t numPlaces, uint8_t sign);
 [; ;lcd.h: 38: void LCDInit(void);
 [; ;lcd.h: 41: void LCDWrite(uint8_t data_or_command, uint8_t data);
-[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 6: void PIN_MANAGER_Initialize (void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
@@ -13244,78 +13244,78 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr.h: 19: void TMR4_Initialize(void);
 [; ;system.h: 21: void SYSTEM_Initialize(void);
 [; ;system.h: 23: void OSCILLATOR_Initialize(void);
-"71 system.c
+"35 system.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
-"72
+"36
 {
-[; ;system.c: 71: void SYSTEM_Initialize(void)
-[; ;system.c: 72: {
+[; ;system.c: 35: void SYSTEM_Initialize(void)
+[; ;system.c: 36: {
 [e :U _SYSTEM_Initialize ]
 [f ]
-[; ;system.c: 73: PIN_MANAGER_Initialize();
-"73
+[; ;system.c: 37: PIN_MANAGER_Initialize();
+"37
 [e ( _PIN_MANAGER_Initialize ..  ]
-[; ;system.c: 74: OSCILLATOR_Initialize();
-"74
+[; ;system.c: 38: OSCILLATOR_Initialize();
+"38
 [e ( _OSCILLATOR_Initialize ..  ]
-[; ;system.c: 76: ADC_Initialize();
-"76
+[; ;system.c: 40: ADC_Initialize();
+"40
 [e ( _ADC_Initialize ..  ]
-[; ;system.c: 77: PWM_Initialize();
-"77
+[; ;system.c: 41: PWM_Initialize();
+"41
 [e ( _PWM_Initialize ..  ]
-[; ;system.c: 79: TMR2_Initialize();
-"79
+[; ;system.c: 43: TMR2_Initialize();
+"43
 [e ( _TMR2_Initialize ..  ]
-[; ;system.c: 80: TMR4_Initialize();
-"80
+[; ;system.c: 44: TMR4_Initialize();
+"44
 [e ( _TMR4_Initialize ..  ]
-[; ;system.c: 81: Init_Battery_State_Machine(0);
-"81
+[; ;system.c: 45: Init_Battery_State_Machine(0);
+"45
 [e ( _Init_Battery_State_Machine (1 -> -> 0 `i `uc ]
-[; ;system.c: 82: Init_Battery_State_Machine(1);
-"82
+[; ;system.c: 46: Init_Battery_State_Machine(1);
+"46
 [e ( _Init_Battery_State_Machine (1 -> -> 1 `i `uc ]
-[; ;system.c: 83: LCDInit();
-"83
+[; ;system.c: 47: LCDInit();
+"47
 [e ( _LCDInit ..  ]
-[; ;system.c: 84: _delay((unsigned long)((200)*(32000000/4000.0)));
-"84
+[; ;system.c: 48: _delay((unsigned long)((200)*(32000000/4000.0)));
+"48
 [e ( __delay (1 -> * -> -> 200 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;system.c: 85: LCDClear();
-"85
+[; ;system.c: 49: LCDClear();
+"49
 [e ( _LCDClear ..  ]
-[; ;system.c: 86: _delay((unsigned long)((200)*(32000000/4000.0)));
-"86
+[; ;system.c: 50: _delay((unsigned long)((200)*(32000000/4000.0)));
+"50
 [e ( __delay (1 -> * -> -> 200 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;system.c: 87: }
-"87
+[; ;system.c: 51: }
+"51
 [e :UE 1563 ]
 }
-"89
+"53
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
-"90
+"54
 {
-[; ;system.c: 89: void OSCILLATOR_Initialize(void)
-[; ;system.c: 90: {
+[; ;system.c: 53: void OSCILLATOR_Initialize(void)
+[; ;system.c: 54: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;system.c: 91: OSCCON1 = 0x60;
-"91
+[; ;system.c: 55: OSCCON1 = 0x60;
+"55
 [e = _OSCCON1 -> -> 96 `i `uc ]
-[; ;system.c: 92: OSCCON3 = 0x00;
-"92
+[; ;system.c: 56: OSCCON3 = 0x00;
+"56
 [e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;system.c: 93: OSCEN = 0x00;
-"93
+[; ;system.c: 57: OSCEN = 0x00;
+"57
 [e = _OSCEN -> -> 0 `i `uc ]
-[; ;system.c: 94: OSCFRQ = 0x06;
-"94
+[; ;system.c: 58: OSCFRQ = 0x06;
+"58
 [e = _OSCFRQ -> -> 6 `i `uc ]
-[; ;system.c: 95: OSCTUNE = 0x00;
-"95
+[; ;system.c: 59: OSCTUNE = 0x00;
+"59
 [e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;system.c: 96: }
-"96
+[; ;system.c: 60: }
+"60
 [e :UE 1564 ]
 }

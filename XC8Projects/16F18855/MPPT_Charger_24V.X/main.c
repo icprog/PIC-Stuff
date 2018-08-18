@@ -78,13 +78,6 @@ void main(void)
         for(j=0;j<4;j++) Ianalogs[j]=readIAnalog(j);                // Read analogs
         
         for(j=0;j<4;j++) Vanalogs[j]=readVAnalog(j);                // Read analogs
-//        Vanalogs[0]=ADCRead(21);                                    // Read VOut0
-        
-  //      Vanalogs[1]=ADCRead(17);                                    // Read VOut1
-
-    //    Vanalogs[2]=ADCRead(23);                                    // Read VIn0
-
-      //  Vanalogs[3]=ADCRead(19);                                    // Read VIn1    
 
         if(Fault)faultNotReset+=1;
         
@@ -108,14 +101,14 @@ void main(void)
         
             if(Imode[0])
             {
-                if(VIn0<MPPT0)                                          // MPPT Voltage of Panel 0
+                if(VIn0<MPPT0)                                      // MPPT Voltage of Panel 0
                 {
                     if(Buck0Output<1023)
                     {
                         Buck0Output+=1;
                     }
                 }
-                else if(VIn0>MPPT0)                                     // MPPT Voltage of Panel 1
+                else if(VIn0>MPPT0)                                 // MPPT Voltage of Panel 1
                 {
                     if(Buck0Output>0)
                     {
@@ -163,15 +156,14 @@ void main(void)
                 }
                 else Buck1Output=Buck1Output;
             }
+            PWM6_LoadDutyValue(Buck0Output);
+            PWM7_LoadDutyValue(Buck1Output);
             fastLoop=0;
         }
 
         fastLoop+=1;
         slowLoop+=1;
    
-        PWM1_LoadDutyValue(FanOutput);
-        PWM6_LoadDutyValue(Buck0Output);
-        PWM7_LoadDutyValue(Buck1Output);
 
         menuButton = readButton();
         if(menuButton == Down) if(MPPT0>2700)MPPT1-=1;
@@ -191,7 +183,7 @@ void main(void)
             
             if(largerIOut>25)
             {
-                if(NewFanOutput>FanOutput)
+                if(NewFanOutput>FanOutput)                          // NewFanOutput ie equal to largerIOut+5
                 {
                     FanOutput+=1;
                 }
@@ -222,6 +214,8 @@ void main(void)
                 batteryState[0]=CHARGE;
                 batteryState[1]=CHARGE;
             }
+
+            PWM1_LoadDutyValue(FanOutput);
             
             ADREF = 0x00;                                               // ADNREF VSS; ADPREF VDD;
             batteryTemp=tempCalc(ADCRead(9));                           // Read Thermistor on RB1

@@ -1,4 +1,3 @@
-#include    "system.h"
 #include    "buttons.h"
 
 int16_t         readButtons     =   0;

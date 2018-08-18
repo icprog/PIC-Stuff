@@ -1,8 +1,8 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"11 buttons.c
+"10 buttons.c
 [c E14259 4 60 61 62 63 .. ]
 [n E14259 . POT channel_VSS channel_Temp channel_DAC1 channel_FVR  ]
-"23 adc.h
+"17 adc.h
 [v _ADCRead `(i ~T0 @X0 0 ef1`E14259 ]
 [v F14219 `(v ~T0 @X0 1 tf1`ul ]
 "153 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic.h
@@ -13116,51 +13116,50 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
-[; ;adc.h: 12: extern int16_t analogs[8];
-[; ;adc.h: 14: typedef enum
-[; ;adc.h: 15: {
-[; ;adc.h: 16: POT = 0x4,
-[; ;adc.h: 17: channel_VSS = 0x3C,
-[; ;adc.h: 18: channel_Temp = 0x3D,
-[; ;adc.h: 19: channel_DAC1 = 0x3E,
-[; ;adc.h: 20: channel_FVR = 0x3F
-[; ;adc.h: 21: } adcc_channel_t;
-[; ;adc.h: 23: int16_t ADCRead(adcc_channel_t channel);
-[; ;adc.h: 27: int16_t readIAnalog(uint16_t channel);
-[; ;adc.h: 29: int16_t readVAnalog(uint16_t channel);
-[; ;adc.h: 33: void ADC_Initialize(void);
-[; ;adc.h: 39: bool ADCC_IsConversionDone();
-[; ;adc.h: 41: int16_t ADCC_GetConversionResult(void);
-[; ;adc.h: 43: void ADCC_StopConversion(void);
-[; ;adc.h: 45: void ADCC_SetStopOnInterrupt(void);
-[; ;adc.h: 47: void ADCC_DischargeSampleCapacitor(void);
-[; ;adc.h: 49: void ADCC_LoadAcquisitionRegister(uint8_t);
-[; ;adc.h: 51: void ADCC_SetPrechargeTime(uint8_t);
-[; ;adc.h: 53: void ADCC_SetRepeatCount(uint8_t);
-[; ;adc.h: 55: uint8_t ADCC_GetCurrentCountofConversions(void);
-[; ;adc.h: 57: void ADCC_ClearAccumulator(void);
-[; ;adc.h: 59: uint16_t ADCC_GetAccumulatorValue(void);
-[; ;adc.h: 61: bool ADCC_HasAccumulatorOverflowed(void);
-[; ;adc.h: 63: uint16_t ADCC_GetFilterValue(void);
-[; ;adc.h: 87: uint16_t ADCC_GetPreviousResult(void);
-[; ;adc.h: 111: void ADCC_DefineSetPoint(uint16_t);
-[; ;adc.h: 136: void ADCC_SetUpperThreshold(uint16_t);
-[; ;adc.h: 161: void ADCC_SetLowerThreshold(uint16_t);
-[; ;adc.h: 184: uint16_t ADCC_GetErrorCalculation(void);
-[; ;adc.h: 206: void ADCC_EnableDoubleSampling(void);
-[; ;adc.h: 228: void ADCC_EnableContinuousConversion(void);
-[; ;adc.h: 250: void ADCC_DisableContinuousConversion(void);
-[; ;adc.h: 272: bool ADCC_HasErrorCrossedUpperThreshold(void);
-[; ;adc.h: 294: bool ADCC_HasErrorCrossedLowerThreshold(void);
-[; ;adc.h: 316: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 8: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;adc.h: 6: extern int16_t analogs[8];
+[; ;adc.h: 8: typedef enum
+[; ;adc.h: 9: {
+[; ;adc.h: 10: POT = 0x4,
+[; ;adc.h: 11: channel_VSS = 0x3C,
+[; ;adc.h: 12: channel_Temp = 0x3D,
+[; ;adc.h: 13: channel_DAC1 = 0x3E,
+[; ;adc.h: 14: channel_FVR = 0x3F
+[; ;adc.h: 15: } adcc_channel_t;
+[; ;adc.h: 17: int16_t ADCRead(adcc_channel_t channel);
+[; ;adc.h: 21: int16_t readIAnalog(uint16_t channel);
+[; ;adc.h: 23: int16_t readVAnalog(uint16_t channel);
+[; ;adc.h: 27: void ADC_Initialize(void);
+[; ;adc.h: 33: bool ADCC_IsConversionDone();
+[; ;adc.h: 35: int16_t ADCC_GetConversionResult(void);
+[; ;adc.h: 37: void ADCC_StopConversion(void);
+[; ;adc.h: 39: void ADCC_SetStopOnInterrupt(void);
+[; ;adc.h: 41: void ADCC_DischargeSampleCapacitor(void);
+[; ;adc.h: 43: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adc.h: 45: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adc.h: 47: void ADCC_SetRepeatCount(uint8_t);
+[; ;adc.h: 49: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adc.h: 51: void ADCC_ClearAccumulator(void);
+[; ;adc.h: 53: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adc.h: 55: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adc.h: 57: uint16_t ADCC_GetFilterValue(void);
+[; ;adc.h: 81: uint16_t ADCC_GetPreviousResult(void);
+[; ;adc.h: 105: void ADCC_DefineSetPoint(uint16_t);
+[; ;adc.h: 130: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adc.h: 155: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adc.h: 178: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adc.h: 200: void ADCC_EnableDoubleSampling(void);
+[; ;adc.h: 222: void ADCC_EnableContinuousConversion(void);
+[; ;adc.h: 244: void ADCC_DisableContinuousConversion(void);
+[; ;adc.h: 266: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adc.h: 288: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adc.h: 310: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
-[; ;lead_acid_agm.h: 17: extern int16_t batteryTemp;
-[; ;battery_charger.h: 31: extern uint8_t battery_state[2];
-[; ;battery_charger.h: 33: void Init_Battery_State_Machine(uint8_t z);
-[; ;battery_charger.h: 34: void Battery_State_Machine(uint8_t z);
-[; ;battery_charger.h: 35: void cc_cv_mode(uint8_t z);
-[; ;buttons.h: 12: uint8_t readButton(void);
+[; ;lead_acid.h: 12: extern int16_t batteryTemp;
+[; ;battery_charger.h: 9: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;battery_charger.h: 13: extern uint8_t battery_state[2];
+[; ;battery_charger.h: 15: void Init_Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 16: void Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 17: void cc_cv_mode(uint8_t z);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
 [; ;lcd.h: 29: void LCDWriteString(const char *characters);
@@ -13168,7 +13167,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 36: void LCDWriteInt(int16_t value,int8_t fieldLength, uint8_t numPlaces, uint8_t sign);
 [; ;lcd.h: 38: void LCDInit(void);
 [; ;lcd.h: 41: void LCDWrite(uint8_t data_or_command, uint8_t data);
-[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 6: void PIN_MANAGER_Initialize (void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
@@ -13177,184 +13176,185 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr.h: 19: void TMR4_Initialize(void);
 [; ;system.h: 21: void SYSTEM_Initialize(void);
 [; ;system.h: 23: void OSCILLATOR_Initialize(void);
-"4 buttons.c
+[; ;buttons.h: 12: uint8_t readButton(void);
+"3 buttons.c
 [v _readButtons `i ~T0 @X0 1 e ]
 [i _readButtons
 -> 0 `i
 ]
-[; ;buttons.c: 4: int16_t readButtons = 0;
-"5
+[; ;buttons.c: 3: int16_t readButtons = 0;
+"4
 [v _button `uc ~T0 @X0 1 e ]
 [i _button
 -> -> 0 `i `uc
 ]
-[; ;buttons.c: 5: uint8_t button = 0;
-"6
+[; ;buttons.c: 4: uint8_t button = 0;
+"5
 [v _lastButton `uc ~T0 @X0 1 e ]
 [i _lastButton
 -> -> 0 `i `uc
 ]
-[; ;buttons.c: 6: uint8_t lastButton = 0;
-"7
+[; ;buttons.c: 5: uint8_t lastButton = 0;
+"6
 [v _j `c ~T0 @X0 1 e ]
 [i _j
 -> -> 0 `i `c
 ]
-[; ;buttons.c: 7: int8_t j = 0;
-"9
+[; ;buttons.c: 6: int8_t j = 0;
+"8
 [v _readButton `(uc ~T0 @X0 1 ef ]
-"10
+"9
 {
-[; ;buttons.c: 9: uint8_t readButton(void)
-[; ;buttons.c: 10: {
+[; ;buttons.c: 8: uint8_t readButton(void)
+[; ;buttons.c: 9: {
 [e :U _readButton ]
 [f ]
-[; ;buttons.c: 11: readButtons=ADCRead(11);
-"11
+[; ;buttons.c: 10: readButtons=ADCRead(11);
+"10
 [e = _readButtons ( _ADCRead (1 -> -> 11 `i `E14259 ]
-[; ;buttons.c: 13: if(readButtons>=365&&readButtons<405)
-"13
+[; ;buttons.c: 12: if(readButtons>=365&&readButtons<405)
+"12
 [e $ ! && >= _readButtons -> 365 `i < _readButtons -> 405 `i 1564  ]
-[; ;buttons.c: 14: {
+[; ;buttons.c: 13: {
+"13
+{
+[; ;buttons.c: 14: button=1;
 "14
-{
-[; ;buttons.c: 15: button=1;
-"15
 [e = _button -> -> 1 `i `uc ]
-"16
+"15
 }
-[; ;buttons.c: 16: }
+[; ;buttons.c: 15: }
 [e $U 1565  ]
-"18
+"17
 [e :U 1564 ]
-[; ;buttons.c: 18: else if(readButtons>=535&&readButtons<590)
+[; ;buttons.c: 17: else if(readButtons>=535&&readButtons<590)
 [e $ ! && >= _readButtons -> 535 `i < _readButtons -> 590 `i 1566  ]
-[; ;buttons.c: 19: {
+[; ;buttons.c: 18: {
+"18
+{
+[; ;buttons.c: 19: button=2;
 "19
-{
-[; ;buttons.c: 20: button=2;
-"20
 [e = _button -> -> 2 `i `uc ]
-"21
+"20
 }
-[; ;buttons.c: 21: }
+[; ;buttons.c: 20: }
 [e $U 1567  ]
-"23
+"22
 [e :U 1566 ]
-[; ;buttons.c: 23: else if(readButtons>745)
+[; ;buttons.c: 22: else if(readButtons>745)
 [e $ ! > _readButtons -> 745 `i 1568  ]
-[; ;buttons.c: 24: {
+[; ;buttons.c: 23: {
+"23
+{
+[; ;buttons.c: 24: button=3;
 "24
-{
-[; ;buttons.c: 25: button=3;
-"25
 [e = _button -> -> 3 `i `uc ]
-"26
+"25
 }
-[; ;buttons.c: 26: }
+[; ;buttons.c: 25: }
 [e $U 1569  ]
-"28
+"27
 [e :U 1568 ]
-[; ;buttons.c: 28: else
-[; ;buttons.c: 29: {
-"29
+[; ;buttons.c: 27: else
+[; ;buttons.c: 28: {
+"28
 {
-[; ;buttons.c: 30: button=0;
-"30
+[; ;buttons.c: 29: button=0;
+"29
 [e = _button -> -> 0 `i `uc ]
-"31
+"30
 }
 [e :U 1569 ]
 [e :U 1567 ]
 [e :U 1565 ]
-[; ;buttons.c: 31: }
-[; ;buttons.c: 33: if (button!=0)
-"33
+[; ;buttons.c: 30: }
+[; ;buttons.c: 32: if (button!=0)
+"32
 [e $ ! != -> _button `i -> 0 `i 1570  ]
-[; ;buttons.c: 34: {
+[; ;buttons.c: 33: {
+"33
+{
+[; ;buttons.c: 34: if (button!=lastButton)
 "34
-{
-[; ;buttons.c: 35: if (button!=lastButton)
-"35
 [e $ ! != -> _button `i -> _lastButton `i 1571  ]
-[; ;buttons.c: 36: {
+[; ;buttons.c: 35: {
+"35
+{
+[; ;buttons.c: 36: lastButton=button;
 "36
-{
-[; ;buttons.c: 37: lastButton=button;
-"37
 [e = _lastButton _button ]
-[; ;buttons.c: 38: j=0;
-"38
+[; ;buttons.c: 37: j=0;
+"37
 [e = _j -> -> 0 `i `c ]
-"39
+"38
 }
-[; ;buttons.c: 39: }
+[; ;buttons.c: 38: }
 [e $U 1572  ]
-"40
+"39
 [e :U 1571 ]
-[; ;buttons.c: 40: else
-[; ;buttons.c: 41: {
+[; ;buttons.c: 39: else
+[; ;buttons.c: 40: {
+"40
+{
+[; ;buttons.c: 41: j+=1;
 "41
-{
-[; ;buttons.c: 42: j+=1;
-"42
 [e =+ _j -> -> 1 `i `c ]
-[; ;buttons.c: 44: if(j==1)
-"44
+[; ;buttons.c: 43: if(j==1)
+"43
 [e $ ! == -> _j `i -> 1 `i 1573  ]
-[; ;buttons.c: 45: {
-"45
+[; ;buttons.c: 44: {
+"44
 {
-[; ;buttons.c: 46: return (lastButton);
-"46
+[; ;buttons.c: 45: return (lastButton);
+"45
 [e ) _lastButton ]
 [e $UE 1563  ]
-"47
+"46
 }
 [e :U 1573 ]
-[; ;buttons.c: 47: }
-[; ;buttons.c: 49: if (j>10)
-"49
+[; ;buttons.c: 46: }
+[; ;buttons.c: 48: if (j>10)
+"48
 [e $ ! > -> _j `i -> 10 `i 1574  ]
-[; ;buttons.c: 50: {
-"50
+[; ;buttons.c: 49: {
+"49
 {
-[; ;buttons.c: 51: _delay((unsigned long)((25)*(32000000/4000.0)));
-"51
+[; ;buttons.c: 50: _delay((unsigned long)((25)*(32000000/4000.0)));
+"50
 [e ( __delay (1 -> * -> -> 25 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
-[; ;buttons.c: 52: j=10;
-"52
+[; ;buttons.c: 51: j=10;
+"51
 [e = _j -> -> 10 `i `c ]
-[; ;buttons.c: 53: return (lastButton);
-"53
+[; ;buttons.c: 52: return (lastButton);
+"52
 [e ) _lastButton ]
 [e $UE 1563  ]
-"54
+"53
 }
 [e :U 1574 ]
-"55
+"54
 }
 [e :U 1572 ]
+[; ;buttons.c: 53: }
 [; ;buttons.c: 54: }
-[; ;buttons.c: 55: }
-[; ;buttons.c: 56: goto end;
-"56
+[; ;buttons.c: 55: goto end;
+"55
 [e $U 1575  ]
-"57
+"56
 }
 [e :U 1570 ]
-[; ;buttons.c: 57: }
-[; ;buttons.c: 59: j=0;
-"59
+[; ;buttons.c: 56: }
+[; ;buttons.c: 58: j=0;
+"58
 [e = _j -> -> 0 `i `c ]
-[; ;buttons.c: 61: end:
-"61
+[; ;buttons.c: 60: end:
+"60
 [e :U 1575 ]
-[; ;buttons.c: 63: return (0);
-"63
+[; ;buttons.c: 62: return (0);
+"62
 [e ) -> -> 0 `i `uc ]
 [e $UE 1563  ]
-[; ;buttons.c: 64: }
-"64
+[; ;buttons.c: 63: }
+"63
 [e :UE 1563 ]
 }

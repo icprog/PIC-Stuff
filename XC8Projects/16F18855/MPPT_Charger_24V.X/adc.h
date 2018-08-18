@@ -2,12 +2,6 @@
 #define ADC_H
 
 #include    "system.h"
-//#include <xc.h>
-//#include <stdint.h>
-//#include <stdbool.h>
-
-
-//typedef int16_t adc_result_t;
 
 extern int16_t  analogs[8];
 

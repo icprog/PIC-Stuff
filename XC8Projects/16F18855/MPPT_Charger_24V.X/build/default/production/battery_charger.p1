@@ -1,8 +1,8 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "20 battery_charger.c
-[c E14321 0 1 2 3 4 5 .. ]
-[n E14321 charge_states IDLE FAULT FINISHED PRECHARGE CHARGE FLOAT  ]
-"17 lead_acid_agm.h
+[c E14324 0 1 2 3 4 5 .. ]
+[n E14324 charge_states IDLE FAULT FINISHED PRECHARGE CHARGE FLOAT  ]
+"12 lead_acid.h
 [v _batteryTemp `i ~T0 @X0 0 e ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -13112,50 +13112,50 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 205: typedef uint32_t uintmax_t;
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
-[; ;adc.h: 12: extern int16_t analogs[8];
-[; ;adc.h: 14: typedef enum
-[; ;adc.h: 15: {
-[; ;adc.h: 16: POT = 0x4,
-[; ;adc.h: 17: channel_VSS = 0x3C,
-[; ;adc.h: 18: channel_Temp = 0x3D,
-[; ;adc.h: 19: channel_DAC1 = 0x3E,
-[; ;adc.h: 20: channel_FVR = 0x3F
-[; ;adc.h: 21: } adcc_channel_t;
-[; ;adc.h: 23: int16_t ADCRead(adcc_channel_t channel);
-[; ;adc.h: 27: int16_t readIAnalog(uint16_t channel);
-[; ;adc.h: 29: int16_t readVAnalog(uint16_t channel);
-[; ;adc.h: 33: void ADC_Initialize(void);
-[; ;adc.h: 39: bool ADCC_IsConversionDone();
-[; ;adc.h: 41: int16_t ADCC_GetConversionResult(void);
-[; ;adc.h: 43: void ADCC_StopConversion(void);
-[; ;adc.h: 45: void ADCC_SetStopOnInterrupt(void);
-[; ;adc.h: 47: void ADCC_DischargeSampleCapacitor(void);
-[; ;adc.h: 49: void ADCC_LoadAcquisitionRegister(uint8_t);
-[; ;adc.h: 51: void ADCC_SetPrechargeTime(uint8_t);
-[; ;adc.h: 53: void ADCC_SetRepeatCount(uint8_t);
-[; ;adc.h: 55: uint8_t ADCC_GetCurrentCountofConversions(void);
-[; ;adc.h: 57: void ADCC_ClearAccumulator(void);
-[; ;adc.h: 59: uint16_t ADCC_GetAccumulatorValue(void);
-[; ;adc.h: 61: bool ADCC_HasAccumulatorOverflowed(void);
-[; ;adc.h: 63: uint16_t ADCC_GetFilterValue(void);
-[; ;adc.h: 87: uint16_t ADCC_GetPreviousResult(void);
-[; ;adc.h: 111: void ADCC_DefineSetPoint(uint16_t);
-[; ;adc.h: 136: void ADCC_SetUpperThreshold(uint16_t);
-[; ;adc.h: 161: void ADCC_SetLowerThreshold(uint16_t);
-[; ;adc.h: 184: uint16_t ADCC_GetErrorCalculation(void);
-[; ;adc.h: 206: void ADCC_EnableDoubleSampling(void);
-[; ;adc.h: 228: void ADCC_EnableContinuousConversion(void);
-[; ;adc.h: 250: void ADCC_DisableContinuousConversion(void);
-[; ;adc.h: 272: bool ADCC_HasErrorCrossedUpperThreshold(void);
-[; ;adc.h: 294: bool ADCC_HasErrorCrossedLowerThreshold(void);
-[; ;adc.h: 316: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;battery_charger.h: 8: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;adc.h: 6: extern int16_t analogs[8];
+[; ;adc.h: 8: typedef enum
+[; ;adc.h: 9: {
+[; ;adc.h: 10: POT = 0x4,
+[; ;adc.h: 11: channel_VSS = 0x3C,
+[; ;adc.h: 12: channel_Temp = 0x3D,
+[; ;adc.h: 13: channel_DAC1 = 0x3E,
+[; ;adc.h: 14: channel_FVR = 0x3F
+[; ;adc.h: 15: } adcc_channel_t;
+[; ;adc.h: 17: int16_t ADCRead(adcc_channel_t channel);
+[; ;adc.h: 21: int16_t readIAnalog(uint16_t channel);
+[; ;adc.h: 23: int16_t readVAnalog(uint16_t channel);
+[; ;adc.h: 27: void ADC_Initialize(void);
+[; ;adc.h: 33: bool ADCC_IsConversionDone();
+[; ;adc.h: 35: int16_t ADCC_GetConversionResult(void);
+[; ;adc.h: 37: void ADCC_StopConversion(void);
+[; ;adc.h: 39: void ADCC_SetStopOnInterrupt(void);
+[; ;adc.h: 41: void ADCC_DischargeSampleCapacitor(void);
+[; ;adc.h: 43: void ADCC_LoadAcquisitionRegister(uint8_t);
+[; ;adc.h: 45: void ADCC_SetPrechargeTime(uint8_t);
+[; ;adc.h: 47: void ADCC_SetRepeatCount(uint8_t);
+[; ;adc.h: 49: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adc.h: 51: void ADCC_ClearAccumulator(void);
+[; ;adc.h: 53: uint16_t ADCC_GetAccumulatorValue(void);
+[; ;adc.h: 55: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adc.h: 57: uint16_t ADCC_GetFilterValue(void);
+[; ;adc.h: 81: uint16_t ADCC_GetPreviousResult(void);
+[; ;adc.h: 105: void ADCC_DefineSetPoint(uint16_t);
+[; ;adc.h: 130: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adc.h: 155: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adc.h: 178: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adc.h: 200: void ADCC_EnableDoubleSampling(void);
+[; ;adc.h: 222: void ADCC_EnableContinuousConversion(void);
+[; ;adc.h: 244: void ADCC_DisableContinuousConversion(void);
+[; ;adc.h: 266: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adc.h: 288: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adc.h: 310: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;tempCalc.h: 6: int16_t tempCalc(int16_t analogValue);
-[; ;lead_acid_agm.h: 17: extern int16_t batteryTemp;
-[; ;battery_charger.h: 31: extern uint8_t battery_state[2];
-[; ;battery_charger.h: 33: void Init_Battery_State_Machine(uint8_t z);
-[; ;battery_charger.h: 34: void Battery_State_Machine(uint8_t z);
-[; ;battery_charger.h: 35: void cc_cv_mode(uint8_t z);
+[; ;lead_acid.h: 12: extern int16_t batteryTemp;
+[; ;battery_charger.h: 9: enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+[; ;battery_charger.h: 13: extern uint8_t battery_state[2];
+[; ;battery_charger.h: 15: void Init_Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 16: void Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 17: void cc_cv_mode(uint8_t z);
 [; ;buttons.h: 12: uint8_t readButton(void);
 [; ;lcd.h: 19: void gotoXY(uint8_t x, uint8_t y);
 [; ;lcd.h: 25: void LCDWriteCharacter(const char character);
@@ -13164,7 +13164,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 36: void LCDWriteInt(int16_t value,int8_t fieldLength, uint8_t numPlaces, uint8_t sign);
 [; ;lcd.h: 38: void LCDInit(void);
 [; ;lcd.h: 41: void LCDWrite(uint8_t data_or_command, uint8_t data);
-[; ;pin_manager.h: 16: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 6: void PIN_MANAGER_Initialize (void);
 [; ;pwm.h: 7: void PWM_Initialize(void);
 [; ;pwm.h: 9: void PWM6_LoadDutyValue(uint16_t dutyCycle);
 [; ;pwm.h: 11: void PWM7_LoadDutyValue(uint16_t dutyCycle);
@@ -13173,10 +13173,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr.h: 19: void TMR4_Initialize(void);
 [; ;system.h: 21: void SYSTEM_Initialize(void);
 [; ;system.h: 23: void OSCILLATOR_Initialize(void);
-[; ;battery_charger.h: 31: extern uint8_t battery_state[2];
-[; ;battery_charger.h: 33: void Init_Battery_State_Machine(uint8_t z);
-[; ;battery_charger.h: 34: void Battery_State_Machine(uint8_t z);
-[; ;battery_charger.h: 35: void cc_cv_mode(uint8_t z);
+[; ;battery_charger.h: 13: extern uint8_t battery_state[2];
+[; ;battery_charger.h: 15: void Init_Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 16: void Battery_State_Machine(uint8_t z);
+[; ;battery_charger.h: 17: void cc_cv_mode(uint8_t z);
 "3 battery_charger.c
 [v _batteryState `uc ~T0 @X0 -> 2 `i e ]
 [; ;battery_charger.c: 3: uint8_t batteryState[2];
@@ -13257,7 +13257,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;battery_charger.c: 20: batteryState[z] =PRECHARGE;
 "20
-[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14321 3 `uc ]
+[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14324 3 `uc ]
 [; ;battery_charger.c: 21: stateCounter[z] =5;
 "21
 [e = *U + &U _stateCounter * -> _z `ux -> -> # *U &U _stateCounter `ui `ux -> 5 `i ]
@@ -13290,7 +13290,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;battery_charger.c: 30: if(batteryState[z]==PRECHARGE)
 "30
-[e $ ! == -> *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux `i -> . `E14321 3 `i 1565  ]
+[e $ ! == -> *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux `i -> . `E14324 3 `i 1565  ]
 [; ;battery_charger.c: 31: {
 "31
 {
@@ -13321,7 +13321,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;battery_charger.c: 40: batteryState[z]=FAULT;
 "40
-[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14321 1 `uc ]
+[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14324 1 `uc ]
 "41
 }
 [e :U 1568 ]
@@ -13338,7 +13338,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;battery_charger.c: 45: batteryState[z]=CHARGE;
 "45
-[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14321 4 `uc ]
+[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14324 4 `uc ]
 [; ;battery_charger.c: 46: Iref[z]=35;
 "46
 [e = *U + &U _Iref * -> _z `ux -> -> # *U &U _Iref `ui `ux -> 35 `i ]
@@ -13353,7 +13353,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "49
 [e :U 1565 ]
 [; ;battery_charger.c: 49: else if(batteryState[z]==CHARGE)
-[e $ ! == -> *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux `i -> . `E14321 4 `i 1571  ]
+[e $ ! == -> *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux `i -> . `E14324 4 `i 1571  ]
 [; ;battery_charger.c: 50: {
 "50
 {
@@ -13383,7 +13383,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;battery_charger.c: 59: batteryState[z] = FLOAT;
 "59
-[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14321 5 `uc ]
+[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14324 5 `uc ]
 [; ;battery_charger.c: 60: IminCount[z]=10;
 "60
 [e = *U + &U _IminCount * -> _z `ux -> -> # *U &U _IminCount `ui `ux -> -> 10 `i `ui ]
@@ -13428,7 +13428,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "70
 [e :U 1571 ]
 [; ;battery_charger.c: 70: else if(batteryState[z] == FLOAT)
-[e $ ! == -> *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux `i -> . `E14321 5 `i 1580  ]
+[e $ ! == -> *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux `i -> . `E14324 5 `i 1580  ]
 [; ;battery_charger.c: 71: {
 "71
 {
@@ -13450,13 +13450,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;battery_charger.c: 76: else
 [; ;battery_charger.c: 77: if(batteryState[z] == FAULT)
 "77
-[e $ ! == -> *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux `i -> . `E14321 1 `i 1582  ]
+[e $ ! == -> *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux `i -> . `E14324 1 `i 1582  ]
 [; ;battery_charger.c: 78: {
 "78
 {
 [; ;battery_charger.c: 79: batteryState[z]=PRECHARGE;
 "79
-[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14321 3 `uc ]
+[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14324 3 `uc ]
 "80
 }
 [e :U 1582 ]
@@ -13581,7 +13581,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;battery_charger.c: 117: if(batteryState[z]==FLOAT)
 "117
-[e $ ! == -> *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux `i -> . `E14321 5 `i 1594  ]
+[e $ ! == -> *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux `i -> . `E14324 5 `i 1594  ]
 [; ;battery_charger.c: 118: {
 "118
 {
@@ -13593,7 +13593,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;battery_charger.c: 121: batteryState[z]=CHARGE;
 "121
-[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14321 4 `uc ]
+[e = *U + &U _batteryState * -> _z `ux -> -> # *U &U _batteryState `ui `ux -> . `E14324 4 `uc ]
 [; ;battery_charger.c: 122: Vref[z]=1425+(int16_t)((250-batteryTemp)*.24);
 "122
 [e = *U + &U _Vref * -> _z `ux -> -> # *U &U _Vref `ui `ux + -> 1425 `i -> * -> - -> 250 `i _batteryTemp `d .0.24 `i ]

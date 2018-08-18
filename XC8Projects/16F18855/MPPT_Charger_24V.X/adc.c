@@ -1,4 +1,3 @@
-#include <xc.h>
 #include "adc.h"
 
 #define     numISamples                     50                                              // Number of Current readings to Average

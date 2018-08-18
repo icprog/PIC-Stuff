@@ -17429,7 +17429,7 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 12 "adc.h"
+# 6 "adc.h"
 extern int16_t analogs[8];
 
 typedef enum
@@ -17453,7 +17453,7 @@ int16_t readVAnalog(uint16_t channel);
 
 void ADC_Initialize(void);
 
-# 39
+# 33
 bool ADCC_IsConversionDone();
 
 int16_t ADCC_GetConversionResult(void);
@@ -17480,49 +17480,50 @@ bool ADCC_HasAccumulatorOverflowed(void);
 
 uint16_t ADCC_GetFilterValue(void);
 
-# 87
+# 81
 uint16_t ADCC_GetPreviousResult(void);
 
-# 111
+# 105
 void ADCC_DefineSetPoint(uint16_t);
 
-# 136
+# 130
 void ADCC_SetUpperThreshold(uint16_t);
 
-# 161
+# 155
 void ADCC_SetLowerThreshold(uint16_t);
 
-# 184
+# 178
 uint16_t ADCC_GetErrorCalculation(void);
 
-# 206
+# 200
 void ADCC_EnableDoubleSampling(void);
 
-# 228
+# 222
 void ADCC_EnableContinuousConversion(void);
 
-# 250
+# 244
 void ADCC_DisableContinuousConversion(void);
 
-# 272
+# 266
 bool ADCC_HasErrorCrossedUpperThreshold(void);
 
-# 294
+# 288
 bool ADCC_HasErrorCrossedLowerThreshold(void);
 
-# 316
+# 310
 uint8_t ADCC_GetConversionStageStatus(void);
-
-# 8 "battery_charger.h"
-enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
 
 # 6 "tempCalc.h"
 int16_t tempCalc(int16_t analogValue);
 
-# 17 "lead_acid_agm.h"
+# 12 "lead_acid.h"
 extern int16_t batteryTemp;
 
-# 31 "battery_charger.h"
+# 9 "battery_charger.h"
+enum charge_states { IDLE = 0, FAULT = 1, FINISHED = 2, PRECHARGE = 3, CHARGE = 4, FLOAT = 5 };
+
+
+
 extern uint8_t battery_state[2];
 
 void Init_Battery_State_Machine(uint8_t z);
@@ -17554,9 +17555,6 @@ void LCDInit(void);
 
 void LCDWrite(uint8_t data_or_command, uint8_t data);
 
-# 16 "pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-
 # 7 "pwm.h"
 void PWM_Initialize(void);
 
@@ -17576,7 +17574,10 @@ void SYSTEM_Initialize(void);
 
 void OSCILLATOR_Initialize(void);
 
-# 5 "pin_manager.c"
+# 6 "pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+
+# 3 "pin_manager.c"
 void PIN_MANAGER_Initialize(void)
 {
 LATA = 0x20;
