@@ -2,7 +2,7 @@
 
 #define     numISamples                     50                                              // Number of Current readings to Average
 #define     numIChannels                    4                                               // Number of Current channels to read
-#define     numVSamples                     15                                               // Number of Voltage readings to Average
+#define     numVSamples                     5                                               // Number of Voltage readings to Average
 #define     numVChannels                    4                                               // Number of Voltage channels to read
 
 int16_t Isamples[numIChannels][numISamples]  =   {{0},{0}};                     

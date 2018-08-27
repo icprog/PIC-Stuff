@@ -19,7 +19,7 @@ extern      int16_t                 batteryTemp;
 	#define	CUTOFF_VOLTAGE			1075                                    // 10.75V
 
 	#define	ILIM_PRECHARGE			10                                      // 1A, Small current set at PRECHARGE stage
-	#define	ILIM					35                                      // 3.5A Point where we switch back to MPPT, or Current Mode
+	#define	ILIM					30                                      // 3A Point where we switch back to MPPT, or Current Mode
 	#define IFLOAT					15                                      // 1.5A, Point where we go in and out of FLOAT Mode				
 
 #endif

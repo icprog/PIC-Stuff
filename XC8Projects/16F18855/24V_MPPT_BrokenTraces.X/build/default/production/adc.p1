@@ -13249,7 +13249,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ]
 [; ;adc.c: 8: int16_t Isamples[4][50] = {{0},{0}};
-[v F14380 `i ~T0 @X0 -> 15 `i t ]
+[v F14380 `i ~T0 @X0 -> 5 `i t ]
 "9
 [v _Vsamples `F14380 ~T0 @X0 -> 4 `i e ]
 [i _Vsamples
@@ -13262,7 +13262,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-[; ;adc.c: 9: int16_t Vsamples[4][15] = {{0},{0}};
+[; ;adc.c: 9: int16_t Vsamples[4][5] = {{0},{0}};
 "11
 [v _IsampleIndex `ui ~T0 @X0 1 s ]
 [i _IsampleIndex
@@ -13466,13 +13466,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _value ( _ADCRead (1 -> _analog_channel `E14315 ]
 [; ;adc.c: 111: Vtotals[channel] = Vtotals[channel]-Vsamples[channel][VsampleIndex];
 "111
-[e = *U + &U _Vtotals * -> _channel `ux -> -> # *U &U _Vtotals `ui `ux - *U + &U _Vtotals * -> _channel `ux -> -> # *U &U _Vtotals `ui `ux -> *U + &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 15 `i `ui `ux * -> _VsampleIndex `ux -> -> # *U &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 15 `i `ui `ux `ui `ux `l ]
+[e = *U + &U _Vtotals * -> _channel `ux -> -> # *U &U _Vtotals `ui `ux - *U + &U _Vtotals * -> _channel `ux -> -> # *U &U _Vtotals `ui `ux -> *U + &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 5 `i `ui `ux * -> _VsampleIndex `ux -> -> # *U &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 5 `i `ui `ux `ui `ux `l ]
 [; ;adc.c: 113: Vsamples[channel][VsampleIndex] = value;
 "113
-[e = *U + &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 15 `i `ui `ux * -> _VsampleIndex `ux -> -> # *U &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 15 `i `ui `ux `ui `ux _value ]
+[e = *U + &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 5 `i `ui `ux * -> _VsampleIndex `ux -> -> # *U &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 5 `i `ui `ux `ui `ux _value ]
 [; ;adc.c: 115: Vtotals[channel] = Vtotals[channel]+Vsamples[channel][VsampleIndex];
 "115
-[e = *U + &U _Vtotals * -> _channel `ux -> -> # *U &U _Vtotals `ui `ux + *U + &U _Vtotals * -> _channel `ux -> -> # *U &U _Vtotals `ui `ux -> *U + &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 15 `i `ui `ux * -> _VsampleIndex `ux -> -> # *U &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 15 `i `ui `ux `ui `ux `l ]
+[e = *U + &U _Vtotals * -> _channel `ux -> -> # *U &U _Vtotals `ui `ux + *U + &U _Vtotals * -> _channel `ux -> -> # *U &U _Vtotals `ui `ux -> *U + &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 5 `i `ui `ux * -> _VsampleIndex `ux -> -> # *U &U *U + &U _Vsamples * -> _channel `ux -> * -> # *U &U *U &U _Vsamples `ui -> -> 5 `i `ui `ux `ui `ux `l ]
 [; ;adc.c: 117: if(channel>=(4-1))
 "117
 [e $ ! >= _channel -> - -> 4 `i -> 1 `i `ui 1574  ]
@@ -13482,18 +13482,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adc.c: 119: VsampleIndex+=1;
 "119
 [e =+ _VsampleIndex -> -> 1 `i `ui ]
-[; ;adc.c: 120: if(VsampleIndex >= 15)VsampleIndex = 0;
+[; ;adc.c: 120: if(VsampleIndex >= 5)VsampleIndex = 0;
 "120
-[e $ ! >= _VsampleIndex -> -> 15 `i `ui 1575  ]
+[e $ ! >= _VsampleIndex -> -> 5 `i `ui 1575  ]
 [e = _VsampleIndex -> -> 0 `i `ui ]
 [e :U 1575 ]
 "121
 }
 [e :U 1574 ]
 [; ;adc.c: 121: }
-[; ;adc.c: 123: value = Vtotals[channel]/15;
+[; ;adc.c: 123: value = Vtotals[channel]/5;
 "123
-[e = _value -> / *U + &U _Vtotals * -> _channel `ux -> -> # *U &U _Vtotals `ui `ux -> -> 15 `i `l `i ]
+[e = _value -> / *U + &U _Vtotals * -> _channel `ux -> -> # *U &U _Vtotals `ui `ux -> -> 5 `i `l `i ]
 [; ;adc.c: 125: return value;
 "125
 [e ) _value ]

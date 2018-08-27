@@ -17579,7 +17579,7 @@ uint8_t ADCC_GetConversionStageStatus(void);
 
 # 8 "adc.c"
 int16_t Isamples[4][50] = {{0},{0}};
-int16_t Vsamples[4][15] = {{0},{0}};
+int16_t Vsamples[4][5] = {{0},{0}};
 
 static uint16_t IsampleIndex = {0};
 static uint16_t VsampleIndex = {0};
@@ -17664,10 +17664,10 @@ Vtotals[channel] = Vtotals[channel]+Vsamples[channel][VsampleIndex];
 if(channel>=(4-1))
 {
 VsampleIndex+=1;
-if(VsampleIndex >= 15)VsampleIndex = 0;
+if(VsampleIndex >= 5)VsampleIndex = 0;
 }
 
-value = Vtotals[channel]/15;
+value = Vtotals[channel]/5;
 
 return value;
 }
