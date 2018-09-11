@@ -3,7 +3,7 @@
 
 #include    "system.h"
 
-void Pull(void);
+//void Pull(void);
 
 void userMenu(void);
 

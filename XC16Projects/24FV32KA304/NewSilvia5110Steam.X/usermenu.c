@@ -1,17 +1,17 @@
 #include    "usermenu.h"
 #include    "menu.h"
 
-extern char pull;
+//extern char pull;
 extern int8_t   tuning[3];
 
-void Pull(void)
+/*void Pull(void)
 {
     while(pull<1)
     {
         pull+=1;
     }
     
-}
+}*/
 void userMenu(void)
 {
     char testKey2   =   None;

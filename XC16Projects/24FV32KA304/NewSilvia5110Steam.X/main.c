@@ -94,9 +94,6 @@ int8_t tuning[3]        =   {0};
 
 char pull               =   0;                          // pull a 25 second shot with a display key
 
-int PIDValue[]          = {0,0,0};                      // PID calculated values (Water, Steam and Group)
-
-
 // *************** Main Routine ************************************************
 int main(void)
 {
@@ -115,7 +112,7 @@ int main(void)
     }
         
 // *************** Local Variables *********************************************
-    unsigned int powerOut   = 0;                        // Power Output Displayed to screen
+    uint16_t powerOut       = 0;                        // Power Output Displayed to screen
     
     char errorCount         = 0;                        // errorCount disables power, if water level remains low too long
     
@@ -139,7 +136,7 @@ int main(void)
  
     //    int internalBGV;
     
-//    int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
+    int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
     
     int previousSecond      = 0;                        //Used with time.second to limit some stuff to once a second
     
@@ -490,7 +487,8 @@ int main(void)
             
             if(brewSwitch)
             {
-                OC2R = 2;
+                if(shotProgressCounter<200)OC2R = 2;// Turn Boiler Output ON (for 20 seconds), rather than wait for PID to catch Temp drop
+                
                 backLightCounter = 0;           // Turn on Backlight if you are pulling a shot.
                 
                 T2CONbits.TON       =   1;      // Turn Timer2 ON
@@ -583,13 +581,13 @@ int main(void)
                 }
                 powerOut = pumpOutput*100/256;
             }
-            else if(pull)
-            {
-                OC2R = 2;
+            else if(pull)                                       // pull is set by turning OFF the brewSwitch before soakTime has elapsed 
+            {                                                   // thus,starting an automatically timed "Shot Pull"
+                if(shotProgressCounter<200)OC2R = 2;            // Turn Boiler Output ON (for 20 seconds), rather than wait for PID to catch Temp drop
 
-                backLightCounter = 0;           // Turn on Backlight if you are pulling a shot.
+                backLightCounter = 0;                           // Turn on Backlight if you are pulling a shot.
                 
-                T2CONbits.TON       =   1;      // Turn Timer2 ON
+                T2CONbits.TON       =   1;                      // Turn Timer2 ON
                 
                 if(shotProgressCounter <= preInfusionTime)
                 {
