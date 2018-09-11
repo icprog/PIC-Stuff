@@ -86,7 +86,7 @@ int const Kd[]          =   {18,20,22};
 
 char *desc[]            =   {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int powerFail           =   1;                          //Setting powerFail to 1, instructs the user to set the time
+int powerFail           =   0;                          //Setting powerFail to 1, instructs the user to set the time
 
 extern int run;
 
@@ -380,30 +380,30 @@ int main(void)
         }
         
         there:
-        if(tuning[0])
+/*        if(tuning[0])
         {
-            LCDWriteStringXY(2,1,desc[0]);
-            LCDWriteIntXY(48,1,boilerTemperature,4,1,0);
+            LCDWriteStringXY(2,0,desc[0]);
+            LCDWriteIntXY(48,0,boilerTemperature,4,1,0);
             LCDWriteCharacter(123);         // generate degree symbol in font list
             LCDWriteCharacter(70);
         }           
         
         if(tuning[1])
         {
-            LCDWriteStringXY(2,1,desc[1]);
-            LCDWriteIntXY(48,1,steamTemperature,4,1,0);
+            LCDWriteStringXY(2,0,desc[1]);
+            LCDWriteIntXY(48,0,steamTemperature,4,1,0);
             LCDWriteCharacter(123);         // generate degree symbol in font list
             LCDWriteCharacter(70);
         }
         
         if(tuning[2])
         {
-            LCDWriteStringXY(2,1,desc[2]);
-            LCDWriteIntXY(48,1,groupHeadTemp,4,1,0);
+            LCDWriteStringXY(2,0,desc[2]);
+            LCDWriteIntXY(48,0,groupHeadTemp,4,1,0);
             LCDWriteCharacter(123);         // generate degree symbol in font list
             LCDWriteCharacter(70);
         }
-            
+  */          
 // *************** Run Air Pump once an hour for Level transmitter *************
         if(powerSwitch)
         {

@@ -88,7 +88,7 @@ void RTCC_Initialize(void)
     RCFGCALbits.CAL7 = 1;                      // Enable RTCC Calibration all zeros but bit 7, too fast by ~1 sec in 24 hrs
     RCFGCALbits.CAL6 = 0;                      // Enable RTCC Calibration
     RCFGCALbits.CAL5 = 0;                      // Enable RTCC Calibration
-    RCFGCALbits.CAL4 = 0;                      // Enable RTCC Calibration               Change to zero Aug12/2018@11:55 15 sec slow in 2 days?
+    RCFGCALbits.CAL4 = 1;                      // Enable RTCC Calibration               Change to zero Aug12/2018@11:55 15 sec slow in 2 days?
     RCFGCALbits.CAL3 = 1;                      // Enable RTCC Calibration
     RCFGCALbits.CAL2 = 1;                      // Enable RTCC Calibration
     RCFGCALbits.CAL1 = 0;                      // Enable RTCC Calibration this and bit 7, at least 2 seconds fast in a day               

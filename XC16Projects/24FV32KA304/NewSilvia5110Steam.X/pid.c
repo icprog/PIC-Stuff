@@ -8,10 +8,10 @@ int internalKd[]                = {   25,   25,  25};   // Controller Derivative
 static float pidIntegrated[3]   = {    0,    0,   0};
 long pidPrevError[3]            = {    0,    0,   0};
 long pidPrevInput[3]            = {    0,    0,   0};
-int integralMinOutput[3]        = { -500, -275, -25};
-int integralMaxOutput[3]        = {  300,  200,  25};   
-int pMinOutput[3]               = {-7811, -275,-120};   // Minimum output limit of Proportional Action
-int pidMinOutput[3]             = { -275,    0,   0};   // Minimum output limit of Controller
+int integralMinOutput[3]        = {    0,    0,   0};
+int integralMaxOutput[3]        = {   50,  100,  25};   
+int pMinOutput[3]               = {-7811, -575,  -5};   // Minimum output limit of Proportional Action
+int pidMinOutput[3]             = { -275,    0, -21};   // Minimum output limit of Controller
 int pidMaxOutput[3]             = { 7811, 1312, 205};   // Maximum output limit of Controller
 int16_t bias[3]                 = {  275,    0,  21};   // Value summed onto Output(Should be Output required to maintain Setpoint with no external upsets) 
 extern int8_t tuning[3];                                // Set to a 1 when tuning    
@@ -55,7 +55,7 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
     }
 
 // **************** Calculate Integral *****************************************    
-    pidIntegrated[controller] += ((error * internalKi[controller])/60);         // Calculate integral value in repeats/minute
+    pidIntegrated[controller] += ((error * internalKi[controller])/600);        // Calculate integral value in repeats/minute
 
     if (pidIntegrated[controller]< integralMinOutput[controller])               // limit output minimum value
     {
@@ -107,6 +107,8 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
 
     if(tuning[0] || tuning[1] || tuning[2])
     {
+        LCDWriteStringXY(0,0,"MV");
+        LCDWriteIntXY(16,0,temp,4,1,0);
         LCDWriteStringXY(0,1,"ERR");
         LCDWriteIntXY(16,1,error,4,0,0);
         LCDWriteCharacter(' ');

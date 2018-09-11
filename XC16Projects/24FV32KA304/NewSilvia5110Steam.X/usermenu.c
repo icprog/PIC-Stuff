@@ -148,20 +148,20 @@ void userMenu(void)
         LCDBitmap(&menu2[0], 5, 84);              //Draw Menu2
         gotoXY(1,4);
         LCDWriteCharacter(' ');                 // Need to Write something to the screen to get it to Draw the Splash Screen  FIX
-        LCDWriteStringXY(0,1,"SetPoint = ");
-        eepromPutData(setpoint[choice], setParameter(44,1,setRangeL[choice],setRangeH[choice],eepromGetData(setpoint[choice])));
+        LCDWriteStringXY(0,0,"SetPoint = ");
+        eepromPutData(setpoint[choice], setParameter(44,0,setRangeL[choice],setRangeH[choice],eepromGetData(setpoint[choice])));
             
-        LCDWriteStringXY(0,2,"Gain =");
-        eepromPutData(Kp[choice], setParameter(44,2,0,200,eepromGetData(Kp[choice])));
+        LCDWriteStringXY(0,1,"Gain =");
+        eepromPutData(Kp[choice], setParameter(44,1,0,200,eepromGetData(Kp[choice])));
 
-        LCDWriteStringXY(0,3,"Integral =");
-        eepromPutData(Ki[choice], setParameter(44,3,0,500,eepromGetData(Ki[choice])));
+        LCDWriteStringXY(0,2,"Integral =");
+        eepromPutData(Ki[choice], setParameter(44,2,0,500,eepromGetData(Ki[choice])));
 
-        LCDWriteStringXY(0,4,"Derivative =");
-        eepromPutData(Kd[choice], setParameter(44,4,0,500,eepromGetData(Kd[choice])));
+        LCDWriteStringXY(0,3,"Derivative =");
+        eepromPutData(Kd[choice], setParameter(44,3,0,500,eepromGetData(Kd[choice])));
             
-        LCDWriteStringXY(0,5,"Tuning? =");
-        tuning[choice] = setParameter(44,5,0,1,tuning[choice]);
+        LCDWriteStringXY(0,4,"Tuning? =");
+        tuning[choice] = setParameter(44,4,0,1,tuning[choice]);
             
         Init_PID(choice,eepromGetData(Kp[choice]),eepromGetData(Ki[choice]),eepromGetData(Kd[choice]));                
 
