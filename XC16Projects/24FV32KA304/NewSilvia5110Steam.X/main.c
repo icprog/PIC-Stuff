@@ -94,6 +94,9 @@ int8_t tuning[3]        =   {0};
 
 char pull               =   0;                          // pull a 25 second shot with a display key
 
+int PIDValue[]          = {0,0,0};                      // PID calculated values (Water, Steam and Group)
+
+
 // *************** Main Routine ************************************************
 int main(void)
 {
@@ -136,7 +139,7 @@ int main(void)
  
     //    int internalBGV;
     
-    int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
+//    int PIDValue[]          = {0,0,0};                  // PID calculated values (Water, Steam and Group)
     
     int previousSecond      = 0;                        //Used with time.second to limit some stuff to once a second
     

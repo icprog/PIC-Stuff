@@ -10,11 +10,13 @@ long pidPrevError[3]            = {    0,    0,   0};
 long pidPrevInput[3]            = {    0,    0,   0};
 int integralMinOutput[3]        = {    0,    0,   0};
 int integralMaxOutput[3]        = {   50,  100,  25};   
-int pMinOutput[3]               = {-7811, -575,  -5};   // Minimum output limit of Proportional Action
-int pidMinOutput[3]             = { -275,    0, -21};   // Minimum output limit of Controller
+int pMinOutput[3]               = {-7811, -575,   0};   // Minimum output limit of Proportional Action
+int pidMinOutput[3]             = { -275,    0,   0};   // Minimum output limit of Controller
 int pidMaxOutput[3]             = { 7811, 1312, 205};   // Maximum output limit of Controller
 int16_t bias[3]                 = {  275,    0,  21};   // Value summed onto Output(Should be Output required to maintain Setpoint with no external upsets) 
 extern int8_t tuning[3];                                // Set to a 1 when tuning    
+extern     int PIDValue[3];                             // PID calculated values (Water, Steam and Group)
+
 //extern int bits[7];                                     // steamPower Bit
 
 //    int result;
@@ -75,9 +77,9 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
             derivativeValue=pidMaxOutput[controller];
         }
         
-        if(derivativeValue<-4000)
-       {
-            derivativeValue=-4000;
+        if(derivativeValue<-100)
+        {
+            derivativeValue=-100;
         }
 
         pidPrevError[controller] = (long)error;
@@ -109,6 +111,8 @@ int PID_Calculate(unsigned char controller, unsigned int setpoint, unsigned int 
     {
         LCDWriteStringXY(0,0,"MV");
         LCDWriteIntXY(16,0,temp,4,1,0);
+        LCDWriteIntXY(45,0,PIDValue[controller],3,0,0);
+        LCDWriteCharacter(' ');
         LCDWriteStringXY(0,1,"ERR");
         LCDWriteIntXY(16,1,error,4,0,0);
         LCDWriteCharacter(' ');
