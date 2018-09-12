@@ -9,11 +9,11 @@ static float pidIntegrated[3]   = {    0,    0,   0};
 long pidPrevError[3]            = {    0,    0,   0};
 long pidPrevInput[3]            = {    0,    0,   0};
 int integralMinOutput[3]        = {    0,    0,   0};
-int integralMaxOutput[3]        = {   50,  100,  45};   
-int pMinOutput[3]               = {-7811, -575,   1};   // Minimum output limit of Proportional Action
-int pidMinOutput[3]             = { -275,    0,   1};   // Minimum output limit of Controller
-int pidMaxOutput[3]             = { 7811, 1812, 105};   // Max limit of Controller (If steamSwitch is on, OC3R has 6000 summed to its output, so 1812+6000=7812 Out)
-int16_t bias[3]                 = {  275,    0,  21};   // Value summed onto Output(Should be Output required to maintain Setpoint with no external upsets) 
+int integralMaxOutput[3]        = {   50,  100,  40};   
+int pMinOutput[3]               = {-7811, -575,   0};   // Minimum output limit of Proportional Action
+int pidMinOutput[3]             = { -275,    0,   0};   // Minimum output limit of Controller
+int pidMaxOutput[3]             = { 7811, 1812, 205};   // Max limit of Controller (If steamSwitch is on, OC3R has 6000 summed to its output, so 1812+6000=7812 Out)
+int16_t bias[3]                 = {  275,    0,  22};   // Value summed onto Output(Should be Output required to maintain Setpoint with no external upsets) 
 extern int8_t tuning[3];                                // Set to a 1 when tuning    
 
 
