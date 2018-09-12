@@ -67,7 +67,7 @@
 #define backLightCounter        counter[4]              // Used to count time until Backlight turns Off
 #define groupPeriodCounter      counter[5]              // Group PID Period Counter
 #define lowWaterReminder        counter[6]              // Remind User level is Low when below 25%
-#define numSamples              20                      // Number of samples to average for temp[] readings 
+#define numSamples              10                      // Number of samples to average for temp[] readings 
 #define PIDDuration             205                     // Number of Program cycles (Period) for Group Head PID
     
 
@@ -86,7 +86,7 @@ int const Kd[]          =   {18,20,22};
 
 char *desc[]            =   {"Water Temp:","Steam Temp:","Group Temp:"};
 
-int powerFail           =   0;                          //Setting powerFail to 1, instructs the user to set the time
+int powerFail           =   1;                          //Setting powerFail to 1, instructs the user to set the time
 
 extern int run;
 
@@ -282,6 +282,8 @@ int main(void)
                     
                     if(tuning[2])
                     {
+                        OC2CON2bits.OCTRIS  = 1;
+                        OC3CON2bits.OCTRIS  = 1;
                         groupHeadPID    = PID_Calculate(2, groupHeadSetpoint, groupHeadTemp);// Calculate Group PID Value
                         goto there;
                     }
@@ -430,7 +432,11 @@ int main(void)
             }
             else
             {
-                groupOutput = 0;
+                if(groupHeadSetpoint-groupHeadTemp>100)
+                {
+                    groupOutput=1;
+                }
+                else groupOutput = 0;
             }
             
     // OC3 is Initialized as edge aligned, OC2 as center-aligned (OC3R is dutycycle for OC3, OC2R is start of cycle for OC2)
