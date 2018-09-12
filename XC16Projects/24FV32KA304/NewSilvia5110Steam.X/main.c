@@ -420,6 +420,10 @@ int main(void)
 
 // *************** Drive PID Outputs *******************************************
             groupPeriodCounter+=1;
+            
+            LCDWriteIntXY(0,0,(groupHeadSetpoint-groupHeadTemp),4,1,0);
+            
+            LCDWriteIntXY(34,0,(groupOutput),1,0,0);
         
             if(groupPeriodCounter > PIDDuration)
             {
@@ -432,7 +436,7 @@ int main(void)
             }
             else
             {
-                if(groupHeadSetpoint-groupHeadTemp>100)
+                if(groupHeadTemp+100<groupHeadSetpoint)
                 {
                     groupOutput=1;
                 }
