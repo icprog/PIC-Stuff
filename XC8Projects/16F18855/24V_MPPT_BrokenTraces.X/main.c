@@ -54,6 +54,7 @@ void main(void)
     uint16_t        tempFanOutput   =   60;
     extern int8_t   VHoldMode[2];
     extern int16_t  Vref[2];                                       // setpoint for voltage output
+    int16_t         tempVoltage[4];
 
     
     SYSTEM_Initialize();
@@ -81,15 +82,22 @@ void main(void)
 
         if(Fault)faultNotReset+=1;
         
-        if(fastLoop>2)
-        {
-            voltage[0]=(int16_t)(Vanalogs[0]/.54245);               // Calculate VOut0
+//        if(fastLoop>2)
+  //      {
+            tempVoltage[0]=(int16_t)(Vanalogs[0]/.54245);           // Calculate VOut0
         
-            voltage[1]=(int16_t)(Vanalogs[1]/.54395);               // Calculate VOut1
+            tempVoltage[1]=(int16_t)(Vanalogs[1]/.54395);           // Calculate VOut1
 
-            voltage[2]=(int16_t)(Vanalogs[2]/.208100558);           // Calculate VIn0
+            tempVoltage[2]=(int16_t)(Vanalogs[2]/.208100558);       // Calculate VIn0
         
-            voltage[3]=(int16_t)(Vanalogs[3]/.207755);              // Calculate VIn1
+            tempVoltage[3]=(int16_t)(Vanalogs[3]/.207755);          // Calculate VIn1
+            
+            for(j=0;j<4;j++)
+            {
+                if(tempVoltage[j]>voltage[j])voltage[j]+=1;
+                else if(tempVoltage[j]>voltage[j])voltage[j]-=1;
+                else voltage[j]=voltage[j];
+            }
         
             calculateCurrent0();
 
@@ -161,9 +169,9 @@ void main(void)
             PWM6_LoadDutyValue(Buck0Output);
             PWM7_LoadDutyValue(Buck1Output);
             fastLoop=0;
-        }
+//        }
 
-        fastLoop+=1;
+  //      fastLoop+=1;
         slowLoop+=1;
    
 

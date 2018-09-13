@@ -17609,6 +17609,7 @@ uint8_t slowLoop = 200;
 uint16_t tempFanOutput = 60;
 extern int8_t VHoldMode[2];
 extern int16_t Vref[2];
+int16_t tempVoltage[4];
 
 
 SYSTEM_Initialize();
@@ -17636,15 +17637,22 @@ for(j=0;j<4;j++) Vanalogs[j]=readVAnalog(j);
 
 if(!(RB2))faultNotReset+=1;
 
-if(fastLoop>2)
+
+
+tempVoltage[0]=(int16_t)(Vanalogs[0]/.54245);
+
+tempVoltage[1]=(int16_t)(Vanalogs[1]/.54395);
+
+tempVoltage[2]=(int16_t)(Vanalogs[2]/.208100558);
+
+tempVoltage[3]=(int16_t)(Vanalogs[3]/.207755);
+
+for(j=0;j<4;j++)
 {
-voltage[0]=(int16_t)(Vanalogs[0]/.54245);
-
-voltage[1]=(int16_t)(Vanalogs[1]/.54395);
-
-voltage[2]=(int16_t)(Vanalogs[2]/.208100558);
-
-voltage[3]=(int16_t)(Vanalogs[3]/.207755);
+if(tempVoltage[j]>voltage[j])voltage[j]+=1;
+else if(tempVoltage[j]>voltage[j])voltage[j]-=1;
+else voltage[j]=voltage[j];
+}
 
 calculateCurrent0();
 
@@ -17716,9 +17724,9 @@ else dutyCycle7=dutyCycle7;
 PWM6_LoadDutyValue(dutyCycle6);
 PWM7_LoadDutyValue(dutyCycle7);
 fastLoop=0;
-}
 
-fastLoop+=1;
+
+
 slowLoop+=1;
 
 
@@ -17835,7 +17843,7 @@ LCDWriteCharacter('V');
 
 { gotoXY(80,3); LCDWriteInt(Imode[1],1, 0, 0);};
 
-# 291
+# 299
 { gotoXY(0,4); LCDWriteInt(current[3],3, 1, 0);};
 LCDWriteCharacter('A');
 
@@ -17860,7 +17868,7 @@ LCDWriteCharacter(' ');
 LCDWriteCharacter(123);
 LCDWriteCharacter('C');
 
-# 383
+# 391
 if(batteryState[0] > FINISHED)
 {
 cc_cv_mode(0);
@@ -17887,7 +17895,7 @@ current[0]=(int16_t)((Ianalogs[0]-562)/2.9943);
 }
 }
 
-# 421
+# 429
 void calculateCurrent2(void)
 {
 if(Ianalogs[2]-570<=0)

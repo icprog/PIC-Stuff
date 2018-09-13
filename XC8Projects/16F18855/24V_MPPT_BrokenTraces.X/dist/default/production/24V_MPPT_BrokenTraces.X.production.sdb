@@ -3,23 +3,6 @@
 [d edition pro ]
 [d chip 16F18855 ]
 [d frameptr 6 ]
-"217 D:\PIC-Stuff\XC8Projects\16F18855\24V_MPPT_BrokenTraces.X\main.c
-[e E14324 charge_states `uc
-IDLE 0
-FAULT 1
-FINISHED 2
-PRECHARGE 3
-CHARGE 4
-FLOAT 5
-]
-"224
-[e E14259 . `uc
-POT 4
-channel_VSS 60
-channel_Temp 61
-channel_DAC1 62
-channel_FVR 63
-]
 "22 D:\PIC-Stuff\XC8Projects\16F18855\24V_MPPT_BrokenTraces.X\adc.c
 [e E14315 . `uc
 POT 4
@@ -38,6 +21,23 @@ CHARGE 4
 FLOAT 5
 ]
 "10 D:\PIC-Stuff\XC8Projects\16F18855\24V_MPPT_BrokenTraces.X\buttons.c
+[e E14259 . `uc
+POT 4
+channel_VSS 60
+channel_Temp 61
+channel_DAC1 62
+channel_FVR 63
+]
+"225 D:\PIC-Stuff\XC8Projects\16F18855\24V_MPPT_BrokenTraces.X\main.c
+[e E14324 charge_states `uc
+IDLE 0
+FAULT 1
+FINISHED 2
+PRECHARGE 3
+CHARGE 4
+FLOAT 5
+]
+"232
 [e E14259 . `uc
 POT 4
 channel_VSS 60
@@ -113,11 +113,11 @@ channel_FVR 63
 [v _LCDWrite LCDWrite `(v  1 e 1 0 ]
 "33 D:\PIC-Stuff\XC8Projects\16F18855\24V_MPPT_BrokenTraces.X\main.c
 [v _main main `(v  1 e 1 0 ]
-"397
+"405
 [v _calculateCurrent0 calculateCurrent0 `(v  1 e 1 0 ]
-"421
+"429
 [v _calculateCurrent2 calculateCurrent2 `(v  1 e 1 0 ]
-"433
+"441
 [v _calculateCurrent3 calculateCurrent3 `(v  1 e 1 0 ]
 "3 D:\PIC-Stuff\XC8Projects\16F18855\24V_MPPT_BrokenTraces.X\pin_manager.c
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
@@ -191,7 +191,7 @@ channel_FVR 63
 [v _j j `c  1 e 1 0 ]
 "589 C:\Program Files (x86)\Microchip\xc8\v1.45\include\pic16f18855.h
 [v _TRISA TRISA `VEuc  1 e 1 @17 ]
-[s S334 . 1 `uc 1 TRISA0 1 0 :1:0 
+[s S184 . 1 `uc 1 TRISA0 1 0 :1:0 
 `uc 1 TRISA1 1 0 :1:1 
 `uc 1 TRISA2 1 0 :1:2 
 `uc 1 TRISA3 1 0 :1:3 
@@ -201,15 +201,15 @@ channel_FVR 63
 `uc 1 TRISA7 1 0 :1:7 
 ]
 "606
-[u S343 . 1 `S334 1 . 1 0 ]
-[v _TRISAbits TRISAbits `VES343  1 e 1 @17 ]
+[u S193 . 1 `S184 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES193  1 e 1 @17 ]
 "651
 [v _TRISB TRISB `VEuc  1 e 1 @18 ]
 "713
 [v _TRISC TRISC `VEuc  1 e 1 @19 ]
 "775
 [v _LATA LATA `VEuc  1 e 1 @22 ]
-[s S355 . 1 `uc 1 LATA0 1 0 :1:0 
+[s S205 . 1 `uc 1 LATA0 1 0 :1:0 
 `uc 1 LATA1 1 0 :1:1 
 `uc 1 LATA2 1 0 :1:2 
 `uc 1 LATA3 1 0 :1:3 
@@ -219,8 +219,8 @@ channel_FVR 63
 `uc 1 LATA7 1 0 :1:7 
 ]
 "792
-[u S364 . 1 `S355 1 . 1 0 ]
-[v _LATAbits LATAbits `VES364  1 e 1 @22 ]
+[u S214 . 1 `S205 1 . 1 0 ]
+[v _LATAbits LATAbits `VES214  1 e 1 @22 ]
 "837
 [v _LATB LATB `VEuc  1 e 1 @23 ]
 "899
@@ -231,7 +231,7 @@ channel_FVR 63
 [v _ADRESH ADRESH `VEuc  1 e 1 @141 ]
 "1857
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @147 ]
-[s S181 . 1 `uc 1 ADGO 1 0 :1:0 
+[s S26 . 1 `uc 1 ADGO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM 1 0 :2:2 
 `uc 1 ADCS 1 0 :1:4 
@@ -240,24 +240,24 @@ channel_FVR 63
 `uc 1 ADON 1 0 :1:7 
 ]
 "1893
-[s S189 . 1 `uc 1 DONE 1 0 :1:0 
+[s S34 . 1 `uc 1 DONE 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFRM 1 0 :2:2 
 ]
-[s S193 . 1 `uc 1 nDONE 1 0 :1:0 
+[s S38 . 1 `uc 1 nDONE 1 0 :1:0 
 ]
-[s S195 . 1 `uc 1 GO 1 0 :1:0 
+[s S40 . 1 `uc 1 GO 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFM0 1 0 :1:2 
 `uc 1 ADFM1 1 0 :1:3 
 ]
-[s S200 . 1 `uc 1 GO_nDONE 1 0 :1:0 
+[s S45 . 1 `uc 1 GO_nDONE 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ADFRM0 1 0 :1:2 
 `uc 1 ADFRM1 1 0 :1:3 
 ]
-[u S205 . 1 `S181 1 . 1 0 `S189 1 . 1 0 `S193 1 . 1 0 `S195 1 . 1 0 `S200 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES205  1 e 1 @147 ]
+[u S50 . 1 `S26 1 . 1 0 `S34 1 . 1 0 `S38 1 . 1 0 `S40 1 . 1 0 `S45 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES50  1 e 1 @147 ]
 "1968
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @148 ]
 "2007
@@ -294,13 +294,13 @@ channel_FVR 63
 [v _ADSTPTL ADSTPTL `VEuc  1 e 1 @274 ]
 "3137
 [v _ADSTPTH ADSTPTH `VEuc  1 e 1 @275 ]
-[s S554 . 1 `uc 1 C1TSEL 1 0 :2:0 
+[s S406 . 1 `uc 1 C1TSEL 1 0 :2:0 
 `uc 1 C2TSEL 1 0 :2:2 
 `uc 1 C3TSEL 1 0 :2:4 
 `uc 1 C4TSEL 1 0 :2:6 
 ]
 "8946
-[s S559 . 1 `uc 1 C1TSEL0 1 0 :1:0 
+[s S411 . 1 `uc 1 C1TSEL0 1 0 :1:0 
 `uc 1 C1TSEL1 1 0 :1:1 
 `uc 1 C2TSEL0 1 0 :1:2 
 `uc 1 C2TSEL1 1 0 :1:3 
@@ -309,38 +309,38 @@ channel_FVR 63
 `uc 1 C4TSEL0 1 0 :1:6 
 `uc 1 C4TSEL1 1 0 :1:7 
 ]
-[u S568 . 1 `S554 1 . 1 0 `S559 1 . 1 0 ]
-[v _CCPTMRS0bits CCPTMRS0bits `VES568  1 e 1 @542 ]
-[s S466 . 1 `uc 1 C5TSEL 1 0 :2:0 
+[u S420 . 1 `S406 1 . 1 0 `S411 1 . 1 0 ]
+[v _CCPTMRS0bits CCPTMRS0bits `VES420  1 e 1 @542 ]
+[s S318 . 1 `uc 1 C5TSEL 1 0 :2:0 
 `uc 1 P6TSEL 1 0 :2:2 
 `uc 1 P7TSEL 1 0 :2:4 
 ]
 "9031
-[s S470 . 1 `uc 1 C5TSEL0 1 0 :1:0 
+[s S322 . 1 `uc 1 C5TSEL0 1 0 :1:0 
 `uc 1 C5TSEL1 1 0 :1:1 
 `uc 1 P6TSEL0 1 0 :1:2 
 `uc 1 P6TSEL1 1 0 :1:3 
 `uc 1 P7TSEL0 1 0 :1:4 
 `uc 1 P7TSEL1 1 0 :1:5 
 ]
-[u S477 . 1 `S466 1 . 1 0 `S470 1 . 1 0 ]
-[v _CCPTMRS1bits CCPTMRS1bits `VES477  1 e 1 @543 ]
+[u S329 . 1 `S318 1 . 1 0 `S322 1 . 1 0 ]
+[v _CCPTMRS1bits CCPTMRS1bits `VES329  1 e 1 @543 ]
 "9081
 [v _T2TMR T2TMR `VEuc  1 e 1 @652 ]
 "9119
 [v _T2PR T2PR `VEuc  1 e 1 @653 ]
 "9157
 [v _T2CON T2CON `VEuc  1 e 1 @654 ]
-[s S670 . 1 `uc 1 OUTPS 1 0 :4:0 
+[s S524 . 1 `uc 1 OUTPS 1 0 :4:0 
 `uc 1 CKPS 1 0 :3:4 
 `uc 1 ON 1 0 :1:7 
 ]
 "9193
-[s S674 . 1 `uc 1 T2OUTPS 1 0 :4:0 
+[s S528 . 1 `uc 1 T2OUTPS 1 0 :4:0 
 `uc 1 T2CKPS 1 0 :3:4 
 `uc 1 T2ON 1 0 :1:7 
 ]
-[s S678 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
+[s S532 . 1 `uc 1 T2OUTPS0 1 0 :1:0 
 `uc 1 T2OUTPS1 1 0 :1:1 
 `uc 1 T2OUTPS2 1 0 :1:2 
 `uc 1 T2OUTPS3 1 0 :1:3 
@@ -348,7 +348,7 @@ channel_FVR 63
 `uc 1 T2CKPS1 1 0 :1:5 
 `uc 1 T2CKPS2 1 0 :1:6 
 ]
-[s S686 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S540 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -357,8 +357,8 @@ channel_FVR 63
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR2ON 1 0 :1:7 
 ]
-[u S695 . 1 `S670 1 . 1 0 `S674 1 . 1 0 `S678 1 . 1 0 `S686 1 . 1 0 ]
-[v _T2CONbits T2CONbits `VES695  1 e 1 @654 ]
+[u S549 . 1 `S524 1 . 1 0 `S528 1 . 1 0 `S532 1 . 1 0 `S540 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES549  1 e 1 @654 ]
 "9303
 [v _T2HLT T2HLT `VEuc  1 e 1 @655 ]
 "9431
@@ -372,11 +372,11 @@ channel_FVR 63
 "9757
 [v _T4CON T4CON `VEuc  1 e 1 @660 ]
 "9793
-[s S736 . 1 `uc 1 T4OUTPS 1 0 :4:0 
+[s S590 . 1 `uc 1 T4OUTPS 1 0 :4:0 
 `uc 1 T4CKPS 1 0 :3:4 
 `uc 1 T4ON 1 0 :1:7 
 ]
-[s S740 . 1 `uc 1 T4OUTPS0 1 0 :1:0 
+[s S594 . 1 `uc 1 T4OUTPS0 1 0 :1:0 
 `uc 1 T4OUTPS1 1 0 :1:1 
 `uc 1 T4OUTPS2 1 0 :1:2 
 `uc 1 T4OUTPS3 1 0 :1:3 
@@ -384,7 +384,7 @@ channel_FVR 63
 `uc 1 T4CKPS1 1 0 :1:5 
 `uc 1 T4CKPS2 1 0 :1:6 
 ]
-[s S748 . 1 `uc 1 OUTPS0 1 0 :1:0 
+[s S602 . 1 `uc 1 OUTPS0 1 0 :1:0 
 `uc 1 OUTPS1 1 0 :1:1 
 `uc 1 OUTPS2 1 0 :1:2 
 `uc 1 OUTPS3 1 0 :1:3 
@@ -393,8 +393,8 @@ channel_FVR 63
 `uc 1 CKPS2 1 0 :1:6 
 `uc 1 TMR4ON 1 0 :1:7 
 ]
-[u S757 . 1 `S670 1 . 1 0 `S736 1 . 1 0 `S740 1 . 1 0 `S748 1 . 1 0 ]
-[v _T4CONbits T4CONbits `VES757  1 e 1 @660 ]
+[u S611 . 1 `S524 1 . 1 0 `S590 1 . 1 0 `S594 1 . 1 0 `S602 1 . 1 0 ]
+[v _T4CONbits T4CONbits `VES611  1 e 1 @660 ]
 "9903
 [v _T4HLT T4HLT `VEuc  1 e 1 @661 ]
 "10031
@@ -405,35 +405,35 @@ channel_FVR 63
 [v _CCPR1L CCPR1L `VEuc  1 e 1 @780 ]
 "10908
 [v _CCPR1H CCPR1H `VEuc  1 e 1 @781 ]
-[s S495 . 1 `uc 1 MODE 1 0 :4:0 
+[s S347 . 1 `uc 1 MODE 1 0 :4:0 
 `uc 1 FMT 1 0 :1:4 
 `uc 1 OUT 1 0 :1:5 
 `uc 1 OE 1 0 :1:6 
 `uc 1 EN 1 0 :1:7 
 ]
 "10966
-[s S501 . 1 `uc 1 MODE0 1 0 :1:0 
+[s S353 . 1 `uc 1 MODE0 1 0 :1:0 
 `uc 1 MODE1 1 0 :1:1 
 `uc 1 MODE2 1 0 :1:2 
 `uc 1 MODE3 1 0 :1:3 
 ]
-[s S506 . 1 `uc 1 CCP1MODE 1 0 :4:0 
+[s S358 . 1 `uc 1 CCP1MODE 1 0 :4:0 
 `uc 1 CCP1FMT 1 0 :1:4 
 `uc 1 CCP1OUT 1 0 :1:5 
 `uc 1 CCP1OE 1 0 :1:6 
 `uc 1 CCP1EN 1 0 :1:7 
 ]
-[s S512 . 1 `uc 1 CCP1MODE0 1 0 :1:0 
+[s S364 . 1 `uc 1 CCP1MODE0 1 0 :1:0 
 `uc 1 CCP1MODE1 1 0 :1:1 
 `uc 1 CCP1MODE2 1 0 :1:2 
 `uc 1 CCP1MODE3 1 0 :1:3 
 ]
-[s S517 . 1 `uc 1 . 1 0 :6:0 
+[s S369 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 P1M0 1 0 :1:6 
 `uc 1 P1M1 1 0 :1:7 
 ]
-[u S521 . 1 `S495 1 . 1 0 `S501 1 . 1 0 `S506 1 . 1 0 `S512 1 . 1 0 `S517 1 . 1 0 ]
-[v _CCP1CONbits CCP1CONbits `VES521  1 e 1 @782 ]
+[u S373 . 1 `S347 1 . 1 0 `S353 1 . 1 0 `S358 1 . 1 0 `S364 1 . 1 0 `S369 1 . 1 0 ]
+[v _CCP1CONbits CCP1CONbits `VES373  1 e 1 @782 ]
 "12171
 [v _PWM6DCL PWM6DCL `VEuc  1 e 1 @908 ]
 "12237
@@ -446,7 +446,7 @@ channel_FVR 63
 [v _PWM7DCH PWM7DCH `VEuc  1 e 1 @913 ]
 "12709
 [v _PWM7CON PWM7CON `VEuc  1 e 1 @914 ]
-[s S653 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[s S507 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 TMR3IF 1 0 :1:2 
 `uc 1 TMR4IF 1 0 :1:3 
@@ -454,16 +454,16 @@ channel_FVR 63
 `uc 1 TMR6IF 1 0 :1:5 
 ]
 "21299
-[u S660 . 1 `S653 1 . 1 0 ]
-[v _PIR4bits PIR4bits `VES660  1 e 1 @1808 ]
-[s S431 . 1 `uc 1 INTE 1 0 :1:0 
+[u S514 . 1 `S507 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES514  1 e 1 @1808 ]
+[s S283 . 1 `uc 1 INTE 1 0 :1:0 
 `uc 1 . 1 0 :3:1 
 `uc 1 IOCIE 1 0 :1:4 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
 "21564
-[u S436 . 1 `S431 1 . 1 0 ]
-[v _PIE0bits PIE0bits `VES436  1 e 1 @1814 ]
+[u S288 . 1 `S283 1 . 1 0 ]
+[v _PIE0bits PIE0bits `VES288  1 e 1 @1814 ]
 "23324
 [v _OSCCON1 OSCCON1 `VEuc  1 e 1 @2189 ]
 "23464
@@ -478,11 +478,11 @@ channel_FVR 63
 [v _FVRCON FVRCON `VEuc  1 e 1 @2316 ]
 "29763
 [v _PPSLOCK PPSLOCK `VEuc  1 e 1 @3727 ]
-[s S446 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
+[s S298 . 1 `uc 1 PPSLOCKED 1 0 :1:0 
 ]
 "29773
-[u S448 . 1 `S446 1 . 1 0 ]
-[v _PPSLOCKbits PPSLOCKbits `VES448  1 e 1 @3727 ]
+[u S300 . 1 `S298 1 . 1 0 ]
+[v _PPSLOCKbits PPSLOCKbits `VES300  1 e 1 @3727 ]
 "32091
 [v _RA6PPS RA6PPS `VEuc  1 e 1 @3862 ]
 "32141
@@ -522,37 +522,39 @@ channel_FVR 63
 "33
 [v _main main `(v  1 e 1 0 ]
 {
+"57
+[v main@tempVoltage tempVoltage `[4]i  1 a 8 8 ]
 "43
 [v main@efficiency efficiency `f  1 a 3 0 ]
 "41
-[v main@dutyCycle7 dutyCycle7 `ui  1 a 2 26 ]
+[v main@dutyCycle7 dutyCycle7 `ui  1 a 2 34 ]
 "40
-[v main@dutyCycle6 dutyCycle6 `ui  1 a 2 24 ]
-"42
-[v main@dutyCycle1 dutyCycle1 `ui  1 a 2 19 ]
+[v main@dutyCycle6 dutyCycle6 `ui  1 a 2 32 ]
 "54
-[v main@tempFanOutput tempFanOutput `ui  1 a 2 17 ]
+[v main@tempFanOutput tempFanOutput `ui  1 a 2 27 ]
+"42
+[v main@dutyCycle1 dutyCycle1 `ui  1 a 2 25 ]
 "48
-[v main@largerIOut largerIOut `i  1 a 2 15 ]
+[v main@largerIOut largerIOut `i  1 a 2 22 ]
 "36
-[v main@MPPT1 MPPT1 `i  1 a 2 13 ]
+[v main@MPPT1 MPPT1 `i  1 a 2 20 ]
 "35
-[v main@MPPT0 MPPT0 `i  1 a 2 10 ]
+[v main@MPPT0 MPPT0 `i  1 a 2 18 ]
 "45
 [v main@faultNotReset faultNotReset `ui  1 a 2 5 ]
 "44
 [v main@faultCount faultCount `ui  1 a 2 3 ]
 "50
-[v main@j j `uc  1 a 1 28 ]
+[v main@j j `uc  1 a 1 36 ]
 "51
-[v main@menuButton menuButton `uc  1 a 1 12 ]
+[v main@menuButton menuButton `uc  1 a 1 24 ]
 "53
-[v main@slowLoop slowLoop `uc  1 a 1 9 ]
-"52
-[v main@fastLoop fastLoop `uc  1 a 1 8 ]
+[v main@slowLoop slowLoop `uc  1 a 1 17 ]
 "39
-[v main@displayRefresh displayRefresh `uc  1 a 1 7 ]
-"394
+[v main@displayRefresh displayRefresh `uc  1 a 1 16 ]
+"52
+[v main@fastLoop fastLoop `uc  1 a 1 7 ]
+"402
 } 0
 "4 D:\PIC-Stuff\XC8Projects\16F18855\24V_MPPT_BrokenTraces.X\tempCalc.c
 [v _tempCalc tempCalc `(i  1 e 2 0 ]
@@ -690,20 +692,20 @@ channel_FVR 63
 [v cc_cv_mode@z z `uc  1 a 1 38 ]
 "150
 } 0
-"433 D:\PIC-Stuff\XC8Projects\16F18855\24V_MPPT_BrokenTraces.X\main.c
+"441 D:\PIC-Stuff\XC8Projects\16F18855\24V_MPPT_BrokenTraces.X\main.c
 [v _calculateCurrent3 calculateCurrent3 `(v  1 e 1 0 ]
 {
-"443
+"451
 } 0
-"421
+"429
 [v _calculateCurrent2 calculateCurrent2 `(v  1 e 1 0 ]
 {
-"431
+"439
 } 0
-"397
+"405
 [v _calculateCurrent0 calculateCurrent0 `(v  1 e 1 0 ]
 {
-"407
+"415
 } 0
 "56 C:\Program Files (x86)\Microchip\xc8\v1.45\sources\common\ftdiv.c
 [v ___ftdiv __ftdiv `(f  1 e 3 0 ]
