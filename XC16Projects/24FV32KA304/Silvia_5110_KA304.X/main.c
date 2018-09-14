@@ -219,7 +219,7 @@ int main(void)
                 errorSustained>15?airPump=0:(airPump=1,errorSustained+=1);
             }
             
-            backLightCounter +=1;               // Increment the "Seconds" counter to turn OFF Backlight
+            backLightCounter+=1;               // Increment the "Seconds" counter to turn OFF Backlight
             
             previous_time = time.second;
 
